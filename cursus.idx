@@ -1,0 +1,231 @@
+\indexentry {Sequenti\"ele schakeling}{6}
+\indexentry {Toestand $S$}{6}
+\indexentry {Eindige-toestanden machine}{6}
+\indexentry {Finite state machine (FSM)}{6}
+\indexentry {Geheugencomponent}{6}
+\indexentry {Positieve terugkoppeling}{6}
+\indexentry {Flipflop}{6}
+\indexentry {Register}{6}
+\indexentry {Toestandsgebonden sequenti\"ele schakelingen}{6}
+\indexentry {Moore machine}{6}
+\indexentry {Moore-FSM}{6}
+\indexentry {Inputgebonden sequenti\"ele schakelingen}{6}
+\indexentry {Mealy machine}{6}
+\indexentry {Mealy-FSM}{6}
+\indexentry {Asynchrone sequenti\"ele schakelingen}{6}
+\indexentry {Synchrone sequenti\"ele schakelingen}{6}
+\indexentry {Klokingang}{6}
+\indexentry {Klokperiode}{6}
+\indexentry {Klokfrequentie}{6}
+\indexentry {Duty cycle}{6}
+\indexentry {Stijgende flank}{7}
+\indexentry {Rising edge}{7}
+\indexentry {Dalende flank}{7}
+\indexentry {Falling edge}{7}
+\indexentry {Set-reset latch}{7}
+\indexentry {Transparantie-probleem}{7}
+\indexentry {Flipflop}{7}
+\indexentry {SR-latch}{7}
+\indexentry {Set}{7}
+\indexentry {Reset}{7}
+\indexentry {Race}{8}
+\indexentry {Geklokte SR-latch}{8}
+\indexentry {Geklokte D-latch}{8}
+\indexentry {Data-ingang $D$}{8}
+\indexentry {Set-up-tijd}{9}
+\indexentry {Houdtijd}{10}
+\indexentry {Metastabiliteit}{10}
+\indexentry {Stabiele toestanden}{10}
+\indexentry {Metastabiele toestand}{10}
+\indexentry {Tijdsconstante $\tau $}{10}
+\indexentry {Marginale triggering}{10}
+\indexentry {Bal-en-heuvel-analogie}{10}
+\indexentry {Transparant}{11}
+\indexentry {Transparantie-probleem}{11}
+\indexentry {Flankgevoelig}{11}
+\indexentry {Master-slave flipflop}{11}
+\indexentry {Edge-triggered flipflop}{11}
+\indexentry {Preset $\mbox {PR}^*$}{11}
+\indexentry {Clear $\mbox {CLR}^*$}{11}
+\indexentry {Asynchrone set en reset}{12}
+\indexentry {Karakteristieke tabel}{12}
+\indexentry {Excitatietabel}{12}
+\indexentry {SR-flipflop}{13}
+\indexentry {Set-reset flipflop}{13}
+\indexentry {Data-flipflop}{13}
+\indexentry {D-flipflop}{13}
+\indexentry {Toggle-flipflop}{13}
+\indexentry {T-flipflop}{13}
+\indexentry {Toggle}{13}
+\indexentry {JK-flipflop}{13}
+\indexentry {Jack Kilby-flipflop}{13}
+\indexentry {Register}{15}
+\indexentry {Schuifregister}{15}
+\indexentry {Teller}{15}
+\indexentry {Increment}{15}
+\indexentry {Decrement}{15}
+\indexentry {Wrap-around}{15}
+\indexentry {Up-counter}{16}
+\indexentry {Down-counter}{16}
+\indexentry {Bidirectionial counter}{16}
+\indexentry {Bidirectionele teller}{16}
+\indexentry {Counter Enabled $\mbox {CE}_{\mbox {\tiny {in}}}$}{16}
+\indexentry {Down-Up $D/U^*$}{16}
+\indexentry {Counter Enabled $\mbox {CE}_{\mbox {\tiny {out}}}$}{16}
+\indexentry {Ripple Carry Output (RCO)}{16}
+\indexentry {Asynchrone teller}{17}
+\indexentry {Asynchronous counter}{17}
+\indexentry {Ripple counter}{17}
+\indexentry {Synchrone teller}{17}
+\indexentry {Parallel-laadbare bidirectionele teller}{17}
+\indexentry {Parallel laadbaar}{17}
+\indexentry {Modulo-teller}{18}
+\indexentry {BCD-teller}{18}
+\indexentry {Toestandsdiagram}{20}
+\indexentry {Toestanden}{20}
+\indexentry {Transities}{20}
+\indexentry {Ingangscombinatie}{20}
+\indexentry {Initalisatie}{21}
+\indexentry {Uitgangscombinatie}{21}
+\indexentry {Toestandstabel}{21}
+\indexentry {\texttt {VHDL}!\texttt {Literals}}{29}
+\indexentry {\texttt {VHDL}!\texttt {Getal}}{29}
+\indexentry {\texttt {VHDL}!\texttt {abstract literal}}{29}
+\indexentry {\texttt {VHDL}!\texttt {universal\_integer}}{29}
+\indexentry {\texttt {VHDL}!\texttt {.}}{29}
+\indexentry {\texttt {VHDL}!\texttt {universal\_real}}{29}
+\indexentry {\texttt {VHDL}!\texttt {physical types}}{30}
+\indexentry {\texttt {VHDL}!\texttt {E}}{30}
+\indexentry {\texttt {VHDL}!\texttt {e}}{30}
+\indexentry {\texttt {VHDL}!\texttt {base\#literal\#exp}}{30}
+\indexentry {\texttt {VHDL}!\texttt {\_}}{30}
+\indexentry {\texttt {VHDL}!\texttt {Karakter}}{30}
+\indexentry {\texttt {VHDL}!\texttt {character literal}}{30}
+\indexentry {\texttt {VHDL}!\texttt {'}}{30}
+\indexentry {\texttt {VHDL}!\texttt {Karakterreeks}}{30}
+\indexentry {\texttt {VHDL}!\texttt {string literal}}{30}
+\indexentry {\texttt {VHDL}!\texttt {"}}{30}
+\indexentry {\texttt {VHDL}!\texttt {Bitreeks}}{30}
+\indexentry {\texttt {VHDL}!\texttt {``bit string literal}}{30}
+\indexentry {\texttt {VHDL}!\texttt {"}}{30}
+\indexentry {\texttt {VHDL}!\texttt {Scheidingstekens}}{30}
+\indexentry {\texttt {VHDL}!\texttt {delimiters}}{30}
+\indexentry {\texttt {VHDL}!\texttt {enumeration literals}}{30}
+\indexentry {\texttt {VHDL}!\texttt {NULL literal}}{30}
+\indexentry {\texttt {VHDL}!\texttt {bit}}{31}
+\indexentry {\texttt {VHDL}!\texttt {byte}}{31}
+\indexentry {\texttt {VHDL}!\texttt {is}}{31}
+\indexentry {\texttt {VHDL}!\texttt {bit}}{31}
+\indexentry {\texttt {VHDL}!\texttt {byte}}{31}
+\indexentry {\texttt {VHDL}!\texttt {constante}}{31}
+\indexentry {\texttt {VHDL}!\texttt {variabele}}{31}
+\indexentry {\texttt {VHDL}!\texttt {signaal}}{31}
+\indexentry {\texttt {VHDL}!\texttt {INTEGER}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ABS}}{32}
+\indexentry {\texttt {VHDL}!\texttt {**}}{32}
+\indexentry {\texttt {VHDL}!\texttt {*}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/}}{32}
+\indexentry {\texttt {VHDL}!\texttt {MOD}}{32}
+\indexentry {\texttt {VHDL}!\texttt {REM}}{32}
+\indexentry {\texttt {VHDL}!\texttt {+}}{32}
+\indexentry {\texttt {VHDL}!\texttt {-}}{32}
+\indexentry {\texttt {VHDL}!\texttt {+}}{32}
+\indexentry {\texttt {VHDL}!\texttt {-}}{32}
+\indexentry {\texttt {VHDL}!\texttt {=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {REAL}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ABS}}{32}
+\indexentry {\texttt {VHDL}!\texttt {**}}{32}
+\indexentry {\texttt {VHDL}!\texttt {*}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/}}{32}
+\indexentry {\texttt {VHDL}!\texttt {+}}{32}
+\indexentry {\texttt {VHDL}!\texttt {-}}{32}
+\indexentry {\texttt {VHDL}!\texttt {+}}{32}
+\indexentry {\texttt {VHDL}!\texttt {-}}{32}
+\indexentry {\texttt {VHDL}!\texttt {=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {TIME}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ABS}}{32}
+\indexentry {\texttt {VHDL}!\texttt {*}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/}}{32}
+\indexentry {\texttt {VHDL}!\texttt {+}}{32}
+\indexentry {\texttt {VHDL}!\texttt {-}}{32}
+\indexentry {\texttt {VHDL}!\texttt {fs}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ps}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ns}}{32}
+\indexentry {\texttt {VHDL}!\texttt {us}}{32}
+\indexentry {\texttt {VHDL}!\texttt {+}}{32}
+\indexentry {\texttt {VHDL}!\texttt {-}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ms}}{32}
+\indexentry {\texttt {VHDL}!\texttt {sec}}{32}
+\indexentry {\texttt {VHDL}!\texttt {min}}{32}
+\indexentry {\texttt {VHDL}!\texttt {hr}}{32}
+\indexentry {\texttt {VHDL}!\texttt {=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {BIT}}{32}
+\indexentry {\texttt {VHDL}!\texttt {NOT}}{32}
+\indexentry {\texttt {VHDL}!\texttt {=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {AND}}{32}
+\indexentry {\texttt {VHDL}!\texttt {NAND}}{32}
+\indexentry {\texttt {VHDL}!\texttt {OR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {NOR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {XOR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {XNOR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {BIT\_VECTOR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {BIT}}{32}
+\indexentry {\texttt {VHDL}!\texttt {NOT}}{32}
+\indexentry {\texttt {VHDL}!\texttt {\&}}{32}
+\indexentry {\texttt {VHDL}!\texttt {SLL}}{32}
+\indexentry {\texttt {VHDL}!\texttt {SRL}}{32}
+\indexentry {\texttt {VHDL}!\texttt {SLA}}{32}
+\indexentry {\texttt {VHDL}!\texttt {SRA}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ROL}}{32}
+\indexentry {\texttt {VHDL}!\texttt {ROR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {/=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<}}{32}
+\indexentry {\texttt {VHDL}!\texttt {<=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>}}{32}
+\indexentry {\texttt {VHDL}!\texttt {>=}}{32}
+\indexentry {\texttt {VHDL}!\texttt {AND}}{32}
+\indexentry {\texttt {VHDL}!\texttt {NAND}}{32}
+\indexentry {\texttt {VHDL}!\texttt {OR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {NOR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {XOR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {XNOR}}{32}
+\indexentry {\texttt {VHDL}!\texttt {CHARACTER}}{32}
+\indexentry {\texttt {VHDL}!\texttt {STRING}}{32}
+\indexentry {\texttt {VHDL}!\texttt {CHARACTER}}{32}
+\indexentry {\texttt {VHDL}!\texttt {NATURAL}}{32}
+\indexentry {\texttt {VHDL}!\texttt {INTEGER'HIGH}}{32}
+\indexentry {\texttt {VHDL}!\texttt {INTEGER}}{32}
+\indexentry {\texttt {VHDL}!\texttt {POSITIVE}}{32}
+\indexentry {\texttt {VHDL}!\texttt {INTEGER'HIGH}}{32}
+\indexentry {\texttt {VHDL}!\texttt {INTEGER}}{32}
+\indexentry {\texttt {VHDL}!\texttt {DELAY\_LENGTH}}{32}
+\indexentry {\texttt {VHDL}!\texttt {fs}}{32}
+\indexentry {\texttt {VHDL}!\texttt {TIME'HIGH}}{32}
+\indexentry {\texttt {VHDL}!\texttt {TIME}}{32}
+\indexentry {\texttt {VHDL}!\texttt {constant}}{32}
+\indexentry {\texttt {VHDL}!\texttt {variable}}{32}
+\indexentry {\texttt {VHDL}!\texttt {signal}}{33}
+\indexentry {\texttt {VHDL}!\texttt {<=}}{33}
+\indexentry {\texttt {VHDL}!\texttt {after}}{33}
+\indexentry {\texttt {VHDL}!\texttt {:=}}{33}

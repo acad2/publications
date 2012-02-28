@@ -1,0 +1,2701 @@
+\pgfdeclareshape{tris} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{c}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by -0.5\pgfutil@tempdima}
+  \anchor{x}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{z}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \pgfutil@tempdima=\halfwidth
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+\pgfdeclareshape{nmosc} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\radius{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=.5\pgf@xb%
+    \pgf@x=.5\pgf@yb%
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{drain}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{source}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\radius}
+  \anchor{gate}{\centerpoint\advance\pgf@x by-\radius}
+  \anchor{east}{\centerpoint\advance\pgf@x by\radius}
+  \anchor{mid west}{\centerpoint\advance\pgf@x by-\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{mid east}{\centerpoint\advance\pgf@x by\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base west}{\centerpoint\advance\pgf@x by-\radius\pgf@y=0pt}
+  \anchor{base east}{\centerpoint\advance\pgf@x by\radius\pgf@y=0pt}
+  \anchor{north west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchor{north east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchorborder{
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \edef\pgf@marshal{%
+      \noexpand\pgfpointborderellipse
+      {\noexpand\pgfqpoint{\the\pgf@xa}{\the\pgf@ya}}
+      {\noexpand\pgfqpoint{\radius}{\radius}}%
+    }%
+    \pgf@marshal%
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \centerpoint%
+    \advance\pgf@x by\pgf@xa%
+    \advance\pgf@y by\pgf@ya%
+  }
+
+  \backgroundpath{
+    \pgfutil@tempdima=\radius%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/outer xsep}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/outer ysep}}%  
+    \ifdim\pgf@xb<\pgf@yb%
+      \advance\pgfutil@tempdima by-\pgf@yb%
+    \else%
+      \advance\pgfutil@tempdima by-\pgf@xb%
+    \fi%
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}%
+    \centerpoint
+    \advance\pgf@y by -\pgfutil@tempdima
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by \pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+  }
+}
+
+
+\pgfdeclareshape{nmoso} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\radius{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=.5\pgf@xb%
+    \pgf@x=.5\pgf@yb%
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{drain}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{source}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\radius}
+  \anchor{gate}{\centerpoint\advance\pgf@x by-\radius}
+  \anchor{east}{\centerpoint\advance\pgf@x by\radius}
+  \anchor{mid west}{\centerpoint\advance\pgf@x by-\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{mid east}{\centerpoint\advance\pgf@x by\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base west}{\centerpoint\advance\pgf@x by-\radius\pgf@y=0pt}
+  \anchor{base east}{\centerpoint\advance\pgf@x by\radius\pgf@y=0pt}
+  \anchor{north west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchor{north east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchorborder{
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \edef\pgf@marshal{%
+      \noexpand\pgfpointborderellipse
+      {\noexpand\pgfqpoint{\the\pgf@xa}{\the\pgf@ya}}
+      {\noexpand\pgfqpoint{\radius}{\radius}}%
+    }%
+    \pgf@marshal%
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \centerpoint%
+    \advance\pgf@x by\pgf@xa%
+    \advance\pgf@y by\pgf@ya%
+  }
+
+  \backgroundpath{
+    \pgfutil@tempdima=\radius%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/outer xsep}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/outer ysep}}%  
+    \ifdim\pgf@xb<\pgf@yb%
+      \advance\pgfutil@tempdima by-\pgf@yb%
+    \else%
+      \advance\pgfutil@tempdima by-\pgf@xb%
+    \fi%
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}%
+    \centerpoint
+    \advance\pgf@y by -\pgfutil@tempdima
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.64\pgfutil@tempdima
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by \pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+  }
+}
+
+\pgfdeclareshape{pmosc} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\radius{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=.5\pgf@xb%
+    \pgf@x=.5\pgf@yb%
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{drain}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{source}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\radius}
+  \anchor{gate}{\centerpoint\pgfutil@tempdima=\radius\advance\pgf@x by-1.4\pgfutil@tempdima}
+  \anchor{east}{\centerpoint\advance\pgf@x by\radius}
+  \anchor{mid west}{\centerpoint\advance\pgf@x by-\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{mid east}{\centerpoint\advance\pgf@x by\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base west}{\centerpoint\advance\pgf@x by-\radius\pgf@y=0pt}
+  \anchor{base east}{\centerpoint\advance\pgf@x by\radius\pgf@y=0pt}
+  \anchor{north west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchor{north east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchorborder{
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \edef\pgf@marshal{%
+      \noexpand\pgfpointborderellipse
+      {\noexpand\pgfqpoint{\the\pgf@xa}{\the\pgf@ya}}
+      {\noexpand\pgfqpoint{\radius}{\radius}}%
+    }%
+    \pgf@marshal%
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \centerpoint%
+    \advance\pgf@x by\pgf@xa%
+    \advance\pgf@y by\pgf@ya%
+  }
+
+  \backgroundpath{
+    \pgfutil@tempdima=\radius%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/outer xsep}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/outer ysep}}%  
+    \ifdim\pgf@xb<\pgf@yb%
+      \advance\pgfutil@tempdima by-\pgf@yb%
+    \else%
+      \advance\pgfutil@tempdima by-\pgf@xb%
+    \fi%
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}%
+    \centerpoint
+    \advance\pgf@x by -1.2\pgfutil@tempdima
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.2\pgfutil@tempdima}%
+    \centerpoint
+    \advance\pgf@y by -\pgfutil@tempdima
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by \pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+  }
+}
+
+\pgfdeclareshape{pmoso} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\radius{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=.5\pgf@xb%
+    \pgf@x=.5\pgf@yb%
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{drain}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\radius}
+  \anchor{source}{\centerpoint\advance\pgf@y by\radius}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\radius}
+  \anchor{gate}{\centerpoint\pgfutil@tempdima=\radius\advance\pgf@x by-1.4\pgfutil@tempdima}
+  \anchor{east}{\centerpoint\advance\pgf@x by\radius}
+  \anchor{mid west}{\centerpoint\advance\pgf@x by-\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{mid east}{\centerpoint\advance\pgf@x by\radius\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base west}{\centerpoint\advance\pgf@x by-\radius\pgf@y=0pt}
+  \anchor{base east}{\centerpoint\advance\pgf@x by\radius\pgf@y=0pt}
+  \anchor{north west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south west}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by-0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchor{north east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by0.707107\pgf@xa
+  }
+  \anchor{south east}{
+    \centerpoint
+    \pgf@xa=\radius
+    \advance\pgf@x by0.707107\pgf@xa
+    \advance\pgf@y by-0.707107\pgf@xa
+  }
+  \anchorborder{
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \edef\pgf@marshal{%
+      \noexpand\pgfpointborderellipse
+      {\noexpand\pgfqpoint{\the\pgf@xa}{\the\pgf@ya}}
+      {\noexpand\pgfqpoint{\radius}{\radius}}%
+    }%
+    \pgf@marshal%
+    \pgf@xa=\pgf@x%
+    \pgf@ya=\pgf@y%
+    \centerpoint%
+    \advance\pgf@x by\pgf@xa%
+    \advance\pgf@y by\pgf@ya%
+  }
+
+  \backgroundpath{
+    \pgfutil@tempdima=\radius%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/outer xsep}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/outer ysep}}%  
+    \ifdim\pgf@xb<\pgf@yb%
+      \advance\pgfutil@tempdima by-\pgf@yb%
+    \else%
+      \advance\pgfutil@tempdima by-\pgf@xb%
+    \fi%
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}%
+    \centerpoint
+    \advance\pgf@x by -1.2\pgfutil@tempdima
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.2\pgfutil@tempdima}%
+    \centerpoint
+    \advance\pgf@y by -\pgfutil@tempdima
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by -0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.64\pgfutil@tempdima
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by -0.32\pgfutil@tempdima
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by 0.4\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@y by \pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+  }
+}
+
+\pgfdeclareshape{mux2to1} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{data0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{data1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{selin0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.8333\pgfutil@tempdima}
+  \anchor{selout0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.8333\pgfutil@tempdima}
+  \anchor{output}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \pgfutil@tempdima=\halfwidth
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by 0.6666\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -0.6666\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{mux4to1} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{data0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.6\pgfutil@tempdima}
+  \anchor{data1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.2\pgfutil@tempdima}
+  \anchor{data2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.2\pgfutil@tempdima}
+  \anchor{data3}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.6\pgfutil@tempdima}
+  \anchor{selin0}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by -0.333\pgfutil@tempdima\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.7777\pgfutil@tempdima}
+  \anchor{selin1}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by 0.333\pgfutil@tempdima\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.8888\pgfutil@tempdima}
+  \anchor{selout0}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by -0.333\pgfutil@tempdima\pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.7777\pgfutil@tempdima}
+  \anchor{selout1}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by 0.333\pgfutil@tempdima\pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.8888\pgfutil@tempdima}
+  \anchor{output}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \pgfutil@tempdima=\halfwidth
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by 0.6666\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -0.6666\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{decoder2to4} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{a0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{a1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{s0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.6\pgfutil@tempdima}
+  \anchor{s1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.2\pgfutil@tempdima}
+  \anchor{s2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.2\pgfutil@tempdima}
+  \anchor{s3}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.6\pgfutil@tempdima}
+  \anchor{enable}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{demux1to4} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{a0}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@x by-\halfwidth\advance\pgf@y by-0.3333\pgfutil@tempdima}
+  \anchor{a1}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@x by-\halfwidth\advance\pgf@y by0.3333\pgfutil@tempdima}
+  \anchor{s0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.6\pgfutil@tempdima}
+  \anchor{s1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.2\pgfutil@tempdima}
+  \anchor{s2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.2\pgfutil@tempdima}
+  \anchor{s3}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.6\pgfutil@tempdima}
+  \anchor{data}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{encoder4to2} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{f0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{f1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{d0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.6\pgfutil@tempdima}
+  \anchor{d1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.2\pgfutil@tempdima}
+  \anchor{d2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.2\pgfutil@tempdima}
+  \anchor{d3}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.6\pgfutil@tempdima}
+  \anchor{any}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{comp} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{x1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{y1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{x0}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@x by\halfwidth\advance\pgf@y by0.3333\pgfutil@tempdima}
+  \anchor{y0}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@x by\halfwidth\advance\pgf@y by-0.3333\pgfutil@tempdima}
+  \anchor{g}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@x by-\halfwidth\advance\pgf@y by0.3333\pgfutil@tempdima}
+  \anchor{l}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@x by-\halfwidth\advance\pgf@y by-0.3333\pgfutil@tempdima}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{fulladder} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{s}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{x}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{y}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{co}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{ci}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{cla} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{y}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{x}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{p}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{g}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{s}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{c}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+     \begingroup
+     \tikzset{port labels}
+     \tikz@textfont
+     \pgf@anchor@cla@s
+     \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.375ex}{s}}
+     \pgf@anchor@cla@c
+     \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-0.375ex}{c}}
+     \pgf@anchor@cla@x
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x}}
+     \pgf@anchor@cla@y
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y}}
+     \pgf@anchor@cla@p
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{p}}
+     \pgf@anchor@cla@g
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{g}}
+     \endgroup
+  }
+}
+
+\pgfdeclareshape{clagc} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{c}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{pa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.8182\pgfutil@tempdima}
+  \anchor{ga}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.6364\pgfutil@tempdima}
+  \anchor{ca}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.7272\pgfutil@tempdima}
+  \anchor{pb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.0909\pgfutil@tempdima}
+  \anchor{gb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.0909\pgfutil@tempdima}
+  \anchor{cb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.0\pgfutil@tempdima}
+  \anchor{pc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.6364\pgfutil@tempdima}
+  \anchor{gc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.8182\pgfutil@tempdima}
+  \anchor{cc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.7272\pgfutil@tempdima}
+  \anchor{gab}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by0.3333\pgfutil@tempdima\advance\pgf@x by-\halfwidth}
+  \anchor{pab}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by-0.3333\pgfutil@tempdima\advance\pgf@x by-\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+     \begingroup
+     \tikzset{port labels}
+     \tikz@textfont
+     %\pgf@anchor@cla@s
+     %\pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.375ex}{s}}
+     \pgf@anchor@clagc@c
+     \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-0.375ex}{c$_0$}}
+     \pgf@anchor@clagc@pa
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{p$_0$}}
+     \pgf@anchor@clagc@ga
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{g$_0$}}
+     \pgf@anchor@clagc@ca
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{c$_1$}}
+     \pgf@anchor@clagc@pb
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{p$_1$}}
+     \pgf@anchor@clagc@gb
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{g$_1$}}
+     \pgf@anchor@clagc@cb
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{c$_2$}}
+     \pgf@anchor@clagc@pc
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{p$_2$}}
+     \pgf@anchor@clagc@gc
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{g$_2$}}
+     \pgf@anchor@clagc@cc
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{c$_3$}}
+     \pgf@anchor@clagc@gab
+     \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{0.0ex}{g$_{0,2}$}}
+     \pgf@anchor@clagc@pab
+     \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{0.0ex}{p$_{0,2}$}}
+     \endgroup
+  }
+}
+
+\pgfdeclareshape{addsubtractor} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{s}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{c}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{X}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{Y}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{F}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{ale} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{a}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.5\pgfutil@tempdima}
+  \anchor{b}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{m}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.375\pgfutil@tempdima}
+  \anchor{ia}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.5\pgfutil@tempdima}
+  \anchor{ib}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.625\pgfutil@tempdima}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{x}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.25\pgfutil@tempdima}
+  \anchor{y}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.25\pgfutil@tempdima}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{cig} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{c}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{m}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.5\pgfutil@tempdima}
+  \anchor{ia}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{ib}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.5\pgfutil@tempdima}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
+\pgfdeclareshape{nadder} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{xd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.7777\pgfutil@tempdima}
+  \anchor{xc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.5555\pgfutil@tempdima}
+  \anchor{xb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{xa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.1111\pgfutil@tempdima}
+  \anchor{yd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.1111\pgfutil@tempdima}
+  \anchor{yc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{yb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.5555\pgfutil@tempdima}
+  \anchor{ya}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.7777\pgfutil@tempdima}
+  \anchor{sd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{sc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.1111\pgfutil@tempdima}
+  \anchor{sb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.1111\pgfutil@tempdima}
+  \anchor{sa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{c}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+     \begingroup
+     \tikzset{port labels}
+     \tikz@textfont
+     \pgf@anchor@nadder@xa
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x$_0$}}
+     \pgf@anchor@nadder@xb
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x$_1$}}
+     \pgf@anchor@nadder@xc
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{$\ldots$}}
+     \pgf@anchor@nadder@xd
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x$_{n-1}$}}
+     \pgf@anchor@nadder@ya
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y$_0$}}
+     \pgf@anchor@nadder@yb
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y$_1$}}
+     \pgf@anchor@nadder@yc
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{$\ldots$}}
+     \pgf@anchor@nadder@yd
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y$_{n-1}$}}
+     \pgf@anchor@nadder@sa
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{s$_0$}}
+     \pgf@anchor@nadder@sb
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{s$_1$}}
+     \pgf@anchor@nadder@sc
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{$\ldots$}}
+     \pgf@anchor@nadder@sd
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{s$_{n-1}$}}
+     \pgf@anchor@nadder@c
+     \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{0.0ex}{c}}
+     \endgroup
+  }
+}
+\pgfdeclareshape{dadder} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{xd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.7777\pgfutil@tempdima}
+  \anchor{xc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.5555\pgfutil@tempdima}
+  \anchor{xb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{xa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.1111\pgfutil@tempdima}
+  \anchor{yd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.1111\pgfutil@tempdima}
+  \anchor{yc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{yb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.5555\pgfutil@tempdima}
+  \anchor{ya}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.7777\pgfutil@tempdima}
+  \anchor{sd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{sc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.1111\pgfutil@tempdima}
+  \anchor{sb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.1111\pgfutil@tempdima}
+  \anchor{sa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{co}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{ci}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+     \begingroup
+     \tikzset{port labels}
+     \tikz@textfont
+     \pgf@anchor@nadder@xa
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x$_0$}}
+     \pgf@anchor@nadder@xb
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x$_1$}}
+     \pgf@anchor@nadder@xc
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x$_2$}}
+     \pgf@anchor@nadder@xd
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{x$_3$}}
+     \pgf@anchor@nadder@ya
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y$_0$}}
+     \pgf@anchor@nadder@yb
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y$_1$}}
+     \pgf@anchor@nadder@yc
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y$_2$}}
+     \pgf@anchor@nadder@yd
+     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{y$_3$}}
+     \pgf@anchor@nadder@sa
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{s$_0$}}
+     \pgf@anchor@nadder@sb
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{s$_1$}}
+     \pgf@anchor@nadder@sc
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{s$_2$}}
+     \pgf@anchor@nadder@sd
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{s$_3$}}
+     \endgroup
+  }
+}
+
+\pgfdeclareshape{srlatch}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{S}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{R}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@srlatch@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@srlatch@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@srlatch@R
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{R}}
+
+    \pgf@anchor@srlatch@S
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{S}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{srlatchnand}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{S}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{R}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@srlatchnand@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@srlatchnand@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@srlatchnand@R
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{$\overline{\mbox{R}}$}}
+
+    \pgf@anchor@srlatchnand@S
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{$\overline{\mbox{S}}$}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{clsrlatch}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{S}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=0pt%
+  }
+  \anchor{R}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@clsrlatch@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@clsrlatch@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@clsrlatch@R
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{R}}
+
+    \pgf@anchor@clsrlatch@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@clsrlatch@S
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{S}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{cldlatch}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{D}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@cldlatch@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@cldlatch@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@cldlatch@D
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{D}}
+
+    \pgf@anchor@cldlatch@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{cldlatchmaster}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{D}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{ClkT}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1.4\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+
+    \pgf@anchor@cldlatchmaster@ClkT
+    \pgfutil@tempdima=\pgf@x
+    \advance\pgf@x by 0.2\pgfutil@tempdima
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.166667\pgfutil@tempdima}
+    % Angle (>) for clock input
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@cldlatchmaster@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@cldlatchmaster@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@cldlatchmaster@D
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{D}}
+
+    \pgf@anchor@cldlatchmaster@ClkT
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{srff}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{S}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=0pt%
+  }
+  \anchor{R}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@srff@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@srff@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@srff@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@srff@R
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{R}}
+
+    \pgf@anchor@srff@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@srff@S
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{S}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{dff}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{D}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@dff@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@dff@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@dff@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@dff@D
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{D}}
+
+    \pgf@anchor@dff@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{tff}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{T}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@tff@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@tff@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@tff@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@tff@T
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{T}}
+
+    \pgf@anchor@tff@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{jkff}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{K}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=0pt%
+  }
+  \anchor{J}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@jkff@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@jkff@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@jkff@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@jkff@K
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{J}}
+
+    \pgf@anchor@jkff@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@jkff@J
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{K}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{srffx}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{S}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=0pt%
+  }
+  \anchor{R}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  \anchor{PR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+  }
+  \anchor{CLR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+    \pgf@y=-\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@srffx@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@srffx@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@srffx@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@srffx@R
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{R}}
+
+    \pgf@anchor@srffx@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@srffx@S
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{S}}
+
+    \pgf@anchor@srffx@PR
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{PR}
+
+    \pgf@anchor@srffx@CLR
+    \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{CLR}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{tffx}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{T}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y
+  }
+  \anchor{PR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+  }
+  \anchor{CLR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+    \pgf@y=-\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@tffx@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@tffx@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@tffx@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@tffx@T
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{T}}
+
+    \pgf@anchor@tffx@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@tffx@PR
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{PR}
+
+    \pgf@anchor@tffx@CLR
+    \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{CLR}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{dffx}{
+  % The 'minimum width' and 'minimum height' keys, not the content, determine
+  % the size
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  % This is redundant, but makes some things easier:
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  % Inherit from rectangle
+  \inheritanchorborder[from=rectangle]
+
+  % Define same anchor a normal rectangle has
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+
+  % Define anchors for signal ports
+  \anchor{D}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{PR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+  }
+  \anchor{CLR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+    \pgf@y=-\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@dffx@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@dffx@D
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{D}}
+
+    \pgf@anchor@dffx@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@dffx@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@dffx@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@dffx@PR
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{PR}
+
+    \pgf@anchor@dffx@CLR
+    \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{CLR}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{dffxn}{
+  % The 'minimum width' and 'minimum height' keys, not the content, determine
+  % the size
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  % This is redundant, but makes some things easier:
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \saveddimen\radius{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=.5\pgf@xb%
+    \pgf@x=.5\pgf@yb%
+  }
+  % Inherit from rectangle
+  \inheritanchorborder[from=rectangle]
+
+  % Define same anchor a normal rectangle has
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+
+  % Define anchors for signal ports
+  \anchor{D}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{PR}{
+    \pgf@process{\northeast}%
+    \pgfutil@tempdima=\radius
+    \pgf@x=0pt%
+    \advance\pgf@y by 0.2\pgfutil@tempdima
+  }
+  \anchor{CLR}{
+    \pgf@process{\northeast}%
+    \pgfutil@tempdima=\radius
+    \pgf@x=0pt%
+    \pgf@y=-\pgf@y%
+    \advance\pgf@y by -0.2\pgfutil@tempdima
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    \pgfutil@tempdima=\radius
+    \pgf@anchor@dffx@PR
+    \advance\pgf@y by 0.1\pgfutil@tempdima
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1\pgfutil@tempdima}
+    \pgf@anchor@dffx@CLR
+    \advance\pgf@y by -0.1\pgfutil@tempdima
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1\pgfutil@tempdima}
+    % Angle (>) for clock input
+    \pgf@anchor@dffx@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@dffx@D
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{D}}
+
+    \pgf@anchor@dffx@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@dffx@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@dffxn@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-.75ex}{Clk}}
+
+    \pgf@anchor@dffx@PR
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{PR}
+
+    \pgf@anchor@dffx@CLR
+    \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{CLR}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{jkffx}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{Q}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Qn}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+  }
+  \anchor{K}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=0pt%
+  }
+  \anchor{J}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-0.5\pgf@y%
+  }
+  \anchor{PR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+  }
+  \anchor{CLR}{
+    \pgf@process{\northeast}%
+    \pgf@x=0pt%
+    \pgf@y=-\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    % Angle (>) for clock input
+    \pgf@anchor@jkffx@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@jkffx@Q
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Q}}
+
+    \pgf@anchor@jkffx@Qn
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{$\overline{\mbox{Q}}$}}
+
+    \pgf@anchor@jkffx@K
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{J}}
+
+    \pgf@anchor@jkffx@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@jkffx@J
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{K}}
+
+    \pgf@anchor@jkffx@PR
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{PR}
+
+    \pgf@anchor@jkffx@CLR
+    \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{CLR}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{regd}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \saveddimen\radius{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=.5\pgf@xb%
+    \pgf@x=.5\pgf@yb%
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{PR}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+    \pgfutil@tempdima=\radius
+    \advance\pgf@x by .2\pgfutil@tempdima
+  }
+  \anchor{Q0}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+    \pgfutil@tempdima=\radius
+    \advance\pgf@x by .2\pgfutil@tempdima
+  }
+  \anchor{CLR}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+    \pgfutil@tempdima=\radius
+    \advance\pgf@x by .2\pgfutil@tempdima
+  }
+  \anchor{LD}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=.5\pgf@y%
+  }
+  \anchor{Clk}{
+    \pgf@process{\northeast}%
+    \pgf@x=-1\pgf@x%
+    \pgf@y=-.5\pgf@y%
+  }
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    \pgfutil@tempdima=\radius
+    \pgf@anchor@regd@PR
+    \advance\pgf@x by -0.1\pgfutil@tempdima
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1\pgfutil@tempdima}
+    \pgf@anchor@regd@CLR
+    \advance\pgf@x by -0.1\pgfutil@tempdima
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1\pgfutil@tempdima}
+    % Angle (>) for clock input
+    \pgf@anchor@regd@Clk
+    \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@xc=\pgf@x \pgf@yc=\pgf@y
+    \pgfmathsetlength\pgf@x{1.6ex} % size depends on font size
+    \advance\pgf@ya by \pgf@x
+    \advance\pgf@xb by \pgf@x
+    \advance\pgf@yc by -\pgf@x
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xc}{\pgf@yc}}
+    \pgfclosepath
+
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@regd@PR
+    \advance\pgf@x by -0.2\pgfutil@tempdima
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Pr}}
+
+    \pgf@anchor@regd@CLR
+    \advance\pgf@x by -0.2\pgfutil@tempdima
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{Clr}}
+
+    \pgf@anchor@regd@Clk
+    \pgftext[left,base,at={\pgfpoint{\pgf@xb}{\pgf@yb}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{Clk}}
+
+    \pgf@anchor@regd@LD
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{LD}}
+    \endgroup
+  }
+}

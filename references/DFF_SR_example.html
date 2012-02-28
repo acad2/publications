@@ -1,0 +1,435 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="en">
+    <title>D flip-flops and shift register | TikZ example</title>
+    <!-- Framework CSS -->
+    <link rel="stylesheet" type="text/css" media="all" href="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/960.css">
+	<link rel="stylesheet" type="text/css" media="all" href="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/pygments_style.css">
+    <!-- Site-specific CSS -->
+    <link rel="stylesheet" href="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/base.css" type="text/css" media="screen">
+    <!--[if IE]><link rel="stylesheet" href="http://media.texample.net/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+
+</head><body id="code" class="level3  tikz tikz-examples">
+<!-- Start of #header -->
+<div id="header">
+    <div class="container_12">
+        <div class="grid_7">
+            <h2><a href="http://www.texample.net/"><img src="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/logo.png" alt="TeXample.net"></a></h2>
+            <p>ample resources for TeX users</p>
+        </div>
+        <div id="navigation-mini" class="grid_5">
+            <form action="/search/" id="cse-search-box">
+            <ul>
+                <li><a href="http://www.texample.net/about/">About</a></li>
+                <li><a href="http://www.texample.net/contact/">Contact</a></li>
+            <li>
+    <input name="cx" value="008133027829266614561:kc0rxma4h7e" type="hidden">
+    <input name="cof" value="FORID:9" type="hidden">
+    <input name="ie" value="UTF-8" type="hidden">
+    <input style="background: url(&quot;http://www.google.com/cse/intl/en/images/google_custom_search_watermark.gif&quot;) no-repeat scroll left center rgb(255, 255, 255);" name="q" size="20" type="text">
+    <input name="sa" value="Search" type="submit"></li>
+            </ul>
+<input value="www.texample.net/tikz/examples/d-flip-flops-and-shift-register/" name="siteurl" type="hidden"></form>
+<script type="text/javascript" src="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/brand"></script>
+
+</div>
+        <div class="clear">&nbsp;</div>    
+        
+        <!-- Start of #navigation-main -->
+        <div id="navigation-main" class="grid_12">
+            <ul>
+                <!--<li id="nav-home"><a href="/">home</a></li>-->
+                <li id="nav-tikz"><a href="http://www.texample.net/tikz/">Ti<i>k</i>Z</a></li>
+                <!--<li id="nav-beamer"><a href="/tikz/">Beamer</a></li>-->
+                <li id="nav-community"><a href="http://www.texample.net/community/">Community</a></li>
+                <!--<li id="nav-articles"><a href="/articles/">Articles</a></li>-->
+                <li id="nav-weblog"><a href="http://www.texample.net/weblog/">Weblog</a></li>
+<!--                <li id="nav-tools"><a 
+href="/tools/">Tools</a></li> -->
+            </ul>
+        </div>
+        <!-- End of #navigation-main -->
+        <div class="clear">&nbsp;</div>
+        
+    </div>
+    <!-- End of #header -->
+</div>
+<!-- END of #header-wrapper -->
+
+<div id="navigation-sec-wrapper">
+    <div class="container_12">
+        <div id="navigation-sec" class="grid_12">
+            
+<ul id="navigation-sub">
+<!--    <li id="nav-tikz-gallery"><a href="">gallery</a></li> -->
+    <li id="nav-tikz-examples"><a href="http://www.texample.net/tikz/examples/">Examples</a></li>
+    <li id="nav-tikz-resources"><a href="http://www.texample.net/tikz/resources/">Resources</a></li>
+    <li id="nav-tikz-builds"><a href="http://www.texample.net/tikz/builds/">Builds</a></li>
+</ul>
+
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+</div>
+
+
+<div class="wrapper">
+<div class="container_12">
+        <div class="grid_12 breadcrumbs">
+            
+            <a href="http://www.texample.net/">Home</a> 
+             &gt; <a href="http://www.texample.net/tikz/">Ti<i>k</i>Z</a> &gt; <a href="http://www.texample.net/tikz/examples/">Examples</a> &gt; <a href="http://www.texample.net/tikz/examples/all/">All</a> &gt; D flip-flops and shift register
+        </div>
+        <div class="clear">&nbsp;</div>
+</div>
+</div>
+
+<div id="content-wrapper">
+
+<div class="container_12">
+<div class="grid_9">
+
+
+<h1>Example: D flip-flops and shift&nbsp;register</h1>
+<div class="pubinfo">
+Published 2009-08-01 |
+ Author:
+<a href="http://www.texample.net/tikz/examples/author/martin-scharrer/">Martin Scharrer</a>
+
+</div>
+
+<div class="example-description">
+<p>Example of a custom node shape for drawing  D flip-flops. The shape is used to draw a serial shift
+register.</p>
+
+</div>
+<p>Download as: [<a href="http://media.texample.net/tikz/examples/PDF/d-flip-flops-and-shift-register.pdf">PDF</a>]
+[<a href="http://media.texample.net/tikz/examples/TEX/d-flip-flops-and-shift-register.tex">TEX</a>]
+
+</p>
+<div class="galleryimage">
+<a href="http://media.texample.net/tikz/examples/PDF/d-flip-flops-and-shift-register.pdf"><img src="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/d-flip-flops-and-shift-register.png" alt="D flip-flops and shift register"></a>
+</div>
+
+<div id="example">
+<div class="highlight"><pre><span class="c">% D flip-flops (DFFs) and shift register</span>
+<span class="c">% Author: Martin Scharrer</span>
+<span class="k">\documentclass</span><span class="na">[a4paper,landscape]</span><span class="nb">{</span>article<span class="nb">}</span>
+
+<span class="k">\usepackage</span><span class="nb">{</span>pgf,tikz<span class="nb">}</span>
+<span class="k">\usetikzlibrary</span><span class="nb">{</span>calc,arrows<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="nb">{</span>amsmath<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="na">[left=1cm,right=1cm]</span><span class="nb">{</span>geometry<span class="nb">}</span>
+<span class="k">\pagestyle</span><span class="nb">{</span>empty<span class="nb">}</span>
+
+<span class="k">\makeatletter</span>
+
+<span class="c">% Data Flip Flip (DFF) shape</span>
+<span class="k">\pgfdeclareshape</span><span class="nb">{</span>dff<span class="nb">}{</span>
+  <span class="c">% The 'minimum width' and 'minimum height' keys, not the content, determine</span>
+  <span class="c">% the size</span>
+  <span class="k">\savedanchor\northeast</span><span class="nb">{</span><span class="c">%</span>
+    <span class="k">\pgfmathsetlength\pgf</span>@x<span class="nb">{</span><span class="k">\pgfshapeminwidth</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgfmathsetlength\pgf</span>@y<span class="nb">{</span><span class="k">\pgfshapeminheight</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@x=0.5<span class="k">\pgf</span>@x
+    <span class="k">\pgf</span>@y=0.5<span class="k">\pgf</span>@y
+  <span class="nb">}</span>
+  <span class="c">% This is redundant, but makes some things easier:</span>
+  <span class="k">\savedanchor\southwest</span><span class="nb">{</span><span class="c">%</span>
+    <span class="k">\pgfmathsetlength\pgf</span>@x<span class="nb">{</span><span class="k">\pgfshapeminwidth</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgfmathsetlength\pgf</span>@y<span class="nb">{</span><span class="k">\pgfshapeminheight</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@x=-0.5<span class="k">\pgf</span>@x
+    <span class="k">\pgf</span>@y=-0.5<span class="k">\pgf</span>@y
+  <span class="nb">}</span>
+  <span class="c">% Inherit from rectangle</span>
+  <span class="k">\inheritanchorborder</span><span class="na">[from=rectangle]</span>
+
+  <span class="c">% Define same anchor a normal rectangle has</span>
+  <span class="k">\anchor</span><span class="nb">{</span>center<span class="nb">}{</span><span class="k">\pgfpointorigin</span><span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>north<span class="nb">}{</span><span class="k">\northeast</span> <span class="k">\pgf</span>@x=0pt<span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>east<span class="nb">}{</span><span class="k">\northeast</span> <span class="k">\pgf</span>@y=0pt<span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>south<span class="nb">}{</span><span class="k">\southwest</span> <span class="k">\pgf</span>@x=0pt<span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>west<span class="nb">}{</span><span class="k">\southwest</span> <span class="k">\pgf</span>@y=0pt<span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>north east<span class="nb">}{</span><span class="k">\northeast</span><span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>north west<span class="nb">}{</span><span class="k">\northeast</span> <span class="k">\pgf</span>@x=-<span class="k">\pgf</span>@x<span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>south west<span class="nb">}{</span><span class="k">\southwest</span><span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>south east<span class="nb">}{</span><span class="k">\southwest</span> <span class="k">\pgf</span>@x=-<span class="k">\pgf</span>@x<span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>text<span class="nb">}{</span>
+    <span class="k">\pgfpointorigin</span>
+    <span class="k">\advance\pgf</span>@x by -.5<span class="k">\wd\pgfnodeparttextbox</span><span class="c">%</span>
+    <span class="k">\advance\pgf</span>@y by -.5<span class="k">\ht\pgfnodeparttextbox</span><span class="c">%</span>
+    <span class="k">\advance\pgf</span>@y by +.5<span class="k">\dp\pgfnodeparttextbox</span><span class="c">%</span>
+  <span class="nb">}</span>
+
+  <span class="c">% Define anchors for signal ports</span>
+  <span class="k">\anchor</span><span class="nb">{</span>D<span class="nb">}{</span>
+    <span class="k">\pgf</span>@process<span class="nb">{</span><span class="k">\northeast</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@x=-1<span class="k">\pgf</span>@x<span class="c">%</span>
+    <span class="k">\pgf</span>@y=.5<span class="k">\pgf</span>@y<span class="c">%</span>
+  <span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>CLK<span class="nb">}{</span>
+    <span class="k">\pgf</span>@process<span class="nb">{</span><span class="k">\northeast</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@x=-1<span class="k">\pgf</span>@x<span class="c">%</span>
+    <span class="k">\pgf</span>@y=-.66666<span class="k">\pgf</span>@y<span class="c">%</span>
+  <span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>CE<span class="nb">}{</span>
+    <span class="k">\pgf</span>@process<span class="nb">{</span><span class="k">\northeast</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@x=-1<span class="k">\pgf</span>@x<span class="c">%</span>
+    <span class="k">\pgf</span>@y=-0.33333<span class="k">\pgf</span>@y<span class="c">%</span>
+  <span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>Q<span class="nb">}{</span>
+    <span class="k">\pgf</span>@process<span class="nb">{</span><span class="k">\northeast</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@y=.5<span class="k">\pgf</span>@y<span class="c">%</span>
+  <span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>Qn<span class="nb">}{</span>
+    <span class="k">\pgf</span>@process<span class="nb">{</span><span class="k">\northeast</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@y=-.5<span class="k">\pgf</span>@y<span class="c">%</span>
+  <span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>R<span class="nb">}{</span>
+    <span class="k">\pgf</span>@process<span class="nb">{</span><span class="k">\northeast</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@x=0pt<span class="c">%</span>
+  <span class="nb">}</span>
+  <span class="k">\anchor</span><span class="nb">{</span>S<span class="nb">}{</span>
+    <span class="k">\pgf</span>@process<span class="nb">{</span><span class="k">\northeast</span><span class="nb">}</span><span class="c">%</span>
+    <span class="k">\pgf</span>@x=0pt<span class="c">%</span>
+    <span class="k">\pgf</span>@y=-<span class="k">\pgf</span>@y<span class="c">%</span>
+  <span class="nb">}</span>
+  <span class="c">% Draw the rectangle box and the port labels</span>
+  <span class="k">\backgroundpath</span><span class="nb">{</span>
+    <span class="c">% Rectangle box</span>
+    <span class="k">\pgfpathrectanglecorners</span><span class="nb">{</span><span class="k">\southwest</span><span class="nb">}{</span><span class="k">\northeast</span><span class="nb">}</span>
+    <span class="c">% Angle (&gt;) for clock input</span>
+    <span class="k">\pgf</span>@anchor@dff@CLK
+    <span class="k">\pgf</span>@xa=<span class="k">\pgf</span>@x <span class="k">\pgf</span>@ya=<span class="k">\pgf</span>@y
+    <span class="k">\pgf</span>@xb=<span class="k">\pgf</span>@x <span class="k">\pgf</span>@yb=<span class="k">\pgf</span>@y
+    <span class="k">\pgf</span>@xc=<span class="k">\pgf</span>@x <span class="k">\pgf</span>@yc=<span class="k">\pgf</span>@y
+    <span class="k">\pgfmathsetlength\pgf</span>@x<span class="nb">{</span>1.6ex<span class="nb">}</span> <span class="c">% size depends on font size</span>
+    <span class="k">\advance\pgf</span>@ya by <span class="k">\pgf</span>@x
+    <span class="k">\advance\pgf</span>@xb by <span class="k">\pgf</span>@x
+    <span class="k">\advance\pgf</span>@yc by -<span class="k">\pgf</span>@x
+    <span class="k">\pgfpathmoveto</span><span class="nb">{</span><span class="k">\pgfpoint</span><span class="nb">{</span><span class="k">\pgf</span>@xa<span class="nb">}{</span><span class="k">\pgf</span>@ya<span class="nb">}}</span>
+    <span class="k">\pgfpathlineto</span><span class="nb">{</span><span class="k">\pgfpoint</span><span class="nb">{</span><span class="k">\pgf</span>@xb<span class="nb">}{</span><span class="k">\pgf</span>@yb<span class="nb">}}</span>
+    <span class="k">\pgfpathlineto</span><span class="nb">{</span><span class="k">\pgfpoint</span><span class="nb">{</span><span class="k">\pgf</span>@xc<span class="nb">}{</span><span class="k">\pgf</span>@yc<span class="nb">}}</span>
+    <span class="k">\pgfclosepath</span>
+
+    <span class="c">% Draw port labels</span>
+    <span class="k">\begingroup</span>
+    <span class="k">\tikzset</span><span class="nb">{</span>flip flop/port labels<span class="nb">}</span> <span class="c">% Use font from this style</span>
+    <span class="k">\tikz</span>@textfont
+
+    <span class="k">\pgf</span>@anchor@dff@D
+    <span class="k">\pgftext</span><span class="na">[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]</span><span class="nb">{</span><span class="k">\raisebox</span><span class="nb">{</span>-0.75ex<span class="nb">}{</span>D<span class="nb">}}</span>
+
+    <span class="k">\pgf</span>@anchor@dff@CE
+    <span class="k">\pgftext</span><span class="na">[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]</span><span class="nb">{</span><span class="k">\raisebox</span><span class="nb">{</span>-0.75ex<span class="nb">}{</span>CE<span class="nb">}}</span>
+
+    <span class="k">\pgf</span>@anchor@dff@Q
+    <span class="k">\pgftext</span><span class="na">[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]</span><span class="nb">{</span><span class="k">\raisebox</span><span class="nb">{</span>-.75ex<span class="nb">}{</span>Q<span class="nb">}}</span>
+
+    <span class="k">\pgf</span>@anchor@dff@Qn
+    <span class="k">\pgftext</span><span class="na">[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]</span><span class="nb">{</span><span class="k">\raisebox</span><span class="nb">{</span>-.75ex<span class="nb">}{</span><span class="s">$</span><span class="nv">\overline</span><span class="nb">{</span><span class="nv">\mbox</span><span class="nb">{Q}}</span><span class="s">$</span><span class="nb">}}</span>
+
+    <span class="k">\pgf</span>@anchor@dff@R
+    <span class="k">\pgftext</span><span class="na">[top,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]</span><span class="nb">{</span>R<span class="nb">}</span>
+
+    <span class="k">\pgf</span>@anchor@dff@S
+    <span class="k">\pgftext</span><span class="na">[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]</span><span class="nb">{</span>S<span class="nb">}</span>
+    <span class="k">\endgroup</span>
+  <span class="nb">}</span>
+<span class="nb">}</span>
+
+<span class="c">% Key to add font macros to the current font</span>
+<span class="k">\tikzset</span><span class="nb">{</span>add font/.code=<span class="nb">{</span><span class="k">\expandafter\def\expandafter\tikz</span>@textfont<span class="k">\expandafter</span><span class="nb">{</span><span class="k">\tikz</span>@textfont#1<span class="nb">}}}</span> 
+
+<span class="c">% Define default style for this node</span>
+<span class="k">\tikzset</span><span class="nb">{</span>flip flop/port labels/.style=<span class="nb">{</span>font=<span class="k">\sffamily\scriptsize</span><span class="nb">}}</span>
+<span class="k">\tikzset</span><span class="nb">{</span>every dff node/.style=<span class="nb">{</span>draw,minimum width=2cm,minimum 
+height=2.828427125cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add 
+font=<span class="k">\sffamily</span><span class="nb">}}</span>
+
+<span class="k">\makeatother</span>
+
+<span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+
+<span class="k">\begin</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>[font=<span class="k">\sffamily</span>,&gt;=triangle 45]
+  <span class="k">\def\N</span><span class="nb">{</span>7<span class="nb">}</span>  <span class="c">% Number of Flip-Flops minus one</span>
+
+  <span class="c">% Place FFs</span>
+  <span class="k">\foreach</span> <span class="k">\m</span> in <span class="nb">{</span>0,...,<span class="k">\N</span><span class="nb">}</span>
+    <span class="k">\node</span> [shape=dff] (DFF<span class="k">\m</span>) at (<span class="s">$</span><span class="nb"> </span><span class="m">3</span><span class="o">*(</span><span class="nv">\m</span><span class="nb">,</span><span class="m">0</span><span class="o">)</span><span class="nb"> </span><span class="s">$</span>) <span class="nb">{</span>Bit <span class="k">\#\m</span><span class="nb">}</span>;
+
+  <span class="c">% Connect FFs (Q1 with D1, etc.)</span>
+  <span class="k">\def\p</span><span class="nb">{</span>0<span class="nb">}</span>  <span class="c">% Used to save the previous number</span>
+  <span class="k">\foreach</span> <span class="k">\m</span> in <span class="nb">{</span>1,...,<span class="k">\N</span><span class="nb">}</span> <span class="nb">{</span> <span class="c">% Note that it starts with 1, not 0</span>
+    <span class="k">\draw</span> [-&gt;] (DFF<span class="k">\p</span>.Q) -- (DFF<span class="k">\m</span>.D);
+    <span class="k">\global\let\p\m</span>
+  <span class="nb">}</span>
+
+  <span class="c">% Connect and label data in- and output port</span>
+  <span class="k">\draw</span> [&lt;-] (DFF0.D) -- +(-1,0) node [anchor=east] <span class="nb">{</span>input<span class="nb">}</span> ;
+  <span class="k">\draw</span> [-&gt;] (DFF<span class="k">\N</span>.Q) -- +(1,0) node [anchor=west] <span class="nb">{</span>output<span class="nb">}</span>;
+
+  <span class="c">% 'Reset' port label</span>
+  <span class="k">\path</span> (DFF0) +(-2cm,+2cm) coordinate (temp)
+    node [anchor=east] <span class="nb">{</span>reset<span class="nb">}</span>;
+  <span class="c">% Connect resets</span>
+  <span class="k">\foreach</span> <span class="k">\m</span> in <span class="nb">{</span>0,...,<span class="k">\N</span><span class="nb">}</span>
+    <span class="k">\draw</span> [-&gt;] (temp) -| (DFF<span class="k">\m</span>.R);
+
+  <span class="c">% 'Set' port label</span>
+  <span class="k">\path</span> (DFF0) +(-2cm,-2cm) coordinate (temp)
+    node [anchor=east] <span class="nb">{</span>set<span class="nb">}</span>;
+  <span class="c">% Connect sets</span>
+  <span class="k">\foreach</span> <span class="k">\m</span> in <span class="nb">{</span>0,...,<span class="k">\N</span><span class="nb">}</span>
+    <span class="k">\draw</span> [-&gt;] (temp) -| (DFF<span class="k">\m</span>.S);
+
+  <span class="c">% Clock port label</span>
+  <span class="k">\path</span> (DFF0) +(-2cm,-2.5cm) coordinate (temp)
+    node [anchor=east] <span class="nb">{</span>clock<span class="nb">}</span>;
+  <span class="k">\foreach</span> <span class="k">\m</span> in <span class="nb">{</span>0,...,<span class="k">\N</span><span class="nb">}</span>
+    <span class="k">\draw</span> [-&gt;] (temp) -| (<span class="s">$</span><span class="nb"> </span><span class="o">(</span><span class="nb">DFF</span><span class="nv">\m</span><span class="nb">.CLK</span><span class="o">)</span><span class="nb"> </span><span class="o">+</span><span class="nb"> </span><span class="o">(-</span><span class="m">5</span><span class="nb">mm,</span><span class="m">0</span><span class="o">)</span><span class="nb"> </span><span class="s">$</span>) --(DFF<span class="k">\m</span>.CLK);
+
+  <span class="c">% Clock port label</span>
+  <span class="k">\path</span> (DFF0) +(-2cm,-3cm) coordinate (temp)
+    node [anchor=east] <span class="nb">{</span>clock enable<span class="nb">}</span>;
+  <span class="k">\foreach</span> <span class="k">\m</span> in <span class="nb">{</span>0,...,<span class="k">\N</span><span class="nb">}</span>
+    <span class="k">\draw</span> [-&gt;] (temp) -| (<span class="s">$</span><span class="nb"> </span><span class="o">(</span><span class="nb">DFF</span><span class="nv">\m</span><span class="nb">.CE</span><span class="o">)</span><span class="nb"> </span><span class="o">+</span><span class="nb"> </span><span class="o">(-</span><span class="m">7</span><span class="nb">.</span><span class="m">5</span><span class="nb">mm,</span><span class="m">0</span><span class="o">)</span><span class="nb"> </span><span class="s">$</span>) --(DFF<span class="k">\m</span>.CE);
+<span class="k">\end</span><span class="nb">{</span>tikzpicture<span class="nb">}</span>
+
+<span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
+</pre></div>
+
+</div>
+
+
+
+<div id="commentsection">
+<h2>Comments</h2>
+
+
+
+<ul id="comments">
+
+<li>
+<dt id="c1457"><a href="#c1457">#1</a> Will, June 16, 2010 at 1:01 a.m.</dt>
+    <dd><p>Thanks for the example!</p>
+<p>I have a question though.</p>
+<p>When computing the location of the 'text' anchor, you use pgfnodeparttextbox.  The PGF manual says that this should be avoided:</p>
+<p>"The problem is that the box pgfnodeparttextbox will most likely not 
+have the correct size when the anchor is computed. After all, the anchor
+ position might be recomputed at a time when several other nodes have 
+been created."</p>
+<p>Taken from page 483 of Manual 2.0</p>
+<p>The code above seems to work fine, however, and I don't know any good alternative.</p>
+<p>Does anyone else know a good alternative which achieves the same functionality but without pgfnodeparttextbox?</p>
+<p>Thanks.</p></dd></li>
+
+</ul>
+
+
+<p>Comments for this entry are closed.</p> 
+
+
+</div>
+
+</div>
+
+<div class="grid_3">
+
+<div class="colentry linklist">
+<h5>Navigation</h5>
+<ul class="codemenu">
+<li><a href="http://www.texample.net/tikz/examples/">Gallery main page</a></li>
+<li><a href="http://www.texample.net/tikz/examples/about/">About the gallery</a></li>
+<li><a href="http://www.texample.net/tikz/examples/contribute/">Contribute</a></li>
+<li><a href="http://www.texample.net/tikz/examples/all/">Show all examples</a></li>
+<!--<li><a href="/pgftikzexamples/download/">Download</a></li>-->
+</ul>
+
+<p class="feedlink"><a href="http://www.texample.net/feeds/tikz/examples/">Subscribe to the Ti<i>k</i>Z examples RSS feed</a></p>
+
+</div>
+
+
+
+<p>There are currently <a href="#commentsection">one comments</a> on this entry.</p>
+
+
+<div class="tag-list">
+
+<h5>Features</h5>
+<ul>
+
+    <li><a href="http://www.texample.net/tikz/examples/feature/foreach/">Foreach<span class="count">59</span></a></li>
+
+    <li><a href="http://www.texample.net/tikz/examples/feature/nodes-and-shapes/">Nodes and shapes<span class="count">8</span></a></li>
+
+</ul>
+
+
+<h5>Tags</h5>
+<ul>
+
+    <li><a href="http://www.texample.net/tikz/examples/tag/customization/">Customization<span class="count">12</span></a></li>
+
+    <li><a href="http://www.texample.net/tikz/examples/tag/diagrams/">Diagrams<span class="count">40</span></a></li>
+
+</ul>
+
+
+<h5>Technical areas</h5>
+<ul>
+
+    <li><a href="http://www.texample.net/tikz/examples/area/electrical-engineering/">Electrical engineering<span class="count">21</span></a></li>
+
+</ul>
+
+
+
+</div>
+
+<p></p>
+<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by/2.5/"><img alt="Creative Commons License" style="border-width: 0pt;" src="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/somerights20.png"></a><!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <Work rdf:about="">
+        <license rdf:resource="http://creativecommons.org/licenses/by/2.5/" />
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    </Work>
+    <License rdf:about="http://creativecommons.org/licenses/by/2.5/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/></License></rdf:RDF> -->
+
+
+
+</div>
+
+<div class="clear">&nbsp;</div>
+</div><!-- container -->
+
+
+</div>
+
+<!-- footer -->
+<div id="footer" class="container_12">
+    <div class="grid_12">
+        <a href="http://www.texample.net/about/">about</a> | <a href="http://www.texample.net/contact/">contact</a> |
+        Hosted by <a href="http://www.webfaction.com/?affiliate=fauske">Webfaction</a>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>
+<!-- end of footer -->
+
+
+
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script src="D%20flip-flops%20and%20shift%20register%20%7C%20TikZ%20example_bestanden/ga.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-3069412-4");
+        pageTracker._trackPageview();
+    </script>
+    
+</body></html>

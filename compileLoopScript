@@ -1,0 +1,8 @@
+cd "/home/willem/backups/DEP/"
+while true
+do
+	sleep 40
+	makeindex cursus.idx
+	pdflatex -interaction nonstopmode cursus.tex
+	echo "$IFS"
+done

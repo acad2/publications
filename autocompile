@@ -1,0 +1,7 @@
+while true
+do
+	bibtex cursus.aux
+	makeindex cursus.idx
+	pdflatex -interaction nonstopmode cursus.tex
+	sleep 25
+done

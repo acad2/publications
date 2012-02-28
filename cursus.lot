@@ -1,0 +1,21 @@
+\select@language {dutch}
+\contentsline {xpart}{Digitaal Ontwerp en Fysische Limieten}{3}
+\contentsline {xpart}{Combinatorische en Sequenti\"ele Schakelingen}{5}
+\addvspace {10\p@ }
+\contentsline {xchapter}{Sequenti\"ele Schakelingen (Schakelingen met geheugen)}{5}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Moore-machine}}}{21}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Mealy-machine}}}{21}
+\contentsline {table}{\numberline {1.1}{\ignorespaces Toestandstabellen van de leidende voorbeelden.}}{21}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Moore-machine}}}{24}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Mealy-machine}}}{24}
+\contentsline {table}{\numberline {1.2}{\ignorespaces Geminimaliseerde toestandstabellen van de leidende voorbeelden.}}{24}
+\contentsline {xpart}{Processoren}{27}
+\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{29}
+\addvspace {10\p@ }
+\contentsline {xchapter}{VHDL}{29}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Scheidingstekens in VHDL.}}{30}
+\contentsline {table}{\numberline {2.2}{\ignorespaces Gereserveerde woorden in VHDL.}}{31}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Overzicht van belangrijke types in VHDL.}}}{32}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Overzicht van belangrijke afgeleide types in VHDL.}}}{32}
+\contentsline {table}{\numberline {2.3}{\ignorespaces Overzicht van belangrijke types en afgeleide types in VHDL.}}{32}
+\contentsline {xpart}{Appendices}{37}

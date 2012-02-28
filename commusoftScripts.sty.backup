@@ -1,0 +1,247 @@
+\ProvidesPackage{commusoftScripts}
+\RequirePackage{float}
+\RequirePackage{tikz}
+\usetikzlibrary{patterns}
+\tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
+\newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
+
+\newcommand\termen{\@ifstar{\@dblarg{\@termens}}{\@termen}}
+\def\@termens[#1]#2{\termenlayout{#2}\index{#1@#2}}
+\newcommand\@termen[2][]{%
+  \if\relax\detokenize{#1}\relax
+    \termenlayout{#2}%
+    \begingroup
+    \@splitword#2\@nil%
+    \uppercase\expandafter{%
+      \expandafter\def\expandafter\@initial\expandafter{\@first}}%
+    \toks0=\expandafter{\@initial}%
+    \toks2=\expandafter{\@rest}%
+    \edef\x{\endgroup\noexpand\index{\the\toks0 \the\toks2 }}\x
+  \else
+    \termenlayout{#2}\index{#1}
+  \fi
+}
+\def\@splitword#1#2\@nil{\def\@first{#1}\def\@rest{#2}}
+\makeatletter
+
+%\newcommand{\termen}[1]{\index{#1}\termenlayout{#1}}
+\newcommand{\bigoh}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
+\newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=13.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
+\newcommand{\commusoftQuality}[1]{
+\begin{figure}[b!]
+\centering
+\begin{tikzpicture}[scale=0.5]
+\filldraw[draw=black,fill=black!35,very thick] (-1.5 cm,0) arc (180:90:1.5cm) -- (8 cm,1.5 cm) arc (90:0:1.5 cm) -- (9.5 cm,-3.5 cm) -- (-1.5 cm,-3.5 cm) -- cycle;
+\foreach\x in {1,...,#1} {
+  \node[star,draw=black,fill=black!50,minimum width=0.8 cm, minimum height=0.8 cm, star point ratio=2,thick] (A\x) at (2*\x-2,1.5) {};
+  \draw (A\x.base) -- (A\x.outer point 1);
+  \draw (A\x.base) -- (A\x.outer point 2);
+  \draw (A\x.base) -- (A\x.outer point 3);
+  \draw (A\x.base) -- (A\x.outer point 4);
+  \draw (A\x.base) -- (A\x.outer point 5);
+}
+\foreach\x in {#1,...,4} {
+  \node[star,draw=black,fill=white,minimum width=0.8 cm, minimum height=0.8 cm, star point ratio=2,thick] (A\x) at (2*\x,1.5) {};
+}
+\foreach\x/\t in {1/bad,2/poor,3/average,4/good,5/excellent} {
+  \node[scale=0.75,anchor=base] (T\x) at (2*\x-2,0.4) {\small{\t}};
+}
+\node (QR) at (4,-1) {\large{\textit{$\mathcal{Q}$uality$\mathcal{R}$eference: }#1}};
+\node[anchor=south west,scale=0.75,text width=6 cm] (CSSA) at (-1.5,-3.5) {\small{KommuSoft Quality Standards at}\\\small{\texttt{http://www.4shared.com/??}}};
+\end{tikzpicture}
+\end{figure}
+}
+\newcommand{\kkaartb}[5]{
+\begin{scope}[xshift=#1 cm, yshift=#2 cm]
+\draw[thick] (0,0) -- ++(1,0) -- ++(0,1) -- ++(-1,0) -- cycle;
+\draw[thick] (0,0.5) -- ++(1,0);
+\draw[thick] (0.5,0) -- ++(0,1);
+\draw[thick] (0,1) -- (-0.25,1.25);
+\draw (-0.15,1.15) node[anchor=south east]{#3};
+\foreach \va/\vb in {#4} {
+  \draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{\va} (-0.125,0.5);
+  \draw[thick] (0.5,1.125) to node[sloped,above]{\vb} (1,1.125);
+}
+\foreach \va/\vb/\vc/\vd in {#5} {
+  \draw (0.25,0.25) node{\vc};
+  \draw (0.25,0.75) node{\va};
+  \draw (0.75,0.25) node{\vd};
+  \draw (0.75,0.75) node{\vb};
+}
+\end{scope}
+}
+\newcommand{\kkaartc}[5]{
+\begin{scope}[xshift=#1 cm, yshift=#2 cm]
+\draw[thick] (0,0) -- ++(1,0) -- ++(0,2) -- ++(-1,0) -- cycle;
+\draw[thick] (0,2) -- (-0.25,2.25);
+\draw (-0.15,2.15) node[anchor=south east]{#3};
+\draw[thick] (0,0.5) -- ++(1,0);
+\draw[thick] (0,1) -- ++(1,0);
+\draw[thick] (0,1.5) -- ++(1,0);
+\draw[thick] (0.5,0) -- ++(0,2);
+\draw[thick] (0,2) -- (-0.25,2.25);
+\foreach \va/\vb/\vc in {#4} {
+  \draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{\va} (-0.125,1);
+  \draw[thick] (1.125,0.5) to node[sloped,above,rotate=180]{\vb} (1.125,1.5);
+  \draw[thick] (0.5,2.125) to node[sloped,above]{\vc} (1,2.125);
+}
+\foreach \va/\vb/\vc/\vd/\ve/\vf/\vg/\vh in {#5} {
+  \draw (0.25,1.25) node{\vc};
+  \draw (0.25,1.75) node{\va};
+  \draw (0.75,1.25) node{\vd};
+  \draw (0.75,1.75) node{\vb};
+  \draw (0.25,0.25) node{\ve};
+  \draw (0.25,0.75) node{\vg};
+  \draw (0.75,0.25) node{\vf};
+  \draw (0.75,0.75) node{\vh};
+}
+\end{scope}
+}
+\newcommand{\kkaartd}[6][1.00]{
+\begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
+\draw[thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
+\draw[thick] (0,2) -- (-0.25,2.25);
+\draw (-0.15,2.15) node[anchor=south east, scale=#1]{#4};
+\draw[thick] (0,0.5) -- ++(2,0);
+\draw[thick] (0,1) -- ++(2,0);
+\draw[thick] (0,1.5) -- ++(2,0);
+\draw[thick] (0.5,0) -- ++(0,2);
+\draw[thick] (1,0) -- ++(0,2);
+\draw[thick] (1.5,0) -- ++(0,2);
+\draw[thick] (0,2) -- (-0.25,2.25);
+\foreach \va/\vb/\vc/\vd in {#5} {
+  \draw[thick] (-0.125,0) to node[sloped,below,rotate=180,scale=#1]{\va} (-0.125,1);
+  \draw[thick] (2.125,0.5) to node[sloped,above,rotate=180,scale=#1]{\vb} (2.125,1.5);
+  \draw[thick] (0.5,2.125) to node[sloped,above,scale=#1]{\vc} (1.5,2.125);
+  \draw[thick] (1,-0.125) to node[sloped,below,scale=#1]{\vd} (2,-0.125);
+}
+\foreach \va/\vb/\vc/\vd/\ve/\vf/\vg/\vh/\vi/\vj/\vk/\vl/\vm/\vn/\vo/\vp in {#6} {
+  \draw (0.25,1.75) node[scale=#1]{\va};
+  \draw (0.75,1.75) node[scale=#1]{\vc};
+  \draw (1.25,1.75) node[scale=#1]{\vd};
+  \draw (1.75,1.75) node[scale=#1]{\vb};
+  \draw (0.25,1.25) node[scale=#1]{\ve};
+  \draw (0.75,1.25) node[scale=#1]{\vg};
+  \draw (1.25,1.25) node[scale=#1]{\vh};
+  \draw (1.75,1.25) node[scale=#1]{\vf};
+  \draw (0.25,0.75) node[scale=#1]{\vm};
+  \draw (0.75,0.75) node[scale=#1]{\vo};
+  \draw (1.25,0.75) node[scale=#1]{\vp};
+  \draw (1.75,0.75) node[scale=#1]{\vn};
+  \draw (0.25,0.25) node[scale=#1]{\vi};
+  \draw (0.75,0.25) node[scale=#1]{\vk};
+  \draw (1.25,0.25) node[scale=#1]{\vl};
+  \draw (1.75,0.25) node[scale=#1]{\vj};
+}
+\end{scope}
+}
+\newcommand{\kkaartdmarks}[5][1.00]{
+\begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,2-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,2-0.5*\yf-0.5+\tt);
+}
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \draw[\ss,rounded corners,black!80] (0.5*\xo+\tt,2-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,2-0.5*\yf-0.5+\tt);
+}
+%x-wall
+\foreach \ss/\xo/\xf/\de/\tt in {#5} {
+  %lower
+  \draw[\ss,rounded corners,black!80] (0.5*\xo+\tt,-0.2) -- ++(0,0.1+0.5*\de-\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,-0.1-0.5*\de+\tt);
+}
+\end{scope}
+}
+\newcommand{\kkaarte}[5]{
+\begin{scope}[xshift=#1 cm, yshift=#2 cm]
+\draw[thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
+\draw[thick] (2.5,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
+\draw[thick] (0,2) -- (-0.25,2.25);
+\draw (-0.15,2.15) node[anchor=south east]{#3};
+\draw[thick] (0,0.5) -- ++(2,0);
+\draw[thick] (0,1) -- ++(2,0);
+\draw[thick] (0,1.5) -- ++(2,0);
+\draw[thick] (2.5,0.5) -- ++(2,0);
+\draw[thick] (2.5,1) -- ++(2,0);
+\draw[thick] (2.5,1.5) -- ++(2,0);
+\draw[thick] (0.5,0) -- ++(0,2);
+\draw[thick] (1,0) -- ++(0,2);
+\draw[thick] (1.5,0) -- ++(0,2);
+\draw[thick] (3,0) -- ++(0,2);
+\draw[thick] (3.5,0) -- ++(0,2);
+\draw[thick] (4,0) -- ++(0,2);
+\draw[thick] (0,2) -- (-0.25,2.25);
+\foreach \va/\vb/\vc/\vd/\ve in {#4} {
+  \draw[thick] (2.5,2.625) to node[sloped,above]{\va} (4.5,2.625);
+  \draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{\vb} (-0.125,1);
+  \draw[thick] (4.625,0.5) to node[sloped,above,rotate=180]{\vc} (4.625,1.5);
+  \draw[thick] (0.5,2.125) to node[sloped,above]{\vd} (1.5,2.125);
+  \draw[thick] (3,2.125) to node[sloped,above]{\vd} (4,2.125);
+  \draw[thick] (1,-0.125) to node[sloped,below]{\ve} (2,-0.125);
+  \draw[thick] (2.5,-0.125) to node[sloped,below]{\ve} (3.5,-0.125);
+}
+\foreach \va/\vb/\vc/\vd/\ve/\vf/\vg/\vh/\vi/\vj/\vk/\vl/\vm/\vn/\vo/\vp/\vq/\vr/\vs/\vt/\vu/\vv/\vw/\vx/\vy/\vz/\vaa/\vab/\vac/\vad/\vae/\vaf in {#5} {
+  \draw (0.25,1.75) node{\va};
+  \draw (0.75,1.75) node{\vc};
+  \draw (1.25,1.75) node{\vd};
+  \draw (1.75,1.75) node{\vb};
+  \draw (0.25,1.25) node{\ve};
+  \draw (0.75,1.25) node{\vg};
+  \draw (1.25,1.25) node{\vh};
+  \draw (1.75,1.25) node{\vf};
+  \draw (0.25,0.75) node{\vm};
+  \draw (0.75,0.75) node{\vo};
+  \draw (1.25,0.75) node{\vp};
+  \draw (1.75,0.75) node{\vn};
+  \draw (0.25,0.25) node{\vi};
+  \draw (0.75,0.25) node{\vk};
+  \draw (1.25,0.25) node{\vl};
+  \draw (1.75,0.25) node{\vj};
+
+  \draw (4.25,1.75) node{\vq};
+  \draw (3.75,1.75) node{\vs};
+  \draw (3.25,1.75) node{\vt};
+  \draw (2.75,1.75) node{\vr};
+  \draw (4.25,1.25) node{\vu};
+  \draw (3.75,1.25) node{\vw};
+  \draw (3.25,1.25) node{\vx};
+  \draw (2.75,1.25) node{\vv};
+  \draw (4.25,0.75) node{\vac};
+  \draw (3.75,0.75) node{\vae};
+  \draw (3.25,0.75) node{\vaf};
+  \draw (2.75,0.75) node{\vad};
+  \draw (4.25,0.25) node{\vy};
+  \draw (3.75,0.25) node{\vaa};
+  \draw (3.25,0.25) node{\vab};
+  \draw (2.75,0.25) node{\vz};
+}
+\end{scope}
+}
+%Timebehav
+%arg0	X
+%arg0	Y
+%arg0	T
+%arg0	N
+%arg0	X
+\newcommand{\timebehav}[8]{
+\def\xs{#5};
+\begin{scope}[xshift=#1 cm,yshift=#2 cm]
+  \draw[thick,->] (-0.1,0) -- ++(#3+0.6,0) node[anchor=north east,scale=0.75]{$t$};
+  \draw[thick,->] (0,-0.1) -- ++(0,0.5*#4+0.2);
+  \foreach \i/\t in {#6} {
+    \draw (-0.5,0.25+0.5*\i) node[scale=0.85]{\t};
+    \draw (0,0.125+0.5*\i) node[anchor=east,scale=0.65]{$0$};
+    \draw (0,0.375+0.5*\i) node[anchor=east,scale=0.65]{$1$};
+    \draw[dotted,tiny] (0,0.375+0.5*\i) -- (#3+0.3,0.375+0.5*\i);
+    \draw[dotted,tiny] (0,0.125+0.5*\i) -- (#3+0.3,0.125+0.5*\i);
+  }
+  \foreach \ni/\xi/\bi/\xj/\bj in {#7} {
+    \draw[thick] (\xi*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bj+0.5*\ni);
+  }
+  \foreach \t/\dt/\i/\j in {#8} {
+     \draw[gray,very tiny,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
+  }
+\end{scope}
+}
+\DeclareMathOperator{\rem}{rem}
+\DeclareMathOperator{\fix}{fix}
+\DeclareMathOperator{\float}{float}
+\DeclareMathOperator{\ifun}{if}

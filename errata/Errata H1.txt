@@ -1,0 +1,97 @@
+bladzijde 1:
+- slecht => slechtS
+- uitsluiten => uitsluitenD
+- sterker nog het => sterker nog, het
+- logisch schakelingen => logischE schakelingen
+
+bladzijde 2:
+- logisch schakelingen => logischE schakelingen
+-Waarbij we L ALS beschouwen als het al dan (een "als" teveel)
+- bepaald => bepaalD
+- brand => brandT
+- Of, indien we dit formaliseren (komma)
+
+bladzijde 3:
+- brand => brandT
+
+bladzijde 4:
+-Poorten zijn kleine componenten die enkelE ingangEN (?) bevatten, en een of meerdere
+uitgangen => kan toch ook maar 1 ingang zijn?
+- loopT => loop
+- en XOR. Op figuur 1.5.=> en XOR staan afgebeeld op figuur 1.5 
+- rede => redeN
+- universiële => universEle
+-technologiën => technologieën
+
+bladzijde 5:
+- uitgangen (verkeerd gesplitst) 
+
+bladzijde 6:
+-logische bewerkingen is heet de => is of heet staat er teveel
+-Deze operaties hebben elk een specieke prioriteit zodat
+men makkelijk => zin niet afgemaakt
+
+bladzijde 8:
+-Indien we willen de maxterm voor een bepaalde term willen genereren => "willen" teveel
+-gelimineerd => geëlimineerd
+
+bladzijde 9: 
+-Bovendien is hun kostprijs lager dan een AND of OR poort => Bovendien is hun kostprijs lager dan DIE VAN/DE KOSTPRIJS VAN een AND of OR poort
+
+bladzijde 10:
+-een circuit die => een circuit DAT
+-als ontwerpen => als ontwerpeR
+-waNt => wat
+
+bladzijde 11:
+-implementatieSbeslissingen=>implementatiebeslissingen
+-De beschrijving WORDT ofwel in natuurlijke taal, wat soms dubbelzinnig is, of
+met behulp van een blokschema. => (voorstel) De beschrijving GEBEURT ofwel in natuurlijke taal, wat soms dubbelzinnig is, of
+met behulp van een blokschema.
+-Bij de systeemsynthese worden dan processoren, geheugens
+en de ASIC componenten => (voorstel) 
+Bij de systeemsynthese worden dan processoren, geheugens
+en de ASIC componenten GECOMBINEERD
+
+bladzijde 12:
+-ontdekking => ontdekkEN
+-het component => DE component
+-een een speciaal => EN een speciaal
+-concrete => concreet
+-begeleid => begeleidT
+
+bladzijde 13:
+- voetnoot niet correct weergegeven
+
+bladzijde 14:
+-is sinds zijn oorsprong in 1993
+IS VHDL-AMS nooit echt doorgebroken. (een is teveel)
+-bedoelt => bedoelD
+-VHDL is immers
+een standaard die door allerhande programma's die iets met de ontwikkeling van digitale elektronica
+worden gebruikt => (voorstel) VHDL is immers
+een standaard die door allerhande programma's worden gebruikt die iets met de ontwikkeling van digitale elektronica te maken hebben.
+-een hogerE => een hoger
+-repitieve => repETitieve
+-door een deel => Voor een deel
+-onoverzichtelijk => onoverzichtelijk IS
+
+bladzijde 15:
+-nedelen => nAdelen
+-nadele => nadeleN
+-het component => DE component
+
+bladzijde 16:
+-het component => DE component
+-hebben.6. (een '.' teveel)
+-dit component => DEZE component (2 keer)
+-ons virtuele component => onZE virtuele component
+-gedefinieerd => gedefinieerdE
+-verschillend => verschillendE
+-het virtuele component => DE virtuele component
+
+bladzijde 17:
+-elk component=> elkE component
+-het bijbehorende component => DE bijbehorende component
+-Alle hardware werkt continuE en houdt NIET nooit op met werken =>Alle hardware werkt continu en houdt nooit op met werken
+-VHDL heeft nooit aan typische hardware-types zoals bitvectoren (heeft nooit wat?)

@@ -1,0 +1,20 @@
+\usepgflibrary{DEPcomponents}
+\tikzset{nmosc/.style={shape=nmosc,draw,minimum width=0.75cm,minimum height=0.75cm}}
+\tikzset{nmoso/.style={shape=nmoso,draw,minimum width=0.75cm,minimum height=0.75cm}}
+\tikzset{pmosc/.style={shape=pmosc,draw,minimum width=0.75cm,minimum height=0.75cm}}
+\tikzset{pmoso/.style={shape=pmoso,draw,minimum width=0.75cm,minimum height=0.75cm}}
+\tikzset{mux4to1/.style={shape=mux4to1,draw,minimum width=1.6cm,minimum height=0.6cm}}
+\tikzset{decoder2to4/.style={shape=decoder2to4,draw,minimum width=1.6cm,minimum height=0.6cm}}
+\tikzset{encoder4to2/.style={shape=encoder4to2,draw,minimum width=2cm,minimum height=1.0cm}}
+\tikzset{demux1to4/.style={shape=demux1to4,draw,minimum width=1.6cm,minimum height=0.6cm}}
+\tikzset{tris/.style={shape=tris,draw,minimum width=0.6cm,minimum height=0.6cm}}
+\tikzset{halfadder/.style={shape=fulladder,draw,minimum width=1.5cm,minimum height=1cm}}
+\tikzset{fulladder/.style={shape=fulladder,draw,minimum width=1.5cm,minimum height=1cm}}
+\tikzset{addsubtractor/.style={shape=addsubtractor,draw,minimum width=2.25cm,minimum height=1.5cm,text width=2.25 cm,align=center}}
+\tikzset{cla/.style={shape=cla,draw,minimum width=1.5cm,minimum height=1cm}}
+\tikzset{clag3/.style={shape=clagc,draw,minimum width=5.5cm,minimum height=1cm}}
+\tikzset{ale/.style={shape=ale,draw,minimum width=2cm,minimum height=1cm}}
+\tikzset{cig/.style={shape=cig,draw,minimum width=0.75cm,minimum height=0.5cm}}
+\tikzset{nadder/.style={shape=nadder,draw,minimum width=6cm,minimum height=0.75cm}}
+\tikzset{dadder/.style={shape=dadder,draw,minimum width=6cm,minimum height=0.75cm}}
+\tikzset{port labels/.style={font=\sffamily\scriptsize}}

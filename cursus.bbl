@@ -1,0 +1,97 @@
+\begin{thebibliography}{HAR00}
+
+\bibitem[30785]{30711}
+Ieee standard for binary floating-point arithmetic.
+\newblock {\em ANSI/IEEE Std 754-1985}, page 0\_1, 1985.
+
+\bibitem[59708]{5976968}
+Ieee standard for floating-point arithmetic - redline.
+\newblock {\em IEEE Std 754-2008 (Revision of IEEE Std 754-1985) - Redline},
+  pages 1--82, 29 2008.
+
+\bibitem[Ada81]{Adams81BOOK54}
+D.~Adams.
+\newblock {\em The Hitchhiker's Guide to the Galaxy}.
+\newblock POCKET BOOKS, New York, 1981.
+
+\bibitem[Ash08]{ashenden2008designer}
+P.J. Ashenden.
+\newblock {\em {The designer's guide to VHDL}}.
+\newblock Morgan Kaufmann, 2008.
+
+\bibitem[BV04]{brown2004fundamentals}
+S.~Brown and Z.~Vranesic.
+\newblock {\em {Fundamentals of Digital Logic with VHDL Design with CD-ROM}}.
+\newblock McGraw-Hill, Inc. New York, NY, USA, 2004.
+
+\bibitem[DD05]{fundamentenvdi05}
+K.~Dekimpe and B.~Demoen.
+\newblock {\em {Fundamenten voor de Informatica}}.
+\newblock 2005.
+
+\bibitem[Dec07]{socs02}
+B.~De Decker.
+\newblock {\em {Structuur en organisatie van computersystemen - 2
+  Computerapparatuur}}.
+\newblock Acco, 2007.
+
+\bibitem[Dem10]{aenb10}
+B.~Demoen.
+\newblock {\em {Automaten en Berekenbaarheid}}.
+\newblock 2010.
+
+\bibitem[DV07]{socs04}
+B.~De Decker and P.~Verbaeten.
+\newblock {\em {Structuur en organisatie van computersystemen - 4 Netwerken en
+  getallen}}.
+\newblock Acco, 2007.
+
+\bibitem[FY00]{floyd2000digital}
+T.L. Floyd and Q.~Yu.
+\newblock {\em Digital fundamentals}.
+\newblock Prentice Hall, 2000.
+
+\bibitem[GK97]{gajski1997principles}
+D.D. Gajski and J.~Kleinsmith.
+\newblock {\em {Principles of digital design}}, volume~42.
+\newblock Prentice Hall, 1997.
+
+\bibitem[HAR00]{hardi00}
+HARDI Electronics AB.
+\newblock {\em VHDL handbook}, 2000.
+
+\bibitem[Hyd04]{hyde2004write}
+R.~Hyde.
+\newblock {\em {Write Great Code: Understanding the Machine}}.
+\newblock No Starch Pr, 2004.
+
+\bibitem[Koh70]{Kohavi70}
+Zvi Kohavi.
+\newblock {\em Switching and Finite Automata Theory}.
+\newblock McGraw-Hill, 1970.
+
+\bibitem[PT97]{pellerin1997vhdl}
+D.~Pellerin and D.~Taylor.
+\newblock {\em {VHDL made easy!}}
+\newblock Prentice Hall, 1997.
+
+\bibitem[SJ07]{serway2007physics}
+R.A. Serway and J.W. Jewett.
+\newblock {\em Physics for scientists and engineers with modern physics},
+  volume~2.
+\newblock Brooks/Cole Pub Co, 2007.
+
+\bibitem[Toc95]{Toc95}
+Ronald~J. Tocci.
+\newblock {\em Digital systems: principles and applications}.
+\newblock Prentice Hall, 1995.
+
+\bibitem[Wak00]{wakerly2000digital}
+J.F. Wakerly.
+\newblock {\em {Digital design: principles and practices}}.
+\newblock Prentice-Hall, Inc. Upper Saddle River, NJ, USA, 2000.
+
+\bibitem[xil08]{xilinxFpgaDs099}
+{\em Xilinx DS099 Spartan-3 FPGA Family data sheet}, June 2008.
+
+\end{thebibliography}

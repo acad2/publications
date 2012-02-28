@@ -1,0 +1,23 @@
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.1}Terminologie}{\reset@font\mtcSfont 81}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.1.1}Classificatie van sequenti\"ele schakelingen}{\reset@font\mtcSSfont 82}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.1.2}Terminologie van het kloksignaal}{\reset@font\mtcSSfont 82}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.2}Bouwblokken}{\reset@font\mtcSfont 82}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.1}De flipflop}{\reset@font\mtcSSfont 83}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode De latch}{\reset@font\mtcSSSfont 83}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Geklokte SR-latch}{\reset@font\mtcPfont 83}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Geklokte D-latch}{\reset@font\mtcPfont 84}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Set-up- en houdtijd}{\reset@font\mtcPfont 84}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Metastabiliteit}{\reset@font\mtcPfont 85}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode De flipflop}{\reset@font\mtcSSSfont 86}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Master-slave flipflop}{\reset@font\mtcPfont 86}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Edge-triggered flipflop}{\reset@font\mtcPfont 87}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Types flipflops}{\reset@font\mtcSSSfont 87}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode SR-flipflop}{\reset@font\mtcPfont 88}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode D-flipflop}{\reset@font\mtcPfont 88}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode T-flipflop}{\reset@font\mtcPfont 88}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode JK-flipflop}{\reset@font\mtcPfont 88}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.2}Registers}{\reset@font\mtcSSfont 89}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.3}Tellers}{\reset@font\mtcSSfont 89}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {4.2.4}In VHDL}{\reset@font\mtcSSfont 89}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.3}Synchroon}{\reset@font\mtcSfont 89}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {4.4}Asynchroon}{\reset@font\mtcSfont 89}}

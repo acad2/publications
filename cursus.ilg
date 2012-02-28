@@ -1,0 +1,12 @@
+This is makeindex, version 2.15 [TeX Live 2009] (kpathsea + Thai support).
+Scanning input file cursus.idx....
+!! Input index error (file = cursus.idx, line = 129):
+   -- Incomplete first argument (premature LFD).
+
+!! Input index error (file = cursus.idx, line = 132):
+   -- Incomplete first argument (premature LFD).
+done (160 entries accepted, 2 rejected).
+Sorting entries....done (1203 comparisons).
+Generating output file cursus.ind....done (223 lines written, 0 warnings).
+Output written in cursus.ind.
+Transcript written in cursus.ilg.
