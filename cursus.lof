@@ -53,8 +53,11 @@
 \contentsline {figure}{\numberline {1.20}{\ignorespaces Geminimaliseerde toestandsdiagrammen van de leidende voorbeelden.}}{24}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Moore-machine}}}{24}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Mealy-machine}}}{24}
-\contentsline {xpart}{Processoren}{27}
-\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{29}
+\contentsline {figure}{\numberline {1.21}{\ignorespaces Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}}{25}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Gray-code (minimal-bit-change)}}}{25}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Straightforward}}}{25}
+\contentsline {xpart}{Processoren}{29}
+\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{31}
 \addvspace {10\p@ }
-\contentsline {xchapter}{VHDL}{29}
-\contentsline {xpart}{Appendices}{37}
+\contentsline {xchapter}{VHDL}{31}
+\contentsline {xpart}{Appendices}{39}

@@ -262,6 +262,8 @@
 \@writefile{toc}{\contentsline {paragraph}{De eerste voorwaarde}{22}}
 \@writefile{toc}{\contentsline {paragraph}{De tweede voorwaarde}{22}}
 \@writefile{toc}{\contentsline {subsubsection}{Omzetting naar een toestandsdiagram en -tabel}{23}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Implementeren van de toestanden in het geheugen}{23}}
+\@writefile{toc}{\contentsline {subsubsection}{Coderen van de toestanden}{23}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1.20}{\ignorespaces Geminimaliseerde toestandsdiagrammen van de leidende voorbeelden.}}{24}}
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Moore-machine}}}{24}}
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Mealy-machine}}}{24}}
@@ -270,222 +272,233 @@
 \@writefile{lot}{\contentsline {subtable}{\numberline{(b)}{\ignorespaces {Mealy-machine}}}{24}}
 \@writefile{lot}{\contentsline {table}{\numberline {1.2}{\ignorespaces Geminimaliseerde toestandstabellen van de leidende voorbeelden.}}{24}}
 \newlabel{tbl:minimaalToestandstabel}{{1.2}{24}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Implementeren van de toestanden in het geheugen}{24}}
-\@writefile{toc}{\contentsline {subsubsection}{Coderen van de toestanden}{24}}
-\@writefile{toc}{\contentsline {subsubsection}{De keuze van het type flipflop}{24}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.5}Implementeren van de combinatorische logica}{24}}
-\@writefile{toc}{\contentsline {subsubsection}{Logica die de volgende toestand berekent}{24}}
-\@writefile{toc}{\contentsline {subsubsection}{Logica die de uitgang toestand berekent}{24}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{24}}
-\newlabel{s:asynchroneSequence}{{1.4}{24}}
-\@writefile{toc}{\contentsline {part}{III\hspace  {1em}Processoren}{25}}
-\@writefile{lof}{\contentsline {xpart}{Processoren}{27}}
-\@writefile{lot}{\contentsline {xpart}{Processoren}{27}}
-\@writefile{toc}{\contentsline {xpart}{Processoren}{27}}
-\@writefile{toc}{\contentsline {part}{IV\hspace  {1em}Very High Speed Integrated Circuit Hardware Description Language}{27}}
-\@writefile{lof}{\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{29}}
-\@writefile{lot}{\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{29}}
-\@writefile{toc}{\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{29}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}VHDL}{29}}
+\@writefile{default}{\indexentry{Coderen}{24}}
+\@writefile{default}{\indexentry{Straightforward codering}{24}}
+\@writefile{default}{\indexentry{One-hot codering}{24}}
+\@writefile{default}{\indexentry{Minimal-bit-change}{24}}
+\@writefile{toc}{\contentsline {paragraph}{Straightforward codering}{24}}
+\@writefile{default}{\indexentry{Glitches}{25}}
+\@writefile{toc}{\contentsline {paragraph}{One-hotcodering}{25}}
+\@writefile{toc}{\contentsline {paragraph}{Minimal-bit-change}{25}}
+\@writefile{default}{\indexentry{Gray-code teller}{25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.21}{\ignorespaces Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}}{25}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Gray-code (minimal-bit-change)}}}{25}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Straightforward}}}{25}}
+\newlabel{fig:grayCodeCounter}{{1.21}{25}}
+\@writefile{toc}{\contentsline {subsubsection}{De keuze van het type flipflop}{26}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.5}Implementeren van de combinatorische logica}{26}}
+\@writefile{toc}{\contentsline {subsubsection}{Logica die de volgende toestand berekent}{26}}
+\@writefile{toc}{\contentsline {subsubsection}{Logica die de uitgang toestand berekent}{26}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{26}}
+\newlabel{s:asynchroneSequence}{{1.4}{26}}
+\@writefile{toc}{\contentsline {part}{III\hspace  {1em}Processoren}{27}}
+\@writefile{lof}{\contentsline {xpart}{Processoren}{29}}
+\@writefile{lot}{\contentsline {xpart}{Processoren}{29}}
+\@writefile{toc}{\contentsline {xpart}{Processoren}{29}}
+\@writefile{toc}{\contentsline {part}{IV\hspace  {1em}Very High Speed Integrated Circuit Hardware Description Language}{29}}
+\@writefile{lof}{\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{31}}
+\@writefile{lot}{\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{31}}
+\@writefile{toc}{\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{31}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}VHDL}{31}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{lof}{\contentsline {xchapter}{VHDL}{29}}
-\@writefile{lot}{\contentsline {xchapter}{VHDL}{29}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Combinatorische schakelingen in VHDL}{29}}
-\newlabel{s:combinatorischVHDL}{{2.1}{29}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Elementen van de VHDL-taal}{29}}
-\@writefile{toc}{\contentsline {subsubsection}{Lexicale elementen (woordenschat)}{29}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Literals}}{29}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Getal}}{29}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {abstract literal}}{29}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {universal\_integer}}{29}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {.}}{29}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {universal\_real}}{29}}
+\@writefile{lof}{\contentsline {xchapter}{VHDL}{31}}
+\@writefile{lot}{\contentsline {xchapter}{VHDL}{31}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Combinatorische schakelingen in VHDL}{31}}
+\newlabel{s:combinatorischVHDL}{{2.1}{31}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}Elementen van de VHDL-taal}{31}}
+\@writefile{toc}{\contentsline {subsubsection}{Lexicale elementen (woordenschat)}{31}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Literals}}{31}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Getal}}{31}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {abstract literal}}{31}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {universal\_integer}}{31}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {.}}{31}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {universal\_real}}{31}}
 \citation{Adams81BOOK54}
 \citation{hardi00}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {physical types}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {E}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {e}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {base\#literal\#exp}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {\_}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Karakter}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {character literal}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {'}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Karakterreeks}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {string literal}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {"}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Bitreeks}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {``bit string literal}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {"}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Scheidingstekens}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {delimiters}}{30}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces Scheidingstekens in VHDL.}}{30}}
-\newlabel{tbl:vHDLdelimiters}{{2.1}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {enumeration literals}}{30}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NULL literal}}{30}}
-\@writefile{toc}{\contentsline {paragraph}{Gereserveerde woorden}{30}}
-\@writefile{toc}{\contentsline {subsubsection}{Data-types}{30}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces Gereserveerde woorden in VHDL.}}{31}}
-\newlabel{tbl:vHDLReservedWords}{{2.2}{31}}
-\@writefile{toc}{\contentsline {paragraph}{Zelf types defini\"eren}{31}}
-\@writefile{toc}{\contentsline {paragraph}{Defini\"eren met opsomming}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {bit}}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {byte}}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {is}}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {bit}}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {byte}}{31}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.1}{\ignorespaces Defini\"eren van types door opsomming.}}{31}}
-\newlabel{lst:constante}{{2.1}{31}}
-\@writefile{toc}{\contentsline {paragraph}{Defini\"eren met subtypering}{31}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.2}{\ignorespaces Defini\"eren van types door subtypering.}}{31}}
-\newlabel{lst:constante}{{2.2}{31}}
-\@writefile{toc}{\contentsline {subsubsection}{Data-objecten}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {constante}}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {variabele}}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {signaal}}{31}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ABS}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {**}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {*}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {MOD}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {REM}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {REAL}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ABS}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {**}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {*}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {TIME}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ABS}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {*}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {fs}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ps}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ns}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {us}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ms}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {sec}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {min}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {hr}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {BIT}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOT}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {AND}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NAND}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {OR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XOR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XNOR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {BIT\_VECTOR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {BIT}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOT}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {\&}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SLL}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SRL}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SLA}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SRA}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ROL}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ROR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {AND}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NAND}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {OR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XOR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XNOR}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {CHARACTER}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {STRING}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {CHARACTER}}{32}}
-\newlabel{tbl:vHDLTypes}{{2.2(a)}{32}}
-\newlabel{sub@tbl:vHDLTypes}{{(a)}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NATURAL}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER'HIGH}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {POSITIVE}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER'HIGH}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {DELAY\_LENGTH}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {fs}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {TIME'HIGH}}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {TIME}}{32}}
-\newlabel{tbl:vHDLSubTypes}{{2.2(b)}{32}}
-\newlabel{sub@tbl:vHDLSubTypes}{{(b)}{32}}
-\@writefile{lot}{\contentsline {subtable}{\numberline{(a)}{\ignorespaces {Overzicht van belangrijke types in VHDL.}}}{32}}
-\@writefile{lot}{\contentsline {subtable}{\numberline{(b)}{\ignorespaces {Overzicht van belangrijke afgeleide types in VHDL.}}}{32}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces Overzicht van belangrijke types en afgeleide types in VHDL.}}{32}}
-\newlabel{tbl:vHDLTypesSubTypes}{{2.3}{32}}
-\@writefile{toc}{\contentsline {paragraph}{Constante}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {constant}}{32}}
-\@writefile{toc}{\contentsline {paragraph}{Variabele}{32}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {variable}}{32}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.3}{\ignorespaces Defini\"eren van fysische types.}}{32}}
-\newlabel{lst:constante}{{2.3}{32}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.4}{\ignorespaces Werken met constanten.}}{33}}
-\newlabel{lst:constante}{{2.4}{33}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.5}{\ignorespaces Werken met variabelen.}}{33}}
-\newlabel{lst:variabele}{{2.5}{33}}
-\@writefile{toc}{\contentsline {paragraph}{Signaal}{33}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {signal}}{33}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{33}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.6}{\ignorespaces Werken met signalen.}}{33}}
-\newlabel{lst:variabele}{{2.6}{33}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {after}}{33}}
-\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {:=}}{33}}
-\@writefile{toc}{\contentsline {subsubsection}{Bibliotheken}{33}}
-\@writefile{toc}{\contentsline {subsubsection}{Bewerkingen}{33}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Hardwarebeschrijving met VHDL}{33}}
-\@writefile{toc}{\contentsline {subsubsection}{Structurele beschrijving}{33}}
-\@writefile{toc}{\contentsline {subsubsection}{Gedragsbeschrijving}{33}}
-\@writefile{toc}{\contentsline {subsubsection}{Repetitieve structuren}{33}}
-\newlabel{ss:combinatorischVHDLHardware}{{2.1.2}{33}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.7}{\ignorespaces 2-naar-1-multiplexer.}}{34}}
-\newlabel{vhdl:bToAMultiplexer}{{2.7}{34}}
-\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.8}{\ignorespaces $n$-bit Opteller.}}{34}}
-\newlabel{vhdl:adder}{{2.8}{34}}
-\@writefile{toc}{\contentsline {part}{V\hspace  {1em}Appendices}{35}}
-\@writefile{lof}{\contentsline {xpart}{Appendices}{37}}
-\@writefile{lot}{\contentsline {xpart}{Appendices}{37}}
-\@writefile{toc}{\contentsline {xpart}{Appendices}{37}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {physical types}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {E}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {e}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {base\#literal\#exp}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {\_}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Karakter}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {character literal}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {'}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Karakterreeks}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {string literal}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {"}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Bitreeks}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {``bit string literal}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {"}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {Scheidingstekens}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {delimiters}}{32}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces Scheidingstekens in VHDL.}}{32}}
+\newlabel{tbl:vHDLdelimiters}{{2.1}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {enumeration literals}}{32}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NULL literal}}{32}}
+\@writefile{toc}{\contentsline {paragraph}{Gereserveerde woorden}{32}}
+\@writefile{toc}{\contentsline {subsubsection}{Data-types}{32}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces Gereserveerde woorden in VHDL.}}{33}}
+\newlabel{tbl:vHDLReservedWords}{{2.2}{33}}
+\@writefile{toc}{\contentsline {paragraph}{Zelf types defini\"eren}{33}}
+\@writefile{toc}{\contentsline {paragraph}{Defini\"eren met opsomming}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {bit}}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {byte}}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {is}}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {bit}}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {byte}}{33}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.1}{\ignorespaces Defini\"eren van types door opsomming.}}{33}}
+\newlabel{lst:constante}{{2.1}{33}}
+\@writefile{toc}{\contentsline {paragraph}{Defini\"eren met subtypering}{33}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.2}{\ignorespaces Defini\"eren van types door subtypering.}}{33}}
+\newlabel{lst:constante}{{2.2}{33}}
+\@writefile{toc}{\contentsline {subsubsection}{Data-objecten}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {constante}}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {variabele}}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {signaal}}{33}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ABS}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {**}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {*}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {MOD}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {REM}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {REAL}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ABS}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {**}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {*}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {TIME}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ABS}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {*}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {fs}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ps}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ns}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {us}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {+}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {-}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ms}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {sec}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {min}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {hr}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {BIT}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOT}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {AND}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NAND}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {OR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XOR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XNOR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {BIT\_VECTOR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {BIT}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOT}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {\&}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SLL}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SRL}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SLA}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {SRA}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ROL}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {ROR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {/=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {>=}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {AND}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NAND}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {OR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NOR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XOR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {XNOR}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {CHARACTER}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {STRING}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {CHARACTER}}{34}}
+\newlabel{tbl:vHDLTypes}{{2.2(a)}{34}}
+\newlabel{sub@tbl:vHDLTypes}{{(a)}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {NATURAL}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER'HIGH}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {POSITIVE}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER'HIGH}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {INTEGER}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {DELAY\_LENGTH}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {fs}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {TIME'HIGH}}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {TIME}}{34}}
+\newlabel{tbl:vHDLSubTypes}{{2.2(b)}{34}}
+\newlabel{sub@tbl:vHDLSubTypes}{{(b)}{34}}
+\@writefile{lot}{\contentsline {subtable}{\numberline{(a)}{\ignorespaces {Overzicht van belangrijke types in VHDL.}}}{34}}
+\@writefile{lot}{\contentsline {subtable}{\numberline{(b)}{\ignorespaces {Overzicht van belangrijke afgeleide types in VHDL.}}}{34}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces Overzicht van belangrijke types en afgeleide types in VHDL.}}{34}}
+\newlabel{tbl:vHDLTypesSubTypes}{{2.3}{34}}
+\@writefile{toc}{\contentsline {paragraph}{Constante}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {constant}}{34}}
+\@writefile{toc}{\contentsline {paragraph}{Variabele}{34}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {variable}}{34}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.3}{\ignorespaces Defini\"eren van fysische types.}}{34}}
+\newlabel{lst:constante}{{2.3}{34}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.4}{\ignorespaces Werken met constanten.}}{35}}
+\newlabel{lst:constante}{{2.4}{35}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.5}{\ignorespaces Werken met variabelen.}}{35}}
+\newlabel{lst:variabele}{{2.5}{35}}
+\@writefile{toc}{\contentsline {paragraph}{Signaal}{35}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {signal}}{35}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {<=}}{35}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.6}{\ignorespaces Werken met signalen.}}{35}}
+\newlabel{lst:variabele}{{2.6}{35}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {after}}{35}}
+\@writefile{default}{\indexentry{\texttt {VHDL}!\texttt {:=}}{35}}
+\@writefile{toc}{\contentsline {subsubsection}{Bibliotheken}{35}}
+\@writefile{toc}{\contentsline {subsubsection}{Bewerkingen}{35}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}Hardwarebeschrijving met VHDL}{35}}
+\@writefile{toc}{\contentsline {subsubsection}{Structurele beschrijving}{35}}
+\@writefile{toc}{\contentsline {subsubsection}{Gedragsbeschrijving}{35}}
+\@writefile{toc}{\contentsline {subsubsection}{Repetitieve structuren}{35}}
+\newlabel{ss:combinatorischVHDLHardware}{{2.1.2}{35}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.7}{\ignorespaces 2-naar-1-multiplexer.}}{36}}
+\newlabel{vhdl:bToAMultiplexer}{{2.7}{36}}
+\@writefile{codes}{\contentsline {vhdlcode}{\numberline {2.8}{\ignorespaces $n$-bit Opteller.}}{36}}
+\newlabel{vhdl:adder}{{2.8}{36}}
+\@writefile{toc}{\contentsline {part}{V\hspace  {1em}Appendices}{37}}
+\@writefile{lof}{\contentsline {xpart}{Appendices}{39}}
+\@writefile{lot}{\contentsline {xpart}{Appendices}{39}}
+\@writefile{toc}{\contentsline {xpart}{Appendices}{39}}
 \@writefile{@@@}{\chapterbegin }
 \@writefile{@@@}{\chapterbegin }
 \@writefile{@@@}{\chapterbegin }
@@ -512,7 +525,7 @@
 \bibcite{wakerly2000digital}{Wak00}
 \bibcite{xilinxFpgaDs099}{xil08}
 \@writefile{@@@}{\chapterbegin }
-\newlabel{reference}{{V}{43}}
-\newlabel{glos}{{V}{43}}
-\newlabel{idx}{{V}{43}}
+\newlabel{reference}{{V}{45}}
+\newlabel{glos}{{V}{45}}
+\newlabel{idx}{{V}{45}}
 \global\mtcsecondpartfalse

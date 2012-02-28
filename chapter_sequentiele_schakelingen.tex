@@ -1208,6 +1208,77 @@ $E$&$B/1$&$A/0$
 \end{table}
 \subsection{Implementeren van de toestanden in het geheugen}
 \subsubsection{Coderen van de toestanden}
+Tot nu toe hebben we toestanden altijd voorgesteld met letters. Uiteraard dienen we deze toestanden op de een of andere manier voor te stellen in de geheugencomponenten in onze schakeling. Vermits letters niet opgeslagen kunnen worden in een flipflop of een register\footnote{Uiteraard kunnen we bijvoorbeeld wel het ASCII equivalent opslaan.} zullen we de toestanden moeten omzetten naar een binaire voorstelling. Dit wordt het \termen{coderen} van de toestanden genoemd. Doorgaans lijkt dit geen ingewikkeld probleem, we kunnen eenvoudigweg elke toestand een opeenvolgend nummer geven en deze toestanden dan binair coderen. Merk echter op dat de toestand geen impliciete ordening hebben, alleen al door opeenvolgende nummers te gebruiken zijn er $n!$ mogelijke coderingen mogelijk. Er bestaan echter technieken die ervoor zorgen dat we door een intelligente codering minder hardware zullen gebruiken. Dit leidt meestal tot goedkopere en snellere schakelingen. Algemeen zijn er drie technieken die we kunnen gebruiken:
+\begin{itemize}
+ \item ``\termen{Straightforward codering}'': soms is de codering triviaal.
+ \item De ``\termen{one-hot codering}'': hierbij stellen we $n$ toestanden voor door $n$ bits, elke toestand krijgt z'n eigen bit. Indien de toestand actief is, is deze bit hoog, de andere bits zijn dan laag.
+ \item De ``\termen{minimal-bit-change}'': we zoeken een codering die telkens een minimum aan bits verandert. Hierbij gebruiken we $\left\lceil\log_2 n\right\rceil$ bits om de $n$ toestanden voor te stellen.
+\end{itemize}
+Uiteraard dienen we ons niet te beperken tot \'e\'en van deze implementaties. Indien het aantal uitgangen bijvoorbeeld niet voldoet om een straightforward codering toe te passen kunnen we dit bijvoorbeeld aanvullen met extra bits die een minimal-bit change gebruiken. We bespreken nu de verschillende coderingstechnieken in detail.
+\paragraph{Straightforward codering}Een codering kan triviaal zijn als de toestand een duidelijke betekenis heeft. Dit is doorgaans het geval bij bijvoorbeeld tellers. Ook indien we over een Moore-machine beschikken waarbij het elke toestand een andere uitgang heeft en de uitgang bevat minstens $\left\lceil\log_2 n\right\rceil$ bits kunnen we een straightforward codering toepassen. In dat geval gebruiken we de uitgang van een toestand ook als zijn codering. Merk op dat in dat geval we geen logica nodig hebben die de toestand naar de uitgang codeert. Deze codering is echter niet altijd ideaal. We reduceren dan we de logica aan de uitgang, maar meestal resulteert dit in complexere logica om de transities te implementeren. Verder veranderen er meestal heel wat bits per overgang. We herinneren ons dat een CMOS-implementatie enkel energie verbruikt wanneer deze omschakelt. Indien we dus veel flipflops van waarde moeten laten veranderen betekent dit dus een groter vermogenverbruik. Een tweede aspect is dat niet elke bit tegelijk verandert. Vermits er meerdere bits zijn kan dit problemen opleveren: er bestaat een gevaar voor \termen{glitches}, een tijdelijk foute waarde op een lijn ten gevolge van asynchroon gedrag aan de ingang. Indien het resultaat van een teller dus nog in een andere schakeling gebruikt wordt kan dit problemen opleveren.??%TODO:extend
+\paragraph{One-hotcodering}We voorzien een flipflop voor elke toestand, hierdoor is het aantal flipflops \bigoh{n} in tegenstelling tot de \bigoh{\log_2n}. Bij elke toestand is er \'e\'en flipflop hoog, alle andere flipflops zijn laag. Het spreekt dus voor zich dat we deze configuratie enkel kunnen gebruiken bij een klein aantal toestanden. One-hotcoderingen hebben enkele voordelen: het ontwerp van een dergelijke schakeling is vrij eenvoudig en is dus snel te realiseren. Verder is het ideaal voor een implementatie bij een FPGA. Een one-hotcodering verbruikt doorgaans weinig vermogen aangezien bij elke overgang tussen twee verschillende toestanden er twee flipflops omschakelen. Tot slot zijn ook de combinatorische schakelingen voor de uitgangen en de transities doorgaans vrij goedkoop. Het grootste nadeel van een one-hot codering is dan ook de kostprijs voor de flipflops.
+\paragraph{Minimal-bit-change}Indien de kostprijs en vermogenverbruik een belangrijke factor zijn maken we meestal gebruik van de minimal-bit-change. Hierbij proberen we ervoor te zorgen dat de som van het aantal bits die veranderen van alle overgangen minimaal is. Dit probleem is echter niet triviaal en is NP-compleet. Bij een klein aantal toestanden kunnen we alle mogelijkheden uitproberen, bij een groter aantal maakt men gebruik van programma's zoals bijvoorbeeld MUSE, JEDI, MUSTANG,... Deze programma's werken op basis van heuristieken en geven meestal een benaderende oplossing. Soms worden er ook kansen bij de overgangen betrokken om het de kosten en het vermogenverbruik verder te minimaliseren. Een typisch voorbeeld is de \termen{Gray-code teller}\footnote{Vernoemd naar Frank Gray (1887-1969), fysicus bij Bell Labs.}. Gray ontwikkelde een teller die bij elke overgang slechts \'e\'en bit veranderde. Figuur \ref{fig:grayCodeCounter} toont het toestandsdiagram van een 2-bit en 3-bit teller. Op de bogen plaatsen we hier het aantal bits die veranderen. Het feit dat we niet voor een straightforward implementatie voor een teller kiezen kan vreemd lijken. Deze teller dient dan ook meestal niet om de binaire waarde onmiddellijk uit te lezen, maar kan bijvoorbeeld gebruikt worden als een controller die een lus vormt over een vast aantal toestanden. Over het concreet oplossen van dit probleem gaan we niet verder in.
+\begin{figure}[hbt]
+\centering
+\subfigure[Gray-code (minimal-bit-change)]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state,initial,initial text=RST, initial where=left] (A) {$00$};
+\node[state] (B) [right=of A] {$01$};
+\node[state] (C) [below=of B] {$11$};
+\node[state] (D) [left=of C] {$10$};
+\begin{scope}[node distance=1.414cm]
+  \node[state,initial,initial text=RST, initial where=left,above left=of A] (AA) {$000$};
+  \node[state] (CC) [above right=of B] {$011$};
+  \node[state] (EE) [below right=of C] {$110$};
+  \node[state] (GG) [below left=of D] {$101$};
+\end{scope}
+\node[state] (BB) [right=of AA] {$001$};
+\node[state] (DD) [below=of CC] {$010$};
+\node[state] (FF) [left=of EE] {$111$};
+\node[state] (HH) [above=of GG] {$100$};
+\path (A) edge node{1} (B)
+      (B) edge node{1} (C)
+      (C) edge node{1} (D)
+      (D) edge node{1} (A);
+\path (AA) edge node{1} (BB)
+      (BB) edge node{1} (CC)
+      (CC) edge node{1} (DD)
+      (DD) edge node{1} (EE)
+      (EE) edge node{1} (FF)
+      (FF) edge node{1} (GG)
+      (GG) edge node{1} (HH)
+      (HH) edge node{1} (AA);
+\end{tikzpicture}}
+\subfigure[Straightforward]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state,initial,initial text=RST, initial where=left] (A) {$00$};
+\node[state] (B) [right=of A] {$01$};
+\node[state] (C) [below=of B] {$10$};
+\node[state] (D) [left=of C] {$11$};
+\begin{scope}[node distance=1.414cm]
+  \node[state,initial,initial text=RST, initial where=left,above left=of A] (AA) {$000$};
+  \node[state] (CC) [above right=of B] {$010$};
+  \node[state] (EE) [below right=of C] {$100$};
+  \node[state] (GG) [below left=of D] {$110$};
+\end{scope}
+\node[state] (BB) [right=of AA] {$001$};
+\node[state] (DD) [below=of CC] {$011$};
+\node[state] (FF) [left=of EE] {$101$};
+\node[state] (HH) [above=of GG] {$111$};
+\path (A) edge node{1} (B)
+      (B) edge node{2} (C)
+      (C) edge node{1} (D)
+      (D) edge node{2} (A);
+\path (AA) edge node{1} (BB)
+      (BB) edge node{2} (CC)
+      (CC) edge node{1} (DD)
+      (DD) edge node{3} (EE)
+      (EE) edge node{1} (FF)
+      (FF) edge node{2} (GG)
+      (GG) edge node{1} (HH)
+      (HH) edge node{3} (AA);
+\end{tikzpicture}}
+\caption{Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}
+\label{fig:grayCodeCounter}
+\end{figure}
 \subsubsection{De keuze van het type flipflop}
 \subsection{Implementeren van de combinatorische logica}
 \subsubsection{Logica die de volgende toestand berekent}
