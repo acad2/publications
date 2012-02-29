@@ -45,7 +45,11 @@
 {\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Straightforward codering}{\reset@font\mtcPfont 24}}
 {\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode One-hotcodering}{\reset@font\mtcPfont 25}}
 {\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Minimal-bit-change}{\reset@font\mtcPfont 25}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode De keuze van het type flipflop}{\reset@font\mtcSSSfont 26}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode De keuze van het type flipflop}{\reset@font\mtcSSSfont 25}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode De kosten van een flipflop}{\reset@font\mtcPfont 26}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Don't cares}{\reset@font\mtcPfont 26}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Eenvoud van het ontwerp}{\reset@font\mtcPfont 26}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Toepassingen}{\reset@font\mtcPfont 26}}
 {\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.5}Implementeren van de combinatorische logica}{\reset@font\mtcSSfont 26}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Logica die de volgende toestand berekent}{\reset@font\mtcSSSfont 26}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Logica die de uitgang toestand berekent}{\reset@font\mtcSSSfont 26}}
