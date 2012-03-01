@@ -14,6 +14,11 @@
 \contentsline {subtable}{\numberline {(b)}{\ignorespaces {Coderingstabel}}}{26}
 \contentsline {table}{\numberline {1.4}{\ignorespaces Codering van de Moore-machine van het leidend voorbeeld.}}{26}
 \contentsline {table}{\numberline {1.5}{\ignorespaces Keuze van het type flipflop.}}{27}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {JK}}}{28}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {SR}}}{28}
+\contentsline {subtable}{\numberline {(c)}{\ignorespaces {D}}}{28}
+\contentsline {subtable}{\numberline {(d)}{\ignorespaces {T}}}{28}
+\contentsline {table}{\numberline {1.6}{\ignorespaces Excitatietabellen van de verschillende flipflops}}{28}
 \contentsline {xpart}{Processoren}{31}
 \contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{33}
 \addvspace {10\p@ }

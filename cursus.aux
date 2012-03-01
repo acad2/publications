@@ -257,14 +257,14 @@
 \@writefile{toc}{\contentsline {paragraph}{Toestandstabel}{21}}
 \@writefile{default}{\indexentry{Toestandstabel}{21}}
 \@writefile{toc}{\contentsline {paragraph}{Opstellen van een toestandsdiagram en -tabel}{21}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Minimaliseren van de toestanden}{22}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Stap 2: Minimaliseren van de toestanden}{22}}
 \@writefile{toc}{\contentsline {subsubsection}{Het minimalisatiealoritme}{22}}
 \@writefile{toc}{\contentsline {paragraph}{Het algemeen idee}{22}}
 \@writefile{toc}{\contentsline {paragraph}{De eerste voorwaarde}{22}}
 \@writefile{toc}{\contentsline {paragraph}{De tweede voorwaarde}{22}}
+\citation{aenb10}
 \@writefile{toc}{\contentsline {subsubsection}{Omzetting naar een toestandsdiagram en -tabel}{23}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Implementeren van de toestanden in het geheugen}{23}}
-\@writefile{toc}{\contentsline {subsubsection}{Coderen van de toestanden}{23}}
+\@writefile{toc}{\contentsline {paragraph}{Een formeel algoritme}{23}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1.20}{\ignorespaces Geminimaliseerde toestandsdiagrammen van de leidende voorbeelden.}}{24}}
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {Moore-machine}}}{24}}
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Mealy-machine}}}{24}}
@@ -273,6 +273,8 @@
 \@writefile{lot}{\contentsline {subtable}{\numberline{(b)}{\ignorespaces {Mealy-machine}}}{24}}
 \@writefile{lot}{\contentsline {table}{\numberline {1.2}{\ignorespaces Geminimaliseerde toestandstabellen van de leidende voorbeelden.}}{24}}
 \newlabel{tbl:minimaalToestandstabel}{{1.2}{24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Stap 3: Implementeren van de toestanden in het geheugen}{24}}
+\@writefile{toc}{\contentsline {subsubsection}{Stap 3A: Coderen van de toestanden}{24}}
 \@writefile{default}{\indexentry{Coderen}{24}}
 \@writefile{default}{\indexentry{Straightforward codering}{24}}
 \@writefile{default}{\indexentry{One-hot codering}{24}}
@@ -295,21 +297,38 @@
 \@writefile{lot}{\contentsline {subtable}{\numberline{(b)}{\ignorespaces {Coderingstabel}}}{26}}
 \@writefile{lot}{\contentsline {table}{\numberline {1.4}{\ignorespaces Codering van de Moore-machine van het leidend voorbeeld.}}{26}}
 \newlabel{tbl:mooreBitRepresentation}{{1.4}{26}}
-\@writefile{toc}{\contentsline {subsubsection}{De keuze van het type flipflop}{26}}
+\@writefile{toc}{\contentsline {subsubsection}{Stap 3B: De keuze van het type flipflop}{26}}
 \@writefile{toc}{\contentsline {paragraph}{De kosten van een flipflop}{26}}
 \@writefile{toc}{\contentsline {paragraph}{Don't cares}{26}}
-\@writefile{toc}{\contentsline {paragraph}{Eenvoud van het ontwerp}{26}}
-\@writefile{default}{\indexentry{Excitatietabel}{26}}
+\@writefile{toc}{\contentsline {paragraph}{Eenvoud van het ontwerp}{27}}
+\@writefile{default}{\indexentry{Excitatietabel}{27}}
 \@writefile{toc}{\contentsline {paragraph}{Toepassingen}{27}}
 \@writefile{toc}{\contentsline {paragraph}{Welke flipflop kiezen?}{27}}
 \@writefile{toc}{\contentsline {paragraph}{Samevatting}{27}}
 \@writefile{lot}{\contentsline {table}{\numberline {1.5}{\ignorespaces Keuze van het type flipflop.}}{27}}
 \newlabel{tbl:whichFlipflop}{{1.5}{27}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.5}Implementeren van de combinatorische logica}{27}}
-\@writefile{toc}{\contentsline {subsubsection}{Logica die de volgende toestand berekent}{27}}
-\@writefile{toc}{\contentsline {subsubsection}{Logica die de uitgang toestand berekent}{27}}
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{27}}
-\newlabel{s:asynchroneSequence}{{1.4}{27}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.5}Stap 4: Implementeren van de combinatorische logica}{27}}
+\@writefile{toc}{\contentsline {subsubsection}{Stap 4A: Logica die de volgende toestand berekent}{27}}
+\@writefile{toc}{\contentsline {paragraph}{Excitatietabellen}{27}}
+\@writefile{default}{\indexentry{Excitatiefuncties}{27}}
+\@writefile{default}{\indexentry{Excitatietabellen}{27}}
+\newlabel{tbl:excitationTablesFlipflopsJK}{{1.5(a)}{28}}
+\newlabel{sub@tbl:excitationTablesFlipflopsJK}{{(a)}{28}}
+\newlabel{tbl:excitationTablesFlipflopsSR}{{1.5(b)}{28}}
+\newlabel{sub@tbl:excitationTablesFlipflopsSR}{{(b)}{28}}
+\newlabel{tbl:excitationTablesFlipflopsD}{{1.5(c)}{28}}
+\newlabel{sub@tbl:excitationTablesFlipflopsD}{{(c)}{28}}
+\newlabel{tbl:excitationTablesFlipflopsT}{{1.5(d)}{28}}
+\newlabel{sub@tbl:excitationTablesFlipflopsT}{{(d)}{28}}
+\@writefile{lot}{\contentsline {subtable}{\numberline{(a)}{\ignorespaces {JK}}}{28}}
+\@writefile{lot}{\contentsline {subtable}{\numberline{(b)}{\ignorespaces {SR}}}{28}}
+\@writefile{lot}{\contentsline {subtable}{\numberline{(c)}{\ignorespaces {D}}}{28}}
+\@writefile{lot}{\contentsline {subtable}{\numberline{(d)}{\ignorespaces {T}}}{28}}
+\@writefile{lot}{\contentsline {table}{\numberline {1.6}{\ignorespaces Excitatietabellen van de verschillende flipflops}}{28}}
+\newlabel{tbl:excitationTablesFlipflops}{{1.6}{28}}
+\@writefile{toc}{\contentsline {subsubsection}{Stap 4B: Logica die de uitgang toestand berekent}{28}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{28}}
+\newlabel{s:asynchroneSequence}{{1.4}{28}}
 \@writefile{toc}{\contentsline {part}{III\hspace  {1em}Processoren}{29}}
 \@writefile{lof}{\contentsline {xpart}{Processoren}{31}}
 \@writefile{lot}{\contentsline {xpart}{Processoren}{31}}

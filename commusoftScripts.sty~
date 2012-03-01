@@ -15,10 +15,11 @@
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
 
-\tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
-
 \newcommand{\algref}[1]{\textbf{Algorithm \ref{#1}}}
+
+\tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
 \newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
+
 \newcommand\termen{\@ifstar{\@dblarg{\@termens}}{\@termen}}
 \def\@termens[#1]#2{\termenlayout{#2}\index{#1@#2}}
 \newcommand\@termen[2][]{%

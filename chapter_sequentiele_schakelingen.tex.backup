@@ -1107,7 +1107,7 @@ $G$&$F/0$&$G/0$
 \end{table}
 \paragraph{Toestandstabel}Een toestandsdiagram is een grafische voorstelling. Bij een groot aantal toestanden of bij bijvoorbeeld invoer van een toestandsdiagram in een computer, maken we meestal gebruik van een alternatieve voorstelling: de \termen{toestandstabel}. De rijen in de toestandstabel stellen de verschillende toestanden voor, de kolommen stellen de invoercombinatie voor. In een cel $i,j$ voor toestand $A_i$ en invoer $I_j$ plaatsen we de volgende toestand. In het geval van een Moore-machine voorzien we een extra kolom die per rij de uitgangscombinatie van deze toestand weergeeft. Bij een Mealy-machine plaatsen we in elke cel naast de volgende toestand de uitgangscombinatie voor toestand $A_i$ en invoer $I_j$. Ook hier plaatsen we een slash om de volgende toestand van de uitvoer te onderscheiden. De toestandstabellen van de leidende voorbeelden staan in tabel \ref{tbl:toestandstabel}.
 \paragraph{Opstellen van een toestandsdiagram en -tabel}Zoals reeds gezegd is het opstellen van een toestandsdiagram of -tabel een kunst. Een algemene techniek die gehanteerd kan worden is het aantal klokflanken te bepalen dat we geheugen moeten voorzien.  In het geval van de voorbeelden is dit drie klokflanken voor de Moore-machine en twee klokflanken voor de Mealy-machine. Vervolgens kunnen we een toestandstabel of -diagram opstellen die de overgang naar verschillende toestanden van het geheugen voorstelt. Zo komt $A$ in beide voorbeelden overeen met de toestand waarin we starten, er is bijgevolg nog geen sprake over inhoud in het geheugen. $B$ en $C$ betekent dat er na de eerste klokflank respectievelijk een 0 en een 1 in het geheugen opgeslagen is. $D$, $E$, $F$ en $G$ spreken over de respectievelijke geheugentoestanden $00$, $01$, $10$ en $11$. Voor de Mealy-machine is dit reeds voldoende. Bij de Moore-machine introduceren we nog een extra niveau. De overgangen op dit laatste niveau houden in dat we de oudste bit vergeten en de nieuwe bit memoriseren. Hierdoor gaan alle overgangen van een toestand op het laatste niveau enkel naar toestanden op hetzelfde niveau. We kunnen machinaal eenvoudig een tabel opstellen voor een arbitraire diepte. Een groot nadeel is dat indien we $n$ klokflanken willen memoriseren, we $2^{n+1}-1$ toestanden bekomen. Na het opstellen van deze tabel dienen we enkel de specificaties nog te vertalen in de uitgangen van de toestanden in het geval van een Moore-machine, en de overgangen bij een Mealy-machine. Meestal kan men echter door logisch te redeneren voorkomen dat we dergelijke grote toestandstabellen moeten opstellen. In de volgende subsectie reduceren we het aantal toestanden tot de theoretische ondergrens. Of we de initi\"ele tabel opstellen met de hier beschreven methode of door logisch te redeneren verandert niets aan het resultaat van de volgende stap.
-\subsection{Minimaliseren van de toestanden}
+\subsection{Stap 2: Minimaliseren van de toestanden}
 Nu we een toestandsdiagram opgesteld hebben kunnen we dit diagram implementeren met behulp van logica. Het loont echter meestal de moeite om eerst het toestandsdiagram te minimaliseren. Minder toestanden impliceren minder geheugencomponenten om de toestand bij te houden. Bovendien kunnen we meestal ook de achterliggende logica die de volgende toestand en de uitgangen berekend. Hiertoe geven we een methode die gegarandeert het kleinste toestandsdiagram vindt die de specificaties kan implementeren. Men minimaal bedoelen we hier het aantal toestanden. Dit betekent dus niet noodzakelijk dat de schakeling die we hiermee verwezenlijken ook minimaal is.
 \subsubsection{Het minimalisatiealoritme}
 \paragraph{Het algemeen idee}De methode die we implementeren gaat uit van een positief idee: alle toestanden zijn vertegenwoordigers van dezelfe toestand. Uiteraard is dit niet altijd het geval. Er zijn twee omstandigheden waarin twee toestanden niet gelijk aan elkaar zijn:
@@ -1207,8 +1207,10 @@ $E$&$B/1$&$A/0$
 \caption{Geminimaliseerde toestandstabellen van de leidende voorbeelden.}
 \label{tbl:minimaalToestandstabel}
 \end{table}
-\subsection{Implementeren van de toestanden in het geheugen}
-\subsubsection{Coderen van de toestanden}
+\paragraph{Een formeel algoritme}
+De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen deze algoritmen in respectievelijk \algref{alg:minimalMoore} en \algref{alg:minimalMealy}.??
+\subsection{Stap 3: Implementeren van de toestanden in het geheugen}
+\subsubsection{Stap 3A: Coderen van de toestanden}
 Tot nu toe hebben we toestanden altijd voorgesteld met letters. Uiteraard dienen we deze toestanden op de een of andere manier voor te stellen in de geheugencomponenten in onze schakeling. Vermits letters niet opgeslagen kunnen worden in een flipflop of een register\footnote{Uiteraard kunnen we bijvoorbeeld wel het ASCII equivalent opslaan.} zullen we de toestanden moeten omzetten naar een binaire voorstelling. Dit wordt het \termen{coderen} van de toestanden genoemd. Doorgaans lijkt dit geen ingewikkeld probleem, we kunnen eenvoudigweg elke toestand een opeenvolgend nummer geven en deze toestanden dan binair coderen. Merk echter op dat de toestand geen impliciete ordening hebben, alleen al door opeenvolgende nummers te gebruiken zijn er $n!$ mogelijke coderingen mogelijk. Er bestaan echter technieken die ervoor zorgen dat we door een intelligente codering minder hardware zullen gebruiken. Dit leidt meestal tot goedkopere en snellere schakelingen. Algemeen zijn er drie technieken die we kunnen gebruiken:
 \begin{itemize}
  \item ``\termen{Straightforward codering}'': soms is de codering triviaal.
@@ -1285,14 +1287,14 @@ Uiteraard dienen we ons niet te beperken tot \'e\'en van deze implementaties. In
 \centering
 \begin{tabular}{c|cc}
 Toestand&0&1\\\hline
-\verb+001+&\verb+010/0+&\verb+001/0+\\
-\verb+010+&\verb+010/0+&\verb+100/0+\\
-\verb+100+&\verb+010/1+&\verb+001/0+\\
+\texttt{001}&\texttt{010/0}&\texttt{001/0}\\
+\texttt{010}&\texttt{010/0}&\texttt{100/0}\\
+\texttt{100}&\texttt{010/1}&\texttt{001/0}\\
 \end{tabular}
 \caption{Codering van de Mealy-machine van het leidend voorbeeld.}
 \label{tbl:mealyBitRepresentation}
 \end{table}
-Bij het zoeken naar een naar een minimal-bit-change voor de Moore-machine maken we gebruik vaan een greedy algoritme. We stelleen eerst een tabel op die het aantal bindingen tussen twee toestanden bevat. Vervolgens wijzen we coderingen aan toestanden toe volgens het aantal bindingen tussen de toestanden. De bindingstabel staat beschreven in tabel \ref{tbl:mooreBitRepresentationBinding}. We zien dat $E$ en $J$ een dubbele binding bevat. We kennen hier de waarde 
+Bij het zoeken naar een naar een minimal-bit-change voor de Moore-machine maken we gebruik vaan een greedy algoritme. We stelleen eerst een tabel op die het aantal bindingen tussen twee toestanden bevat. Vervolgens wijzen we coderingen aan toestanden toe volgens het aantal bindingen tussen de toestanden. De bindingstabel staat beschreven in tabel \ref{tbl:mooreBitRepresentationBinding}. We zien dat $E$ en $J$ een dubbele binding bevat. We kennen hier de waarde $01$ toe aan $E$ en $11$ bij $J$. Verder is $B$ gelinkt aan $E$ en daarom geven we dit de waarde $00$. $A$ krijgt ten slotte de waarde $10$.
 \begin{table}[hbt]
 \centering
 \subtable[Bindingstabel]{
@@ -1305,17 +1307,17 @@ $J$&-&-&-&0\\
 \end{tabular}
 \label{tbl:mooreBitRepresentationBinding}
 }
-% \subtable[Coderingstabel]{\begin{tabular}{c|cc|c}
-% Toestand&0&1&Uitgang\\\hline
-% \verb+001+&\verb+010+&\verb+001+&0\\
-% \verb+010+&\verb+010+&\verb+100+&0\\
-% \verb+100+&\verb+010+&\verb+001+&0\\
-% \verb+100+&\verb+010+&\verb+001+&1
-% \end{tabular}}
+\subtable[Coderingstabel]{\begin{tabular}{c|cc|c}
+Toestand&0&1&Uitgang\\\hline
+\texttt{10}&\texttt{00}&\texttt{10}&\texttt{0}\\
+\texttt{00}&\texttt{00}&\texttt{01}&\texttt{0}\\
+\texttt{01}&\texttt{11}&\texttt{10}&\texttt{0}\\
+\texttt{11}&\texttt{00}&\texttt{01}&\texttt{1}\\
+\end{tabular}}
 \caption{Codering van de Moore-machine van het leidend voorbeeld.}
 \label{tbl:mooreBitRepresentation}
 \end{table}
-\subsubsection{De keuze van het type flipflop}
+\subsubsection{Stap 3B: De keuze van het type flipflop}
 Nadat we elke toestand kunnen voorstellen met een sequentie aan bits, dienen we flipflops te voorzien om deze toestand bij te houden. Hierbij hebben we de keuze tussen de verschillende flipflops die we in \ref{sss:typesFlipflops} besproken hebben. Elk van deze types zal een specifieke combinatorische logica vereisen met specifieke kosten en vertraging. Om de meest optimale schakeling te realiseren zullen we altijd alle types moeten uitproberen. Verder kunnen we ook voor verschillende bits een verschillend type flipflop voorzien. Hierop gaan we echter niet in. De ervaring leert ons wel dat voor verschillende toepassingen verschillende soorten flipflops een zekere voorkeur genieten. De typische toepassingen zeg maar. Een cruciale factor is ook het aantal don't cares. In het algemeen is het zo dat hoe meer don't cares de combinatorische schakeling bevat, hoe eenvoudiger te implementeren. Sommige flipflops introduceren makkelijker don't cares dan andere flipflops.
 \paragraph{De kosten van een flipflop}Als we de kostprijs van de verschillende types flipflops met elkaar vergelijken merken we dat de JK-flipflop opmerkelijk duurder\footnote{Ter illustratie een JK-flipflop ge\"integreerd circuit kost \$0.116, een gelijkaardige D-flipflop kost ongeveer \$0.049.} is. Dit betekent daarom niet dat de totale kostprijs van de schakeling groter is. Immers dienen we ook een combinatorisch gedeelte, de optelling van beide leidt tot de totale kostprijs.
 \paragraph{Don't cares}Een JK-flipflop is dan duurder, maar door de typische realisatie leidt dit tot veel don't cares. Dit leidt tot een eenvoudige schakeling. Het is logisch dat een JK-flipflop nogal wat don't cares impliceert: er zijn immers enkele manieren om dezelfde waarde in een JK-flipflop te klokken. Ook een SR-flipflop laat ruimte voor don't cares in het combinatorische gedeelte. Een D-flipflop laat doorgaans weinig plaats voor don't cares. Dit komt omdat in elke klokflank een nieuwe waarde uit de ingang wordt gelezen. We dienen er dus telkens voor te zorgen dat op dit moment de juiste waarde aan de ingang staat. Een T-flipflop ten slotte heeft net hetzelfde probleem, meestal is het effect hier zelfs nog erger.
@@ -1337,9 +1339,58 @@ Toepassingen&\multicolumn{2}{c|}{veel veranderingen}&tijdelijke geheugens&teller
 \caption{Keuze van het type flipflop.}
 \label{tbl:whichFlipflop}
 \end{table}
-\subsection{Implementeren van de combinatorische logica}
-Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de volgende toestand berekent, en de logica die de uitgang bepaalt.
-\subsubsection{Logica die de volgende toestand berekent}
-\subsubsection{Logica die de uitgang toestand berekent}
+\subsection{Stap 4: Implementeren van de combinatorische logica}
+Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de volgende toestand berekent, en de logica die de uitgang bepaalt. We bespreken elk van deze onderdelen apart.
+\subsubsection{Stap 4A: Logica die de volgende toestand berekent}
+\paragraph{Excitatietabellen}Het deel van de logica die de volgende toestand van het circuit berekent is bij zowel een Moore- als een Mealy-machine identiek. Het is een combinatorische schakeling die als ingangen de invoer van het component en de de toestand heeft, als uitvoer heeft het de ingangen van de flipflops die de toestand bijhouden. Het aantal uitgangen en de uitgangen zelf hangen dus af van het type flipflop die we gekozen hebben. We dien dus een tabel op te stellen die op basis van de invoer van de schakeling en de toestand aangeeft welke ingangen van welke flipflops hoog of laag moeten zijn. Deze functies noemen we de \termen{excitatiefuncties} ze komen voort uit de \termen{excitatietabellen} van de verschillende flipflops. Deze tabellen werden reeds ge\"introduceert in \ref{sss:typesFlipflops}. In tabel \ref{tbl:excitationTablesFlipflops} geven we eerst opnieuw een kort overzicht van de excitatietabellen van de verschillende flipflops.
+\begin{table}[hbt]
+\centering
+\subtable[JK]{
+\begin{tabular}{c|c|cc}
+$Q$&$Q_{\mbox{\small{next.}}}$&$J$&$K$\\\hline
+0&0&0&-\\
+0&1&1&-\\
+1&0&-&1\\
+1&1&-&0\\
+\end{tabular}
+\label{tbl:excitationTablesFlipflopsJK}}
+\subtable[SR]{
+\begin{tabular}{c|c|cc}
+$Q$&$Q_{\mbox{\small{next.}}}$&$S$&$R$\\\hline
+0&0&0&-\\
+0&1&1&0\\
+1&0&0&1\\
+1&1&-&0\\
+\end{tabular}
+\label{tbl:excitationTablesFlipflopsSR}}
+\subtable[D]{
+\begin{tabular}{c|c|c}
+$Q$&$Q_{\mbox{\small{next.}}}$&$D$\\\hline
+0&0&0\\
+0&1&1\\
+1&0&0\\
+1&1&1\\
+\end{tabular}
+\label{tbl:excitationTablesFlipflopsD}}
+\subtable[T]{
+\begin{tabular}{c|c|c}
+$Q$&$Q_{\mbox{\small{next.}}}$&$T$\\\hline
+0&0&0\\
+0&1&1\\
+1&0&1\\
+1&1&0\\
+\end{tabular}
+\label{tbl:excitationTablesFlipflopsT}}
+\caption{Excitatietabellen van de verschillende flipflops}
+\label{tbl:excitationTablesFlipflops}
+\end{table}
+Op basis van deze tabellen kunnen we nu de excitatiefuncties berekenen. Deze functies bevatten traditioneel veel don't cares. Deze don't cares hebben drie oorzaken:
+\begin{itemize}
+ \item De don't cares die we terug vinden bij de excitatietabellen. Dit zijn don't cares in de uitgang van de functie en komen enkel voor bij implementaties met JK- en SR-flipflops.
+ \item Binaire coderingen van toestanden die niet bestaan. Een concreet geval is bijvoorbeeld $011$ bij een one-hot codering. Dergelijke invoer codeert nooit naar een uitvoer.
+ \item Binaire coderingen van ingangscombinaties die niet mogelijk zijn. Stel bijvoorbeeld dat we een $2$-bit ingang beschouwen en enkel configuraties $00$, $01$ en $11$ kunnen voorkomen.
+\end{itemize}
+Deze laatste twee zijn een vorm van invoer die niet kan voorkomen. In een tabel kunnen we de rijen weglaten, of we kunnen de rij opvullen met don´t cares aan het uitganggedeelte.
+\subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}

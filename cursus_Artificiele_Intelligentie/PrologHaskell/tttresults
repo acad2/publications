@@ -1,0 +1,98 @@
+BoardTree (Board [[ , , ],[ , , ],[ , , ]]) [
+	BoardTree (Board [[X, , ],[ , , ],[ , , ]]) [
+		BoardTree (Board [[X,O, ],[ , , ],[ , , ]]) [
+			BoardTree (Board [[X,O,X],[ , , ],[ , , ]]) [],
+			BoardTree (Board [[X,O, ],[X, , ],[ , , ]]) [],
+			BoardTree (Board [[X,O, ],[ ,X, ],[ , , ]]) [],
+			BoardTree (Board [[X,O, ],[ , ,X],[ , , ]]) [],
+			BoardTree (Board [[X,O, ],[ , , ],[X, , ]]) [],
+			BoardTree (Board [[X,O, ],[ , , ],[ ,X, ]]) [],
+			BoardTree (Board [[X,O, ],[ , , ],[ , ,X]]) []
+		],
+		BoardTree (Board [[X, ,O],[ , , ],[ , , ]]) [
+			BoardTree (Board [[X,X,O],[ , , ],[ , , ]]) [],
+			BoardTree (Board [[X, ,O],[X, , ],[ , , ]]) [],
+			BoardTree (Board [[X, ,O],[ ,X, ],[ , , ]]) [],
+			BoardTree (Board [[X, ,O],[ , ,X],[ , , ]]) [],
+			BoardTree (Board [[X, ,O],[ , , ],[X, , ]]) [],
+			BoardTree (Board [[X, ,O],[ , , ],[ ,X, ]]) [],
+			BoardTree (Board [[X, ,O],[ , , ],[ , ,X]]) []
+		],
+		BoardTree (Board [[X, , ],[ ,O, ],[ , , ]]) [
+			BoardTree (Board [[X,X, ],[ ,O, ],[ , , ]]) [],
+			BoardTree (Board [[X, ,X],[ ,O, ],[ , , ]]) [],
+			BoardTree (Board [[X, , ],[ ,O,X],[ , , ]]) [],
+			BoardTree (Board [[X, , ],[ ,O, ],[ , ,X]]) []
+		],
+		BoardTree (Board [[X, , ],[ , ,O],[ , , ]]) [
+			BoardTree (Board [[X,X, ],[ , ,O],[ , , ]]) [],
+			BoardTree (Board [[X, ,X],[ , ,O],[ , , ]]) [],
+			BoardTree (Board [[X, , ],[X, ,O],[ , , ]]) [],
+			BoardTree (Board [[X, , ],[ ,X,O],[ , , ]]) [],
+			BoardTree (Board [[X, , ],[ , ,O],[X, , ]]) [],
+			BoardTree (Board [[X, , ],[ , ,O],[ ,X, ]]) [],
+			BoardTree (Board [[X, , ],[ , ,O],[ , ,X]]) []
+		],
+		BoardTree (Board [[X, , ],[ , , ],[ , ,O]]) [
+			BoardTree (Board [[X,X, ],[ , , ],[ , ,O]]) [],
+			BoardTree (Board [[X, ,X],[ , , ],[ , ,O]]) [],
+			BoardTree (Board [[X, , ],[ ,X, ],[ , ,O]]) [],
+			BoardTree (Board [[X, , ],[ , ,X],[ , ,O]]) []
+		]
+	],
+	BoardTree (Board [[ ,X, ],[ , , ],[ , , ]]) [
+		BoardTree (Board [[O,X, ],[ , , ],[ , , ]]) [
+			BoardTree (Board [[O,X,X],[ , , ],[ , , ]]) [],
+			BoardTree (Board [[O,X, ],[X, , ],[ , , ]]) [],
+			BoardTree (Board [[O,X, ],[ ,X, ],[ , , ]]) [],
+			BoardTree (Board [[O,X, ],[ , ,X],[ , , ]]) [],
+			BoardTree (Board [[O,X, ],[ , , ],[X, , ]]) [],
+			BoardTree (Board [[O,X, ],[ , , ],[ ,X, ]]) [],
+			BoardTree (Board [[O,X, ],[ , , ],[ , ,X]]) []
+		],
+		BoardTree (Board [[ ,X, ],[O, , ],[ , , ]]) [
+			BoardTree (Board [[X,X, ],[O, , ],[ , , ]]) [],
+			BoardTree (Board [[ ,X,X],[O, , ],[ , , ]]) [],
+			BoardTree (Board [[ ,X, ],[O,X, ],[ , , ]]) [],
+			BoardTree (Board [[ ,X, ],[O, ,X],[ , , ]]) [],
+			BoardTree (Board [[ ,X, ],[O, , ],[X, , ]]) [],
+			BoardTree (Board [[ ,X, ],[O, , ],[ ,X, ]]) [],
+			BoardTree (Board [[ ,X, ],[O, , ],[ , ,X]]) []
+		],
+		BoardTree (Board [[ ,X, ],[ ,O, ],[ , , ]]) [
+			BoardTree (Board [[X,X, ],[ ,O, ],[ , , ]]) [],
+			BoardTree (Board [[ ,X, ],[X,O, ],[ , , ]]) [],
+			BoardTree (Board [[ ,X, ],[ ,O, ],[X, , ]]) [],
+			BoardTree (Board [[ ,X, ],[ ,O, ],[ ,X, ]]) []
+		],
+		BoardTree (Board [[ ,X, ],[ , , ],[O, , ]]) [
+			BoardTree (Board [[X,X, ],[ , , ],[O, , ]]) [],
+			BoardTree (Board [[ ,X,X],[ , , ],[O, , ]]) [],
+			BoardTree (Board [[ ,X, ],[X, , ],[O, , ]]) [],
+			BoardTree (Board [[ ,X, ],[ ,X, ],[O, , ]]) [],
+			BoardTree (Board [[ ,X, ],[ , ,X],[O, , ]]) [],
+			BoardTree (Board [[ ,X, ],[ , , ],[O,X, ]]) [],
+			BoardTree (Board [[ ,X, ],[ , , ],[O, ,X]]) []
+		],
+		BoardTree (Board [[ ,X, ],[ , , ],[ ,O, ]]) [
+			BoardTree (Board [[X,X, ],[ , , ],[ ,O, ]]) [],
+			BoardTree (Board [[ ,X, ],[X, , ],[ ,O, ]]) [],
+			BoardTree (Board [[ ,X, ],[ ,X, ],[ ,O, ]]) [],
+			BoardTree (Board [[ ,X, ],[ , , ],[X,O, ]]) []
+		]
+	],
+	BoardTree (Board [[ , , ],[ ,X, ],[ , , ]]) [
+		BoardTree (Board [[O, , ],[ ,X, ],[ , , ]]) [
+			BoardTree (Board [[O,X, ],[ ,X, ],[ , , ]]) [],
+			BoardTree (Board [[O, ,X],[ ,X, ],[ , , ]]) [],
+			BoardTree (Board [[O, , ],[ ,X,X],[ , , ]]) [],
+			BoardTree (Board [[O, , ],[ ,X, ],[ , ,X]]) []
+		],
+		BoardTree (Board [[ ,O, ],[ ,X, ],[ , , ]]) [
+			BoardTree (Board [[X,O, ],[ ,X, ],[ , , ]]) [],
+			BoardTree (Board [[ ,O, ],[X,X, ],[ , , ]]) [],
+			BoardTree (Board [[ ,O, ],[ ,X, ],[X, , ]]) [],
+			BoardTree (Board [[ ,O, ],[ ,X, ],[ ,X, ]]) []
+		]
+	]
+]

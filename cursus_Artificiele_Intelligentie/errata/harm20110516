@@ -1,0 +1,31 @@
+Hey,
+
+bij het nog eens doorlopen ben ik op volgende dingen gestoten:
+
+[V] 2.3.5 Er staat dat Greedy Search de enige complete heuristische oplossing is maar Hill Climbing (1) is toch ook compleet?
+[V] 2.4.1 "Een pad die echter vanuit B vertrekt," -> Een pad dat
+[V] 2.4.2 "Indien onze Queue een pad bevat die naar een..." -> Een pad dat
+[X]	  Ik merk ook dat het algoritme bij Optimal Uniform Cost (Algorithm 11) eigenlijk niet veel verschilt van Algoritme 10. Enkel goalReached(Queue) wordt goalReached(Queue[0]). Het Branch en Bound principe wordt nergens geimplementeerd. 
+[V] 2.4.6 "A* is een uitbreiding op het Uniform Cost Search Algoritme ..." A* is afaik een uitbreiding op het Extended Uniform Cost algoritme aangezien A* gebruikt maakt van de Extended Uniform Cost en niet gewoon de geaccumuleerde kost. (Extended Uniform kost is natuurlijk een uitbreiding op Uniform kost dus de interpretatie van de zin is voor discussie vatbaar)
+[V]       Theorema 2: Initieel: "S = pad die bron bevat" -> pad dat bron bevat
+[V]       Bewijs van terminatie: "(B is immers een pad die het doel bereikt,..." -> een pad dat
+[V]       laatste zin: "..., zal de Queue op een gegeven moment leeg is,..." is -> zijn
+[V]       Minimale kost paden en monotoniciteit: "Indien we bijvoorbeeld een pad beschouwen(S,A,C,D) die ..." die -> dat
+[V]       "A* zal indien we de monoticiteitsregel volgen altijd een knoop selecteren, met het meest efficiente pad tot de knoop." komma mag weg
+[V] 2.4.8, 2e alinea: "... dat de kinderen een voor een gegenereerde worden, om geen..." -> gegenereerd; komma na worden moet er niet staan volgens mij
+[V] 3.2.4 7e alinea: "Een eerste aspect die duidelijk opvalt is de symmetrie." die -> dat
+[V]       8e alinea: "Het algoritme kan eindigen omwille van twee redenen, ...." , -> :
+[V] 3.2.5 laatste alinea:  "Veel praktisch algoritmen hebben..." -> praktische
+[V]                                 "Dit vermijd de keuze van een taal, ..." -> vermijdt
+[X] 4.4 Eerste zin: ik zou het dubbelpunt weglaten.
+[V] 4.4.2 "Het verwijderen van enkele variabelen, kan een kettingreactie..." komma mag weg
+[V] 4.5.1 "eenvoudig weg" -> eenvoudigweg
+[V] 4.5.5 "In het laatste geval dreigen er ..." Huidige zinsstructuur: __1__, __2__, __3_. Ik denk dat de volgende structuur beter leesbaar zou zijn: __1__ die __3__ die toch __2__.
+[V] 4.6.1 Forward Check: "Vervolgens controleren we ... aan die variabele -namelijk- c(z_i,z_k),.. .
+[V]       "Een oplossing hiervoor is door middel van backtracking, all-e- mogelijke..."
+[X]       Look Ahead Check: Er klopt iets niet aan de tweede zin. (En er moet geen komma voor de "en")
+
+Als ik later nog fouten vind stuur ik ze wel door :)
+
+
+Harm
