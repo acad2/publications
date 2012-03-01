@@ -56,8 +56,8 @@
 \contentsline {figure}{\numberline {1.21}{\ignorespaces Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}}{25}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Gray-code (minimal-bit-change)}}}{25}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Straightforward}}}{25}
-\contentsline {xpart}{Processoren}{29}
-\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{31}
+\contentsline {xpart}{Processoren}{31}
+\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{33}
 \addvspace {10\p@ }
-\contentsline {xchapter}{VHDL}{31}
-\contentsline {xpart}{Appendices}{39}
+\contentsline {xchapter}{VHDL}{33}
+\contentsline {xpart}{Appendices}{41}
