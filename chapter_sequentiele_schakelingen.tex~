@@ -1280,13 +1280,65 @@ Uiteraard dienen we ons niet te beperken tot \'e\'en van deze implementaties. In
 \caption{Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}
 \label{fig:grayCodeCounter}
 \end{figure}
+\paragraph{Leidende voorbeelden}Voor de Moore-machine kiezen we voor een minimal-bit-change benadering en voor de Mealy-machine een one-hot codering. Deze keuzes zijn louter didactief. De toegewezen bitvoorstellingen worden in een toestandstabel geschreven. Deze ??. Voor een one-hot codering is dit vrij triviaal. We wijzen elke toestand \'e\'en bit toe. Welke bit heeft geen invloed op de schakeling. Tabel \ref{tbl:mealyBitRepresentation} stelt de Mealy-machine uit de leidende voorbeelden voor met de one-hot codering.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|cc}
+Toestand&0&1\\\hline
+\texttt{001}&\texttt{010/0}&\texttt{001/0}\\
+\texttt{010}&\texttt{010/0}&\texttt{100/0}\\
+\texttt{100}&\texttt{010/1}&\texttt{001/0}\\
+\end{tabular}
+\caption{Codering van de Mealy-machine van het leidend voorbeeld.}
+\label{tbl:mealyBitRepresentation}
+\end{table}
+Bij het zoeken naar een naar een minimal-bit-change voor de Moore-machine maken we gebruik vaan een greedy algoritme. We stelleen eerst een tabel op die het aantal bindingen tussen twee toestanden bevat. Vervolgens wijzen we coderingen aan toestanden toe volgens het aantal bindingen tussen de toestanden. De bindingstabel staat beschreven in tabel \ref{tbl:mooreBitRepresentationBinding}. We zien dat $E$ en $J$ een dubbele binding bevat. We kennen hier de waarde $01$ toe aan $E$ en $11$ bij $J$. Verder is $B$ gelinkt aan $E$ en daarom geven we dit de waarde $00$. $A$ krijgt ten slotte de waarde $10$.
+\begin{table}[hbt]
+\centering
+\subtable[Bindingstabel]{
+\begin{tabular}{c|cccc}
+&$A$&$B$&$E$&$J$\\\hline
+$A$&1&1&1&0\\
+$B$&-&1&1&1\\
+$E$&-&-&0&2\\
+$J$&-&-&-&0\\
+\end{tabular}
+\label{tbl:mooreBitRepresentationBinding}
+}
+\subtable[Coderingstabel]{\begin{tabular}{c|cc|c}
+Toestand&0&1&Uitgang\\\hline
+\texttt{10}&\texttt{00}&\texttt{10}&\texttt{0}\\
+\texttt{00}&\texttt{00}&\texttt{01}&\texttt{0}\\
+\texttt{01}&\texttt{11}&\texttt{10}&\texttt{0}\\
+\texttt{11}&\texttt{00}&\texttt{01}&\texttt{1}\\
+\end{tabular}}
+\caption{Codering van de Moore-machine van het leidend voorbeeld.}
+\label{tbl:mooreBitRepresentation}
+\end{table}
 \subsubsection{De keuze van het type flipflop}
 Nadat we elke toestand kunnen voorstellen met een sequentie aan bits, dienen we flipflops te voorzien om deze toestand bij te houden. Hierbij hebben we de keuze tussen de verschillende flipflops die we in \ref{sss:typesFlipflops} besproken hebben. Elk van deze types zal een specifieke combinatorische logica vereisen met specifieke kosten en vertraging. Om de meest optimale schakeling te realiseren zullen we altijd alle types moeten uitproberen. Verder kunnen we ook voor verschillende bits een verschillend type flipflop voorzien. Hierop gaan we echter niet in. De ervaring leert ons wel dat voor verschillende toepassingen verschillende soorten flipflops een zekere voorkeur genieten. De typische toepassingen zeg maar. Een cruciale factor is ook het aantal don't cares. In het algemeen is het zo dat hoe meer don't cares de combinatorische schakeling bevat, hoe eenvoudiger te implementeren. Sommige flipflops introduceren makkelijker don't cares dan andere flipflops.
-\paragraph{De kosten van een flipflop}Als we de kostprijs van de verschillende types flipflops met elkaar vergelijken merken we dat de JK-flipflop opmerkelijk duurder\footnote{Ter illustratie een JK-flipflop ge\"integreerd circuit kost \$0.116, een gelijkaardige D-flipflop kost ongeveer \$0.49.} is. Dit betekent daarom niet dat de totale kostprijs van de schakeling groter is. Immers dienen we ook een combinatorisch gedeelte, de optelling van beide leidt tot de totale kostprijs.
+\paragraph{De kosten van een flipflop}Als we de kostprijs van de verschillende types flipflops met elkaar vergelijken merken we dat de JK-flipflop opmerkelijk duurder\footnote{Ter illustratie een JK-flipflop ge\"integreerd circuit kost \$0.116, een gelijkaardige D-flipflop kost ongeveer \$0.049.} is. Dit betekent daarom niet dat de totale kostprijs van de schakeling groter is. Immers dienen we ook een combinatorisch gedeelte, de optelling van beide leidt tot de totale kostprijs.
 \paragraph{Don't cares}Een JK-flipflop is dan duurder, maar door de typische realisatie leidt dit tot veel don't cares. Dit leidt tot een eenvoudige schakeling. Het is logisch dat een JK-flipflop nogal wat don't cares impliceert: er zijn immers enkele manieren om dezelfde waarde in een JK-flipflop te klokken. Ook een SR-flipflop laat ruimte voor don't cares in het combinatorische gedeelte. Een D-flipflop laat doorgaans weinig plaats voor don't cares. Dit komt omdat in elke klokflank een nieuwe waarde uit de ingang wordt gelezen. We dienen er dus telkens voor te zorgen dat op dit moment de juiste waarde aan de ingang staat. Een T-flipflop ten slotte heeft net hetzelfde probleem, meestal is het effect hier zelfs nog erger.
 \paragraph{Eenvoud van het ontwerp}Indien we de schakeling zelf moeten realiseren moeten we ook rekening houden met het tijdsaspect en dus de eenvoud van het ontwerp. Doorgaans leidt een D-flipflop tot de eenvoudigste implementatie. Dit komt omdat we meestal geneigd zijn absoluut te denken. Verder heeft een D-flipflop ook slechts \'e\'en ingang, en is de component makkelijk te specifi\"eren: "wat we aan de ingang aanleggen staat de volgende klokflank in de flipflop". Het opstellen van een \termen{excitatietabel} is dan ook eenvoudig. Een T-flipflop is ook conceptueel eenvoudig: "indien de waarde moet omslaan, leg dan 1 aan op de ingang". Moeilijker zijn de SR- en JK-flipflop. Dit komt in de eerste plaats omdat beide componenten twee ingangen hebben. Merk dus op dat we twee een excitatietabel met twee ingangen moeten opstellen.
 \paragraph{Toepassingen}Door jaren ervaring heeft men kennis opgebouwd welke toepassing welke flipflop vereist. In subsectie \ref{ss:counters} hebben we reeds teller gebruikt en hebben we vaak gebruik gemaakt van T- en D-flipflops. Tellers en frequentiedelers\footnote{Een frequentiedeler is een moduloteller die de frequentie waarmee er geteld wordt deelt door het modulo-getal. Enkel wanneer zich een overflow voordoet geven we het signaal door. Hierdoor kunnen we delen van de schakeling aan een lagere klokfrequentie laten werken.} worden typisch ge\"implementeerd met T-flipflops. Meestal zal dit tot ijle excitatietabellen leiden. Een D-flipflop wordt typisch gebruikt om een waarde zeer tijdelijk te onthouden, meestal slechts enkele klokflanken. Voor complexe toepassingen waarbij de waarde van de flipflop frequent een 0 of 1 wordt zijn SR- en JK-flipflops het meest geschikt.
+\paragraph{Welke flipflop kiezen?}De vorige paragrafen proberen hints te geven welke flipflops het meest geschikt zijn, deze hints zijn echter niet absoluut. Om tot de goedkoopste schakeling te komen, moeten we alle mogelijkheden uitproberen. Meestal hebben we de tijd niet alle configuraties te proberen. In dat geval zijn D-flipflops meestal de beste keuze. Ook een FPGA volgt deze redenering en bevat enkel D-flipflops.
+\paragraph{Samevatting}
+We vatten de vorige paragrafen samen in tabel \ref{tbl:whichFlipflop}.
+\begin{table}[hbt]
+\centering
+\small{\begin{tabular}{|*{5}{M}}
+\hline
+Flipflop&JK&SR&D&T\\\hline\hline
+Kostprijs&\verb/--/&\verb/++/&\verb/++/&\verb/++/\\\hline
+Don't cares&\verb/++/&\verb/+/&\verb/-/&\verb/--/\\\hline
+Ontwerp&\verb/--/&\verb/-/&\verb/++/&\verb/+/\\\hline
+Toepassingen&\multicolumn{2}{c|}{veel veranderingen}&tijdelijke geheugens&tellers, frequentiedelers\\\hline
+\end{tabular}}
+\caption{Keuze van het type flipflop.}
+\label{tbl:whichFlipflop}
+\end{table}
 \subsection{Implementeren van de combinatorische logica}
+Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de volgende toestand berekent, en de logica die de uitgang bepaalt.
 \subsubsection{Logica die de volgende toestand berekent}
 \subsubsection{Logica die de uitgang toestand berekent}
 \section{Asynchroon schakelingen}

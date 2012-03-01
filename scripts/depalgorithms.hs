@@ -4,21 +4,21 @@ import Data.Function
 type Transition s i = s->i->s
 type MooreOutput s o = s->o
 type MealyOutput s i o = s->i->o
-type MooreMachine s i o = ([s],s,[i],[o],Transition s i,MooreOutput s o)
-type MealyMachine s i o = ([s],s,[i],[o],Transition s i,MealyOutput s i o)
+data MooreMachine s i o = Moore ([s],s,[i],[o],Transition s i,MooreOutput s o)
+data MealyMachine s i o = Mealy ([s],s,[i],[o],Transition s i,MealyOutput s i o)
 
 splitMooreOutput :: (Eq o) => MooreMachine s i o -> [[s]]
-splitMooreOutput (states,_,_,_,_,func)  = partitionBy (mooreOutputSplitter func) states
+splitMooreOutput (Moore (states,_,_,_,_,func))  = partitionBy (mooreOutputSplitter func) states
 
 mooreOutputSplitter :: (Eq b) => (a->b)->[a]->a->Bool
 mooreOutputSplitter _ [] _ = False
 mooreOutputSplitter func (x:xs) y = (func x) == (func y)
 
 doSplitMooreOperation :: (Eq s) => MooreMachine s i o -> [[s]] -> [[s]] -> [[s]]
-doSplitMooreOperation (_,_,inputs,_,transit,_) = doSplitOperation inputs transit
+doSplitMooreOperation (Moore (_,_,inputs,_,transit,_)) = doSplitOperation inputs transit
 
 doSplitMealyOperation :: (Eq s) => MealyMachine s i o -> [[s]] -> [[s]] -> [[s]]
-doSplitMealyOperation (_,_,inputs,_,transit,_) = doSplitOperation inputs transit
+doSplitMealyOperation (Mealy (_,_,inputs,_,transit,_)) = doSplitOperation inputs transit
 
 doSplitOperation :: (Eq s) => [i] -> Transition s i -> [[s]] -> [[s]] -> [[s]]
 doSplitOperation _ _ _ [] = []
@@ -34,7 +34,7 @@ samePartitionStates (s:other) x y	| elem x s = elem y s
 					| otherwise = samePartitionStates other x y
 
 splitMealyOutput :: (Eq o) => MealyMachine s i o -> [[s]]
-splitMealyOutput (states,_,inputs,_,_,func)  = partitionBy (mealyOutputSplitter func inputs) states
+splitMealyOutput (Mealy (states,_,inputs,_,_,func))  = partitionBy (mealyOutputSplitter func inputs) states
 
 mealyOutputSplitter :: (Eq b) => (a->i->b)->[i]->[a]->a->Bool
 mealyOutputSplitter _ _ [] _ = False
@@ -49,13 +49,16 @@ addOrCreate _ x [] = [[x]]
 addOrCreate func x (l:ls)	| func l x = ((x:l):ls)
 				| otherwise = (l:addOrCreate (func) x ls)
 
-whileFunc :: ([a] -> [a]) -> [a] -> [a] 
-whileFunc f a = snd $ last $ takeWhile (uncurry ((/=) `on` length)) $ zip t (tail t)
+whileFunc :: ([a] -> [a]) -> [a] -> [[a]] 
+whileFunc f a = map (snd) (takeWhile (uncurry ((/=) `on` length)) $ zip t (tail t))
 	where 
 		t = (iterate f a)
 
+rebindMoore :: MooreMachine s i o -> [[s]] -> MooreMachine s i o
+rebindMealy :: MealyMachine s i o -> [[s]] -> MealyMachine s i o
+
 sampleMoore :: MooreMachine Char Char Char
-sampleMoore = (['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'],'A',['0','1'],['0','1'],sampleMooreTransition,sampleMooreOutput)
+sampleMoore = Moore (['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'],'A',['0','1'],['0','1'],sampleMooreTransition,sampleMooreOutput)
 
 sampleMooreTransition :: Transition Char Char
 sampleMooreTransition 'A' '0' = 'B'
@@ -94,7 +97,7 @@ sampleMooreOutput 'J' = '1'
 sampleMooreOutput _ = '0'
 
 sampleMealy :: MealyMachine Char Char Char
-sampleMealy = (['A','B','C','D','E','F','G'],'A',['0','1'],['0','1'],sampleMealyTransition,sampleMealyOutput)
+sampleMealy = Mealy (['A','B','C','D','E','F','G'],'A',['0','1'],['0','1'],sampleMealyTransition,sampleMealyOutput)
 
 sampleMealyTransition :: Transition Char Char
 sampleMealyTransition 'A' '0' = 'B'

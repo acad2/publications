@@ -9,7 +9,11 @@
 \contentsline {subtable}{\numberline {(a)}{\ignorespaces {Moore-machine}}}{24}
 \contentsline {subtable}{\numberline {(b)}{\ignorespaces {Mealy-machine}}}{24}
 \contentsline {table}{\numberline {1.2}{\ignorespaces Geminimaliseerde toestandstabellen van de leidende voorbeelden.}}{24}
-\contentsline {table}{\numberline {1.3}{\ignorespaces Keuze van het type flipflop.}}{26}
+\contentsline {table}{\numberline {1.3}{\ignorespaces Codering van de Mealy-machine van het leidend voorbeeld.}}{26}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Bindingstabel}}}{26}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Coderingstabel}}}{26}
+\contentsline {table}{\numberline {1.4}{\ignorespaces Codering van de Moore-machine van het leidend voorbeeld.}}{26}
+\contentsline {table}{\numberline {1.5}{\ignorespaces Keuze van het type flipflop.}}{27}
 \contentsline {xpart}{Processoren}{31}
 \contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{33}
 \addvspace {10\p@ }
