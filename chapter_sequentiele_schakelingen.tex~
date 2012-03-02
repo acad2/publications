@@ -1451,8 +1451,39 @@ $F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$\\\hline
 \end{tabular}
 \label{tbl:stateTableMooreCombLinSR}}
 \caption{Voorstelling van de transitiefunctie van de Moore-machine.}
+\label{tbl:stateTableMooreCombLin}
 \end{table}
-Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In het geval we niet met D-flipflops werken dienen we nog een extra stap te beschouwen: in dat geval beschouwen we voor elke flipflop het tupple $\left(F_i,D_i\right)$. Hierbij geldt $F_i=Q$ en $D_i=Q_{\mbox{\small{next.}}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft in de excitatietabellen (zie tabel \ref{tbl:excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen. Voorbeelden hiervan voor respectievelijk de T-, JK- en SR-flipflop staan in tabellen \ref{tbl:stateTableMooreCombLinT}, \ref{tbl:stateTableMooreCombLinJK} en \ref{tbl:stateTableMooreCombLinSR}.
+Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In het geval we niet met D-flipflops werken dienen we nog een extra stap te beschouwen: in dat geval beschouwen we voor elke flipflop het tupple $\left(F_i,D_i\right)$. Hierbij geldt $F_i=Q$ en $D_i=Q_{\mbox{\small{next.}}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft in de excitatietabellen (zie tabel \ref{tbl:excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen. Voorbeelden hiervan voor respectievelijk de T-, JK- en SR-flipflop staan in tabellen \ref{tbl:stateTableMooreCombLinT}, \ref{tbl:stateTableMooreCombLinJK} en \ref{tbl:stateTableMooreCombLinSR}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren. We minimaliseren eerste de functies met behulp van Karnaugh-kaarten en implementeren dan vervolgens de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben (1 per D- en T-flipflop en 2 per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op figuur \ref{fig:mooreCombImpl} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie. Omdat we echter over meerdere uitgangen spreken is er geen garantie dat deze implementatie de goedkoopste is.
+\begin{figure}[hbt]
+\centering
+\subfigure[D-flipflops]{
+\begin{tikzpicture}
+\kkaartc{0}{0}{$D_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/0/1/0/0};
+\kkaartc{2}{0}{$D_1$}{$F_0$/$F_1$/$I_0$}{0/1/1/0/0/0/0/1};
+\end{tikzpicture}}
+\subfigure[T-flipflops]{
+\begin{tikzpicture}
+\kkaartc{0}{0}{$T_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/1/0/1/1};
+\kkaartc{2}{0}{$T_1$}{$F_0$/$F_1$/$I_0$}{0/1/0/1/0/0/1/0};
+\end{tikzpicture}}
+\subfigure[JK-flipflops]{
+\begin{tikzpicture}%TODO
+\kkaartc{0}{0}{$J_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/1/0/1/1};
+\kkaartc{2}{0}{$K_0$}{$F_0$/$F_1$/$I_0$}{0/1/0/1/0/0/1/0};
+\kkaartc{4}{0}{$J_1$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/1/0/1/1};
+\kkaartc{6}{0}{$K_1$}{$F_0$/$F_1$/$I_0$}{0/1/0/1/0/0/1/0};
+\end{tikzpicture}}
+\subfigure[SR-flipflops]{
+\begin{tikzpicture}
+\kkaartc{0}{0}{$S_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/1/0/1/1};
+\kkaartc{2}{0}{$R_0$}{$F_0$/$F_1$/$I_0$}{0/1/0/1/0/0/1/0};
+\kkaartc{4}{0}{$S_1$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/1/0/1/1};
+\kkaartc{6}{0}{$R_1$}{$F_0$/$F_1$/$I_0$}{0/1/0/1/0/0/1/0};
+\end{tikzpicture}}
+\caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
+\label{fig:mooreCombImpl}
+\end{figure}
+\paragraph{Het one-hot-codering geval}
 \subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}
