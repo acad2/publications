@@ -19,13 +19,19 @@
 \contentsline {subtable}{\numberline {(c)}{\ignorespaces {D}}}{28}
 \contentsline {subtable}{\numberline {(d)}{\ignorespaces {T}}}{28}
 \contentsline {table}{\numberline {1.6}{\ignorespaces Excitatietabellen van de verschillende flipflops}}{28}
-\contentsline {xpart}{Processoren}{31}
-\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{33}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Coderingstabel}}}{28}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {D-flipflop}}}{28}
+\contentsline {subtable}{\numberline {(c)}{\ignorespaces {T-flipflop}}}{28}
+\contentsline {subtable}{\numberline {(d)}{\ignorespaces {JK-flipflop}}}{28}
+\contentsline {subtable}{\numberline {(e)}{\ignorespaces {SR-flipflop}}}{28}
+\contentsline {table}{\numberline {1.7}{\ignorespaces Voorstelling van de transitiefunctie van de Moore-machine.}}{28}
+\contentsline {xpart}{Processoren}{33}
+\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{35}
 \addvspace {10\p@ }
-\contentsline {xchapter}{VHDL}{33}
-\contentsline {table}{\numberline {2.1}{\ignorespaces Scheidingstekens in VHDL.}}{34}
-\contentsline {table}{\numberline {2.2}{\ignorespaces Gereserveerde woorden in VHDL.}}{35}
-\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Overzicht van belangrijke types in VHDL.}}}{36}
-\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Overzicht van belangrijke afgeleide types in VHDL.}}}{36}
-\contentsline {table}{\numberline {2.3}{\ignorespaces Overzicht van belangrijke types en afgeleide types in VHDL.}}{36}
-\contentsline {xpart}{Appendices}{41}
+\contentsline {xchapter}{VHDL}{35}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Scheidingstekens in VHDL.}}{36}
+\contentsline {table}{\numberline {2.2}{\ignorespaces Gereserveerde woorden in VHDL.}}{37}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Overzicht van belangrijke types in VHDL.}}}{38}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Overzicht van belangrijke afgeleide types in VHDL.}}}{38}
+\contentsline {table}{\numberline {2.3}{\ignorespaces Overzicht van belangrijke types en afgeleide types in VHDL.}}{38}
+\contentsline {xpart}{Appendices}{43}

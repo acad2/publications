@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.5.5)  1 MAR 2012 22:54
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.5.5)  2 MAR 2012 02:54
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -4182,24 +4182,24 @@ Overfull \hbox (1.0437pt too wide) in paragraph at lines 1223--1285
 [25] [26] [27]
 Missing character: There is no Â in font cmr10!
 Missing character: There is no ´ in font cmr10!
-) [28] [29
+ [28]) [29] [30
 
-] [30] [31
+] [31] [32] [33
 
-] [32] (./chapter_vhdl.tex
+] [34] (./chapter_vhdl.tex
 Hoofdstuk 2.
-[33
+[35
 
-] [34]
+] [36]
 
-LaTeX Warning: Reference `lst:typeEnum' on page 35 undefined on input line 116.
+LaTeX Warning: Reference `lst:typeEnum' on page 37 undefined on input line 116.
 
 
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 151.
-[35]
+[37]
 
-LaTeX Warning: Reference `lst:signal' on page 36 undefined on input line 169.
+LaTeX Warning: Reference `lst:signal' on page 38 undefined on input line 169.
 
 LaTeX Font Info:    Try loading font information for OML+cmr on input line 175.
 
@@ -4211,30 +4211,30 @@ LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <8> not available
 
 Underfull \vbox (badness 3557) has occurred while \output is active []
 
- [36])
-[37] [38] [39
+ [38])
+[39] [40] [41
 
-] [40] (./cursus.lot)
+] [42] (./cursus.lot)
 \tf@lot=\write10
 \openout10 = `cursus.lot'.
 
- [41
+ [43
 
 
-] [42
+] [44
 
 ] (./cursus.lof)
 \tf@lof=\write11
 \openout11 = `cursus.lof'.
 
- [43] [44
+ [45] [46
 
 ]
 (./cursus.codes)
 \tf@codes=\write12
 \openout12 = `cursus.codes'.
 
- [45] (./cursus.bbl [46
+ [47] (./cursus.bbl [48
 
 
 ]
@@ -4248,9 +4248,9 @@ Underfull \hbox (badness 1072) in paragraph at lines 4--6
 r/m/n/10 ,
  []
 
-) (./cursus.gls) (./cursus.ind [47] [48
+) (./cursus.gls) (./cursus.ind [49] [50
 
-] [49])
+] [51])
 Package minitoc Info: I0009
 (minitoc)             Listing minitoc auxiliary files. 
 (minitoc)             Creating the cursus.maf file.
@@ -4267,7 +4267,7 @@ Package minitoc(hints) Warning: W0024
 (minitoc(hints))                Some hints have been written 
 (minitoc(hints))                in the cursus.log file.
 
-[50
+[52
 
 
 ] (./cursus.aux)
@@ -4286,10 +4286,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 19697 strings out of 493848
- 369441 string characters out of 1152824
- 725794 words of memory out of 3000000
- 22286 multiletter control sequences out of 15000+50000
+ 19708 strings out of 493848
+ 369775 string characters out of 1152824
+ 725929 words of memory out of 3000000
+ 22297 multiletter control sequences out of 15000+50000
  22858 words of font info for 89 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  52i,16n,89p,2044b,1267s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -4324,9 +4324,9 @@ lic/amsfonts/cm/cmti7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
 /cm/cmti8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.p
 fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on cursus.pdf (58 pages, 757077 bytes).
+Output written on cursus.pdf (60 pages, 760851 bytes).
 PDF statistics:
- 356 PDF objects out of 1000 (max. 8388607)
+ 362 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  27 words of extra memory for PDF output out of 10000 (max. 10000000)
 
