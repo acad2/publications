@@ -149,7 +149,7 @@ encoding=UTF-8
 highlight=BibTeX
 line=70
 mode=BibTeX
-open=true
+open=false
 order=1
 
 [item:chapter_basis_digitaal_ontwerp.tex]
@@ -164,10 +164,10 @@ order=3
 
 [item:chapter_combinatorische_schakelingen.tex]
 archive=true
-column=470
+column=141
 encoding=UTF-8
 highlight=LaTeX
-line=2193
+line=545
 mode=LaTeX
 open=false
 order=0
@@ -194,10 +194,10 @@ order=-1
 
 [item:chapter_sequentiele_schakelingen.tex]
 archive=true
-column=33
+column=47
 encoding=UTF-8
 highlight=LaTeX
-line=1478
+line=1493
 mode=LaTeX
 open=true
 order=0
@@ -263,8 +263,8 @@ CursorColumn=2
 CursorLine=474
 
 [view-settings,view=0,item:chapter_combinatorische_schakelingen.tex]
-CursorColumn=470
-CursorLine=2193
+CursorColumn=141
+CursorLine=545
 
 [view-settings,view=0,item:chapter_niet_programmeerbare_processoren.tex]
 CursorColumn=0
@@ -275,8 +275,8 @@ CursorColumn=0
 CursorLine=1
 
 [view-settings,view=0,item:chapter_sequentiele_schakelingen.tex]
-CursorColumn=33
-CursorLine=1478
+CursorColumn=47
+CursorLine=1493
 
 [view-settings,view=0,item:chapter_technologische_randvoorwaarden.tex]
 CursorColumn=0

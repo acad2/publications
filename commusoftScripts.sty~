@@ -15,11 +15,10 @@
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
 
-\newcommand{\algref}[1]{\textbf{Algorithm \ref{#1}}}
-
 \tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
-\newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
 
+\newcommand{\algref}[1]{\textbf{Algorithm \ref{#1}}}
+\newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
 \newcommand\termen{\@ifstar{\@dblarg{\@termens}}{\@termen}}
 \def\@termens[#1]#2{\termenlayout{#2}\index{#1@#2}}
 \newcommand\@termen[2][]{%
@@ -109,6 +108,26 @@
   \draw (0.25,0.75) node{\vg};
   \draw (0.75,0.25) node{\vf};
   \draw (0.75,0.75) node{\vh};
+}
+\end{scope}
+}
+\newcommand{\kkaartcmarks}[6][1.00]{
+\begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
+%fill
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,2-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,2-0.5*\yf-0.5+\tt);
+}
+\foreach \ss/\xo/\xf/\de/\tt in {#5} {
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,2) -- ++(0,-0.5*\de+\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,0.5*\de-\tt);%upper
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,0) -- ++(0,0.5*\de-\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,-0.5*\de+\tt);%lower
+}
+%draw
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \draw[\ss,rounded corners,black!90] (0.5*\xo+\tt,2-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,2-0.5*\yf-0.5+\tt);
+}
+\foreach \ss/\xo/\xf/\de/\tt in {#5} {
+  \draw[\ss,rounded corners,black!90] (0.5*\xo+\tt,2.1) -- ++(0,-0.1-0.5*\de+\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,0.1+0.5*\de-\tt);%upper
+  \draw[\ss,rounded corners,black!90] (0.5*\xo+\tt,-0.1) -- ++(0,0.1+0.5*\de-\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,-0.1-0.5*\de+\tt);%lower
 }
 \end{scope}
 }

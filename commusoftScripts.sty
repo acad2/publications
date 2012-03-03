@@ -111,6 +111,26 @@
 }
 \end{scope}
 }
+\newcommand{\kkaartcmarks}[5][1.00]{
+\begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
+%fill
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,2-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,2-0.5*\yf-0.5+\tt);
+}
+\foreach \ss/\xo/\xf/\de/\tt in {#5} {
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,2) -- ++(0,-0.5*\de+\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,0.5*\de-\tt);%upper
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,0) -- ++(0,0.5*\de-\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,-0.5*\de+\tt);%lower
+}
+%draw
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \draw[\ss,rounded corners,black!90] (0.5*\xo+\tt,2-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,2-0.5*\yf-0.5+\tt);
+}
+\foreach \ss/\xo/\xf/\de/\tt in {#5} {
+  \draw[\ss,rounded corners,black!90] (0.5*\xo+\tt,2.1) -- ++(0,-0.1-0.5*\de+\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,0.1+0.5*\de-\tt);%upper
+  \draw[\ss,rounded corners,black!90] (0.5*\xo+\tt,-0.1) -- ++(0,0.1+0.5*\de-\tt) -- ++(0.5+0.5*\xf-0.5*\xo-2*\tt,0) -- ++(0,-0.1-0.5*\de+\tt);%lower
+}
+\end{scope}
+}
 \newcommand{\kkaartd}[6][1.00]{
 \begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
 \draw[thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
