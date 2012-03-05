@@ -25,7 +25,9 @@
 \contentsline {subtable}{\numberline {(d)}{\ignorespaces {JK-flipflop}}}{28}
 \contentsline {subtable}{\numberline {(e)}{\ignorespaces {SR-flipflop}}}{28}
 \contentsline {table}{\numberline {1.7}{\ignorespaces Voorstelling van de transitiefunctie van de Moore-machine.}}{28}
-\contentsline {table}{\numberline {1.8}{\ignorespaces Implementatie van de Mealy-schakeling met verschillende soorten flipflops.??}}{30}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {D- en JK-flipflops}}}{30}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {T- en SR-flipflops}}}{30}
+\contentsline {table}{\numberline {1.8}{\ignorespaces Implementatie van de Mealy-schakeling met verschillende soorten flipflops.}}{30}
 \contentsline {xpart}{Processoren}{35}
 \contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{37}
 \addvspace {10\p@ }
