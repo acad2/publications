@@ -73,30 +73,30 @@
 \contentsline {paragraph}{Excitatietabellen van flipflops}{27}
 \contentsline {paragraph}{De transitiefunctie}{28}
 \contentsline {paragraph}{Het one-hot-codering geval}{29}
-\contentsline {subsubsection}{Stap 4B: Logica die de uitgang toestand berekent}{29}
-\contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{29}
-\contentsline {part}{III\hspace {1em}Processoren}{31}
-\contentsline {xpart}{Processoren}{33}
-\contentsline {part}{IV\hspace {1em}Very High Speed Integrated Circuit Hardware Description Language}{33}
-\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{35}
-\contentsline {chapter}{\numberline {2}VHDL}{35}
-\contentsline {section}{\numberline {2.1}Combinatorische schakelingen in VHDL}{35}
-\contentsline {subsection}{\numberline {2.1.1}Elementen van de VHDL-taal}{35}
-\contentsline {subsubsection}{Lexicale elementen (woordenschat)}{35}
-\contentsline {paragraph}{Gereserveerde woorden}{36}
-\contentsline {subsubsection}{Data-types}{36}
-\contentsline {paragraph}{Zelf types defini\"eren}{37}
-\contentsline {paragraph}{Defini\"eren met opsomming}{37}
-\contentsline {paragraph}{Defini\"eren met subtypering}{37}
-\contentsline {subsubsection}{Data-objecten}{37}
-\contentsline {paragraph}{Constante}{38}
-\contentsline {paragraph}{Variabele}{38}
-\contentsline {paragraph}{Signaal}{39}
-\contentsline {subsubsection}{Bibliotheken}{39}
-\contentsline {subsubsection}{Bewerkingen}{39}
-\contentsline {subsection}{\numberline {2.1.2}Hardwarebeschrijving met VHDL}{39}
-\contentsline {subsubsection}{Structurele beschrijving}{39}
-\contentsline {subsubsection}{Gedragsbeschrijving}{39}
-\contentsline {subsubsection}{Repetitieve structuren}{39}
-\contentsline {part}{V\hspace {1em}Appendices}{41}
-\contentsline {xpart}{Appendices}{43}
+\contentsline {subsubsection}{Stap 4B: Logica die de uitgang toestand berekent}{31}
+\contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{31}
+\contentsline {part}{III\hspace {1em}Processoren}{33}
+\contentsline {xpart}{Processoren}{35}
+\contentsline {part}{IV\hspace {1em}Very High Speed Integrated Circuit Hardware Description Language}{35}
+\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{37}
+\contentsline {chapter}{\numberline {2}VHDL}{37}
+\contentsline {section}{\numberline {2.1}Combinatorische schakelingen in VHDL}{37}
+\contentsline {subsection}{\numberline {2.1.1}Elementen van de VHDL-taal}{37}
+\contentsline {subsubsection}{Lexicale elementen (woordenschat)}{37}
+\contentsline {paragraph}{Gereserveerde woorden}{38}
+\contentsline {subsubsection}{Data-types}{38}
+\contentsline {paragraph}{Zelf types defini\"eren}{39}
+\contentsline {paragraph}{Defini\"eren met opsomming}{39}
+\contentsline {paragraph}{Defini\"eren met subtypering}{39}
+\contentsline {subsubsection}{Data-objecten}{39}
+\contentsline {paragraph}{Constante}{40}
+\contentsline {paragraph}{Variabele}{40}
+\contentsline {paragraph}{Signaal}{41}
+\contentsline {subsubsection}{Bibliotheken}{41}
+\contentsline {subsubsection}{Bewerkingen}{41}
+\contentsline {subsection}{\numberline {2.1.2}Hardwarebeschrijving met VHDL}{41}
+\contentsline {subsubsection}{Structurele beschrijving}{41}
+\contentsline {subsubsection}{Gedragsbeschrijving}{41}
+\contentsline {subsubsection}{Repetitieve structuren}{41}
+\contentsline {part}{V\hspace {1em}Appendices}{43}
+\contentsline {xpart}{Appendices}{45}

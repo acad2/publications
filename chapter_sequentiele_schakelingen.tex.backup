@@ -1174,7 +1174,8 @@ Nadat we het aantal toestanden hebben geminimaliseerd hebben dienen we alleen no
           edge[bend right] node {1} (A)
       (J) edge[bend left,swap] node {0} (B)
           edge[bend right] node {1} (E);
-\end{tikzpicture}}
+\end{tikzpicture}
+\label{fig:minimaalToestandsdiagramMoore}}
 \subfigure[Mealy-machine]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
 \node[state,initial,initial text=RST, initial where=left] (A) {$A$};
 \node[state] (B) [right=of A] {$B$};
@@ -1185,7 +1186,8 @@ Nadat we het aantal toestanden hebben geminimaliseerd hebben dienen we alleen no
           edge node[swap] {1/0} (E)
       (E) edge[bend right,swap] node {0/1} (B)
           edge node {1/0} (A);
-\end{tikzpicture}}
+\end{tikzpicture}
+\label{fig:minimaalToestandsdiagramMealy}}
 \caption{Geminimaliseerde toestandsdiagrammen van de leidende voorbeelden.}
 \label{fig:minimaalToestandsdiagram}
 \end{figure}
@@ -1521,6 +1523,10 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
   \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
   \pdot{A\x\y.input \z -| L\t};
 }
+\foreach \x/\z/\t in {} {
+  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
+  \pdot{O\x.input \z -| L\t};
+}
 \foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
   \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
   \draw (\x.CLR) |- (\z);
@@ -1577,11 +1583,9 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \node[or gate] (O1) at (FF1.T -| ORr) {};
 
 \node[and gate,inputs={normal,inverted}] (A00) at ([yshift=0.5 cm] ANDr |- O0.output) {};
-%\node[and gate,inputs={normal,inverted,normal}] (A01) at ([yshift=-0.5 cm] ANDr |- O0.output) {};
 
 \node[and gate,inputs={inverted,normal}] (A10) at ([yshift=0.5 cm] ANDr |- O1.output) {};
 \node[and gate,inputs={normal,normal,inverted}] (A11) at ([yshift=-0.5 cm] ANDr |- O1.output) {};
-%\node[and gate,inputs={normal,normal,normal}] (A12) at ([yshift=-1 cm] ANDr |- O1.output) {};
 \foreach \x in {0,1,2} {
   \coordinate (L\x) at (-3.5-0.2*\x,0);
 }
@@ -1592,9 +1596,13 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \foreach \x/\y/\z/\t in {0/0/1/0.2,1/0/1/0.2,1/1/2/0.2} {
   \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
 }
-\foreach \x/\y/\z/\t in {0/0/1/0,0/0/2/2} {
+\foreach \x/\y/\z/\t in {0/0/1/0,0/0/2/2,1/0/1/0,1/0/2/2,1/1/1/0,1/1/2/1,1/1/3/2} {
   \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
   \pdot{A\x\y.input \z -| L\t};
+}
+\foreach \x/\z/\t in {0/2/1} {
+  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
+  \pdot{O\x.input \z -| L\t};
 }
 \foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
   \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
@@ -1607,35 +1615,222 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \pdot{I2 -| F4I};
 \end{tikzpicture}}
 \subfigure[JK-flipflops]{
-\begin{tikzpicture}
+\begin{tikzpicture}[circuit logic US]
 \def\ta{0.09};
 \def\tb{0.03};
-\kkaartcmarks[1]{0}{3}{/1/0/2/1/\ta}{};
-\kkaartc{0}{3}{$J_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/-/-/-/-};
-\kkaartcmarks[1]{2}{3}{/1/0/2/1/\ta,/0/0/3/0/\tb}{};
-\kkaartc{2}{3}{$K_0$}{$F_0$/$F_1$/$I_0$}{-/-/-/-/1/0/1/1};
-\kkaartcmarks[1]{0}{0}{/0/1/1/1/\ta}{};
-\kkaartc{0}{0}{$J_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/-/0/0/-/-};
-\kkaartcmarks[1]{2}{0}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
-\kkaartc{2}{0}{$K_1$}{$F_0$/$F_1$/$I_0$}{-/-/1/0/-/-/0/1};
+\kkaartcmarks[0.75]{0}{3.5}{/1/0/2/1/\ta}{};
+\kkaartc[0.75]{0}{3.5}{$J_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/-/-/-/-};
+\kkaartcmarks[0.75]{1.5}{3.5}{/1/0/2/1/\ta,/0/0/3/0/\tb}{};
+\kkaartc[0.75]{1.5}{3.5}{$K_0$}{$F_0$/$F_1$/$I_0$}{-/-/-/-/1/0/1/1};
+\kkaartcmarks[0.75]{0}{-0.5}{/0/1/1/1/\ta}{};
+\kkaartc[0.75]{0}{-0.5}{$J_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/-/0/0/-/-};
+\kkaartcmarks[0.75]{1.5}{-0.5}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
+\kkaartc[0.75]{1.5}{-0.5}{$K_1$}{$F_0$/$F_1$/$I_0$}{-/-/1/0/-/-/0/1};
+\def\sc{0.75};
+\def\sca{0.8};
+\begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
+\node[jkffxn,scale=\sca] (FF0) at (0,2) {};
+\node[jkffxn,scale=\sca] (FF1) at (0,-2) {};
+\coordinate (F0I) at (-3.5,3.8);
+\coordinate (F1I) at (-3.7,4.0);
+\coordinate (F2I) at (-3.9,4.0);
+\coordinate (F3I) at (-4.1,4.0);
+\coordinate (F4I) at (-4.3,4.0);
+\coordinate (F0O) at (1,3.8);
+\coordinate (F1O) at (1.2,4.0);
+
+\coordinate (Clk0) at (F3I |- FF0.Clk);
+\coordinate (Clk1) at (F3I |- FF1.Clk);
+\coordinate (CLR0) at (F4I |- 0,0.2);
+\coordinate (CLR1) at (F4I |- 0,-3.8);
+
+\draw (FF0.Q) -| (F0O) -- (F0I);
+\draw (FF1.Q) -| (F1O) -- (F1I);
+\draw (F0I) -- (F0I |- 0,-4);
+\draw (F1I) -- (F1I |- 0,-4);
+\draw (F2I) -- (F2I |- 0,-4);
+\draw (F3I) -- (F3I |- 0,-4);
+\draw (F4I) -- (F4I |- 0,-4);
+\coordinate (I0) at (-5,0);
+\coordinate (I1) at (-5,-0.5);
+\coordinate (I2) at (-5,-1);
+\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| F2I);
+\draw (I1) node[anchor=east]{Clk} -- (I1 -| F3I);
+\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| F4I);
+\coordinate (ORr) at (-1.5,0);
+\coordinate (ANDr) at (-2.65,0);
+
+\node[or gate,inputs={normal,inverted}] (O0) at (FF0.K -| ORr) {};
+\node[or gate] (O1) at (FF1.K -| ORr) {};
+
+%\node[and gate,inputs={normal,inverted}] (A00) at ([yshift=0.5 cm] ANDr |- O0.output) {};
+
+\node[and gate,inputs={inverted,normal}] (A00) at (ANDr |- FF1.J) {};
+\node[and gate,inputs={inverted,inverted}] (A10) at (ANDr |- O1.input 1) {};
+\node[and gate,inputs={normal,normal}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
+\foreach \x in {0,1,2} {
+  \coordinate (L\x) at (-3.5-0.2*\x,0);
+}
+\end{scope}
+\foreach \x in {0,1} {
+  \draw (O\x.output) -- (FF\x.K);
+}
+\foreach \x/\y in {00/1} {
+  \draw (A\x.output) -- (FF\y.J);
+}
+\foreach \x/\y/\z/\t in {1/0/1/0.2,1/1/2/0.2} {
+  \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
+}
+\foreach \x/\y/\z/\t in {0/0/1/0,0/0/2/2,1/0/1/0,1/0/2/2,1/1/1/0,1/1/2/2} {
+  \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
+  \pdot{A\x\y.input \z -| L\t};
+}
+\foreach \x/\z/\t in {0/1/1,0/2/2} {
+  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
+  \pdot{O\x.input \z -| L\t};
+}
+\foreach \x/\y/\t in {FF0/J/1} {
+  \draw (\x.\y) -- (\x.\y -| L\t);
+  \pdot{\x.\y -| L\t};
+}
+\foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
+  \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
+  \draw (\x.CLR) |- (\z);
+  \pdot{\y};
+  \pdot{\z};
+}
+\pdot{I0 -| F2I};
+\pdot{I1 -| F3I};
+\pdot{I2 -| F4I};
 \end{tikzpicture}}
 \subfigure[SR-flipflops]{
-\begin{tikzpicture}
+\begin{tikzpicture}[circuit logic US]
 \def\ta{0.09};
 \def\tb{0.03};
-\kkaartcmarks[1]{0}{3}{/1/0/1/1/\ta}{};
-\kkaartc{0}{3}{$S_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/0/-/0/0};
-\kkaartcmarks[1]{2}{3}{/2/0/2/1/\ta,/2/0/3/0/\tb}{};
-\kkaartc{2}{3}{$R_0$}{$F_0$/$F_1$/$I_0$}{-/-/0/0/1/0/1/1};
-\kkaartcmarks[1]{0}{0}{/0/1/1/1/\ta}{};
-\kkaartc{0}{0}{$S_1$}{$F_0$/$F_1$/$I_0$}{0/1/0/-/0/0/-/0};
-\kkaartcmarks[1]{2}{0}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
-\kkaartc{2}{0}{$R_1$}{$F_0$/$F_1$/$I_0$}{-/0/1/0/-/-/0/1};
+\kkaartcmarks[0.75]{0}{3.5}{/1/0/1/1/\ta}{};
+\kkaartc[0.75]{0}{3.5}{$S_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/0/-/0/0};
+\kkaartcmarks[0.75]{1.5}{3.5}{/2/0/2/1/\ta,/2/0/3/0/\tb}{};
+\kkaartc[0.75]{1.5}{3.5}{$R_0$}{$F_0$/$F_1$/$I_0$}{-/-/0/0/1/0/1/1};
+\kkaartcmarks[0.75]{0}{-0.5}{/0/1/1/1/\ta}{};
+\kkaartc[0.75]{0}{-0.5}{$S_1$}{$F_0$/$F_1$/$I_0$}{0/1/0/-/0/0/-/0};
+\kkaartcmarks[0.75]{1.5}{-0.5}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
+\kkaartc[0.75]{1.5}{-0.5}{$R_1$}{$F_0$/$F_1$/$I_0$}{-/0/1/0/-/-/0/1};
+\def\sc{0.75};
+\def\sca{0.8};
+\begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
+\node[srffxn,scale=\sca] (FF0) at (0,2) {};
+\node[srffxn,scale=\sca] (FF1) at (0,-2) {};
+\coordinate (F0I) at (-3.5,3.8);
+\coordinate (F1I) at (-3.7,4.0);
+\coordinate (F2I) at (-3.9,4.0);
+\coordinate (F3I) at (-4.1,4.0);
+\coordinate (F4I) at (-4.3,4.0);
+\coordinate (F0O) at (1,3.8);
+\coordinate (F1O) at (1.2,4.0);
+
+\coordinate (Clk0) at (F3I |- FF0.Clk);
+\coordinate (Clk1) at (F3I |- FF1.Clk);
+\coordinate (CLR0) at (F4I |- 0,0.2);
+\coordinate (CLR1) at (F4I |- 0,-3.8);
+
+\draw (FF0.Q) -| (F0O) -- (F0I);
+\draw (FF1.Q) -| (F1O) -- (F1I);
+\draw (F0I) -- (F0I |- 0,-4);
+\draw (F1I) -- (F1I |- 0,-4);
+\draw (F2I) -- (F2I |- 0,-4);
+\draw (F3I) -- (F3I |- 0,-4);
+\draw (F4I) -- (F4I |- 0,-4);
+\coordinate (I0) at (-5,0);
+\coordinate (I1) at (-5,-0.5);
+\coordinate (I2) at (-5,-1);
+\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| F2I);
+\draw (I1) node[anchor=east]{Clk} -- (I1 -| F3I);
+\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| F4I);
+\coordinate (ORr) at (-1.5,0);
+\coordinate (ANDr) at (-2.65,0);
+
+\node[or gate,inputs={normal,normal}] (O0) at (FF0.R -| ORr) {};
+\node[or gate] (O1) at (FF1.R -| ORr) {};
+
+%\node[and gate,inputs={normal,inverted}] (A00) at ([yshift=0.5 cm] ANDr |- O0.output) {};
+
+\node[and gate,inputs={normal,normal}] (A00) at (ANDr |- O0.input 1) {};
+\node[and gate,inputs={normal,inverted}] (A01) at ([yshift=-0.8 cm] ANDr |- O0.input 1) {};
+\node[and gate,inputs={inverted,normal}] (A20) at (ANDr |- FF0.S) {};
+\node[and gate,inputs={inverted,normal}] (A30) at (ANDr |- FF1.S) {};
+\node[and gate,inputs={inverted,inverted}] (A10) at (ANDr |- O1.input 1) {};
+\node[and gate,inputs={normal,normal}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
+\foreach \x in {0,1,2} {
+  \coordinate (L\x) at (-3.5-0.2*\x,0);
+}
+\end{scope}
+\foreach \x in {0,1} {
+  \draw (O\x.output) -- (FF\x.R);
+}
+\foreach \x/\y in {30/1,20/0} {
+  \draw (A\x.output) -- (FF\y.S);
+}
+\foreach \x/\y/\z/\t in {1/0/1/0.2,1/1/2/0.2,0/0/1/0.2,0/1/2/0.2} {
+  \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
+}
+\foreach \x/\y/\z/\t in {2/0/1/0,2/0/2/1,3/0/1/0,3/0/2/2,1/0/1/0,1/0/2/2,1/1/1/0,1/1/2/2,0/0/1/0,0/0/2/1,0/1/1/0,0/1/2/2} {
+  \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
+  \pdot{A\x\y.input \z -| L\t};
+}
+\foreach \x/\z/\t in {} {
+  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
+  \pdot{O\x.input \z -| L\t};
+}
+\foreach \x/\y/\t in {} {
+  \draw (\x.\y) -- (\x.\y -| L\t);
+  \pdot{\x.\y -| L\t};
+}
+\foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
+  \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
+  \draw (\x.CLR) |- (\z);
+  \pdot{\y};
+  \pdot{\z};
+}
+\pdot{I0 -| F2I};
+\pdot{I1 -| F3I};
+\pdot{I2 -| F4I};
 \end{tikzpicture}}
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
 \label{fig:mooreCombImpl}
 \end{figure}
-\paragraph{Het one-hot-codering geval}
+\paragraph{Het one-hot-codering geval}Naast het geval van de Moore-machine zullen we ook de transitiefunctie van de Mealy-machine implementeren. Over deze realisatie is het ook eenvoudiger om enkele eigenschappen te formaliseren. Deze eigenschappen gaan over de kosten van de transitiefunctie v\'o\'or dat we minimalisatie van de Karnaugh-kaarten toepassen. Verder hangen de eigenschappen af van het type flipflop die we gebruiken:
+\begin{itemize}
+ \item Bij een D-flipflop is het aantal AND-poorten voor een flipflop equivalent met het aantal transities naar de toestand die de flipflop voorstelt. Bij een transitie\footnote{Inclusief lussen.} naar toestand $x$ dient immer de overeenkomstige flipflop op 1 gezet te worden, in de andere gevallen is de waarde van de flipflop altijd 0. We kunnen dit verder formaliseren tot: ``Het aantal enen in de $D_i$ kolom is gelijk aan het aantal transities naar toestand $i$''.
+ \item Bij een T-flipflop is het aantal T-poorten gelijk met het aantal transities die naar een de bijbehorende toestand gaan, of vanuit de toestand vertrekken, die geen lussen zijn. Of eenvoudiger: ``Het aantal enen in de $T_i$-kolom is gelijk aan het aantal transitites van of naar toestand $i$ die geen lussen zijn''.
+ \item Bij een SR-flipflop komt is het aantal AND-poorten die naar de S-ingang gaan gelijk aan het aantal transities naar de toestand, die niet uit de toestand komen. Het aantal AND-poorten die voor de R-ingang staan zijn het aantal transities die uit de toestand vertrekken, en die geen lussen zijn. Deze logica kunnen we ook omzetten naar het aantal enen in de kolommen $S_i$ en $R_i$.
+ \item Bij JK-flipflops gelden dezelfde regels als bij de SR-flipflops. Alleen dienen we hier S door J en R door K te vervangen.
+\end{itemize}
+We kunnen deze theorie testen met de praktijk in tabel \ref{tbl:stateTableMealyCombLin}. Hierbij hebben we de tabellen voor de verschillende types flipflops naast elkaar gezet, dit is louter om de voorstelling eenvoudig te houden. Merk op dat verschillende rijen uitsluitend don't cares bevatten. Dit is het gevolg van het feit dat heel wat binaire voorstellingen van toestanden bij de invoer geen overeenkomstige toestand hebben. Meestal worden deze rijen in een tabel weggelaten.
+\begin{table}[hbt]
+\centering\small{
+\begin{tabular}{cccc|ccc|cccccc}
+$F_0$&$F_1$&$F_2$&$I_0$&$D_0$&$D_1$&$D_2$&$J_0$&$K_0$&$J_1$&$K_1$&$J_2$&$K_2$\\\hline
+0&0&0&0&-&-&-&-&-&-&-&-&-\\
+0&0&0&1&-&-&-&-&-&-&-&-&-\\
+0&0&1&0&0&1&0&0&-&1&-&-&1\\
+0&0&1&1&0&0&1&0&-&0&-&-&0\\
+0&1&0&0&0&1&0&0&-&-&0&0&-\\
+0&1&0&1&1&0&0&1&-&-&1&0&-\\
+0&1&1&0&-&-&-&-&-&-&-&-&-\\
+0&1&1&1&-&-&-&-&-&-&-&-&-\\
+1&0&0&0&0&1&0&-&1&1&-&0&-\\
+1&0&0&1&0&0&1&-&1&0&-&1&-\\
+1&0&1&0&-&-&-&-&-&-&-&-&-\\
+1&0&1&1&-&-&-&-&-&-&-&-&-\\
+1&1&0&0&-&-&-&-&-&-&-&-&-\\
+1&1&0&1&-&-&-&-&-&-&-&-&-\\
+1&1&1&0&-&-&-&-&-&-&-&-&-\\
+1&1&1&1&-&-&-&-&-&-&-&-&-
+\end{tabular}}
+\caption{Implementatie van de Mealy-schakeling met verschillende soorten flipflops.}
+\label{tbl:stateTableMealyCombLin}
+\end{table}
+We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar toestand $E$ op figuur \ref{fig:minimaalToestandsdiagramMealy}, verder bevatten de kolommen voor toestand $A$ en $B$ respectievelijk 2 en 3 enen.
 \subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}

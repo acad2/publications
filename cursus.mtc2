@@ -1,18 +1,18 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.1}Combinatorische schakelingen in VHDL}{\reset@font\mtcSfont 35}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.1.1}Elementen van de VHDL-taal}{\reset@font\mtcSSfont 35}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Lexicale elementen (woordenschat)}{\reset@font\mtcSSSfont 35}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Gereserveerde woorden}{\reset@font\mtcPfont 36}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Data-types}{\reset@font\mtcSSSfont 36}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Zelf types defini\"eren}{\reset@font\mtcPfont 37}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Defini\"eren met opsomming}{\reset@font\mtcPfont 37}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Defini\"eren met subtypering}{\reset@font\mtcPfont 37}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Data-objecten}{\reset@font\mtcSSSfont 37}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Constante}{\reset@font\mtcPfont 38}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Variabele}{\reset@font\mtcPfont 38}}
-{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Signaal}{\reset@font\mtcPfont 39}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Bibliotheken}{\reset@font\mtcSSSfont 39}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Bewerkingen}{\reset@font\mtcSSSfont 39}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.1.2}Hardwarebeschrijving met VHDL}{\reset@font\mtcSSfont 39}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Structurele beschrijving}{\reset@font\mtcSSSfont 39}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Gedragsbeschrijving}{\reset@font\mtcSSSfont 39}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Repetitieve structuren}{\reset@font\mtcSSSfont 39}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {2.1}Combinatorische schakelingen in VHDL}{\reset@font\mtcSfont 37}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.1.1}Elementen van de VHDL-taal}{\reset@font\mtcSSfont 37}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Lexicale elementen (woordenschat)}{\reset@font\mtcSSSfont 37}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Gereserveerde woorden}{\reset@font\mtcPfont 38}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Data-types}{\reset@font\mtcSSSfont 38}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Zelf types defini\"eren}{\reset@font\mtcPfont 39}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Defini\"eren met opsomming}{\reset@font\mtcPfont 39}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Defini\"eren met subtypering}{\reset@font\mtcPfont 39}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Data-objecten}{\reset@font\mtcSSSfont 39}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Constante}{\reset@font\mtcPfont 40}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Variabele}{\reset@font\mtcPfont 40}}
+{\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode Signaal}{\reset@font\mtcPfont 41}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Bibliotheken}{\reset@font\mtcSSSfont 41}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Bewerkingen}{\reset@font\mtcSSSfont 41}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {2.1.2}Hardwarebeschrijving met VHDL}{\reset@font\mtcSSfont 41}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Structurele beschrijving}{\reset@font\mtcSSSfont 41}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Gedragsbeschrijving}{\reset@font\mtcSSSfont 41}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Repetitieve structuren}{\reset@font\mtcSSSfont 41}}

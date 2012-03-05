@@ -25,13 +25,14 @@
 \contentsline {subtable}{\numberline {(d)}{\ignorespaces {JK-flipflop}}}{28}
 \contentsline {subtable}{\numberline {(e)}{\ignorespaces {SR-flipflop}}}{28}
 \contentsline {table}{\numberline {1.7}{\ignorespaces Voorstelling van de transitiefunctie van de Moore-machine.}}{28}
-\contentsline {xpart}{Processoren}{33}
-\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{35}
+\contentsline {table}{\numberline {1.8}{\ignorespaces Implementatie van de Mealy-schakeling met verschillende soorten flipflops.??}}{30}
+\contentsline {xpart}{Processoren}{35}
+\contentsline {xpart}{Very High Speed Integrated Circuit Hardware Description Language}{37}
 \addvspace {10\p@ }
-\contentsline {xchapter}{VHDL}{35}
-\contentsline {table}{\numberline {2.1}{\ignorespaces Scheidingstekens in VHDL.}}{36}
-\contentsline {table}{\numberline {2.2}{\ignorespaces Gereserveerde woorden in VHDL.}}{37}
-\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Overzicht van belangrijke types in VHDL.}}}{38}
-\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Overzicht van belangrijke afgeleide types in VHDL.}}}{38}
-\contentsline {table}{\numberline {2.3}{\ignorespaces Overzicht van belangrijke types en afgeleide types in VHDL.}}{38}
-\contentsline {xpart}{Appendices}{43}
+\contentsline {xchapter}{VHDL}{37}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Scheidingstekens in VHDL.}}{38}
+\contentsline {table}{\numberline {2.2}{\ignorespaces Gereserveerde woorden in VHDL.}}{39}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Overzicht van belangrijke types in VHDL.}}}{40}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Overzicht van belangrijke afgeleide types in VHDL.}}}{40}
+\contentsline {table}{\numberline {2.3}{\ignorespaces Overzicht van belangrijke types en afgeleide types in VHDL.}}{40}
+\contentsline {xpart}{Appendices}{45}

@@ -84,34 +84,34 @@
 }
 \end{scope}
 }
-\newcommand{\kkaartc}[5]{
-\begin{scope}[xshift=#1 cm, yshift=#2 cm]
+\newcommand{\kkaartc}[6][1.00]{
+\begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
 \draw[thick] (0,0) -- ++(1,0) -- ++(0,2) -- ++(-1,0) -- cycle;
 \draw[thick] (0,2) -- (-0.25,2.25);
-\draw (-0.15,2.15) node[anchor=south east]{#3};
+\draw (-0.15,2.15) node[anchor=south east]{#4};
 \draw[thick] (0,0.5) -- ++(1,0);
 \draw[thick] (0,1) -- ++(1,0);
 \draw[thick] (0,1.5) -- ++(1,0);
 \draw[thick] (0.5,0) -- ++(0,2);
 \draw[thick] (0,2) -- (-0.25,2.25);
-\foreach \va/\vb/\vc in {#4} {
+\foreach \va/\vb/\vc in {#5} {
   \draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{\va} (-0.125,1);
   \draw[thick] (1.125,0.5) to node[sloped,above,rotate=180]{\vb} (1.125,1.5);
   \draw[thick] (0.5,2.125) to node[sloped,above]{\vc} (1,2.125);
 }
-\foreach \va/\vb/\vc/\vd/\ve/\vf/\vg/\vh in {#5} {
-  \draw (0.25,1.25) node{\vc};
-  \draw (0.25,1.75) node{\va};
-  \draw (0.75,1.25) node{\vd};
-  \draw (0.75,1.75) node{\vb};
-  \draw (0.25,0.25) node{\ve};
-  \draw (0.25,0.75) node{\vg};
-  \draw (0.75,0.25) node{\vf};
-  \draw (0.75,0.75) node{\vh};
+\foreach \va/\vb/\vc/\vd/\ve/\vf/\vg/\vh in {#6} {
+  \draw (0.25,1.25) node[scale=#1]{\vc};
+  \draw (0.25,1.75) node[scale=#1]{\va};
+  \draw (0.75,1.25) node[scale=#1]{\vd};
+  \draw (0.75,1.75) node[scale=#1]{\vb};
+  \draw (0.25,0.25) node[scale=#1]{\ve};
+  \draw (0.25,0.75) node[scale=#1]{\vg};
+  \draw (0.75,0.25) node[scale=#1]{\vf};
+  \draw (0.75,0.75) node[scale=#1]{\vh};
 }
 \end{scope}
 }
-\newcommand{\kkaartcmarks}[6][1.00]{
+\newcommand{\kkaartcmarks}[5][1.00]{
 \begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
 %fill
 \foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
