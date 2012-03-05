@@ -33,7 +33,6 @@
 \tikzset{tff/.style={draw,minimum width=1.5cm,minimum height=2.121320344cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add font=\sffamily,shape=tff}}
 \tikzset{jkff/.style={draw,minimum width=1.5cm,minimum height=2.121320344cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add font=\sffamily,shape=jkff}}
 \tikzset{srffx/.style={draw,minimum width=1.5cm,minimum height=2.121320344cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add font=\sffamily,shape=srffx}}
-\tikzset{srffxn/.style={draw,minimum width=1.5cm,minimum height=2.121320344cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add font=\sffamily,shape=srffxn}}
 \tikzset{dffx/.style={draw,minimum width=1.5cm,minimum height=2.121320344cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add font=\sffamily,shape=dffx}}
 \tikzset{dffxn/.style={draw,minimum width=1.5cm,minimum height=2.121320344cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add font=\sffamily,shape=dffxn}}
 \tikzset{tffx/.style={draw,minimum width=1.5cm,minimum height=2.121320344cm,very thick,inner sep=1mm,outer sep=0pt,cap=round,add font=\sffamily,shape=tffx}}

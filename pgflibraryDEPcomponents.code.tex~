@@ -2333,10 +2333,10 @@
     \pgf@anchor@srffxn@S
     \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{S}}
 
-    \pgf@anchor@srffx@PR
+    \pgf@anchor@srffxn@PR
     \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{PR}
 
-    \pgf@anchor@srffx@CLR
+    \pgf@anchor@srffxn@CLR
     \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{CLR}
     \endgroup
   }
