@@ -1882,43 +1882,59 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
 \def\ta{0.09};
 \kkaartdmarks[0.75]{0}{0}{/1/2/2/3/\ta}{}{};
 \kkaartd[0.75]{0}{0}{$J_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
-\kkaartdmarks[0.75]{2.5}{0}{/0/0/3/3/\ta}{}{};
-\kkaartd[0.75]{2.5}{0}{$K_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/-/-/-/-/1/1/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.25}{0}{/0/0/3/3/\ta}{}{};
+\kkaartd[0.75]{2.25}{0}{$K_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/-/-/-/-/1/1/-/-/-/-/-/-/-/-};
 \kkaartdmarks[0.75]{0}{-2.5}{/0/0/3/1/\ta}{}{};
 \kkaartd[0.75]{0}{-2.5}{$J_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/1/0/-/-/-/-/-/-/-/-};
-\kkaartdmarks[0.75]{2.5}{-2.5}{/0/2/3/3/\ta}{}{};
-\kkaartd[0.75]{2.5}{-2.5}{$K_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.25}{-2.5}{/0/2/3/3/\ta}{}{};
+\kkaartd[0.75]{2.25}{-2.5}{$K_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
 \kkaartdmarks[0.75]{0}{-5}{/2/2/3/3/\ta}{}{};
 \kkaartd[0.75]{0}{-5}{$J_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/0/-/-/0/1/-/-/-/-/-/-/-/-};
-\kkaartdmarks[0.75]{2.5}{-5}{/0/0/3/1/\ta}{}{};
-\kkaartd[0.75]{2.5}{-5}{$K_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/-/-/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.25}{-5}{/0/0/3/1/\ta}{}{};
+\kkaartd[0.75]{2.25}{-5}{$K_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/-/-/-/-/-/-/-/-/-/-};
 \def\sc{0.75};
 \def\sca{0.8};
 \begin{scope}[xshift=8 cm,yshift=-1.75 cm,scale=\sc]
-\node[dffxn,scale=\sca] (FF0) at (0,3.333) {$FF_0$};
-\node[dffxn,scale=\sca] (FF1) at (0,0) {$FF_1$};
-\node[dffxn,scale=\sca] (FF2) at (0,-3.333) {$FF_2$};
-\def\gx{-1.75};
-\node[and gate] (G0) at (\gx,0 |- FF0.D) {};
-\node[not gate] (G1) at (\gx,0 |- FF1.D) {};
-\node[and gate,inputs={inverted,normal}] (G2) at (\gx,0 |- FF2.D) {};
+\node[jkffxn,scale=\sca] (FF0) at (0,3.333) {};
+\node[jkffxn,scale=\sca] (FF1) at (0,0) {};
+\node[jkffxn,scale=\sca] (FF2) at (0,-3.333) {};
+\coordinate (SS) at (FF1.J -| -1.125,0);
+\def\gx{-2};
+\node[and gate] (GJ0) at (\gx,0 |- FF0.J) {};
+\node[not gate] (GJ1) at (\gx,0 |- FF1.J) {};
+\node[and gate] (GJ2) at (\gx,0 |- FF2.J) {};
 \foreach \x in {0,...,2} {
   \coordinate (LI\x) at (1+0.2*\x,5+0.2*\x);
-  \coordinate (LO\x) at (-2.5-0.2*\x,5+0.2*\x);
+  \coordinate (LO\x) at (-2.7-0.2*\x,5+0.2*\x);
   \coordinate (LF\x) at (LO\x |- 0,-5);
   \draw (FF\x.Q) -| (LI\x) -- (LO\x) -- (LF\x);
-  \draw (G\x.output) -- (FF\x.D);
+}
+\foreach \x in {0,1,2} {
+  \draw (GJ\x.output) -- (FF\x.J);
+}
+\foreach \x in {} {
+  \draw (GK\x.output) -- (FF\x.K);
 }
 \foreach \x in {3,4,5} {
-  \coordinate (LO\x) at (-2.5-0.2*\x,5.4);
+  \coordinate (LO\x) at (-2.7-0.2*\x,5.4);
   \coordinate (LF\x) at (LO\x |- 0,-5);
   \draw (LO\x) -- (LF\x);
 }
 \end{scope}
-\foreach \x/\y/\z in {0/input 1/1,0/input 2/3,1/input/3,2/input 1/1,2/input 2/3} {
-  \draw (G\x.\y) -- (G\x.\y -| LO\z);
-  \pdot{G\x.\y -| LO\z};
+\draw (FF2.K) -| (SS);
+\pdot{SS};
+\foreach \x/\y/\z in {0/input 1/1,0/input 2/3,1/input/3,2/input 1/0,2/input 2/3} {
+  \draw (GJ\x.\y) -- (GJ\x.\y -| LO\z);
+  \pdot{GJ\x.\y -| LO\z};
 }
+\foreach \x/\y/\z in {0,1,2} {
+  \draw (FF\x.Clk) -- (FF\x.Clk -| LO4);
+  \pdot{FF\x.Clk -| LO4};
+}
+\draw (FF1.K) -- (FF1.K -| LO3);
+\pdot{FF1.K -| LO3};
+\draw (FF2.CLR) |- ++(-0.5,-0.125) node[anchor=west,scale=0.75]{$1$};
+\draw (FF1.CLR) -- (FF2.PR);
 \end{tikzpicture}}
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
 \label{fig:mealyCombImpl}

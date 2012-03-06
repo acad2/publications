@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.19)  6 MAR 2012 11:34
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.2.19)  6 MAR 2012 14:14
 entering extended mode
  %&-line parsing enabled.
 **cursus.tex
@@ -4409,7 +4409,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1922 \end{tikzpicture}}
+l.1938 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4421,7 +4421,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1922 \end{tikzpicture}}
+l.1938 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4433,7 +4433,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1922 \end{tikzpicture}}
+l.1938 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4447,6 +4447,11 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no , in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -4556,10 +4561,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 23064 strings out of 493848
- 447419 string characters out of 1152823
+ 23089 strings out of 493848
+ 447742 string characters out of 1152823
  806534 words of memory out of 3000000
- 25624 multiletter control sequences out of 15000+50000
+ 25649 multiletter control sequences out of 15000+50000
  22858 words of font info for 89 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  56i,16n,89p,2044b,1267s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -4594,7 +4599,7 @@ lic/amsfonts/cm/cmti7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
 /cm/cmti8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.p
 fb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on cursus.pdf (62 pages, 801363 bytes).
+Output written on cursus.pdf (62 pages, 801726 bytes).
 PDF statistics:
  369 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
