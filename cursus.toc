@@ -72,8 +72,8 @@
 \contentsline {subsubsection}{Stap 4A: Logica die de volgende toestand berekent}{27}
 \contentsline {paragraph}{Excitatietabellen van flipflops}{27}
 \contentsline {paragraph}{De transitiefunctie}{28}
-\contentsline {paragraph}{Het one-hot-codering geval}{29}
-\contentsline {subsubsection}{Stap 4B: Logica die de uitgang toestand berekent}{31}
+\contentsline {paragraph}{Het one-hot-codering geval}{30}
+\contentsline {subsubsection}{Stap 4B: Logica die de uitgang toestand berekent}{30}
 \contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{31}
 \contentsline {part}{III\hspace {1em}Processoren}{33}
 \contentsline {xpart}{Processoren}{35}

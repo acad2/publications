@@ -1483,6 +1483,9 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \coordinate (Clk1) at (F3I |- 0,-3);
 \coordinate (CLR0) at (F4I |- 0,0.5);
 \coordinate (CLR1) at (F4I |- 0,-3.5);
+\coordinate (PR0) at (F4I |- 0,3.5);
+\coordinate (PR1) at (F4I |- 0,-0.5);
+\coordinate (MID) at (FF0.CLR |- 0,0);
 
 \draw (FF0.Q) -| (F0O) -- (F0I);
 \draw (FF1.Q) -| (F1O) -- (F1I);
@@ -1529,10 +1532,11 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 }
 \foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
   \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \draw (\x.CLR) |- (\z);
   \pdot{\y};
-  \pdot{\z};
 }
+\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
+\draw (FF0.PR) |- (PR0);\pdot{PR0};
+\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
 \pdot{I0 -| F2I};
 \pdot{I1 -| F3I};
 \pdot{I2 -| F4I};
@@ -1562,6 +1566,9 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \coordinate (Clk1) at (F3I |- 0,-3);
 \coordinate (CLR0) at (F4I |- 0,0.5);
 \coordinate (CLR1) at (F4I |- 0,-3.5);
+\coordinate (PR0) at (F4I |- 0,3.5);
+\coordinate (PR1) at (F4I |- 0,-0.5);
+\coordinate (MID) at (FF0.CLR |- 0,0);
 
 \draw (FF0.Q) -| (F0O) -- (F0I);
 \draw (FF1.Q) -| (F1O) -- (F1I);
@@ -1606,10 +1613,11 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 }
 \foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
   \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \draw (\x.CLR) |- (\z);
   \pdot{\y};
-  \pdot{\z};
 }
+\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
+\draw (FF0.PR) |- (PR0);\pdot{PR0};
+\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
 \pdot{I0 -| F2I};
 \pdot{I1 -| F3I};
 \pdot{I2 -| F4I};
@@ -1643,6 +1651,9 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \coordinate (Clk1) at (F3I |- FF1.Clk);
 \coordinate (CLR0) at (F4I |- 0,0.2);
 \coordinate (CLR1) at (F4I |- 0,-3.8);
+\coordinate (PR0) at (F4I |- 0,3.5);
+\coordinate (PR1) at (F4I |- 0,-0.5);
+\coordinate (MID) at (FF0.CLR |- 0,0);
 
 \draw (FF0.Q) -| (F0O) -- (F0I);
 \draw (FF1.Q) -| (F1O) -- (F1I);
@@ -1695,10 +1706,11 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 }
 \foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
   \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \draw (\x.CLR) |- (\z);
   \pdot{\y};
-  \pdot{\z};
 }
+\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
+\draw (FF0.PR) |- (PR0);\pdot{PR0};
+\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
 \pdot{I0 -| F2I};
 \pdot{I1 -| F3I};
 \pdot{I2 -| F4I};
@@ -1732,6 +1744,9 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \coordinate (Clk1) at (F3I |- FF1.Clk);
 \coordinate (CLR0) at (F4I |- 0,0.2);
 \coordinate (CLR1) at (F4I |- 0,-3.8);
+\coordinate (PR0) at (F4I |- 0,3.5);
+\coordinate (PR1) at (F4I |- 0,-0.5);
+\coordinate (MID) at (FF0.CLR |- 0,0);
 
 \draw (FF0.Q) -| (F0O) -- (F0I);
 \draw (FF1.Q) -| (F1O) -- (F1I);
@@ -1787,10 +1802,11 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 }
 \foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
   \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \draw (\x.CLR) |- (\z);
   \pdot{\y};
-  \pdot{\z};
 }
+\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
+\draw (FF0.PR) |- (PR0);\pdot{PR0};
+\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
 \pdot{I0 -| F2I};
 \pdot{I1 -| F3I};
 \pdot{I2 -| F4I};
@@ -1798,6 +1814,7 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
 \label{fig:mooreCombImpl}
 \end{figure}
+Naast de logica voor de volgende toestand, verbinden we ook de klokingangen van de flipflops met het globale kloksignaal, en implementeren we de clear logica. De clear zorgt ervoor dat op het moment dat we de schakeling herzetten en dus het \clrsin{} signaal van de schakeling 0 wordt, de schakeling in de eerste toestand terechtkomt. In ons geval is dat 10. Daarom verbinden we de clear-ingang met de preset ingang van de eerste flipflop en de clear-ingang van de tweede flipflop. Op de clear-ingang van de eerste flipflop en de preset-ingang van de tweede wordt steeds een hoog signaal aangelegd.
 \paragraph{Het one-hot-codering geval}Naast het geval van de Moore-machine zullen we ook de transitiefunctie van de Mealy-machine implementeren. Over deze realisatie is het ook eenvoudiger om enkele eigenschappen te formaliseren. Deze eigenschappen gaan over de kosten van de transitiefunctie v\'o\'or dat we minimalisatie van de Karnaugh-kaarten toepassen. Verder hangen de eigenschappen af van het type flipflop die we gebruiken:
 \begin{itemize}
  \item Bij een D-flipflop is het aantal AND-poorten voor een flipflop equivalent met het aantal transities naar de toestand die de flipflop voorstelt. Bij een transitie\footnote{Inclusief lussen.} naar toestand $x$ dient immer de overeenkomstige flipflop op 1 gezet te worden, in de andere gevallen is de waarde van de flipflop altijd 0. We kunnen dit verder formaliseren tot: ``Het aantal enen in de $D_i$ kolom is gelijk aan het aantal transities naar toestand $i$''.
@@ -1852,44 +1869,120 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
 \kkaartd[0.75]{0}{-5}{$D_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/1/0/0/-/-/0/1/-/-/-/-/-/-/-/-};
 \def\sc{0.75};
 \def\sca{0.8};
-\begin{scope}[xshift=7 cm,yshift=-1.75 cm,scale=\sc]
+\begin{scope}[xshift=5 cm,yshift=-1.75 cm,scale=\sc]
 \node[dffxn,scale=\sca] (FF0) at (0,3.333) {$FF_0$};
 \node[dffxn,scale=\sca] (FF1) at (0,0) {$FF_1$};
 \node[dffxn,scale=\sca] (FF2) at (0,-3.333) {$FF_2$};
-\foreach \g/\x in {0,1,2} {
-
-}
+\def\gx{-1.75};
+\node[and gate] (G0) at (\gx,0 |- FF0.D) {};
+\node[not gate] (G1) at (\gx,0 |- FF1.D) {};
+\node[and gate,inputs={inverted,normal}] (G2) at (\gx,0 |- FF2.D) {};
 \foreach \x in {0,...,2} {
   \coordinate (LI\x) at (1+0.2*\x,5+0.2*\x);
-  \coordinate (LO\x) at (-4.5-0.2*\x,5+0.2*\x);
+  \coordinate (LO\x) at (-2.5-0.2*\x,5+0.2*\x);
   \coordinate (LF\x) at (LO\x |- 0,-5);
   \draw (FF\x.Q) -| (LI\x) -- (LO\x) -- (LF\x);
+  \draw (G\x.output) -- (FF\x.D);
 }
 \foreach \x in {3,4,5} {
-  \coordinate (LO\x) at (-4.5-0.2*\x,5.4);
+  \coordinate (LO\x) at (-2.5-0.2*\x,5.4);
   \coordinate (LF\x) at (LO\x |- 0,-5);
   \draw (LO\x) -- (LF\x);
 }
+\coordinate (FFCLR1) at (LO5 |- 0,-1.667);
 \end{scope}
+\foreach \x/\y/\z in {0/input 1/1,0/input 2/3,1/input/3,2/input 1/1,2/input 2/3} {
+  \draw (G\x.\y) -- (G\x.\y -| LO\z);
+  \pdot{G\x.\y -| LO\z};
+}
+\foreach \x/\y/\z in {0,1,2} {
+  \draw (FF\x.Clk) -- (FF\x.Clk -| LO4);
+  \pdot{FF\x.Clk -| LO4};
+}
+\draw (FF2.CLR) |- ++(-0.5,-0.11) node[anchor=east,scale=0.75]{$1$};
+\draw (FF1.CLR) -- (FF2.PR);
+\draw (FF0.PR) |- ++(-0.5,0.11) node[anchor=east,scale=0.75]{$1$};
+\draw (FF1.PR) |- ++(-0.5,0.11) node[anchor=east,scale=0.75]{$1$};
+\coordinate (FFCLR0) at ([yshift=-0.11 cm] FF0.CLR -| LO5);
+\draw (FF0.CLR) |- (FFCLR0);
+\draw (FFCLR1 -| FF1.CLR) |- (FFCLR1);
+\pdot{FFCLR0};
+\pdot{FFCLR1};
+\pdot{FFCLR1 -| FF1.CLR};
 \end{tikzpicture}}
 \subfigure[JK-flipflop]{\begin{tikzpicture}[circuit logic US]
 \def\ta{0.09};
 \kkaartdmarks[0.75]{0}{0}{/1/2/2/3/\ta}{}{};
 \kkaartd[0.75]{0}{0}{$J_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
-\kkaartdmarks[0.75]{2.5}{0}{/0/0/3/3/\ta}{}{};
-\kkaartd[0.75]{2.5}{0}{$K_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/-/-/-/-/1/1/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.25}{0}{/0/0/3/3/\ta}{}{};
+\kkaartd[0.75]{2.25}{0}{$K_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/-/-/-/-/1/1/-/-/-/-/-/-/-/-};
 \kkaartdmarks[0.75]{0}{-2.5}{/0/0/3/1/\ta}{}{};
 \kkaartd[0.75]{0}{-2.5}{$J_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/1/0/-/-/-/-/-/-/-/-};
-\kkaartdmarks[0.75]{2.5}{-2.5}{/0/2/3/3/\ta}{}{};
-\kkaartd[0.75]{2.5}{-2.5}{$K_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.25}{-2.5}{/0/2/3/3/\ta}{}{};
+\kkaartd[0.75]{2.25}{-2.5}{$K_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
 \kkaartdmarks[0.75]{0}{-5}{/2/2/3/3/\ta}{}{};
 \kkaartd[0.75]{0}{-5}{$J_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/0/-/-/0/1/-/-/-/-/-/-/-/-};
-\kkaartdmarks[0.75]{2.5}{-5}{/0/0/3/1/\ta}{}{};
-\kkaartd[0.75]{2.5}{-5}{$K_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/-/-/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.25}{-5}{/0/0/3/1/\ta}{}{};
+\kkaartd[0.75]{2.25}{-5}{$K_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/-/-/-/-/-/-/-/-/-/-};
+\def\sc{0.75};
+\def\sca{0.8};
+\begin{scope}[xshift=7.5 cm,yshift=-1.75 cm,scale=\sc]
+\node[jkffxn,scale=\sca] (FF0) at (0,3.333) {};
+\node[jkffxn,scale=\sca] (FF1) at (0,0) {};
+\node[jkffxn,scale=\sca] (FF2) at (0,-3.333) {};
+\coordinate (SS) at (FF1.J -| -1.125,0);
+\def\gx{-2};
+\node[and gate] (GJ0) at (\gx,0 |- FF0.J) {};
+\node[not gate] (GJ1) at (\gx,0 |- FF1.J) {};
+\node[and gate] (GJ2) at (\gx,0 |- FF2.J) {};
+\foreach \x in {0,...,2} {
+  \coordinate (LI\x) at (1+0.2*\x,5+0.2*\x);
+  \coordinate (LO\x) at (-2.7-0.2*\x,5+0.2*\x);
+  \coordinate (LF\x) at (LO\x |- 0,-5);
+  \draw (FF\x.Q) -| (LI\x) -- (LO\x) -- (LF\x);
+}
+\foreach \x in {0,1,2} {
+  \draw (GJ\x.output) -- (FF\x.J);
+}
+\foreach \x in {} {
+  \draw (GK\x.output) -- (FF\x.K);
+}
+\foreach \x in {3,4,5} {
+  \coordinate (LO\x) at (-2.7-0.2*\x,5.4);
+  \coordinate (LF\x) at (LO\x |- 0,-5);
+  \draw (LO\x) -- (LF\x);
+}
+\coordinate (FFCLR1) at (LO5 |- 0,-1.667);
+\end{scope}
+\draw (FF2.K) -| (SS);
+\pdot{SS};
+\foreach \x/\y/\z in {0/input 1/1,0/input 2/3,1/input/3,2/input 1/0,2/input 2/3} {
+  \draw (GJ\x.\y) -- (GJ\x.\y -| LO\z);
+  \pdot{GJ\x.\y -| LO\z};
+}
+\foreach \x/\y/\z in {0,1,2} {
+  \draw (FF\x.Clk) -- (FF\x.Clk -| LO4);
+  \pdot{FF\x.Clk -| LO4};
+}
+\draw (FF1.K) -- (FF1.K -| LO3);
+\pdot{FF1.K -| LO3};
+\draw (FF2.CLR) |- ++(-0.5,-0.11) node[anchor=east,scale=0.75]{$1$};
+\draw (FF1.CLR) -- (FF2.PR);
+\draw (FF0.PR) |- ++(-0.5,0.11) node[anchor=east,scale=0.75]{$1$};
+\draw (FF1.PR) |- ++(-0.5,0.11) node[anchor=east,scale=0.75]{$1$};
+\draw (FF0.K) -- ++(-0.5,0) node[anchor=east,scale=0.75]{$1$};
+\coordinate (FFCLR0) at ([yshift=-0.11 cm] FF0.CLR -| LO5);
+\draw (FF0.CLR) |- (FFCLR0);
+\draw (FFCLR1 -| FF1.CLR) |- (FFCLR1);
+\pdot{FFCLR0};
+\pdot{FFCLR1};
+\pdot{FFCLR1 -| FF1.CLR};
 \end{tikzpicture}}
-\caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
+\caption{Implementatie van de Mealy-schakeling met verschillende soorten flipflops.}
 \label{fig:mealyCombImpl}
 \end{figure}
+Merk op dat we hier de verbindingen naar de \clrsin{} en \prsin{} ingangen anders geconfigureerd zijn dan bij de Moore-machine. Dit komt omdat de begintoestand van de Mealy-machine 001 is, terwijl dit 10 is bij de Moore-machine.
 \subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
+Naast de logica die de volgende toestand berekent, dienen we ook de de logica te synthetiseren die de uitgangen bepaalt. Dit eigenlijk niets anders dan het synthetiseren van een combinatorische schakeling. Hiervoor dienen een tabel op te stellen die vanuit de coderingstabel een tabel opstelt die de functie bepaalt. Vermits de uitgang bij een Moore-machine anders bepaald wordt dan bij een Mealy-machine, zal ook de techniek om deze tabel op te stellen licht verschillen.
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}
