@@ -1844,27 +1844,48 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
 \centering
 \subfigure[D-flipflop]{\begin{tikzpicture}[circuit logic US]
 \def\ta{0.09};
-\kkaartdmarks{0}{0}{/1/2/2/3/\ta}{}{};
-\kkaartd{0}{0}{$D_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/1/-/-/0/0/-/-/-/-/-/-/-/-};
-\kkaartdmarks{0}{-3}{/0/0/3/1/\ta}{}{};
-\kkaartd{0}{-3}{$D_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/1/0/-/-/1/0/-/-/-/-/-/-/-/-};
-\kkaartdmarks{0}{-6}{}{/2/3/1/\ta}{};
-\kkaartd{0}{-6}{$D_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/1/0/0/-/-/0/1/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{0}{0}{/1/2/2/3/\ta}{}{};
+\kkaartd[0.75]{0}{0}{$D_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/1/-/-/0/0/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{0}{-2.5}{/0/0/3/1/\ta}{}{};
+\kkaartd[0.75]{0}{-2.5}{$D_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/1/0/-/-/1/0/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{0}{-5}{}{/2/3/1/\ta}{};
+\kkaartd[0.75]{0}{-5}{$D_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/1/0/0/-/-/0/1/-/-/-/-/-/-/-/-};
+\def\sc{0.75};
+\def\sca{0.8};
+\begin{scope}[xshift=7 cm,yshift=-1.75 cm,scale=\sc]
+\node[dffxn,scale=\sca] (FF0) at (0,3.333) {$FF_0$};
+\node[dffxn,scale=\sca] (FF1) at (0,0) {$FF_1$};
+\node[dffxn,scale=\sca] (FF2) at (0,-3.333) {$FF_2$};
+\foreach \g/\x in {0,1,2} {
+
+}
+\foreach \x in {0,...,2} {
+  \coordinate (LI\x) at (1+0.2*\x,5+0.2*\x);
+  \coordinate (LO\x) at (-4.5-0.2*\x,5+0.2*\x);
+  \coordinate (LF\x) at (LO\x |- 0,-5);
+  \draw (FF\x.Q) -| (LI\x) -- (LO\x) -- (LF\x);
+}
+\foreach \x in {3,4,5} {
+  \coordinate (LO\x) at (-4.5-0.2*\x,5.4);
+  \coordinate (LF\x) at (LO\x |- 0,-5);
+  \draw (LO\x) -- (LF\x);
+}
+\end{scope}
 \end{tikzpicture}}
 \subfigure[JK-flipflop]{\begin{tikzpicture}[circuit logic US]
 \def\ta{0.09};
-\kkaartdmarks{0}{0}{/1/2/2/3/\ta}{}{};
-\kkaartd{0}{0}{$J_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
-\kkaartdmarks{3}{0}{/0/0/3/3/\ta}{}{};
-\kkaartd{3}{0}{$K_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/-/-/-/-/1/1/-/-/-/-/-/-/-/-};
-\kkaartdmarks{0}{-3}{/0/0/3/1/\ta}{}{};
-\kkaartd{0}{-3}{$J_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/1/0/-/-/-/-/-/-/-/-};
-\kkaartdmarks{3}{-3}{/0/2/3/3/\ta}{}{};
-\kkaartd{3}{-3}{$K_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
-\kkaartdmarks{0}{-6}{/2/2/3/3/\ta}{}{};
-\kkaartd{0}{-6}{$J_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/0/-/-/0/1/-/-/-/-/-/-/-/-};
-\kkaartdmarks{3}{-6}{/0/0/3/1/\ta}{}{};
-\kkaartd{3}{-6}{$K_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/-/-/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{0}{0}{/1/2/2/3/\ta}{}{};
+\kkaartd[0.75]{0}{0}{$J_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.5}{0}{/0/0/3/3/\ta}{}{};
+\kkaartd[0.75]{2.5}{0}{$K_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/-/-/-/-/1/1/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{0}{-2.5}{/0/0/3/1/\ta}{}{};
+\kkaartd[0.75]{0}{-2.5}{$J_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/1/0/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.5}{-2.5}{/0/2/3/3/\ta}{}{};
+\kkaartd[0.75]{2.5}{-2.5}{$K_1$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/1/-/-/-/-/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{0}{-5}{/2/2/3/3/\ta}{}{};
+\kkaartd[0.75]{0}{-5}{$J_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/-/-/0/0/-/-/0/1/-/-/-/-/-/-/-/-};
+\kkaartdmarks[0.75]{2.5}{-5}{/0/0/3/1/\ta}{}{};
+\kkaartd[0.75]{2.5}{-5}{$K_2$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/1/0/-/-/-/-/-/-/-/-/-/-/-/-/-/-};
 \end{tikzpicture}}
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
 \label{fig:mealyCombImpl}
