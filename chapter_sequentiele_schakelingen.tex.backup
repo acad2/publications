@@ -1210,7 +1210,19 @@ $E$&$B/1$&$A/0$
 \label{tbl:minimaalToestandstabel}
 \end{table}
 \paragraph{Een formeel algoritme}
-De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen deze algoritmen in respectievelijk \algref{alg:minimalMoore} en \algref{alg:minimalMealy}.??%TODO: write algorithms
+De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen deze algoritmen in respectievelijk \algref{alg:minimizeFSM}. Het algoritme bevat de algemene \procedureref{Minimize}-procedure. Deze procedure maakt gebruik van twee functies: \procedureref{Minimize1} en \procedureref{Minimize2}. Beide afwijken bij Moore- en Mealy-machines. Daarom worden deze functies opgesplitst. Voor de Moore-machine gebruiken we dus respectievelijk \procedureref{Minimize1Moore} en \procedureref{Minimize2Moore}, voor de Mealy-machine maken we gebruik van \procedureref{Minimize1Mealy} en \procedureref{Minimize2Mealy}. Verder vereist dit algoritme enige voeling met vaste punt theorie in de wiskunde. %TODO: write algorithms
+\begin{algorithm}[htb]
+\caption{Minimaliseren van een toestandsdiagram}
+\label{alg:minimizeFSM}
+\begin{algorithmic}[1]
+\STATE $test$
+\FORALL{$d\in D\wedge\neg c\left(d\right)$}
+\IF{$nothing$}
+\STATE $test$
+\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 \subsection{Stap 3: Implementeren van de toestanden in het geheugen}
 \subsubsection{Stap 3A: Coderen van de toestanden}
 Tot nu toe hebben we toestanden altijd voorgesteld met letters. Uiteraard dienen we deze toestanden op de een of andere manier voor te stellen in de geheugencomponenten in onze schakeling. Vermits letters niet opgeslagen kunnen worden in een flipflop of een register\footnote{Uiteraard kunnen we bijvoorbeeld wel het ASCII equivalent opslaan.} zullen we de toestanden moeten omzetten naar een binaire voorstelling. Dit wordt het \termen{coderen} van de toestanden genoemd. Doorgaans lijkt dit geen ingewikkeld probleem, we kunnen eenvoudigweg elke toestand een opeenvolgend nummer geven en deze toestanden dan binair coderen. Merk echter op dat de toestand geen impliciete ordening hebben, alleen al door opeenvolgende nummers te gebruiken zijn er $n!$ mogelijke coderingen mogelijk. Er bestaan echter technieken die ervoor zorgen dat we door een intelligente codering minder hardware zullen gebruiken. Dit leidt meestal tot goedkopere en snellere schakelingen. Algemeen zijn er drie technieken die we kunnen gebruiken:
@@ -1983,6 +1995,6 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
 \end{figure}
 Merk op dat we hier de verbindingen naar de \clrsin{} en \prsin{} ingangen anders geconfigureerd zijn dan bij de Moore-machine. Dit komt omdat de begintoestand van de Mealy-machine 001 is, terwijl dit 10 is bij de Moore-machine.
 \subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
-Naast de logica die de volgende toestand berekent, dienen we ook de de logica te synthetiseren die de uitgangen bepaalt. Dit eigenlijk niets anders dan het synthetiseren van een combinatorische schakeling. Hiervoor dienen een tabel op te stellen die vanuit de coderingstabel een tabel opstelt die de functie bepaalt. Vermits de uitgang bij een Moore-machine anders bepaald wordt dan bij een Mealy-machine, zal ook de techniek om deze tabel op te stellen licht verschillen.
+Naast de logica die de volgende toestand berekent, dienen we ook de de logica te synthetiseren die de uitgangen bepaalt. Dit eigenlijk niets anders dan het synthetiseren van een combinatorische schakeling. Hiervoor dienen een tabel op te stellen die vanuit de coderingstabel een tabel opstelt die de functie bepaalt. Vermits de uitgang bij een Moore-machine anders bepaald wordt dan bij een Mealy-machine, zal ook de techniek om deze tabel op te stellen licht verschillen. Bij een Moore-machine wordt de uitgang enkel bepaald door de toestand. Hierdoor kunnen we de tabel opstellen door de transitiekolommen weg te laten. Bij een Mealy-machine dienen we een linearisering toe te passen. Hierbij beschouwen we niet meer de codering van de volgende toestand zoals in de vorige stap, maar uiteraard de uitgang. Vanuit die tabel stellen we dan opnieuw een combinatorische schakeling op. Merk op dat deze schakeling niet afhangt van het type flipflop. Immers hebben alle types flipflop een $Q$-uitgang. De schakeling hangt wel af van de toestandscodering. Op tabel \ref{tbl:mealyMooreTables} toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop.
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}

@@ -6,6 +6,8 @@ type MooreOutput s o = s->o
 type MealyOutput s i o = s->i->o
 data MooreMachine s i o = Moore ([s],s,[i],[o],Transition s i,MooreOutput s o)
 data MealyMachine s i o = Mealy ([s],s,[i],[o],Transition s i,MealyOutput s i o)
+data KarnaughEntry = One | Zero | DontCare
+data KarnaughCard a = KarnaughCard ([a],[KarnaughEntry])
 
 splitMooreOutput :: (Eq o) => MooreMachine s i o -> [[s]]
 splitMooreOutput (Moore (states,_,_,_,_,func))  = partitionBy (mooreOutputSplitter func) states
@@ -54,8 +56,19 @@ whileFunc f a = map (snd) (takeWhile (uncurry ((/=) `on` length)) $ zip t (tail 
 	where 
 		t = (iterate f a)
 
-rebindMoore :: MooreMachine s i o -> [[s]] -> MooreMachine s i o
-rebindMealy :: MealyMachine s i o -> [[s]] -> MealyMachine s i o
+--rebindMoore :: MooreMachine s i o -> [[s]] -> MooreMachine s i o
+--rebindMealy :: MealyMachine s i o -> [[s]] -> MealyMachine s i o
+
+toBitArray :: String -> [Bool]
+toBitArray [] = []
+toBitArray ('0':as) = (False:toBitArray as)
+toBitArray (_:as) = (True:toBitArray as)
+
+isBitArray :: String -> Bool
+isBitArray [] = True
+isBitArray ('0':as) = isBitArray as
+isBitArray ('1':as) = isBitArray as
+isBitArray _ = False
 
 sampleMoore :: MooreMachine Char Char Char
 sampleMoore = Moore (['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'],'A',['0','1'],['0','1'],sampleMooreTransition,sampleMooreOutput)

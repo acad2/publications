@@ -53,14 +53,14 @@
 \contentsline {figure}{\numberline {1.20}{\ignorespaces Geminimaliseerde toestandsdiagrammen van de leidende voorbeelden.}}{24}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Moore-machine}}}{24}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Mealy-machine}}}{24}
-\contentsline {figure}{\numberline {1.21}{\ignorespaces Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}}{25}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Gray-code (minimal-bit-change)}}}{25}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Straightforward}}}{25}
-\contentsline {figure}{\numberline {1.22}{\ignorespaces Implementatie van de Moore-schakeling met verschillende soorten flipflops.}}{29}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {D-flipflops}}}{29}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {T-flipflops}}}{29}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {JK-flipflops}}}{29}
-\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {SR-flipflops}}}{29}
+\contentsline {figure}{\numberline {1.21}{\ignorespaces Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}}{26}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Gray-code (minimal-bit-change)}}}{26}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Straightforward}}}{26}
+\contentsline {figure}{\numberline {1.22}{\ignorespaces Implementatie van de Moore-schakeling met verschillende soorten flipflops.}}{30}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {D-flipflops}}}{30}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {T-flipflops}}}{30}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {JK-flipflops}}}{30}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {SR-flipflops}}}{30}
 \contentsline {figure}{\numberline {1.23}{\ignorespaces Implementatie van de Mealy-schakeling met verschillende soorten flipflops.}}{32}
 \contentsline {subfigure}{\numberline {(a)}{\ignorespaces {D-flipflop}}}{32}
 \contentsline {subfigure}{\numberline {(b)}{\ignorespaces {JK-flipflop}}}{32}

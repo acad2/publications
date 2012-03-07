@@ -57,23 +57,23 @@
 \contentsline {paragraph}{Een formeel algoritme}{23}
 \contentsline {subsection}{\numberline {1.3.4}Stap 3: Implementeren van de toestanden in het geheugen}{24}
 \contentsline {subsubsection}{Stap 3A: Coderen van de toestanden}{24}
-\contentsline {paragraph}{Straightforward codering}{24}
+\contentsline {paragraph}{Straightforward codering}{25}
 \contentsline {paragraph}{One-hotcodering}{25}
 \contentsline {paragraph}{Minimal-bit-change}{25}
-\contentsline {paragraph}{Leidende voorbeelden}{25}
+\contentsline {paragraph}{Leidende voorbeelden}{26}
 \contentsline {subsubsection}{Stap 3B: De keuze van het type flipflop}{26}
-\contentsline {paragraph}{De kosten van een flipflop}{26}
-\contentsline {paragraph}{Don't cares}{26}
+\contentsline {paragraph}{De kosten van een flipflop}{27}
+\contentsline {paragraph}{Don't cares}{27}
 \contentsline {paragraph}{Eenvoud van het ontwerp}{27}
 \contentsline {paragraph}{Toepassingen}{27}
 \contentsline {paragraph}{Welke flipflop kiezen?}{27}
 \contentsline {paragraph}{Samevatting}{27}
-\contentsline {subsection}{\numberline {1.3.5}Stap 4: Implementeren van de combinatorische logica}{27}
-\contentsline {subsubsection}{Stap 4A: Logica die de volgende toestand berekent}{27}
-\contentsline {paragraph}{Excitatietabellen van flipflops}{27}
+\contentsline {subsection}{\numberline {1.3.5}Stap 4: Implementeren van de combinatorische logica}{28}
+\contentsline {subsubsection}{Stap 4A: Logica die de volgende toestand berekent}{28}
+\contentsline {paragraph}{Excitatietabellen van flipflops}{28}
 \contentsline {paragraph}{De transitiefunctie}{28}
-\contentsline {paragraph}{Het one-hot-codering geval}{30}
-\contentsline {subsubsection}{Stap 4B: Logica die de uitgang toestand berekent}{30}
+\contentsline {paragraph}{Het one-hot-codering geval}{29}
+\contentsline {subsubsection}{Stap 4B: Logica die de uitgang toestand berekent}{31}
 \contentsline {section}{\numberline {1.4}Asynchroon schakelingen}{31}
 \contentsline {part}{III\hspace {1em}Processoren}{33}
 \contentsline {xpart}{Processoren}{35}

@@ -89,14 +89,14 @@
 \indexentry {Uitgangscombinatie}{21}
 \indexentry {Toestandstabel}{21}
 \indexentry {Coderen}{24}
-\indexentry {Straightforward codering}{24}
-\indexentry {One-hot codering}{24}
-\indexentry {Minimal-bit-change}{24}
+\indexentry {Straightforward codering}{25}
+\indexentry {One-hot codering}{25}
+\indexentry {Minimal-bit-change}{25}
 \indexentry {Glitches}{25}
 \indexentry {Gray-code teller}{25}
 \indexentry {Excitatietabel}{27}
-\indexentry {Excitatiefuncties}{27}
-\indexentry {Excitatietabellen}{27}
+\indexentry {Excitatiefuncties}{28}
+\indexentry {Excitatietabellen}{28}
 \indexentry {\texttt {VHDL}!\texttt {Literals}}{37}
 \indexentry {\texttt {VHDL}!\texttt {Getal}}{37}
 \indexentry {\texttt {VHDL}!\texttt {abstract literal}}{37}

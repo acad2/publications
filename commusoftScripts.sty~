@@ -1,5 +1,7 @@
 \ProvidesPackage{commusoftScripts}
 \newcolumntype{M}{>{\centering\arraybackslash}m{2cm}<{\centering\arraybackslash}|}
+\usepackage{algorithm}
+\usepackage{algorithmic}
 \RequirePackage{subfigure}
 \RequirePackage{graphicx}
 \RequirePackage{listings}
@@ -17,6 +19,7 @@
 
 \tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
 
+\newcommand{\procedureref}[1]{\textsc{#1}}
 \newcommand{\algref}[1]{\textbf{Algorithm \ref{#1}}}
 \newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
 \newcommand\termen{\@ifstar{\@dblarg{\@termens}}{\@termen}}
@@ -88,16 +91,16 @@
 \begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
 \draw[thick] (0,0) -- ++(1,0) -- ++(0,2) -- ++(-1,0) -- cycle;
 \draw[thick] (0,2) -- (-0.25,2.25);
-\draw (-0.15,2.15) node[anchor=south east]{#4};
+\draw (-0.15,2.15) node[anchor=south east,scale=#1]{#4};
 \draw[thick] (0,0.5) -- ++(1,0);
 \draw[thick] (0,1) -- ++(1,0);
 \draw[thick] (0,1.5) -- ++(1,0);
 \draw[thick] (0.5,0) -- ++(0,2);
 \draw[thick] (0,2) -- (-0.25,2.25);
 \foreach \va/\vb/\vc in {#5} {
-  \draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{\va} (-0.125,1);
-  \draw[thick] (1.125,0.5) to node[sloped,above,rotate=180]{\vb} (1.125,1.5);
-  \draw[thick] (0.5,2.125) to node[sloped,above]{\vc} (1,2.125);
+  \draw[thick] (-0.125,0) to node[sloped,below,rotate=180,scale=#1]{\va} (-0.125,1);
+  \draw[thick] (1.125,0.5) to node[sloped,above,rotate=180,scale=#1]{\vb} (1.125,1.5);
+  \draw[thick] (0.5,2.125) to node[sloped,above,scale=#1]{\vc} (1,2.125);
 }
 \foreach \va/\vb/\vc/\vd/\ve/\vf/\vg/\vh in {#6} {
   \draw (0.25,1.25) node[scale=#1]{\vc};

@@ -1210,7 +1210,19 @@ $E$&$B/1$&$A/0$
 \label{tbl:minimaalToestandstabel}
 \end{table}
 \paragraph{Een formeel algoritme}
-De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen deze algoritmen in respectievelijk \algref{alg:minimalMoore} en \algref{alg:minimalMealy}.??%TODO: write algorithms
+De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen deze algoritmen in respectievelijk \algref{alg:minimizeFSM}. Het algoritme bevat de algemene \procedureref{Minimize}-procedure. Deze procedure maakt gebruik van twee functies: \procedureref{Minimize1} en \procedureref{Minimize2}. Beide afwijken bij Moore- en Mealy-machines. Daarom worden deze functies opgesplitst. Voor de Moore-machine gebruiken we dus respectievelijk \procedureref{Minimize1Moore} en \procedureref{Minimize2Moore}, voor de Mealy-machine maken we gebruik van \procedureref{Minimize1Mealy} en \procedureref{Minimize2Mealy}. Verder vereist dit algoritme enige voeling met vaste punt theorie in de wiskunde. We gebruiken de notatie \fixedpoint{O} om aan te geven dat we operatie $O$ blijven uitvoeren op een gegeven object tot het object na de operatie nog steeds identiek is aan het orgineel.%TODO: write algorithms
+\begin{algorithm}[htb]
+\caption{Minimaliseren van een toestandsdiagram}
+\label{alg:minimizeFSM}
+\begin{algorithmic}[1]
+\STATE $test$
+\FORALL{$d\in D\wedge\neg c\left(d\right)$}
+\IF{$nothing$}
+\STATE $test$
+\ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 \subsection{Stap 3: Implementeren van de toestanden in het geheugen}
 \subsubsection{Stap 3A: Coderen van de toestanden}
 Tot nu toe hebben we toestanden altijd voorgesteld met letters. Uiteraard dienen we deze toestanden op de een of andere manier voor te stellen in de geheugencomponenten in onze schakeling. Vermits letters niet opgeslagen kunnen worden in een flipflop of een register\footnote{Uiteraard kunnen we bijvoorbeeld wel het ASCII equivalent opslaan.} zullen we de toestanden moeten omzetten naar een binaire voorstelling. Dit wordt het \termen{coderen} van de toestanden genoemd. Doorgaans lijkt dit geen ingewikkeld probleem, we kunnen eenvoudigweg elke toestand een opeenvolgend nummer geven en deze toestanden dan binair coderen. Merk echter op dat de toestand geen impliciete ordening hebben, alleen al door opeenvolgende nummers te gebruiken zijn er $n!$ mogelijke coderingen mogelijk. Er bestaan echter technieken die ervoor zorgen dat we door een intelligente codering minder hardware zullen gebruiken. Dit leidt meestal tot goedkopere en snellere schakelingen. Algemeen zijn er drie technieken die we kunnen gebruiken:
