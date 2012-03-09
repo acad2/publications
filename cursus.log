@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.5.5)  7 MAR 2012 04:28
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.5.5)  8 MAR 2012 00:41
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -603,16 +603,25 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@every@algorithm=\toks35
 \c@algorithm=\count153
 )
-(/usr/share/texmf-texlive/tex/latex/algorithms/algorithmic.sty
-Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
-\c@ALC@unique=\count154
-\c@ALC@line=\count155
-\c@ALC@rem=\count156
-\c@ALC@depth=\count157
-\ALC@tlm=\skip68
-\algorithmicindent=\skip69
-)
-(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikzlibrarypatterns.code.tex
+(/usr/share/texmf-texlive/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count154
+\c@ALG@rem=\count155
+\c@ALG@nested=\count156
+\ALG@tlm=\skip68
+\ALG@thistlm=\skip69
+\c@ALG@Lnr=\count157
+\c@ALG@blocknr=\count158
+\c@ALG@storecount=\count159
+\c@ALG@tmpcounter=\count160
+\ALG@tmplength=\skip70
+) (/usr/share/texmf-texlive/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikzlibrarypatterns.code.tex
 File: tikzlibrarypatterns.code.tex 2008/01/15 v2.00 (rcs-revision 1.2)
 
 (/usr/share/texmf/tex/generic/pgf/libraries/pgflibrarypatterns.code.tex
@@ -648,7 +657,7 @@ File: pgflibraryshapes.multipart.code.tex 2010/01/07 v2.00 (rcs-revision 1.2)
 \pgfnodepartfivebox=\box91
 )))
 \@float@every@vhdlcode=\toks36
-\c@vhdlcode=\count158
+\c@vhdlcode=\count161
 )
 (./tikzlibrarycircuits.logic.US.code.tex (./tikzlibrarycircuits.logic.code.tex
 (./tikzlibrarycircuits.code.tex
@@ -661,7 +670,7 @@ File: pgflibraryshapes.multipart.code.tex 2010/01/07 v2.00 (rcs-revision 1.2)
 \pgfdecoratedinputsegmentcompleteddistance=\dimen200
 \pgfdecoratedinputsegmentremainingdistance=\dimen201
 \pgf@decorate@distancetomove=\dimen202
-\pgf@decorate@repeatstate=\count159
+\pgf@decorate@repeatstate=\count162
 \pgfdecorationsegmentamplitude=\dimen203
 \pgfdecorationsegmentlength=\dimen204
 )
@@ -671,7 +680,7 @@ File: pgflibraryshapes.multipart.code.tex 2010/01/07 v2.00 (rcs-revision 1.2)
 .tex)) (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikzlibrarycalc.code.tex
 File: tikzlibrarycalc.code.tex 2009/09/04 v2.00 (rcs-revision 1.6)
 )
-\tikz@lib@circ@count=\count160
+\tikz@lib@circ@count=\count163
 
 
 ! Package pgfkeys Error: I do not know the key '/tikz/pos/.belongs to family' a
@@ -799,8 +808,8 @@ Package: circuitikz 2009/04/17 The CircuiTikz circuit drawing package version 0
 (/usr/share/texmf-texlive/tex/latex/xstring/xstring.sty
 (/usr/share/texmf-texlive/tex/generic/xstring/xstring.tex
 \@xs@message=\write5
-\integerpart=\count161
-\decimalpart=\count162
+\integerpart=\count164
+\decimalpart=\count165
 )
 Package: xstring 2009/06/05 v1.5c String manipulations (C Tellechea)
 )
@@ -838,8 +847,8 @@ Package: mtcmess 2006/03/14
 Package minitoc Info: I0001
 (minitoc)             *** minitoc package, version 60 ***.
 \tf@mtc=\write6
-\mtcindent=\skip70
-\mtcskipamount=\skip71
+\mtcindent=\skip71
+\mtcskipamount=\skip72
 Package minitoc Info: I0005
 (minitoc)             compatible with hyperref.
 Package minitoc Info: I0023
@@ -865,11 +874,11 @@ Package minitoc Info: I0031
 
 \openout6 = `cursus.mtc0'.
 
-\c@mtc=\count163
-\c@minitocdepth=\count164
-\c@ptc=\count165
-\c@parttocdepth=\count166
-\ptcindent=\skip72
+\c@mtc=\count166
+\c@minitocdepth=\count167
+\c@ptc=\count168
+\c@parttocdepth=\count169
+\ptcindent=\skip73
 Package minitoc Info: I0010
 (minitoc)             The english language is selected.
 (minitoc)              on input line 4910.
@@ -950,24 +959,24 @@ sh.dict
 Dictionary: glossaries-dictionary, Language: English 
 ) (/usr/share/texmf/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count167
+\scratchcounter=\count170
 \scratchdimen=\dimen215
 \scratchbox=\box95
-\nofMPsegments=\count168
-\nofMParguments=\count169
+\nofMPsegments=\count171
+\nofMParguments=\count172
 \everyMPshowfont=\toks39
-\MPscratchCnt=\count170
+\MPscratchCnt=\count173
 \MPscratchDim=\dimen216
-\MPnumerator=\count171
+\MPnumerator=\count174
 \everyMPtoPDFconversion=\toks40
 )
-\c@lstlisting=\count172
-\c@minilofdepth=\count173
-\c@minilotdepth=\count174
-\c@partlofdepth=\count175
-\c@partlotdepth=\count176
-\c@sectlofdepth=\count177
-\c@sectlotdepth=\count178
+\c@lstlisting=\count175
+\c@minilofdepth=\count176
+\c@minilotdepth=\count177
+\c@partlofdepth=\count178
+\c@partlotdepth=\count179
+\c@sectlofdepth=\count180
+\c@sectlotdepth=\count181
 Package minitoc(hints) Info: I0049
 (minitoc(hints))             ==> You requested the hints option. 
 (minitoc(hints))             Some hints are eventually given below.
@@ -4182,15 +4191,16 @@ LaTeX Font Warning: Font shape `U/stmry/m/n' in size <0.5> not available
 
 LaTeX Font Warning: Command \small invalid in math mode on input line 1151.
 
-[23] [24]
-Overfull \hbox (1.0437pt too wide) in paragraph at lines 1237--1299
+[23] [24] [25]
+Overfull \hbox (1.0437pt too wide) in paragraph at lines 1272--1334
  \OT1/cmr/bx/n/10 Minimal-bit-change[] \OT1/cmr/m/n/10 In-dien de kost-prijs en
  ver-mo-gen-ver-bruik een be-lang-rijke fac-tor zijn ma-ken we meestal
  []
 
-[25] [26] [27]
+[26] [27]
 Missing character: There is no Â in font cmr10!
 Missing character: There is no ´ in font cmr10!
+ [28]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -4208,7 +4218,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1555 \end{tikzpicture}}
+l.1590 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4220,113 +4230,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1555 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1636 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1636 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1729 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1729 \end{tikzpicture}}
+l.1590 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4359,6 +4263,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
 ! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
 to ignore it. Perhaps you misspelled it.
@@ -4367,7 +4272,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1825 \end{tikzpicture}}
+l.1671 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4379,87 +4284,12 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1825 \end{tikzpicture}}
+l.1671 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-[28] [29]
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1924 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1924 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1924 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-Missing character: There is no ; in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no f in font nullfont!
-Missing character: There is no @ in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no , in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -4494,7 +4324,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1992 \end{tikzpicture}}
+l.1764 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4506,7 +4336,48 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1992 \end{tikzpicture}}
+l.1764 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1860 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4518,7 +4389,74 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1992 \end{tikzpicture}}
+l.1860 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+[29] [30]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1959 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1959 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1959 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4545,15 +4483,86 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[30]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2027 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2027 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2027 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no f in font nullfont!
+Missing character: There is no @ in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
 LaTeX Warning: Reference `tbl:mealyMooreTables' on page 31 undefined on input l
-ine 1998.
+ine 2033.
 
 
-LaTeX Warning: Reference `fig:' on page 31 undefined on input line 1998.
+LaTeX Warning: Reference `fig:' on page 31 undefined on input line 2033.
 
-) [31] [32] [33
+[31]) [32] [33
 
 ] [34] [35
 
@@ -4657,11 +4666,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 20301 strings out of 493848
- 377858 string characters out of 1152824
- 823899 words of memory out of 3000000
- 22882 multiletter control sequences out of 15000+50000
- 23159 words of font info for 90 fonts, out of 3000000 for 9000
+ 20644 strings out of 493848
+ 383328 string characters out of 1152824
+ 776123 words of memory out of 3000000
+ 23221 multiletter control sequences out of 15000+50000
+ 23761 words of font info for 92 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  52i,16n,89p,2044b,1267s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
@@ -4695,11 +4704,10 @@ blic/amsfonts/cm/cmti12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfon
 ts/cm/cmti7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti8.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/s
 hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-
-texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/share/texmf-texlive/font
-s/type1/hoekwater/stmaryrd/stmary10.pfb>
-Output written on cursus.pdf (62 pages, 820561 bytes).
+texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on cursus.pdf (62 pages, 820477 bytes).
 PDF statistics:
- 377 PDF objects out of 1000 (max. 8388607)
+ 373 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  27 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,7 +1,8 @@
 \ProvidesPackage{commusoftScripts}
 \newcolumntype{M}{>{\centering\arraybackslash}m{2cm}<{\centering\arraybackslash}|}
-\usepackage{algorithm}
-\usepackage{algorithmic}
+RequirePackage{algorithm}
+\RequirePackage{algorithmicx}
+\RequirePackage{algpseudocode}
 \RequirePackage{subfigure}
 \RequirePackage{graphicx}
 \RequirePackage{listings}
@@ -20,7 +21,8 @@
 \tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
 
 \newcommand{\procedureref}[1]{\textsc{#1}}
-\newcommand{\algref}[1]{\textbf{Algorithm \ref{#1}}}
+\newcommand{\fixedpoint}[1]{\ensuremath{\left\llbracket #1\right\rrbracket}}
+\newcommand{\algoref}[1]{\textbf{Algorithm \ref{#1}}}
 \newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
 \newcommand\termen{\@ifstar{\@dblarg{\@termens}}{\@termen}}
 \def\@termens[#1]#2{\termenlayout{#2}\index{#1@#2}}

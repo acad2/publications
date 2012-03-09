@@ -10,10 +10,10 @@
 \contentsline {subtable}{\numberline {(b)}{\ignorespaces {Mealy-machine}}}{24}
 \contentsline {table}{\numberline {1.2}{\ignorespaces Geminimaliseerde toestandstabellen van de leidende voorbeelden.}}{24}
 \contentsline {table}{\numberline {1.3}{\ignorespaces Codering van de Mealy-machine van het leidend voorbeeld.}}{26}
-\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Bindingstabel}}}{26}
-\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Coderingstabel}}}{26}
-\contentsline {table}{\numberline {1.4}{\ignorespaces Codering van de Moore-machine van het leidend voorbeeld.}}{26}
-\contentsline {table}{\numberline {1.5}{\ignorespaces Keuze van het type flipflop.}}{27}
+\contentsline {subtable}{\numberline {(a)}{\ignorespaces {Bindingstabel}}}{27}
+\contentsline {subtable}{\numberline {(b)}{\ignorespaces {Coderingstabel}}}{27}
+\contentsline {table}{\numberline {1.4}{\ignorespaces Codering van de Moore-machine van het leidend voorbeeld.}}{27}
+\contentsline {table}{\numberline {1.5}{\ignorespaces Keuze van het type flipflop.}}{28}
 \contentsline {subtable}{\numberline {(a)}{\ignorespaces {JK}}}{28}
 \contentsline {subtable}{\numberline {(b)}{\ignorespaces {SR}}}{28}
 \contentsline {subtable}{\numberline {(c)}{\ignorespaces {D}}}{28}
