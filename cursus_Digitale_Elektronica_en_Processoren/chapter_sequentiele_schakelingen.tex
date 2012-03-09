@@ -183,6 +183,7 @@ t_{HL}=1.4+1.4+1.4=4.2&\ifun&D=0\wedge\mbox{Clk}=1\\
 t_{LH}=1.4+1.4=2.8&\ifun&D=1\wedge\mbox{Clk}=1
 \end{array}\right.
 \end{array}
+\label{eqn:dLatchDelays}
 \end{equation}
 We kunnen dergelijke vertragingen grafisch weergeven zoals op de tijdsgrafieken op figuur \ref{fig:timebehavDLatch}.
 \begin{figure}[hbt]
@@ -352,7 +353,8 @@ Een Edge-trigger flipflop maakt gebruik van een structuur die we kunnen groepere
 \draw (\dx-1,0) -- ++(-0.5,0) node[anchor=east,scale=0.75]{Klok Clk};
 \pdot{\dx-1,0};
 \draw (NA03.input 2) -- (NA03.input 2 -| \dx-1.5,0) node[anchor=east,scale=0.75]{$D$};
-\end{tikzpicture}}
+\end{tikzpicture}
+\label{fig:edgeTriggeredFlipflopBasic}}
 \subfigure[Uitgebreide implementatie.]{
 \begin{tikzpicture}[circuit logic US]
 \def\dx{-1.75};
@@ -394,7 +396,8 @@ Een Edge-trigger flipflop maakt gebruik van een structuur die we kunnen groepere
 \pdot{CLRI -| \dx-1.5,0};
 \draw (\dx-1.5,0 |- NA03.input 3) |- (NA01.input 3);
 \pdot{\dx-1.5,0 |- NA03.input 3};
-\end{tikzpicture}}
+\end{tikzpicture}
+\label{fig:edgeTriggeredFlipflopExtended}}
 \subfigure[Tijdsgrafiek]{\begin{tikzpicture}
 \timebehav{5.00}{-1.00}{8.50}{8}{0.75}{0/$Qn$,1/$Q$,2/$S^*$,3/$R^*$,4/$A$,5/$B$,6/$D$,7/Clk}{0/0.00/1/1.55/0, 0/1.55/0/3.88/1, 0/3.88/1/6.55/0, 0/6.55/0/8.88/1, 0/8.88/1/11.48/1, 1/0.00/0/1.30/1, 1/1.30/1/4.13/0, 1/4.13/0/6.30/1, 1/6.30/1/9.13/0, 1/9.13/0/11.48/0, 2/0.00/1/1.05/0, 2/1.05/0/2.30/1, 2/2.30/1/6.05/0, 2/6.05/0/7.30/1, 2/7.30/1/11.48/1, 3/0.00/1/3.63/0, 3/3.63/0/4.88/1, 3/4.88/1/8.63/0, 3/8.63/0/9.88/1, 3/9.88/1/11.13/0, 3/11.13/0/11.48/0, 4/0.00/0/0.68/1, 4/0.68/1/3.18/0, 4/3.18/0/5.38/1, 4/5.38/1/7.55/0, 4/7.55/0/11.48/0, 5/0.00/1/0.43/0, 5/0.43/0/2.93/1, 5/2.93/1/5.13/0, 5/5.13/0/6.68/1, 5/6.68/1/11.48/1, 6/0.00/0/0.18/1, 6/0.18/1/2.68/0, 6/2.68/0/3.93/1, 6/3.93/1/6.43/0, 6/6.43/0/11.48/0, 7/0.00/0/0.80/1, 7/0.80/1/2.05/0, 7/2.05/0/3.30/1, 7/3.30/1/4.55/0, 7/4.55/0/5.80/1, 7/5.80/1/7.05/0, 7/7.05/0/8.30/1, 7/8.30/1/9.55/0, 7/9.55/0/10.80/1, 7/10.80/1/11.48/1}{1.30/0.25/1/0, 3.63/0.25/3/0, 6.30/0.25/1/0, 8.63/0.25/3/0, 1.05/0.25/2/1, 3.88/0.25/0/1, 6.05/0.25/2/1, 8.88/0.25/0/1, 0.80/0.25/7/2, 2.05/0.25/7/2, 5.80/0.25/7/2, 7.05/0.25/7/2, 3.30/0.32/7/3, 4.55/0.32/7/3, 8.30/0.32/7/3, 9.55/0.32/7/3, 10.80/0.32/7/3, 0.43/0.25/5/4, 2.93/0.25/5/4, 5.13/0.25/5/4, 7.30/0.25/2/4, 0.18/0.25/6/5, 2.68/0.25/6/5, 4.88/0.25/3/5, 6.43/0.25/6/5};
 \end{tikzpicture}
@@ -1574,7 +1577,8 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \pdot{I0 -| F2I};
 \pdot{I1 -| F3I};
 \pdot{I2 -| F4I};
-\end{tikzpicture}}
+\end{tikzpicture}
+\label{fig:mooreTotalImplementationD}}
 \subfigure[T-flipflops]{
 \begin{tikzpicture}[circuit logic US]
 \def\ta{0.09};
@@ -2132,6 +2136,7 @@ toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun cod
 \pdot{I};
 \end{tikzpicture}
 \caption{Volledige implementatie van de Mealy-machine met D-flipflops.}
+\label{fig:mealyTotalImplementation}
 \end{figure}
 \subsection{Tijdsgedrag}
 \label{ss:timeBehaviorSeqSync}
@@ -2139,9 +2144,42 @@ Tot slot bepalen we de maximale klokfrequentie die we bij een implementatie van 
 \begin{equation}
 \mbox{vertraging pad}=\mbox{logica transitie}+\mbox{set-up flipflop}+\mbox{Clk naar $Q$ of $\overline{Q}$}
 \end{equation}
-De vertragingen van de klok naar $Q$ en $\overline{Q}$ kunnen we berekenen vanuit de implementatie van de flipflop. De fabrikant van een flipflop zal bovendien steeds deze vertragingen in het datasheet\footnote{Elk ge\"integreerd circuit heeft een datasheet, een document opgesteld door de producent die de karakteristieken van het component formeel beschrijft.} van het component zetten. Indien de implementatie gegeven is, kunnen we de vertraging berekenen. Op basis van de implementatie van een D-flipflop op figuur \ref{fig:dflipflop} op pagina \pageref{fig:dflipflop} berekenen we de twee vertragingen:
+De vertragingen van de klok naar $Q$ en $\overline{Q}$ kunnen we berekenen vanuit de implementatie van de flipflop. De fabrikant van een flipflop zal bovendien steeds deze vertragingen in het datasheet\footnote{Elk ge\"integreerd circuit heeft een datasheet, een document opgesteld door de producent die de karakteristieken van het component formeel beschrijft.} van het component zetten. Indien de implementatie gegeven is, kunnen we de vertraging berekenen. Indien we een master-slave D-flipflop gebruiken dien we enkel rekening te houden met de propagatietijd van de klok naar $Q$ of $\overline{Q}$ van een D-latch. We hebben deze vertragingen reeds uitgerekend in vergelijking (\ref{eqn:dLatchDelays}) op pagina \pageref{eqn:dLatchDelays}. Eenmaal we de vertraging van het kritisch pad hebben berekend kunnen we de maximale klokfrequentie bepalen. Dit doen we door het inverse te berekenen van deze vertraging:
 \begin{equation}
-d
+f_{\mbox{\small{max.}}}=\displaystyle\frac{1}{\mbox{vertraging kritisch pad}}
 \end{equation}
+Merk wel op dat we bij het berekenen van de vertraging geen eenheid gegeven hebben. Deze vertragingen die we tot hier toe hebben berekend dienen uitsluitend om verschillende implementaties met elkaar te vergelijken. In de praktijk zal de technologie waarmee we de schakeling realiseren een tijds\'e\'enheid impliceren waarmee we die vertraging kunnen vermenigvuldigen.
+\subsubsection{Leidend voorbeeld}
+\paragraph{Moore-machine}
+We berekenen de vertraging van de implementatie van de Moore-machine die beschreven staat op figuur \ref{fig:mooreTotalImplementationD}. In totaal kunnen we 10 verschillende paden onderscheiden: in de schakeling staan twee flipflops. Het signaal van deze flipflops vormt een ingang bij alle 5 de AND-poorten. Merk op dat we de inverter aan de AND-poort niet moeten meetellen in onze berekening. We dienen in dat geval de $\overline{Q}$-uitgang te beschouwen. In de onderstaande vergelijking berekenen we de vertraging van alle paden. Het subscript van de vertraging wijst op de bron- en doel-flipflop, en de AND-poort. Deze poorten nummeren we van 0 tot 4 van boven naar beneden:
+\begin{equation}
+\begin{array}{ll}
+\left\{\begin{array}{l}
+t_{\small{FF_0\rightarrow FF_0,0}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up D}+\mbox{2-AND}+\mbox{2-OR}=4.2+1+2.4+2.4=10.0\\
+t_{\small{FF_0\rightarrow FF_0,1}}=\mbox{Clk}\rightarrow Q+\mbox{set-up D}+\mbox{3-AND}+\mbox{2-OR}=4.2+1+2.8+2.4=10.4\\
+t_{\small{FF_0\rightarrow FF_1,2}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up D}+\mbox{3-AND}+\mbox{3-OR}=4.2+1+2.8+2.8=10.8\\
+t_{\small{FF_0\rightarrow FF_1,3}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up D}+\mbox{3-AND}+\mbox{3-OR}=4.2+1+2.8+2.8=10.8\\
+t_{\small{FF_0\rightarrow FF_1,4}}=\mbox{Clk}\rightarrow Q+\mbox{set-up D}+\mbox{3-AND}+\mbox{3-OR}=4.2+1+2.8+2.8=10.8\\
+
+t_{\small{FF_1\rightarrow FF_0,0}}=\mbox{Clk}\rightarrow Q+\mbox{set-up D}+\mbox{2-AND}+\mbox{2-OR}=4.2+1+2.4+2.4=10.0\\
+t_{\small{FF_1\rightarrow FF_0,1}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up D}+\mbox{3-AND}+\mbox{2-OR}=4.2+1+2.8+2.4=10.4\\
+t_{\small{FF_1\rightarrow FF_1,2}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up D}+\mbox{3-AND}+\mbox{3-OR}=4.2+1+2.8+2.8=10.8\\
+t_{\small{FF_1\rightarrow FF_1,3}}=\mbox{Clk}\rightarrow Q+\mbox{set-up D}+\mbox{3-AND}+\mbox{3-OR}=4.2+1+2.8+2.8=10.8\\
+t_{\small{FF_1\rightarrow FF_1,4}}=\mbox{Clk}\rightarrow Q+\mbox{set-up D}+\mbox{3-AND}+\mbox{3-OR}=4.2+1+2.8+2.8=10.8
+\end{array}\right.&\mbox{(Voorbeeld)}
+\end{array}
+\end{equation}
+Het maximale pad heeft dus een vertraging van $10.8$. Indien we een referentievertraging van $1\mbox{ ns}$ nemen, is de maximale frequentie $f_{\mbox{\small{max.}}}=1/10.8\mbox{ ns}\approx 93\mbox{ MHz}$. Indien we dezelfde schakeling met NAND-NAND logica zouden hebben gebouwd, zou de vertraging van elk pad gereduceerd worden met 2. In dat geval zou de maximale klokfrequentie $f_{\mbox{\small{max.}}}=1/8.8\mbox{ ns}\approx 114\mbox{ MHz}$.
+\paragraph{Mealy-machine}
+Voor de Mealy-machine gebruiken we de implementatie op figuur \ref{fig:mealyTotalImplementation}. In deze schakeling dienen we twee paden te beschouwen: het eerste loopt van $FF_1$ naar $FF_0$, vertrekt vanuit $Q$ en gaat door \'e\'en 2-AND-poort. Het andere pad ligt tussen $FF_1$ en $FF_2$. Ook hierbij passeren we een 2-AND-poort, merk echter op dat het signaal vertrekt vanuit $\overline{Q}$. De vertraging van dit pad is dus gelijk aan:
+\begin{equation}
+\begin{array}{ll}
+\left\{\begin{array}{l}
+t_{\small{FF_1\rightarrow FF_0}}=\mbox{Clk}\rightarrow Q+\mbox{set-up D}+\mbox{2-AND}=4.2+1+2.4=7.6\\
+t_{\small{FF_1\rightarrow FF_2}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up D}+\mbox{2-AND}=4.2+1+2.4=7.6
+\end{array}\right.&\mbox{(Voorbeeld)}
+\end{array}
+\end{equation}
+Beide paden hebben hier dus dezelfde vertraging. Als we een referentievertraging van $1\mbox{ ns}$ nemen, is de maximale frequentie $f_{\mbox{\small{max.}}}=1/7.6\mbox{ ns}\approx 131\mbox{ MHz}$.
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}
