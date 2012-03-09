@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.5.5)  8 MAR 2012 00:41
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.5.5)  9 MAR 2012 04:58
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -890,7 +890,7 @@ File: english.mld 2006/01/13
 File: english.mld 2006/01/13
 ))
 Package minitoc Info: I0024
-(minitoc)             PREPARING MINITOCS FROM cursus.toc on input line 49.
+(minitoc)             PREPARING MINITOCS FROM cursus.toc on input line 57.
 
 {\reset@font\mtcPfont\mtc@string\contentsline{paragraph}{\noexpand \leavevmode 
 }{\reset@font\mtcPfont v}}
@@ -920,11 +920,11 @@ Package minitoc Info: I0033
 \tf@default=\write7
 \openout7 = `cursus.idx'.
 
-Package index Info: Writing index file cursus.idx on input line 52.
+Package index Info: Writing index file cursus.idx on input line 60.
 \glo@main@file=\write8
 \openout8 = `cursus.glo'.
 
-Package glossaries Info: Writing glossary file cursus.glo on input line 53.
+Package glossaries Info: Writing glossary file cursus.glo on input line 61.
 (./cursus.aux
 
 LaTeX Warning: Label `lst:constante' multiply defined.
@@ -941,18 +941,18 @@ LaTeX Warning: Label `lst:variabele' multiply defined.
 )
 \openout1 = `cursus.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
 
 (/usr/share/texmf-texlive/tex/latex/glossaries/dict/glossaries-dictionary-Engli
 sh.dict
@@ -983,15 +983,15 @@ Package minitoc(hints) Info: I0049
  <sedesVcrop.pdf, id=4, 1958.31625pt x 3311.37125pt>
 File: sedesVcrop.pdf Graphic file (type pdf)
  <use sedesVcrop.pdf>
-LaTeX Font Info:    Try loading font information for U+stmry on input line 69.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 77.
 
 (/usr/share/texmf-texlive/tex/latex/stmaryrd/Ustmry.fd)
-LaTeX Font Info:    Try loading font information for U+msa on input line 69.
+LaTeX Font Info:    Try loading font information for U+msa on input line 77.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 69.
+LaTeX Font Info:    Try loading font information for U+msb on input line 77.
 
 (/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -1019,10 +1019,10 @@ softEmblema.pdf>] [2
 [5]
 
 LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
-(Font)              using `OT1/cmss/bx/n' instead on input line 97.
+(Font)              using `OT1/cmss/bx/n' instead on input line 105.
 
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 101.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 109.
 [6] [7
 
 ] [8
@@ -4192,7 +4192,7 @@ LaTeX Font Warning: Font shape `U/stmry/m/n' in size <0.5> not available
 LaTeX Font Warning: Command \small invalid in math mode on input line 1151.
 
 [23] [24] [25]
-Overfull \hbox (1.0437pt too wide) in paragraph at lines 1272--1334
+Overfull \hbox (1.0437pt too wide) in paragraph at lines 1259--1321
  \OT1/cmr/bx/n/10 Minimal-bit-change[] \OT1/cmr/m/n/10 In-dien de kost-prijs en
  ver-mo-gen-ver-bruik een be-lang-rijke fac-tor zijn ma-ken we meestal
  []
@@ -4218,7 +4218,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1590 \end{tikzpicture}}
+l.1577 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4230,116 +4230,11 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1590 \end{tikzpicture}}
+l.1577 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
 Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1671 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1671 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1764 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
-
-! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
-to ignore it. Perhaps you misspelled it.
-
-See the pgfkeys package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1764 \end{tikzpicture}}
-                         
-(That was another \errmessage.)
-
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -4377,7 +4272,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1860 \end{tikzpicture}}
+l.1658 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4389,7 +4284,112 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1860 \end{tikzpicture}}
+l.1658 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1751 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1751 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1847 \end{tikzpicture}}
+                         
+(That was another \errmessage.)
+
+
+! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
+to ignore it. Perhaps you misspelled it.
+
+See the pgfkeys package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1847 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4432,7 +4432,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1959 \end{tikzpicture}}
+l.1954 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4444,7 +4444,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1959 \end{tikzpicture}}
+l.1954 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4456,7 +4456,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1959 \end{tikzpicture}}
+l.1954 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4496,6 +4496,8 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
 ! Package pgfkeys Error: I do not know the key '/tikz/add font' and I am going 
 to ignore it. Perhaps you misspelled it.
@@ -4504,7 +4506,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.2027 \end{tikzpicture}}
+l.2031 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4516,7 +4518,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.2027 \end{tikzpicture}}
+l.2031 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4528,7 +4530,7 @@ See the pgfkeys package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.2027 \end{tikzpicture}}
+l.2031 \end{tikzpicture}}
                          
 (That was another \errmessage.)
 
@@ -4555,31 +4557,36 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
-LaTeX Warning: Reference `tbl:mealyMooreTables' on page 31 undefined on input l
-ine 2033.
+LaTeX Warning: Reference `fig:' on page 31 undefined on input line 2072.
 
 
-LaTeX Warning: Reference `fig:' on page 31 undefined on input line 2033.
+Underfull \vbox (badness 2818) has occurred while \output is active []
 
-[31]) [32] [33
+ [31])
+Underfull \vbox (badness 3579) has occurred while \output is active []
 
-] [34] [35
+ [32]
+[33] [34
 
-] [36] (./chapter_vhdl.tex
+] [35] [36] [37
+
+] [38] (./chapter_vhdl.tex
 Hoofdstuk 2.
-[37
+[39
 
-] [38]
+] [40]
 
-LaTeX Warning: Reference `lst:typeEnum' on page 39 undefined on input line 116.
+LaTeX Warning: Reference `lst:typeEnum' on page 41 undefined on input line 116.
 
 
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 151.
-[39]
+[41]
 
-LaTeX Warning: Reference `lst:signal' on page 40 undefined on input line 169.
+LaTeX Warning: Reference `lst:signal' on page 42 undefined on input line 169.
 
 LaTeX Font Info:    Try loading font information for OML+cmr on input line 175.
 
@@ -4591,30 +4598,30 @@ LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <8> not available
 
 Underfull \vbox (badness 3701) has occurred while \output is active []
 
- [40])
-[41] [42] [43
+ [42])
+[43] [44] [45
 
-] [44] (./cursus.lot)
+] [46] (./cursus.lot)
 \tf@lot=\write10
 \openout10 = `cursus.lot'.
 
- [45
+ [47
 
 
-] [46
+] [48
 
 ] (./cursus.lof)
 \tf@lof=\write11
 \openout11 = `cursus.lof'.
 
- [47] [48
+ [49] [50
 
 ]
 (./cursus.codes)
 \tf@codes=\write12
 \openout12 = `cursus.codes'.
 
- [49] (./cursus.bbl [50
+ [51] (./cursus.bbl [52
 
 
 ]
@@ -4628,9 +4635,9 @@ Underfull \hbox (badness 1072) in paragraph at lines 4--6
 r/m/n/10 ,
  []
 
-) (./cursus.gls) (./cursus.ind [51] [52
+) (./cursus.gls) (./cursus.ind [53] [54
 
-] [53])
+] [55])
 Package minitoc Info: I0009
 (minitoc)             Listing minitoc auxiliary files. 
 (minitoc)             Creating the cursus.maf file.
@@ -4647,7 +4654,7 @@ Package minitoc(hints) Warning: W0024
 (minitoc(hints))                Some hints have been written 
 (minitoc(hints))                in the cursus.log file.
 
-[54
+[56
 
 
 ] (./cursus.aux)
@@ -4668,7 +4675,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  20644 strings out of 493848
  383328 string characters out of 1152824
- 776123 words of memory out of 3000000
+ 776325 words of memory out of 3000000
  23221 multiletter control sequences out of 15000+50000
  23761 words of font info for 92 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
@@ -4705,9 +4712,9 @@ ts/cm/cmti7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti8.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/s
 hare/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texmf-
 texlive/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on cursus.pdf (62 pages, 820477 bytes).
+Output written on cursus.pdf (64 pages, 824503 bytes).
 PDF statistics:
- 373 PDF objects out of 1000 (max. 8388607)
+ 379 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  27 words of extra memory for PDF output out of 10000 (max. 10000000)
 

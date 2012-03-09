@@ -2328,7 +2328,7 @@ Het optellen van twee vlottende komma getallen verloopt in drie stappen:
  \item Vervolgens tellen we de twee mantisses met elkaar op.
  \item Het resultaat dienen we vervolgens weer te normaliseren.
 \end{enumerate}
-IEEE 754 definieert het formaat van een vlottende komma, de wiskundige operaties zelf behoren hier echter niet bij. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij het getal eerst wordt omgezet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
+IEEE 754 definieert het formaat van een vlottende komma, de wiskunde operaties zelf behoren hier echter niet bij. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij het getal eerst wordt omgezet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
 \paragraph{Vermenigvuldiging}
 Vermenigvuldigen is bij vlottende komma simpeler dan optellen:
 \begin{enumerate}

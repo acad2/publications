@@ -1210,20 +1210,7 @@ $E$&$B/1$&$A/0$
 \label{tbl:minimaalToestandstabel}
 \end{table}
 \paragraph{Een formeel algoritme}
-De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{alg:minimizeFSM}.
-%\begin{algorithm}[htb]
-%\caption{Minimaliseren van een toestandsdiagram}
-%\label{alg:minimizeFSM}
-%\begin{algorithmic}[1]
-%\STATE $test$
-%\FORALL{$d\in D\wedge\neg c\left(d\right)$}
-%\IF{$nothing$}
-%\STATE $test$
-%\ENDIF
-%\ENDFOR
-%\STATE $\left\{\left\{s|s\in S:f\left(s\right)=o\right\}|o\right\}$
-%\end{algorithmic}
-%\end{algorithm}
+De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{alg:minimizeFSM}. ??%TODO: complete algorithm
 \begin{algorithm}[hbt]
 \caption{Minimaliseren van een toestandsdiagram.}\label{alg:minimizeFSM}
 \begin{algorithmic}[1]
@@ -1242,7 +1229,7 @@ De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat e
 \State \textbf{return} $\left\{\left\{s|s\in S,\forall i\in I:f\left(s,i\right)=o\right\}|o\in O\right\}$
 \EndFunction
 \Function{Minimize2}{$S,I,\delta,\mathcal{P}$}
-\State \textbf{return} $\left\{\left\{s|s\in P:f\left(s\right)=o\right\}|P\in\mathcal{P}\right\}$
+\State \textbf{return} $\left\{\left\{s|s\in P:f\left(s\right)=o\right\}|P\in\mathcal{P},\right\}$
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -1861,7 +1848,7 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
 \label{fig:mooreCombImpl}
 \end{figure}
-Naast de logica voor de volgende toestand, verbinden we ook de klokingangen van de flipflops met het globale kloksignaal, en implementeren we de clear logica. De clear zorgt ervoor dat op het moment dat we de schakeling herzetten en dus het \clrsin{} signaal van de schakeling 0 wordt, de schakeling in de eerste toestand terechtkomt. In ons geval is dat 10. Daarom verbinden we de clear-ingang met de preset ingang van de eerste flipflop en de clear-ingang van de tweede flipflop. Op de clear-ingang van de eerste flipflop en de preset-ingang van de tweede wordt steeds een hoog signaal aangelegd.
+Naast de logica voor de volgende toestand, verbinden we ook de klokingangen van de flipflops met het globale kloksignaal, en implementeren we de clear logica. De clear zorgt ervoor dat op het moment dat we de schakeling herzetten en dus het \clrsin{} signaal van de schakeling 0 wordt, de schakeling in de eerste toestand terechtkomt. In ons geval is dat 10. Daarom verbinden we de clear-ingang met de preset ingang van de eerste flipflop en de clear-ingang van de tweede flipflop. Op de clear-ingang van de eerste flipflop en de preset-ingang van de tweede wordt steeds een hoog signaal aangelegd. Merk verder ook op we in principe geen negatieve ingangen voor toestandssignalen moeten gebruiken. In plaats van een negatie aan de ingang van de AND-poort te plaatsen, kunnen we eenvoudig gebruik maken van de $\overline{Q}$-uitgang van de flipflop. Omdat we echter hiermee het aantal lijnen voor de flipflops bijna verdubbelen, maken we er in de figuur abstractie van. Dit principe kunnen we enkel toepassen voor signalen die uit de flipflops komen. De signalen die de ingangsconfiguratie bepalen hebben wel een expliciete NOT-poort nodig.
 \paragraph{Het one-hot-codering geval}Naast het geval van de Moore-machine zullen we ook de transitiefunctie van de Mealy-machine implementeren. Over deze realisatie is het ook eenvoudiger om enkele eigenschappen te formaliseren. Deze eigenschappen gaan over de kosten van de transitiefunctie v\'o\'or dat we minimalisatie van de Karnaugh-kaarten toepassen. Verder hangen de eigenschappen af van het type flipflop die we gebruiken:
 \begin{itemize}
  \item Bij een D-flipflop is het aantal AND-poorten voor een flipflop equivalent met het aantal transities naar de toestand die de flipflop voorstelt. Bij een transitie\footnote{Inclusief lussen.} naar toestand $x$ dient immer de overeenkomstige flipflop op 1 gezet te worden, in de andere gevallen is de waarde van de flipflop altijd 0. We kunnen dit verder formaliseren tot: ``Het aantal enen in de $D_i$ kolom is gelijk aan het aantal transities naar toestand $i$''.
@@ -1937,7 +1924,15 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
   \draw (LO\x) -- (LF\x);
 }
 \coordinate (FFCLR1) at (LO5 |- 0,-1.667);
+\coordinate (I0) at (-4.25,4.75);
+\coordinate (I1) at (-4.25,1.5);
+\coordinate (I2) at (-4.25,-1.667);
+\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| LO3);
+\draw (I1) node[anchor=east]{Clk} -- (I1 -| LO4);
+\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| LO5);
 \end{scope}
+\pdot{I0 -| LO3};
+\pdot{I1 -| LO4};
 \foreach \x/\y/\z in {0/input 1/1,0/input 2/3,1/input/3,2/input 1/1,2/input 2/3} {
   \draw (G\x.\y) -- (G\x.\y -| LO\z);
   \pdot{G\x.\y -| LO\z};
@@ -2000,7 +1995,16 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
   \draw (LO\x) -- (LF\x);
 }
 \coordinate (FFCLR1) at (LO5 |- 0,-1.667);
+
+\coordinate (I0) at (-4.25,4.75);
+\coordinate (I1) at (-4.25,1.5);
+\coordinate (I2) at (-4.25,-1.667);
+\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| LO3);
+\draw (I1) node[anchor=east]{Clk} -- (I1 -| LO4);
+\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| LO5);
 \end{scope}
+\pdot{I0 -| LO3};
+\pdot{I1 -| LO4};
 \draw (FF2.K) -| (SS);
 \pdot{SS};
 \foreach \x/\y/\z in {0/input 1/1,0/input 2/3,1/input/3,2/input 1/0,2/input 2/3} {
@@ -2030,6 +2034,29 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
 \end{figure}
 Merk op dat we hier de verbindingen naar de \clrsin{} en \prsin{} ingangen anders geconfigureerd zijn dan bij de Moore-machine. Dit komt omdat de begintoestand van de Mealy-machine 001 is, terwijl dit 10 is bij de Moore-machine.
 \subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
-Naast de logica die de volgende toestand berekent, dienen we ook de de logica te synthetiseren die de uitgangen bepaalt. Dit eigenlijk niets anders dan het synthetiseren van een combinatorische schakeling. Hiervoor dienen een tabel op te stellen die vanuit de coderingstabel een tabel opstelt die de functie bepaalt. Vermits de uitgang bij een Moore-machine anders bepaald wordt dan bij een Mealy-machine, zal ook de techniek om deze tabel op te stellen licht verschillen. Bij een Moore-machine wordt de uitgang enkel bepaald door de toestand. Hierdoor kunnen we de tabel opstellen door de transitiekolommen weg te laten. Bij een Mealy-machine dienen we een linearisering toe te passen. Hierbij beschouwen we niet meer de codering van de volgende toestand zoals in de vorige stap, maar uiteraard de uitgang. Vanuit die tabel stellen we dan opnieuw een combinatorische schakeling op. Merk op dat deze schakeling niet afhangt van het type flipflop. Immers hebben alle types flipflop een $Q$-uitgang. De schakeling hangt wel af van de toestandscodering. Op tabel \ref{tbl:mealyMooreTables} toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop.
+Naast de logica die de volgende toestand berekent, dienen we ook de de logica te synthetiseren die de uitgangen bepaalt. Dit eigenlijk niets anders dan het synthetiseren van een combinatorische schakeling. Hiervoor dienen een tabel op te stellen die vanuit de coderingstabel een tabel opstelt die de functie bepaalt. Vermits de uitgang bij een Moore-machine anders bepaald wordt dan bij een Mealy-machine, zal ook de techniek om deze tabel op te stellen licht verschillen. Bij een Moore-machine wordt de uitgang enkel bepaald door de toestand. Hierdoor kunnen we de tabel opstellen door de transitiekolommen weg te laten. Bij een Mealy-machine dienen we een linearisering toe te passen. Hierbij beschouwen we niet meer de codering van de volgende toestand zoals in de vorige stap, maar uiteraard de uitgang. Vanuit die tabel stellen we dan opnieuw een combinatorische schakeling op. Merk op dat deze schakeling niet afhangt van het type flipflop. Immers hebben alle types flipflop een $Q$-uitgang. De schakeling hangt wel af van de toestandscodering. Op tabel \ref{tbl:mooreMealyTables}
+\begin{table}[hbt]
+\subtable[Moore-machine]{\small{\begin{tabular}{cccc|ccc|cccccc}
+$F_0$&$F_1$&$F_2$&$I_0$&$T_0$&$T_1$&$T_2$&$S_0$&$R_0$&$S_1$&$R_1$&$S_2$&$R_2$\\\hline
+0&0&1&0&0&1&1&0&-&1&0&0&1\\
+0&0&1&1&0&0&0&0&-&0&-&-&0\\
+0&1&0&0&0&0&0&0&-&-&0&0&-\\
+0&1&0&1&1&1&0&1&0&0&1&0&-\\
+1&0&0&0&1&1&0&0&1&1&0&0&-\\
+1&0&0&1&1&0&1&0&1&0&-&1&0
+\end{tabular}}}
+\subtable[Mealy-machine]{\small{\begin{tabular}{cccc|c}
+$F_0$&$F_1$&$F_2$&$I_0$&$O_0$\\\hline
+0&0&1&0&0\\
+0&0&1&1&0\\
+0&1&0&0&0\\
+0&1&0&1&1\\
+1&0&0&0&1\\
+1&0&0&1&1
+\end{tabular}}}
+\caption{Uitgangslogica van de Moore- en Mealy-machine.}
+\label{tbl:mooreMealyTables}
+\end{table}
+toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop.
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}
