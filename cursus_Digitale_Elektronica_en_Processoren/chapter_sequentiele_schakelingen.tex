@@ -2069,6 +2069,71 @@ $F_0$&$F_1$&$F_2$&$I_0$&$O_0$\\\hline
 \caption{Uitgangslogica van de Moore- en Mealy-machine naast hun coderingstabellen.}
 \label{tbl:mooreMealyTables}
 \end{table}
-toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:mealyTotalImplementation} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop.
+toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:mealyTotalImplementation} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop. Merk op dat we in deze figuur gebruik maken van de $\overline{Q}$-uitgangen. Hoewel we in de figuur de logica implementeren met AND-OR logica zal men in de praktijk altijd opteren voor NAND- en NOR-poorten bij de implementatie. Dit drukt niet alleen de kosten, maar zorgt ook voor een kleinere vertraging waardoor we de klokfrequentie kunnen opdrijven. We gaan kort in op het tijdsgedrag in subsectie \ref{ss:timeBehaviorSeqSync}.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[circuit logic US]
+\def\ta{0.09};
+\kkaartdmarks{4}{0}{/2/0/3/1/\ta}{}{};
+\kkaartd{4}{0}{$D_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/0/-/-/1/0/-/-/-/-/-/-/-/-};
+\def\sc{0.75};
+\def\sca{0.8};
+\begin{scope}[scale=\sc]
+\def\xa{-2.75};
+\def\xi{-4.25};
+\def\xc{-2.25};
+\def\xr{-1.75};
+\def\xb{2};
+\def\xs{-1.25};
+\node[dffxn,scale=\sca] (FF0) at (0,4) {$FF_0$};
+\node[dffxn,scale=\sca] (FF1) at (0,0) {$FF_1$};
+\node[dffxn,scale=\sca] (FF2) at (0,-4) {$FF_2$};
+\draw (FF0.PR) |- ++(0.25,0.15) node[anchor=west]{$1$};
+\draw (FF1.PR) |- ++(0.25,0.15) node[anchor=west]{$1$};
+\draw (FF2.CLR) |- ++(0.25,-0.15) node[anchor=west]{$1$};
+\draw (FF2.PR) -- (FF1.CLR);
+\coordinate (FFM) at (FF1.CLR |- 0,-2);
+\node[and gate,anchor=output] (A0) at (FF0.D -| \xa,0) {};
+\node[and gate,anchor=input 1] (A1) at (FF0.Q -| \xb,0) {};
+\node[not gate,anchor=output] (N0) at (FF1.D -| \xa,0) {};
+\node[and gate,anchor=output] (A2) at (FF2.D -| \xa,0) {};
+\draw (A0.output) -- (FF0.D);
+\draw (N0.output) -- (FF1.D);
+\draw (A2.output) -- (FF2.D);
+\foreach \x in {0,1,2} {
+  \coordinate (Cl\x) at (FF\x.Clk -| \xc,0);
+  \draw (FF\x.Clk) -- (Cl\x);
+}
+\coordinate (In) at (FF1.D -| \xs,0);
+\coordinate (Ina) at (-\xs,2);
+\draw (FF0.Q) -- (A1.input 1);
+\draw (A1.output) -- ++(0.5,0) node[anchor=west]{$O_0$};
+\draw (N0.input) -- ++(-1,0) node[anchor=east]{$I_0$};
+\coordinate (R0) at (\xr,2.25);
+\coordinate (R2) at (\xr,0 |- FFM);
+\draw (FFM) -| (R0) -- (R0 |- 0,5.5) node[anchor=south]{Clr$^*$};
+\draw (FF0.CLR) |- (R0);
+\draw (Cl0) -- (Cl0 |- 0,-5.5) node[anchor=north]{Clk};
+\draw (In) |- (Ina) |- (A1.input 2);
+\draw (N0.input -| \xi,0) |- (A0.input 2);
+\draw (N0.input -| \xi,0) |- (A2.input 1);
+\end{scope}
+\foreach \x in {1,2} {
+  \pdot{Cl\x};
+}
+\pdot{R0};
+\pdot{FFM};
+\pdot{In};
+\pdot{N0.input -| \xi,0};
+\end{tikzpicture}
+\caption{Volledige implementatie van de Mealy-machine met D-flipflops.}
+\end{figure}
+\subsection{Tijdsgedrag}
+\label{ss:timeBehaviorSeqSync}
+Tot slot bepalen we de maximale klokfrequentie die we bij een implementatie van een sequenti\"ele schakeling kunnen hanteren. We herinneren ons uit het hoofdstuk over combinatorische schakelingen dat de vertraging in een systeem bepaald wordt door het kritische pad, de maximale tijd die een signaal nodig heeft om zich doorheen de schakeling voort te planten. In een sequenti\"ele schakeling betekent dit dat het signaal zich doorheen de combinatorische schakeling dient te propageren die de volgende toestand bepaald. Verder dient ook de set-tup-tijd van de geheugenmodules en de tijd die het kloksignaal nodig heeft om zich tot aan de $Q$- of $\overline{Q}$-uitgang te propageren in rekening te worden gebracht. Bij het bepalen van het kritische pad van de transitiefunctie moeten we alle paden vanuit alle ingangen (dus ook de flipflops die toestand bijhouden) beschouwen, naar alle flipflops. Of formeler:
+\begin{equation}
+\mbox{vertraging kritisch pad}=
+\end{equation}
+De vertragingen van de klok naar $Q$ en $\overline{Q}$ kunnen we berekenen vanuit de implementatie van de flipflop. De fabrikant van een flipflop zal bovendien steeds deze vertragingen in het datasheet\footnote{Elk ge\"integreerd circuit heeft een datasheet, een document opgesteld door de producent die de karakteristieken van het component formeel beschrijft.} van het component zetten.
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}
