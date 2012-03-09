@@ -2078,13 +2078,14 @@ toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun cod
 \kkaartd{4}{0}{$D_0$}{$F_0$/$F_1$/$F_2$/$I_0$}{-/-/0/0/0/0/-/-/1/0/-/-/-/-/-/-/-/-};
 \def\sc{0.75};
 \def\sca{0.8};
-\begin{scope}[scale=\sc]
 \def\xa{-2.75};
 \def\xi{-4.25};
 \def\xc{-2.25};
 \def\xr{-1.75};
 \def\xb{2};
 \def\xs{-1.25};
+
+\begin{scope}[scale=\sc]
 \node[dffxn,scale=\sca] (FF0) at (0,4) {$FF_0$};
 \node[dffxn,scale=\sca] (FF1) at (0,0) {$FF_1$};
 \node[dffxn,scale=\sca] (FF2) at (0,-4) {$FF_2$};
@@ -2117,6 +2118,7 @@ toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun cod
 \draw (In) |- (Ina) |- (A1.input 2);
 \draw (N0.input -| \xi,0) |- (A0.input 2);
 \draw (N0.input -| \xi,0) |- (A2.input 1);
+\coordinate (I) at (N0.input -| \xi,0);
 \end{scope}
 \foreach \x in {1,2} {
   \pdot{Cl\x};
@@ -2124,7 +2126,7 @@ toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun cod
 \pdot{R0};
 \pdot{FFM};
 \pdot{In};
-\pdot{N0.input -| \xi,0};
+\pdot{I};
 \end{tikzpicture}
 \caption{Volledige implementatie van de Mealy-machine met D-flipflops.}
 \end{figure}
