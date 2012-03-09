@@ -2069,6 +2069,6 @@ $F_0$&$F_1$&$F_2$&$I_0$&$O_0$\\\hline
 \caption{Uitgangslogica van de Moore- en Mealy-machine naast hun coderingstabellen.}
 \label{tbl:mooreMealyTables}
 \end{table}
-toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop.
+toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:mealyTotalImplementation} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop.
 \section{Asynchroon schakelingen}
 \label{s:asynchroneSequence}
