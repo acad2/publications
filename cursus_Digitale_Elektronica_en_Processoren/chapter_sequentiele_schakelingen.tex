@@ -2181,6 +2181,57 @@ t_{\small{FF_1\rightarrow FF_2}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up
 \end{array}
 \end{equation}
 Beide paden hebben hier dus dezelfde vertraging. Als we een referentievertraging van $1\mbox{ ns}$ nemen, is de maximale frequentie $f_{\mbox{\small{max.}}}=1/7.6\mbox{ ns}\approx 131\mbox{ MHz}$.
-\section{Asynchroon schakelingen}
+\section{Asynchrone schakelingen}
 \label{s:asynchroneSequence}
-Naast schakelingen waar het ritme bepaalt wordt door een klok, bestaan er ook schakelingen die een vorm van geheugen bezitten, maar van toestand veranderen doordat het ingangssignaal verandert. We hebben in dit hoofdstuk reeds dergelijke schakelingen ge\"implementeerd. In subsectie \ref{ss:flipflop} hebben we een latch geconstrueerd. Een latch heeft in principe geen klokingang, maar houdt wel een toestand bij. Op het moment dat we een ingang aan een SR-latch aanpasen, zal de latch soms in een andere toestand terechtkomen. Verder bezit het component ook duidelijk een geheugen vermits als de ingang $\left(S,R\right)=\left(0,0\right)$, de vorige toestand behouden blijft. De situatie van de latch illustreert hoe asynchrone schakelingen worden gerealiseerd:
+Naast schakelingen waar het ritme bepaalt wordt door een klok, bestaan er ook schakelingen die een vorm van geheugen bezitten, maar van toestand veranderen doordat het ingangssignaal verandert. We hebben in dit hoofdstuk reeds dergelijke schakelingen ge\"implementeerd. In subsectie \ref{ss:flipflop} hebben we een latch geconstrueerd. Een latch heeft in principe geen klokingang, maar houdt wel een toestand bij. Op het moment dat we een ingang aan een SR-latch aanpasen, zal de latch soms in een andere toestand terechtkomen. Verder bezit het component ook duidelijk een geheugen vermits als de ingang $\left(S,R\right)=\left(0,0\right)$, de vorige toestand behouden blijft. De situatie van de latch illustreert hoe asynchrone schakelingen worden gerealiseerd: We hebben een aantal ingangssignalen, die door logica worden verwerkt in een soort geheugen. Dit geheugen vertraagt een terugkoppeling, en houdt de toestand bij. Het terugkoppelen betekent dat de uitgangen van een logische schakeling als een deel van de invoer fungeren die door die logica verwerkt wordt. In deze cursus zullen we uitsluitend asynchrone sequenti\"ele schakelingen beschouwen die voldoen aan een belangrijke voorwaarde: de \termen{fundamentele modus}, ofwel de ``\termen{fundamental mode restriction}''. Deze beperking bestaat uit twee delen:
+\begin{itemize}
+ \item Er mag hooguit \'e\'en ingangssignaal tegelijk veranderen. Een voorbeeld die dit concept duidelijk illustreert is de SR-latch: indien we $S$ en $R$ ingang tegelijk van 1 naar 0 omschakelen, komt het component in een oscillerend toestand komt.
+ \item Een ingangsverandering mag slechts optreden als alle effecten van de vorige verandering uitgestorven zijn. Ook dit principe kennen we al impliciet. Zo dienen we de set-up tijd van een flipflop te respecteren om te voorkomen dat de flipflop in een onvoorspelbare toestand komt.
+\end{itemize}
+We zijn in principe niet verplicht om ons aan deze voorwaarden te houden. Alleen wordt het ontwerpen van schakelingen die deze restricties niet volgen zeer moeilijk.
+\paragraph{}
+Ook bij het ontwerpen van een asynchrone schakeling zullen we een stappenplan volgen. In grote lijnen lijkt deze procedure op het ontwikkelen van synchrone schakelingen. De stappen zelf wijken echter sterk af van hun synchrone variant. In de meeste stappen zullen we ook met de complexe problemen die eigen zijn aan een asynchrone schakeling moeten rekening houden. Het plan bestaat uit 4 stappen:
+\begin{enumerate}
+ \item Opstellen van een toestandstabel.
+ \item Minimaliseren van het aantal toestanden.
+ \item Coderen van de toestanden.
+ \item Realisatie van de schakeling met digitale logica.
+\end{enumerate}
+\paragraph{Terminologie}
+Bij synchrone schakelingen werkten we met een klokflank. Vaak gebruikt men bij een kloksignaal de termen ``stijgende klokflank'' en ``dalende klokflank''. Dit zijn immers de tijdstippen waarop gebeurtenissen plaatsvinden in de schakeling die relevant zijn. Een asynchrone schakeling heeft geen kloksignaal. Toch worden de termen ``\termen{stijgende flank}'' en ``\termen{dalende flank}'' ook in deze context gebruikt. De gebeurtenissen in een asynchrone schakeling zijn immers de omschakeling van \'e\'en van de ingangssignalen.
+\subsection{Leidend voorbeeld}
+Een oplettende lezer heeft misschien al opgemerkt dat de geheugencomponenten die we gebruiken in synchrone schakelingen -- latches en flipflops -- op hun beurt weer asynchrone schakelingen zijn. Daarom zullen we een nieuw type latch ontwerpen, die uiteraard louter fictief is. De latch wordt gebruikt als een interrupt-register. In de meeste computers voert een programma niet constant controles uit of een gebruiker bijvoorbeeld een toets aanslaat. De CPU bevat een component dat bijhoudt of er een bepaalde gebeurtenis plaatsvindt. Hardwarematig controleert de CPU frequent of zo'n gebeurtenis is opgetreden. In dat geval voert de processor een procedure uit gedefinieerd door het besturingssysteem. Op dat moment dient het component uiteraard gereset te worden. Verder kan een besturingssysteem ook een masker plaatsen op een interrupt. In dat geval zal de CPU niet reageren op deze gebeurtenis. Dit component heeft twee ingangen $I$ en $E$. $I$ zal een stijgende flank vertonen wanneer de gebruiker een toets aanslaat, maar zal na enige tijd weer dalen. $E$ bepaald of de CPU luistert naar deze interrupt. Indien $E=0$ heeft het besturingssysteem een masker gezet. Indien we een laag signaal op $E$ aanleggen wordt een reset op de module uitgevoerd. Dit is het geval wanneer de processor de procedure van het besturingssysteem zal uitvoeren. Op het moment dat de procedure uitgevoerd is, zetten we $E$ dan terug hoog om te luisteren naar een mogelijke gebeurtenis. De uitgang $Q$ vertelt ons of er een gebeurtenis is opgetreden op het moment dat er geen masker op de interrupt.
+\paragraph{Formele beschrijving}
+De vorige paragraaf is relatief informeel beschreven. We zetten deze beschrijving om in een formeler equivalent. Dit doen we aan de hand van tabel \ref{tbl:formalDescriptionAsyncExample}. In de eerste kolom plaatsen we de gebeurtenis. Dit is dus een ingang die van waarde verandert. De tweede kolom bevat de voorwaarden die relevant zijn voor deze regel. Dit zijn testen in verband met ingangen en uitgangen. De derde kolom ten slotte bevat het effect. Een effect houdt in dat de uitgang verandert.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|c|c}
+Gebeurtenis&Voorwaarde(n)&Effect(en)\\\hline
+$I:0\rightarrow 1$&$E=1$&$Q\rightarrow 1$\\
+$E:1\rightarrow 0$&&$Q\rightarrow 0$
+\end{tabular}
+\caption{Formele beschrijving van het leidend voorbeeld.}
+\label{tbl:formalDescriptionAsyncExample}
+\end{table}
+Merk verder op dat het onmogelijk is dat $Q$ een 1 bevat en $E$ een 0.
+\subsection{Stap 1: Opstellen van een toestandstabel}
+Net zoals bij de synchrone schakelingen stellen we eerst een toestandstabel op. Een eerste vraag die zich stelt is wat een toestand is. Een toestand is elke combinatie van in- en uitgangen waarin de schakeling kan terechtkomen. De schakeling die we zullen implementeren telt 3 verschillende signalen. Dit betekent dus dat we hooguit 8 toestanden kunnen bekomen. Aangezien configuraties met $\left(Q,E\right)=\left(1,0\right)$ onmogelijk kunnen voorkomen houden we 6 toestanden over. We stellen een configuratietabel op die voor elke mogelijke configuratie een toestand voorziet in tabel \ref{tbl:configTableAsync}.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|ccc}
+Toestand&$Q$&$I$&$E$\\\hline
+$a$&$0$&$0$&$0$\\
+$b$&$0$&$0$&$1$\\
+$c$&$0$&$1$&$0$\\
+$d$&$0$&$1$&$1$\\
+(onmogelijk)&$0$&$0$&$0$\\
+$e$&$0$&$0$&$1$\\
+(onmogelijk)&$0$&$1$&$0$\\
+$f$&$0$&$1$&$1$
+\end{tabular}
+\caption{Configuratie- en toestandstabel van het leidend voorbeeld.}
+\label{tbl:configTableAsync}
+\end{table}
+\subsection{Stap 2: Minimaliseren van de toestanden}
+\subsection{Stap 3: Codering van de toestanden}
+\subsection{Stap 4: Realisatie met digitale logica}
