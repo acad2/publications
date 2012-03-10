@@ -2232,6 +2232,46 @@ $f$&$0$&$1$&$1$
 \caption{Configuratie- en toestandstabel van het leidend voorbeeld.}
 \label{tbl:configTableAsync}
 \end{table}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,state/.style=state with output,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state] (E) {$e$\nodepart{lower} $1$};
+\node[state] (F) [right=of E] {$f$\nodepart{lower} $1$};
+\node[state] (A) [below=of E] {$a$\nodepart{lower} $0$};
+\node[state] (B) [below=of F] {$b$\nodepart{lower} $0$};
+\node[state] (C) [below=of A] {$c$\nodepart{lower} $0$};
+\node[state] (D) [below=of B] {$d$\nodepart{lower} $0$};
+\path (A) edge[loop left] node {00} (A)
+	  edge[bend left] node {01} (B)
+	  edge[bend left] node {10} (C)
+      (B) edge[bend left] node {00} (A)
+	  edge[loop right] node {01} (B)
+	  edge node {11} (F)
+      (C) edge[bend left] node {00} (A)
+	  edge[loop left] node {10} (C)
+	  edge[bend left] node {11} (D)
+      (D) edge node {00} (B)
+	  edge[bend left] node {10} (C)
+	  edge[loop right] node {11} (D)
+      (E) edge node {00} (A)
+	  edge[loop left] node {01} (E)
+	  edge[bend left] node {11} (F)
+      (F) edge[bend left] node {01} (E)
+	  edge[loop right] node {11} (F)
+	  edge[bend right,in=45,out=45] node {10} (C);
+% \path (A) edge node {0} (B)
+%           edge[loop above] node {1} (A)
+%       (B) edge[loop above] node {0} (B)
+%           edge node {1} (E)
+%       (E) edge[swap] node {0} (J)
+%           edge[bend right] node {1} (A)
+%       (J) edge[bend left,swap] node {0} (B)
+%           edge[bend right] node {1} (E);
+\end{tikzpicture}
+\caption{Toestandsdiagram van het leidend voorbeeld.}
+\label{fig:stateDiagramAsync}
+\end{figure}
+
 \subsection{Stap 2: Minimaliseren van de toestanden}
 \subsection{Stap 3: Codering van de toestanden}
 \subsection{Stap 4: Realisatie met digitale logica}
