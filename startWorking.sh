@@ -5,4 +5,3 @@ kile "cursus.kilepr" & evince "cursus.pdf" & evince "slides/5_Sequentieel.pdf"
 #end depending part
 cd "`dirname $0`"
 sh putOnRepository.sh
-

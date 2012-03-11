@@ -2218,7 +2218,7 @@ Merk verder op dat het onmogelijk is dat $Q$ een 1 bevat en $E$ een 0.
 Net zoals bij de synchrone schakelingen stellen we eerst een toestandstabel op. Een eerste vraag die zich stelt is wat een toestand is. Een toestand is elke combinatie van in- en uitgangen waarin de schakeling kan terechtkomen. De schakeling die we zullen implementeren telt 3 verschillende signalen. Dit betekent dus dat we hooguit 8 toestanden kunnen bekomen. Aangezien configuraties met $\left(Q,E\right)=\left(1,0\right)$ onmogelijk kunnen voorkomen houden we 6 toestanden over. We stellen een configuratietabel op die voor elke mogelijke configuratie een toestand voorziet in tabel \ref{tbl:configTableAsync}.
 \begin{table}[hbt]
 \centering
-\begin{tabular}{c|ccc}
+\subtable[Configuratietabel]{\begin{tabular}{c|ccc}
 Toestand&$Q$&$I$&$E$\\\hline
 $a$&$0$&$0$&$0$\\
 $b$&$0$&$0$&$1$\\
@@ -2229,9 +2229,21 @@ $e$&$0$&$0$&$1$\\
 (onmogelijk)&$0$&$1$&$0$\\
 $f$&$0$&$1$&$1$
 \end{tabular}
-\caption{Configuratie- en toestandstabel van het leidend voorbeeld.}
+\label{tbl:configTableAsync}}
+\subtable[Toestandstabel]{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&$a$&$b$&$-$&$c$&$0$\\
+$b$&$a$&$b$&$f$&$-$&$0$\\
+$c$&$a$&$-$&$d$&$c$&$0$\\
+$d$&$-$&$b$&$d$&$c$&$0$\\
+$e$&$a$&$e$&$f$&$-$&$1$\\
+$f$&$-$&$e$&$f$&$c$&$1$
+\end{tabular}
 \label{tbl:configTableAsync}
+}
+\caption{Configuratie- en toestandstabel van het leidend voorbeeld.}
 \end{table}
+Op basis van deze configuratietabel kunnen we nu een toestandstabel maken. Deze toestandtabel loopt erg gelijk met een toestandstabel van een Moore-machine. Waarbij de tabel uit drie delen bestaat: toestand, invoer en uitvoer. Een verschil met de toestandtabel van de Moore-machine is dat we niet alle kolommen invullen bij elke toestand. Een toestand is immers gekoppeld aan een bepaalde invoerconfiguratie\footnote{Beschreven in de configuratietabel.}, de fundamentele modus zorgt ervoor dat er slechts \'e\'en bit tegelijk kan omslaan, bijgevolg kunnen we kolommen die op meerdere bits afwijken niet invullen. Concreet betekent dit dat we voor een invoer van $n$-bits, $n+1$ van de $2^n$ kolommen kunnen invullen. In de overige kolommen schrijven we een liggende streepje (``-''). Veelal zal men ook de kolommen van de toestandtabel anders schikken. Men probeert configuraties die slechts \'e\'en bit verschillen naast elkaar te plaatsen. Dit is echter niet vereist. Een toestandtabel bij asynchrone schakelingen wordt ook een ``\termen{flow table}'' genoemd. Indien de tabel nog niet geminimaliseerd is, spreekt met van een ``\termen{primitive flow table}''.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,state/.style=state with output,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
@@ -2258,7 +2270,7 @@ $f$&$0$&$1$&$1$
 	  edge[bend left] node {11} (F)
       (F) edge[bend left] node {01} (E)
 	  edge[loop right] node {11} (F)
-	  edge[bend right,in=45,out=45] node {10} (C);
+	  edge node {10} (C);
 % \path (A) edge node {0} (B)
 %           edge[loop above] node {1} (A)
 %       (B) edge[loop above] node {0} (B)
