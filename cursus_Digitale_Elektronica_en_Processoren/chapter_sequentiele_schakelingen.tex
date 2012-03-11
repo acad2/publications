@@ -2239,11 +2239,13 @@ $d$&$-$&$b$&$d$&$c$&$0$\\
 $e$&$a$&$e$&$f$&$-$&$1$\\
 $f$&$-$&$e$&$f$&$c$&$1$
 \end{tabular}
-\label{tbl:configTableAsync}
+\label{tbl:stateTableAsync}
 }
 \caption{Configuratie- en toestandstabel van het leidend voorbeeld.}
 \end{table}
-Op basis van deze configuratietabel kunnen we nu een toestandstabel maken. Deze toestandtabel loopt erg gelijk met een toestandstabel van een Moore-machine. Waarbij de tabel uit drie delen bestaat: toestand, invoer en uitvoer. Een verschil met de toestandtabel van de Moore-machine is dat we niet alle kolommen invullen bij elke toestand. Een toestand is immers gekoppeld aan een bepaalde invoerconfiguratie\footnote{Beschreven in de configuratietabel.}, de fundamentele modus zorgt ervoor dat er slechts \'e\'en bit tegelijk kan omslaan, bijgevolg kunnen we kolommen die op meerdere bits afwijken niet invullen. Concreet betekent dit dat we voor een invoer van $n$-bits, $n+1$ van de $2^n$ kolommen kunnen invullen. In de overige kolommen schrijven we een liggende streepje (``-''). Veelal zal men ook de kolommen van de toestandtabel anders schikken. Men probeert configuraties die slechts \'e\'en bit verschillen naast elkaar te plaatsen. Dit is echter niet vereist. Een toestandtabel bij asynchrone schakelingen wordt ook een ``\termen{flow table}'' genoemd. Indien de tabel nog niet geminimaliseerd is, spreekt met van een ``\termen{primitive flow table}''.
+Op basis van deze configuratietabel kunnen we nu een toestandstabel maken. Deze toestandtabel loopt erg gelijk met een toestandstabel van een Moore-machine. Waarbij de tabel uit drie delen bestaat: toestand, invoer en uitvoer. Een verschil met de toestandtabel van de Moore-machine is dat we niet alle kolommen invullen bij elke toestand. Een toestand is immers gekoppeld aan een bepaalde invoerconfiguratie\footnote{Beschreven in de configuratietabel.}, de fundamentele modus zorgt ervoor dat er slechts \'e\'en bit tegelijk kan omslaan, bijgevolg kunnen we kolommen die op meerdere bits afwijken niet invullen. Concreet betekent dit dat we voor een invoer van $n$-bits, $n+1$ van de $2^n$ kolommen kunnen invullen. In de overige kolommen schrijven we een liggende streepje (``-''). Veelal zal men ook de kolommen van de toestandtabel anders schikken. Men probeert configuraties die slechts \'e\'en bit verschillen naast elkaar te plaatsen. Dit is echter niet vereist.
+\paragraph{}
+We stellen de toestandstabel op met behulp van de configuratietabel en de tabel met mogelijke gebeurtenissen. Toestand $a$ betekent in dit geval bijvoorbeeld dat we $\left(I,E\right)=\left(0,0\right)$ aan de ingangen aanleggen. Het spreekt dus voor zich dat we bij de kolom met dezelde configuratie ook een $a$ schrijven. In dat geval is de toestand \termen{stabiel}. Bij de tweede kolom geldt $\left(I,E\right)=\left(0,1\right)$, dit betekent dus dat we een stijgende flank van $E$ beschouwen. Uit de gebeurtenissentabel leiden we af dat in dat geval $Q$ op 0 komt te staan. Dit is reeds het geval. we migreren dus naar de toestand met $\left(Q,I,E\right)=\left(0,0,1\right)$. Op de configuratietabel zien we dat dit toestand $b$ is. Bij de laatste kolom beschouwen we een stijgende flank van $I$, opnieuw gebeurt er niets vermits er niet aan de voorwaarden wordt voldaan in de gebeurtenissentabel. Op deze manier kunnen we de volledige toestandstabel opstellen zoals in tabel \ref{tbl:stateTableAsync}. We kunnen ook met behulp van een toestandsdiagram een grafische voorstelling van deze tabel geven. Het toestandsdiagram staat op figuur \ref{fig:stateDiagramAsync}.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,state/.style=state with output,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
@@ -2271,19 +2273,12 @@ Op basis van deze configuratietabel kunnen we nu een toestandstabel maken. Deze 
       (F) edge[bend left] node {01} (E)
 	  edge[loop right] node {11} (F)
 	  edge node {10} (C);
-% \path (A) edge node {0} (B)
-%           edge[loop above] node {1} (A)
-%       (B) edge[loop above] node {0} (B)
-%           edge node {1} (E)
-%       (E) edge[swap] node {0} (J)
-%           edge[bend right] node {1} (A)
-%       (J) edge[bend left,swap] node {0} (B)
-%           edge[bend right] node {1} (E);
 \end{tikzpicture}
-\caption{Toestandsdiagram van het leidend voorbeeld.}
+\caption{Toestandsdiagram van het leidend voorbeeld.??}%TODO: verbeteren
 \label{fig:stateDiagramAsync}
 \end{figure}
-
+\paragraph{}Een toestandtabel bij asynchrone schakelingen wordt ook een ``\termen{flow table}'' genoemd. Indien de tabel nog niet geminimaliseerd is, spreekt met van een ``\termen{primitive flow table}''.
 \subsection{Stap 2: Minimaliseren van de toestanden}
+Net als bij synchrone schakelingen loont het meestal de moeite om de toestandsruimte te minimaliseren. Sommige toestanden kunnen immers 
 \subsection{Stap 3: Codering van de toestanden}
 \subsection{Stap 4: Realisatie met digitale logica}
