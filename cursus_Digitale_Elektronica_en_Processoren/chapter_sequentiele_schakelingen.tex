@@ -2279,6 +2279,11 @@ We stellen de toestandstabel op met behulp van de configuratietabel en de tabel 
 \end{figure}
 \paragraph{}Een toestandtabel bij asynchrone schakelingen wordt ook een ``\termen{flow table}'' genoemd. Indien de tabel nog niet geminimaliseerd is, spreekt met van een ``\termen{primitive flow table}''.
 \subsection{Stap 2: Minimaliseren van de toestanden}
-Net als bij synchrone schakelingen loont het meestal de moeite om de toestandsruimte te minimaliseren. Sommige toestanden kunnen immers 
+Net als bij synchrone schakelingen loont het meestal de moeite om de toestandsruimte te minimaliseren. We dienen het algoritme echter aan te passen aan het sypecifiek geval van de asynchrone schakelingen. We stellen ons hierbij opnieuw de vraag wanneer twee toestanden van elkaar verschillen: 2 toestanden verschillen van elkaar indien:
+\begin{itemize}
+ \item Ze een verschillende uitgangscombinatie hebben
+ \item De twee toestanden niet stabiel zijn onder dezelfde invoercombinatie
+ \item 	
+\end{itemize}
 \subsection{Stap 3: Codering van de toestanden}
 \subsection{Stap 4: Realisatie met digitale logica}
