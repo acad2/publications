@@ -1111,6 +1111,7 @@ $G$&$F/0$&$G/0$
 \paragraph{Toestandstabel}Een toestandsdiagram is een grafische voorstelling. Bij een groot aantal toestanden of bij bijvoorbeeld invoer van een toestandsdiagram in een computer, maken we meestal gebruik van een alternatieve voorstelling: de \termen{toestandstabel}. De rijen in de toestandstabel stellen de verschillende toestanden voor, de kolommen stellen de invoercombinatie voor. In een cel $i,j$ voor toestand $A_i$ en invoer $I_j$ plaatsen we de volgende toestand. In het geval van een Moore-machine voorzien we een extra kolom die per rij de uitgangscombinatie van deze toestand weergeeft. Bij een Mealy-machine plaatsen we in elke cel naast de volgende toestand de uitgangscombinatie voor toestand $A_i$ en invoer $I_j$. Ook hier plaatsen we een slash om de volgende toestand van de uitvoer te onderscheiden. De toestandstabellen van de leidende voorbeelden staan in tabel \ref{tbl:toestandstabel}.
 \paragraph{Opstellen van een toestandsdiagram en -tabel}Zoals reeds gezegd is het opstellen van een toestandsdiagram of -tabel een kunst. Een algemene techniek die gehanteerd kan worden is het aantal klokflanken te bepalen dat we geheugen moeten voorzien.  In het geval van de voorbeelden is dit drie klokflanken voor de Moore-machine en twee klokflanken voor de Mealy-machine. Vervolgens kunnen we een toestandstabel of -diagram opstellen die de overgang naar verschillende toestanden van het geheugen voorstelt. Zo komt $A$ in beide voorbeelden overeen met de toestand waarin we starten, er is bijgevolg nog geen sprake over inhoud in het geheugen. $B$ en $C$ betekent dat er na de eerste klokflank respectievelijk een 0 en een 1 in het geheugen opgeslagen is. $D$, $E$, $F$ en $G$ spreken over de respectievelijke geheugentoestanden $00$, $01$, $10$ en $11$. Voor de Mealy-machine is dit reeds voldoende. Bij de Moore-machine introduceren we nog een extra niveau. De overgangen op dit laatste niveau houden in dat we de oudste bit vergeten en de nieuwe bit memoriseren. Hierdoor gaan alle overgangen van een toestand op het laatste niveau enkel naar toestanden op hetzelfde niveau. We kunnen machinaal eenvoudig een tabel opstellen voor een arbitraire diepte. Een groot nadeel is dat indien we $n$ klokflanken willen memoriseren, we $2^{n+1}-1$ toestanden bekomen. Na het opstellen van deze tabel dienen we enkel de specificaties nog te vertalen in de uitgangen van de toestanden in het geval van een Moore-machine, en de overgangen bij een Mealy-machine. Meestal kan men echter door logisch te redeneren voorkomen dat we dergelijke grote toestandstabellen moeten opstellen. In de volgende subsectie reduceren we het aantal toestanden tot de theoretische ondergrens. Of we de initi\"ele tabel opstellen met de hier beschreven methode of door logisch te redeneren verandert niets aan het resultaat van de volgende stap.
 \subsection{Stap 2: Minimaliseren van de toestanden}
+\label{ss:minimizeFSMSeq}
 Nu we een toestandsdiagram opgesteld hebben kunnen we dit diagram implementeren met behulp van logica. Het loont echter meestal de moeite om eerst het toestandsdiagram te minimaliseren. Minder toestanden impliceren minder geheugencomponenten om de toestand bij te houden. Bovendien kunnen we meestal ook de achterliggende logica die de volgende toestand en de uitgangen berekend. Hiertoe geven we een methode die gegarandeert het kleinste toestandsdiagram vindt die de specificaties kan implementeren. Men minimaal bedoelen we hier het aantal toestanden. Dit betekent dus niet noodzakelijk dat de schakeling die we hiermee verwezenlijken ook minimaal is.
 \subsubsection{Het minimalisatiealoritme}
 \paragraph{Het algemeen idee}De methode die we implementeren gaat uit van een positief idee: alle toestanden zijn vertegenwoordigers van dezelfe toestand. Uiteraard is dit niet altijd het geval. Er zijn twee omstandigheden waarin twee toestanden niet gelijk aan elkaar zijn:
@@ -2249,6 +2250,7 @@ We stellen de toestandstabel op met behulp van de configuratietabel en de tabel 
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,state/.style=state with output,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\clip (-1.5,-5.5) rectangle (4,1);
 \node[state] (E) {$e$\nodepart{lower} $1$};
 \node[state] (F) [right=of E] {$f$\nodepart{lower} $1$};
 \node[state] (A) [below=of E] {$a$\nodepart{lower} $0$};
@@ -2271,19 +2273,123 @@ We stellen de toestandstabel op met behulp van de configuratietabel en de tabel 
 	  edge[loop left] node {01} (E)
 	  edge[bend left] node {11} (F)
       (F) edge[bend left] node {01} (E)
-	  edge[loop right] node {11} (F)
-	  edge node {10} (C);
+	  edge[loop right] node {11} (F);
+	  %edge node {10} (C);
+\draw (F) .. controls ([shift={(4cm,-4cm)}] F) and ([shift={(2cm,-3cm)}] C).. (C) node[midway] {10};
 \end{tikzpicture}
-\caption{Toestandsdiagram van het leidend voorbeeld.??}%TODO: verbeteren
+\caption{Toestandsdiagram van het leidend voorbeeld.}
 \label{fig:stateDiagramAsync}
 \end{figure}
 \paragraph{}Een toestandtabel bij asynchrone schakelingen wordt ook een ``\termen{flow table}'' genoemd. Indien de tabel nog niet geminimaliseerd is, spreekt met van een ``\termen{primitive flow table}''.
 \subsection{Stap 2: Minimaliseren van de toestanden}
-Net als bij synchrone schakelingen loont het meestal de moeite om de toestandsruimte te minimaliseren. We dienen het algoritme echter aan te passen aan het sypecifiek geval van de asynchrone schakelingen. We stellen ons hierbij opnieuw de vraag wanneer twee toestanden van elkaar verschillen: 2 toestanden verschillen van elkaar indien:
-\begin{itemize}
- \item Ze een verschillende uitgangscombinatie hebben
- \item De twee toestanden niet stabiel zijn onder dezelfde invoercombinatie
- \item 	
-\end{itemize}
+Net als bij synchrone schakelingen loont het meestal de moeite om de toestandsruimte te minimaliseren. Dit leidt immers in de meeste gevallen tot een goedkopere schakeling. Vermits het probleem anders is, vertoont de minimalisatie van asynchrone schakelingen ook verschillen tegenover synchrone schakelingen. Een belangrijk verschil is dat we in de flow toestandstabel ook rekening moeten houden met don't cares. Elke toestand heeft er immers $2^n-n-1$ bij $n$-bit invoer. Daarnaast kunnen er uiteraard nog bijkomende don't cares optreden die probleemafhankelijk zijn. Meestal laten deze don't cares toe om op een flexibele manier de toestandsruimte te minimaliseren.
+\paragraph{}
+Er bestaan verschillende methodes om de toestandsruimte te minimaliseren. We opteren voor een methode die werkt met twee stappen. Allereerst is er de partitionering. Deze partitionering is volledig analoog aan de sequenti\"ele schakelingen (zie \ref{ss:minimizeFSMSeq} op pagina \pageref{ss:minimizeFSMSeq}).
+%Het verschil tussen deze regels en de regels bij een sequenti\"ele machine, is dat we hier afdwingen dat beide toestanden naar dezelfde toestand $S_k$ gaan. Bij het minimaliseren van een sequenti\"ele machine mochten beide toestanden een andere volgende toestand hebben, zolang deze toestanden zich in dezelfde partitie bevinden. Een tweede verschil is dat we hier rekening houden met de don't cares. Deze regel zorgt er dan ook voor dat we meer toestanden kunnen tegenkomen die equivalent zijn met elkaar.
+We dienen echter de voorwaarden van deze partitionering minimaal aan te passen. De nieuwe voorwaarde wordt dan:
+\begin{enumerate}
+ \item De toestanden hebben dezelfde uitgangscombinatie.
+ \item De don't cares bevinden zich in dezelfde kolommen.
+\end{enumerate}
+Vervolgens passen we opnieuw de iteratiestap toe zoals bij synchrone schakelingen. De voorwaarden veranderen hierbij niet.
+\paragraph{}
+Nadat we de partitionering berekend hebben, kunnen we een eerste toestandsreductie toepassen. Bij de synchrone schakelingen betekent de toestandreductie dan ook meteen het einde van de minimalisatie. Bij synchrone schakelingen kunnen we verder reduceren. Hiertoe berekenen we \termen{compatibele toestanden}\footnote{Bemerkt het verschil met ``equivalente toestanden'' bij de partitionering.}. Twee toestanden $S_i$ en $S_j$ zijn equivalent indien:
+\begin{enumerate}
+ \item Dezelfde uitvoerconfiguratie hebben
+ \item Voor elke ingangscombinatie geldt ofwel:
+ \begin{enumerate}
+  \item Zijn $S_i$ en $S_j$ beide stabiel
+  \item De volgende toestand van minstens \'e\'en van de twee toestanden $S_i$ of $S_j$ is niet gespecificeerd, er staat dus een don't care in de kolom van minstens \'e\'en van de toestanden.
+  \item Beide toestanden gaan naar dezelfde toestand $S_k$.
+ \end{enumerate}
+\end{enumerate}
+Merk op dat de toestanden $S_i$, $S_j$ en $S_k$ niet de toestanden zijn uit de initi\"ele toestandstabel, maar uit de door partitionering reeds gereduceerde toestandstabel. Een andere mogelijke valkuil is dat beide toestanden naar dezelfde toestand moeten gaan, niet naar twee compatibele of equivalente toestanden. De rede hiervoor is dat de compatibiliteitsrelatie niet transitief is: Als toestand $A$ compatibel is met toestand $B$ en $B$ is compatibel met toestand $C$, is $A$ niet noodzakelijk compatibel met toestand $C$. De relatie is echter wel symmetrisch\footnote{Dit kunnen we eenvoudig aantonen door $S_i$ en $S_j$ om te wisselen. In dat geval zien we dat de voorwaarden niet veranderen.} en uiteraard reflexief.
+\paragraph{}
+Het feit dat er de compatibiliteitsrelatie niet transitief is introduceert ook een nieuw probleem: we willen verschillende compatibele toestand samennemen in \'e\'en nieuwe toestand, een zogenaamde \termen{kliek $K_n$}. Vermits hiervoor elke twee toestanden compatibel met elkaar moeten zijn, is dit proces niet deterministisch. Men kan dit probleem op verschillende methodes oplossen. In de praktijk lost men dit vaak op met behulp van programma's die zoeken naar een zo goed mogelijke groepering. Nadat we een groepering hebben bepaald, minimaliseren we opnieuw de toestandentabel. Dit betekent echter nog niet dat het minimalisatiealgoritme ten einde is: door het groeperen van toestanden in een nieuwe toestand, kunnen deze nieuwe toestanden weer compatibiliteit vertonen. We dienen dus opnieuw een compatibiliteitsrelatie op te bouwen en eventueel te minimaliseren. De minimalisatie stopt op het moment dat geen enkele nieuwe toestand meer compatibel is met een andere. Schematisch geven we het hele proces weer in een flowchart op figuur \ref{fig:flowchartMinimizeAsynchrone}.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[node distance = 2cm, auto]
+\node [block] (A) {Partitioneren van de toestanden};
+\node [block, below of=A] (B) {Bepaal compatibele toestanden};
+\node [block, below of=B] (C) {Groepeer compatibele toestanden};
+\node [block, below of=C] (D) {Samenvoegen van de toestanden in een groep};
+\node [decision,below of=D] (E) {Toestands\-tabel verandert?};
+\node [block] (F) at (E -| 3,0) {Stop};
+\node [block] (O) at (A -| -3,0) {Start};
+\path [line] (O) -- (A);
+\path [line] (A) -- (B);
+\path [line] (B) -- (C);
+\path [line] (C) -- (D);
+\path [line] (D) -- (E);
+\path [line] (E) -- node [near start,scale=0.75] {yes} ++(-3,0) |- (B);
+\path [line] (E) -- node [near start,scale=0.75] {no} (F);
+\end{tikzpicture}
+\caption{Flowchart van het minimalisatieproces van asynchrone schakelingen.}
+\label{fig:flowchartMinimizeAsynchrone}
+\end{figure}
+% Door dit nieuwe criterium is de transitiviteit van de compatibiliteitsrelatie niet meer gewaarborgd. Bij de sequenti\"ele schakelingen geldt immers de eigenschap als $A$ compatibel is met $B$ en $B$ met $C$ is $A$ ook compatibel met $C$. De transitiviteit vervalt omdat we toelaten dat don't cares.
+\paragraph{Voorbeeld}
+Om alle speciale gevallen in te sluiten gebruiken we een andere toestandstabel beschreven in tabel \ref{tbl:stateTableAsyncMiniOrig}.
+\begin{table}[hbt]
+\centering
+\subtable[Initi\"ele tabel]{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&$a$&$f$&$-$&$c$&$0$\\
+$b$&$-$&$b$&$h$&$-$&$1$\\
+$c$&$-$&$c$&$g$&$j$&$0$\\
+$d$&$-$&$f$&$d$&$-$&$1$\\
+$e$&$g$&$-$&$d$&$e$&$1$\\
+$f$&$-$&$f$&$k$&$-$&$0$\\
+$g$&$l$&$g$&$j$&$-$&$0$\\
+$h$&$-$&$l$&$h$&$e$&$1$\\
+$i$&$i$&$e$&$-$&$f$&$1$\\
+$j$&$b$&$-$&$-$&$j$&$0$\\
+$k$&$-$&$b$&$k$&$e$&$1$\\
+$l$&$-$&$l$&$k$&$-$&$1$\\
+$m$&$m$&$l$&$-$&$e$&$1$
+\end{tabular}
+\label{tbl:stateTableAsyncMiniOrig}}
+\subtable[Tabel na partitionering]{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&$a$&$f$&$-$&$c$&$0$\\
+$b$&$-$&$b$&$h$&$-$&$1$\\
+$c$&$-$&$c$&$g$&$j$&$0$\\
+$d$&$-$&$f$&$d$&$-$&$1$\\
+$e$&$g$&$-$&$d$&$e$&$1$\\
+$f$&$-$&$f$&$h$&$-$&$0$\\
+$g$&$b$&$g$&$j$&$-$&$0$\\
+$h$&$-$&$b$&$h$&$e$&$1$\\
+$i$&$i$&$e$&$-$&$f$&$1$\\
+$j$&$b$&$-$&$-$&$j$&$0$\\
+$m$&$m$&$b$&$-$&$e$&$1$
+\end{tabular}
+\label{tbl:stateTableAsyncMiniParty}}
+\caption{Evolutie van de toestandstabel bij het minimaliseren}
+\end{table}
+Allereerst passen we de initialisatiestap van het partitiealgoritme toe. We dienen hierbij buiten een verschillende uitvoerconfiguratie ook rekening te houden met verschillende don't care configuraties. Dit leid tot de volgende partitie:
+\begin{equation}
+\begin{array}{lr}
+\mathcal{P}_0=\left\{\left\{a\right\},\left\{b,d,l\right\},\left\{c\right\},\left\{e\right\},\left\{f\right\},\left\{g\right\},\left\{h,k\right\},\left\{i,m\right\},\left\{j\right\}\right\}&\mbox{(voorbeeld)}
+\end{array}
+\end{equation}
+Na het iteratieproces bij de partitionering die wel volledig behouden blijft bekomen we volgende partitie:
+\begin{equation}
+\begin{array}{lr}
+\mathcal{P}_1=\left\{\left\{a\right\},\left\{b,l\right\},\left\{c\right\},\left\{d\right\},\left\{e\right\},\left\{f\right\},\left\{g\right\},\left\{h,k\right\},\left\{i\right\},\left\{j\right\},\left\{m\right\}\right\}&\mbox{(voorbeeld)}
+\end{array}
+\end{equation}
+Op basis van deze partitionering kunnen we een nieuwe toestandstabel opstellen: tabel \ref{tbl:stateTableAsyncMiniParty}. We gebruiken hier telkens de alfabetisch eerste letter van de toestanden die in een bepaalde partitie zitten. Dit is echter een arbitraire keuze. Vervolgens minimaliseren we verder door een compatibiliteitsrelatie op te stellen. Zo is $a$ duidelijk niet compatibel met $b$ net als $a$ en $d$, ze hebben immers een verschillende uitvoer. Ook $\left(a,c\right)$ en $\left(a,e\right)$ zijn duidelijk geen elementen van de relatie: $a$ en $c$ gaan onder invoer $\left(0,1\right)$ naar een verschillende toestand, hetzelfde geldt voor $a$ en $e$ onder invoer $\left(1,0\right)$. $\left(a,f\right)$ behoort dan weer wel tot de relatie. Het zijn beide toestanden met dezelfde uitvoer, en in alle mogelijke invoercombinaties heeft ofwel minstens \'e\'en van de toestanden een don't care, of wijzen ze naar dezelfde toestand. Alle andere toestanden zijn niet compatibel met $a$ omwille van hiervoor opgesomde redenen. We kunnen zo verder alle toestanden tegen elkaar uitspelen, en defini\"eren zo de equivalentierelatie $\equiv_0$ als volgt\footnote{Bij de definitie hebben we de symmetrische redundantie weggelaten. Het spreekt echter voor zich dat als $x\equiv_0y$, dat ook geldt $y\equiv_0x$}:
+\begin{equation}
+\left\{\begin{array}{cc}
+a\equiv_0f&b\equiv_0h\\
+b\equiv_0m&c\equiv_0j\\
+d\equiv_0e&f\equiv_0j\\
+g\equiv_0j&h\equiv_0m
+\end{array}\right.
+\end{equation}
+We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een \termen{Merger diagram}. Hierbij stellen we de toestanden voor als knopen, en indien twee toestanden compatibel zijn, tekenen we een ongerichte boog tussen de knopen die deze toestanden voorstellen. Een dergelijk Merger diagram staat op figuur \ref{fig:mergerDiagram0}.
+\begin{figure}
+\caption{Merger-diagrammen van het leidend voorbeeld.}
+\end{figure}
 \subsection{Stap 3: Codering van de toestanden}
 \subsection{Stap 4: Realisatie met digitale logica}

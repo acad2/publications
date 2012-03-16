@@ -12,8 +12,15 @@
 \RequirePackage{amsmath}
 \RequirePackage{float}
 \RequirePackage{tikz}
+
+\usetikzlibrary{shapes,arrows}
 \usetikzlibrary{patterns}
 \usetikzlibrary{automata}
+
+\tikzstyle{decision} = [diamond, draw, fill=black!20,text width=6em, text badly centered, node distance=4cm, inner sep=0pt,scale=0.75]
+\tikzstyle{block} = [rectangle, draw, fill=black!20,text width=6.667em, text centered, rounded corners, minimum height=4em,scale=0.75]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw,ellipse,black=black!15, node distance=4cm,minimum height=2.667em,scale=0.75]
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
