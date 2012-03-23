@@ -2389,6 +2389,61 @@ g\equiv_0j&h\equiv_0m
 \end{equation}
 We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een \termen{Merger diagram}. Hierbij stellen we de toestanden voor als knopen, en indien twee toestanden compatibel zijn, tekenen we een ongerichte boog tussen de knopen die deze toestanden voorstellen. Een dergelijk Merger diagram staat op figuur \ref{fig:mergerDiagram0}.
 \begin{figure}
+\centering
+\subfigure[Iteratie 1]{\begin{tikzpicture}[shorten >=1pt,auto,node distance=1.3cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state] (A) {$a$};
+\node[state] (F) [below=of A] {$f$};
+\node[state] (J) [right=of F] {$j$};
+\node[state] (C) [below=of J] {$c$};
+\node[state] (G) [above=of J] {$g$};
+\node[state] (B) [right=of G] {$b$};
+\node[state] (H) [right=of B] {$h$};
+\node[state] (M) [below=of B] {$m$};
+\node[state] (D) [right=of C] {$d$};
+\node[state] (E) [right=of D] {$e$};
+\node[state] (I) [left=of C] {$i$};
+\path (A) edge (F)
+      (F) edge (J)
+      (J) edge (G)
+      (J) edge (C);
+\path (B) edge (H)
+      (H) edge (M)
+      (M) edge (B);
+\path (D) edge (E);
+\node[draw,dashed,fit=(A) (F)] {};
+\node[draw,dashed,fit=(B) (H) (M)] {};
+\node[draw,dashed,fit=(C) (J)] {};
+\node[draw,dashed,fit=(D) (E)] {};
+%\draw[rounded corners=3mm,dashed] (A.north west) -- (A.north east) -- (F.south east) -- (F.south west) -- cycle;
+\end{tikzpicture}
+\label{fig:mergerDiagram0}}
+\subfigure[Iteratie 2]{\begin{tikzpicture}[shorten >=1pt,auto,node distance=1.3cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state] (A) {$a$};
+\node[state] (F) [below=of A] {$f$};
+\node[state] (J) [right=of F] {$j$};
+\node[state] (C) [below=of J] {$c$};
+\node[state] (G) [above=of J] {$g$};
+\node[state] (B) [right=of G] {$b$};
+\node[state] (H) [right=of B] {$h$};
+\node[state] (M) [below=of B] {$m$};
+\node[state] (D) [right=of C] {$d$};
+\node[state] (E) [right=of D] {$e$};
+\node[state] (I) [left=of C] {$i$};
+\path (A) edge (F)
+      (F) edge (J)
+      (J) edge (G)
+      (J) edge (C);
+\path (B) edge (H)
+      (H) edge (M)
+      (M) edge (B);
+\path (D) edge (E);
+\node[draw,dashed,fit=(A) (F)] {};
+\node[draw,dashed,fit=(B) (H) (M)] {};
+\node[draw,dashed,fit=(C) (J)] {};
+\node[draw,dashed,fit=(D) (E)] {};
+%\draw[rounded corners=3mm,dashed] (A.north west) -- (A.north east) -- (F.south east) -- (F.south west) -- cycle;
+\end{tikzpicture}
+\label{fig:mergerDiagram1}}
 \caption{Merger-diagrammen van het leidend voorbeeld.}
 \end{figure}
 \subsection{Stap 3: Codering van de toestanden}
