@@ -2327,6 +2327,13 @@ Het feit dat er de compatibiliteitsrelatie niet transitief is introduceert ook e
 \caption{Flowchart van het minimalisatieproces van asynchrone schakelingen.}
 \label{fig:flowchartMinimizeAsynchrone}
 \end{figure}
+\paragraph{Groeperen van toestanden in een nieuwe toestand}
+Hoe bouwen we vanuit een groep toestanden een nieuwe toestand op? Dit kunnen we in principe al afleiden uit de definitie van compatibele toestanden. Uit de toestanden $\left\{s_1,s_2,\ldots,s_n\right\}$ construeren we een toestand $t$ indien alle toestanden met elkaar compatibel zijn. We dienen bij $t$ ook de overgangen te defini\"eren $s$ gaat onder een invoer $I$ over naar $\delta\left(s,I\right)$ deze functie noemen we ook de \termen{transitie-functie}. Verder voeren we ook een functie $\mathcal{G}\left(s\right)$ in, deze functie geeft de nieuwe toestand weer van de groep waar $s$ toe behoort. We kunnen dan volgende regels op $t$ defini\"eren\footnote{We voeren de regels in de volgorde van verschijnen uit. Het kan zijn dat een situatie aan twee criteria voldoet, in dat geval voeren we de eerste regel uit.}:
+\begin{enumerate}
+ \item $\delta\left(t,I\right)=-$ indien $\forall i:\delta\left(s_i,I\right)=-$. We plaatsen een don't care bij een transitie van $t$ met invoer $I$ als elke toestanden $s_i$ onder deze invoer ook een don't care bevat.
+ \item $\delta\left(t,I\right)=t$ indien $\forall i:\delta\left(s_i,I\right)=-\vee\delta\left(s_i,I\right)\in\left\{s_1,s_2,\ldots,s_n\right\}$. Indien alle toestanden onder invoer $I$ binnen de groep blijven of een don't care bevatten, vormt $t$ onder invoer $I$ een stabiele toestand.
+ \item $\delta\left(t,I\right)=u$ indien $\forall i:\delta\left(s_i,I\right)=-\vee\mathcal{G}\left(\delta\left(s_i,I\right)\right)=u$. Indien alle toestanden onder invoer $I$ naar dezelfde groep transformeren, transformeert $t$ onder deze invoer naar de toestand die deze groep voorstelt.
+\end{enumerate}
 % Door dit nieuwe criterium is de transitiviteit van de compatibiliteitsrelatie niet meer gewaarborgd. Bij de sequenti\"ele schakelingen geldt immers de eigenschap als $A$ compatibel is met $B$ en $B$ met $C$ is $A$ ook compatibel met $C$. De transitiviteit vervalt omdat we toelaten dat don't cares.
 \paragraph{Voorbeeld}
 Om alle speciale gevallen in te sluiten gebruiken we een andere toestandstabel beschreven in tabel \ref{tbl:stateTableAsyncMiniOrig}.
@@ -2364,7 +2371,7 @@ $j$&$b$&$-$&$-$&$j$&$0$\\
 $m$&$m$&$b$&$-$&$e$&$1$
 \end{tabular}
 \label{tbl:stateTableAsyncMiniParty}}
-\caption{Evolutie van de toestandstabel bij het minimaliseren}
+\caption{Evolutie van de toestandstabel bij het minimaliseren voor en na partitioneren.}
 \end{table}
 Allereerst passen we de initialisatiestap van het partitiealgoritme toe. We dienen hierbij buiten een verschillende uitvoerconfiguratie ook rekening te houden met verschillende don't care configuraties. Dit leid tot de volgende partitie:
 \begin{equation}
@@ -2390,6 +2397,7 @@ g\equiv_0j&h\equiv_0m
 We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een \termen{Merger diagram}. Hierbij stellen we de toestanden voor als knopen, en indien twee toestanden compatibel zijn, tekenen we een ongerichte boog tussen de knopen die deze toestanden voorstellen. Een dergelijk Merger diagram staat op figuur \ref{fig:mergerDiagram0}.
 \begin{figure}
 \centering
+\hfill{}
 \subfigure[Iteratie 1]{\begin{tikzpicture}[shorten >=1pt,auto,node distance=1.3cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
 \node[state] (A) {$a$};
 \node[state] (F) [below=of A] {$f$};
@@ -2417,34 +2425,40 @@ We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een 
 %\draw[rounded corners=3mm,dashed] (A.north west) -- (A.north east) -- (F.south east) -- (F.south west) -- cycle;
 \end{tikzpicture}
 \label{fig:mergerDiagram0}}
+\hfill{}
 \subfigure[Iteratie 2]{\begin{tikzpicture}[shorten >=1pt,auto,node distance=1.3cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
 \node[state] (A) {$a$};
-\node[state] (F) [below=of A] {$f$};
-\node[state] (J) [right=of F] {$j$};
-\node[state] (C) [below=of J] {$c$};
-\node[state] (G) [above=of J] {$g$};
-\node[state] (B) [right=of G] {$b$};
-\node[state] (H) [right=of B] {$h$};
-\node[state] (M) [below=of B] {$m$};
-\node[state] (D) [right=of C] {$d$};
-\node[state] (E) [right=of D] {$e$};
-\node[state] (I) [left=of C] {$i$};
-\path (A) edge (F)
-      (F) edge (J)
-      (J) edge (G)
-      (J) edge (C);
-\path (B) edge (H)
-      (H) edge (M)
-      (M) edge (B);
-\path (D) edge (E);
-\node[draw,dashed,fit=(A) (F)] {};
-\node[draw,dashed,fit=(B) (H) (M)] {};
-\node[draw,dashed,fit=(C) (J)] {};
-\node[draw,dashed,fit=(D) (E)] {};
-%\draw[rounded corners=3mm,dashed] (A.north west) -- (A.north east) -- (F.south east) -- (F.south west) -- cycle;
+\node[state] (B) [right=of A] {$b$};
+\node[state] (C) [right=of B] {$c$};
+\node[state] (E) [below=of A] {$e$};
+\node[state] (G) [right=of E] {$g$};
+\node[state] (I) [right=of G] {$i$};
 \end{tikzpicture}
 \label{fig:mergerDiagram1}}
+\hfill{}
 \caption{Merger-diagrammen van het leidend voorbeeld.}
 \end{figure}
+We kunnen vervolgens een keuze maken welke compatibele toestanden we samennemen. Merk op dat we enkel toestanden kunnen samennemen als elke twee toestanden compatibel met elkaar zijn. Zo kunnen we $\left\{a,f\right\}$ samennemen, maar $\left\{a,f,j\right\}$ is niet mogelijk omdat $a$ en $j$ niet compatibel met elkaar zijn. Op figuur \ref{fig:mergerDiagram0} duiden we met behulp van de stippelijnen aan welke toestanden we hebben samengenomen. Of formeler:\begin{equation}
+\begin{array}{lr}
+\mathcal{P}_2=\left\{\left\{a,f\right\},\left\{b,h,m\right\},\left\{c,j\right\},\left\{d,e\right\},\left\{g\right\},\left\{i\right\}\right\}&\mbox{(voorbeeld)}
+\end{array}
+\end{equation}
+We hadden echter in plaats van $\left\{c,j\right\}$ ook voor $\left\{g,j\right\}$ kunnen opteren. Of $\left\{a,f\right\}$ en $\left\{c,j\right\}$ kunnen inwisselen voor $\left\{f,j\right\}$. Men kan argumenteren dat we met de laatste configuratie minder toestanden wegwerken. Merk echter op dat we eventueel na deze iteratie nog iteraties kunnen uitvoeren en toestanden wegwerken. Een strategie waarin we in elke iteratie het aantal toestanden maximaal reduceren zal niet altijd tot het beste resultaat leiden.
+\paragraph{}
+We genereren vervolgens voor elke voorgestelde groep een nieuwe toestand. Deze toestand stellen we met de alfabetisch laagste letter voor van de toestanden die de groep omvat.
+\begin{table}[hbt]
+\centering
+\subtable[Iteratie 1]{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&$a$&$a$&$h$&$c$&$0$\\
+$b$&$b$&$b$&$b$&$e$&$1$\\
+$c$&$b$&$c$&$g$&$c$&$0$\\
+$e$&$g$&$a$&$d$&$d$&$1$\\
+$g$&$b$&$g$&$c$&$-$&$0$\\
+$i$&$i$&$e$&$-$&$a$&$1$
+\end{tabular}
+\label{tbl:stateTableIteration1}}
+\caption{Evolutie van de toestandstabel bij het minimaliseren voor en na twee iteraties.}
+\end{table}
 \subsection{Stap 3: Codering van de toestanden}
 \subsection{Stap 4: Realisatie met digitale logica}
