@@ -77,7 +77,7 @@ Bij de synthese van een flipflop zullen we een eerste positief feedback componen
 \caption{Set-reset latch.}
 \label{fig:setResetLatch}
 \end{figure}
-Figuur \ref{fig:setResetLatch} toont de NOR- en NAND-implementatie van de zogenaamde set-reset latch (ofwel \termen{SR-latch}). Dit component werkt met positieve terugkoppeling waarbij de uitgangen dus ook een deel van de ingangen vormen. We onthouden de uitvoer door bepaalde waarden aan de ingang aan te leggen, die resulteren in het opnieuw bekomen van dezelfde uitvoer. Bij de NOR-implementatie is dit $\left(S,R\right)=\left(0,0\right)$. De NAND-implementatie is in feite de volledig duale vorm en werkt volledig equivalent, alleen zijn $S$ en $R$ hier laag actieve signalen (zie \ref{s:negativeLogic}). We zouden ook negatieve logica aan $Q$ en $Q_n$ moeten toekennen maar omdat altijd geldt $Q_n=Q'$ kunnen we ook eenvoudigweg de twee uitgangen omdraaien en bekomen we positieve logica aan de uitgang. De stabiele invoer van de NAND-implementatie is dan ook $\left(S^*,R^*\right)=\left(1,1\right)$. Indien we \'e\'en van de ingangen laten afwijken van de stabiele toestand, komen we in een onstabiele toestand. Deze stabiele toestand kan maar op \'e\'en manier terug stabiel worden. Op deze manier kunnen we een nieuwe waarde toekennen aan de latch. Deze waarde zal ook verder gelden nadat de ingangen weer stabiel zijn. Hierdoor kent men ook de termen \termen{set} (1 in het geheugen) en \termen{reset} (0 in het geheugen) toe aan de ingangen. Indien beide ingangen afwijken van de stabiele ingangen is het gedrag niet meer bepaald. In dat geval zal de uiteindelijke waarde afhangen van de implementatie van de latch en de vertraging van de poorten. Bij identieke vertragingen leidt dit tot een oscillerend effect wat ook te zien is op de tijdsgrafieken op figuur \ref{fig:setResetLatch}. In een minder ideaal systeem zal de snelste poort\footnote{Uiteraard zijn de twee poorten in theorie even traag, in de praktijk zullen er altijd kleine verschillen zijn.} de uiteindelijke vertraging bepalen. Dit gedrag noemt men een ``\termen{race}'' (zie \ref{ss:races}).
+Figuur \ref{fig:setResetLatch} toont de NOR- en NAND-implementatie van de zogenaamde set-reset latch (ofwel \termen{SR-latch}). Dit component werkt met positieve terugkoppeling waarbij de uitgangen dus ook een deel van de ingangen vormen. We onthouden de uitvoer door bepaalde waarden aan de ingang aan te leggen, die resulteren in het opnieuw bekomen van dezelfde uitvoer. Bij de NOR-implementatie is dit $\left(S,R\right)=\left(0,0\right)$. De NAND-implementatie is in feite de volledig duale vorm en werkt volledig equivalent, alleen zijn $S$ en $R$ hier laag actieve signalen (zie \ref{s:negativeLogic}). We zouden ook negatieve logica aan $Q$ en $Q_n$ moeten toekennen maar omdat altijd geldt $Q_n=Q'$ kunnen we ook eenvoudigweg de twee uitgangen omdraaien en bekomen we positieve logica aan de uitgang. De stabiele invoer van de NAND-implementatie is dan ook $\left(S^*,R^*\right)=\left(1,1\right)$. Indien we \'e\'en van de ingangen laten afwijken van de stabiele toestand, komen we in een onstabiele toestand. Deze stabiele toestand kan maar op \'e\'en manier terug stabiel worden. Op deze manier kunnen we een nieuwe waarde toekennen aan de latch. Deze waarde zal ook verder gelden nadat de ingangen weer stabiel zijn. Hierdoor kent men ook de termen \termen{set} (1 in het geheugen) en \termen{reset} (0 in het geheugen) toe aan de ingangen. Indien beide ingangen afwijken van de stabiele ingangen is het gedrag niet meer bepaald. In dat geval zal de uiteindelijke waarde afhangen van de implementatie van de latch en de vertraging van de poorten. Bij identieke vertragingen leidt dit tot een oscillerend effect wat ook te zien is op de tijdsgrafieken op figuur \ref{fig:setResetLatch}. In een minder ideaal systeem zal de snelste poort\footnote{Uiteraard zijn de twee poorten in theorie even traag, in de praktijk zullen er altijd kleine verschillen zijn.} de uiteindelijke vertraging bepalen. Dit gedrag noemt men een ``\termen{race}'' (zie \ref{term:race}).
 \paragraph{Geklokte SR-latch}
 Bij de SR-latch is er geen sprake van een klokingang. We kunnen immers ook geheugens zonder klok gebruiken in bijvoorbeeld asynchrone schakelingen. Door extra hardware voor de SR-latch te plaatsen, kunnen we een \termen{geklokte SR-latch} bouwen. Figuur \ref{fig:clockedSRLatch} toont hoe we dit kunnen realiseren. Zolang het kloksignaal op 0 staat zal het geheugen zijn waarde behouden, indien het kloksignaal op 1 staat gelden dezelfde regels als bij een SR-latch.
 \begin{figure}[hbt]
@@ -1251,6 +1251,8 @@ Daarnaast heeft het algoritme ook nood aan twee functies:
 
 \subsection{Stap 3: Implementeren van de toestanden in het geheugen}
 \subsubsection{Stap 3A: Coderen van de toestanden}
+\label{term:minimalBitChange}
+\label{term:grayCodeCounter}
 Tot nu toe hebben we toestanden altijd voorgesteld met letters. Uiteraard dienen we deze toestanden op de een of andere manier voor te stellen in de geheugencomponenten in onze schakeling. Vermits letters niet opgeslagen kunnen worden in een flipflop of een register\footnote{Uiteraard kunnen we bijvoorbeeld wel het ASCII equivalent opslaan.} zullen we de toestanden moeten omzetten naar een binaire voorstelling. Dit wordt het \termen{coderen} van de toestanden genoemd. Doorgaans lijkt dit geen ingewikkeld probleem, we kunnen eenvoudigweg elke toestand een opeenvolgend nummer geven en deze toestanden dan binair coderen. Merk echter op dat de toestand geen impliciete ordening hebben, alleen al door opeenvolgende nummers te gebruiken zijn er $n!$ mogelijke coderingen mogelijk. Er bestaan echter technieken die ervoor zorgen dat we door een intelligente codering minder hardware zullen gebruiken. Dit leidt meestal tot goedkopere en snellere schakelingen. Algemeen zijn er drie technieken die we kunnen gebruiken:
 \begin{itemize}
  \item ``\termen{Straightforward codering}'': soms is de codering triviaal.
@@ -2327,7 +2329,7 @@ Het feit dat er de compatibiliteitsrelatie niet transitief is introduceert ook e
 \caption{Flowchart van het minimalisatieproces van asynchrone schakelingen.}
 \label{fig:flowchartMinimizeAsynchrone}
 \end{figure}
-\paragraph{Groeperen van toestanden in een nieuwe toestand}
+\paragraph{Samenvoegen van toestanden in een nieuwe toestand}
 Hoe bouwen we vanuit een groep toestanden een nieuwe toestand op? Dit kunnen we in principe al afleiden uit de definitie van compatibele toestanden. Uit de toestanden $\left\{s_1,s_2,\ldots,s_n\right\}$ construeren we een toestand $t$ indien alle toestanden met elkaar compatibel zijn. We dienen bij $t$ ook de overgangen te defini\"eren $s$ gaat onder een invoer $I$ over naar $\delta\left(s,I\right)$ deze functie noemen we ook de \termen{transitie-functie}. Verder voeren we ook een functie $\mathcal{G}\left(s\right)$ in, deze functie geeft de nieuwe toestand weer van de groep waar $s$ toe behoort. We kunnen dan volgende regels op $t$ defini\"eren\footnote{We voeren de regels in de volgorde van verschijnen uit. Het kan zijn dat een situatie aan twee criteria voldoet, in dat geval voeren we de eerste regel uit.}:
 \begin{enumerate}
  \item $\delta\left(t,I\right)=-$ indien $\forall i:\delta\left(s_i,I\right)=-$. We plaatsen een don't care bij een transitie van $t$ met invoer $I$ als elke toestanden $s_i$ onder deze invoer ook een don't care bevat.
@@ -2335,7 +2337,7 @@ Hoe bouwen we vanuit een groep toestanden een nieuwe toestand op? Dit kunnen we 
  \item $\delta\left(t,I\right)=u$ indien $\forall i:\delta\left(s_i,I\right)=-\vee\mathcal{G}\left(\delta\left(s_i,I\right)\right)=u$. Indien alle toestanden onder invoer $I$ naar dezelfde groep transformeren, transformeert $t$ onder deze invoer naar de toestand die deze groep voorstelt.
 \end{enumerate}
 % Door dit nieuwe criterium is de transitiviteit van de compatibiliteitsrelatie niet meer gewaarborgd. Bij de sequenti\"ele schakelingen geldt immers de eigenschap als $A$ compatibel is met $B$ en $B$ met $C$ is $A$ ook compatibel met $C$. De transitiviteit vervalt omdat we toelaten dat don't cares.
-\paragraph{Voorbeeld}
+\subsubsection{Voorbeeld}
 Om alle speciale gevallen in te sluiten gebruiken we een andere toestandstabel beschreven in tabel \ref{tbl:stateTableAsyncMiniOrig}.
 \begin{table}[hbt]
 \centering
@@ -2430,11 +2432,22 @@ We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een 
 \node[state] (A) {$a$};
 \node[state] (B) [right=of A] {$b$};
 \node[state] (C) [right=of B] {$c$};
-\node[state] (E) [below=of A] {$e$};
-\node[state] (G) [right=of E] {$g$};
-\node[state] (I) [right=of G] {$i$};
+\node[state] (D) [below=of A] {$d$};
+\node[state] (I) [right=of D] {$i$};
+\node[state] (G) [right=of I] {$g$};
+\path (C) edge (G);
+\node[draw,dashed,fit=(C) (G)] {};
 \end{tikzpicture}
 \label{fig:mergerDiagram1}}
+\hfill{}
+\subfigure[Iteratie 3]{\begin{tikzpicture}[shorten >=1pt,auto,node distance=1.3cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state] (A) {$a$};
+\node[state] (B) [right=of A] {$b$};
+\node[state] (C) [right=of B] {$c$};
+\node[state] (D) [below=of A] {$d$};
+\node[state] (I) [right=of D] {$i$};
+\end{tikzpicture}
+\label{fig:mergerDiagram2}}
 \hfill{}
 \caption{Merger-diagrammen van het leidend voorbeeld.}
 \end{figure}
@@ -2445,20 +2458,60 @@ We kunnen vervolgens een keuze maken welke compatibele toestanden we samennemen.
 \end{equation}
 We hadden echter in plaats van $\left\{c,j\right\}$ ook voor $\left\{g,j\right\}$ kunnen opteren. Of $\left\{a,f\right\}$ en $\left\{c,j\right\}$ kunnen inwisselen voor $\left\{f,j\right\}$. Men kan argumenteren dat we met de laatste configuratie minder toestanden wegwerken. Merk echter op dat we eventueel na deze iteratie nog iteraties kunnen uitvoeren en toestanden wegwerken. Een strategie waarin we in elke iteratie het aantal toestanden maximaal reduceren zal niet altijd tot het beste resultaat leiden.
 \paragraph{}
-We genereren vervolgens voor elke voorgestelde groep een nieuwe toestand. Deze toestand stellen we met de alfabetisch laagste letter voor van de toestanden die de groep omvat.
+We genereren vervolgens voor elke voorgestelde groep een nieuwe toestand. Deze toestand stellen we met de alfabetisch laagste letter voor van de toestanden die de groep omvat. De toestandstabel die hieruit voortkomt staat in tabel \ref{tbl:stateTableIteration1}.
 \begin{table}[hbt]
 \centering
-\subtable[Iteratie 1]{\begin{tabular}{c|cccc|c}
+\subtable[Iteratie 1]{\small{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
-$a$&$a$&$a$&$h$&$c$&$0$\\
-$b$&$b$&$b$&$b$&$e$&$1$\\
+$a$&$a$&$a$&$b$&$c$&$0$\\
+$b$&$b$&$b$&$b$&$d$&$1$\\
 $c$&$b$&$c$&$g$&$c$&$0$\\
-$e$&$g$&$a$&$d$&$d$&$1$\\
+$d$&$g$&$a$&$d$&$d$&$1$\\
 $g$&$b$&$g$&$c$&$-$&$0$\\
-$i$&$i$&$e$&$-$&$a$&$1$
-\end{tabular}
+$i$&$i$&$d$&$-$&$a$&$1$
+\end{tabular}}
 \label{tbl:stateTableIteration1}}
+\subtable[Iteratie 2 en 3]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&$a$&$a$&$b$&$c$&$0$\\
+$b$&$b$&$b$&$b$&$d$&$1$\\
+$c$&$b$&$c$&$c$&$c$&$0$\\
+$d$&$c$&$a$&$d$&$d$&$1$\\
+$i$&$i$&$d$&$-$&$a$&$1$
+\end{tabular}}
+\label{tbl:stateTableIteration2}}
 \caption{Evolutie van de toestandstabel bij het minimaliseren voor en na twee iteraties.}
 \end{table}
+Hierbij voegen we dus de toestanden samen. We zullen in deze tekst de groep $\left\{b,h,m\right\}$ volledig uitwerken. Deze groep hebben we voorgesteld door $b$. Bij de invoer $\left(0,0\right)$ zien we dat zowel $b$ als $h$ een don't care bevatten. Voor $m$ is dit echter een stabiele toestand bijgevolg is deze ingang ook een stabiele toestand. Bij de configuratie $\left(0,1\right)$ wijzen alle toestanden naar $b$, vermits $b$ in de groep zit die later $b$ zal worden, plaatsen we $b$ in de tabel. Indien $\left(1,1\right)$ op de ingang wordt aangelegd gaan $b$ en $h$ naar $h$, $m$ bevat een don't care. We kunnen dus zonder problemen ook $h$ invullen bij die don't care. $h$ is een onderdeel van de groep die later toestand $b$ zal worden. Bijgevolg kunnen we ook voor deze kolom $b$ invullen. In de laatste configuratie ten slotte -- $\left(1,0\right)$ -- gaan $h$ en $m$ naar $e$. We zien dat $e$ een onderdeel is van de groep $\left\{d,e\right\}$. Deze groep zal dus later voorgesteld worden door de toestand $d$. Bijgevolg vullen we $d$ in. Indien we deze procedure ook toepassen op de andere groepen resulteert dit in tabel \ref{tbl:stateTableIteration1}. Hiermee zijn we aan het einde gekomen van de eerste iteratie. Vermist we echter een andere toestandstabel hebben tegenover het begin van de iteratie, dienen we een nieuwe iteratie aan te vatten. Hierbij berekenen we opnieuw een compatibiliteitsrelatie: $\equiv_1$. We zullen de berekening van deze relatie achterwege laten, vermits we reeds de vorige relatie uitgebreid hebben beschreven. We defini\"eren $\equiv_1$ op symmetrie na als volgt:
+\begin{equation}
+c\equiv_1g
+\end{equation}
+Het Merger-diagram van deze relatie staat op figuur \ref{fig:mergerDiagram1}. Hier is de keuze van de groep wel deterministisch. De nieuwe partitie is dus:
+\begin{equation}
+\begin{array}{lr}
+\mathcal{P}_3=\left\{\left\{a\right\},\left\{b\right\},\left\{c,g\right\},\left\{d\right\},\left\{i\right\}\right\}&\mbox{(voorbeeld)}
+\end{array}
+\end{equation}
+Op basis van deze partitie ruilen we dus $\left\{c,g\right\}$ in voor een nieuwe toestand $c$. De vernieuwde toestandstabel is dan tabel \ref{tbl:stateTableIteration2}. Merk op dat we niet enkel de rij van toestand $c$ moeten aanpassen. Ook toestanden die naar $g$ kunnen springen, springen nu naar $c$, bijvoorbeeld toestand $d$. Opnieuw hebben we dus de toestandstabel aangepast. Dit impliceert dat we nogmaals een iteratie uitvoeren. De compatibiliteitsrelatie $\equiv_2$ blijkt echter leeg te zijn, geen enkele toestand is dus compatibel met een andere. Dit leidt tot een Merger-diagram zoals op figuur \ref{fig:mergerDiagram2}. We kunnen bijgevolg geen toestanden groeperen waardoor de tabel onveranderd blijft. We hebben dus het aantal toestanden geminimaliseerd tot 5 zoals in tabel \ref{tbl:stateTableIteration2}.
+??%\paragraph{Alternatieve groepering}TODO: mss een alternatieve groepering tonen
 \subsection{Stap 3: Codering van de toestanden}
+\subsubsection{Terminologie}
+\label{term:race}
+Net als bij synchrone schakelingen moeten we elk van deze toestanden op een manier coderen in het geheugen. Het probleem is dat we bij het coderen van toestanden bij asynchrone schakelingen op nieuwe problemen stuiten. Deze problemen brengt nieuwe terminologie met zich mee die we eerst zullen introduceren:
+\begin{itemize}
+ \item \termen{Race}: Een fenomeen dat optreed wanneer door \'e\'en ingangsbit te veranderen er minstens twee toestandsvariabelen moeten veranderen.
+ \item \termen{Critical race}: Indien een race tot een tijdelijk verkeerde toestand leidt (de codering van een andere toestand dus) spreken we van een critical race.
+ \item \termen{Cycle}: Een sequentieel circuit werkt met terugkoppeling. Door deze terugkoppeling kunnen er oscillerende effecten optreden. Een race die in een oscillerend effect uitmondt heet een cycle.
+\end{itemize}
+Het optreden van deze een critical race of cycle hangt af van de vertragingskarakteristieken van de poorten. Het spreekt voor zich dat we trachtten om deze fenomenen te voorkomen. Daarom zullen we ook technieken ontwikkelen die ons toelaten een goede toestandscodering te ontwikkelen waarbij we deze problemen reeds kunnen voorkomen.
+\subsubsection{Elimineren van critical races}
+Er zijn grofweg drie methodes waarmee we critical races kunnen elimineren. We zullen deze methodes ordenen volgens het vermogen om problemen op te lossen. Zo is de laatste methode in staat om alle problemen op te lossen, maar zal deze meestal een hoge kostprijs met zich meebrengen. We proberen dus de problemen op te lossen in de volgorde waarin de methodes worden voorgesteld. Verder zullen de methodes meestal in staat zijn een gedeelte van het probleem op te lossen, waarna de andere methodes de overige problemen kunnen oplossen. De methodes zijn:
+\begin{enumerate}
+ \item Het kiezen van een toestandscodering die elke overgang realiseert door hooguit \'e\'en bit te veranderen.
+ \item Werken met zogezegde ``\termen{tussentoestanden}'': via een reeds bestaande toestand toch de finale toestand bereiken, bij de verschillende overgangen verandert dan telkens slechts \'e\'en bit.
+ \item Het introduceren van ``\termen{overgangstoestanden}'': nieuw toestanden toevoegen die geen functionaliteit hebben buiten deze van het doorverwijzen naar een andere toestand.
+\end{enumerate}
+\paragraph{Methode 1: Zoeken naar een goede codering}Hierbij kunnen we terugdenken aan de ``minimal-bit-change'' en de ``Gray-code teller'' uit \ref{term:minimalBitChange}. Deze methode lost in de meeste gevallen reeds heel wat problemen op. Een methode die het beste resultaat oplevert is alle mogelijk toestandscoderingen afgaan en vervolgens het aantal overgangen met 1 veranderende bit tellen. Deze methode is wel niet effici\"ent vermits we \bigoh{n!} verschillende configuraties moeten analyseren.
+\paragraph{Methode 2: Gebruik maken van een tussentoestand}
+\paragraph{Methode 3: Invoeren van extra overgangstoestand}
 \subsection{Stap 4: Realisatie met digitale logica}
