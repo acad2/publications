@@ -2504,6 +2504,7 @@ Net als bij synchrone schakelingen moeten we elk van deze toestanden op een mani
  \item \termen{Cycle}: Een sequentieel circuit werkt met terugkoppeling. Door deze terugkoppeling kunnen er oscillerende effecten optreden. Een race die in een oscillerend effect uitmondt heet een cycle.
 \end{itemize}
 Het optreden van deze een critical race of cycle hangt af van de vertragingskarakteristieken van de poorten. Het spreekt voor zich dat we trachtten om deze fenomenen te voorkomen. Daarom zullen we ook technieken ontwikkelen die ons toelaten een goede toestandscodering te ontwikkelen waarbij we deze problemen reeds kunnen voorkomen.
+\paragraph{}Het aantal bits die verandert tussen twee toestanden is een belangrijke eigenschap, deze wordt vaak ook de ``\termen{Hamming distance}'' ofwel ``\termen{Hammingafstand}'' genoemd, en is enkel gedefinieerd tussen twee bitreeksen van dezelfde lengte.
 \subsubsection{Elimineren van critical races}
 Er zijn grofweg drie methodes waarmee we critical races kunnen elimineren. We zullen deze methodes ordenen volgens het vermogen om problemen op te lossen. Zo is de laatste methode in staat om alle problemen op te lossen, maar zal deze meestal een hoge kostprijs met zich meebrengen. We proberen dus de problemen op te lossen in de volgorde waarin de methodes worden voorgesteld. Verder zullen de methodes meestal in staat zijn een gedeelte van het probleem op te lossen, waarna de andere methodes de overige problemen kunnen oplossen. De methodes zijn:
 \begin{enumerate}
@@ -2526,10 +2527,28 @@ $100$&	\ndAs{$010$}&	\ndAs{$001$}&	\stAs{$100$}&	\stAs{$100$}&	$1$\\
 $101$&	\stAs{$101$}&	$100$&		$-$&		$001$&		$1$
 \end{tabular}}
 \label{tbl:coderingTableAsyncM1}}
+\subtable[Na methode 2]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$001$&	\stAs{$001$}&	\stAs{$001$}&	$000$&		\ndAs{$010$}&	$0$\\
+$000$&	\stAs{$000$}&	\stAs{$000$}&	\stAs{$000$}&	$100$&		$1$\\
+$010$&	$000$&		\stAs{$010$}&	\stAs{$010$}&	\stAs{$010$}&	$0$\\
+$100$&	\ndAs{$010$}&	\ndAs{$001$}&	\stAs{$100$}&	\stAs{$100$}&	$1$\\
+$101$&	\stAs{$101$}&	$100$&		$-$&		$001$&		$1$
+\end{tabular}}
+\label{tbl:coderingTableAsyncM2}}
+\subtable[Na methode 3]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$001$&	\stAs{$001$}&	\stAs{$001$}&	$000$&		\ndAs{$010$}&	$0$\\
+$000$&	\stAs{$000$}&	\stAs{$000$}&	\stAs{$000$}&	$100$&		$1$\\
+$010$&	$000$&		\stAs{$010$}&	\stAs{$010$}&	\stAs{$010$}&	$0$\\
+$100$&	\ndAs{$010$}&	\ndAs{$001$}&	\stAs{$100$}&	\stAs{$100$}&	$1$\\
+$101$&	\stAs{$101$}&	$100$&		$-$&		$001$&		$1$
+\end{tabular}}
+\label{tbl:coderingTableAsyncM3}}
 \caption{Coderingstabellen van het voorbeeld na het toepassen van de verschillende methodes.}
 \end{table}
 We voeren ook wat nieuwe syntax in die het ons in de volgende stappen makkelijker zal maken: stabiele configuraties zullen we noteren tussen twee vertical bars (``$|$'') in de tabel. Cellen waarbij de toestand naar een andere toestand gaat waarbij de encodering minstens twee bits verandert worden onderlijnd. Deze configuraties zullen we nog trachtten aan te passen met de volgende methodes.
 \subsubsection{Methode 2: Gebruik maken van een tussentoestand}
-Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna deze toestand ons naar de uiteindelijke toestand brengt. Dit principe is bovendien uiteraard niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuratie toch niet kan voorkomen, kunnen we een transitie invullen bij de don't cares.
+Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna deze toestand ons naar de uiteindelijke toestand brengt. Dit principe is bovendien niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuratie toch niet kan voorkomen, kunnen we een transitie invullen bij de don't cares.
 \subsubsection{Methode 3: Invoeren van extra overgangstoestand}
 \subsection{Stap 4: Realisatie met digitale logica}
