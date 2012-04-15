@@ -1458,23 +1458,58 @@ Al deze effecten zorgen ervoor dat een CMOS-implementatie betere karakteristieke
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
+\def \yt{2.5};
+\def \yts{2.325};
+\def \yb{-3.5};
+\def \ybs{-3.325};
 \begin{scope}[yscale=2]
 \draw[dotted,thick] (0,0.9) node[anchor=east]{$90\%$} -- ++(10,0) node[anchor=west]{$V_{IH}$};
 \draw[dotted,thick] (0,0.5) node[anchor=east]{$50\%$} -- ++(10,0) node[anchor=west]{$V_T$};
 \draw[dotted,thick] (0,0.1) node[anchor=east]{$10\%$} -- ++(10,0) node[anchor=west]{$V_{IL}$};
 \draw plot[thick,samples=7,black!80,variable=\x,domain=0:1,smooth] (\x,{0.05+0.025*rand-0.0125}) -- plot[thick,samples=14,black!80,variable=\x,domain=1:3,smooth] (\x,{0.05+0.45*\x-0.45+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=3:6,smooth] (\x,{0.95+0.025*rand-0.0125}) -- plot[thick,samples=7,black!80,variable=\x,domain=6:7,smooth] (\x,{0.95-0.9*\x+5.4+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=7:10,smooth] (\x,{0.05+0.025*rand-0.0125});
+\coordinate (IA) at (1.1111,0.1);
+\coordinate (IMA) at (2,0.5);
+\coordinate (IB) at (2.8889,0.9);
+\coordinate (IC) at (6.0556,0.9);
+\coordinate (IMB) at (6.5,0.5);
+\coordinate (ID) at (6.9444,0.1);
 \end{scope}
+\draw (IA) -- (IA |- 0,\yt);
+\draw (IB) -- (IB |- 0,\yt);
+\draw (IC) -- (IC |- 0,\yt);
+\draw (ID) -- (ID |- 0,\yt);
+\draw[<->] (IA |- 0,\yts) to node[midway,above]{Stijgtijd $t_r$} (IB |- 0,\yts);
+\draw[<->] (IC |- 0,\yts) to node[midway,above]{Daaltijd $t_f$} (ID |- 0,\yts);
 \begin{scope}[yscale=2,yshift=-1.5cm]
 \draw[dotted,thick] (0,0.9) node[anchor=east]{$90\%$} -- ++(10,0) node[anchor=west]{$V_{OH}$};
 \draw[dotted,thick] (0,0.5) node[anchor=east]{$50\%$} -- ++(10,0) node[anchor=west]{$V_T$};
 \draw[dotted,thick] (0,0.1) node[anchor=east]{$10\%$} -- ++(10,0) node[anchor=west]{$V_{OL}$};
-\draw plot[thick,samples=7,black!80,variable=\x,domain=0:1,smooth] (\x,{0.95+0.025*rand-0.0125}) -- plot[thick,samples=14,black!80,variable=\x,domain=1.5:3.5,smooth] (\x,{0.95-0.45*\x+1.5*0.45+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=3.5:6.35,smooth] (\x,{0.05+0.025*rand-0.0125}) -- plot[thick,samples=7,black!80,variable=\x,domain=6.35:7.35,smooth] (\x,{0.05+0.9*\x-0.9*6.35+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=7.35:10,smooth] (\x,{0.95+0.025*rand-0.0125});
+\draw plot[thick,samples=7,black!80,variable=\x,domain=0:1,smooth] (\x,{0.95+0.025*rand-0.0125}) -- plot[thick,samples=14,black!80,variable=\x,domain=1.5:3.5,smooth] (\x,{0.95-0.45*\x+1.5*0.45+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=3.5:6.35,smooth] (\x,{0.05+0.025*rand-0.0125}) -- plot[thick,samples=14,black!80,variable=\x,domain=6.35:8.35,smooth] (\x,{0.05+0.45*\x-0.45*6.35+0.025*rand-0.0125}) -- plot[thick,samples=11,black!80,variable=\x,domain=8.35:10,smooth] (\x,{0.95+0.025*rand-0.0125});
+\coordinate (OMA) at (2.5,0.5);
+\coordinate (OMB) at (7.35,0.5);
 \end{scope}
+\draw (IMA) -- (IMA |- 0,\yb);
+\draw (OMA) -- (OMA |- 0,\yb);
+\draw (IMB) -- (IMB |- 0,\yb);
+\draw (OMB) -- (OMB |- 0,\yb);
+\draw[<->] (IMA |- 0,\ybs) to node[midway,below]{$t_{pHL}$} (OMA |- 0,\ybs);
+\draw[<->] (IMB |- 0,\ybs) to node[midway,below]{$t_{pLH}$} (OMB |- 0,\ybs);
 \end{tikzpicture}
 \caption{Het dynamisch gedrag van een NOT-poort.}
+\label{fig:dynamicBehaviorNotGate}
 \end{figure}
-??%TODO
-De ingangsimpedantie is hierbij omgekeerd evenredig met de \termen{Stijgtijd}. De uitgangsimpedantie is evenredig met de \termen{Daaltijd}. Deze 
+We hebben het reeds uitvoerig gehad over het dynamisch karakter van een elektronische schakeling. Naast het feit dat het enige tijd duurt alvorens een spanning die op een draad wordt aangelegd daadwerkelijk dit spanningsniveau bereikt, heeft ook een poort een dynamisch karakter. Een interessante eigenschap is dat de stijg- en daaltijd invloed hebben op de vertraging van de poort. We zullen deze drie grootheden nu formaliseren:
+\begin{itemize}
+ \item \termen{Stijgtijd $t_r$} ofwel \termen{rise time}: de tijd die de spanning nodig heeft om van een lage spanning naar een hoge spanning te stijgen. Men neemt hiervoor de 10\% en 90\% grenzen tussen de basisspanning en de topspanning\footnote{In sommige publicaties wordt 80\% en 20\% gebruikt.}.
+ \item \termen{Daaltijd $t_f$} ofwel \termen{fall time}: de tijd die de spanning nodig heeft om van een hoge spanning naar een lage spanning te dalen. Men neemt hiervoor de 90\% en 10\% grenzen tussen de basisspanning en de topspanning.
+ \item \termen{Vertragingstijd $t_p$}: De tijd die de poort nodig heeft tussen de ingangspanning die het midden bereikt tussen de basisspanning en de topspanning en de uitgang die deze 50\% grens bereikt. Vermits de stijg- en daaltijd ook bepalen hoe snel een signaal van naar 50\% stijgt of daalt, hebben deze parameters ook invloed op de vertragingstijd. We berekenen de vertraging door het gemiddelde te nemen tussen de vertraging tijdens het dalen $t_{pHL}$ en het stijgen $t_{pLH}$:
+\begin{equation}
+\mbox{Vertragingstijd $t_p$}=\displaystyle\frac{t_{pHL}+t_{pLH}}{2}
+\end{equation}
+\end{itemize}
+Dit principe wordt ge\"illustreerd op figuur \ref{fig:dynamicBehaviorNotGate}. We zien hier twee situaties: in de eerste situatie is de stijgtijd van de ingang gelijk aan de daaltijd van de uitgang. De poort heeft weliswaar een vertraging, maar deze is vrij beperkt. In het tweede geval is de stijgtijd van de uitgang dubbel zolang als de daaltijd van de ingang. Hoewel de poort sneller reageert op het veranderende signaal, is de vertraging groter. Vermits de stijg- en daaltijden be\"invloed worden door de parasitaire capaciteit\footnote{De capaciteit die wordt veroorzaakt door de draad zelf.}, wordt dus ook de vertraging be\"invloed door de aard van de draden. De vertraging bij korte draden is aanzienelijk kleiner dan deze van lange draden.
+%??%TODO
+%De ingangsimpedantie is hierbij omgekeerd evenredig met de \termen{Stijgtijd}. De uitgangsimpedantie is evenredig met de \termen{Daaltijd}. Deze 
 \subsection{Vermogenverbruik}
 Een van de belangrijkste ontwerpbeperkingen bij grote schakelingen is het \termen{vermogenverbruik}. Het vermogenverbruik is dan ook een parameter die zich negatief uit op twee verschillende domeinen:
 \begin{itemize}
@@ -1484,14 +1519,15 @@ Een van de belangrijkste ontwerpbeperkingen bij grote schakelingen is het \terme
 We beschouwen twee vormen van vermogenverbruik:
 \begin{itemize}
  \item \termen{Statisch vermogenverbruik}: Dit is vermogen die continue verbruikt wordt. Ook indien de schakeling niets doet. We zagen reeds dat dit bij NMOS implementaties het geval is, omdat we bij het sluiten van een NMOS-transistor, een lekstroom genereren van de source naar de drain. Bij NMOS-poorten mogen we dan ook uitgaan van een vermogenverbruik van $1\mbox{ mW}$. Dit betekent dus voor een gemiddelde chip makkelijk oploopt in tot $1\mbox{ kW}$ wat totaal onaanvaardbaar is. Bij CMOS hebben we eenvoudigweg geen lekstroom en dus ook geen statisch vermogenverbruik.
- \item \termen{Dynamisch vermogenverbruik}: Dit is het vermogen die verbruikt wordt op het moment dat een poort omschakelt. In \cite[3.12]{brown2004fundamentals} wordt hiervoor volgende formule gegeven:
+ \item \termen{Dynamisch vermogenverbruik}: Dit is het vermogen die verbruikt wordt op het moment dat een poort omschakelt. Hierdoor wordt de parasitaire capaciteit $C$ op- of ontladen. In \cite[3.12]{brown2004fundamentals} wordt hiervoor volgende formule gegeven:
 \begin{equation}
 P_{\mbox{\small{dyn.}}}=C\times f\times V^2
 \end{equation}
-Met chipoppervlakte $C$, klokfrequentie $f$ en voedingsspanning $V$.??%TODO%In de praktijk komt dit ongeveer overeen met $35\mbox{ nW}$ per inverter in een poort. Hierbij maken we een assumptie dat per klokcyclus, 20\% van de poorten omschakelt, en we een klokfrequentie rond de $100\mbox{ MHz}$ gebruiken.
+Met chipoppervlakte $C$, een klokfrequentie $f$ en voedingsspanning $V$. We kunnen deze formule als volgt verklaren: Vermits het chipoppervlakte hoofdzakelijk draden bevat is dit een goede schatting voor de totale lengte van de draden, verder bepaald de klokfrequentie hoeveel maal we per seconde deze draden moeten op- en ontladen. Het vermogen ten slotte om een capaciteit $C$ op te laden is evenredig met het kwadraat van de spanning. In de praktijk werken de meeste schakelingen met een klokfrequentie in de grootorde van $100\mbox{ MHz}$. Verder schakelen uiteraard niet alle draden telkens om, een realistische schatting ligt bij de 20\%. Indien we ook de oppervlakt van een poort in rekening brengen komen we uit op een ordegrootte van $35\mbox{ nW}$ per inverter. We kunnen dus in de grootorde van $300\ 000\ 000$ invertoren plaatsen voor een vermogenverbruik van $1\mbox{ W}$. In de praktijk is vermogenverbruik dan ook een van de balangrijkste beperkingen om mee rekening te houden bij het ontwerpen van digitale schakelingen, vandaar dat er in deze cursus ook een grote nadruk ligt op het minimaliseren van digitale schakelingen.
+??%TODO%In de praktijk komt dit ongeveer overeen met $35\mbox{ nW}$ per inverter in een poort. Hierbij maken we een assumptie dat per klokcyclus, 20\% van de poorten omschakelt, en we een klokfrequentie rond de $100\mbox{ MHz}$ gebruiken.
 \end{itemize}
 \subsection{``1'' en ``0'' doorgeven}
-Een oplettend lezer zal zich misschien de vraag gesteld hebben, waarom we een buffer zoals op figuur \ref{fig:bufferCmos} op pagina \pageref{fig:bufferCmos} niet implementeren door de NMOS en PMOS transistor om te wisselen. Dit zou ons immers twee transistoren besparen, en bovendien zou de poort effici\"enter werken, zoals op figuur \ref{fig:badBufferCmos}. Deze methode kunnen we echter niet consistent hanteren. Voor de verklaring moeten we terug naar een belangrijk detail bij de werking van transistoren in sectie \ref{ss:nmosPmosWork}. Een NMOS transistor geleid immers alleen maar indien de spanning tussen de basis en de collector $V_{GS}$, groter is dan de transferspanning $V_{T}$. Indien de NMOS transistor dus gesloten is, zal de uitgangsspanning $V_{T}$ lager zijn dan de ingangsspanning. Dit geeft misschien bij \'e\'en transistor geen noemenswaardige problemen, maar bij een sequentie van transistoren, zal de spanning uiteindelijk onder het grensniveau vallen. Samenvattend kunnen we zeggen dat NMOS transistoren hoge spanningen niet goed doorgeven. Analoog voor PMOS geldt dezelfde redenering, maar dan toegepast op lage spanningen. Deze spanningsverschillen zijn ook gevisualiseerd op figuur \ref{fig:badBufferCmos}.
+Een oplettend lezer zal zich misschien de vraag gesteld hebben, waarom we een buffer zoals op figuur \ref{fig:bufferCmos} op pagina \pageref{fig:bufferCmos} niet implementeren door de NMOS en PMOS transistor om te wisselen. Dit zou ons immers twee transistoren besparen, en bovendien zou de poort effici\"enter werken, zoals op figuur \ref{fig:badBufferCmos}. Deze methode kunnen we echter niet consistent hanteren. Voor de verklaring moeten we terug naar een belangrijk detail bij de werking van transistoren in sectie \ref{ss:nmosPmosWork}. Een NMOS transistor geleid immers alleen maar indien de spanning tussen de basis en de collector $V_{GS}$, groter is dan de transferspanning $V_{T}$. Indien de NMOS transistor dus gesloten is, zal de uitgangsspanning $V_{T}$ lager zijn dan de ingangsspanning. Dit geeft misschien bij \'e\'en transistor geen noemenswaardige problemen, maar bij een sequentie van transistoren, zal de spanning uiteindelijk onder het grensniveau vallen. Samenvattend kunnen we zeggen dat NMOS transistoren hoge spanningen niet goed doorgeven, en dus een slechte pull-up zijn. Analoog voor PMOS geldt dezelfde redenering, maar dan toegepast op lage spanningen. Een PMOS transistor is dus een slechte pull-down. Deze spanningsverschillen zijn ook gevisualiseerd op figuur \ref{fig:badBufferCmos}.
 \begin{figure}[hbt]
 \centering
 \subfigure[Buffer met inverterende poorten]{\begin{tikzpicture}[circuit logic US]
@@ -1539,7 +1575,7 @@ Een oplettend lezer zal zich misschien de vraag gesteld hebben, waarom we een bu
 \end{tikzpicture}
 \label{fig:badBufferCmos}
 }
-\caption{Buffer ge\"implementeerd met omgekeerde transistoren.??}%TODO: betere naam zoeken.
+\caption{Buffer ge\"implementeerd met omgekeerde transistoren: NMOS is een slechte pull-up.??}%TODO: betere naam zoeken.
 \label{fig:badNmosPmos}
 \end{figure}
 \subsection{Fan-in en fan-out}
