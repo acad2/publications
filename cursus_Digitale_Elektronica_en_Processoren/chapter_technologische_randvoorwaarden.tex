@@ -520,7 +520,7 @@ Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met 
 \end{figure}
 In hoofdstuk \ref{ch:basis} hadden we het reeds over de XOR-poort. Een poort die 1 teruggeeft als de twee ingangen niet gelijk zijn aan elkaar. Deze poort hadden we toen ge\"implementeerd met een ingewikkeld schema van poorten. Omdat we echter op transistor niveau werken, kunnen we verschillende complexe poorten toch relatief simpel implementeren. In de volgende subsecties zullen we eerst de \termen{AND-OR-Invert (AOI)} en \termen{OR-AND-Invert (OAI)} implementeren. Deze schakelingen worden relatief vaak gebruikt, om bijvoorbeeld XOR en \termen{XNOR} poorten te implementeren.
 \subsubsection{AND-OR-Invert (AOI)}
-Een veelgebruikt component is een AND-OR-Inverter. Dit is een component die we op poort-niveau kunnen beschrijven als een tweelagige?? structuur waarbij ingangen eerst door een reeks AND-poorten gaat. De uitgangen van de AND-poorten vormen op hun beurt de ingangen van een NOR-poort. Een concreet voorbeeld hiervan staat op figuur \ref{fig:aoiExample}. Indien we echter de schakeling zouden bouwen zoals we dit voorstellen op poortniveau\footnote{We substitueren dus iedere poort door zijn equivalent in CMOS.}, hebben we 18 transistoren nodig. Een effici\"entere manier is het implementeren van een nieuw component de AOI zoals op figuur \ref{fig:aoiCmos}. Hierbij hebben we slechts 10 transistoren nodig. Bovendien hebben we de implementatie gereduceerd tot \'e\'en laag. Hierdoor wordt de vertraging van het component ook teruggedrongen.
+Een veelgebruikt component is een AND-OR-Inverter. Dit is een component die we op poort-niveau kunnen beschrijven als een tweelagige structuur waarbij ingangen eerst door een reeks AND-poorten gaat. De uitgangen van de AND-poorten vormen op hun beurt de ingangen van een NOR-poort. Een concreet voorbeeld hiervan staat op figuur \ref{fig:aoiExample}. Indien we echter de schakeling zouden bouwen zoals we dit voorstellen op poortniveau\footnote{We substitueren dus iedere poort door zijn equivalent in CMOS.}, hebben we 18 transistoren nodig. Een effici\"entere manier is het implementeren van een nieuw component de AOI zoals op figuur \ref{fig:aoiCmos}. Hierbij hebben we slechts 10 transistoren nodig. Bovendien hebben we de implementatie gereduceerd tot \'e\'en laag. Hierdoor wordt de vertraging van het component ook teruggedrongen.
 \subsubsection{OR-AND-Invert (OAI)}
 De tegenhanger van de AND-OR-Inverter is de OR-AND-Inverter. Figuur \ref{fig:oaiExample} toont een voorbeeld van dit type component. Naar analogie met de AOI bestaat dit component op poortniveau opnieuw uit twee lagen, ditmaal gaan de ingangen door een reeks OR poorten waarbij hun uitgangen dan weer de invoer van een NAND poort vormen. Opnieuw kunnen we door een implementatie in CMOS het aantal transistoren van 18 naar 10 reduceren.
 \subsubsection{Andere veelgebruikte poorten}
@@ -1420,6 +1420,7 @@ I_{\infty}=\displaystyle\frac{V_{DD}}{R_{IH}+R_{OH}}\Rightarrow V_{\infty}=R_{IH
 We leiden vervolgens de tijdsconstante af door de het systeem als een RC-keten te modelleren. In dat geval moeten we de twee weerstanden als parallel beschouwen. De tijdsconstante is dan de vervangweerstand vermenigvuldigt met de capaciteit van de condensator:
 \begin{equation}
 R_{\mbox{subs.}}=\displaystyle\frac{R_{IH}\cdot R_{OH}}{R_{IH}+R_{OH}}\Rightarrow \tau=R_{\mbox{subs.}}\cdot C=\displaystyle\frac{R_{IH}\cdot R_{OH}\cdot C}{R_{IH}+R_{OH}}
+\label{eqn:tauHL}
 \end{equation}
 Voor het opladen van een condensator geldt volgende exponenti\"ele functie:
 \begin{equation}
@@ -1429,6 +1430,7 @@ V\left(t\right)=V_{\infty}\cdot\left(1-e^{-t/\tau}\right)
 We berekenen de vergelijk van laag naar hoog volledig analoog. Aangezien er geen bron meer op de schakeling staat, is de schakeling een zuivere RC-keten. De condensator zal dus ontladen, de eindspanning is dus $V_{\infty}=0\mbox{ V}$. We berekenen de tijdsconstante dan ook opnieuw met behulp van de vervangweerstand:
 \begin{equation}
 R_{\mbox{subs.}}=\displaystyle\frac{R_{IL}\cdot R_{OL}}{R_{IL}+R_{OL}}\Rightarrow \tau=R_{\mbox{subs.}}\cdot C=\displaystyle\frac{R_{IL}\cdot R_{OL}\cdot C}{R_{IL}+R_{OL}}
+\label{eqn:tauLH}
 \end{equation}
 Bij een RC-keten geldt voor het ontladen van een condensator geldt vervolgens deze exponenti\"ele functie:
 \begin{equation}
@@ -1439,18 +1441,38 @@ We zien dus dat bij overgangen van laag naar hoog en hoog naar laag, we te maken
 \begin{equation}
 \left\{\begin{array}{l|ll}
 \tau\ssearrow&\tau=R_{\mbox{\small{subs.}}}\cdot C&\mbox{lage tijdsconstante}\\
-P_{\mbox{\small{stat.}}}??\ssearrow&P_{\mbox{\small{stat.}}}=V^2/R_{\mbox{\small{tot.}}}&\mbox{minimaal statisch vermogenverbruik}\\
+P_{\mbox{\small{stat.}}}??\ssearrow&P_{\mbox{\small{stat.}}}=V^2/\left(R_I+R_O\right)=V^2/R_{\mbox{\small{tot.}}}&\mbox{minimaal statisch vermogenverbruik}\\
 P_{\mbox{\small{dyn.}}}??\ssearrow&P_{\mbox{\small{dyn.}}}=V^2/R_O&\mbox{minimaal dynamisch vermogenverbruik}\\
 V_{\infty}\approx V_{DD}&V_{\infty}=R_I\cdot V_{DD}/\left(R_I+R_O\right)&\mbox{uitgangsspanning dicht bij de voedingsspanning}\\
 \end{array}\right.
+\label{eqn:PVTsummary}
 \end{equation}
 Hiervoor streven we naar bepaalde waardes voor de verschillende parameters:
 \begin{itemize}
- \item \termen{Ingangsimpedantie $R_I$}: We streven naar een zo hoog mogelijke ingangsimpedantie, immers stelt vergelijking (\ref{eqn:vInfty}) dat indien $R_I\gg R_O$, $V_{\infty}\approx V_{DD}$. Bovendien is het statisch vermogenverbruik lager.
- \item \termen{Uitgangsimpedantie $R_O$}: We proberen de uitgangsimpedantie zo laag mogelijk te houden. Dit haalt de tijdsconstante naar beneden, waardoor de chip sneller schakelt. Een nadelig bijeffect is een hoger dynamisch vermogenverbruik.
- \item \termen{Capaciteit $C$}: De capaciteit probeert men zo laag mogelijk te houden. Immers verhoogt een hoge capaciteit de vertraging. Hoge capaciteiten zijn kenmerkend voor lange verbindingen, vandaar dat men deze meestal op chips tot een minimum beperkt.
+ \item \termen{Ingangsimpedantie $R_I$}: We streven naar een zo hoog mogelijke ingangsimpedantie, immers stelt vergelijking (\ref{eqn:vInfty}) dat indien $R_I\gg R_O$, $V_{\infty}\approx V_{DD}$. Bovendien is het statisch vermogenverbruik lager (zie vergelijk \ref{eqn:PVTsummary}).
+ \item \termen{Uitgangsimpedantie $R_O$}: We proberen de uitgangsimpedantie zo laag mogelijk te houden. Dit haalt de tijdsconstante naar beneden, waardoor de chip sneller schakelt (zie vergelijking (\ref{eqn:tauHL}) en (\ref{eqn:tauLH})). Een nadelig bijeffect is een hoger dynamisch vermogenverbruik (zie vergelijking \ref{eqn:PVTsummary}).
+ \item \termen{Capaciteit $C$}: De capaciteit probeert men zo laag mogelijk te houden. Immers verhoogt een hoge capaciteit rechtstreeks de vertraging (zie vergelijking (\ref{eqn:PVTsummary})). Hoge capaciteiten zijn kenmerkend voor lange verbindingen, vandaar dat men deze meestal op chips tot een minimum beperkt.
 \end{itemize}
+Al deze effecten zorgen ervoor dat een CMOS-implementatie betere karakteristieken heeft dan een NMOS-poort: NMOS heeft een groot statisch vermogenverbruik. Om dit tegen te gaan, kunnen we een sterke weerstand $R$ in de schakeling plaatsen. Dit leid echter tot een grote uitgangsimpedantie vermits $R\approx R_O$, hierdoor wordt de stijgtijd van de schakeling groter, en dus bijgevolg de algemene vertraging.??%TODO: recheck
 \paragraph{Stijg- en daaltijd}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}
+\begin{scope}[yscale=2]
+\draw[dotted,thick] (0,0.9) node[anchor=east]{$90\%$} -- ++(10,0) node[anchor=west]{$V_{IH}$};
+\draw[dotted,thick] (0,0.5) node[anchor=east]{$50\%$} -- ++(10,0) node[anchor=west]{$V_T$};
+\draw[dotted,thick] (0,0.1) node[anchor=east]{$10\%$} -- ++(10,0) node[anchor=west]{$V_{IL}$};
+\draw plot[thick,samples=7,black!80,variable=\x,domain=0:1,smooth] (\x,{0.05+0.025*rand-0.0125}) -- plot[thick,samples=14,black!80,variable=\x,domain=1:3,smooth] (\x,{0.05+0.45*\x-0.45+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=3:6,smooth] (\x,{0.95+0.025*rand-0.0125}) -- plot[thick,samples=7,black!80,variable=\x,domain=6:7,smooth] (\x,{0.95-0.9*\x+5.4+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=7:10,smooth] (\x,{0.05+0.025*rand-0.0125});
+\end{scope}
+\begin{scope}[yscale=2,yshift=-1.5cm]
+\draw[dotted,thick] (0,0.9) node[anchor=east]{$90\%$} -- ++(10,0) node[anchor=west]{$V_{OH}$};
+\draw[dotted,thick] (0,0.5) node[anchor=east]{$50\%$} -- ++(10,0) node[anchor=west]{$V_T$};
+\draw[dotted,thick] (0,0.1) node[anchor=east]{$10\%$} -- ++(10,0) node[anchor=west]{$V_{OL}$};
+\draw plot[thick,samples=7,black!80,variable=\x,domain=0:1,smooth] (\x,{0.95+0.025*rand-0.0125}) -- plot[thick,samples=14,black!80,variable=\x,domain=1.5:3.5,smooth] (\x,{0.95-0.45*\x+1.5*0.45+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=3.5:6.35,smooth] (\x,{0.05+0.025*rand-0.0125}) -- plot[thick,samples=7,black!80,variable=\x,domain=6.35:7.35,smooth] (\x,{0.05+0.9*\x-0.9*6.35+0.025*rand-0.0125}) -- plot[thick,samples=21,black!80,variable=\x,domain=7.35:10,smooth] (\x,{0.95+0.025*rand-0.0125});
+\end{scope}
+\end{tikzpicture}
+\caption{Het dynamisch gedrag van een NOT-poort.}
+\end{figure}
 ??%TODO
 De ingangsimpedantie is hierbij omgekeerd evenredig met de \termen{Stijgtijd}. De uitgangsimpedantie is evenredig met de \termen{Daaltijd}. Deze 
 \subsection{Vermogenverbruik}
