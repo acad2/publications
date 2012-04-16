@@ -1589,7 +1589,47 @@ f_{\mbox{\small{max}}}=\displaystyle\frac{1}{\Delta V}\cdot\displaystyle\frac{\p
 \end{equation}
 Verder zal ook de parasitaire capaciteit zelf toenemen: de uitgang die met alle ingangen verbonden is vormt \'e\'en draad. Vermits de grootte van deze draad zal afhangen van de fan-out zal dus ook de parasitaire capaciteit toenemen. We kunnen de fan-out beperken door gebruik te maken van het buffer: we verdelen de uitgang van de poort onder een paar buffers die op hun beurt de ingangen van de andere poorten bevoorraden. Het nadeel van een gebruik van een buffer is dat dit buffer ook moet omschakelen, wat extra vermogenverbruik en vertragingen teweeg brengt.
 \subsection{Tri-state buffer}
-Een uitbreiding van een buffer is een \termen{Tri-state buffer}. Een tri-state buffer heeft drie mogelijke uitgangswaarden: 0, 1 en $Z$. Deze $Z$ is de zogezegd \termen{zwevende modus}. Het betekent dat de lijn losgekoppeld is. Er staat dus zogezegd niets op de lijn. Tri-state buffers worden vaak gebruikt om bijvoorbeeld over een lijn gegevens van verschillende bronnen over te brengen. In dat geval moeten de andere bronnen een $Z$ op de lijn zetten.
+Een uitbreiding van een buffer is een \termen{Tri-state buffer}. Een tri-state buffer heeft drie mogelijke uitgangswaarden: 0, 1 en de zogenaamde \termen{zwevende modus $Z$}. Deze laatste toestand wordt ook wel \termen{hoog impedant} genoemd. Het betekent dat de lijn losgekoppeld is van enige bron. Er staat dus zogezegd niets op de lijn. Hiertoe wordt een buffer uitgebreid met een tweede ingang: \termen{Enable $E$}. Hierdoor kan de component in drie toestanden worden gebracht: wanneer enable op 0 staat, staat de tri-state buffer in de $Z$ stand. In het geval er een hoog signaal op de enable-ingang wordt aangelegd, laat het de ingang door, deze kan uiteraard in twee standen staan.
+\begin{figure}[hbt]
+\centering
+\subfigure[Symbool]{
+\begin{tikzpicture}
+\node[tris] (TS) at (0,0) {};
+\draw (TS.c) -- ++(0,-0.5) node[anchor=north]{enable $e$};
+\draw (TS.x) -- ++(-0.5,0) node[anchor=east]{input $x$};
+\draw (TS.z) -- ++(0.5,0) node[anchor=west]{output $f$};
+\end{tikzpicture}
+}
+\subfigure[Tabel]{
+\begin{tikzpicture}
+\node (A) at (0,0) {\begin{tabular}{cc|c}
+$e$&$x$&$f$\\\hline
+$0$&$0$&$Z$\\
+$0$&$1$&$Z$\\
+$1$&$0$&$0$\\
+$1$&$1$&$1$
+\end{tabular}};
+\end{tikzpicture}
+}
+\subfigure[Implementatie]{
+\begin{tikzpicture}[circuit logic US]
+\node[transgate] (TG) at (0,0) {};
+\node[not gate,scale=0.8] (N1) at (-1,0) {};
+\node[not gate,scale=0.8] (N2) at (-2,0) {};
+\node[not gate,scale=0.8] (N3) at (-1,1) {};
+\draw (N1.output) -- (TG.x);
+\draw (N2.output) -- (N1.input);
+\draw (N2.input) -- (-3,0 |- N2.input) node[anchor=east]{$x$};
+\draw (N3.input) -- (-3,0 |- N3.input) node[anchor=east]{$e$};
+\draw (N3.output) -| (TG.cn);
+\draw (TG.z) -- ++(0.5,0) node[anchor=west]{$f$};
+\pdot{-2.6,1};
+\draw (-2.6,1) |- (0,-1) -- (TG.c);
+\end{tikzpicture}
+}
+\caption{Tri-state buffer.}
+\end{figure}
+Tri-state buffers worden vaak gebruikt om bijvoorbeeld over een lijn gegevens van verschillende bronnen over te brengen. In dat geval moeten de andere bronnen een $Z$ op de lijn zetten.
 \section{CAD-ontwerp in de praktijk}
 \subsection{Ingave}
 \subsection{Synthese}
