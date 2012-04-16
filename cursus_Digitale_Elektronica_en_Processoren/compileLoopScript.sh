@@ -1,4 +1,5 @@
-cd "/home/willem/backups/DEP/"
+#!/bin/sh
+cd "`dirname $0`"
 while true
 do
 	sleep 40

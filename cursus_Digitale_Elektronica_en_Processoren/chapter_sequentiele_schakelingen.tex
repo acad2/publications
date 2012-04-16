@@ -2494,6 +2494,7 @@ Het Merger-diagram van deze relatie staat op figuur \ref{fig:mergerDiagram1}. Hi
 \end{equation}
 Op basis van deze partitie ruilen we dus $\left\{c,g\right\}$ in voor een nieuwe toestand $c$. De vernieuwde toestandstabel is dan tabel \ref{tbl:stateTableIteration2}. Merk op dat we niet enkel de rij van toestand $c$ moeten aanpassen. Ook toestanden die naar $g$ kunnen springen, springen nu naar $c$, bijvoorbeeld toestand $d$. Opnieuw hebben we dus de toestandstabel aangepast. Dit impliceert dat we nogmaals een iteratie uitvoeren. De compatibiliteitsrelatie $\equiv_2$ blijkt echter leeg te zijn, geen enkele toestand is dus compatibel met een andere. Dit leidt tot een Merger-diagram zoals op figuur \ref{fig:mergerDiagram2}. We kunnen bijgevolg geen toestanden groeperen waardoor de tabel onveranderd blijft. We hebben dus het aantal toestanden geminimaliseerd tot 5 zoals in tabel \ref{tbl:stateTableIteration2}.
 ??%\paragraph{Alternatieve groepering}TODO: mss een alternatieve groepering tonen
+%\paragraph{Leidend voorbeeld} Bij wijzen van oefening kan de lezer de toestandstabel van het leidend voorbeeld 
 \subsection{Stap 3: Codering van de toestanden}
 \subsubsection{Terminologie}
 \label{term:race}
@@ -2504,6 +2505,7 @@ Net als bij synchrone schakelingen moeten we elk van deze toestanden op een mani
  \item \termen{Cycle}: Een sequentieel circuit werkt met terugkoppeling. Door deze terugkoppeling kunnen er oscillerende effecten optreden. Een race die in een oscillerend effect uitmondt heet een cycle.
 \end{itemize}
 Het optreden van deze een critical race of cycle hangt af van de vertragingskarakteristieken van de poorten. Het spreekt voor zich dat we trachtten om deze fenomenen te voorkomen. Daarom zullen we ook technieken ontwikkelen die ons toelaten een goede toestandscodering te ontwikkelen waarbij we deze problemen reeds kunnen voorkomen.
+\paragraph{}Het aantal bits die verandert tussen twee toestanden is een belangrijke eigenschap, deze wordt vaak ook de ``\termen{Hamming distance}'' ofwel ``\termen{Hammingafstand}'' genoemd, en is enkel gedefinieerd tussen twee bitreeksen van dezelfde lengte.
 \subsubsection{Elimineren van critical races}
 Er zijn grofweg drie methodes waarmee we critical races kunnen elimineren. We zullen deze methodes ordenen volgens het vermogen om problemen op te lossen. Zo is de laatste methode in staat om alle problemen op te lossen, maar zal deze meestal een hoge kostprijs met zich meebrengen. We proberen dus de problemen op te lossen in de volgorde waarin de methodes worden voorgesteld. Verder zullen de methodes meestal in staat zijn een gedeelte van het probleem op te lossen, waarna de andere methodes de overige problemen kunnen oplossen. De methodes zijn:
 \begin{enumerate}
@@ -2511,7 +2513,58 @@ Er zijn grofweg drie methodes waarmee we critical races kunnen elimineren. We zu
  \item Werken met zogezegde ``\termen{tussentoestanden}'': via een reeds bestaande toestand toch de finale toestand bereiken, bij de verschillende overgangen verandert dan telkens slechts \'e\'en bit.
  \item Het introduceren van ``\termen{overgangstoestanden}'': nieuw toestanden toevoegen die geen functionaliteit hebben buiten deze van het doorverwijzen naar een andere toestand.
 \end{enumerate}
-\paragraph{Methode 1: Zoeken naar een goede codering}Hierbij kunnen we terugdenken aan de ``minimal-bit-change'' en de ``Gray-code teller'' uit \ref{term:minimalBitChange}. Deze methode lost in de meeste gevallen reeds heel wat problemen op. Een methode die het beste resultaat oplevert is alle mogelijk toestandscoderingen afgaan en vervolgens het aantal overgangen met 1 veranderende bit tellen. Deze methode is wel niet effici\"ent vermits we \bigoh{n!} verschillende configuraties moeten analyseren.
-\paragraph{Methode 2: Gebruik maken van een tussentoestand}
-\paragraph{Methode 3: Invoeren van extra overgangstoestand}
+We zullen elk van deze methodes in de volgende subsubsecties bespreken.
+\subsubsection{Methode 1: Zoeken naar een goede codering}
+Hierbij kunnen we terugdenken aan de ``minimal-bit-change'' en de ``Gray-code teller'' uit \ref{term:minimalBitChange}. Deze methode lost in de meeste gevallen reeds heel wat problemen op. Een methode die het beste resultaat oplevert is alle mogelijk toestandscoderingen afgaan en vervolgens het aantal overgangen met 1 veranderende bit tellen. Deze methode is wel niet effici\"ent vermits we \bigoh{n!} verschillende configuraties moeten analyseren. We kunnen uiteraard met behulp van heuristische methodes reeds tot een acceptabele configuratie komen. Bovendien is de kans groot dat niet elke overgang tot 1 veranderende bit is te herleiden, in dat geval moeten we de andere methodes gebruiken. Een optimale configuratie in methode 1 leidt niet noodzakelijk tot het beste eindresultaat.
+\paragraph{Voorbeeld}%We zullen een encodering bouwen voor de toestandtabel in tabel \ref{tbl:stateTableIteration2}. Deze zullen we bouwen op basis van het toewijzen van een encodering aan \'e\'en toestand, en vervolgens toestanden die overgangen van of naar deze toestand hebben een codering toewijzen met minimale bitverandering. De rest van de toestanden zullen we vervolgens op soortgelijke manier  invullen. We kennen $000$ toe aan toestand $b$. $b$ is verbonden met toestanden $a$, $c$ en $d$. We zullen dus moeten kiezen. Bijgevolg kennen we $001$ toe aan $a$, $010$ aan $c$ en $100$ aan $d$. Vervolgens dienen we alleen nog $i$ te bepalen. $i$ is enkel verbonden met $a$ en $d$, vermits deze de coderingen $001$ en $100$ hebben, kennen we $101$ toe aan $i$. Op basis van deze codering kunnen we de toestandstabel omzetten in een coderingstabel zoals in tabel \ref{tbl:coderingTableAsyncM1}.
+We zullen een codering bouwen voor de toestandstabel in tabel \ref{tbl:coderingTableAsyncM0}. Hierbij kennen we de toestand $d$ de codering $10$ toe. Omdat er slechts \'e\'en overgang is tussen $c$ en $d$, zullen we $c$ de encodering $01$ geven. $a$ krijgt de encodering $00$ omdat er zowel overgangen tussen $a$ en $c$, als tussen $a$ en $d$ zijn. $b$ krijgt ten slotte de overblijvende codering $11$. Het resultaat van deze codering staat in de coderingstabel in tabel \ref{tbl:coderingTableAsyncM1}.
+\begin{table}[hbt]
+\centering
+\subtable[Toestandstabel]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&	$a$&	$b$&	$a$&	$c$&	$00$\\
+$b$&	$b$&	$b$&	$c$&	$d$&	$01$\\
+$c$&	$a$&	$c$&	$c$&	$d$&	$10$\\
+$d$&	$b$&	$-$&	$a$&	$d$&	$11$\\
+\end{tabular}}
+\label{tbl:coderingTableAsyncM0}}
+\subtable[Na methode 1]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$00$&	\stAs{$00$}&	\ndAs{$11$}&	\stAs{$00$}&	$01$&		$00$\\
+$11$&	\stAs{$11$}&	\stAs{$11$}&	$01$&		$10$&		$01$\\
+$01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\ndAs{$10$}&	$10$\\
+$10$&	$11$&		$-$&		$00$&		\stAs{$10$}&	$11$\\
+\end{tabular}}
+\label{tbl:coderingTableAsyncM1}}
+% \subtable[Na methode 1]{\small{\begin{tabular}{c|cccc|c}
+% \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+% $001$&	\stAs{$001$}&	\stAs{$001$}&	$000$&		\ndAs{$010$}&	$0$\\
+% $000$&	\stAs{$000$}&	\stAs{$000$}&	\stAs{$000$}&	$100$&		$1$\\
+% $010$&	$000$&		\stAs{$010$}&	\stAs{$010$}&	\stAs{$010$}&	$0$\\
+% $100$&	\ndAs{$010$}&	\ndAs{$001$}&	\stAs{$100$}&	\stAs{$100$}&	$1$\\
+% $101$&	\stAs{$101$}&	$100$&		$-$&		$001$&		$1$
+% \end{tabular}}
+% \label{tbl:coderingTableAsyncM1}}
+\subtable[Na methode 2]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$00$&	\stAs{$00$}&	$11$&		\stAs{$00$}&	$01$&		$00$\\
+$11$&	\stAs{$11$}&	\stAs{$11$}&	$01$&		$100$&		$01$\\
+$01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\stAs{$00$}&	$10$\\
+$10$&	$11$&		$-$&		$00$&		\stAs{$10$}&	$11$\\
+\end{tabular}}
+\label{tbl:coderingTableAsyncM2}}
+\subtable[Na methode 3]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$00$&	\stAs{$00$}&	$11$&		\stAs{$00$}&	$01$&		$00$\\
+$11$&	\stAs{$11$}&	\stAs{$11$}&	\stAs{$00$}&	$100$&		$01$\\
+$01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\stAs{$00$}&	$10$\\
+$10$&	\ndAs{$11$}&	$-$&		\stAs{$10$}&	\stAs{$10$}&	$11$\\
+\end{tabular}}
+\label{tbl:coderingTableAsyncM3}}
+\caption{Coderingstabellen van het voorbeeld na het toepassen van de verschillende methodes.}
+\end{table}
+We voeren ook wat nieuwe syntax in die het ons in de volgende stappen makkelijker zal maken: stabiele configuraties zullen we noteren tussen twee vertical bars (``$|$'') in de tabel. Cellen waarbij de toestand naar een andere toestand gaat waarbij de encodering minstens twee bits verandert worden onderlijnd. Deze configuraties zullen we nog trachtten aan te passen met de volgende methodes.
+\subsubsection{Methode 2: Gebruik maken van een tussentoestand}
+Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna deze toestand ons naar de uiteindelijke toestand brengt. Dit principe is bovendien niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuratie toch niet kan voorkomen, kunnen we een transitie invullen bij de don't cares.
+\subsubsection{Methode 3: Invoeren van extra overgangstoestand}
 \subsection{Stap 4: Realisatie met digitale logica}

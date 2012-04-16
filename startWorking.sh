@@ -1,3 +1,4 @@
+#!/bin/sh
 cd "`dirname $0`"
 #depending part
 cd "cursus_Digitale_Elektronica_en_Processoren"

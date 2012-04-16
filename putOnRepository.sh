@@ -1,3 +1,4 @@
+#!/bin/sh
 cd "`dirname $0`"
 echo "Execute commit"
 git add -u

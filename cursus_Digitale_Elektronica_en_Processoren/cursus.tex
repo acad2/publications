@@ -16,6 +16,7 @@
 \usepackage{stmaryrd}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{bbding}
 \usepackage{commusoftScripts}
 \usetikzlibrary{circuits.logic.US}
 \usetikzlibrary{DEPcomponents}
@@ -68,6 +69,8 @@ title=\lstname,                 % show the filename of files included with \lsti
 \newcommand{\clrsin}{\texttt{Clr$^*$}}
 \newcommand{\prsin}{\texttt{Pr$^*$}}
 \newcommand{\pdot}[1]{\fill (#1) circle (0.4 mm);}
+\newcommand{\stAs}[1]{$|$#1$|$}
+\newcommand{\ndAs}[1]{\underline{#1}}
 \title{\includegraphics[width=5cm]{sedesVcrop.pdf}\\Cursus:\\Digitale Elektronica \& Processoren\\\texttt{H01L1A}\\\texttt{\small versie 0.2.718}}
 \author{Willem M. A. Van Onsem BSc\\\includegraphics[width=2.5cm]{kommusoftEmblema.pdf}}
 \date{Katholieke Universiteit Leuven\\Academiejaar 2010-2011}
@@ -122,17 +125,22 @@ De meest recente versie van deze cursus is op onderstaande link te vinden:
 \caption{Link naar de meest recente versie van deze cursus.}
 \end{figure}
 Indien er fouten gerapporteerd worden, of toevoegingen gedaan worden zullen na verloop van tijd de aanpassingen daar te vinden zijn.
-\paragraph{}Deze cursus is opgedragen aan Louis Van Onsem (1931-1993), voor drie jaar en vier maanden peterschap, en m'n derde voornaam: Agnes.
+\paragraph{}Deze cursus is opgedragen aan leden van mijn familie:
+\begin{itemize}
+ \item \textsc{Louis Van Onsem (1931-1993)}: voor drie jaar peterschap en m'n derde voornaam: \textsc{Agnes}.% en vier maanden
+ \item \textsc{Gabriella Simons (1923-2012)}: voor haar humor, fijne herinneringen en 17 jaar plaatsvervangend peterschap.
+ \item \textsc{Constant Soetewey (1907-1945)}: voor hoogstaande absurdistische literatuur, die dit jaar opnieuw uitgegeven werd\cite{Kohler} onder het pseudoniem \textsc{Kurt K\"ohler}.
+\end{itemize}
 \end{it}
 \commusoftQuality{1}
 \chapter*{Voorbeschouwing}
 \mainmatter
 \part{Digitaal Ontwerp en Fysische Limieten}
 %\input{chapter_basis_digitaal_ontwerp}
-%\input{chapter_technologische_randvoorwaarden}
+\input{chapter_technologische_randvoorwaarden}
 \part{Combinatorische en Sequenti\"ele Schakelingen}
 %\input{chapter_combinatorische_schakelingen}
-\input{chapter_sequentiele_schakelingen}
+%\input{chapter_sequentiele_schakelingen}
 \part{Processoren}
 %\input{chapter_niet_programmeerbare_processoren}
 %\input{chapter_programmeerbare_processoren}
