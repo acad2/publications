@@ -1589,7 +1589,7 @@ f_{\mbox{\small{max}}}=\displaystyle\frac{1}{\Delta V}\cdot\displaystyle\frac{\p
 \end{equation}
 Verder zal ook de parasitaire capaciteit zelf toenemen: de uitgang die met alle ingangen verbonden is vormt \'e\'en draad. Vermits de grootte van deze draad zal afhangen van de fan-out zal dus ook de parasitaire capaciteit toenemen. We kunnen de fan-out beperken door gebruik te maken van het buffer: we verdelen de uitgang van de poort onder een paar buffers die op hun beurt de ingangen van de andere poorten bevoorraden. Het nadeel van een gebruik van een buffer is dat dit buffer ook moet omschakelen, wat extra vermogenverbruik en vertragingen teweeg brengt.
 \subsection{Tri-state buffer}
-Een uitbreiding van een buffer is een \termen{Tri-state buffer}. Een tri-state buffer heeft drie mogelijke uitgangswaarden: 0, 1 en de zogenaamde \termen{zwevende modus $Z$}. Deze laatste toestand wordt ook wel \termen{hoog impedant} genoemd. Het betekent dat de lijn losgekoppeld is van enige bron. Er staat dus zogezegd niets op de lijn. Hiertoe wordt een buffer uitgebreid met een tweede ingang: \termen{Enable $E$}. Hierdoor kan de component in drie toestanden worden gebracht: wanneer enable op 0 staat, staat de tri-state buffer in de $Z$ stand. In het geval er een hoog signaal op de enable-ingang wordt aangelegd, laat het de ingang door, deze kan uiteraard in twee standen staan.
+Een uitbreiding van een buffer is een \termen{Tri-state buffer}. Figuur \ref{fig:triStateSymbol} toont het symbool die men voor deze component gebruikt: een buffer met een derde ingang aan de zijkant van de driehoek. Een tri-state buffer heeft drie mogelijke uitgangswaarden: 0, 1 en de zogenaamde \termen{zwevende modus $Z$}. Deze laatste toestand wordt ook wel \termen{hoog impedant} genoemd. Het betekent dat de lijn losgekoppeld is van enige bron. Er staat dus zogezegd niets op de lijn. Hiertoe wordt een buffer uitgebreid met een tweede ingang: \termen{Enable $E$}. Hierdoor kan de component in drie toestanden worden gebracht: wanneer enable op 0 staat, staat de tri-state buffer in de $Z$ stand. In het geval er een hoog signaal op de enable-ingang wordt aangelegd, laat het de ingang door, deze kan uiteraard in twee standen staan. Op figuur \ref{fig:triStateTruth} wordt dit concept met behulp van een waarheidstabel weergegeven. Er bestaan verschillende manieren om dit component te implementeren. Een goedkope manier wordt voorgesteld op figuur \ref{fig:triStateImplementation} en maakt gebruik van een \termen{transmission gate}, een component die functioneert als een schakelaar.
 \begin{figure}[hbt]
 \centering
 \subfigure[Symbool]{
@@ -1599,7 +1599,7 @@ Een uitbreiding van een buffer is een \termen{Tri-state buffer}. Een tri-state b
 \draw (TS.x) -- ++(-0.5,0) node[anchor=east]{input $x$};
 \draw (TS.z) -- ++(0.5,0) node[anchor=west]{output $f$};
 \end{tikzpicture}
-}
+\label{fig:triStateSymbol}}
 \subfigure[Tabel]{
 \begin{tikzpicture}
 \node (A) at (0,0) {\begin{tabular}{cc|c}
@@ -1610,7 +1610,7 @@ $1$&$0$&$0$\\
 $1$&$1$&$1$
 \end{tabular}};
 \end{tikzpicture}
-}
+\label{fig:triStateTruth}}
 \subfigure[Implementatie]{
 \begin{tikzpicture}[circuit logic US]
 \node[transgate] (TG) at (0,0) {};
@@ -1626,7 +1626,27 @@ $1$&$1$&$1$
 \pdot{-2.6,1};
 \draw (-2.6,1) |- (0,-1) -- (TG.c);
 \end{tikzpicture}
-}
+\label{fig:triStateImplementation}}
+\subfigure[Transmission Gate]{
+\begin{tikzpicture}
+\node[transgate] (TG) at (0,0) {};
+\draw (TG.x) -- ++(-0.5,0) node[anchor=east]{$x$};
+\draw (TG.z) -- ++(0.5,0) node[anchor=west]{$f$};
+\draw (TG.cn) -- ++(0,0.5) node[anchor=south]{$\bar{s}$};
+\draw (TG.c) -- ++(0,-0.5) node[anchor=north]{$s$};
+\draw (2,0) node{$\equiv$};
+\begin{scope}[xshift=4 cm]
+\node[pmosc,rotate=-90] (P) at (0,0.5) {};
+\node[nmosc,rotate=90] (N) at (0,-0.5) {};
+\draw (P.source) -| (0.5,0) |- (N.source);
+\draw (P.drain) -| (-0.5,0) |- (N.drain);
+\draw (-0.5,0) -- ++(-0.5,0) node[anchor=east]{$x$};
+\draw (0.5,0) -- ++(0.5,0) node[anchor=west]{$f$};
+\draw (P.gate) -- ++(0,0.5) node[anchor=south]{$s$};
+\draw (N.gate) -- ++(0,-0.5) node[anchor=north]{$s$};
+\end{scope}
+\end{tikzpicture}
+\label{fig:triStateTransmission}}
 \caption{Tri-state buffer.}
 \end{figure}
 Tri-state buffers worden vaak gebruikt om bijvoorbeeld over een lijn gegevens van verschillende bronnen over te brengen. In dat geval moeten de andere bronnen een $Z$ op de lijn zetten.
