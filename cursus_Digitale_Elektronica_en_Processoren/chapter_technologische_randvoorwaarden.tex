@@ -316,6 +316,7 @@ Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos
 \label{fig:nandNorCmos}
 \end{figure}
 \paragraph{Uitgangen verbinden}
+\label{term:kortsluiting}
 Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met zich meebracht, sterker nog, we konden sommige poorten implementeren aan de hand van verbindingen. Een groot nadeel van CMOS is dat dit niet langer mogelijk is. Figuur \ref{fig:cmosFail} toont de rede hiervoor. Op het moment dat de ene ingang een hoog potentiaal heeft, en de andere een laag potentiaal ontstaat er immers een kortsluiting. De stroom is in staat om vanaf de $V_{\mbox{\tiny DD}}$ rechtstreeks de aarding te bereiken. Hoewel de transistoren een minimale weerstand hebben, volstaat deze meestal niet. Het gevolg zijn zeer hoge stromen die het elektronische circuit zouden kunnen beschadigen.
 \begin{figure}[hbt]
 \centering
@@ -1589,7 +1590,7 @@ f_{\mbox{\small{max}}}=\displaystyle\frac{1}{\Delta V}\cdot\displaystyle\frac{\p
 \end{equation}
 Verder zal ook de parasitaire capaciteit zelf toenemen: de uitgang die met alle ingangen verbonden is vormt \'e\'en draad. Vermits de grootte van deze draad zal afhangen van de fan-out zal dus ook de parasitaire capaciteit toenemen. We kunnen de fan-out beperken door gebruik te maken van het buffer: we verdelen de uitgang van de poort onder een paar buffers die op hun beurt de ingangen van de andere poorten bevoorraden. Het nadeel van een gebruik van een buffer is dat dit buffer ook moet omschakelen, wat extra vermogenverbruik en vertragingen teweeg brengt.
 \subsection{Tri-state buffer}
-Een uitbreiding van een buffer is een \termen{Tri-state buffer}. Figuur \ref{fig:triStateSymbol} toont het symbool die men voor deze component gebruikt: een buffer met een derde ingang aan de zijkant van de driehoek. Een tri-state buffer heeft drie mogelijke uitgangswaarden: 0, 1 en de zogenaamde \termen{zwevende modus $Z$}. Deze laatste toestand wordt ook wel \termen{hoog impedant} genoemd. Het betekent dat de lijn losgekoppeld is van enige bron. Er staat dus zogezegd niets op de lijn. Hiertoe wordt een buffer uitgebreid met een tweede ingang: \termen{Enable $E$}. Hierdoor kan de component in drie toestanden worden gebracht: wanneer enable op 0 staat, staat de tri-state buffer in de $Z$ stand. In het geval er een hoog signaal op de enable-ingang wordt aangelegd, laat het de ingang door, deze kan uiteraard in twee standen staan. Op figuur \ref{fig:triStateTruth} wordt dit concept met behulp van een waarheidstabel weergegeven. Er bestaan verschillende manieren om dit component te implementeren. Een goedkope manier wordt voorgesteld op figuur \ref{fig:triStateImplementation} en maakt gebruik van een \termen{transmission gate}, een component die functioneert als een schakelaar.
+Een uitbreiding van een buffer is een \termen{Tri-state buffer} ofwel \termen{3-state buffer}. Figuur \ref{fig:triStateSymbol} toont het symbool die men voor deze component gebruikt: een buffer met een derde ingang aan de zijkant van de driehoek. Een tri-state buffer heeft drie mogelijke uitgangswaarden: 0, 1 en de zogenaamde \termen{zwevende modus $Z$}. Deze laatste toestand wordt ook wel \termen{hoog impedant} genoemd. Het betekent dat de lijn losgekoppeld is van enige bron. Er staat dus zogezegd niets op de lijn. Hiertoe wordt een buffer uitgebreid met een tweede ingang: \termen{Enable $E$}. Hierdoor kan de component in drie toestanden worden gebracht: wanneer enable op 0 staat, staat de tri-state buffer in de $Z$ stand. In het geval er een hoog signaal op de enable-ingang wordt aangelegd, laat het de ingang door, deze kan uiteraard in twee standen staan. Op figuur \ref{fig:triStateTruth} wordt dit concept met behulp van een waarheidstabel weergegeven. Er bestaan verschillende manieren om dit component te implementeren. Een goedkope manier wordt voorgesteld op figuur \ref{fig:triStateImplementation} en maakt gebruik van een \termen{transmission gate}, een component die functioneert als een schakelaar.
 \begin{figure}[hbt]
 \centering
 \subfigure[Symbool]{
@@ -1634,22 +1635,45 @@ $1$&$1$&$1$
 \draw (TG.z) -- ++(0.5,0) node[anchor=west]{$f$};
 \draw (TG.cn) -- ++(0,0.5) node[anchor=south]{$\bar{s}$};
 \draw (TG.c) -- ++(0,-0.5) node[anchor=north]{$s$};
-\draw (2,0) node{$\equiv$};
+\draw (1.75,0) node{$\equiv$};
 \begin{scope}[xshift=4 cm]
 \node[pmosc,rotate=-90] (P) at (0,0.5) {};
 \node[nmosc,rotate=90] (N) at (0,-0.5) {};
-\draw (P.source) -| (0.5,0) |- (N.source);
-\draw (P.drain) -| (-0.5,0) |- (N.drain);
-\draw (-0.5,0) -- ++(-0.5,0) node[anchor=east]{$x$};
-\draw (0.5,0) -- ++(0.5,0) node[anchor=west]{$f$};
-\draw (P.gate) -- ++(0,0.5) node[anchor=south]{$s$};
+\coordinate (X) at (-0.75,0);
+\coordinate (F) at (0.75,0);
+\draw (P.source) -| (F) |- (N.source);
+\draw (P.drain) -| (X) |- (N.drain);
+\draw (X) -- ++(-0.5,0) node[anchor=east]{$x$};
+\draw (F) -- ++(0.5,0) node[anchor=west]{$f$};
+\draw (P.gate) -- ++(0,0.5) node[anchor=south]{$\bar{s}$};
 \draw (N.gate) -- ++(0,-0.5) node[anchor=north]{$s$};
+\pdot{X};\pdot{F};
 \end{scope}
 \end{tikzpicture}
 \label{fig:triStateTransmission}}
+\subfigure[Bus]{
+\begin{tikzpicture}[circuit logic US]
+\node[tris] (T1) at (-0.75,0.5) {};
+\node[tris] (T2) at (-0.75,-0.5) {};
+\node[buffer gate] (B1) at (0.75,1) {};
+\node[buffer gate] (B2) at (0.75,0) {};
+\node[buffer gate] (B3) at (0.75,-1) {};
+\draw (B1.input) -| (0,0) |- (B3.input);
+\draw (0,0) -- (B2.input);\draw (0,0.5) -- (T1.z);\draw (0,-0.5) -- (T2.z);
+\draw (T1.x) -- (T1.x -| -1.5,0) node[anchor=east]{$x_1$};
+\draw (T1.c) |- (-1.25,0) node[anchor=east]{$e_1$};
+\draw (T2.x) -- (T2.x -| -1.5,0) node[anchor=east]{$x_2$};
+\draw (T2.c) |- (-1.25,-1) node[anchor=east]{$e_2$};
+\draw (B1.output) -- ++(0.5,0) node[anchor=west]{$f_1$};
+\draw (B2.output) -- ++(0.5,0) node[anchor=west]{$f_2$};
+\draw (B3.output) -- ++(0.5,0) node[anchor=west]{$f_3$};
+\pdot{0,0};\pdot{0,-0.5};\pdot{0,0.5};
+\end{tikzpicture}
+\label{fig:triStateBus}}
 \caption{Tri-state buffer.}
 \end{figure}
-Tri-state buffers worden vaak gebruikt om bijvoorbeeld over een lijn gegevens van verschillende bronnen over te brengen. In dat geval moeten de andere bronnen een $Z$ op de lijn zetten.
+De transmission gate zelf bestaat zoals te zien op figuur \ref{fig:triStateTransmission} uit twee transistoren. Indien $s=0$ zijn beide schakelaars open, en staat er dus geen signaal op uitgang $f$, in dat geval is de uitgang dus hoog impedant. Bij $s=1$ zijn beide transistoren gesloten, en wordt het signaal die aangelegd wordt op $x$ verder gepropageerd. De schakeling op \ref{fig:triStateImplementation} bevat extra componenten om het binnenkomende signaal opnieuw voldoende sterk te maken, dezelfde argumenten als met fan-in en fan-out gelden hier immers.
+\paragraph{Bus}Tri-state buffers worden vaak gebruikt om bijvoorbeeld over een lijn gegevens van verschillende bronnen over te brengen. We hebben reeds in \ref{term:kortsluiting} gezien dat het verbinden van uitgangen tot kortsluiting leidt. Hierdoor zouden we echter genoodzaakt zijn om voor elke uitgang een aparte draad te voorzien. Verbindingen kunnen een groot gedeelte van het chipoppervlak beslaan, vandaar dat we het aantal draden ook tot een minimum proberen te beperken. We kunnen dit probleem oplossen met een zogenaamde \termen{bus}. Bij een bus wordt een draad gedeeld tussen verschillende bronnen $x_i$. Elk van die bronnen stuurt een tri-state buffer aan. Verder zorgt men er voor dat er slechts \'e\'en tri-state buffer tegelijk actief is. Omdat de andere tri-state buffers op dat moment hoog-impedant zijn, is er geen gevaar voor kortsluiting. Figuur \ref{fig:triStateBus} geeft een implementatie van dit principe. In subsectie \ref{ss:multiplexer} zullen we verder een component tegenkomen die dit principe met een algemenere techniek realiseert: de multiplexer. In dat geval moeten de andere bronnen een $Z$ op de lijn zetten.
 \section{CAD-ontwerp in de praktijk}
 \subsection{Ingave}
 \subsection{Synthese}
