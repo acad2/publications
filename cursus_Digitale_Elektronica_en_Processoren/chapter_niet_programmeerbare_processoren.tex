@@ -1,2 +1,26 @@
 \chapter{Niet-Programmeerbare Processoren}
 \chapterquote{We accepteren nu het feit dat leren een levenslang proces is om op de hoogte te blijven van veranderingen. En de meest urgente taak is mensen te leren hoe te leren.}{Peter F. Drucker, Amerikaans management consultant en auteur (1909-)}
+\begin{chapterintro}
+In de twee vorige hoofdstukken hebben we componenten gebouwd met een beperkte functionaliteit. De combinatorische schakelingen laten ons toe om schakelingen te ontwerpen die een rekenkundige operatie uitvoeren, maar we hebben geen geheugen beschikbaar om tussenresultaten in op te slaan. Het hoofdstuk over sequenti\"ele schakelingen maakt het mogelijk om schakelingen te ontwerpen met een geheugen. De meeste problemen hebben echter zeer grote toestandsruimtes (een 32-bit getal heeft meer dan vier miljard toestanden). Daarom volstaan de methodes uit dit hoofdstuk niet om een component te ontwikkelen die iets functioneel doet. Daarvoor zullen we methodes op een hoger niveau introduceren, dat van een niet-programmeerbare processor. Een niet programmeerbare processor voert een algoritme uit die op voorhand gekend is. Hierdoor kunnen we optimaal gebruik maken van de hardware en zoveel mogelijk instructies tegelijk uitvoeren. Het nadeel is dat eenmaal de processor geproduceerd is, we geen andere problemen met het component kunnen uitvoeren.
+\end{chapterintro}
+\minitoc[n]
+\section{De Niet-Programmeerbare Processor}
+Alvorens we de bouw van zo'n processor verder uitwerken, dienen we eerst enkele concepten te formaliseren. Allereerst ontleden we in deze sectie uit welke delen zo'n processor is opgebouwd. Vervolgens zullen we in sectie \ref{s:descriptionFSMD} een methode ontwikkelen om een algoritme formeel weer te geven. Deze beschrijving zal toelaten het algoritme later om te zetten naar een processor. In sectie \ref{s:memoryFSMD} ten slotte zullen we extra geheugencomponenten introduceren die we nodig zullen hebben bij de bouw van een processor.
+\subsection{Algemene Structuur}
+Een \termen{Niet-programmeerbare processor}, ofwel \termen{Finite State Machine with Data path (FSMD)} bestaat grofweg uit twee delen:
+\begin{itemize}
+ \item Een \termen{datapad}: een component die bewerkingen (rekenkundig, arithmetisch,...) uitvoert en de resultaten opslaat in tijdelijk geheugen.
+ \item Een \termen{controller}: een component die het datapad aanstuurt. Het zegt welke actie op welk moment moet ondernomen worden.
+\end{itemize}
+In dit hoofdstuk is de controller niet programmeerbaar. Dat wil zeggen dat de controller telkens hetzelfde programma uitvoert. Dit betekent echter niet dat er een vaste cyclus in de controller zit. De controller kan afhankelijk van de waarden die in de geheugens van het datapad zitten, of van ingangen van de processor beslissen om andere acties te ondernemen. Een controller is dus een sequenti\"ele schakeling ofwel finite state machine. De synthese van een finite state machine werd in het hoofdstuk \ref{ch:SeqComp} reeds besproken. Uiteraard zullen we de karakteristieken die eigen zijn aan controllers in dit hoofdstuk bespreken.
+\paragraph{}
+Het spreekt voor zich dat de controller en het datapad continu data met elkaar uitwisselen. Enerzijds geeft de controller instructies aan het datapad. De groep signalen waarmee een controller een datapad aanstuurt noemen we het ``\termen{instructiewoord}''. Anderzijds zullen de instructies vaak afhangen van de toestand van variabelen opgeslagen in het datapad. De verzameling van signalen die het datapad over zijn variabelen doorstuurt naar de controller noemen we ``\termen{statussignalen}''.
+\subsection{Het Datapad}
+\section{Formeel Beschrijven van een Algoritme}
+\label{s:descriptionFSMD}
+\section{Geheugencomponenten}
+\label{s:memoryFSMD}
+\section{Synthese van een Niet-Programmeerbare Processor}
+\label{s:syntheseFSMD}
+\section{Tijdsgedrag}
+\label{s:timeFSMD}
