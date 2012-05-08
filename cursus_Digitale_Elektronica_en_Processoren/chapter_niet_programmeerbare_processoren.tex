@@ -189,8 +189,76 @@ Toestand&Conditie&Toestand&gang&Conditie&Acties\\\noalign{\hrule height 1pt}
 \caption{Toestand-actie tabel van het leidend voorbeeld.}
 \label{tbl:stateActionTableRunningExample}
 \end{table}
-\paragraph{Simulatie}Om ons meer vertrouwd te maken met het concept van een toestand-actie tabel zullen we een deling simuleren met behulp van de tabel. We zullen $N=12$ delen door $D=7$ op de processor en stap per stap kijken wat er verandert. Dit doen we met behulp van 
+\paragraph{Simulatie}Om ons meer vertrouwd te maken met het concept van een toestand-actie tabel zullen we een deling simuleren met behulp van de tabel. We zullen $N=12$ delen door $D=7$ op de processor en stap per stap kijken wat er verandert. Dit doen we met behulp van tabel \ref{tbl:stateActionTableRunningExampleSim}. Omdat we met bitoperaties werken zullen we alle variabelen in de tabel in binaire notatie zetten.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|c|c|c}
+Toestand&Voldane Condities&Acties&Uitvoer\\\hline
+\multirow{4}{*}{$S_0$}&\multirow{4}{*}{$ci=1$}&$X\gets N=1100$&\multirow{4}{*}{$co=0$}\\
+&&$Y\gets0000$&\\
+&&$Z\gets0000$&\\
+&&$I\gets11$&\\\hline
+
+\multirow{4}{*}{$S_1$}&\multirow{2}{*}{$I=11>00$}&$Z\gets z_2z_1z_0x_3=0001$&\multirow{4}{*}{$co=0$}\\
+&&$X\gets X\shlcmd{} 1=1000$&\\
+&\multirow{2}{*}{$z_2z_1z_0x_3=0001<D=0101$}&$Y\gets Y\shlcmd{} 1=0000$&\\
+&&$I\gets I-1=10$&\\\hline
+
+\multirow{4}{*}{$S_1$}&\multirow{2}{*}{$I=10>00$}&$Z\gets z_2z_1z_0x_3=0011$&\multirow{4}{*}{$co=0$}\\
+&&$X\gets X\shlcmd{} 1=0000$&\\
+&\multirow{2}{*}{$z_2z_1z_0x_3=0011<D=0101$}&$Y\gets Y\shlcmd{} 1=0000$&\\
+&&$I\gets I-1=01$&\\\hline
+
+\multirow{4}{*}{$S_1$}&\multirow{2}{*}{$I=01>00$}&$Z\gets z_2z_1z_0x_3-D=0001$&\multirow{4}{*}{$co=0$}\\
+&&$X\gets X\shlcmd{} 1=0000$&\\
+&\multirow{2}{*}{$z_2z_1z_0x_3=0110\geq D=0101$}&$Y\gets y_2y_1y_01=0001$&\\
+&&$I\gets I-1=00$&\\\hline
+
+\multirow{4}{*}{$S_1$}&\multirow{2}{*}{$I=00$}&$Z\gets z_2z_1z_0x_3=0010$&\multirow{4}{*}{$co=0$}\\
+&&$X\gets X\shlcmd{} 1=0000$&\\
+&\multirow{2}{*}{$z_2z_1z_0x_3=0010<D=0101$}&$Y\gets Y\shlcmd{} 1=0010$&\\
+&&$I\gets I-1=11$&\\\hline
+
+\multirow{3}{*}{$S_2$}&\multirow{3}{*}{$ci=0$}&&$co=1$\\
+&&&$Q=Y=0010$\\
+&&&$R=Z=0010$\\
+\end{tabular}
+\caption{Simulatie van het algoritme met behulp van de toestand-actie tabel (tabel \ref{tbl:stateActionTableRunningExample}).}
+\label{tbl:stateActionTableRunningExampleSim}
+\end{table}
+We stellen dat vanaf dat we de simulatie beginnen, reeds de data reeds op de ingangen van de processor aangelegd staat. Bijgevolg is $ci=1$, $N=1100$ en $D=0101$. We maken verder ook een assumptie dat $X$, $Y$ en $Z$ 4-bit geheugens zijn, dit is redelijk vermits we uitsluitend bits in dit bereik gebruiken, en we geen schuifoperaties naar rechts uitvoeren waardoor hogere bits in het bereik zouden komen te liggen. $I$ is een 2-bit geheugen vermits het uitsluitend waardes tussen 0 en 3 moet aannemen. Initieel vertrekt de processor vanuit toestand $S_0$ we zien op die toestand-actie tabel dat in toestand $S_0$ de ingangen in de geheugens worden ingelezen. Vermits er data op de ingangen staat, krijgt $X$ de waarde van de teller $N=1100$. De overige variabelen worden ge\"initialiseerd zoals beschreven staat in de toestand-actie tabel. Omdat $ci=1$ kunnen we afleiden dat de volgende toestand $S_1$ is. Verder specificeert de tabel ook dat we een laag signaal op de controle-uitgang moeten aanleggen (momenteel staat er immers geen uitkomst op de uitgangen). In de volgende stap bevinden we ons in toestand $S_1$. We evalueren eerst de verschillende condities ??.
 \subsection{ASM-Schema}
+Zoals reeds gezegd is de visualisatie van een eindige toestandsautomaat niet toereikend om een algoritme weer te geven. Een grafisch voorstelling die we wel kunnen gebruiken is een ``\termen{Algorithmic-State-Machine Chart}'' ofwel ``\termen{ASM-schema}''. Een ASM-schema lijkt op een flow-chart en bestaat drie verschillende soorten ``\termen{ASM-elementen}'':
+\begin{itemize}
+ \item \termen{Toestandskader} ofwel \termen{state box}: dit is een set niet-conditionele toekenning. We stellen een toestandskader voor door middel van een rechthoek waarin we de toekenningen schrijven. De toekenningen in \'e\'en toestandskader worden parallel uitgevoerd. Figuur \ref{fig:asmElementState} toont een voorbeeld van een toestandskader.
+ \item \termen{Beslissingskader} ofwel \termen{decision box}: dit is de voorstelling van een bepaalde conditie. Een conditie wordt voorgesteld met behulp van een ruit, waarin de conditie wordt geschreven. Vanuit een beslissingskader vertrekken er twee pijlen: voor het geval waarin de voorwaarde waar of vals is. Figuur \ref{fig:asmElementDecision} toont een voorbeeld van een beslissingskader.
+ \item \termen{Conditioneel kader} ofwel \termen{conditional box}: Dit is een toestandskader die enkel onder voorwaarden gespecificeerd door een beslissingskader worden uitgevoerd. Ook deze toekenningen worden in parallel uitgevoerd. Men stelt een conditioneel kader voor als een rechthoek met afgeronde hoeken. Figuur \ref{fig:asmElementConditional} toont een voorbeeld van een conditioneel kader.
+\end{itemize}
+\begin{figure}[hbt]
+\centering
+\subfigure[Toestandskader]{
+\begin{tikzpicture}
+
+\end{tikzpicture}
+\label{fig:asmElementState}
+}
+\subfigure[Beslissingskader]{
+\begin{tikzpicture}
+
+\end{tikzpicture}
+\label{fig:asmElementDecision}
+}
+\subfigure[Conditioneel kader]{
+\begin{tikzpicture}
+
+\end{tikzpicture}
+\label{fig:asmElementConditional}
+}
+\caption{Voorstelling van de verschillende ASM-elementen}
+\label{fig:asmElementsEnum}
+\end{figure}
+
+\subsubsection{Traditionele Valkuilen}
 \section{Geheugencomponenten}
 \label{s:memoryFSMD}
 \subsection{Registerbank}
