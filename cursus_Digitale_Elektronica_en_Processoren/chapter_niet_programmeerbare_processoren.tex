@@ -57,12 +57,6 @@ Een processor voert operaties uit op data. Deze data moet op de een of andere ma
 \draw (1.75,-3.5) node[scale=0.8,anchor=south]{externe-uitgangen};
 \draw[<-,thick] (O.west) -- ++(-3,0);
 \draw[->,thick] (RA) |- ++(3.5,-1);
-% \draw[->,thick] (D.south -| 0.5,0) to node[midway,sloped,above]{status-signalen} (C.north -| 0.5,0);
-% \draw[->,thick] (C.north -| -0.5,0) to node[midway,sloped,above]{instructiewoord} (D.south -| -0.5,0);
-% \draw[<-,thick] (C.west) to node[below,midway]{controle-ingangen} (-4.5,-2);
-% \draw[->,thick] (C.east) to node[below,midway]{controle-uitgangen} (4.5,-2);
-% \draw[<-,thick] (D.west) to node[above,midway]{data-ingangen} (-4.5,2);
-% \draw[->,thick] (D.east) to node[above,midway]{data-uitgangen} (4.5,2);
 \end{tikzpicture}
 \label{fig:datapadInformationStreams}}
 \caption{Opbouw van een processor en datapad.}
@@ -90,37 +84,119 @@ In het datapad doen we dan ook niets anders dan waardes uit het tijdelijke geheu
 In het eerste hoofdstuk hebben we reeds vermeld dat we schakelingen bij het bouwen van een processor beschrijven op registertransfer-niveau. Dit betekent dat we bijvoorbeeld abstractie zullen maken van flipflops en zullen werken met registers. Ook zullen we details als het aantal bits die een opteller nodig heeft verwaarlozen. Deze nieuwe notatiestijl zullen we geleidelijk invoeren.
 \section{Formeel Beschrijven van een Algoritme}
 \label{s:descriptionFSMD}
-Alvorens we een processor kunnen bouwen die een algoritme uitvoert, moeten we eerst een formeel algoritme kunnen opstellen. Dit algoritme vertrekt altijd vanuit een probleemstelling. Hoe we een probleemstelling omzetten naar een algoritme behoort niet tot de inhoud van deze cursus\footnote{Het omzetten van een probleem in een algoritme is geen exacte wetenschap. Het is een vaardigheid die wel geoefend kan worden. Hiervoor bestaan er andere cursussen.}.
+Alvorens we een processor kunnen bouwen die een algoritme uitvoert, moeten we eerst een formeel algoritme kunnen opstellen. Dit algoritme vertrekt altijd vanuit een probleemstelling. Hoe we een probleemstelling omzetten naar een algoritme behoort niet tot de inhoud van deze cursus\footnote{Het omzetten van een probleem in een algoritme is geen exacte wetenschap. Het is een vaardigheid die wel geoefend kan worden. Hiervoor bestaan er andere cursussen.}. We zullen altijd stellen dat het algoritme vooraf gekend moet zijn.
 \subsection{Leidend Voorbeeld: Deler}
-Als leidend voorbeeld doorheen dit hoofdstuk zullen we een processor bouwen die natuurlijke getallen kan delen. Uiteraard zouden we hiervoor een combinatorische schakeling kunnen bouwen. We zullen echter een algoritme beschouwen om de berekening te maken. De processor heeft 2 32-bit ingangen die het deeltal en de deler inlezen. Verder bevat het ook een controle-ingang. Zolang we een laag signaal op de controle-ingang aanleggen betekent dit dat er geen correcte invoer op de data-ingangen staat. Pas wanneer we een hoog signaal aanleggen zal het algoritme dus een deling uitvoeren. Verder bevat de processor ook 2 32-bit uitgang om het quoti\"ent en de rest naar buiten te brengen, en een controle uitgang die hoog wordt op het moment dat het algoritme het quoti\"ent en de rest heeft berekend. Zolang de controle-uitgang dus laag is, is het algoritme nog bezig met de berekening. We maken de assumptie dat de deler nooit gelijk is aan 0. Het algoritme die dan vervolgens het deeltal en de deler omzet in het quoti\"ent en rest staat op \algoref{alg:devisionFSMD}.
+Als leidend voorbeeld doorheen dit hoofdstuk zullen we een processor bouwen die natuurlijke getallen kan delen. Uiteraard zouden we hiervoor een combinatorische schakeling kunnen bouwen. We zullen echter een algoritme beschouwen om de berekening te maken. De processor heeft 2 4-bit ingangen die het deeltal en de deler inlezen. Verder bevat het ook een controle-ingang. Zolang we een laag signaal op de controle-ingang aanleggen betekent dit dat er geen correcte invoer op de data-ingangen staat. Pas wanneer we een hoog signaal aanleggen zal het algoritme dus een deling uitvoeren. Verder bevat de processor ook 2 4-bit uitgang om het quoti\"ent en de rest naar buiten te brengen, en een controle uitgang die hoog wordt op het moment dat het algoritme het quoti\"ent en de rest heeft berekend. Zolang de controle-uitgang dus laag is, is het algoritme nog bezig met de berekening. Verder zal de processor ook wachten totdat de controle-ingang eerst laag is geweest alvorens opnieuw te beginnen. We maken de assumptie dat de deler nooit gelijk is aan 0. Het algoritme die dan vervolgens het deeltal en de deler omzet in het quoti\"ent en rest staat op \algoref{alg:devisionFSMD}.
 \begin{algorithm}[hbt]
 \caption{Delen van twee $n$-bit getallen.}\label{alg:devisionFSMD}
 \begin{algorithmic}[1]
 \Function{Division}{$N,D$}
 \State $Q\gets 0$
 \State $R\gets 0$
-\For{$i\gets n-1...0$}
-\State $R\gets 2\times R$
-\State $R\left[0\right]\gets N\left[i\right]$
+\For{$I=n-1\mbox{ \textbf{to} }0$}
+\State $R\gets R\shlcmd{}1$\Comment{Logische shift $R$ naar links over 1 positie}
+\State $R\left[0\right]\gets N\left[n-1\right]$
+\State $N\gets N\shlcmd{}1$\Comment{Logische shift $N$ naar links over 1 positie}
+\State $Q\gets Q\shlcmd{}1$\Comment{Logische shift $Q$ naar links over 1 positie}
 \If{$R\geq D$}
 \State $R\gets R-D$
-\State $Q\left[i\right]\gets 1$
+\State $Q\left[0\right]\gets 1$
 \EndIf
 \EndFor
 \State \Return $\left(Q,R\right)$
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
-We gaan niet in op de precieze werking van het algoritme. Indien we een index opvragen of zetten bij een variabele zoals $V\left[i\right]$ betekent dit dat we een operatie op de $i$-de bit uitvoeren. Dit algoritme is echter niet geschikt voor een processor. Een processor voert immers continu het programma uit. Bovendien wordt hier niet gewacht tot er invoer op de data-ingangen staat. Daarom zullen we het algoritme herschrijven. We beschouwen hierbij de controle-ingang $ci$ en de controle-uitgang $co$.
+We gaan niet in op de precieze werking van het algoritme. Indien we een index opvragen of zetten bij een variabele zoals $V\left[i\right]$ betekent dit dat we een operatie op de $i$-de bit uitvoeren. We tellen we van rechts naar links, $V[0]$ is dus de minst beduidende bit van $V$ die rechts staat in de encodering. Verder zullen we ook de subscript-notatie gebruiken wanneer we bits samen nemen. Zo betekent $v_2v_1w_2w_2v_2w_1$ dat we een getal samenstellen uit de eerste twee bits van $V$, gevolgd door de eerste en de derde bit van $W$, daarna volgen nog de derde bit van $V$ en de tweede bit van $W$. Dit algoritme is echter niet geschikt voor een processor. Een processor voert immers continu het programma uit. Bovendien wordt hier niet gewacht tot er invoer op de data-ingangen staat. Een laatste opmerking is dat we geen berekeningen op invoer kunnen uitvoeren. Anders zouden we immers de uitgangen van functionele eenheden met de ingangen van de processor verbinden. Daarom dienen we variabelen te introduceren die we $X$, $Y$ en $Z$. Daarom zullen we het algoritme herschrijven\footnote{Strikt genomen is dit geen algoritme meer, vermits het nooit eindigt en er geen echt resultaat is. Een betere bewoording is waarschijnlijk procedure.}. We beschouwen hierbij de controle-ingang $ci$ en de controle-uitgang $co$. De herschreven procedure staat in \algoref{alg:devisionFSMDRev}.
+\begin{algorithm}[hbt]
+\caption{Procedure voor het delen van twee $4$-bit getallen.}\label{alg:devisionFSMDRev}
+\begin{algorithmic}[1]
+\Procedure{Division}{}
+\While{true}
+\Repeat\label{algl:s1start}
+\State $co\gets 0$
+\State $X\gets N$
+\State $Y\gets 0$
+\State $Z\gets 0$
+\Until{$ci$}\label{algl:s1stop}
+\For{$I=3\mbox{ \textbf{to} }0$}\label{algl:s2start}
+\State $Z\gets Z\shlcmd{}1$\Comment{Logische shift $Z$ naar links over 1 positie}
+\State $Z\left[0\right]\gets X\left[3\right]$
+\State $X\gets X\shlcmd{}1$\Comment{Logische shift $X$ naar links over 1 positie}
+\State $Y\gets Y\shlcmd{}1$\Comment{Logische shift $Y$ naar links over 1 positie}
+\If{$Z\geq D$}\label{algl:devisionFSMDComp}
+\State $Z\gets Z-D$\label{algl:devisionFSMDSub}
+\State $Y\left[0\right]\gets 1$
+\EndIf
+\EndFor\label{algl:s2stop}
+\Repeat\label{algl:s3start}
+\State $co\gets 1$
+\State $Q\gets Y$
+\State $R\gets Z$
+\Until{$\neg ci$}\label{algl:s3stop}
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 \subsection{Toestandsbeschrijving}
+Een eerste probleem dient zich aan hoe we de procedure omzetten in een reeks toestanden. De vraag is immers wat we in \'e\'en zo'n toestand zullen realiseren. Zo kunnen we \algoref{alg:devisionFSMDRev} uitvoeren en per instructie een nieuwe toestand bouwen. Als we echter het programma onder de loep nemen, zien we dat dit algoritme zich uitstekend leent om verschillende instructies samen uit te voeren. Allereerst voeren we in de \textbf{for}-lus hoofdzakelijke shift operaties uit. Deze shiftoperaties vinden plaats over een vast aantal posities. We dienen dus helemaal geen schuifoperator te implementeren, en kunnen eenvoudigweg schuiven met verbindingen. Vervolgens doen we ook aan bitmanipulaties. Omdat deze bitmanipulaties opnieuw op vaste plaatsen plaatsvinden kunnen we dit realiseren met behulp van verbindingen. De enige twee aspecten die enige logica vereisen is de test of $Z\geq D$ is (lijn \ref{algl:devisionFSMDComp}), en het eventueel aftrekken van $D$ uit $Z$ (lijn \ref{algl:devisionFSMDSub}). Daarnaast moeten we tijdens de uitvoer van de \textbf{for} lus ook controleren of $I\geq 0$. In dat geval dienen we immers nogmaals de for-lus uit te voeren. We kunnen dit echter controleren met een simpele OR-poort die alle bits van $I$ samenneemt. Indien minstens \'e\'en van de bits een 1 is, zal de OR-lus een 1 teruggeven, en dienen we dus nog een cyclus uit te voeren. Dit leidt ertoe dat we ons algoritme in drie toestanden opdelen:
+\begin{enumerate}
+ \item $S_0$: inlezen van invoer, initialiseren van variabelen en wachten totdat $ci$ hoog wordt (lijnen \ref{algl:s1start}-\ref{algl:s1stop}).
+ \item $S_1$: uitvoeren van een cyclus van de \textbf{for} lus en $I$ met 1 verlagen (lijnen \ref{algl:s2start}-\ref{algl:s2stop}).
+ \item $S_2$: resultaten op de uitgang plaatsen en wachten tot $ci$ laag wordt (lijnen \ref{algl:s3start}-\ref{algl:s3stop}).
+\end{enumerate}
 \subsection{Toestand-Actie Tabel}
+Nu we de toestanden hebben vastgesteld kunnen we het algoritme verder formaliseren. Dit zouden we kunnen doen met een grafische voorstelling zoals we gedaan hebben met een eindige toestandsautomaat. Het probleem is dat een rij in het toestandsdiagram niet enkel de voorwaarden en eventuele uitgangen bevat, daarnaast dient het ook nog de acties die door het datapad moeten worden uitgevoerd weer te geven. Dit zou leiden tot een complex en chaotisch diagram. Daarom verkiezen we een tabel: de ``\termen{Toestand-Actie Tabel}''. De tabel bestaat grofweg uit drie gedeeltes:
+\begin{itemize}
+ \item de huidige toestand: de huidige toestand waarin de controller zich bevindt.
+ \item Een toestandsgedeelte: die we kunnen vergelijken met de toestandstabel van een eindige toestandsautomaat. De tabel bevat volgende kolommen:
+ \begin{itemize}
+  \item condities (afhankelijk van controle- en status-signalen)
+  \item de volgende toestand
+  \item de uitvoer (van eventuele controle-uitgangen).
+ \end{itemize}
+ \item een controle-actie gedeelte. Dit gedeelte bevat twee kolommen:
+ \begin{itemize}
+  \item conditie: een set voorwaarden wanneer een bepaalde set acties (gespecificeerd in de volgende kolom) moet worden uitgevoerd.
+  \item actie: afhankelijk van de conditie welke opdrachten uitgevoerd worden op de variabelen in een klokcyclus.
+ \end{itemize}
+\end{itemize}
+Tabel \ref{tbl:stateActionTableRunningExample} toont de toestand-actie tabel van \algoref{alg:devisionFSMDRev}. Een belangrijke opmerking is dat het onderverdelen van toestanden in condities bij het toestandsgedeelte niet verder loopt bij het onderverdelen van diezelfde toestand in het controle-actie gedeelte. Dit betekent dus dat de conditie bij de volgende toestand niet de conditie bij de controle- en datapad-acties impliceert en omgekeerd. Concreet betekent dit dus dat indien $I>0$, dit niet betekent dat $z_2z_1z_0x_3<D$ of dat we de bijbehorende datapad-acties moeten uitvoeren. Het toestandsgedeelte en het controle-actie gedeelte zijn dus onafhankelijk en zijn enkel afhankelijk van de huidige toestand.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c!{\vrule width 1pt}c|c|c!{\vrule width 1pt}c|c}
+Huidige&\multicolumn{2}{c|}{Volgende toestand}&Uit-&\multicolumn{2}{c}{Controle- \& datapad-acties}\\
+Toestand&Conditie&Toestand&gang&Conditie&Acties\\\noalign{\hrule height 1pt}
+\multirow{4}{*}{$S_0$}&\multirow{2}{*}{$ci=0$}&\multirow{2}{*}{$S_0$}&\multirow{2}{*}{$co=0$}&&$X\gets N$\\
+&&&&&$Y\gets 0$\\\cline{2-4}
+&\multirow{2}{*}{$ci=1$}&\multirow{2}{*}{$S_1$}&\multirow{2}{*}{$co=0$}&&$Z\gets 0$\\
+&&&&&$I\gets 3$\\\noalign{\hrule height 1pt}
+\multirow{8}{*}{$S_1$}&\multirow{4}{*}{$I>0$}&\multirow{4}{*}{$S_1$}&\multirow{4}{*}{$co=0$}&\multirow{4}{*}{$z_2z_1z_0x_3<D$}&$Z\gets z_2z_1z_0x_3$\\
+&&&&&$X\gets X\shlcmd 1$\\
+&&&&&$Y\gets Y\shlcmd 1$\\
+&&&&&$I\gets I-1$\\\cline{2-6}
+&\multirow{4}{*}{$I=0$}&\multirow{4}{*}{$S_2$}&\multirow{4}{*}{$co=0$}&\multirow{4}{*}{$z_2z_1z_0x_3\geq D$}&$Z\gets z_2z_1z_0x_3-D$\\
+&&&&&$X\gets X\shlcmd 1$\\
+&&&&&$Y\gets y_2y_1y_01$\\
+&&&&&$I\gets I-1$\\\noalign{\hrule height 1pt}
+\multirow{6}{*}{$S_2$}&\multirow{3}{*}{$ci=0$}&\multirow{3}{*}{$S_0$}&$co=1$&&\\
+&&&$Q=Y$&&\\
+&&&$R=Z$&&\\\cline{2-4}
+&\multirow{3}{*}{$ci=1$}&\multirow{3}{*}{$S_2$}&$co=1$&&\\
+&&&$Q=Y$&&\\
+&&&$R=Z$&&\\
+\end{tabular}
+\caption{Toestand-actie tabel van het leidend voorbeeld.}
+\label{tbl:stateActionTableRunningExample}
+\end{table}
+\paragraph{Simulatie}Om ons meer vertrouwd te maken met het concept van een toestand-actie tabel zullen we een deling simuleren met behulp van de tabel. We zullen $N=12$ delen door $D=7$ op de processor en stap per stap kijken wat er verandert. Dit doen we met behulp van 
 \subsection{ASM-Schema}
 \section{Geheugencomponenten}
 \label{s:memoryFSMD}
 \subsection{Registerbank}
 \subsection{Random Access Memory (RAM)}
-\subsection{Stack (Last-In-First-Out)}
-\subsection{Queue (First-In-First-Out)}
+\subsection{Stack (LIFO: Last-In-First-Out)}
+\subsection{Queue (FIFO: First-In-First-Out)}
 \section{Synthese van een Niet-Programmeerbare Processor}
 \label{s:syntheseFSMD}
 \section{Tijdsgedrag}
