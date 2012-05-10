@@ -238,26 +238,65 @@ Zoals reeds gezegd is de visualisatie van een eindige toestandsautomaat niet toe
 \centering
 \subfigure[Toestandskader]{
 \begin{tikzpicture}
-
+\node[asmS] (S) at (0,0) {$\begin{array}{c}\mbox{niet conditioneel commando 1}\\\mbox{niet conditioneel commando 2}\\\cdots\\\mbox{niet conditioneel commando $n$}\end{array}$};
+\draw[<-] (S) -- ++(0,1.5) node[anchor=south]{in};
+\draw[->] (S) -- ++(0,-1.5) node[anchor=north]{uit};
 \end{tikzpicture}
 \label{fig:asmElementState}
 }
 \subfigure[Beslissingskader]{
 \begin{tikzpicture}
-
+\node[asmD] (D) at (0,0) {test};
+\draw[<-] (D) -- ++(0,1.5) node[anchor=south]{in};
+\draw[->] (D) -| ++(-1.75,-1.5) node[anchor=north]{uit 1};
+\draw[->] (D) -| ++(1.75,-1.5) node[anchor=north]{uit 2};
+\draw (-1.75,0) node[anchor=south west,scale=0.75]{[True]};
+\draw (1.75,0) node[anchor=south east,scale=0.75]{[False]};
 \end{tikzpicture}
 \label{fig:asmElementDecision}
 }
 \subfigure[Conditioneel kader]{
 \begin{tikzpicture}
-
+\node[asmC] (C) at (0,0) {$\begin{array}{c}\mbox{conditioneel commando 1}\\\mbox{conditioneel commando 2}\\\cdots\\\mbox{conditioneel commando $n$}\end{array}$};
+\draw[<-] (C) -- ++(0,1.5) node[anchor=south]{in};
+\draw[->] (C) -- ++(0,-1.5) node[anchor=north]{uit};
 \end{tikzpicture}
 \label{fig:asmElementConditional}
 }
 \caption{Voorstelling van de verschillende ASM-elementen}
 \label{fig:asmElementsEnum}
 \end{figure}
+Deze ASM-elementen worden gegroepeerd in een ``\termen{ASM-blok}''. Al deze elementen worden dan in \'e\'en klokcyclus uitgevoerd. Hierdoor voorzien we per toestand in de Toestand-Actie tabel een ASM-blok. Het blok zelf moet dan specificeren wat er in de toestand gebeurt. We zullen dit component voorstellen met behulp van een vierkant met streepjeslijnen. Vermits alle acties in \'e\'en klokflank uitgevoerd worden, bevat elk ASM-blok exact \'e\'en toestandskader. Dit toestandskader bevat dan alle acties die onafhankelijk van condities in die toestand worden uitgevoerd. Indien er geen onafhankelijke operaties zijn, is het vierkant leeg.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}
+\node[asmS] (S1S) at (0,0) {$\begin{array}{c}X\gets N\\Y\gets 0\\Z\gets 0\\I\gets 3\\co=0\end{array}$};
+\node[asmD] (S1D) at (0,-2) {$ci=0$};
+\draw[->] (S1S) -- (S1D);
+\draw[->] (S1D) -| (-2,0) -- (S1S);
+\draw (-2,-2) node[anchor=south west,scale=0.75]{[True]};
+\draw (2,-2) node[anchor=south east,scale=0.75]{[False]};
 
+\node[asmS] (S2S) at (5,0) {$\begin{array}{c}X\gets N\\I\gets I-1\\co=0\end{array}$};
+\node[asmD] (S2D1) at (5,-2) {$ $};
+\node[asmD] (S2D2) at (5,-6) {$I>0$};
+\draw[->] (S1D) -| (2,1) -| (S2S);
+\draw[->] (S2D2) -| (3,0) -- (S2S);
+\draw (3,-6) node[anchor=south west,scale=0.75]{[True]};
+\draw (7,-6) node[anchor=south east,scale=0.75]{[False]};
+
+\node[asmS] (S3S) at (10,0) {$\begin{array}{c}co=1\end{array}$};
+\node[asmD] (S3D) at (10,-2) {$ci=1$};
+\draw[->] (S2D2) -| (7,1) -| (S3S);
+\draw[->] (S3S) -- (S3D);
+\draw[->] (S3D) -| (8,0) -- (S3S);
+\draw (8,-2) node[anchor=south west,scale=0.75]{[True]};
+\draw (12,-2) node[anchor=south east,scale=0.75]{[False]};
+\draw[->] (S3D) -| (12,1.5) -| (S1S);
+
+\end{tikzpicture}
+\caption{ASM-schema van het leidend voorbeeld.}
+\end{figure}
 \subsubsection{Traditionele Valkuilen}
 \section{Geheugencomponenten}
 \label{s:memoryFSMD}
