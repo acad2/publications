@@ -228,17 +228,20 @@ Toestand&Voldane Condities&Acties&Uitvoer\\\hline
 \end{table}
 We stellen dat vanaf dat we de simulatie beginnen, reeds de data reeds op de ingangen van de processor aangelegd staat. Bijgevolg is $ci=1$, $N=1100$ en $D=0101$. We maken verder ook een assumptie dat $X$, $Y$ en $Z$ 4-bit geheugens zijn, dit is redelijk vermits we uitsluitend bits in dit bereik gebruiken, en we geen schuifoperaties naar rechts uitvoeren waardoor hogere bits in het bereik zouden komen te liggen. $I$ is een 2-bit geheugen vermits het uitsluitend waardes tussen 0 en 3 moet aannemen. Initieel vertrekt de processor vanuit toestand $S_0$ we zien op die toestand-actie tabel dat in toestand $S_0$ de ingangen in de geheugens worden ingelezen. Vermits er data op de ingangen staat, krijgt $X$ de waarde van de teller $N=1100$. De overige variabelen worden ge\"initialiseerd zoals beschreven staat in de toestand-actie tabel. Omdat $ci=1$ kunnen we afleiden dat de volgende toestand $S_1$ is. Verder specificeert de tabel ook dat we een laag signaal op de controle-uitgang moeten aanleggen (momenteel staat er immers geen uitkomst op de uitgangen). In de volgende stap bevinden we ons in toestand $S_1$. We evalueren eerst de verschillende condities ??.
 \subsection{ASM-Schema}
-Zoals reeds gezegd is de visualisatie van een eindige toestandsautomaat niet toereikend om een algoritme weer te geven. Een grafisch voorstelling die we wel kunnen gebruiken is een ``\termen{Algorithmic-State-Machine Chart}'' ofwel ``\termen{ASM-schema}''. Een ASM-schema lijkt op een flow-chart en bestaat drie verschillende soorten ``\termen{ASM-elementen}'':
+Zoals reeds gezegd is de visualisatie van een eindige toestandsautomaat niet toereikend om een algoritme weer te geven. Een grafisch voorstelling die we wel kunnen gebruiken is een ``\termen{Algorithmic-State-Machine Chart}'' ofwel ``\termen{ASM-schema}''.
+\subsubsection{ASM-Elementen}
+Een ASM-schema lijkt op een flow-chart en bestaat drie verschillende soorten ``\termen{ASM-elementen}'':
 \begin{itemize}
- \item \termen{Toestandskader} ofwel \termen{state box}: dit is een set niet-conditionele toekenning. We stellen een toestandskader voor door middel van een rechthoek waarin we de toekenningen schrijven. De toekenningen in \'e\'en toestandskader worden parallel uitgevoerd. Figuur \ref{fig:asmElementState} toont een voorbeeld van een toestandskader.
+ \item \termen{Toestandskader} ofwel \termen{state box}: dit is een set niet-conditionele toekenning. We stellen een toestandskader voor door middel van een rechthoek waarin we de toekenningen schrijven. De toekenningen in \'e\'en toestandskader worden parallel uitgevoerd. Daarnaast bevat een toestandskader ook de status- en data-uitgangen van de processor. Men maakt een onderscheid doordat toekenningen met een pijl ($\gets$) weergegeven worden en uitgangen met een gelijkheidsteken ($=$). Figuur \ref{fig:asmElementState} toont een voorbeeld van een toestandskader.
  \item \termen{Beslissingskader} ofwel \termen{decision box}: dit is de voorstelling van een bepaalde conditie. Een conditie wordt voorgesteld met behulp van een ruit, waarin de conditie wordt geschreven. Vanuit een beslissingskader vertrekken er twee pijlen: voor het geval waarin de voorwaarde waar of vals is. Figuur \ref{fig:asmElementDecision} toont een voorbeeld van een beslissingskader.
- \item \termen{Conditioneel kader} ofwel \termen{conditional box}: Dit is een toestandskader die enkel onder voorwaarden gespecificeerd door een beslissingskader worden uitgevoerd. Ook deze toekenningen worden in parallel uitgevoerd. Men stelt een conditioneel kader voor als een rechthoek met afgeronde hoeken. Figuur \ref{fig:asmElementConditional} toont een voorbeeld van een conditioneel kader.
+ \item \termen{Conditioneel kader} ofwel \termen{conditional box}: Dit is een toestandskader die enkel onder voorwaarden gespecificeerd door een beslissingskader worden uitgevoerd. Ook deze toekenningen worden in parallel uitgevoerd. Verder bevat een conditioneel kader ook de conditionele uitvoer op de processoruitgangen. We noteren toekenningen en uitgangen op dezelfde manier als bij toestandskaders. Men stelt een conditioneel kader voor als een rechthoek met afgeronde hoeken. Figuur \ref{fig:asmElementConditional} toont een voorbeeld van een conditioneel kader.
 \end{itemize}
 \begin{figure}[hbt]
 \centering
 \subfigure[Toestandskader]{
 \begin{tikzpicture}
-\node[asmS] (S) at (0,0) {$\begin{array}{c}\mbox{niet conditioneel commando 1}\\\mbox{niet conditioneel commando 2}\\\cdots\\\mbox{niet conditioneel commando $n$}\end{array}$};
+%\node[asmS] (S) at (0,0) {$\begin{array}{c}\mbox{niet conditioneel commando 1}\\\mbox{niet conditioneel commando 2}\\\cdots\\\mbox{niet conditioneel commando $n$}\end{array}$};
+\node[asmS] (S) at (0,0) {$\begin{array}{c}\mbox{variabele$_1\gets$ expressie$_1$}\\\cdots\\\mbox{variabele$_m\gets$ expressie$_m$}\\\mbox{uitgang$_1=$ expressie$_{m+1}$}\\\cdots\\\mbox{uitgang$_n=$ expressie$_{m+n}$}\end{array}$};
 \draw[<-] (S) -- ++(0,1.5) node[anchor=south]{in};
 \draw[->] (S) -- ++(0,-1.5) node[anchor=north]{uit};
 \end{tikzpicture}
@@ -257,7 +260,8 @@ Zoals reeds gezegd is de visualisatie van een eindige toestandsautomaat niet toe
 }
 \subfigure[Conditioneel kader]{
 \begin{tikzpicture}
-\node[asmC] (C) at (0,0) {$\begin{array}{c}\mbox{conditioneel commando 1}\\\mbox{conditioneel commando 2}\\\cdots\\\mbox{conditioneel commando $n$}\end{array}$};
+%\node[asmC] (C) at (0,0) {$\begin{array}{c}\mbox{conditioneel commando 1}\\\mbox{conditioneel commando 2}\\\cdots\\\mbox{conditioneel commando $n$}\end{array}$};
+\node[asmC] (C) at (0,0) {$\begin{array}{c}\mbox{variabele$_1\gets$ expressie$_1$}\\\cdots\\\mbox{variabele$_m\gets$ expressie$_m$}\\\mbox{uitgang$_1=$ expressie$_{m+1}$}\\\cdots\\\mbox{uitgang$_n=$ expressie$_{m+n}$}\end{array}$};
 \draw[<-] (C) -- ++(0,1.5) node[anchor=south]{in};
 \draw[->] (C) -- ++(0,-1.5) node[anchor=north]{uit};
 \end{tikzpicture}
@@ -266,7 +270,8 @@ Zoals reeds gezegd is de visualisatie van een eindige toestandsautomaat niet toe
 \caption{Voorstelling van de verschillende ASM-elementen}
 \label{fig:asmElementsEnum}
 \end{figure}
-Deze ASM-elementen worden gegroepeerd in een ``\termen{ASM-blok}''. Al deze elementen worden dan in \'e\'en klokcyclus uitgevoerd. Hierdoor voorzien we per toestand in de Toestand-Actie tabel een ASM-blok. Het blok zelf moet dan specificeren wat er in de toestand gebeurt. We zullen dit component voorstellen met behulp van een vierkant met streepjeslijnen. Vermits alle acties in \'e\'en klokflank uitgevoerd worden, bevat elk ASM-blok exact \'e\'en toestandskader. Dit toestandskader bevat dan alle acties die onafhankelijk van condities in die toestand worden uitgevoerd. Indien er geen onafhankelijke operaties zijn, is het vierkant leeg.
+\subsubsection{Het ASM-Blok}
+Deze ASM-elementen worden gegroepeerd in een ``\termen{ASM-blok}''. Alle ASM-elementen die in eenzelfde ASM-blok zitten, worden dan in \'e\'en klokcyclus uitgevoerd. Hierdoor voorzien we per toestand in de Toestand-Actie tabel een ASM-blok. Het blok zelf moet dan specificeren wat er in de toestand gebeurt. We zullen dit component voorstellen met behulp van een vierkant met streepjeslijnen. Vermits alle acties in \'e\'en klokflank uitgevoerd worden, bevat elk ASM-blok exact \'e\'en toestandskader. Dit toestandskader bevat dan alle toekenningen en uitgangen die onafhankelijk van condities in die toestand worden uitgevoerd. Indien er geen onafhankelijke operaties zijn, is het vierkant leeg. Indien er naast onafhankelijke acties ook onafhankelijk acties gebeuren (zowel in het toestand- als het actie-gedeelte), zullen we vervolgens enkele beslissingskaders plaatsen. 
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
