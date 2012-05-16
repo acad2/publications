@@ -321,28 +321,27 @@ Deze ASM-elementen worden gegroepeerd in een ``\termen{ASM-blok}''. Alle ASM-ele
 \end{figure}
 \subsubsection{Traditionele Valkuilen}
 Traditioneel maakt men een aantal fouten tegen ASM-schemas. In deze subsubsectie zullen we een overzicht geven van de meest gemaakte fouten.
-\paragraph{Meerdere volgende toestanden}Men kan in een ASM-schema een flow chart tekenen waarbij onder bepaalde condities, men twee verschillende pijlen kan volgen. Een voorbeeld van zo'n flow chart staat op figuur \ref{fig:badASMMultipleFlows}. Indien bijvoorbeeld test $t_1$ slaagt en $t2$ faalt, dienen we de stromen naar $A_1$ \'en $A_3$ te volgen. Dit is niet zo problematisch wanneer dit in hetzelfde ASM-blok gebeurd (we kunnen argumenteren dat we dan alle toewijzingen uit $A_1$ en $A_3$ uitvoeren). Indien we echter later naar verschillende toestanden gaan krijgen we problemen. We kunnen dit probleem makkelijk verhelpen door geen vertakkingen met pijlen toe te staan. Enkel uit het beslissingkader vertrekken twee pijlen. Uit een toestands- en conditioneel kader vertrekt altijd slechts \'e\'en pijl. Het samenbrengen van pijlen is wel toegelaten.
 \begin{figure}[hbt]
 \centering
 \subfigure[Meerdere volgende toestanden]{
 \begin{tikzpicture}
 \node[asmS] (A0) at (0,0) {$A_0$};
-\node[asmD] (T0) at (-1.75,-1.75) {$t_1$};
-\node[asmD] (T1) at (1.75,-1.75) {$t_2$};
-\node[asmS] (A1) at (-3,-3.5) {$A_1$};
-\node[asmS] (A2) at (0,-3.5) {$A_2$};
-\node[asmS] (A3) at (3,-3.5) {$A_3$};
+\node[asmD] (T0) at (-1.75,-1.25) {$t_1$};
+\node[asmD] (T1) at (1.75,-1.25) {$t_2$};
+\node[asmS] (A1) at (-3,-2.375) {$A_1$};
+\node[asmS] (A2) at (0,-2.375) {$A_2$};
+\node[asmS] (A3) at (3,-2.375) {$A_3$};
 \setTrueFalseLabels{T0};
 \setTrueFalseLabels{T1};
-\draw[->] (A0) -- (0,-0.75) -| (T0);
-\draw[->] (0,-0.75) -| (T1);
+\draw[->] (A0) -- (0,-0.5) -| (T0);
+\draw[->] (0,-0.5) -| (T1);
 \draw[->] (T0) -| (A1);
 \draw[->] (T1) -| (A3);
 \draw[->] (T0) -| (A2);
-\draw[<-] (A0) -- ++(0,1);
-\draw (T1) -| (0,-1.75);
-\pdot{0,-0.75};
-\pdot{0,-1.75};
+\draw[<-] (A0) -- ++(0,0.75);
+\draw (T1) -| (0,-1.25);
+\pdot{0,-0.5};
+\pdot{0,-1.25};
 \begin{pgfonlayer}{background}
 \node[asmB, fit=(A0) (T0) (T1)] (S1) {};
 \node[asmB, fit=(A1)] (S2) {};
@@ -359,14 +358,14 @@ Traditioneel maakt men een aantal fouten tegen ASM-schemas. In deze subsubsectie
 \subfigure[Geen volgende toestanden]{
 \begin{tikzpicture}
 \node[asmS] (A0) at (0,0) {$A_0$};
-\node[asmD] (T0) at (0,-1.75) {$t_1$};
-\node[asmS] (A1) at (1.25,-3.5) {$A_1$};
+\node[asmD] (T0) at (0,-1.25) {$t_1$};
+\node[asmS] (A1) at (1.25,-2.375) {$A_1$};
 \setTrueFalseLabels{T0};
 \draw[->] (A0) -- (T0);
 \draw[->] (T0) -| (A1);
-\draw[<-] (A0) -- ++(0,1);
-\draw (T0) -| (-1.25,-0.75) -- (0,-0.75);
-\pdot{0,-0.75};
+\draw[<-] (A0) -- ++(0,0.75);
+\draw (T0) -| (-1.25,-0.5) -- (0,-0.5);
+\pdot{0,-0.5};
 \begin{pgfonlayer}{background}
 \node[asmB, fit=(A0) (T0)] (S1) {};
 \node[asmB, fit=(A1)] (S2) {};
@@ -381,14 +380,14 @@ Traditioneel maakt men een aantal fouten tegen ASM-schemas. In deze subsubsectie
 \node[asmS] (A0) at (0,0) {$X\gets 0$};
 \node[asmD] (T0) at (0,-0.75) {$t_1$};
 \node[asmC] (A1) at (1.25,-1.5) {$X\gets 1$};
-\node[asmS] (A2) at (0,-3) {$A_0$};
+\node[asmS] (A2) at (0,-2.5) {$A_0$};
 \setTrueFalseLabels{T0};
 \draw[->] (A0) -- (T0);
 \draw[->] (T0) -| (A1);
-\draw[<-] (A0) -- ++(0,1);
-\draw[->] (T0) -| (-1.25,-2.25) -| (A2);
-\draw (A1) |- (0,-2.25);
-\pdot{0,-2.25};
+\draw[<-] (A0) -- ++(0,0.75);
+\draw[->] (T0) -| (-1.25,-2) -| (A2);
+\draw (A1) |- (0,-2);
+\pdot{0,-2};
 \begin{pgfonlayer}{background}
 \node[asmB, fit=(A0) (T0) (A1)] (S1) {};
 \node[asmB, fit=(A2)] (S2) {};
@@ -403,14 +402,14 @@ Traditioneel maakt men een aantal fouten tegen ASM-schemas. In deze subsubsectie
 \node[asmS] (A0) at (0,0.25) {$a\gets a-1$};
 \node[asmD] (T0) at (0,-0.75) {$a>3$};
 \node[asmC] (A1) at (-1.25,-1.5) {$b\gets 2$};
-\node[asmS] (A2) at (0,-3) {$A_0$};
+\node[asmS] (A2) at (0,-2.5) {$A_0$};
 \setTrueFalseLabels{T0};
 \draw[->] (A0) -- (T0);
 \draw[->] (T0) -| (A1);
-\draw[<-] (A0) -- (0,1);
-\draw[->] (T0) -| (1.25,-2.25) -| (A2);
-\draw (A1) |- (0,-2.25);
-\pdot{0,-2.25};
+\draw[<-] (A0) -- ++(0,0.75);
+\draw[->] (T0) -| (1.25,-2) -| (A2);
+\draw (A1) |- (0,-2);
+\pdot{0,-2};
 \begin{pgfonlayer}{background}
 \node[asmB, fit=(A0) (T0) (A1)] (S1) {};
 \node[asmB, fit=(A2)] (S2) {};
@@ -420,9 +419,34 @@ Traditioneel maakt men een aantal fouten tegen ASM-schemas. In deze subsubsectie
 \end{tikzpicture}
 \label{fig:badASMTests}
 }
+\subfigure[Gebruik nieuwe waarde]{
+\begin{tikzpicture}
+\node[asmS] (A00) at (0,0) {$y\gets x+1$};
+\node[asmS] (A01) at (0,-1) {$z\gets y+2$};
+\draw[->] (0,0.75) -- (A00);
+\draw[->] (A00) -- (A01);
+\draw[->] (A01) -- (0,-1.75);
+\node (A) at (1.5,-0.5) {$\neq$};
+\node[asmS] (A1) at (3,-0.5) {$\begin{array}{c}y\gets x+1\\z\gets y+2\end{array}$};
+\draw[->] (3,0.75) -- (A1);
+\draw[->] (A1) -- (3,-1.75);
+\end{tikzpicture}
+\label{fig:badASMUsage}
+}
+\subfigure[Conditioneel na toestandskader]{
+\begin{tikzpicture}
+\node[asmS,minimum width=3cm] (A00) at (0,0) {$A_0$};
+\node[asmC,minimum width=3cm] (A01) at (0,-1) {$A_1$};
+\draw[->] (0,0.75) -- (A00);
+\draw[->] (A00) -- (A01);
+\draw[->] (A01) -- (0,-1.75);
+\end{tikzpicture}
+\label{fig:badCAfterS}
+}
 \caption{Traditionele valkuilen bij het maken van ASM-schema's.}
 \label{fig:badASM}
 \end{figure}
+\paragraph{Meerdere volgende toestanden}Men kan in een ASM-schema een flow chart tekenen waarbij onder bepaalde condities, men twee verschillende pijlen kan volgen. Een voorbeeld van zo'n flow chart staat op figuur \ref{fig:badASMMultipleFlows}. Indien bijvoorbeeld test $t_1$ slaagt en $t2$ faalt, dienen we de stromen naar $A_1$ \'en $A_3$ te volgen. Dit is niet zo problematisch wanneer dit in hetzelfde ASM-blok gebeurd (we kunnen argumenteren dat we dan alle toewijzingen uit $A_1$ en $A_3$ uitvoeren). Indien we echter later naar verschillende toestanden gaan krijgen we problemen. We kunnen dit probleem makkelijk verhelpen door geen vertakkingen met pijlen toe te staan. Enkel uit het beslissingkader vertrekken twee pijlen. Uit een toestands- en conditioneel kader vertrekt altijd slechts \'e\'en pijl. Het samenbrengen van pijlen is wel toegelaten.
 \paragraph{Geen volgende toestand}Ook het omgekeerde kan voorkomen: een ASM-blok waarbij we geen volgende toestand bekomen bij een bepaalde situatie. Figuur \ref{fig:badASMNoFlows} toont een minimaal voorbeeld: indien aan $t_1$ wordt voldaan zullen we nooit naar een volgende toestand overgaan. Dit komt omdat de pijl nooit een toestandskader bereikt (en we dus in een volgende toestand komen. Ook dit probleem kunnen we eenvoudig voorkomen: in elk ASM-blok gaan alle mogelijke lussen doorheen het toestandskader.
 \paragraph{Verschillende toekenningen aan dezelfde variabele} Tijdens \'e\'en klokflank kan een variabele slechts \'e\'enmaal van waarde veranderen. We kunnen in een ASM-blok echter meerdere kaders plaatsen die elk een waarde aan dezelfde variabele toekennen. Figuur \ref{fig:badASMMultipleAssignments} toont zo'n situatie: indien $t_1$ niet waar is, kennen we zowel $0$ als $1$ toe aan $X$. Men kan argumenteren dat $X$ dan de waarde $1$ krijgt, omdat dit de laatste toekenning is aan $X$ in het diagram. De componenten die in een ASM-blok staan kunnen dus vrij verandert worden in volgorde. Bovendien zullen we in sectie \ref{s:syntheseFSMD} een mechanisme ontwikkelen om deze ASM-schema's om te zetten in hardware. Incorrecte ASM-schema's zullen leiden tot implementatiefouten. We kunnen dit voorkomen door bij elk ASM-blok alle mogelijke paden te analyseren en te controleren dat geen variabele twee toewijzingen krijgt.
 \paragraph{Testen van nieuwe waarde} Omdat alles in een ASM-blok tegelijk gebeurt zijn de waardes van variabelen ook nog niet aangepast wanneer we een toestandsblok verlaten. Zolang we ons echter nog in hetzelfde ASM-blok bevinden, zijn die aanpassingen nog niet doorgevoerd. Stel dat we bijvoorbeeld volgende \texttt{C} programma beschouwen:
@@ -432,7 +456,12 @@ if(a > 3) {
   b = 2;
 }
 \end{verbatim}
-Dan kunnen we dit vertalen naar \'e\'en toestand in het ASM-schema. Figuur \ref{fig:badASMTests} is echter niet de juiste vertaling. Stel immers dat $a=4$ dan zal in het \texttt{C}-programma de \texttt{if}-lus niet uitgevoerd worden, $a$ heeft immers voor het \texttt{if}-statement de waarde $3$. In het ASM-schema krijgt $a$ ook de waarde $3$, maar alleen nadat we het ASM-blok verlaten hebben. Bijgevolg zal bij de voorwaarde $a$ nog steeds de waarde $4$ hebben. En zal de \texttt{if}-lus uitgevoerd worden.
+Dan kunnen we dit vertalen naar \'e\'en toestand in het ASM-schema. Figuur \ref{fig:badASMTests} is echter niet de juiste vertaling. Stel immers dat $a=4$ dan zal in het \texttt{C}-programma de \texttt{if}-lus niet uitgevoerd worden, $a$ heeft immers voor het \texttt{if}-statement de waarde $3$. In het ASM-schema krijgt $a$ ook de waarde $3$, maar alleen nadat we het ASM-blok verlaten hebben. Bijgevolg zal bij de voorwaarde $a$ nog steeds de waarde $4$ hebben. En zal de \texttt{if}-lus uitgevoerd worden. Een oplossing is om in dit geval gewoon te testen op $a-1>3$ of dus $a>4$.
+\paragraph{Gebruiken van een nieuwe waarde} Een verwante traditionele fout is het gebruiken van de nieuwe waarde in de volgende berekening. Indien beide kaders in een verschillend ASM-blok of -element staan, is dit uiteraard toegelaten. Indien de toekenningen in hetzelfde ASM-element of ASM-blok staan, worden de opdrachten parallel uitgevoerd, en zullen we dus de oude waarde gebruiken. Men kan dit fenomeen testen door de volgorde van toekenningen in een ASM-element te wijzigen of de beslissingskaders en hun bijbehorende conditionele kaders anders te schikken. Nadat deze volgorde dan wijzigt, zou het programma nog steeds op dezelfde manier moeten werken.
+\paragraph{Aanduiden van controller-uitgangen}
+
+\paragraph{Conditioneel kader na toestandskader}Een laatste fout die regelmatig terugkomt is het plaatsen van een conditioneel kader na een toestandskader. Vermits er geen beslissingskader aan vooraf gaat, is dit conditioneel kader helemaal niet gebonden aan een voorwaarde. Dit probleem lossen we op door het conditioneel kader om te vormen tot een toestandskader. Indien beide kaders bovendien in eenzelfde ASM-blok staan, kunnen we de inhoud van beide kaders samennemen in \'e\'en toestandskader.
+\subsubsection{Inputgebaseerde en Toestandsgebaseerde ASM-schema's}
 \section{Geheugencomponenten}
 \label{s:memoryFSMD}
 \subsection{Registerbank}
