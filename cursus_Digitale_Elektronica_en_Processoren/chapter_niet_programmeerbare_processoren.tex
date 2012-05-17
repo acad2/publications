@@ -302,7 +302,7 @@ Deze ASM-elementen worden gegroepeerd in een ``\termen{ASM-blok}''. Alle ASM-ele
 
 \node[asmS] (S3S) at (2*\ds,0) {$\begin{array}{c}co=1\end{array}$};
 \node[asmD] (S3D) at (2*\ds,\dy) {$ci=1$};
-\node[asmN] (N1) at (2*\ds,2*\dy) {test};
+\node[asmN] (N1) at (2*\ds,2*\dy) {$\begin{array}{c}Q=Y\\R=Z\end{array}$};
 \draw[->] (S2D2) -| (\ds+2*\di,\offset) -| (S3S);
 \draw[->] (S3S) -- (S3D);
 \draw[->] (S3D) -| (2*\ds-\di,0) -- (S3S);
@@ -444,10 +444,17 @@ Traditioneel maakt men een aantal fouten tegen ASM-schemas. In deze subsubsectie
 \end{tikzpicture}
 \label{fig:badCAfterS}
 }
+\subfigure[Toewijzen uitgang]{
+\begin{tikzpicture}
+\node[asmS] (A1) at (3,-0.5) {$\mbox{uitgang}\gets\mbox{expressie}$};
+\draw[->] (3,0.75) -- (A1);
+\draw[->] (A1) -- (3,-1.75);
+\end{tikzpicture}
+}
 \caption{Traditionele valkuilen bij het maken van ASM-schema's.}
 \label{fig:badASM}
 \end{figure}
-\paragraph{Meerdere volgende toestanden}Men kan in een ASM-schema een flow chart tekenen waarbij onder bepaalde condities, men twee verschillende pijlen kan volgen. Een voorbeeld van zo'n flow chart staat op figuur \ref{fig:badASMMultipleFlows}. Indien bijvoorbeeld test $t_1$ slaagt en $t2$ faalt, dienen we de stromen naar $A_1$ \'en $A_3$ te volgen. Dit is niet zo problematisch wanneer dit in hetzelfde ASM-blok gebeurd (we kunnen argumenteren dat we dan alle toewijzingen uit $A_1$ en $A_3$ uitvoeren). Indien we echter later naar verschillende toestanden gaan krijgen we problemen. We kunnen dit probleem makkelijk verhelpen door geen vertakkingen met pijlen toe te staan. Enkel uit het beslissingkader vertrekken twee pijlen. Uit een toestands- en conditioneel kader vertrekt altijd slechts \'e\'en pijl. Het samenbrengen van pijlen is wel toegelaten.
+\paragraph{Meerdere volgende toestanden}Men kan in een ASM-schema een flow chart tekenen waarbij onder bepaalde condities, men twee verschillende pijlen kan volgen. Een voorbeeld van zo'n flow chart staat op figuur \ref{fig:badASMMultipleFlows}. Indien bijvoorbeeld test $t_1$ slaagt en $t2$ faalt, dienen we de stromen naar $A_1$ \'en $A_3$ te volgen. Dit is niet zo problematisch wanneer dit in hetzelfde ASM-blok gebeurd (we kunnen argumenteren dat we dan alle toewijzingen uit $A_1$ en $A_3$ uitvoeren). Indien we echter later naar verschillende toestanden gaan krijgen we problemen. We kunnen dit probleem makkelijk verhelpen door geen vertakkingen met pijlen toe te staan. Enkel uit het beslissingskader vertrekken twee pijlen. Uit een toestands- en conditioneel kader vertrekt altijd slechts \'e\'en pijl. Het samenbrengen van pijlen is wel toegelaten.
 \paragraph{Geen volgende toestand}Ook het omgekeerde kan voorkomen: een ASM-blok waarbij we geen volgende toestand bekomen bij een bepaalde situatie. Figuur \ref{fig:badASMNoFlows} toont een minimaal voorbeeld: indien aan $t_1$ wordt voldaan zullen we nooit naar een volgende toestand overgaan. Dit komt omdat de pijl nooit een toestandskader bereikt (en we dus in een volgende toestand komen. Ook dit probleem kunnen we eenvoudig voorkomen: in elk ASM-blok gaan alle mogelijke lussen doorheen het toestandskader.
 \paragraph{Verschillende toekenningen aan dezelfde variabele} Tijdens \'e\'en klokflank kan een variabele slechts \'e\'enmaal van waarde veranderen. We kunnen in een ASM-blok echter meerdere kaders plaatsen die elk een waarde aan dezelfde variabele toekennen. Figuur \ref{fig:badASMMultipleAssignments} toont zo'n situatie: indien $t_1$ niet waar is, kennen we zowel $0$ als $1$ toe aan $X$. Men kan argumenteren dat $X$ dan de waarde $1$ krijgt, omdat dit de laatste toekenning is aan $X$ in het diagram. De componenten die in een ASM-blok staan kunnen dus vrij verandert worden in volgorde. Bovendien zullen we in sectie \ref{s:syntheseFSMD} een mechanisme ontwikkelen om deze ASM-schema's om te zetten in hardware. Incorrecte ASM-schema's zullen leiden tot implementatiefouten. We kunnen dit voorkomen door bij elk ASM-blok alle mogelijke paden te analyseren en te controleren dat geen variabele twee toewijzingen krijgt.
 \paragraph{Testen van nieuwe waarde} Omdat alles in een ASM-blok tegelijk gebeurt zijn de waardes van variabelen ook nog niet aangepast wanneer we een toestandsblok verlaten. Zolang we ons echter nog in hetzelfde ASM-blok bevinden, zijn die aanpassingen nog niet doorgevoerd. Stel dat we bijvoorbeeld volgende \texttt{C} programma beschouwen:
@@ -459,11 +466,108 @@ if(a > 3) {
 \end{verbatim}
 Dan kunnen we dit vertalen naar \'e\'en toestand in het ASM-schema. Figuur \ref{fig:badASMTests} is echter niet de juiste vertaling. Stel immers dat $a=4$ dan zal in het \texttt{C}-programma de \texttt{if}-lus niet uitgevoerd worden, $a$ heeft immers voor het \texttt{if}-statement de waarde $3$. In het ASM-schema krijgt $a$ ook de waarde $3$, maar alleen nadat we het ASM-blok verlaten hebben. Bijgevolg zal bij de voorwaarde $a$ nog steeds de waarde $4$ hebben. En zal de \texttt{if}-lus uitgevoerd worden. Een oplossing is om in dit geval gewoon te testen op $a-1>3$ of dus $a>4$.
 \paragraph{Gebruiken van een nieuwe waarde} Een verwante traditionele fout is het gebruiken van de nieuwe waarde in de volgende berekening. Een voorbeeld van dit concept staat op figuur \ref{fig:badASMUsage}. Hier zien we twee ASM-schema's die niet equivalent zijn. Indien bijvoorbeeld $x=2$ en $y=1$ zal in de eerste flow $z=5$. In het tweede geval is $z=3$. Indien beide kaders in een verschillend ASM-blok of -element staan, is dit uiteraard toegelaten. Indien de toekenningen in hetzelfde ASM-element of ASM-blok staan, worden de opdrachten parallel uitgevoerd, en zullen we dus de oude waarde gebruiken. Men kan dit fenomeen testen door de volgorde van toekenningen in een ASM-element te wijzigen of de beslissingskaders en hun bijbehorende conditionele kaders anders te schikken. Nadat deze volgorde dan wijzigt, zou het programma nog steeds op dezelfde manier moeten werken.
-\paragraph{Aanduiden van controller-uitgangen}We zijn reeds kort ingegaan op de notatie van uitgangen in de toestand- en conditionele kaders. We noteren de waarde van een uitgang met behulp van een gelijheidsteken ($=$). Indien we de uitgang niet vermelden, staat er een 0 op die uitgang (in het geval van meerdere bits, zijn alle bits dus 0). Soms komt het ook voor dat een uitgang in elke toestand een combinatorische schakeling van enkele variabelen is. In dat geval moeten we deze uitgang niet in elk toestandskader vermelden, maar volstaat het om een nota te maken, zoals we ook op figuur \ref{fig:aSMSchemaRunningExample}. Deze nota is geen onderdeel van het ASM-schema, en wordt makkelijk vergeten.
+\paragraph{Aanduiden van controller-uitgangen}We zijn reeds kort ingegaan op de notatie van uitgangen in de toestand- en conditionele kaders. We noteren de waarde van een uitgang met behulp van een gelijkheidsteken ($=$). Indien we de uitgang niet vermelden, staat er een 0 op die uitgang (in het geval van meerdere bits, zijn alle bits dus 0). Soms komt het ook voor dat een uitgang in elke toestand een combinatorische schakeling van enkele variabelen is. In dat geval moeten we deze uitgang niet in elk toestandskader vermelden, maar volstaat het om een nota te maken, zoals we ook op figuur \ref{fig:aSMSchemaRunningExample}. Deze nota is geen onderdeel van het ASM-schema, en wordt makkelijk vergeten.
 \paragraph{Conditioneel kader na toestandskader}Een laatste fout die regelmatig terugkomt is het plaatsen van een conditioneel kader na een toestandskader zoals op figuur \ref{fig:badCAfterS}. Vermits er geen beslissingskader aan vooraf gaat, is dit conditioneel kader helemaal niet gebonden aan een voorwaarde. Dit probleem lossen we op door het conditioneel kader om te vormen tot een toestandskader. Indien beide kaders bovendien in eenzelfde ASM-blok staan, kunnen we de inhoud van beide kaders samennemen in \'e\'en toestandskader.
 \subsubsection{Inputgebaseerde en Toestandsgebaseerde ASM-schema's}
+We hebben het reeds kort gehad over het toekennen van toestanden aan delen van een programma besproken. Een belangrijk aspect daarbij is dat we ASM-schema's kunnen onderverdelen in twee categorie\"en:
+\begin{itemize}
+ \item \termen{Inputgebaseerd ASM-schema}: In dit schema kunnen we de waarde van testen (status-signale) en controle-ingangen onmiddellijk gebruiken. Een inputgebaseerd ASM-schema van het leidend voorbeeld stond op figuur \ref{fig:aSMSchemaRunningExample}.
+ \item \termen{Toestandsgebaseerd ASM-schema}: Hierbij kunnen we de waardes van testen (status-signalen) en controle-ingangen pas in de volgende klokflank gebruiken. Het betekent dus dat elke voorwaardelijke uitvoering van een opdracht gepaard gaat met de overgang naar een nieuwe toestand. Bijgevolg bevat dit diagram ook geen conditionele kaders.
+\end{itemize}
+Inputgebaseerde ASM-schema's kunnen meer opdrachten uitvoeren in een klokflank, omdat we niet moeten wachten op het kloksignaal om conditionele operaties uit te voeren. Anderzijds zal dit ASM-schema tot een langere klokcyclus leiden. Dit komt omdat de testen eerst moeten berekend worden alvorens we sommige opdrachten kunnen uitvoeren. Een nadeel van toestandsgebaseerde ASM-schema's is dat we meer toestanden nodig hebben, wat zal leiden tot een groter geheugen en mogelijk ook logica.
+\paragraph{}
+De termen inputgebaseerd en toestandsgebaseerd komen van de controller. We hebben reeds besproken dat een controller een eindige toestandsautomaat is. Ook bij deze eindige toestandsautomaten hebben we deze indeling gemaakt. Een toestandsgebaseerd ASM-schema zal aanleiding geven tot een toestandsgebaseerde controller en vice versa. Bij wijze van voorbeeld zullen we het leidend voorbeeld ook met een toestandsgebaseerd ASM-schema visualiseren op figuur \ref{fig:aSMSchemaRunningExampleState}.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}
+\def\ds{6};
+\def\di{1.75};
+\def\dy{-2};
+\def\offset{1};
+\node[asmS] (S1S) at (0,0) {$\begin{array}{c}X\gets N\\Y\gets 0\\Z\gets 0\\I\gets 3\\co=0\end{array}$};
+\node[asmD] (S1D) at (0,\dy) {$ci=0$};
+\draw[->] (S1S) -- (S1D);
+\draw[->] (S1D) -| (-\di,0) -- (S1S);
+\setTrueFalseLabels{S1D};
+
+\node[asmS] (S2S) at (\ds,0) {$\begin{array}{c}X\gets N\\co=0\end{array}$};
+\node[asmD] (S2D1) at (\ds,\dy) {$z_2z_1z_0x_3<D$};
+\draw[->] (S2S) -- (S2D1);
+\node[asmS] (S4S) at (\ds-\di,2*\dy) {$\begin{array}{c}Z\gets z_2z_1z_0x_3\\I\gets I-1\\Y\gets Y\shlcmd{} 1\end{array}$};
+\draw[->] (S2D1) -| (S4S);
+\node[asmS] (S5S) at (\ds+\di,2*\dy) {$\begin{array}{c}Z\gets z_2z_1z_0x_3-D\\I\gets I-1\\Y\gets y_2y_1y_01\end{array}$};
+\draw[->] (S2D1) -| (S5S);
+\node[asmD] (S4D) at (\ds-\di,3*\dy) {$I>0$};
+\draw[->] (S4S) -| (S4D);
+\node[asmD] (S5D) at (\ds+\di,3*\dy) {$I>0$};
+\draw[->] (S5S) -| (S5D);
+\draw[->] (S1D) -| (\di,\offset) -| (S2S);
+\draw[->] (S4D) -| (\ds-2*\di,0) -- (S2S);
+\setTrueFalseLabels{S2D1};
+\setTrueFalseLabels{S4D};
+\setTrueFalseLabels{S5D};
+
+\node[asmS] (S3S) at (2*\ds,0) {$\begin{array}{c}co=1\end{array}$};
+\node[asmD] (S3D) at (2*\ds,\dy) {$ci=1$};
+\node[asmN] (N1) at (2*\ds,2*\dy) {$\begin{array}{c}Q=Y\\R=Z\end{array}$};
+\draw[->] (S4D) -| (\ds-0.375*\di,3.75*\dy) -| (\ds+2*\di,\offset) -| (S3S);
+\draw (S5D) -| (\ds+0.375*\di,3.5*\dy) -| (\ds-2*\di,0 |- S4D);
+\draw (S5D) -- (S5D -| \ds+2*\di,0);
+\pdot{S5D -| \ds+2*\di,0}
+\pdot{\ds-2*\di,0 |- S4D}
+\draw[->] (S3S) -- (S3D);
+\draw[->] (S3D) -| (2*\ds-\di,0) -- (S3S);
+\draw[->] (S3D) -| (\di+2*\ds,1.5) -| (S1S);
+\setTrueFalseLabels{S3D};
+\begin{pgfonlayer}{background}
+\node[asmB, fit=(S1S) (S1D)] (S1) {};
+\node[asmB, fit=(S2S) (S2D1)] (S2) {};
+\node[asmB, fit=(S3S) (S3D)] (S3) {};
+\node[asmB, fit=(S4S) (S4D)] (S4) {};
+\node[asmB, fit=(S5S) (S5D)] (S5) {};
+\end{pgfonlayer}
+\draw (S1.south west) node[anchor=south west]{$S_1$};
+\draw (S2.south west) node[anchor=south west]{$S_2$};
+\draw (S3.south west) node[anchor=south west]{$S_3$};
+\draw (S5.south west) node[anchor=south west]{$S_4$};
+\draw (S4.south west) node[anchor=south west]{$S_5$};
+\end{tikzpicture}
+\caption{Toestandsgebaseerd ASM-schema van het leidend voorbeeld.}
+\label{fig:aSMSchemaRunningExampleState}
+\end{figure}
 \section{Geheugencomponenten}
 \label{s:memoryFSMD}
+Alvorens we processoren kunnen implementeren zullen we eerst nieuwe componenten moeten introduceren. We zullen we deze componenten introduceren in een logische volgorde waarbij componenten gebruik maken van eerder ge\"introduceerde componenten.
+\subsection{Register File Cell (RFC)}
+Een \termen{register file cell} is een uitbreiding op een geklokte D-flipflop. Het component bevat een klok-ingang $\mbox{Clk}$, data-ingangen $D_{\mbox{\small{in}}1},\ldots,D_{\mbox{\small{in}}m}$, data-uitgangen $D_{\mbox{\small{out}}1},\ldots,D_{\mbox{\small{out}}n}$, \termen{leespoorten $\mbox{RE}_1,\mbox{RE}_{n}$} (ook wel ``\termen{Read-Enabled}'' genoemd) en \termen{schrijfpoorten $\mbox{WE}_1,\ldots,\mbox{WE}_{\left\lceil\log_2m+1\right\rceil}$} (ook wel ``\termen{Write-Enabled}'' genoemd). Deze ingangen laten ons toe om te kiezen uit welke data-ingang we data willen inlezen en deze bij de klokflank willen opslaan. Indien alle schrijfpoorten $\mbox{WE}_i=0$ lezen we geen nieuwe waarde in, en blijft de oude waarde behouden. In de andere gevallen dienen de schrijfpoorten een binaire getal $a$ te bepalen vanuit welke data-ingang $d_{\mbox{\small{in}}a}$ we data inlezen. Daarnaast 
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}
+\node[dff] (D) at (0,0) {};
+\node[mux4to1,rotate=90] (M) at (-1.75,0 |- D.D) {};
+\draw (M.output) -- (D.D);
+\node[tris] (T1) at (1.75,0 |- D.Q) {};
+\node[tris] (T2) at (2.5,-0.25) {};
+\draw (D.Q) -- (T1.x);
+\draw (D.Q -| 1.25,0) |- (T2.x);
+\draw (D.Q -| 1.25,0) |- (-2.25,1.5) |- (M.data0);
+\draw (M.data3) -| (M.data2 -| -2.25,0);
+\draw (M.data1) -- ++(-1,0) node[anchor=east,scale=0.85]{$D_{\mbox{\small{in}}1}$};
+\draw (M.data2) -- ++(-1,0) node[anchor=east,scale=0.85]{$D_{\mbox{\small{in}}2}$};
+\draw (D.Clk) -| (-1,-1.5) node[anchor=north,scale=0.85]{Clk};
+\draw (T1.z) -- (T1.z -| 3.5,0) node[anchor=west,scale=0.85]{$D_{\mbox{\small{out}}1}$};
+\draw (T2.z) -- (T2.z -| 3.5,0) node[anchor=west,scale=0.85]{$D_{\mbox{\small{out}}2}$};
+\draw (T1.c) -- (T1.c |- 0,-1.75) node[anchor=north,scale=0.85]{$\mbox{RE}_1$};
+\draw (T2.c) -- (T2.c |- 0,-1.75) node[anchor=north,scale=0.85]{$\mbox{RE}_2$};
+\draw (M.selout1) -- (M.selout1 |- 0,2) node[anchor=south,scale=0.85]{$\mbox{WE}_2$};
+\draw (M.selout0) -| (-1.125,2) node[anchor=south,scale=0.85]{$\mbox{WE}_1$};
+\pdot{D.Q -| 1.25,0};
+\pdot{M.data2 -| -2.25,0};
+\node[rectangle,draw=black,dashed,inner sep=0.3cm, fit=(M) (D) (T1) (T2)] (S1) {};
+\end{tikzpicture}
+\caption{Register File Cell (RFC)}
+\label{fig:registerFileCell}
+\end{figure}
 \subsection{Registerbank}
 \subsection{Random Access Memory (RAM)}
 \subsection{Stack (LIFO: Last-In-First-Out)}

@@ -1,0 +1,3 @@
+[NOOT: als ge kudos wil voor u errata beter u naam erbij schrijven.]
+1.5.1: VHDL net bedoelt is -> VHDL net bedoelD is [done 20120309]
+1.4.1: De interface beschrijft hoe de hardware interageert?? met zijn omgeving -> De interface beschrijft hoe de hardware interageert met zijn omgeving [done 20120309]

@@ -3485,66 +3485,39 @@
 
 \pgfdeclareshape{asmN} {
 
-  \savedanchor\centerpoint{
-    \pgf@x=.5\wd\pgfnodeparttextbox
-    \pgf@y=.5\ht\pgfnodeparttextbox
-    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
-  } 
-  \saveddimen\halfwidth{%
-    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
-    \pgf@x=0.5\pgf@xb
-  }
-  \saveddimen\halfheight{
-    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
-    \pgf@x=0.5\pgf@yb
-  }
-
+  \inheritsavedanchors[from=rectangle] % this is nearly a rectangle
   \inheritanchorborder[from=rectangle]
-  \anchor{center}{\centerpoint}
-  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
-  \anchor{base}{\centerpoint\pgf@y=0pt}
-  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
-  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
-  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
-  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+  \inheritanchor[from=rectangle]{north}
+  \inheritanchor[from=rectangle]{north west}
+  \inheritanchor[from=rectangle]{north east}
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchor[from=rectangle]{west}
+  \inheritanchor[from=rectangle]{east}
+  \inheritanchor[from=rectangle]{mid}
+  \inheritanchor[from=rectangle]{mid west}
+  \inheritanchor[from=rectangle]{mid east}
+  \inheritanchor[from=rectangle]{base}
+  \inheritanchor[from=rectangle]{base west}
+  \inheritanchor[from=rectangle]{base east}
+  \inheritanchor[from=rectangle]{south}
+  \inheritanchor[from=rectangle]{south west}
+  \inheritanchor[from=rectangle]{south east}
 
   \backgroundpath{
-     \pgfutil@tempdima=\halfheight
-     \pgfutil@tempdima=0.1\pgfutil@tempdima
-     \centerpoint
-     \advance\pgf@y by \halfheight
-     \advance\pgf@x by -\halfwidth
-     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-     \centerpoint
-     \advance\pgf@y by \halfheight
-     \advance\pgf@x by \halfwidth
-     \advance\pgf@x by -\pgfutil@tempdima
-     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-     \centerpoint
-     \advance\pgf@x by \halfwidth
-     \advance\pgf@y by \halfheight
-     \advance\pgf@y by -\pgfutil@tempdima
-     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%      \south
-%      \advance\pgf@x by \halfwidth
-%      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%      \south
-%      \advance\pgf@x by -\halfwidth
-%      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-      \pgfpathclose
-%      \north
-%      \advance\pgf@x by \halfwidth
-%      \advance\pgf@x by -0.1\halfheight
-%      \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-%      \north
-%      \advance\pgf@x by \halfwidth
-%      \advance\pgf@x by -0.1\halfheight
-%      \advance\pgf@y by -0.1\halfheight
-%      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%      \east
-%      \advance\pgf@y by 0.9\halfheight
-%      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%      \pgfpathclose
+    \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y \pgf@yc=\pgf@x
+    \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgf@yc=-0.75\pgf@yc
+    \pgf@xc=\pgf@xb \advance\pgf@xc by -\pgf@yc
+    \pgf@yc=-\pgf@yc \advance\pgf@yc by \pgf@yb
+    \pgfpathmoveto{\pgfqpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfqpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfqpoint{\pgf@xc}{\pgf@yb}}
+    \pgfpathlineto{\pgfqpoint{\pgf@xb}{\pgf@yc}}
+    \pgfpathlineto{\pgfqpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathclose
+    \pgfpathmoveto{\pgfqpoint{\pgf@xc}{\pgf@yb}}
+    \pgfpathlineto{\pgfqpoint{\pgf@xc}{\pgf@yc}}
+    \pgfpathlineto{\pgfqpoint{\pgf@xb}{\pgf@yc}}
   }
 
 }
