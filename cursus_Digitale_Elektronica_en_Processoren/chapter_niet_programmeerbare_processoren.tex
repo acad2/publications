@@ -539,7 +539,7 @@ De termen inputgebaseerd en toestandsgebaseerd komen van de controller. We hebbe
 \label{s:memoryFSMD}
 Alvorens we processoren kunnen implementeren zullen we eerst nieuwe componenten moeten introduceren. We zullen we deze componenten introduceren in een logische volgorde waarbij componenten gebruik maken van eerder ge\"introduceerde componenten.
 \subsection{Register File Cell (RFC)}
-Een \termen{register file cell} is een uitbreiding op een geklokte D-flipflop. Het component bevat een klok-ingang $\mbox{Clk}$, data-ingangen $D_{\mbox{\small{in}}1},\ldots,D_{\mbox{\small{in}}m}$, data-uitgangen $D_{\mbox{\small{out}}1},\ldots,D_{\mbox{\small{out}}n}$, \termen{leespoorten $\mbox{RE}_1,\mbox{RE}_{n}$} (ook wel ``\termen{Read-Enabled}'' genoemd) en \termen{schrijfpoorten $\mbox{WE}_1,\ldots,\mbox{WE}_{\left\lceil\log_2m+1\right\rceil}$} (ook wel ``\termen{Write-Enabled}'' genoemd). Deze ingangen laten ons toe om te kiezen uit welke data-ingang we data willen inlezen en deze bij de klokflank willen opslaan. Indien alle schrijfpoorten $\mbox{WE}_i=0$ lezen we geen nieuwe waarde in, en blijft de oude waarde behouden. In de andere gevallen dienen de schrijfpoorten een binaire getal $a$ te bepalen vanuit welke data-ingang $d_{\mbox{\small{in}}a}$ we data inlezen. Daarnaast 
+Een \termen{register file cell} is een uitbreiding op een geklokte D-flipflop. Het component bevat een klok-ingang $\mbox{Clk}$, data-ingangen $D_{\mbox{\small{in}}1},\ldots,D_{\mbox{\small{in}}m}$, data-uitgangen $D_{\mbox{\small{out}}1},\ldots,D_{\mbox{\small{out}}n}$, \termen{leespoorten $\mbox{RE}_1,\mbox{RE}_{n}$} (ook wel ``\termen{Read-Enabled}'' genoemd) en \termen{schrijfpoorten $\mbox{WE}_1,\ldots,\mbox{WE}_{\left\lceil\log_2m+1\right\rceil}$} (ook wel ``\termen{Write-Enabled}'' genoemd). Deze ingangen laten ons toe om te kiezen uit welke data-ingang we data willen inlezen en deze bij de klokflank willen opslaan. We zullen data geklokt wegschrijven, net zoals bij een D-flipflop. Indien alle schrijfpoorten $\mbox{WE}_i=0$ lezen we geen nieuwe waarde in, en blijft de oude waarde behouden. In de andere gevallen dienen de schrijfpoorten een binaire getal $a$ te bepalen vanuit welke data-ingang $d_{\mbox{\small{in}}a}$ we data inlezen. Indien er voor het aantal data-ingangen $m$ geen natuurlijk getal $l$ bestaat zodat $l=\log_2 m+1$, zal er bij alle overige write-enable configuraties, data ingelezen worden uit de laatste data-ingang. Daarnaast kunnen we op eender welke uitgang de inhoud van het geheugen plaatsen. Vandaar dat er per uitgang ook een read-enable ingang is voorzien. Indien we een laag signaal aanleggen op een read-enable ingang $\mbox{RE}_i$, zal de overeenkomstige uitgang $D_{\mbox{\small{out}}i}$ hoog impedant zijn. De toestand van de uitgangen is niet geklokt: indien we tijdens twee klokflanken in een read-enable ingang aanpassen zullen we mits enige vertraging het resultaat op de data-uitgang zien, we hoeven dus niet op een klokflank te wachten. Op figuur \ref{fig:registerFileCell} tonen we een implementatie van een Register File Cell met $m=n=2$.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -554,7 +554,7 @@ Een \termen{register file cell} is een uitbreiding op een geklokte D-flipflop. H
 \draw (M.data3) -| (M.data2 -| -2.25,0);
 \draw (M.data1) -- ++(-1,0) node[anchor=east,scale=0.85]{$D_{\mbox{\small{in}}1}$};
 \draw (M.data2) -- ++(-1,0) node[anchor=east,scale=0.85]{$D_{\mbox{\small{in}}2}$};
-\draw (D.Clk) -| (-1,-1.5) node[anchor=north,scale=0.85]{Clk};
+\draw (D.Clk) -| (-1,-2) node[anchor=north,scale=0.85]{Clk};
 \draw (T1.z) -- (T1.z -| 3.5,0) node[anchor=west,scale=0.85]{$D_{\mbox{\small{out}}1}$};
 \draw (T2.z) -- (T2.z -| 3.5,0) node[anchor=west,scale=0.85]{$D_{\mbox{\small{out}}2}$};
 \draw (T1.c) -- (T1.c |- 0,-1.75) node[anchor=north,scale=0.85]{$\mbox{RE}_1$};
@@ -563,12 +563,33 @@ Een \termen{register file cell} is een uitbreiding op een geklokte D-flipflop. H
 \draw (M.selout0) -| (-1.125,2) node[anchor=south,scale=0.85]{$\mbox{WE}_1$};
 \pdot{D.Q -| 1.25,0};
 \pdot{M.data2 -| -2.25,0};
+\setIndexLabelsMuxD[west]{M};
 \node[rectangle,draw=black,dashed,inner sep=0.3cm, fit=(M) (D) (T1) (T2)] (S1) {};
 \end{tikzpicture}
-\caption{Register File Cell (RFC)}
+\caption{Implementatie van een Register File Cell (RFC) met $2$ lees- en $2$ schrijfpoorten}
 \label{fig:registerFileCell}
 \end{figure}
 \subsection{Registerbank}
+Een belangrijke toepassing van een Register File Cell is een \termen{registerbank}. Een registerbank bevat verschillende register file cellen, die geordend worden in matrixstructuur. We spreken dan ook over een \termen{$m\times n$ registerbank} met $k$ \termen{schrijfpoorten} en $l$ \termen{leespoorten}. Dit betekent dat het component $m$ sequenties van $n$ bits opslaat. We kunnen hierbij data op $k$ verschillende sequenties tegelijk schrijven, en de inhoud van $l$ verschillende sequenties uitlezen. Hiervoor dienen we volgende in- en uitgangen te voorzien:
+\begin{itemize}
+ \item \termen{invoer-ingangen $I_{ij}$}: een set van $k\times n$ ingangen om $k$ sequenties van $n$ bits te kunnen inlezen in de registerbank.
+ \item \termen{write-enable-ingangen $\mbox{WE}_i$}: $k$ verschillende signalen waarmee we aangeven of de invoer op $I_{ij}$ ingangen moet worden ingelezen.
+ \item \termen{write-address-ingangen $\mbox{WA}_{ia}$}: $k$ groepen van $\lceil\log_2m\rceil$ bits waarmee we aangeven op welk adres we de $n$ bits die op $I_{ij}$ staan zullen wegschrijven.
+ \item \termen{uitvoer-uitgangen $O_{ij}$}: een reeks van $l\times n$ signalen die we gebruiken om data in de registerbank uit te lezen.
+ \item \termen{read-enable-ingangen $\mbox{RE}_i$}: $l$ signalen die bepalen of we op de uitgangen $O_{ij}$ iets zullen uitlezen. Analoog aan de write-enable-ingangen.
+ \item \termen{read-address-ingangen $\mbox{RA}_{ia}$}: $l$ groepen van $\left\lceil\log_2m\right\rceil$ bits bepalen welke sequentie -- binair voorgesteld op de adres-ingangen -- wordt uitgelezen. Dit is analoog aan de write-address-ingangen.
+\end{itemize}
+Een registerbank omvat twee scenarios: het inlezen van data en het uitlezen van data. Indien we een hoog signaal aanleggen op $\mbox{WE}_i$, zullen we de data die op de ingangen $I_{ij}$ staan wegschrijven naar het adres dat binair ge\"encodeerd is met de write-access ingangen $\mbox{WA}_{ia}$ voor $j=0\ldots n-1$ en $a=0\ldots\left\lceil\log_2m\right\rceil-1$. Dit doen we op de klokflank. Indien we een laag signaal aan de write-enable ingang plaatsen, wordt de inhoud die op de bijbehorende invoer-ingangen staat genegeerd. Bij het uitlezen van data is het signaal van de read-enable-ingang van belang. Indien we een hoog signaal aanleggen op $\mbox{RE}_i$ zullen de uitvoer-uitgangen $O_{ij}$ de waardes van de data opgeslagen in een adres, binair gevormd door de read-address-ingangen $\mbox{WA}_{ia}$, aannemen voor $j=0\ldots n-1$ en $a=0\ldots\left\lceil\log_2m\right\rceil-1$. Indien we een laag signaal aanleggen, zijn deze uitvoer-uitgangen hoog impedant. Uitlezen van data gebeurt ongeklokt: indien we bijvoorbeeld de read-adress signalen aanpassen, zullen de uitvoer-uitgangen zich aanpassen ongeacht de toestand van de kok op dat moment. Tot slot beschouwen we vaak een speciaal geval van een registerbank: de \termen{dual port registerbank} is een registerbank met \'e\'en lees- en \'e\'en schrijfpoort. Bijgevolg is in dat geval $k=l=1$.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}
+
+\end{tikzpicture}
+\caption{Implementatie van een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten.}
+\label{fig:registerbank}
+\end{figure}
+\paragraph{}
+Op figuur \ref{fig:registerbank} beschouwen we een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten. We zullen hier het kloksignaal negeren vermits de klokingang van de registerbank het kloksignaal enkel verderpropageert naar de klokingangen van alle register file cellen. Verder zullen we ook een nieuwe notatie invoeren die we vanaf hier frequent zullen gebruiken: vaak zullen een groot aantal signalen parallell verschillende bits van het ene component naar het andere overbrengen. Vermits door de ori\"entatie van de het component meestal duidelijk is om welke signalen het gaat, zullen we niet elk signaal individueel tekenen. In dat geval stellen we de groep signalen voor met een brede lijn, en schrijven naast een dwarse streep het aantal signalen op die deze lijn voorstelt.
 \subsection{Random Access Memory (RAM)}
 \subsection{Stack (LIFO: Last-In-First-Out)}
 \subsection{Queue (FIFO: First-In-First-Out)}

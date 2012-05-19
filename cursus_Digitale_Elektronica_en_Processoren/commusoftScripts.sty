@@ -36,6 +36,12 @@
   \draw (#1.east) node[anchor=south west,scale=0.75]{[False]};
   \draw (#1.west) node[anchor=south east,scale=0.75]{[True]};
 }
+\newcommand{\setIndexLabelsMuxD}[2][south]{
+  \draw (#2.data0) node[anchor=#1,scale=0.75]{00};
+  \draw (#2.data1) node[anchor=#1,scale=0.75]{01};
+  \draw (#2.data2) node[anchor=#1,scale=0.75]{10};
+  \draw (#2.data3) node[anchor=#1,scale=0.75]{11};
+}
 
 \newcommand{\procedureref}[1]{\textsc{#1}}
 \newcommand{\shlcmd}{\ensuremath{\mbox{ \textbf{shl} }}}
