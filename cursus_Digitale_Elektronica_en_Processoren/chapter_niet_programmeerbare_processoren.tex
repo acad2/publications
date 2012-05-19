@@ -583,7 +583,25 @@ Een registerbank omvat twee scenarios: het inlezen van data en het uitlezen van 
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
-
+\def\dy{-2 cm};
+\def\dx{2 cm};
+\foreach \a in {0,1} {
+  \node[decoder2to4,rotate=90] (DW\a) at (-1*\dx,0.5*\dy+2*\a*\dy) {decoder};
+  \draw (DW\a.a0) -- ++(-0.5*\dx,0) node[anchor=east]{$\mbox{WA}_{\a0}$};
+  \draw (DW\a.a1) -- ++(-0.5*\dx,0) node[anchor=east]{$\mbox{WA}_{\a1}$};
+  \draw (DW\a.enable) |- ++(-0.5*\dx,0.0625*\dy) node[anchor=east]{$\mbox{WE}_{\a}$};
+}
+\foreach \a in {0,1,2} {
+  \node[decoder2to4,rotate=-90] (DR\a) at (3*\dx,0.5*\dy+\dy*\a) {decoder};
+  \draw (DR\a.a0) -- ++(0.5*\dx,0) node[anchor=west]{$\mbox{RA}_{\a0}$};
+  \draw (DR\a.a1) -- ++(0.5*\dx,0) node[anchor=west]{$\mbox{RA}_{\a1}$};
+  \draw (DR\a.enable) |- ++(0.5*\dx,-0.0625*\dy) node[anchor=west]{$\mbox{RE}_{\a}$};
+}
+\foreach \y in {0,...,3} {
+  \foreach \x in {0,...,2} {
+    \node[rfc] (RFC\y\x) at (\dx*\x,\dy*\y) {RFC};
+  }
+}
 \end{tikzpicture}
 \caption{Implementatie van een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten.}
 \label{fig:registerbank}
