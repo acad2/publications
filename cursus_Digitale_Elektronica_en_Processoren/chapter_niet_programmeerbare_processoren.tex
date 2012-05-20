@@ -589,6 +589,7 @@ Een registerbank omvat twee scenarios: het inlezen van data en het uitlezen van 
 \def\rb{0.03625};
 \foreach \a in {0,1} {
   \node[decoder2to4,rotate=90] (DW\a) at (-1.25*\dx,0.5*\dy+2*\a*\dy) {decoder};
+%  \node[sigo] (SgW\a) at (-1.5*\dx,0 |- DW\a) {};
   \draw (DW\a.a0) -- ++(-0.5*\dx,0) node[anchor=east]{$\mbox{WA}_{\a0}$};
   \draw (DW\a.a1) -- ++(-0.5*\dx,0) node[anchor=east]{$\mbox{WA}_{\a1}$};
   \draw (DW\a.enable) |- ++(-0.5*\dx,\ra*\dy) node[anchor=east]{$\mbox{WE}_{\a}$};
@@ -672,12 +673,37 @@ Een registerbank omvat twee scenarios: het inlezen van data en het uitlezen van 
 }
 \node[fit=(DR0) (DR1) (DR2) (DW0) (DW1) (RFC00) (RFC32),inner sep=0.625cm,draw=black,rectangle,dashed] {};
 \end{tikzpicture}
-\caption{Implementatie van een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten.}
+\caption{Implementatie van een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten.??}
 \label{fig:registerbank}
 \end{figure}
 \paragraph{}
-Op figuur \ref{fig:registerbank} beschouwen we een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten. Bij de constructie van een registerbank met $k$ schrijf- en $l$ leespoorten, gebruiken we logischerwijs file register cellen met $k$ schrijf- en $l$ leespoorten. We zullen hier het kloksignaal negeren vermits de klokingang van de registerbank het kloksignaal enkel verderpropageert naar de klokingangen van alle register file cellen. Verder zullen we ook een nieuwe notatie invoeren die we vanaf hier frequent zullen gebruiken: vaak zullen een groot aantal signalen parallell verschillende bits van het ene component naar het andere overbrengen. Vermits door de ori\"entatie van de het component meestal duidelijk is om welke signalen het gaat, zullen we niet elk signaal individueel tekenen. In dat geval stellen we de groep signalen voor met een brede lijn, en schrijven naast een dwarse streep het aantal signalen op die deze lijn voorstelt.
+Op figuur \ref{fig:registerbank} beschouwen we een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten. Bij de constructie van een registerbank met $k$ schrijf- en $l$ leespoorten, gebruiken we logischerwijs file register cellen met $k$ schrijf- en $l$ leespoorten. We zullen hier het kloksignaal negeren vermits de klokingang van de registerbank het kloksignaal enkel verderpropageert naar de klokingangen van alle register file cellen. We construeren vervolgens $k+l$ $m$-bit decoders te introduceren. Bij elk van de decoders verbinden we een read-enable $\mbox{RE}_i$ of write-enable $\mbox{WE}_i$ met de enable-ingang van de decoder. De read-address $\mbox{RA}_{ij}$ en write-address $\mbox{WA}_{ij}$ ingangen leggen vervolgens signalen aan op de adres-ingangen van de bijbehorende decoders.??
+\paragraph{}
+Verder zullen we ook een nieuwe notatie invoeren die we vanaf hier frequent zullen gebruiken: vaak zullen een groot aantal signalen parallell verschillende bits van het ene component naar het andere overbrengen. Vermits door de ori\"entatie van de het component meestal duidelijk is om welke signalen het gaat, zullen we niet elk signaal individueel tekenen. In dat geval stellen we de groep signalen voor met een brede lijn, en schrijven naast een dwarse streep het aantal signalen op die deze lijn voorstelt.
 \subsection{Random Access Memory (RAM)}
+Een variant van een registerbank is ``\termen{Random Access Memory (RAM)}''. De term ``\termen{Random Access}'' slaat op het feit dat we het geheugen niet sequentieel moeten uitlezen. We kunnen dus een adres meegeven die bepaald welke cellen we uitlezen. Verder wijkt een RAM ook af van ``Read-Only Memory (ROM)'' omdat we data naar het geheugen kunnen schrijven. Bij ROM branden we de data via een ingewikkelde procedure op de chip, waarna we enkel data kunnen uitlezen. Beide eigenschappen zijn ook eigen aan een registerbank. Indien we echter naar de implementatie van een registerbank kijken, is deze niet goedkoop. RAM geheugens bieden een gelijkaardige functionaliteit met minder hardware. Hiervoor bestaan er twee soorten implementaties:
+\begin{itemize}
+ \item \termen{Statisch RAM}: hier realiseren we een bit geheugen met een flipflop (wat dus neerkomt op 4 tot 6 transistoren per bit).
+ \item \termen{Dynamisch RAM}: een implementatie met behulp van een condensator. Indien er stroom op de condensator staat bevat de cel een 1, in het ander geval een 0. Dynamisch RAM heeft de eigenschap dat door de data van een bit op te vragen, we de stroom uit de condensator halen, en deze dus opnieuw moeten opladen. Daarnaast kent een condensator ook lekstroom, waardoor we aan een zekere frequentie de cellen die een 1 voorstellen terug moeten opladen. We hebben dit dynamisch RAM reeds kort aangehaald in sectie \ref{ss:??Hoofdstuk2}.
+\end{itemize}
+Vermits we minder hardware per bit nodig hebben, zal RAM bepaalde functionaliteit van een registerbank niet aanbieden. Allereerst werkt RAM geheugen trager. Dit kan alleen al verklaard worden door een grotere adres-decoder - RAM geheugens zijn immers groter - en is dus niet geschikt voor het opslaan van tussenresultaten in processoren. Daarnaast heeft RAM-geheugen een \termen{gecombineerde lees-schrijfpoort $R/W^*$}. Om aan te geven dat we iets willen schrijven of uitlezen bevat RAM-geheugen daarnaast ook een \termen{Chip Select-ingang $CS$}. Deze ingang functioneert ook als een vorm van klok-ingang. RAM geheugen is bijgevolg niet geklokt\footnote{Of tenminste niet op de globale klok van de schakeling.}.
+\paragraph{}
+RAM-geheugens hebben complex tijdsgedrag. Daarom zullen we de twee scenario's: het uitlezen en wegschrijven van data bespreken samen met de verschillende vormen van vertraging. Verder zullen we ook enkele typische grenzen van vertragingstijden voor RAM-geheugen geven in tabel \ref{tbl:rAMDelaySamples}.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{clrr}
+\hline
+$t_{RC}$&cyclustijd lezen&35 ns&\\
+$t_{AA}$&toegangstijd&&35 ns\\
+$t_{ACS}$&$CS$ toegangstijd&&35 ns\\
+$t_{HZ}$&$CS'\rightarrow Z$&0 ns&30 ns\\\hline
+$t_{WC}$&cyclustijd schrijven&35 ns&\\
+$t_{DW}$&data set-up-tijd&20 ns&\\
+$t_{DH}$&data houdtijd&0 ns&\\
+\end{tabular}
+\caption{Typische vertragingstijden voor RAM-geheugens.}
+\label{tbl:rAMDelaySamples}
+\end{table}
 \subsection{Stack (LIFO: Last-In-First-Out)}
 \subsection{Queue (FIFO: First-In-First-Out)}
 \section{Synthese van een Niet-Programmeerbare Processor}

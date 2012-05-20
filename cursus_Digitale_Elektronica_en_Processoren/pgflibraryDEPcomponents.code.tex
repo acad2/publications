@@ -3652,20 +3652,21 @@
   \inheritanchor[from=rectangle]{south east}
 
   \backgroundpath{
-    \south
-    \pgfpathmoveto{\pgfqpoint{\pgf@x}{\pgf@y}}
-    \north \pgf@xb=\pgf@x \pgf@yb=\pgf@y
-    \pgf@yc=-0.75\pgf@yc
-    \pgf@xc=\pgf@xb \advance\pgf@xc by -\pgf@yc
-    \pgf@yc=-\pgf@yc \advance\pgf@yc by \pgf@yb
+    \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \pgfutil@tempdima=\pgf@ya
+    \pgf@xc=\pgf@xa
+    \pgf@yc=\pgf@ya
+    \northeast \advance\pgf@xa by\pgf@x \pgf@yb=\pgf@y
+    \pgf@xd=\pgf@xa
+    \advance\pgfutil@tempdima by-\pgf@yb
+    \pgfpathmoveto{\pgfqpoint{\pgf@xa}{\pgf@ya}}
     \pgfpathlineto{\pgfqpoint{\pgf@xa}{\pgf@yb}}
-    \pgfpathlineto{\pgfqpoint{\pgf@xc}{\pgf@yb}}
-    \pgfpathlineto{\pgfqpoint{\pgf@xb}{\pgf@yc}}
-    \pgfpathlineto{\pgfqpoint{\pgf@xb}{\pgf@ya}}
-    \pgfpathclose
-    \pgfpathmoveto{\pgfqpoint{\pgf@xc}{\pgf@yb}}
-    \pgfpathlineto{\pgfqpoint{\pgf@xc}{\pgf@yc}}
-    \pgfpathlineto{\pgfqpoint{\pgf@xb}{\pgf@yc}}
+    \pgfclosepath
+    %\advance\pgf@xc by0.12\pgfutil@tempdima
+    %\advance\pgf@yc by-0.1\pgfutil@tempdima
+    %\pgfpathmoveto{\pgfqpoint{\pgf@xc}{\pgf@yc}}
+    %\pgfpathlineto{\pgfqpoint{\pgf@xa}{\pgf@ya}}
+    %\pgfpathlineto{\pgfqpoint{\pgf@xa}{\pgf@ya}}
   }
 
 }
