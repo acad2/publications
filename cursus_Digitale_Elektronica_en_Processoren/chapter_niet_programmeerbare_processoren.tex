@@ -583,31 +583,100 @@ Een registerbank omvat twee scenarios: het inlezen van data en het uitlezen van 
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
-\def\dy{-2 cm};
-\def\dx{2 cm};
+\def\dy{-2.2 cm};
+\def\dx{2.2 cm};
+\def\ra{0.0725};
+\def\rb{0.03625};
 \foreach \a in {0,1} {
-  \node[decoder2to4,rotate=90] (DW\a) at (-1*\dx,0.5*\dy+2*\a*\dy) {decoder};
+  \node[decoder2to4,rotate=90] (DW\a) at (-1.25*\dx,0.5*\dy+2*\a*\dy) {decoder};
   \draw (DW\a.a0) -- ++(-0.5*\dx,0) node[anchor=east]{$\mbox{WA}_{\a0}$};
   \draw (DW\a.a1) -- ++(-0.5*\dx,0) node[anchor=east]{$\mbox{WA}_{\a1}$};
-  \draw (DW\a.enable) |- ++(-0.5*\dx,0.0625*\dy) node[anchor=east]{$\mbox{WE}_{\a}$};
+  \draw (DW\a.enable) |- ++(-0.5*\dx,\ra*\dy) node[anchor=east]{$\mbox{WE}_{\a}$};
 }
 \foreach \a in {0,1,2} {
-  \node[decoder2to4,rotate=-90] (DR\a) at (3*\dx,0.5*\dy+\dy*\a) {decoder};
+  \node[decoder2to4,rotate=-90] (DR\a) at (3.5*\dx,0.5*\dy+\dy*\a) {decoder};
   \draw (DR\a.a0) -- ++(0.5*\dx,0) node[anchor=west]{$\mbox{RA}_{\a0}$};
   \draw (DR\a.a1) -- ++(0.5*\dx,0) node[anchor=west]{$\mbox{RA}_{\a1}$};
-  \draw (DR\a.enable) |- ++(0.5*\dx,-0.0625*\dy) node[anchor=west]{$\mbox{RE}_{\a}$};
+  \draw (DR\a.enable) |- ++(0.5*\dx,-\ra*\dy) node[anchor=west]{$\mbox{RE}_{\a}$};
 }
 \foreach \y in {0,...,3} {
-  \foreach \x in {0,...,2} {
-    \node[rfc] (RFC\y\x) at (\dx*\x,\dy*\y) {RFC};
+  \foreach \x in {0,1,2} {
+    \node[rfcbc] (RFC\y\x) at (\dx*\x,\dy*\y) {RFC};
   }
 }
+\foreach \x in {0,...,3} {
+  \coordinate (MI\x0) at (DW0.s\x -| -0.5*\dx-4*\ra*\dx-\ra*\dx*\x,0);
+  \coordinate (MI\x1) at (DW1.s\x -| -0.5*\dx-3*\ra*\dx+\ra*\dx*\x,0);
+  \foreach \y in {0,1} {
+    \draw (DW\y.s\x) -- (MI\x\y);
+  }
+  \foreach \y in {0,1,2} {
+    \coordinate (MO\x\y) at (DR\y.s\x -| 2.5*\dx+\rb*\dx+4*\ra*\dx*\y+\ra*\dx*\x,0);
+    \draw (DR\y.s\x) -- (MO\x\y);
+  }
+}
+\foreach \y in {0,...,3} {
+  \foreach \x/\p in {0/a,1/b,2/c} {
+    \coordinate (RLH\y\x) at (0,\dy*\y+0.5*\dy-\rb*\dy-\ra*\dy*\x -| RFC\y2.re\p);
+    \draw (RLH\y\x) -- (RLH\y\x -| RFC\y0.re\p);
+    \foreach \z in {0,1,2} {
+      \draw (RFC\y\z.re\p) -- (RLH\y\x -| RFC\y\z.re\p);
+    }
+    \foreach \z in {1,2} {
+      \pdot{RLH\y\x -| RFC\y\z.re\p};
+    }
+  }
+  \foreach \x/\p in {0/a,1/b} {
+      \coordinate (WLH\y\x) at (0,\dy*\y-0.5*\dy+\rb*\dy+\ra*\dy+\ra*\dy*\x -| RFC\y0.we\p);
+      \draw (WLH\y\x) -- (WLH\y\x -| RFC\y2.we\p);
+      \foreach \z in {0,1,2} {
+	\draw (RFC\y\z.we\p) -- (WLH\y\x -| RFC\y\z.we\p);
+      }
+      \foreach \z in {0,1} {
+	\pdot{WLH\y\x -| RFC\y\z.we\p};
+      }
+    }
+}
+\foreach \x in {0,1,2} {
+  \foreach \y/\p/\an in {0/a/west,1/b/north,2/c/east} {
+    \coordinate (RLV\x\y) at (\dx*\x+0.5*\dx-\rb*\dx-\ra*\dx*\y,0 |- RFC0\x.dout\p);
+    \draw (RLV\x\y) -- (RLV\x\y |- 0,3.75*\dy) node[anchor=\an,scale=0.95]{$O_{\y\x}$};
+    
+    \foreach \z in {0,1,2,3} {
+      \draw (RLV\x\y |- RFC\z\x.dout\p) -- (RFC\z\x.dout\p);
+    }
+    \foreach \z in {1,2,3} {
+      \pdot{RLV\x\y |- RFC\z\x.dout\p};
+    }
+  }
+  \foreach \y/\p/\an in {0/a/east,1/b/west} {
+    \coordinate (WLV\x\y) at (\dx*\x-0.5*\dx+\rb*\dx+\ra*\dx+\ra*\dx*\y,0 |- RFC3\x.din\p);
+    \draw (WLV\x\y) -- (WLV\x\y |- 0,-0.75*\dy) node[anchor=\an,scale=0.95]{$I_{\y\x}$};
+    \foreach \z in {0,1,2,3} {
+      \draw (WLV\x\y |- RFC\z\x.din\p) -- (RFC\z\x.din\p);
+    }
+    \foreach \z in {0,1,2} {
+      \pdot{WLV\x\y |- RFC\z\x.din\p};
+    }
+  }
+}
+\foreach \y in {0,...,3} {
+  \foreach \x in {0,1} {
+    \draw (MI\y\x) |- (WLH\y\x);
+  }
+}
+\foreach \y in {0,...,3} {
+  \foreach \x in {0,1,2} {
+    \draw (MO\y\x) |- (RLH\y\x);
+  }
+}
+\node[fit=(DR0) (DR1) (DR2) (DW0) (DW1) (RFC00) (RFC32),inner sep=0.625cm,draw=black,rectangle,dashed] {};
 \end{tikzpicture}
 \caption{Implementatie van een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten.}
 \label{fig:registerbank}
 \end{figure}
 \paragraph{}
-Op figuur \ref{fig:registerbank} beschouwen we een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten. We zullen hier het kloksignaal negeren vermits de klokingang van de registerbank het kloksignaal enkel verderpropageert naar de klokingangen van alle register file cellen. Verder zullen we ook een nieuwe notatie invoeren die we vanaf hier frequent zullen gebruiken: vaak zullen een groot aantal signalen parallell verschillende bits van het ene component naar het andere overbrengen. Vermits door de ori\"entatie van de het component meestal duidelijk is om welke signalen het gaat, zullen we niet elk signaal individueel tekenen. In dat geval stellen we de groep signalen voor met een brede lijn, en schrijven naast een dwarse streep het aantal signalen op die deze lijn voorstelt.
+Op figuur \ref{fig:registerbank} beschouwen we een $4\times 3$ registerbank met $2$ schrijf- en $3$ leespoorten. Bij de constructie van een registerbank met $k$ schrijf- en $l$ leespoorten, gebruiken we logischerwijs file register cellen met $k$ schrijf- en $l$ leespoorten. We zullen hier het kloksignaal negeren vermits de klokingang van de registerbank het kloksignaal enkel verderpropageert naar de klokingangen van alle register file cellen. Verder zullen we ook een nieuwe notatie invoeren die we vanaf hier frequent zullen gebruiken: vaak zullen een groot aantal signalen parallell verschillende bits van het ene component naar het andere overbrengen. Vermits door de ori\"entatie van de het component meestal duidelijk is om welke signalen het gaat, zullen we niet elk signaal individueel tekenen. In dat geval stellen we de groep signalen voor met een brede lijn, en schrijven naast een dwarse streep het aantal signalen op die deze lijn voorstelt.
 \subsection{Random Access Memory (RAM)}
 \subsection{Stack (LIFO: Last-In-First-Out)}
 \subsection{Queue (FIFO: First-In-First-Out)}
