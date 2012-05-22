@@ -1,1 +1,7 @@
 [NOOT: als ge kudos wil voor u errata beter u naam erbij schrijven.]
+[Ingmar] 2.1 rede -> reden [done 20120520]
+[Ingmar] 2.1 elektronica-systemen -> elektronicasystemen [done 20120520]
+[Ingmar] bij positief staat er "(p)"" maar bij negatief geen "(n)" ? [done 20120520]
+[Ingmar] 2.2.3 scakeling -> schakeling [done 20120520]
+[Ingmar] herstelt worden -> hersteld worden  [done 20120522]
+[Ingmar] 2.4.2 verwijzing kapot bij "Het vierkant stelt een 1-bit geheugen voor (zie ??)"  [done 20120522]

@@ -684,22 +684,24 @@ Verder zullen we ook een nieuwe notatie invoeren die we vanaf hier frequent zull
 Een variant van een registerbank is ``\termen{Random Access Memory (RAM)}''. De term ``\termen{Random Access}'' slaat op het feit dat we het geheugen niet sequentieel moeten uitlezen. We kunnen dus een adres meegeven die bepaald welke cellen we uitlezen. Verder wijkt een RAM ook af van ``Read-Only Memory (ROM)'' omdat we data naar het geheugen kunnen schrijven. Bij ROM branden we de data via een ingewikkelde procedure op de chip, waarna we enkel data kunnen uitlezen. Beide eigenschappen zijn ook eigen aan een registerbank. Indien we echter naar de implementatie van een registerbank kijken, is deze niet goedkoop. RAM geheugens bieden een gelijkaardige functionaliteit met minder hardware. Hiervoor bestaan er twee soorten implementaties:
 \begin{itemize}
  \item \termen{Statisch RAM}: hier realiseren we een bit geheugen met een flipflop (wat dus neerkomt op 4 tot 6 transistoren per bit).
- \item \termen{Dynamisch RAM}: een implementatie met behulp van een condensator. Indien er stroom op de condensator staat bevat de cel een 1, in het ander geval een 0. Dynamisch RAM heeft de eigenschap dat door de data van een bit op te vragen, we de stroom uit de condensator halen, en deze dus opnieuw moeten opladen. Daarnaast kent een condensator ook lekstroom, waardoor we aan een zekere frequentie de cellen die een 1 voorstellen terug moeten opladen. We hebben dit dynamisch RAM reeds kort aangehaald in sectie \ref{ss:??Hoofdstuk2}.
+ \item \termen{Dynamisch RAM}: een implementatie met behulp van een condensator. Indien er stroom op de condensator staat bevat de cel een 1, in het ander geval een 0. Dynamisch RAM heeft de eigenschap dat door de data van een bit op te vragen, we de stroom uit de condensator halen, en deze dus opnieuw moeten opladen. Daarnaast kent een condensator ook lekstroom, waardoor we aan een zekere frequentie de cellen die een 1 voorstellen terug moeten opladen.
 \end{itemize}
 Vermits we minder hardware per bit nodig hebben, zal RAM bepaalde functionaliteit van een registerbank niet aanbieden. Allereerst werkt RAM geheugen trager. Dit kan alleen al verklaard worden door een grotere adres-decoder - RAM geheugens zijn immers groter - en is dus niet geschikt voor het opslaan van tussenresultaten in processoren. Daarnaast heeft RAM-geheugen een \termen{gecombineerde lees-schrijfpoort $R/W^*$}. Om aan te geven dat we iets willen schrijven of uitlezen bevat RAM-geheugen daarnaast ook een \termen{Chip Select-ingang $CS$}. Deze ingang functioneert ook als een vorm van klok-ingang. RAM geheugen is bijgevolg niet geklokt\footnote{Of tenminste niet op de globale klok van de schakeling.}.
 \paragraph{}
-RAM-geheugens hebben complex tijdsgedrag. Daarom zullen we de twee scenario's: het uitlezen en wegschrijven van data bespreken samen met de verschillende vormen van vertraging. Verder zullen we ook enkele typische grenzen van vertragingstijden voor RAM-geheugen geven in tabel \ref{tbl:rAMDelaySamples}.
+RAM-geheugens hebben complex tijdsgedrag. Daarom zullen we de twee scenario's: het uitlezen en wegschrijven van data bespreken samen met de verschillende vormen van vertraging. Verder zullen we ook enkele typische grenzen van vertragingstijden voor vergelijkbare RAM-geheugen geven in tabel \ref{tbl:rAMDelaySamples}.
 \begin{table}[hbt]
 \centering
-\begin{tabular}{clrr}
+\begin{tabular}{cl|rr|rr}
+\multirow{2}{*}{$\Delta t$}&\multirow{2}{*}{Vertraging}&\multicolumn{2}{c|}{2147H SRAM}&\multicolumn{2}{c}{MM5280 DRAM}\\
+&&min&max&min&max\\
 \hline
-$t_{RC}$&cyclustijd lezen&35 ns&\\
-$t_{AA}$&toegangstijd&&35 ns\\
-$t_{ACS}$&$CS$ toegangstijd&&35 ns\\
-$t_{HZ}$&$CS'\rightarrow Z$&0 ns&30 ns\\\hline
-$t_{WC}$&cyclustijd schrijven&35 ns&\\
-$t_{DW}$&data set-up-tijd&20 ns&\\
-$t_{DH}$&data houdtijd&0 ns&\\
+$t_{RC}$&cyclustijd lezen&35 ns&&400 ns&\\
+$t_{AA}$&toegangstijd&&35 ns&&200 ns\\
+$t_{ACS}$&$CS$ toegangstijd&&35 ns&&180 ns\\
+$t_{HZ}$&$CS'\rightarrow Z$&0 ns&30 ns&0 ns&\\\hline
+$t_{WC}$&cyclustijd schrijven&35 ns&&0 ns&\\
+$t_{DW}$&data set-up-tijd&20 ns&&150 ns&\\
+$t_{DH}$&data houdtijd&0 ns&&0 ns&\\
 \end{tabular}
 \caption{Typische vertragingstijden voor RAM-geheugens.}
 \label{tbl:rAMDelaySamples}
