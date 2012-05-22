@@ -689,6 +689,29 @@ Een variant van een registerbank is ``\termen{Random Access Memory (RAM)}''. De 
 Vermits we minder hardware per bit nodig hebben, zal RAM bepaalde functionaliteit van een registerbank niet aanbieden. Allereerst werkt RAM geheugen trager. Dit kan alleen al verklaard worden door een grotere adres-decoder - RAM geheugens zijn immers groter - en is dus niet geschikt voor het opslaan van tussenresultaten in processoren. Daarnaast heeft RAM-geheugen een \termen{gecombineerde lees-schrijfpoort $R/W^*$}. Om aan te geven dat we iets willen schrijven of uitlezen bevat RAM-geheugen daarnaast ook een \termen{Chip Select-ingang $CS$}. Deze ingang functioneert ook als een vorm van klok-ingang. RAM geheugen is bijgevolg niet geklokt\footnote{Of tenminste niet op de globale klok van de schakeling.}.
 \paragraph{}
 RAM-geheugens hebben complex tijdsgedrag. Daarom zullen we de twee scenario's: het uitlezen en wegschrijven van data bespreken samen met de verschillende vormen van vertraging. Verder zullen we ook enkele typische grenzen van vertragingstijden voor vergelijkbare RAM-geheugen geven in tabel \ref{tbl:rAMDelaySamples}.
+\begin{figure}[hbt]
+\centering
+\subfigure[Uitlezen]{
+\begin{tikzpicture}
+\begin{wave}[0.5]{3}{6.5}
+ \nextwave{Adres} \unknown{0.5} \known{Adres}{4} \unknown{2}
+ \nextwave{$CS\cdot R/W^*$} \bit{0}{0.5}\bit{1}{4}\bit{0}{2}
+ \nextwave{$D_{out}$} \unknownbit{2} \unknown{1} \known{geldig}{2} \unknownbit{1.5}
+\end{wave}
+\end{tikzpicture}
+\label{fig:timeRAMRead}}
+\centering
+\subfigure[Wegschrijven]{
+\begin{tikzpicture}
+\begin{wave}[0.5]{3}{6.5}
+ \nextwave{Adres} \unknown{0.5} \known{Adres}{4} \unknown{2}
+ \nextwave{$CS\cdot\left(R/W^*\right)'$} \bit{0}{0.5}\bit{1}{4}\bit{0}{2}
+ \nextwave{$D_{in}$} \known{don't care}{3}\known{geldig}{2} \unknown{1.5}
+\end{wave}
+\end{tikzpicture}
+\label{fig:timeRAMWrite}}
+\caption{Tijdsgedrag van RAM-geheugens.}
+\end{figure}
 \begin{table}[hbt]
 \centering
 \begin{tabular}{cl|rr|rr}
