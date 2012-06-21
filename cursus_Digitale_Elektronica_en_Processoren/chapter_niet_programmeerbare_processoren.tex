@@ -710,7 +710,7 @@ RAM-geheugens hebben complex tijdsgedrag. Daarom zullen we de twee scenario's: h
 \begin{tikzpicture}
 \begin{wave}[0.5]{3}{5.71428}
  \nextwave{Adres} \knownS{}{0.6857} \known{Adres}{4} \knownE{}{1.02857}
- \nextwave[0.5]{$\mbox{CS}\cdot \mbox{R/W}^*$} \bitS{0}{0.6857} \bit{1}{4} \bitE{0}{1.02857}
+ \nextwave[0.5]{$\mbox{CS}\cdot\left(\mbox{R/W}^*\right)'$} \bitS{0}{0.6857} \bit{1}{4} \bitE{0}{1.02857}
  \nextwave[1.0]{$\mbox{D}_{\mbox{\small{in}}}$} \knownS{-}{2.8571428} \known{geldig}{2.3428572} \knownE{-}{0.51428}
  \waveTime{1}{1}{1}{2}{0.5}{$t_{\mbox{\small{WC}}}$}
  \waveTime{2}{2}{3}{1}{-2.5}{$t_{\mbox{\small{DW}}}$}
@@ -753,10 +753,93 @@ In hardware is een element een hoeveelheid data met een vast aantal bits. Men sp
 \paragraph{Conceptueel voorbeeld}
 \begin{figure}[hbt]
 \centering
-\subfigure[]{
-
+\subfigure[Push 6]{
+\begin{stackConcept}{}\scpush{6}\end{stackConcept}
+}
+\subfigure[Push 2]{
+\begin{stackConcept}{6}\scpush{2}\end{stackConcept}
+}
+\subfigure[Pop]{
+\begin{stackConcept}{6,2}\scpop{}\end{stackConcept}
+}
+\subfigure[Push 1]{
+\begin{stackConcept}{6}\scpush{1}\end{stackConcept}
+}
+\subfigure[Pop]{
+\begin{stackConcept}{6,1}\scpop{}\end{stackConcept}
+}
+\subfigure[Pop]{
+\begin{stackConcept}{6}\scpop{}\end{stackConcept}
 }
 \caption{Conceptueel voorbeeld van een stapelgeheugen.}
+\label{fig:stackConceptExample}
+\end{figure}
+We introduceren ook een conceptueel voorbeeld van een stapelgeheugen dat staat op figuur \ref{fig:stackConceptExample}. Initieel is de stapel leeg en bevat deze dus geen elementen. Vervolgens voeren we een push-operatie uit met als argument 6. Het gevolg is een stapel met als enig element 6. Daarna voeren we een push operatie uit met 2. We voegen dus 2 toe aan de top van de stapel. Hierna voeren we een pop-operatie uit. Vermits het laatste toegevoegde element -- die nog niet van de stapel is gehaald -- 2 is, zullen we 2 terugkrijgen. Bij de push-operatie van 1 voegen we 1 toe aan de stapel. De stapel heeft dan als top 1 en subtop 6. Tot slot voeren we twee pop-operaties uit. Omdat 1 het laatste toegevoegde element is, is dit het resultaat van de eerste pop-operatie. Tot slot zullen we ook 6 van de stapel halen.
+\paragraph{Implementatie met een schuifregister}
+We kunnen een stapel implementeren met behulp van een schuifregister. Voorwaarde is wel dat het geheugen dan niet bijzonder groot kan worden. Bij een push operatie zullen we in dat geval de bits van het element inschuiven en dit aantal bits naar links opschuiven. Bij een pop-operatie schuiven we dit aantal bits terug naar rechts, en stellen de meest rechtse bits dit element voor. Deze implementatie is vrij kostelijk: in \ref{sss:shiftregisters} hebben we reeds register ge\"implementeerd. Per bit geheugen hebben we een flipflop en enkele multiplexers nodig. Bij grote stapelgeheugens is deze kost onacceptabel. Daarom zullen we bij grote stapels meestal gebruik maken van RAM-geheugens.
+\paragraph{Implementatie met RAM-geheugens}
+Een goedkopere manier is gebruik maken van RAM-geheugens. Hierbij is de kost beperkt tot een 4 \`a 6 transistoren per bit. We realiseren dan een stapelgeheugen met behulp van een RAM-geheugen -- die tevens ook de grote van het stapelgeheugen bepaald -- en twee tellers: het \termen{leesadres} en het \termen{schrijfadres}. Indien het RAM-geheugen $n$ adressen kent, dienen beide tellers $\left\lceil\log_2n\right\rceil$-bit tellers te zijn\footnote{Op die manier kunnen ze elk adres voorstellen}. De schrijfteller staat initieel op $0$, de leesteller staat initeel op $n-1$. Wanneer we een push operatie uitvoeren schrijven we de data weg naar het adres voorgesteld door de schrijfteller, en verhogen we beide tellers. Bij een pop-operatie lezen we de data uit het RAM-geheugen op het adres voorgesteld door de leesteller. Vervolgens verlagen we beide tellers. Merk op dat we bij een push- en pop-operatie dus niet alle data in het RAM-geheugen moeten opschuiven. We verhogen en verlagen enkel de tellers.
+\begin{figure}[hbt]
+\centering
+\subfigure[Push 6]{
+\stackImpl{3}{3}{0}{}
+}
+\subfigure[Push 2]{
+\stackImpl{3}{0}{1}{6}
+}
+\subfigure[Pop]{
+\stackImpl{3}{1}{2}{6,2}
+}
+\subfigure[Push 1]{
+\stackImpl{3}{0}{1}{6}
+}
+\subfigure[Pop]{
+\stackImpl{3}{1}{2}{6,1}
+}
+\subfigure[Pop]{
+\stackImpl{3}{0}{1}{6}
+}
+\caption{Demonstratie van een stapelgeheugen met tellers.}
+\label{fig:stackConceptExample}
+\end{figure}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[circuit logic US]
+\def\ec{-5};
+\def\epp{-5.25};
+\def\er{-5.625};
+\def\efe{-1};
+\node[counterdbit] (CW) at (-3,1.5) {$\begin{array}{c}n+1\mbox{-bit}\\\mbox{schrijfteller}\end{array}$};
+\node[mux2to1,rotate=90,scale=1.5,anchor=data0,thick] (M) at ($(CW.Q2)+(2.75,-0.25)$) {};
+\draw[thick] (CW.Q2) -- (CW.Q2 |- M.data0);
+\node[counterdbit] (CR) at (-3,-1.75) {$\begin{array}{c}n\mbox{-bit}\\\mbox{leesteller}\end{array}$};
+\draw[thick] (CR.Q2) |- ++(2.5,-0.25);
+\draw[decoration={sigo,lines={$n$}},decorate,thick] ($(CR.Q2)+(2.5,-0.25)$)  |- (M.data1);
+\node[ramm,anchor=A] (R) at ($(M.output)+(0.75,0)$) {$\begin{array}{c}2^n\times w\mbox{-bit}\\\mbox{RAM}\end{array}$};
+\draw[decoration={sigo,lines={$n$}},decorate,thick] (M.output) -- (R.A);
+\node[not gate,scale=0.75,rotate=90] (N1) at ($(R.RW)+(-0.25,-1)$) {};%($(CR.Q2)+(0,-0.875)$)
+\node[not gate,scale=0.75,rotate=-90] (N2) at (\er,0) {};
+\node[nor gate,inputs={normal,normal,normal}] (NO) at ($(R.north)+(0,1)$) {};
+\coordinate (FEO) at (\efe,0 |- NO.input 2);
+\coordinate (FEOM) at (FEO |- M.data0);
+\coordinate (CRD) at ($(CR.Q2)+(0,-0.75)$);
+\coordinate (MRW) at (M.selin0 |- CRD);
+\pdot{MRW};
+\draw (M.selin0) -- (MRW);
+\draw[decoration={sigo,lines={$n+1$}},decorate,thick] (CW.Q2 |- M.data0) -- (FEOM);
+\draw[decoration={sigo,lines={$n$}},decorate,thick] (FEOM) -- (M.data0);
+\pdot{FEO};\pdot{FEOM};
+\draw[decoration={sigo,lines={$n+1$}},decorate,thick] (FEOM) -- (FEO);
+\draw[decoration={sigo,lines={$n$}},decorate,thick] (FEO) -- (NO.input 2);
+\node[anchor=east,scale=0.9] (IR) at (-7,0 |- CW.CLR) {Reset$^*$};\draw (IR) -- (CW.CLR);\draw (IR -| \er,0) -- (N2.input);\draw(N2.output) |- (CR.LD);\pdot{IR -| \er,0};
+\node[anchor=east,scale=0.9] (IE) at (-7,0 |- CR.CEIN) {Enable};\draw (IE) -- (CR.CEIN);\draw (IE -| \ec,0) |- (CW.CEIN);\draw (IE -| \ec,0) |- ($(CR.Q2)+(2.5,-0.5)$) -| ($(R.CS)+(-0.625,0)$) -- (R.CS);\pdot{IE -| \ec,0};
+\node[anchor=east,scale=0.9] (IPP) at (-7,0 |- CR.DU) {Push/Pop$^*$};\draw (IPP) -- (CR.DU);\draw (IPP -| \epp,0) |- (CW.DU);\draw (IPP -| \epp,0) |- ($(CR.Q2)+(2.5,-0.75)$) -| (N1.input); \draw (N1.output) -| ($(R.RW)+(-0.25,0)$) -- (R.RW);\pdot{IPP -| \epp,0};
+\node[anchor=west,scale=0.9] (OF) at (5,0 |- CW.north east) {Full};\draw[decoration={sigo,lines={$1$ MSB}},decorate] (FEO) |- (OF);
+\node[anchor=west,scale=0.9] (OE) at (5,0 |- NO.output) {Empty};\draw (NO.output) -- (OE);
+\node[anchor=west,scale=0.9] (OD) at (R.D -| 5,0) {Data In/Out};\draw[decoration={sigo,lines={$w$}},decorate,thick] (R.D) -- (OD);
+\node[fit=(R) (M) (CW) (CR) (N1) (N2) (NO) (MRW),inner sep=0.625cm,draw=black,rectangle,dashed] {};
+\end{tikzpicture}
+\caption{Implementatie van een stapelgeheugen met behulp van RAM-geheugen.}
 \end{figure}
 \subsubsection{Queue (FIFO: First-In-First-Out)}
 \section{Synthese van een Niet-Programmeerbare Processor}

@@ -3631,42 +3631,77 @@
   
 }
 
-\pgfdeclareshape{sigo} {
-
-  \inheritsavedanchors[from=rectangle] % this is nearly a rectangle
-  \inheritanchorborder[from=rectangle]
-  \inheritanchor[from=rectangle]{north}
-  \inheritanchor[from=rectangle]{north west}
-  \inheritanchor[from=rectangle]{north east}
-  \inheritanchor[from=rectangle]{center}
-  \inheritanchor[from=rectangle]{west}
-  \inheritanchor[from=rectangle]{east}
-  \inheritanchor[from=rectangle]{mid}
-  \inheritanchor[from=rectangle]{mid west}
-  \inheritanchor[from=rectangle]{mid east}
-  \inheritanchor[from=rectangle]{base}
-  \inheritanchor[from=rectangle]{base west}
-  \inheritanchor[from=rectangle]{base east}
-  \inheritanchor[from=rectangle]{south}
-  \inheritanchor[from=rectangle]{south west}
-  \inheritanchor[from=rectangle]{south east}
-
-  \backgroundpath{
-    \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
-    \pgfutil@tempdima=\pgf@ya
-    \pgf@xc=\pgf@xa
-    \pgf@yc=\pgf@ya
-    \northeast \advance\pgf@xa by\pgf@x \pgf@yb=\pgf@y
-    \pgf@xd=\pgf@xa
-    \advance\pgfutil@tempdima by-\pgf@yb
-    \pgfpathmoveto{\pgfqpoint{\pgf@xa}{\pgf@ya}}
-    \pgfpathlineto{\pgfqpoint{\pgf@xa}{\pgf@yb}}
-    \pgfclosepath
-    %\advance\pgf@xc by0.12\pgfutil@tempdima
-    %\advance\pgf@yc by-0.1\pgfutil@tempdima
-    %\pgfpathmoveto{\pgfqpoint{\pgf@xc}{\pgf@yc}}
-    %\pgfpathlineto{\pgfqpoint{\pgf@xa}{\pgf@ya}}
-    %\pgfpathlineto{\pgfqpoint{\pgf@xa}{\pgf@ya}}
+\pgfdeclareshape{ramm}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
   }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{A}{
+    \pgf@process{\northeast}%
+    \pgf@y=.5\pgf@y%
+    \pgf@x=-\pgf@x%
+  }
+  \anchor{CS}{
+    \pgf@process{\northeast}%
+    \pgf@y=0\pgf@y%
+    \pgf@x=-\pgf@x%
+  }
+  \anchor{RW}{
+    \pgf@process{\northeast}%
+    \pgf@y=-.5\pgf@y%
+    \pgf@x=-\pgf@x%
+  }
+  \anchor{D}{
+    \pgf@process{\northeast}%
+    \pgf@y=0\pgf@y%
+  }
+  
+  % Draw the rectangle box and the port labels
+  \backgroundpath{
+    % Rectangle box
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+    \pgfclosepath
 
+    % Draw port labels
+    \begingroup
+    \tikzset{flip flop/port labels} % Use font from this style
+    \tikz@textfont
+
+    \pgf@anchor@ramm@D
+    \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{D}}
+
+    \pgf@anchor@ramm@A
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{A}}
+
+    \pgf@anchor@ramm@CS
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{CS}}
+
+    \pgf@anchor@ramm@RW
+    \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{$\mbox{R/W}^*$}}
+    \endgroup
+  }
 }

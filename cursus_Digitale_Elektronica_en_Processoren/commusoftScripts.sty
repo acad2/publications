@@ -19,6 +19,8 @@
 \usetikzlibrary{automata}
 \usetikzlibrary{calc}
 \usetikzlibrary{backgrounds}
+\usetikzlibrary{decorations}
+\usepackage{pgfkeys}
 
 \tikzstyle{decision} = [diamond, draw, fill=black!20,text width=6em, text badly centered, node distance=4cm, inner sep=0pt,scale=0.75]
 \tikzstyle{block} = [rectangle, draw, fill=black!20,text width=6.667em, text centered, rounded corners, minimum height=4em,scale=0.75]
@@ -27,6 +29,7 @@
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
+\newcounter{tmpC}
 
 \tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
 
@@ -294,10 +297,10 @@
 }
 %Timebehav
 %arg0	X
-%arg0	Y
-%arg0	T
-%arg0	N
-%arg0	X
+%arg1	Y
+%arg2	T
+%arg3	N
+%arg4	X
 \newcommand{\timebehav}[8]{
 \def\xs{#5};
 \begin{scope}[xshift=#1 cm,yshift=#2 cm]
@@ -322,3 +325,56 @@
 \DeclareMathOperator{\fix}{fix}
 \DeclareMathOperator{\float}{float}
 \DeclareMathOperator{\ifun}{if}
+
+\newenvironment{stackConcept}[1]{\begin{tikzpicture}
+\draw[thick] (-1,0) -- (1,0);
+\coordinate (T) at (0,0.1);
+\foreach \x in {#1} {
+  \node[anchor=south,draw=black,rectangle] (E) at (T) {\x};
+  \coordinate (T) at ($(E.north)+(0,0.1)$);
+}}{\end{tikzpicture}}
+
+\newcommand{\stackImpl}[4]{\begin{tikzpicture}
+\draw (0,0) -- (1,0);
+\draw (2,0) rectangle ++(1,-0.5);
+\draw (2,-1.5) rectangle ++(1,-0.5);
+\draw (2.5,-0.25) node{#2};
+\draw (2.5,-0.75) node{lees};
+\draw (2.5,0.25-0.5*#1) node{schrijf};
+\draw (2.5,-0.25-0.5*#1) node{#3};
+\draw[->] (2,-0.25) -- ++(-0.33,0) |- (1,-0.5*#2-0.1666);
+\draw[->] (2,-0.25-0.5*#1) -- ++(-0.66,0) |- (1,-0.5*#3-0.3333);
+\foreach \x in {0,...,#1} {
+  \draw (0,-0.5*\x) -- ++(0,-0.5) -- ++(1,0) -- ++(0,0.5);
+  \draw[anchor=east] (0,-0.5*\x-0.25) node {\x};
+}
+\setcounter{tmpC}{0};
+\foreach \x in {#4} {
+  \draw (0.5,-0.5*\arabic{tmpC}-0.25) node {\x};
+  \addtocounter{tmpC}{1};
+}
+\end{tikzpicture}
+}
+
+\newcommand{\scpush}[1]{
+\coordinate (TP) at ($(T)+(0,0.25)$);
+\coordinate (TPP) at ($(TP)+(0,0.25)$);
+\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};
+\draw[->] (P.east) .. controls (P -| TP) and (P -| TP) .. (TP);
+}
+\newcommand{\scpop}{
+\coordinate (TP) at ($(T)+(0,0.25)$);
+\coordinate (TPP) at ($(TP)+(1,0.25)$);
+\draw[->] (E.north) .. controls (T |- TPP) and (T |- TPP) .. (TPP);
+}
+
+
+\pgfkeys{/sigo/lines/.initial={$n$}}
+\pgfdeclaredecoration{sigo}{start}{
+  \state{start}[width=0.5\pgfdecoratedinputsegmentremainingdistance-0.5\pgfdecorationsegmentlength,next state=width seg]{}
+  \state{width seg}[width=\pgfdecorationsegmentlength, next state=do nothing] {\pgfpathlineto{\pgfpointorigin}\pgfpathmoveto{\pgfqpoint{5pt}{-2.5pt}}\pgfpathlineto{\pgfqpoint{-5pt}{2.5pt}}\pgftext[left,rotate=-90,base,x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/sigo/lines}}}\pgfpathmoveto{\pgfpointorigin}}
+  \state{do nothing}[width=\pgfdecorationsegmentlength,next state=do nothing]{
+    \pgfpathlineto{\pgfpointdecoratedinputsegmentlast}
+  }
+  \state{final}{\pgfpathlineto{\pgfpointdecoratedpathlast}}
+}

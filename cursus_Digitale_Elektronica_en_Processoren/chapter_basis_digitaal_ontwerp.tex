@@ -575,7 +575,7 @@ Complexe poorten die in de loop der tijd een eigen symbool kregen zijn onder mee
 \caption{Complexe poorten.}
 \label{fig:complexGates}
 \end{figure}
-De waarheidstabellen van deze complexe poorten staat in subsectie \ref{ss:appendixComplexePoorten}. De rede dat NAND en NOR poorten populair zijn komt hoofdzakelijk omdat het universele poorten zijn. Dat betekent dat iedere basispoort kan ge\"implementeerd worden met behulp van NAND of NOR poorten. In tabel \ref{tbl:nandNorUniversal} staan deze implementaties. Bovendien is het realiseren van NAND en NOR poorten de meeste technologie\"en goedkoper dan het bouwen van AND en OR poorten.
+De waarheidstabellen van deze complexe poorten staat in subsectie \ref{ss:appendixComplexePoorten}. De rede dat NAND en NOR poorten populair zijn komt hoofdzakelijk omdat het universele poorten zijn. Dat betekent dat iedere basispoort kan ge\"implementeerd worden met behulp van NAND of NOR poorten. In tabel \ref{tbl:nandNorUniversal} staan deze implementaties. Bovendien is het realiseren van NAND en NOR poorten in de meeste technologie\"en goedkoper dan het bouwen van AND en OR poorten.
 \begin{table}[htb]
 \centering
 \begin{tabular}{c|c|c|c}
@@ -703,7 +703,7 @@ Merk op dat deze formule geen eenheid heeft. Het is dan ook niet de bedoeling de
 \subparagraph{}
 De verwerkingskracht wordt bepaald door het concept van de zwakste schakel. Ketens waarbij de uitgangen van poorten weer nieuwe ingangen aansturen zijn immers nefast. We streven dus naar circuits waarbij een signaal slechts door een beperkt aantal poorten heen moet. De lengte van het langste pad is echter niet makkelijk te berekenen. Immers hangt de vertraging van een poort af van onder meer het type en het aantal ingangen. Het totaal aantal ingangen daarentegen geeft in de meeste gevallen een goede ruwe schatting. We formaliseren tot:
 \begin{equation}
-\mbox{Minimale vertraging}\propto\mbox{\#poortingangen}
+\mbox{Minimale vertraging}\propto\mbox{\#poortingangen}%=?
 \end{equation}
 \paragraph{Tijdsgedrag}In de vorige paragraaf hadden we het reeds over performantie. Snelle systemen worden echter vaak beperkt door het tijdsgedrag van logische schakelingen. Wiskundig gezien levert een verandering aan de ingang immers altijd onmiddellijk een correct signaal aan de uitgang. Maar zoals we reeds gesteld hebben, heeft een poort een zekere tijd nodig om te veranderen. Dit lijkt slechts een detail. Een nadelig effect hiervan is echter dat er overgangsverschijnselen kunnen ontstaan. In de eerste plaats omdat een waarde afhangt van twee ketens van poorten. En het veranderde ingangssignaal zich sneller door de ene dan door de andere keten propageert. Aan de andere kant ook omdat men nu eenmaal niet iedere poort uniform kan aanmaken. Tussen twee (dezelfde) poorten kunnen toch kleine tijdsverschillen optreden. In dat geval spreken we van een \termen{glitch}. Figuur \ref{fig:timeBehaviorGlitchExample} toont een scenario van veranderende poorten in een logische schakeling met een  glitch.
 \begin{figure}[htb]
@@ -1316,7 +1316,7 @@ Both languages are easy to learn and hard to master. And once you have learned o
 \paragraph{PLD talen}
 Talen zoals Abel en Palasm zijn zogenaamde \termen{PLD talen}\footnote{PLD: programmable Logic Device, zie \ref{sss:pld}.}. Deze talen specifi\"eren schakelingen op het niveau van de poorten en dit slechts voor een speciale technologie. Deze talen hebben bijgevolg ook een ander objectief. Waar VHDL net bedoeld is om zich met de details bezig te houden, en de gebruiker met de grote lijnen, zijn PDL talen bedoelt om te implementeren op deze lagere niveaus.
 \subsection{Voordelen}
-VHDL wordt hoofdzakelijk in de industrie gebruikt omwille van zijn overdraagbaarheid. VHDL is immers een standaard die door allerhande programma's elk van deze programma's kunnen heel diverse toepassingen hebben. Op die manier kan een stuk VHDL eerst gesimuleerd worden met het ene programma, daarna gesynthetiseerd met een ander, om bijvoorbeeld geanalyseerd te worden met een derde programma. Deze programma's kunnen bovendien afkomstig zijn van verschillende fabrikanten. Hierdoor kunnen fabrikanten zich ook toespitsen op \'e\'en kant van het ontwerp zonder dat er compatibiliteitsproblemen ontstaan.
+VHDL wordt hoofdzakelijk in de industrie gebruikt omwille van zijn overdraagbaarheid. VHDL is immers een standaard die door allerhande programma's gehanteerd wordt. Elk van deze programma's kunnen heel diverse toepassingen hebben. Op die manier kan een stuk VHDL eerst gesimuleerd worden met het ene programma, daarna gesynthetiseerd met een ander, om bijvoorbeeld geanalyseerd te worden met een derde programma. Deze programma's kunnen bovendien afkomstig zijn van verschillende fabrikanten. Hierdoor kunnen fabrikanten zich ook toespitsen op \'e\'en kant van het ontwerp zonder dat er compatibiliteitsproblemen ontstaan.
 \paragraph{}
 Daarnaast is VHDL ook interessant om complexe schakelingen op een hogere abstractieniveau te beschrijven. Zo kan men een schakeling die vaak terugkomt groeperen in een bepaalde module. Repetitieve structuren dienen slechts \'e\'enmaal beschrijven en ze toch eindeloos blijven gebruiken.
 \paragraph{}
