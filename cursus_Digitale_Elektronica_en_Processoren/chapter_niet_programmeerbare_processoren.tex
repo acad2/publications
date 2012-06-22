@@ -285,7 +285,7 @@ Deze ASM-elementen worden gegroepeerd in een ``\termen{ASM-blok}''. Alle ASM-ele
 \draw[->] (S1D) -| (-\di,0) -- (S1S);
 \setTrueFalseLabels{S1D};
 
-\node[asmS] (S2S) at (\ds,0) {$\begin{array}{c}X\gets N\\I\gets I-1\\co=0\end{array}$};
+\node[asmS] (S2S) at (\ds,0) {$\begin{array}{c}X\gets X\shlcmd 1\\I\gets I-1\\co=0\end{array}$};
 \node[asmD] (S2D1) at (\ds,\dy) {$z_2z_1z_0x_3<D$};
 \draw[->] (S2S) -- (S2D1);
 \node[asmC] (S2C1) at (\ds-\di,2*\dy) {$\begin{array}{c}Z\gets z_2z_1z_0x_3\\Y\gets Y\shlcmd{} 1\end{array}$};
@@ -490,7 +490,7 @@ De termen inputgebaseerd en toestandsgebaseerd komen van de controller. We hebbe
 \draw[->] (S1D) -| (-\di,0) -- (S1S);
 \setTrueFalseLabels{S1D};
 
-\node[asmS] (S2S) at (\ds,0) {$\begin{array}{c}X\gets N\\co=0\end{array}$};
+\node[asmS] (S2S) at (\ds,0) {$\begin{array}{c}X\gets X\shlcmd 1\\co=0\end{array}$};
 \node[asmD] (S2D1) at (\ds,\dy) {$z_2z_1z_0x_3<D$};
 \draw[->] (S2S) -- (S2D1);
 \node[asmS] (S4S) at (\ds-\di,2*\dy) {$\begin{array}{c}Z\gets z_2z_1z_0x_3\\I\gets I-1\\Y\gets Y\shlcmd{} 1\end{array}$};
@@ -746,8 +746,9 @@ RAM geheugens vereisen dat we een absoluut adres meegeven. In heel wat programme
 \begin{itemize}
  \item \termen{push}: het toevoegen van een element aan de stapel. Dit element wordt dan de nieuwe top.
  \item \termen{pop}: het weghalen van het element die zich bij de top bevindt. Het element net onder de top wordt dan de nieuwe top.
+ \item \termen{reset}: ook wel clear genoemd. Een operatie die de volledige stapel verwijdert. We kunnen dit opvatten als het herhalen van een pop-operatie totdat de stapel leeg is, in de meeste gevallen kunnen we deze operatie echter sneller uitvoeren.
  \item \termen{leeg/empty}: controleren of een stapel leeg is en dus geen enkel element bevat. Indien dit het geval is, kan men geen pop-operaties meer uitvoeren.
- \item \termen{vol/full}: controleren of het volledige geheugen van de stapel gebruikt wordt. Indien dit het geval is, kan men geen push-operaties meer uitvoeren. Deze functionaliteit wordt meestal niet in software-implementaties van stapels aangeboden vermits men het geheugen dynamisch kan uitbreiden tot het volledige RAM geheugen in gebruik genomen is.
+ \item \termen{vol/full}: controleren of het volledige geheugen van de stapel gebruikt wordt. Indien dit het geval is, kan men geen push-operaties meer uitvoeren. Deze functionaliteit wordt meestal niet in software-implementaties van stapels aangeboden vermits men het geheugen dynamisch kan uitbreiden tot het volledige RAM geheugen in gebruik genomen is. Een fenomeen die men doorgaans niet beschouwd in software.
 \end{itemize}
 In hardware is een element een hoeveelheid data met een vast aantal bits. Men spreekt over het ``\termen{Last-In-First-Out (LIFO)}''-principe omdat de elementen die het laatst aan een stapel toegevoegd worden (door middel van een push-operatie), de eerste elementen zijn die terug uit de stapel gehaald worden (door middel van een pop-operatie).
 \paragraph{Conceptueel voorbeeld}
@@ -777,8 +778,6 @@ In hardware is een element een hoeveelheid data met een vast aantal bits. Men sp
 We introduceren ook een conceptueel voorbeeld van een stapelgeheugen dat staat op figuur \ref{fig:stackConceptExample}. Initieel is de stapel leeg en bevat deze dus geen elementen. Vervolgens voeren we een push-operatie uit met als argument 6. Het gevolg is een stapel met als enig element 6. Daarna voeren we een push operatie uit met 2. We voegen dus 2 toe aan de top van de stapel. Hierna voeren we een pop-operatie uit. Vermits het laatste toegevoegde element -- die nog niet van de stapel is gehaald -- 2 is, zullen we 2 terugkrijgen. Bij de push-operatie van 1 voegen we 1 toe aan de stapel. De stapel heeft dan als top 1 en subtop 6. Tot slot voeren we twee pop-operaties uit. Omdat 1 het laatste toegevoegde element is, is dit het resultaat van de eerste pop-operatie. Tot slot zullen we ook 6 van de stapel halen.
 \paragraph{Implementatie met een schuifregister}
 We kunnen een stapel implementeren met behulp van een schuifregister. Voorwaarde is wel dat het geheugen dan niet bijzonder groot kan worden. Bij een push operatie zullen we in dat geval de bits van het element inschuiven en dit aantal bits naar links opschuiven. Bij een pop-operatie schuiven we dit aantal bits terug naar rechts, en stellen de meest rechtse bits dit element voor. Deze implementatie is vrij kostelijk: in \ref{sss:shiftregisters} hebben we reeds register ge\"implementeerd. Per bit geheugen hebben we een flipflop en enkele multiplexers nodig. Bij grote stapelgeheugens is deze kost onacceptabel. Daarom zullen we bij grote stapels meestal gebruik maken van RAM-geheugens.
-\paragraph{Implementatie met RAM-geheugens}
-Een goedkopere manier is gebruik maken van RAM-geheugens. Hierbij is de kost beperkt tot een 4 \`a 6 transistoren per bit. We realiseren dan een stapelgeheugen met behulp van een RAM-geheugen -- die tevens ook de grote van het stapelgeheugen bepaald -- en twee tellers: het \termen{leesadres} en het \termen{schrijfadres}. Indien het RAM-geheugen $n$ adressen kent, dienen beide tellers $\left\lceil\log_2n\right\rceil$-bit tellers te zijn\footnote{Op die manier kunnen ze elk adres voorstellen}. De schrijfteller staat initieel op $0$, de leesteller staat initeel op $n-1$. Wanneer we een push operatie uitvoeren schrijven we de data weg naar het adres voorgesteld door de schrijfteller, en verhogen we beide tellers. Bij een pop-operatie lezen we de data uit het RAM-geheugen op het adres voorgesteld door de leesteller. Vervolgens verlagen we beide tellers. Merk op dat we bij een push- en pop-operatie dus niet alle data in het RAM-geheugen moeten opschuiven. We verhogen en verlagen enkel de tellers.
 \begin{figure}[hbt]
 \centering
 \subfigure[Push 6]{
@@ -809,10 +808,11 @@ Een goedkopere manier is gebruik maken van RAM-geheugens. Hierbij is de kost bep
 \def\epp{-5.25};
 \def\er{-5.625};
 \def\efe{-1};
-\node[counterdbit] (CW) at (-3,1.5) {$\begin{array}{c}n+1\mbox{-bit}\\\mbox{schrijfteller}\end{array}$};
+\node[counterdbitrev] (CW) at (-3,1.5) {$\begin{array}{c}n+1\mbox{-bit}\\\mbox{schrijfteller}\end{array}$};
 \node[mux2to1,rotate=90,scale=1.5,anchor=data0,thick] (M) at ($(CW.Q2)+(2.75,-0.25)$) {};
 \draw[thick] (CW.Q2) -- (CW.Q2 |- M.data0);
-\node[counterdbit] (CR) at (-3,-1.75) {$\begin{array}{c}n\mbox{-bit}\\\mbox{leesteller}\end{array}$};
+\node[counterdbitrev] (CR) at (-3,-1.75) {$\begin{array}{c}n\mbox{-bit}\\\mbox{leesteller}\end{array}$};
+\node (CRV) at (CR.D2 |- 0,-0.25) {$2^n-1$};\draw[thick] (CRV) -- (CR.D2);
 \draw[thick] (CR.Q2) |- ++(2.5,-0.25);
 \draw[decoration={sigo,lines={$n$}},decorate,thick] ($(CR.Q2)+(2.5,-0.25)$)  |- (M.data1);
 \node[ramm,anchor=A] (R) at ($(M.output)+(0.75,0)$) {$\begin{array}{c}2^n\times w\mbox{-bit}\\\mbox{RAM}\end{array}$};
@@ -840,9 +840,152 @@ Een goedkopere manier is gebruik maken van RAM-geheugens. Hierbij is de kost bep
 \node[fit=(R) (M) (CW) (CR) (N1) (N2) (NO) (MRW),inner sep=0.625cm,draw=black,rectangle,dashed] {};
 \end{tikzpicture}
 \caption{Implementatie van een stapelgeheugen met behulp van RAM-geheugen.}
+\label{fig:stackImplRAM}
 \end{figure}
+\paragraph{Implementatie met RAM-geheugens}
+Een goedkopere manier is gebruik maken van RAM-geheugens. Hierbij is de kost beperkt tot een 4 \`a 6 transistoren per bit. We realiseren dan een stapelgeheugen met behulp van een RAM-geheugen -- die tevens ook de grote van het stapelgeheugen bepaald -- en twee tellers: het \termen{leesadres} en het \termen{schrijfadres}. Indien het RAM-geheugen $2^n$ adressen kent, beschouwen we een $n$-bit leesteller en $n+1$-bit schrijftellers\footnote{Op die manier kunnen ze elk adres voorstellen. We voegen aan de schrijfteller een extra bit toe voor overflow.}. De schrijfteller staat initieel op $0$, de leesteller staat initeel op $2^n-1$. Wanneer we een push operatie uitvoeren schrijven we de data weg naar het adres voorgesteld door de schrijfteller, en verhogen we beide tellers. Bij een pop-operatie lezen we de data uit het RAM-geheugen op het adres voorgesteld door de leesteller. Vervolgens verlagen we beide tellers. Merk op dat we bij een push- en pop-operatie dus niet alle data in het RAM-geheugen moeten opschuiven. We verhogen en verlagen enkel de tellers. Indien we het volledige geheugen volgeschreven hebben, zal de schrijfteller op $2^n$ komen te staan\footnote{Vermits de schrijfteller een $n+1$-bit teller is.}. Dit betekent dus dat de $n+1$-de bit van die teller een hoog signaal bevat. We kunnen dit hoog signaal naar buiten brengen als een full-signaal. Op figuur \ref{fig:stackImplRAM} implementeren we dit stapelgeheugen. Indien het reset-signaal actief wordt, wordt de schrijfteller gereset en komt deze op 0 te staan, de leesteller voert een load-operatie uit en laad de waarde $2^n-1$ in. Bij een push-operatie wordt het push/pop$^*$ signaal hoog, hierdoor wordt het increment-signaal bij beide tellers geactiveerd en worden deze opgehoogd in de volgende klokflank. De multiplexer zal intussen de huidige waarde van de schrijfteller doorsturen naar het RAM-geheugen, die de waarde die op de data-ingangen staat zal inlezen en wegschrijven. Bij een pop-operatie ontvangen beide tellers een decrement-signaal, de multiplexer stuurt het leesadres door naar het RAM-geheugen die de waarde die op dit adres-staat op de data-uitgang zal zetten. Ons component bevat daarnaast nog een enable-ingang: indien deze op 0 staat, worden de tellers en het RAM-geheugen niet aangepast en gebeurt er dus niets. De full-uitgang brengt zoals eerder vermeld de hoogste bit van de schrijfteller naar buiten, en is hoog indien alle geheugenplaatsen opgebruikt zijn. Daarnaast bevat ons component ook een empty-uitgang. Deze voert een NOR-operatie uit op alle bits van de schrijfteller. Indien alle bits 0 zijn (en de teller dus op 0 staat) is de stapel leeg, en geeft empty dus een laag signaal. Tot slot kunnen we opmerken dat we voor de implementatie strikt genomen geen twee tellers nodig hebben. Vermits de leesteller telkens gelijk is aan de gedecrementeerde waarde schrijfteller (en modulo $2^n$), zouden we ook een combinatorische moduler kunnen voorzien die de waarde van de leesteller uit de schrijfteller afleid. In dit geval zal de vertraging van de pop-operaties wel groter worden.
 \subsubsection{Queue (FIFO: First-In-First-Out)}
+\paragraph{Definitie}Een queue of buffergeheugen is een datastructuur die een lineare lijst voorstelt. Deze lijst heeft twee uiteindes. Aan het ene uiteinde voegen we elementen toe bij een schrijfoperatie, aan het andere uiteinde zullen we bij een leesoperatie elementen weghalen. Zoals de naam al doet vermoeden heeft een queue hoofdzakelijk de taak om data te bufferen in de tijd\footnote{Men dient een buffergeheugen niet te verwarren met een buffer-component. Een buffercomponent staat in voor het gelijkmatig verdelen van de spanning over verschillende uitgangen (en buffert dus het elektrisch potentiaal).}. Dit kan bijvoorbeeld nuttig zijn indien we een component soms aan hoge snelheid invoer data krijgt (zogenaamde bursts) en men deze data niet aan dezelfde snelheid kan verwerken. Een queue dient minstens volgende functionaliteiten aan te bieden:
+\begin{itemize}
+ \item \termen{Write} (ofwel enqueue): het inlezen van data en dit aan \'e\'en uiteinde van het buffergeheugen plaatsen.
+ \item \termen{Read} (ofwel dequeue): het uitlezen van data aan het andere uiteinde van het buffergeheugen.
+ \item \termen{Reset}: het buffergeheugen in de initi\"ele toestand plaatsen (waarbij het dus geen elementen bevat). Dit kan opgevat worden als het herhalen van read operaties tot alle elementen uit de queue verdwenen zijn.
+ \item \termen{Full}: een indicator of alle beschikbare geheugenlocaties bezet zijn.
+ \item \termen{Empty}: een indicator dat het buffergeheugen leeg is.
+\end{itemize}
+In hardware is een element een hoeveelheid data met een vast aantal bits. Men spreekt over het ``\termen{First-In-First-Out (LIFO)}''-principe omdat de elementen die het eerst aan een queue toegevoegd worden (door middel van een write-operatie), de eerste elementen zijn die terug uit de queue gehaald worden (door middel van een read-operatie).
+\begin{figure}[hbt]
+\centering
+\subfigure[Write 6]{
+\begin{queueConcept}{4}{}\qupush{6}\end{queueConcept}
+}
+\subfigure[Write 2]{
+\begin{queueConcept}{4}{6}\qupush{2}\end{queueConcept}
+}
+\subfigure[Read]{
+\begin{queueConcept}{4}{6,2}\qupop{}\end{queueConcept}
+}
+\subfigure[Write 1]{
+\begin{queueConcept}{4}{2}\qupush{1}\end{queueConcept}
+}
+\subfigure[Read]{
+\begin{queueConcept}{4}{2,1}\qupop{}\end{queueConcept}
+}
+\subfigure[Read]{
+\begin{queueConcept}{4}{1}\qupop{}\end{queueConcept}
+}
+\caption{Conceptueel voorbeeld van een buffergeheugen.}
+\label{fig:queueConceptExample}
+\end{figure}
+\paragraph{Conceptueel voorbeeld}
+Analoog aan het stapelgeheugen introduceren we een conceptueel voorbeeld voor een buffergeheugen op figuur \ref{fig:queueConceptExample}. We voeren dezelfde operaties uit als bij het stapelgeheugen (push is write en pop is read). Toch zien we dat de elementen op een andere manier uit de datastructuur verdwijnen. Aanvankelijk is de queue leeg. Vervolgens plaatsen we met write operaties een 6 en een 2 in de queue. Bij de read operatie zullen we in tegenstelling tot bij een stapel, de 6 uit het geheugen halen.
+\begin{figure}[hbt]
+\centering
+\subfigure[Push 6]{
+\queueImpl{2}{0}{0}{}
+}
+\subfigure[Push 2]{
+\queueImpl{2}{0}{1}{6}
+}
+\subfigure[Pop]{
+\queueImpl{2}{0}{2}{6,2}
+}
+\subfigure[Push 1]{
+\queueImpl{2}{1}{2}{6}
+}
+\subfigure[Pop]{
+\queueImpl{2}{1}{3}{6,1}
+}
+\subfigure[Pop]{
+\queueImpl{2}{2}{3}{6}
+}
+\caption{Demonstratie van een buffergeheugen met tellers.}
+\label{fig:queueConceptExample}
+\end{figure}
+\paragraph{Implementatie met RAM-geheugens}
+Analoog kunnen we ook een buffergeheugen implementeren met behulp van een RAM-geheugen en een lees- en schrijfteller. De schrijfteller houdt de positie bij van het uiteinde van de rij, waar we elementen zullen bijschrijven. De leesteller houdt de positie van het andere uiteinde bij, waar we elementen zullen uitlezen. We gebruiken het RAM-geheugen op een manier waarbij we de elementen niet dienen te verplaatsen. Dit kunnen we doen door zowel de lees als de schrijfteller aanvankelijk op 0 te zetten. Indien we een schrijf-operatie dienen uit te voeren, schrijven we het elementen op het adres gespecificeerd door de schrijfteller, en incrementeren we deze teller. Bij een lees-operatie lezen we de locatie van het geheugen uit en incrementeren we de leesteller. Indien \'e\'en van de tellers aan het einde van het geheugen komt, voeren we eenvoudigweg een wrap-around uit, en schrijven we dus opnieuw op het begin van het geheugen. Een probleem stelt zich op het moment dat de lees- en schrijftellers beide dezelfde waarde hebben. In dat geval zijn er immers twee situaties mogelijk: ofwel zijn op dat moment alle geheugencellen bezet, ofwel is op dat moment het buffergeheugen leeg (zoals bijvoorbeeld bij de initi\"ele toestand van de tellers). We verhelpen dit probleem opnieuw door bij een $2^n\times w$-bit RAM geheugen, de tellers uit te breiden naar $n+1$-bit tellers. De hoogste bit wordt niet gebruikt om het adres voor het RAM-geheugen aan te wijzen, we beschouwen voor adressering dus enkel de laagste $n$ bits. Indien deze $n$ laagste bits van de lees- en schrijfteller aan elkaar gelijk zijn, speelt zich opnieuw het scenario van vol of leeg af. Indien daarenboven de hoogste bits aan elkaar gelijk zijn, is de queue leeg, indien ze niet gelijk zijn is het buffergeheugen vol. Het conceptueel principe van deze tellers staat op figuur \ref{fig:queueConceptExample}. Op figuur \ref{fig:queueImplRAM} implementeren we een schakeling die een buffergeheugen realiseert. Vermits de tellers in \'e\'en richting tellen, makken we gebruik van uptellers. Indien de enable-inang hoog is, zal afhankelijk van het signaal aan de \mbox{\termen{read/write$^*$-ingang}} \'e\'en van de tellers een increment uitvoeren. Verder bepaald deze ingang ook, welke teller de multiplexer naar het RAM-geheugen doorstuurd. De multiplexer stuurt wel enkel de laagste $n$ bits door. De enable ingang zal verder ook het RAM-geheugen activeren. Indien de reset-ingang geactiveerd is, zullen beide tellers terug de initi\"ele waarde 0 krijgen. Tot slot implementeren we de indicators zoals eerder besproken: een buffergeheugen is leeg indien alle $n+1$ bits van de twee tellers gelijk zijn. Een buffergeheugen is vol indien op de hoogste bits na de tellers gelijk zijn.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[circuit logic US]
+\def\el{-6.75};
+\def\ela{5.25};
+\def\ec{-5.125};
+\def\epp{-6.125};
+\def\epq{-6.375};
+\def\er{-5};
+\def\efe{-1.25};
+\def\eff{2.75};
+\def\af{3.5};
+\def\afa{3.25};
+\def\afb{3};
+\node[upcounterdbit,minimum width=3cm] (CW) at (-3,1.5) {$\begin{array}{c}n+1\mbox{-bit}\\\mbox{schrijfteller}\end{array}$};
+\node[mux2to1,rotate=90,scale=1.5,anchor=data0,thick] (M) at ($(CW.Q2)+(3,-0.5)$) {};\setIndexLabelsMuxB[west]{M};
+\draw[thick] (CW.Q2) -- (CW.Q2 |- M.data0);
+\node[upcounterdbit,minimum width=3cm] (CR) at (-3,-1.75) {$\begin{array}{c}n+1\mbox{-bit}\\\mbox{leesteller}\end{array}$};
+\draw[thick] (CR.Q2) |- ++(\eff,-0.25);
+\draw[decoration={sigo,lines={$n$}},decorate,thick] ($(CR.Q2)+(\eff,-0.25)$)  |- (M.data1);
+\node[ramm,anchor=A] (R) at ($(M.output)+(0.75,0)$) {$\begin{array}{c}2^n\times w\mbox{-bit}\\\mbox{RAM}\end{array}$};
+\draw[decoration={sigo,lines={$n$}},decorate,thick] (M.output) -- (R.A);
+\node[and gate,anchor=output] (AR) at (CR.CEIN -| \ec,0) {};\draw (AR.output) -- (CR.CEIN);
+\node[and gate,inputs={inverted,normal},anchor=output] (AW) at (CW.CEIN -| \ec,0) {};\draw (AW.output) -- (CW.CEIN);
+\node[comp,rotate=90,thick,anchor=north,xshift=-0.125cm] (CO) at (R.west |- CW.CEIN) {Comp};
+\node[xor gate,anchor=south,yshift=0.25cm] (X) at (CO.east) {};
+\node[and gate,anchor=input 1] (A0) at (X -| \af,0) {};\draw (A0.output) -- (A0.output -| \ela,0) node[anchor=west]{Full};
+\node[and gate,inputs={inverted,normal},anchor=input 2] (A1) at (CO -| \af,0) {};\draw (A1.output) -- (A1.output -| \ela,0) node[anchor=west]{Empty};
+\draw (X.output -| \afa,0) |- (A1.input 1);\pdot{X.output -| \afa,0};\draw (CO.eq -| \afb,0) |- (A0.input 2);\pdot{CO.eq -| \afb,0};
+\coordinate (FEO) at (\efe,0 |- CR.CEIN);
+\coordinate (FEOM) at (FEO |- M.data0);\coordinate (FEOC) at (FEO |- CO.y1);\draw[decoration={sigo,lines={$n+1$}},decorate,thick] (FEOM) -- (FEOC);\pdot{FEOC};\draw[decoration={sigo,lines={$n+1$}},decorate,thick] (FEOC) -- (CO.y1);\draw (FEOC) |- (X.input 1);
+\coordinate (FFO) at ($(CR.Q2)+(\eff,-0.25)$);
+\coordinate (FFOM) at (FFO |- M.data1);\coordinate (FFOC) at (FFO |- CO.x1);\draw[decoration={sigo,lines={$n+1$}},decorate,thick] (FFOM) -- (FFOC);\pdot{FFOC};\draw[decoration={sigo,lines={$n+1$}},decorate,thick] (FFOC) -- (CO.x1);\draw (FFOC) |- (X.input 2);
+\coordinate (CRD) at ($(CR.Q2)+(0,-0.75)$);
+\coordinate (MRW) at (M.selin0 |- CRD);
+\pdot{MRW};\pdot{FFOM};
+\draw (M.selin0) -- (MRW);
+\draw[decoration={sigo,lines={$n+1$}},decorate,thick] (CW.Q2 |- M.data0) -- (FEOM);
+\draw[decoration={sigo,lines={$n$}},decorate,thick] (FEOM) -- (M.data0);
+\pdot{FEOM};
+\node[anchor=east,scale=0.9] (IR) at (\el,0 |- CW.CLR) {Reset$^*$};\draw (IR) -- (CW.CLR);\draw (IR -| \er,0) |- (CR.CLR);\pdot{IR -| \er,0};
+\node[anchor=east,scale=0.9] (IE) at (\el,0 |- AR.input 2) {Enable};\draw (IE) -- (AR.input 2);\draw (IE -| \epq,0) |- (AW.input 2);\draw (IE -| \epq,0) |- ($(CR.Q2)+(2.5,-0.5)$) -| ($(R.CS)+(-0.625,0)$) -- (R.CS);\pdot{IE -| \epq,0};
+\draw (X.output) -- (A0.input 1);\draw (CO.eq) -- (A1.input 2);
+\node[anchor=east,scale=0.9] (IPP) at (\el,0 |- AW.input 1) {Read/Write$^*$};\draw (IPP) -- (AW.input 1);\draw (IPP -| \epp,0) |- (AR.input 1);\pdot{IPP -| \epp,0};\draw (AR.input 1 -| \epp,0) |- (MRW) -| ($(R.RW)+(-0.25,0)$) -- (R.RW);\pdot{AR.input 1 -| \epp,0};
+\node[anchor=west,scale=0.9] (OD) at (R.D -| \ela,0) {Data In/Out};\draw[decoration={sigo,lines={$w$}},decorate,thick] (R.D) -- (OD);
+\node[fit=(R) (M) (CW) (CR) (CW) (AR) (AW) (MRW),inner sep=0.625cm,draw=black,rectangle,dashed] {};
+\end{tikzpicture}
+\caption{Implementatie van een buffergeheugen met behulp van RAM-geheugen.}
+\label{fig:queueImplRAM}
+\end{figure}
 \section{Synthese van een Niet-Programmeerbare Processor}
 \label{s:syntheseFSMD}
+Nu we een ASM-schema gedefinieerd hebben en nieuwe geheugencomponenten ter beschikkingen hebben kunnen we eindelijk een processor implementeren. We vertrekken vanuit het ASM-schema, en zullen in subsectie \ref{ss:syntheseFSMDBasis} eerst een methode bespreken om op een mechanische manier een ASM-schema om te zetten in een processor. Deze methode leidt tot een straightforward resultaat, maar dit is verre van optimaal. In subsecties \ref{ss:syntheseFSMDController}, \ref{ss:syntheseFSMDDatapad} en \ref{ss:syntheseFSMDOptimal} zullen we dan ook optimalisaties bespreken om de processor goedkoper en effici\"enter te maken.
+\subsection{Basisprincipes}
+\label{ss:syntheseFSMDBasis}
+\paragraph{Principes}
+We kunnen door volgende principes toe te passen op het ASM-schema een processor bouwen:
+\begin{enumerate}
+ \item Elke variabele is een register
+ \item Elke operatie komt overeen met een functionele eenheid (FU) die logischerwijs dezelfde opdracht uitvoert (indien er dus een optelling in het ASM-schema voorkomt, zullen we een opteller in het datapad plaatsen).
+ \item Indien een operatie de waarde van een variabele nodig heeft, maken we een verbinding van de uitgang van het bijbehorende register naar de bijbehorende ingang van functionele eenheid.
+ \item Indien het resultaat van een operatie wordt weggeschreven naar een variabele, bouwen we een verbinding van de uitgang van de bijbehorende functionele eenheid naar de data-ingang van het register.
+ \item Indien data-ingangen of constanten ingelezen kunnen worden bij een variabele, bouwen we een verbinding tussen de data-ingang/constante en het bijbehorende register, tenzij de constante 0 is.
+ \item Indien verschillende functionele eenheden waardes wegschrijven naar eenzelfde register, voorzien we een multiplexer om de waarde te kiezen.
+ \item Elk ASM-blok komt overeen met een toestand van de controller.
+ \item Voor elke test waarbij een variabele betrokken is, dienen we een combinatorische module te bouwen die op basis van de waarde van de registers de test kan uitvoeren. De uitgang van deze test module is \'e\'en van het status-signalen, en bijgevolg een deel van de controller-ingangen.
+ \item De reset- en load-ingangen van de registers vormen samen met de selectie-ingangen de het instructiewoord: een deel van de uitgangen van de controller.
+\end{enumerate}
+\paragraph{Leidend voorbeeld}
+Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagina \pageref{fig:aSMSchemaRunningExample} kunnen we een processor bouwen. In het ASM-schema is er sprake van vier variabelen: $X$, $Y$, $Z$ en $I$.
+\begin{figure}[hbt]
+\centering
+\begin{sprocessor}{4}{x/$X$/1/2,y/$Y$/3/2,z/$Z$/3/2,i/$I$/1/2}{sa/{$\shlcmd 1$},de/$-1$,rca/$z_2z_1z_0x_3$,sb/{$\shlcmd 1$},rcb/$z_2z_1z_0x_3-D$,rcc/$y_2y_1y_01$}
+\draw[thick] (RRx-1) -- ++(0,0.5) node[anchor=south] {$N$};
+\draw[thick] (RRi-1) -- ++(0,0.5) node[anchor=south] {3};
+\end{sprocessor}
+\end{figure}
+\subsection{Ontwerp Controller}
+\label{ss:syntheseFSMDController}
+\subsection{Minimaliseren Datapad}
+\label{ss:syntheseFSMDDatapad}
+\subsection{Andere optimalisaties}
+\label{ss:syntheseFSMDOptimal}
 \section{Tijdsgedrag}
 \label{s:timeFSMD}

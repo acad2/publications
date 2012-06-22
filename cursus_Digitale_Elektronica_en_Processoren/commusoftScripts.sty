@@ -12,6 +12,7 @@
 \RequirePackage{amsmath}
 \RequirePackage{float}
 \RequirePackage{tikz}
+\RequirePackage{ifthen}
 
 \usetikzlibrary{shapes}
 \usetikzlibrary{arrows}
@@ -30,6 +31,8 @@
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
 \newcounter{tmpC}
+\newcounter{tmpD}
+\newcounter{tmpE}
 
 \tikzset{asmterminal/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,rounded corners=2mm,align=center},asmcommand/.style={text width=2.6cm,scale=0.65,draw=black,rectangle,minimum size=6mm,align=center},asmcondit/.style={text width=1.5cm,scale=0.6,draw=black,minimum size=3mm,shape aspect=2,diamond,align=center}}
 
@@ -39,12 +42,8 @@
   \draw (#1.east) node[anchor=south west,scale=0.75]{[False]};
   \draw (#1.west) node[anchor=south east,scale=0.75]{[True]};
 }
-\newcommand{\setIndexLabelsMuxD}[2][south]{
-  \draw (#2.data0) node[anchor=#1,scale=0.75]{00};
-  \draw (#2.data1) node[anchor=#1,scale=0.75]{01};
-  \draw (#2.data2) node[anchor=#1,scale=0.75]{10};
-  \draw (#2.data3) node[anchor=#1,scale=0.75]{11};
-}
+\newcommand{\setIndexLabelsMuxD}[2][north]{\draw (#2.data0) node[anchor=#1,scale=0.75]{00};\draw (#2.data1) node[anchor=#1,scale=0.75]{01};\draw (#2.data2) node[anchor=#1,scale=0.75]{10};\draw (#2.data3) node[anchor=#1,scale=0.75]{11};}
+\newcommand{\setIndexLabelsMuxB}[2][north]{\draw (#2.data0) node[anchor=#1,scale=0.75]{0};\draw (#2.data1) node[anchor=#1,scale=0.75]{1};}
 
 \newcommand{\procedureref}[1]{\textsc{#1}}
 \newcommand{\shlcmd}{\ensuremath{\mbox{ \textbf{shl} }}}
@@ -334,39 +333,69 @@
   \coordinate (T) at ($(E.north)+(0,0.1)$);
 }}{\end{tikzpicture}}
 
-\newcommand{\stackImpl}[4]{\begin{tikzpicture}
-\draw (0,0) -- (1,0);
-\draw (2,0) rectangle ++(1,-0.5);
-\draw (2,-1.5) rectangle ++(1,-0.5);
-\draw (2.5,-0.25) node{#2};
-\draw (2.5,-0.75) node{lees};
-\draw (2.5,0.25-0.5*#1) node{schrijf};
-\draw (2.5,-0.25-0.5*#1) node{#3};
-\draw[->] (2,-0.25) -- ++(-0.33,0) |- (1,-0.5*#2-0.1666);
-\draw[->] (2,-0.25-0.5*#1) -- ++(-0.66,0) |- (1,-0.5*#3-0.3333);
-\foreach \x in {0,...,#1} {
-  \draw (0,-0.5*\x) -- ++(0,-0.5) -- ++(1,0) -- ++(0,0.5);
-  \draw[anchor=east] (0,-0.5*\x-0.25) node {\x};
-}
+\newenvironment{queueConcept}[2]{\begin{tikzpicture}
+\coordinate (T) at (0,0.1);
+\coordinate (TA) at (0,0.5*#1);
+\draw[thick] (-0.5,0) -- (-0.5,0.5*#1);
+\draw[thick] (0.5,0) -- (0.5,0.5*#1);
+\draw[thick,white] (-1,-0.35) -- (-1,0.5*#1);
+\draw[thick,white] (1,0) -- (1,0.5*#1);
 \setcounter{tmpC}{0};
-\foreach \x in {#4} {
-  \draw (0.5,-0.5*\arabic{tmpC}-0.25) node {\x};
+\coordinate (B) at (0,0.1);
+\foreach \x in {#2} {
+  \node[anchor=south,draw=black,rectangle] (E\arabic{tmpC}) at (T) {\x};
+  \coordinate (T) at ($(E.north)+(0,0.1)$);
   \addtocounter{tmpC}{1};
+  \coordinate (B) at (E0.south);
 }
-\end{tikzpicture}
-}
+}{\end{tikzpicture}}
 
-\newcommand{\scpush}[1]{
-\coordinate (TP) at ($(T)+(0,0.25)$);
-\coordinate (TPP) at ($(TP)+(0,0.25)$);
-\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};
-\draw[->] (P.east) .. controls (P -| TP) and (P -| TP) .. (TP);
+\newcommand{\stackImpl}[4]{\begin{tikzpicture}\draw (0,0) -- (1,0);\draw (2,0) rectangle ++(1,-0.5);\draw (2,-1.5) rectangle ++(1,-0.5);\draw (2.5,-0.25) node{#2};\draw (2.5,-0.75) node{lees};\draw (2.5,0.25-0.5*#1) node{schrijf};\draw (2.5,-0.25-0.5*#1) node{#3};\draw[->] (2,-0.25) -- ++(-0.33,0) |- (1,-0.5*#2-0.1666);\draw[->] (2,-0.25-0.5*#1) -- ++(-0.66,0) |- (1,-0.5*#3-0.3333);\foreach \x in {0,...,#1} {\draw (0,-0.5*\x) -- ++(0,-0.5) -- ++(1,0) -- ++(0,0.5);\draw[anchor=east] (0,-0.5*\x-0.25) node {\x};}\setcounter{tmpC}{0};\foreach \x in {#4} {\draw (0.5,-0.5*\arabic{tmpC}-0.25) node {\x};\addtocounter{tmpC}{1};}\end{tikzpicture}}
+
+\newcommand{\queueImpl}[4]{\begin{tikzpicture}
+\draw (0,0) -- (1,0);\draw (2,0) rectangle ++(1,-0.5);\draw (2,-0.5) rectangle ++(1,-0.5);\draw (2.5,-0.25) node{#2};\draw (2.5,-0.75) node{#3};\draw (2.5,0.25) node{lees};\draw (2.5,-1.25) node{schrijf};
+\setcounter{tmpD}{#2}\ifthenelse{\value{tmpD}<#1}{}{\addtocounter{tmpD}{-#1}}\draw[->] (2,-0.25) -- ++(-0.33,0) |- (1,-0.5*\arabic{tmpD}-0.1666);
+\setcounter{tmpE}{#3}\ifthenelse{\value{tmpE}<#1}{}{\addtocounter{tmpE}{-#1}}\draw[->] (2,-0.75) -- ++(-0.66,0) |- (1,-0.5*\arabic{tmpE}-0.3333);
+\setcounter{tmpC}{0};
+\foreach \x in {1,...,#1} {
+\draw (0,0.5-0.5*\x) -- ++(0,-0.5) -- ++(1,0) -- ++(0,0.5);
+\draw[anchor=east] (0,-0.5*\x+0.25) node {\arabic{tmpC}};\addtocounter{tmpC}{1};
 }
-\newcommand{\scpop}{
-\coordinate (TP) at ($(T)+(0,0.25)$);
-\coordinate (TPP) at ($(TP)+(1,0.25)$);
-\draw[->] (E.north) .. controls (T |- TPP) and (T |- TPP) .. (TPP);
+\foreach \x in {#4} {
+  \draw (0.5,-0.5*\arabic{tmpD}-0.25) node {\x};
+  \addtocounter{tmpD}{1}\ifthenelse{\value{tmpD}<#1}{}{\addtocounter{tmpD}{-#1}}
 }
+\end{tikzpicture}}
+
+\newcommand{\qupop}{\coordinate (BP) at ($(B)+(0,-0.25)$);\coordinate (BPP) at ($(BP)+(1,-0.25)$);\draw[->] (B) .. controls (B |- BPP) and (B |- BPP) .. (BPP);}
+\newcommand{\scpop}{\coordinate (TP) at ($(T)+(0,0.25)$);\coordinate (TPP) at ($(TP)+(1,0.25)$);\draw[->] (E.north) .. controls (T |- TPP) and (T |- TPP) .. (TPP);}
+\newcommand{\qupush}[1]{\coordinate (TP) at ($(TA)+(0,0.25)$);\coordinate (TPP) at ($(TP)+(0,0.25)$);\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};\draw[->] (P.east) .. controls (P -| TP) and
+ (P -| TP) .. (TP);}
+\newcommand{\scpush}[1]{\coordinate (TP) at ($(T)+(0,0.25)$);\coordinate (TPP) at ($(TP)+(0,0.25)$);\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};\draw[->] (P.east) .. controls (P -| TP) and (P -| TP) .. (TP);}
+
+\newenvironment{sprocessor}[3]{\begin{tikzpicture}
+\setcounter{tmpC}{0}
+\setcounter{tmpD}{0}
+\foreach \x/\y/\cc/\mx in {#2} {
+  \node[regi] (R\x) at (3*\arabic{tmpC},0) {\y};
+  \coordinate (B\x) at (-1,-0.75-0.25*\arabic{tmpC});
+  \coordinate (RR\x-0) at (R\x.D);
+  \draw[thick] (B\x)  -- ++(3*#1-1,0);
+  \draw[thick] (R\x.Q) -- (R\x.Q |- B\x);
+  \pdot{R\x.Q |- B\x};
+  \ifthenelse{\isodd{\cc}}{\sprarr{R\x.LDB}}{}
+  \ifthenelse{\cc>1}{\sprarr{R\x.CLR}}{}
+  \ifthenelse{\mx=2}{\node[mux2to1] (M\x) at (R\x |- 0,1) {};\sprarr{M\x.selin0}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxB{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);}{}
+  \addtocounter{tmpC}{1}
+}
+\setcounter{tmpC}{0}
+\foreach \x/\y in {#3} {
+  \draw[thick] (1.5*\arabic{tmpC}-0.6,-2) rectangle ++(1.2,-1.2);
+  \draw (1.5*\arabic{tmpC},-2.6) node {\y};
+  \addtocounter{tmpC}{1}
+}
+}{\end{tikzpicture}}
+\newcommand{\sprarr}[1]{\draw[<-] (#1) -- ++(-0.375,0) node[anchor=east,scale=0.75]{\arabic{tmpD}};\addtocounter{tmpD}{1}}
 
 
 \pgfkeys{/sigo/lines/.initial={$n$}}
