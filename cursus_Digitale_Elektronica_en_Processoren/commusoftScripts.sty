@@ -13,6 +13,7 @@
 \RequirePackage{float}
 \RequirePackage{tikz}
 \RequirePackage{ifthen}
+\RequirePackage{varwidth}
 
 \usetikzlibrary{shapes}
 \usetikzlibrary{arrows}
@@ -373,7 +374,7 @@
  (P -| TP) .. (TP);}
 \newcommand{\scpush}[1]{\coordinate (TP) at ($(T)+(0,0.25)$);\coordinate (TPP) at ($(TP)+(0,0.25)$);\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};\draw[->] (P.east) .. controls (P -| TP) and (P -| TP) .. (TP);}
 
-\newenvironment{sprocessor}[3]{\begin{tikzpicture}
+\newenvironment{sprocessor}[4]{\begin{tikzpicture}
 \setcounter{tmpC}{0}
 \setcounter{tmpD}{0}
 \foreach \x/\y/\cc/\mx in {#2} {
@@ -389,13 +390,21 @@
   \addtocounter{tmpC}{1}
 }
 \setcounter{tmpC}{0}
-\foreach \x/\y in {#3} {
-  \draw[thick] (1.5*\arabic{tmpC}-0.6,-2) rectangle ++(1.2,-1.2);
-  \draw (1.5*\arabic{tmpC},-2.6) node {\y};
+\coordinate (BF) at (0,-2.8);
+\foreach \x/\y in {#4} {
+  \coordinate (F\x) at (3*#1-2.6-1.5*#3+1.5*\arabic{tmpC},-2.4);
+  \coordinate (FB\x) at (F\x |- BF);
+  \coordinate (FT\x) at ($(FB\x)+(0,0.8)$);
+  \draw[thick] ($(F\x)+(-0.6,0.4)$) rectangle ++(1.2,-0.8);
+  \draw (F\x) node[scale=0.85] {\begin{varwidth}{1.41cm}\begin{center}\y\end{center}\end{varwidth}};
+  \coordinate (FU\x) at (3*#1-1.75+0.25*#3-0.25*\arabic{tmpC},-3.05-#3*0.25+0.25*\arabic{tmpC});
+  \coordinate (FUR\x) at (FU\x |- 0,2+0.25*#3-0.25*\arabic{tmpC});
+  \draw[thick] (FB\x) |- (FU\x) -- (FUR\x);
   \addtocounter{tmpC}{1}
 }
 }{\end{tikzpicture}}
 \newcommand{\sprarr}[1]{\draw[<-] (#1) -- ++(-0.375,0) node[anchor=east,scale=0.75]{\arabic{tmpD}};\addtocounter{tmpD}{1}}
+\newcommand{\sprbtf}[3]{\coordinate (TMP) at (B#1 -| FT#2);\coordinate (TMP) at ($(TMP)+(#3,0)$);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- FT#2);}
 
 
 \pgfkeys{/sigo/lines/.initial={$n$}}

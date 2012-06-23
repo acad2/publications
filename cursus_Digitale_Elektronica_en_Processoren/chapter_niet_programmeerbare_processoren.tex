@@ -976,10 +976,30 @@ We kunnen door volgende principes toe te passen op het ASM-schema een processor 
 Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagina \pageref{fig:aSMSchemaRunningExample} kunnen we een processor bouwen. In het ASM-schema is er sprake van vier variabelen: $X$, $Y$, $Z$ en $I$.
 \begin{figure}[hbt]
 \centering
-\begin{sprocessor}{4}{x/$X$/1/2,y/$Y$/3/2,z/$Z$/3/2,i/$I$/1/2}{sa/{$\shlcmd 1$},de/$-1$,rca/$z_2z_1z_0x_3$,sb/{$\shlcmd 1$},rcb/$z_2z_1z_0x_3-D$,rcc/$y_2y_1y_01$}
-\draw[thick] (RRx-1) -- ++(0,0.5) node[anchor=south] {$N$};
-\draw[thick] (RRi-1) -- ++(0,0.5) node[anchor=south] {3};
+\begin{sprocessor}{4}{x/$X$/1/2,y/$Y$/3/2,z/$Z$/3/2,i/$I$/1/2}{5}{sa/{$\shlcmd 1$},sb/{$\shlcmd 1$},rcc/$y_2y_1y_01$,rca/$z_2z_1z_0x_3$,rcb/{$z_2z_1z_0x_3$\\$-D$},de/$-1$}
+\node[anchor=south] (VN) at ($(RRx-1)+(0,0.5)$) {$N$};
+\node[anchor=south] (V3) at (RRi-1 |- VN.south) {$3$};
+\coordinate (VDC) at ($(FTrcb)+(-0.3,0)$);
+\node[anchor=south] (VD) at (VDC |- VN.south) {$D$};
+\draw[thick] (RRx-1) -- (VN.south);
+\draw[thick] (RRi-1) -- (V3.south);
+\draw[thick] (VDC) -- (VD.south);
+\draw[thick] (FURde) -| (RRi-0);
+\draw[thick] (FURsa) -| (RRx-0);
+\draw[thick] (FURrcb) -| (RRz-0);
+\draw[thick] (FURrca) -| (RRz-1);
+\draw[thick] (FURrcc) -| (RRy-0);
+\draw[thick] (FURsb) -| (RRy-1);
+\sprbtf{i}{de}{0};
+\sprbtf{z}{rcb}{0.3};
+\sprbtf{x}{rcb}{0};
+\sprbtf{z}{rca}{0.2};
+\sprbtf{x}{rca}{-0.2};
+\sprbtf{y}{rcc}{0};
+\sprbtf{y}{sb}{0};
+\sprbtf{x}{sa}{0};
 \end{sprocessor}
+\caption{Implementatie van het leidend voorbeeld via de basisprincipes.}
 \end{figure}
 \subsection{Ontwerp Controller}
 \label{ss:syntheseFSMDController}
