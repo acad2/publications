@@ -976,7 +976,7 @@ We kunnen door volgende principes toe te passen op het ASM-schema een processor 
 Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagina \pageref{fig:aSMSchemaRunningExample} kunnen we een processor bouwen. In het ASM-schema is er sprake van vier variabelen: $X$, $Y$, $Z$ en $I$.
 \begin{figure}[hbt]
 \centering
-\begin{sprocessor}{4}{x/$X$/1/2,y/$Y$/3/2,z/$Z$/3/2,i/$I$/1/2}{5}{sa/{$\shlcmd 1$},sb/{$\shlcmd 1$},rcc/$y_2y_1y_01$,rca/$z_2z_1z_0x_3$,rcb/{$z_2z_1z_0x_3$\\$-D$},de/$-1$}
+\begin{sprocessor}{x/$X$/1/2,y/$Y$/3/2,z/$Z$/3/2,i/$I$/1/2}{sa/{$\shlcmd 1$},sb/{$\shlcmd 1$},rcc/$y_2y_1y_01$,rca/$z_2z_1z_0x_3$,rcb/{$z_2z_1z_0x_3$\\$-D$},de/$-1$}{ta/{$z_2z_1z_0x_3$\\$<D$},tb/{$I>0$}}
 \node[anchor=south] (VN) at ($(RRx-1)+(0,0.5)$) {$N$};
 \node[anchor=south] (V3) at (RRi-1 |- VN.south) {$3$};
 \coordinate (VDC) at ($(FTrcb)+(-0.3,0)$);
@@ -998,6 +998,9 @@ Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagin
 \sprbtf{y}{rcc}{0};
 \sprbtf{y}{sb}{0};
 \sprbtf{x}{sa}{0};
+\sprbtt{x}{ta}{-0.2};
+\sprbtt{z}{ta}{0};
+\sprbtt{i}{tb}{0};
 \end{sprocessor}
 \caption{Implementatie van het leidend voorbeeld via de basisprincipes.}
 \end{figure}
