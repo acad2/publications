@@ -1109,8 +1109,8 @@ In de volgende subsecties zullen we een groot deel van deze problemen bespreken 
 \subsubsection{Patronen in een algoritme}
 Het ontwerp van een controller is in wezen equivalent met de implementatie van een Finite State Machine (FSM). De controller in het leidende voorbeeld is dan ook vrij eenvoudig te implementeren met behulp van de methodes uit hoofdstuk \ref{ch:SeqComp}. Bij complexe programma's is een implementatie van een controller echter niet meer zo triviaal: deze kennen een groot aantal toestanden en tests, en doorgaans een groot instructiewoord. Daarom werd al snel naar een methode gezocht om snel complexe controllers te bouwen. Dit doen we door volgende patronen in een ontwerp (ASM-schema) te zoeken:
 \begin{itemize}
- \item Natuurlijke volgorde van toestanden.
- \item Terugkerende sets van toestanden (meestal veroorzaakt door subroutines).
+ \item \termen{Natuurlijke volgorde} van toestanden.
+ \item Terugkerende sets van toestanden veroorzaakt door een \termen{subroutine}.
  \item Eenvoud van het implementeren van logica met behulp van one-hot coderingen.
 \end{itemize}
 Elk van deze elementen wordt in de volgende subsubsecties verder uitgewerkt. Op basis van deze drie elementen zullen we een component bouwen die een algemene controller vertegenwoordigt: de \termen{microprogrammeerbare controller}. Een component die we in een schakeling inpluggen en die we gegeven een ASM-schema vervolgens kunnen programmeren en daardoor omvormen tot een concrete controller.
@@ -1134,17 +1134,17 @@ Elk van deze elementen wordt in de volgende subsubsecties verder uitgewerkt. Op 
 \draw[thick] (SR) -- (CSP);\draw[thick,->] (CSP) |- (NSLA);\draw[thick,->] (CSP) |- (OLC);
 \draw[thick,->] (NSL.east) -- ++(0.25,0) |- (TL) |- (SR.west);
 \begin{pgfonlayer}{background}
-\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL),inner sep=0.75cm] (CT) {};
+\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL),inner sep=1cm] (CT) {};
 \end{pgfonlayer}
 \coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south,text width=1.5 cm]{Controle-Signalen (CS)};
 \coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
  node[anchor=south,text width=1.5 cm]{Status-Signalen (SS)};
 \coordinate (CI) at (CT.west);\draw[<-,thick] (CI) -- ++(-0.5,0) node[anchor=east,text width=1.5 cm]{Controle-Ingangen (CI)};
 \coordinate (CO) at (CT.east);\draw[->,thick] (CO) -- ++(0.5,0) node[anchor=west,text width=1.5 cm]{Controle-Uitgangen (CO)};
-\coordinate (COD) at ($0.667*(OL.south east)+0.333*(OL.north east)$);\draw[thick] (COD) -- ++(0.5,0) |- (CO);
-\coordinate (CSD) at ($0.333*(OL.south east)+0.667*(OL.north east)$);\coordinate (CSE) at ($0.75*(NSL.south east)+0.25*(NSL.north east)+(0.5,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- ++(0.25,0) |- (CSE) |- (CSF) -- (CS);
-\coordinate (NSLSS) at ($(NSLC)+(-1.25,0)$);
-\draw[thick,->] (SS) |- (NSLC);\draw[thick,->] (CI) -- ++(0.25,0) |- (NSLB);\draw[thick,->] ($(CI)+(0.25,0)$) |- (OLB);\pdot{$(CI)+(0.25,0)$};\pdot{NSLSS};\draw[thick,dashed,->] (NSLSS) |- (OLA);
+\coordinate (COD) at ($0.667*(OL.south east)+0.333*(OL.north east)$);\draw[thick] (COD) -| ($(CO)+(-0.25,0)$) -- (CO);
+\coordinate (CSD) at ($0.333*(OL.south east)+0.667*(OL.north east)$);\coordinate (CSE) at ($0.75*(NSL.south east)+0.25*(NSL.north east)+(0.5,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -| (CSE) |- (CSF) -- (CS);
+\coordinate (NSLSS) at ($(NSLC)+(-0.75,0)$);
+\draw[thick,->] (SS) |- (NSLC);\draw[thick,->] (CI) -- ++(0.25,0) |- (NSLB);\draw[thick,->] ($(CI)+(0.25,0)$) |- (OLA);\pdot{$(CI)+(0.25,0)$};\pdot{NSLSS};\draw[thick,dashed,->] (NSLSS) |- (OLB);
 \end{tikzpicture}
 \caption{Algemene vorm van een controller.}
 \label{fig:generalStructureController}
@@ -1157,12 +1157,243 @@ Allereerst grijpen we terug naar de definitie van een controller. En combineren 
 \end{itemize}
 Beide combinatorische componenten zijn afhankelijk van zowel de controle-ingangen en de huidige toestand bijgehouden door het toestandregister. Daarnaast zullen de statussignalen (de resultaten van de testen in het datapad) de volgende toestand mee helpen bepalen. In het geval van een inputgebaseerd ASM-schema is dit zelfs het geval voor de uitvoer logica. We kunnen dus stellen dat figuur \ref{fig:generalStructureController} de algemene structuur van de controller weergeeft. We zullen dit ontwerp in de volgende subsubsecties aanpassen tot een structuur die gericht is op specifieke eigenschappen van een controller.
 \subsubsection{Natuurlijke volgorde van toestanden}
-Men kan de toestand van een controller enigzinds vergelijken met een programmateller. In de meeste gevallen zal een programma dan ook bestaan uit een reeks toestanden waarbij de volgende toestand vaststaat. Omdat het zoeken van een minimale encodering voor grote toestandstabellen tijdrovend is, zullen we deze optie niet beschouwen. Een logisch gevolg hiervan is dat we de opeenvolgende toestanden opeenvolgende toestandscoderingen geven.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp] (SR) at (0,0) {SReg};
+\node[mux2to1,fill=white,rotate=90,thick] (M) at (-1.5,0) {};
+\node[subcomp,minimum width=0.5 cm,minimum height=0.25] (INC) at ($(M.data1)+(-0.75,0)$) {$+1$};
+\draw[thick,->] (M.output) -- (SR.west);
+\draw[thick,->] (INC.east) -- (M.data1);
+\node[subcomp] (NSL) at (3,1.25) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\Logic\end{center}\end{varwidth}};
+\node[subcomp] (OL) at (3,-1.25) {\begin{varwidth}{2 cm}\begin{center}Output\\Logic\end{center}\end{varwidth}};
+\coordinate (CSP) at ($(SR.east)+(1,0)$);
+\coordinate (TL) at (M.north |- NSL.north);\coordinate (TL) at ($(TL)+(-0.5,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
+\pdot{CSP};
+\coordinate (NSLA) at ($0.75*(NSL.south west)+0.25*(NSL.north west)$);
+\coordinate (NSLB) at ($0.5*(NSL.south west)+0.5*(NSL.north west)$);
+\coordinate (NSLC) at ($0.25*(NSL.south west)+0.75*(NSL.north west)$);
+\coordinate (OLA) at ($0.75*(OL.south west)+0.25*(OL.north west)$);
+\coordinate (OLB) at ($0.5*(OL.south west)+0.5*(OL.north west)$);
+\coordinate (OLC) at ($0.25*(OL.south west)+0.75*(OL.north west)$);
+\draw[thick] (SR) -- (CSP);\draw[thick,->] (CSP) |- (NSLA);\draw[thick,->] (CSP) |- (OLC);
+\draw[thick,->] (NSL.east) -- ++(0.5,0) |- (TL) |- (M.data0);
+\draw[thick,->] ($0.5*(NSL.east)+0.5*(NSL.north east)$) -- ++(0.25,0) |- (TLA -| M.selout0) -- (M.selout0);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL) (M) (INC),inner sep=1cm] (CT) {};
+\end{pgfonlayer}
+\coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south,text width=1.5 cm]{Controle-Signalen (CS)};
+\coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
+ node[anchor=south,text width=1.5 cm]{Status-Signalen (SS)};
+\coordinate (CI) at (CT.west);\draw[<-,thick] (CI) -- ++(-0.5,0) node[anchor=east,text width=1.5 cm]{Controle-Ingangen (CI)};
+\coordinate (CO) at (CT.east);\draw[->,thick] (CO) -- ++(0.5,0) node[anchor=west,text width=1.5 cm]{Controle-Uitgangen (CO)};
+\coordinate (COD) at ($0.667*(OL.south east)+0.333*(OL.north east)$);\draw[thick] (COD) -| ($(CO)+(-0.25,0)$) -- (CO);
+\coordinate (CSD) at ($0.333*(OL.south east)+0.667*(OL.north east)$);\coordinate (CSE) at ($0.75*(NSL.south east)+0.25*(NSL.north east)+(0.75,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- ++(0.25,0) |- (CSE) |- (CSF) -- (CS);
+\coordinate (NSLSS) at ($(NSLC)+(-0.75,0)$);\coordinate (SRINC) at ($(SR.east)+(0.25,0)$);\coordinate (SRINCA) at ($(INC.west)+(-0.25,0)$);\coordinate (SRINCA) at (SRINCA |- OLB);
+\pdot{SRINC};
+\draw[thick,->] (SRINC) |- (SRINCA) |- (INC.west);
+\draw[thick,->] (SS) |- (NSLC);\draw[thick,->] (CI) -- ++(0.25,0) |- (NSLB);\draw[thick,->] ($(CI)+(0.25,0)$) |- (OLA);\pdot{$(CI)+(0.25,0)$};\pdot{NSLSS};\draw[thick,dashed,->] (NSLSS) |- (OLB);
+\begin{pgfonlayer}{background}
+\node[fill=gray!10,draw=black,dotted,thin, fit=(SR) (M) (INC),inner sep=0.5cm] (LR) {};
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{Controller met natuurlijke volgorde van toestanden.}
+\label{fig:incrementStructureController}
+\end{figure}
+Men kan de toestand van een controller enigzinds vergelijken met een programmateller. In de meeste gevallen zal een programma dan ook bestaan uit een reeks toestanden waarbij de volgende toestand vaststaat. Omdat het zoeken van een minimale encodering voor grote toestandstabellen tijdrovend is, zullen we deze optie niet beschouwen. Een logisch gevolg hiervan is dat we de opeenvolgende toestanden opeenvolgende toestandscoderingen geven. In plaats van deze volgende toestandscoderingen voor elke toestand uit te rekenen. Kunnen we dit probleem eenvoudig oplossen door een incrementor en een multiplexer te voorzien. Een deel van de volgende toestandlogica bestaat er dan uit om te bepalen of we de toestandcodering incrementeren, in het ander geval dient de volgende toestand logica zelf een adres te berekenen. In veel gevallen leidt dit tot een vereenvoudiging van de uitvoer logica: er zijn immers heel wat toestanden die deze increment functie kunnen gebruiken, indien dit het geval is kunnen we bovendien don't cares invoeren bij de logica die de volgende encodering berekend. De volgende toestandlogica dient dan ook enkel conditionele volgende toestanden genereren. Figuur \ref{fig:incrementStructureController}. Een oplettende lezer zal misschien reeds opgemerkt hebben dat een register gecombineerd met increment neerkomt op een teller. Vermits we met behulp van de multiplexer kunnen kiezen om het register met 1 op te hogen, ofwel een nieuwe waarde in te laden, hebben we hier een laadbare teller gerealiseerd. Op figuur \ref{fig:incrementStructureController} hebben we de componten die leiden tot deze laadbare teller gemarkeerd met behulp van een lichtgrijze rechthoek.
 \subsubsection{Ondersteunen van subroutines}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp] (SR) at (0,0) {SReg};
+\node[mux4to1,fill=white,rotate=90,thick] (M) at (-1.35,0) {};
+\node[subcomp,minimum width=1.1 cm,minimum height=0.25] (INC) at ($(M.data3)+(-1.25,-0.25)$) {$+1$};
+\coordinate (LFD) at (M.data2 -| INC.north);
+\node[subcomp,minimum width=1.1 cm,minimum height=1.55 cm,anchor=south] (LIFO) at ($(LFD)+(0,-0.25)$) {LIFO};
+\draw[thick,->] (M.output) -- (SR.west);
+\draw[thick,->] (LIFO.east |- M.data1) -- (M.data1);
+\node[subcomp] (NSL) at (3,1.25) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\Logic\end{center}\end{varwidth}};
+\coordinate (TL) at (M.north |- NSL.north);\coordinate (TL) at ($(TL)+(-0.4,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
+\draw[thick,->] (INC.east) -- (INC.east -| TL) |- (M.data3);\pdot{M.data3 -| TL};\draw[thick,->] (M.data3 -| TL) |- (M.data2 -| LIFO.east);
+\node[subcomp] (OL) at (3,-1.25) {\begin{varwidth}{2 cm}\begin{center}Output\\Logic\end{center}\end{varwidth}};
+\coordinate (CSP) at ($(SR.east)+(1,0)$);
+\pdot{CSP};
+\coordinate (NSLA) at ($0.8*(NSL.south west)+0.2*(NSL.north west)$);
+\coordinate (NSLB) at ($0.6*(NSL.south west)+0.4*(NSL.north west)$);
+\coordinate (NSLC) at ($0.4*(NSL.south west)+0.6*(NSL.north west)$);
+\coordinate (NSLD) at ($0.2*(NSL.south west)+0.8*(NSL.north west)$);
+\coordinate (OLA) at ($0.75*(OL.south west)+0.25*(OL.north west)$);
+\coordinate (OLB) at ($0.5*(OL.south west)+0.5*(OL.north west)$);
+\coordinate (OLC) at ($0.25*(OL.south west)+0.75*(OL.north west)$);
+\draw[thick] (SR) -- (CSP);\draw[thick,->] (CSP) |- (NSLA);\draw[thick,->] (CSP) |- (OLC);
+\draw[thick,->] (NSL.east) -- ++(0.5,0) |- (TL) |- (M.data0);
+\draw[thick,->] ($0.5*(NSL.east)+0.5*(NSL.north east)$) -- ++(0.25,0) |- (TLA -| M.selout0) -- (M.selout0);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL) (M) (INC),inner sep=1cm] (CT) {};
+\end{pgfonlayer}
+\coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south,text width=1.5 cm]{Controle-Signalen (CS)};
+\coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
+ node[anchor=south,text width=1.5 cm]{Status-Signalen (SS)};
+\coordinate (CI) at (CT.west);\draw[<-,thick] (CI) -- ++(-0.5,0) node[anchor=east,text width=1.5 cm]{Controle-Ingangen (CI)};
+\coordinate (CO) at (CT.east);\draw[->,thick] (CO) -- ++(0.5,0) node[anchor=west,text width=1.5 cm]{Controle-Uitgangen (CO)};
+\coordinate (COD) at ($0.667*(OL.south east)+0.333*(OL.north east)$);\draw[thick] (COD) -| ($(CO)+(-0.25,0)$) -- (CO);
+\coordinate (PuPoD) at ($(NSL.north west)+(-0.25,0)$);\coordinate (PuPo) at (LIFO.north);
+\draw[thick,->] (NSLB) -| (PuPoD) -| (PuPo);\draw ($(PuPo)+(0,0.2)$) node[anchor=south west,rotate=90,scale=0.85] {Push/Pop$^*$};
+\coordinate (CSD) at ($0.333*(OL.south east)+0.667*(OL.north east)$);\coordinate (CSE) at ($0.75*(NSL.south east)+0.25*(NSL.north east)+(0.75,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- ++(0.25,0) |- (CSE) |- (CSF) -- (CS);
+\coordinate (NSLSS) at ($(NSLD)+(-0.75,0)$);\coordinate (SRINC) at ($(SR.east)+(0.25,0)$);\coordinate (SRINCA) at ($(INC.west)+(-0.25,0)$);\coordinate (SRINCA) at (SRINCA |- OLB);
+\pdot{SRINC};
+\draw[thick,->] (SRINC) |- (SRINCA) |- (INC.west);
+\draw[thick,->] (SS) |- (NSLD);\draw[thick,->] (CI) -- ++(0.25,0) |- (NSLC);\draw[thick,->] ($(CI)+(0.25,0)$) |- (OLA);\pdot{$(CI)+(0.25,0)$};\pdot{NSLSS};\draw[thick,dashed,->] (NSLSS) |- (OLB);
+\begin{pgfonlayer}{background}
+\node[fit=(LIFO) (INC) (M),inner sep=0.125cm] (NSTPA) {};
+\node[fit=(NSL),inner sep=0.125cm] (NSTPB) {};
+\coordinate (NSTPC) at ($(SR.north east)+(0,0.25)$);
+\filldraw[dotted,fill=gray!10] (NSTPA.south west) -- (NSTPA.south east) |- (NSTPC) -- (NSTPB.south west) -- (NSTPB.south east) -- (NSTPB.north east) -- (NSTPB.north west) -| (NSTPA.north west) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{Controller met natuurlijke volgorde van toestanden en subroutines.}
+\label{fig:subroutineStructureController}
+\end{figure}
+Bij het bouwen van een programma wordt vaak gebruik gemaakt van een subroutine: een klein programma die we oproepen om een bepaalde opdracht uit te voeren en nadien terugkeert naar de toestand die volgt op de toestand waar we de subroutine hebben opgeroepen. Een probleem bestaat erin dat we niet eenvoudigweg de subroutine kunnen omzetten naar een reeks toestanden en vervolgens naar de eerste toestand van deze subroutine kunnen springen. In dat geval weet de subroutine immers niet meer naar welke toestand men dient terug te springen (deze toestand wordt de \termen{terugkeertoestand} genoemd) nadat de subroutine is uitgevoerd. Een oplossing zou erin kunnen bestaan om in dat geval per oproep van een subroutine de subroutine te kopi\"eren in de structuur. Deze oplossing heeft echter enkele nadelen:
+\begin{itemize}
+ \item Iedere keer wanneer we een subroutine oproepen dienen we een kopie te maken van alle toestanden. Indien de subroutine $T_s$ verschillende toestanden heeft en we roepen de routine $n$ keer op, resulteert dit in een controller waarvan $n\cdot T_s$ toestanden door de subroutine zijn gegenereerd. Dit leidt dus tot een groot aantal toestanden en complexe logica voor het berekenen van de volgende toestand en de uitvoer.
+ \item In sommige programma's roept een subroutine zichzelf op. Dit fenomeen wordt \termen{recursie} genoemd. We kunnen dit fenomeen niet rechtstreeks omzetten in de aangereikte oplossing, omdat we niet altijd vooraf weten hoe diep deze recursie gaat. In dat geval zullen we de subroutine eerst moeten herschrijven in een subroutine zonder recursie.
+\end{itemize}
+De oplossing bestaat dan ook uit een datastructuur genaamd de \termen{call stack} die -- zoals de naam reeds doet vermoeden -- en vorm van stapelgeheugen is. De oplossing bestaat eruit bij elke oproep naar het stapelgeheugen de terugkeertoestand op de call stack te zetten. Op het moment dat de subroutine is afgelopen, wordt de terugkeertoestand terug uit het stapelgeheugen uitgelezen en in het toestandsregister geplaatst. De callstack ondersteund ook recursie omdat indien een subroutine zichzelf oproept, ook de terugkeertoestand van deze subroutine op de stapel wordt gezet. Indien we deze wijziging combineren met bekomen we een structuur met een incrementor, een stapelgeheugen en een multiplexer zoals op figuur \ref{fig:subroutineStructureController}. De volgende toestand logica heeft dan vier verschillende types instructies:
+\begin{itemize}
+ \item Natuurlijke volgende toestand: het toestandregister wordt met 1 opgehoogd. Dit gebeurt bij toestanden waarbij de volgende toestand vast staat (onafhankelijk van testen).
+ \item Specifieke volgende toestand: indien de volgende toestand wel afhankelijk is van testen, of we springen naar een bepaalde toestand in een programma kan de volgende toestand logica zelf een toestand berekenen.
+ \item Uitvoeren van een subroutine: in dat geval wordt de natuurlijke volgende toestand van de huidige toestand op de call stack geplaatst, en lezen we de begintoestand van de subroutine in het toestandsregister in.
+ \item Terugkeren uit een subroutine: dit is de laatste instructie bij een subroutine. We voeren een pop-operatie uit op de call stack en de terugkeertoestand wordt in het toestandsregister ingelezen. We maken dus de veronderstelling dat we terugspringen naar de volgende natuurlijke toestand van de procedure die we hebben opgeroepen\footnote{We kunnen echter het component aanpassen dat we ook zelf een terugkeertoestand kunnen invoeren. Anderzijds kunnen we, indien dit nodig is, van de terugkeertoestand ook een lege toestand maken en de volgende toestandlogica dan naar het juiste adres laten springen.}.
+\end{itemize}
+We realiseren deze schakeling door naast de incrementor, ook een een stapelgeheugen te plaatsen. De volgende toestandslogica heeft controle over de multiplexer (die kan kiezen uit het stapelgeheugen, de incrementor of een toestandencodering die hij zelf heeft gegenereerd) samen met de push/pop$^*$-ingang van het stapelgeheugen. Verder kan de volgende toestand logica ook zelf een toestandcodering genereren door deze aan \'e\'en van de data-ingangen van de multiplexer aan te leggen.
 \subsubsection{Werken met ``One-Hot'' coderingen}
+In het vorige hoofdstuk hebben we het reeds uitgebreid gehad over de one-hot codering. Een one-hotcodering kan de volgende toestand logica drastisch vereenvoudigen. Een probleem is echter dat we bij een one-hot codering het aantal flipflops opdrijven. Een tussenoplossing zou er echter uit kunnen bestaan om een decoder tussen het toestandsregister en de volgende toestand logica te zetten. Merk op dat we verder ook de uitvoer-logica op een gelijkaardige manier kunnen vereenvoudigen.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp] (SR) at (0,0) {SReg};
+\node[mux4to1,fill=white,rotate=90,thick] (M) at (-1.35,0) {};
+\node[subcomp,minimum width=1.1 cm,minimum height=0.25] (INC) at ($(M.data3)+(-1.25,-0.25)$) {$+1$};
+\coordinate (LFD) at (M.data2 -| INC.north);
+\node[subcomp,minimum width=1.1 cm,minimum height=1.55 cm,anchor=south] (LIFO) at ($(LFD)+(0,-0.25)$) {LIFO};
+\draw[thick,->] (M.output) -- (SR.west);
+\draw[thick,->] (LIFO.east |- M.data1) -- (M.data1);
+\node[subcomp] (DEC) at (2,0) {Decoder};
+\node[subcomp] (NSL) at (4,1.25) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\Logic\end{center}\end{varwidth}};
+\coordinate (TL) at (M.north |- NSL.north);\coordinate (TL) at ($(TL)+(-0.4,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
+\draw[thick,->] (INC.east) -- (INC.east -| TL) |- (M.data3);\pdot{M.data3 -| TL};\draw[thick,->] (M.data3 -| TL) |- (M.data2 -| LIFO.east);
+\node[subcomp] (OL) at (4,-1.25) {\begin{varwidth}{2 cm}\begin{center}Output\\Logic\end{center}\end{varwidth}};
+\coordinate (CSP) at ($(DEC.east)+(0.25,0)$);
+\pdot{CSP};
+\coordinate (NSLA) at ($0.667*(NSL.south west)+0.333*(NSL.north west)$);
+\coordinate (NSLB) at ($0.333*(NSL.south west)+0.667*(NSL.north west)$);
+\coordinate (OLA) at (OL.west);
+\draw[thick,->] (SR.east) -- (DEC.west);
+\draw[thick] (DEC.east) -- (CSP);\draw[thick,->] (CSP) |- (NSLA);\draw[thick,->] (CSP) |- (OLA);
+\draw[thick,->] (NSL.east) -- ++(0.5,0) |- (TL) |- (M.data0);
+\draw[thick,->] ($0.5*(NSL.east)+0.5*(NSL.north east)$) -- ++(0.25,0) |- (TLA -| M.selout0) -- (M.selout0);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL) (M) (INC),inner sep=1cm] (CT) {};
+\end{pgfonlayer}
+\coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south,text width=1.5 cm]{Controle-Signalen (CS)};
+\coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
+ node[anchor=south,text width=1.5 cm]{Status-Signalen (SS)};
+\coordinate (CI) at (CT.west);\draw[<-,thick] (CI) -- ++(-0.5,0) node[anchor=east,text width=1.5 cm]{Controle-Ingangen (CI)};
+\coordinate (CO) at (CT.east);\draw[->,thick] (CO) -- ++(0.5,0) node[anchor=west,text width=1.5 cm]{Controle-Uitgangen (CO)};
+\coordinate (COD) at ($0.667*(OL.south east)+0.333*(OL.north east)$);\draw[thick] (COD) -| ($(CO)+(-0.25,0)$) -- (CO);
+\coordinate (PuPo) at (LIFO.north);\draw[thick,->] (NSLB) -| (PuPo);\draw ($(PuPo)+(0,0.2)$) node[anchor=south west,rotate=90,scale=0.85] {Push/Pop$^*$};
+\coordinate (CSD) at ($0.333*(OL.south east)+0.667*(OL.north east)$);\coordinate (CSE) at ($0.75*(NSL.south east)+0.25*(NSL.north east)+(0.75,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- ++(0.25,0) |- (CSE) |- (CSF) -- (CS);
+\coordinate (NSLSS) at ($(NSLD)+(-0.75,0)$);\coordinate (SRINC) at ($(SR.east)+(0.25,0)$);\coordinate (SRINCA) at ($(INC.west)+(-0.25,0)$);\coordinate (SRINCA) at (SRINCA |- OLB);
+\pdot{SRINC};
+\draw[thick,->] (SRINC) |- (SRINCA) |- (INC.west);
+\coordinate (SRCI) at ($(SR.south)+(0,-0.5)$);\draw[thick,->] (CI) -- ++(0.25,0) |- (SRCI -| DEC) -- (DEC);\draw[thick,->] (SS) |- (NSL.east -| DEC.north) -- (DEC.north);
+\begin{pgfonlayer}{background}
+\node[subcomp,dotted,fill=gray!10,fit=(NSL) (DEC) (OL),inner sep=0.125cm] (ROM) {};
+%\node[fit=(NSL),inner sep=0.125cm] (NSTPB) {};
+%\coordinate (NSTPC) at ($(SR.north east)+(0,0.25)$);
+%\filldraw[dotted,fill=gray!10] (NSTPA.south west) -- (NSTPA.south east) |- (NSTPC) -- (NSTPB.south west) -- (NSTPB.south east) -- (NSTPB.north east) -- (NSTPB.north west) -| (NSTPA.north west) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{Controller met one-hotcodering.}
+\label{fig:oneHotStructureController}
+\end{figure}
+Figuur \ref{fig:oneHotStructureController} toont een algemene controller waarbij we een decoder tussen het toestandsregister en de volgende toestand- en uitvoer-logica's plaatsen.
+\subsubsection{Programmeerbare controller}
+In plaats van specifieke logica te voorzien voor de volgende toestand logica en de uitvoer logica, kunnen we deze componenten ook vervangen door een meer algemene structuur: een vorm van look-up tables. Indien we deze look-up table vervolgens combineren met de decoder bekomen we een geheugen (deze componenten staan gemarkeerd op figuur \ref{fig:oneHotStructureController}). Welk geheugen we gebruiken is in principe arbitrair. Indien we een ROM-geheugen gebruiken kunnen we de controller eenmaal programmeren naar een specifieke controller. Een andere mogelijkheid is om een RAM-geheugen te gebruiken waarbij we de specifieke controller telkens inladen bij het opstarten van het elektronisch circuit. Een voordeel van het gebruik van een RAM-geheugen is dat we bijgevolg het algoritme kunnen wijzigen, op voorwaarde dat alle benodigde hardware op het datapad aanwezig is. Daarentegen betalen we een prijs dat bij het opstarten van het component we eerste de controller moeten inladen wat tijd vergt.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp] (SR) at (0,0) {SReg};
+\node[mux4to1,fill=white,rotate=90,thick] (M) at (-1.35,0) {};
+\node[subcomp,minimum width=1.1 cm,minimum height=0.25] (INC) at ($(M.data3)+(-1.25,-0.25)$) {$+1$};
+\coordinate (LFD) at (M.data2 -| INC.north);
+\node[subcomp,minimum width=1.1 cm,minimum height=1.55 cm,anchor=south] (LIFO) at ($(LFD)+(0,-0.25)$) {LIFO};
+\draw[thick,->] (M.output) -- (SR.west);
+\draw[thick,->] (LIFO.east |- M.data1) -- (M.data1);
+\node[subcomp] (ROM) at (2,0) {\begin{varwidth}{1.5cm}ROM-geheugen\end{varwidth}};
+\coordinate (TL) at (M.north |- NSL.north);\coordinate (TL) at ($(TL)+(-0.4,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
+\coordinate (ROMSA) at ($0.667*(ROM.south west)+0.333*(ROM.south east)$);
+\coordinate (ROMSB) at ($0.333*(ROM.south west)+0.667*(ROM.south east)$);
+\coordinate (ROMNA) at ($0.8*(ROM.north west)+0.2*(ROM.north east)$);
+\coordinate (ROMNB) at ($0.6*(ROM.north west)+0.4*(ROM.north east)$);
+\coordinate (ROMNC) at ($0.4*(ROM.north west)+0.6*(ROM.north east)$);
+\coordinate (ROMND) at ($0.2*(ROM.north west)+0.8*(ROM.north east)$);
+\draw[thick,->] (INC.east) -- (INC.east -| TL) |- (M.data3);\pdot{M.data3 -| TL};\draw[thick,->] (M.data3 -| TL) |- (M.data2 -| LIFO.east);
+\draw[thick,->] (SR.east) -- (ROM.west);
+\draw[thick,->] (ROMSA) -- ++(0,-0.5) -| (M.selin0);
+\draw[thick,->] (ROMNA) -- ++(0,0.25) -| ($(M.data0)+(-0.25,0)$) -- (M.data0);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (ROM) (M) (INC),inner sep=1.25cm] (CT) {};
+\end{pgfonlayer}
+\coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south,text width=1.5 cm]{Controle-Signalen (CS)};
+\coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
+ node[anchor=south,text width=1.5 cm]{Status-Signalen (SS)};
+\coordinate (CI) at (CT.west);\draw[<-,thick] (CI) -- ++(-0.5,0) node[anchor=east,text width=1.5 cm]{Controle-Ingangen (CI)};
+\coordinate (CO) at (CT.east);\draw[->,thick] (CO) -- ++(0.5,0) node[anchor=west,text width=1.5 cm]{Controle-Uitgangen (CO)};
+\draw[thick] (ROM.east) -- (CO);
+\coordinate (PuPo) at (LIFO.north);\draw[thick,->] (ROMNB) -- ++(0,0.5) -| (PuPo);
+
+\coordinate (NSLSS) at ($(NSLD)+(-0.75,0)$);\coordinate (SRINC) at ($(SR.east)+(0.25,0)$);\coordinate (SRINCA) at ($(SR.south)+(0,-0.25)$);\coordinate (SRINCB) at ($(INC.west)+(-0.25,0)$);
+\pdot{SRINC};
+\draw[thick,->] (SRINC) |- (SRINCA) -| (SRINCB) |- (INC.west);
+\coordinate (SRCI) at ($(SR.south)+(0,-0.75)$);\draw[thick,->] (CI) -- ++(0.25,0) |- (SRCI -| ROMSB) -- (ROMSB);\draw[thick,->] (SS) -- ++(0,-0.5) -| (ROMNC);
+\draw[thick] (CS) -- ++(0,-0.25) -| (ROMND);
+\end{tikzpicture}
+\caption{Microprogrammeerbare controller.}
+\label{fig:microprogrammableController}
+\end{figure}
+Op figuur \ref{fig:microprogrammableController} tonen we een realisatie de microprogrammeerbare controller. Merk op dat we geen aparte geheugens voor de volgende toestand en de uitvoer voorzien. We kunnen beide componenten immers combineren tot \'e\'en geheugen component. Het ROM-geheugen dient dan ook verschillende rijen van bits op te slaan:
+\begin{itemize}
+ \item Push/Pop bits: wordt gebruikt bij het oproepen of verlaten van een subroutine, ofwel blijft het stapelgeheugen ongewijzigd.
+ \item Multiplexer bits: bepalen welke van de drie bronnen van toestandscoderingen we gebruiken: natuurlijke opvolging, eigen adressering of stapelgeheugen.
+ \item Toestandsencodering: in het geval men naam een speciale toestand wil gaan (geen natuurlijke opvolging).
+ \item Controle-uitgang: bits die de toestand van een algoritme buiten de processor brengen.
+ \item Controle-signalen ofwel het instructiewoord: bepaald welke opdrachten het datapad zullen uitvoeren.
+\end{itemize}
 \subsection{Minimaliseren Datapad}
 \label{ss:syntheseFSMDDatapad}
+Naast het introduceren van een algemene controller zullen we enkele verbeteringen bij een datapad bespreken. Hiervoor zullen we vier technieken bespreken:
+\begin{itemize}
+ \item Het samenvoegen van variabelen.
+ \item Het samenvoegen van bewerkingen.
+ \item Het samenvoegen van verbindingen ofwel ``\termen{bus sharing}''.
+ \item Het samenvoegen van registers in een registerbank.
+\end{itemize}
+Alvorens we al deze optimalisaties bespreken zullen we eerst een ander leidend voorbeeld introduceren. We zullen telkens \'e\'en van de leidende voorbeelden gebruiken op de plaatsen waar dit relevant is.
+\subsubsection{Leidend voorbeeld: vierkantswortel benadering}
+
+\subsubsection{Variabelen samenvoegen}
+\subsubsection{Bewerkingen samenvoegen}
+\subsubsection{Verbindingen samenvoegen (``bus sharing'')}
+\subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}
 \label{ss:syntheseFSMDOptimal}
+\subsubsection{Minimaal instructiewoord}
+\subsubsection{``Chaining''}
+\subsubsection{``Pipelinging'' en ``multicycling'': meerdere klokcycli per bewerking}
 \section{Tijdsgedrag}
 \label{s:timeFSMD}
+\subsection{Kritisch pad}
+\subsection{Verschoven kloksignalen (``clock skew'')}
+\subsection{Asynchrone ingangen}
