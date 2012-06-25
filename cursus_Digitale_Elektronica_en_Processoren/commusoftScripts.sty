@@ -329,32 +329,11 @@
 \DeclareMathOperator{\fix}{fix}
 \DeclareMathOperator{\float}{float}
 \DeclareMathOperator{\ifun}{if}
+\DeclareMathOperator{\otherwiseun}{otherwise}
+\DeclareMathOperator{\elseun}{else}
 
-\newenvironment{stackConcept}[1]{\begin{tikzpicture}
-\draw[thick] (-1,0) -- (1,0);
-\coordinate (T) at (0,0.1);
-\foreach \x in {#1} {
-  \node[anchor=south,draw=black,rectangle] (E) at (T) {\x};
-  \coordinate (T) at ($(E.north)+(0,0.1)$);
-}}{\end{tikzpicture}}
-
-\newenvironment{queueConcept}[2]{\begin{tikzpicture}
-\coordinate (T) at (0,0.1);
-\coordinate (TA) at (0,0.5*#1);
-\draw[thick] (-0.5,0) -- (-0.5,0.5*#1);
-\draw[thick] (0.5,0) -- (0.5,0.5*#1);
-\draw[thick,white] (-1,-0.35) -- (-1,0.5*#1);
-\draw[thick,white] (1,0) -- (1,0.5*#1);
-\setcounter{tmpC}{0};
-\coordinate (B) at (0,0.1);
-\foreach \x in {#2} {
-  \node[anchor=south,draw=black,rectangle] (E\arabic{tmpC}) at (T) {\x};
-  \coordinate (T) at ($(E.north)+(0,0.1)$);
-  \addtocounter{tmpC}{1};
-  \coordinate (B) at (E0.south);
-}
-}{\end{tikzpicture}}
-
+\newenvironment{stackConcept}[1]{\begin{tikzpicture}\draw[thick] (-1,0) -- (1,0);\coordinate (T) at (0,0.1);\foreach \x in {#1} {\node[anchor=south,draw=black,rectangle] (E) at (T) {\x};\coordinate (T) at ($(E.north)+(0,0.1)$);}}{\end{tikzpicture}}
+\newenvironment{queueConcept}[2]{\begin{tikzpicture}\coordinate (T) at (0,0.1);\coordinate (TA) at (0,0.5*#1);\draw[thick] (-0.5,0) -- (-0.5,0.5*#1);\draw[thick] (0.5,0) -- (0.5,0.5*#1);\draw[thick,white] (-1,-0.35) -- (-1,0.5*#1);\draw[thick,white] (1,0) -- (1,0.5*#1);\setcounter{tmpC}{0};\coordinate (B) at (0,0.1);\foreach \x in {#2} {\node[anchor=south,draw=black,rectangle] (E\arabic{tmpC}) at (T) {\x};\coordinate (T) at ($(E.north)+(0,0.1)$);\addtocounter{tmpC}{1};\coordinate (B) at (E0.south);}}{\end{tikzpicture}}
 \newcommand{\stackImpl}[4]{\begin{tikzpicture}\draw (0,0) -- (1,0);\draw (2,0) rectangle ++(1,-0.5);\draw (2,-1.5) rectangle ++(1,-0.5);\draw (2.5,-0.25) node{#2};\draw (2.5,-0.75) node{lees};\draw (2.5,0.25-0.5*#1) node{schrijf};\draw (2.5,-0.25-0.5*#1) node{#3};\draw[->] (2,-0.25) -- ++(-0.33,0) |- (1,-0.5*#2-0.1666);\draw[->] (2,-0.25-0.5*#1) -- ++(-0.66,0) |- (1,-0.5*#3-0.3333);\foreach \x in {0,...,#1} {\draw (0,-0.5*\x) -- ++(0,-0.5) -- ++(1,0) -- ++(0,0.5);\draw[anchor=east] (0,-0.5*\x-0.25) node {\x};}\setcounter{tmpC}{0};\foreach \x in {#4} {\draw (0.5,-0.5*\arabic{tmpC}-0.25) node {\x};\addtocounter{tmpC}{1};}\end{tikzpicture}}
 
 \newcommand{\queueImpl}[4]{\begin{tikzpicture}
@@ -429,13 +408,16 @@
   \coordinate (TT\x) at ($(TB\x)+(0,0.8)$);
   \draw[thick] ($(T\x)+(-0.6,0.4)$) rectangle ++(1.2,-0.8);
   \draw (T\x) node[scale=0.85] {\begin{varwidth}{1.41cm}\begin{center}\y\end{center}\end{varwidth}};
-  \draw[->] (TB\x) -- ++(0,-0.375) node[anchor=north]{\underline{\alph{tmpC}}};
+  \draw[->] (TB\x) -- ++(0,-0.375) node[anchor=north]{\underline{\Alph{tmpC}}};
   \addtocounter{tmpC}{1}
 }
 }{\end{tikzpicture}}
-\newcommand{\sprarr}[1]{\draw[<-] (#1) -- ++(-0.375,0) node[anchor=east,scale=0.75]{\underline{\Alph{tmpD}}};\addtocounter{tmpD}{1}}
+\newcommand{\sprarr}[1]{\draw[<-] (#1) -- ++(-0.375,0) node[anchor=east,scale=0.75]{\underline{\alph{tmpD}}};\addtocounter{tmpD}{1}}
+\newcommand{\spcorf}[3]{\coordinate (#1) at ($(FT#2)+(#3,0)$);}
 \newcommand{\sprbtf}[3]{\coordinate (TMP) at (B#1 -| FT#2);\coordinate (TMP) at ($(TMP)+(#3,0)$);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- FT#2);}
 \newcommand{\sprbtt}[3]{\coordinate (TMP) at (B#1 -| TT#2);\coordinate (TMP) at ($(TMP)+(#3,0)$);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- TT#2);}
+\newcommand{\sprbtc}[2]{\coordinate (TMP) at (B#1 -| #2);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- #2);}
+\newcommand{\spcort}[3]{\coordinate (#1) at ($(TT#2)+(#3,0)$);}
 
 
 \pgfkeys{/sigo/lines/.initial={$n$}}

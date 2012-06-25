@@ -7,6 +7,7 @@ In de twee vorige hoofdstukken hebben we componenten gebouwd met een beperkte fu
 \section{De Niet-Programmeerbare Processor}
 Alvorens we de bouw van zo'n processor verder uitwerken, dienen we eerst enkele concepten te formaliseren. Allereerst ontleden we in deze sectie uit welke delen zo'n processor is opgebouwd. Vervolgens zullen we in sectie \ref{s:descriptionFSMD} een methode ontwikkelen om een algoritme formeel weer te geven. Deze beschrijving zal toelaten het algoritme later om te zetten naar een processor. In sectie \ref{s:memoryFSMD} ten slotte zullen we extra geheugencomponenten introduceren die we nodig zullen hebben bij de bouw van een processor.
 \subsection{Algemene Structuur}
+\label{ss:specialProcessorGeneralStructure}
 Een \termen{Niet-programmeerbare processor}, ofwel \termen{Finite State Machine with Data path (FSMD)} bestaat grofweg uit twee delen:
 \begin{itemize}
  \item Een \termen{datapad}: een component die bewerkingen (rekenkundig, aritmetisch,...) uitvoert en de resultaten opslaat in tijdelijk geheugen.
@@ -959,27 +960,31 @@ Analoog kunnen we ook een buffergeheugen implementeren met behulp van een RAM-ge
 Nu we een ASM-schema gedefinieerd hebben en nieuwe geheugencomponenten ter beschikkingen hebben kunnen we eindelijk een processor implementeren. We vertrekken vanuit het ASM-schema, en zullen in subsectie \ref{ss:syntheseFSMDBasis} eerst een methode bespreken om op een mechanische manier een ASM-schema om te zetten in een processor. Deze methode leidt tot een straightforward resultaat, maar dit is verre van optimaal. In subsecties \ref{ss:syntheseFSMDController}, \ref{ss:syntheseFSMDDatapad} en \ref{ss:syntheseFSMDOptimal} zullen we dan ook optimalisaties bespreken om de processor goedkoper en effici\"enter te maken.
 \subsection{Basisprincipes}
 \label{ss:syntheseFSMDBasis}
-\paragraph{Principes}
+\subsubsection{Principes}
 We kunnen door volgende principes toe te passen op het ASM-schema een processor bouwen:
 \begin{enumerate}
- \item Elke variabele is een register
+ \item Elke variabele is een register.
+ \item Voor elk register maakt de set-ingang deel uit van het instructiewoord.
  \item Elke operatie komt overeen met een functionele eenheid (FU) die logischerwijs dezelfde opdracht uitvoert (indien er dus een optelling in het ASM-schema voorkomt, zullen we een opteller in het datapad plaatsen).
  \item Indien een operatie de waarde van een variabele nodig heeft, maken we een verbinding van de uitgang van het bijbehorende register naar de bijbehorende ingang van functionele eenheid.
  \item Indien het resultaat van een operatie wordt weggeschreven naar een variabele, bouwen we een verbinding van de uitgang van de bijbehorende functionele eenheid naar de data-ingang van het register.
  \item Indien data-ingangen of constanten ingelezen kunnen worden bij een variabele, bouwen we een verbinding tussen de data-ingang/constante en het bijbehorende register, tenzij de constante 0 is.
- \item Indien verschillende functionele eenheden waardes wegschrijven naar eenzelfde register, voorzien we een multiplexer om de waarde te kiezen.
+ \item Indien een variabele op 0 gezet kan worden, bevat het instructiewoord de reset-ingang van het bijbehorende register.
+ \item Indien verschillende functionele eenheden waardes wegschrijven naar eenzelfde register, voorzien we een multiplexer om de waarde te kiezen. De selectie-ingangen van deze multiplexers behoren tot het instructiewoord.
  \item Elk ASM-blok komt overeen met een toestand van de controller.
  \item Voor elke test waarbij een variabele betrokken is, dienen we een combinatorische module te bouwen die op basis van de waarde van de registers de test kan uitvoeren. De uitgang van deze test module is \'e\'en van het status-signalen, en bijgevolg een deel van de controller-ingangen.
  \item De reset- en load-ingangen van de registers vormen samen met de selectie-ingangen de het instructiewoord: een deel van de uitgangen van de controller.
+ \item Data-uitgangen worden berekend aan de hand van een combinatorische schakeling met als invoer de waarde van de relevante registers, en eventuele instructiewoord-bits.
 \end{enumerate}
-\paragraph{Leidend voorbeeld}
-Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagina \pageref{fig:aSMSchemaRunningExample} kunnen we een processor bouwen. In het ASM-schema is er sprake van vier variabelen: $X$, $Y$, $Z$ en $I$.
+\subsubsection{Leidend voorbeeld}
+\paragraph{Datapad}
+Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagina \pageref{fig:aSMSchemaRunningExample} kunnen we een processor bouwen. Het resultaat van van deze omzetting staat op figuur \ref{fig:sprocessorGenericLeadingExample}. In het ASM-schema is er sprake van vier variabelen: $X$, $Y$, $Z$ en $I$. Daarom introduceren we vier registers. Uit het ASM-schema kunnen we afleiden dan zowel $Y$ als $Z$ op 0 gezet kunnen worden. Daarom voorzien we op basis van de register reeds 6 instructie-bits: de set-ingangen van de $X$ en $I$-registers en de set- en reset-ingangen van de $Y$ en $Z$ registers. Voor elk van de registers voorzien we vervolgens een lijn (deze tekenen we onder de registers). We kunnen nu de functionele eenheden introduceren. Alle operaties uit het ASM-schema gebeuren in toestand $S_2$. In totaal zijn er 6 functionele eenheden: een shift voor zowel $X$ als $Y$ samen met de speciale recombinaties en decrement. We maken geen verschil of de instructies al dan niet voorwaardelijk zijn. Elk van deze functionele eenheden plaatsen we onder de lijnen van de registers. Vervolgens tekenen we verbindingen vanuit de registers en eventuele data-ingangen naar de functionele eenheden. Zo tekenen we een signaal vanuit $I$ naar de decrementor, $X$ en $Y$ naar een shift-operator, en andere registers naar hun specifieke recombinaties. Verder tekenen we ook de testen: $I>0$ en $z_2z_1z_0x_3<D$. Ook deze testen verbinden we met de respectievelijk registers en data-ingangen. Elk van deze testen vormen een deel van het status-signaal. We duiden deze bits aan met onderlijnde grote letters. Vervolgens dienen we de uitgang van de functionele eenheden samen met data-ingangen te verbinden met de ingang van de registers. Zo zien we in het ASM-schema dat de variable $X$ vanuit twee bronnen waardes kan krijgen: vanuit de data-ingang $N$ en vanuit een schuifregister $X\shlcmd1$. Bijgevolg voorzien we een multiplexer die zowel de data-ingang $N$ als de uitgang van een schuifoperator combineert. De selectie-ingang van deze multiplexer maakt deel uit van het instructiewoord. Bits van het instructiewoord duiden we aan met onderlijnde kleine letters\footnote{De voorstelling van bits van het toestand- en instructiewoord zijn louter arbitrair, andere notaties zijn eveneens toegelaten.}. $Y$ kan worden gezet op drie soorten waardes: de waarde 0, het resultaat van een andere schuifoperator en de waarde na de recombinatiestap. Vermits we 0 kunnen activeren door een hoog signaal op de reset-ingang van het register aan te leggen, zullen we 0 niet toevoegen aan de multiplexer, en combineert de multiplexer alleen de uitvoer van de schuifoperator met deze van recombinatie-functionele eenheid. Op een gelijkaardige manier realiseren we de rest van de multiplexers. Tot slot dienen we nog combinatorische logica voor de data-uitgangen te bouwen. In dit geval is het simpel: de notitie bij het ASM-schema stelt dat de data-uitgangen $Q$ en $R$ louter de waardes van $Y$ en $Z$ naar buiten brengen. We specificeren dus deze uitgangen en verbinden de bussen van de registers met deze data-uitgangen. We hebben nu het volledige datapad gerealiseerd zoals op figuur \ref{fig:sprocessorDatapathGenericLeadingExample}.
 \begin{figure}[hbt]
 \centering
 \begin{sprocessor}{x/$X$/1/2,y/$Y$/3/2,z/$Z$/3/2,i/$I$/1/2}{sa/{$\shlcmd 1$},sb/{$\shlcmd 1$},rcc/$y_2y_1y_01$,rca/$z_2z_1z_0x_3$,rcb/{$z_2z_1z_0x_3$\\$-D$},de/$-1$}{ta/{$z_2z_1z_0x_3$\\$<D$},tb/{$I>0$}}
 \node[anchor=south] (VN) at ($(RRx-1)+(0,0.5)$) {$N$};
 \node[anchor=south] (V3) at (RRi-1 |- VN.south) {$3$};
-\coordinate (VDC) at ($(FTrcb)+(-0.3,0)$);
+\spcorf{VDC}{rcb}{-0.3};
 \node[anchor=south] (VD) at (VDC |- VN.south) {$D$};
 \draw[thick] (RRx-1) -- (VN.south);
 \draw[thick] (RRi-1) -- (V3.south);
@@ -990,6 +995,13 @@ Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagin
 \draw[thick] (FURrca) -| (RRz-1);
 \draw[thick] (FURrcc) -| (RRy-0);
 \draw[thick] (FURsb) -| (RRy-1);
+\spcort{TAD}{ta}{0.3};
+\spcort{OQB}{tb}{0.75};\coordinate (OQ) at (OQB |- 0,-4);
+\spcort{ORB}{ta}{0.75};\coordinate (OR) at (ORB |- 0,-4);
+\draw (OQ) node[anchor=north]{$Q$};\sprbtc{y}{OQ};
+\draw (OR) node[anchor=north]{$R$};\sprbtc{z}{OR};
+\draw[thick] (TAD) |- ($(VD.south)+(0,-0.3)$);
+\pdot{$(VD.south)+(0,-0.3)$};
 \sprbtf{i}{de}{0};
 \sprbtf{z}{rcb}{0.3};
 \sprbtf{x}{rcb}{0};
@@ -998,14 +1010,156 @@ Op basis van het ASM-schema op figuur \ref{fig:aSMSchemaRunningExample} op pagin
 \sprbtf{y}{rcc}{0};
 \sprbtf{y}{sb}{0};
 \sprbtf{x}{sa}{0};
-\sprbtt{x}{ta}{-0.2};
+\sprbtt{x}{ta}{-0.3};
 \sprbtt{z}{ta}{0};
 \sprbtt{i}{tb}{0};
 \end{sprocessor}
-\caption{Implementatie van het leidend voorbeeld via de basisprincipes.}
+\caption{Implementatie van het datapad van het leidend voorbeeld via de basisprincipes.}
+\label{fig:sprocessorDatapathGenericLeadingExample}
 \end{figure}
+\paragraph{Controller}
+Naast het datapad moeten we ook de controller realiseren. De controller bouwen we op basis van het ASM-schema. Elke toestand van het ASM-schema komt overeen met een toestand van de controller. De invoer van de controller bestaat enerzijds uit controle-ingangen en anderzijds status-signalen. Voor het voorbeeld van de deler betekent dit dus:
+\begin{enumerate}
+ \item [\underline{ci}] het signaal van de controle-ingang dat aangeeft dat de data-ingangen gereed zijn voor verwerking.
+ \item [\underline{A}] het resultaat van de test $z_2z_1z_0x_3<D$
+ \item [\underline{B}] het resultaat van de test $I>0$
+\end{enumerate}
+Daarnaast dient de controller zowel een instructiewoord naar 
+\begin{enumerate}
+ \item[\underline{co}] het signaal van de controle-uitgang dat aangeeft dat het algoritme was uitgevoerd en de resultaten op de data-uitgangen staat.
+ \item[\underline{a}] indien hoog wordt de waarde van de variabele $X$ gezet op de waarde van de multiplexer.
+ \item[\underline{b}] indien hoog wordt de waarde $N$ doorgegeven aan het register $X$, anders wordt $X\shlcmd1$ doorgegeven.
+ \item[\underline{c}] indien hoog wordt de waarde van de variabele $Y$ gezet op de waarde van de multiplexer.
+ \item[\underline{d}] indien hoog wordt de waarde van de variabele $Y$ gezet op 0.
+ \item[\underline{e}] indien hoog wordt de waarde $Y\shlcmd1$ doorgegeven aan het register $Y$, anders wordt $y_2y_1y_01$ doorgegeven.
+ \item[\underline{f}] indien hoog wordt de waarde van de variabele $Z$ gezet op de waarde van de multiplexer.
+ \item[\underline{g}] indien hoog wordt de waarde van de variabele $Z$ gezet op 0.
+ \item[\underline{h}] indien hoog wordt de waarde $z_2z_1z_0x_3$ doorgegeven aan het register $Z$, anders wordt $z_2z_1z_0x_3-D$.
+ \item[\underline{i}] indien hoog wordt de waarde van de variabele $I$ gezet op de waarde van de multiplexer.
+ \item[\underline{j}] indien hoog wordt de waarde $3$ doorgegeven aan het register $I$, anders wordt $I-1$ doorgegeven.
+\end{enumerate}
+Op basis van deze beschrijving kunnen we een toestandstabel bouwen die de volledige controller beschrijft zoals in tabel \ref{tbl:sprocessorControllerGenericLeadingExample} of figuur \ref{fig:sprocessorControllerGenericLeadingExample}.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|ccc|ccccccccccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{3}{c|}{Ingang}&\multicolumn{11}{c|}{Uitgang}&\multirow{2}{*}{Volgende toestand}\\
+&ci&A&B&co&a&b&c&d&e&f&g&h&i&j&\\\hline
+\multirow{2}{*}{$S_1$}
+&0&-&-&		0	&1&1	&0&1&-	&0&1&-	&1&1	&$S_1$\\
+&1&-&-&		0	&1&1	&0&1&-	&0&1&-	&1&1	&$S_2$\\\hline
+\multirow{4}{*}{$S_2$}
+&-&0&0&		0	&1&0	&1&0&0	&1&0&0	&1&0	&$S_3$\\
+&-&0&1&		0	&1&0	&1&0&0	&1&0&0	&1&0	&$S_2$\\
+&-&1&0&		0	&1&0	&1&0&1	&1&0&1	&1&0	&$S_3$\\
+&-&1&1&		0	&1&0	&1&0&1	&1&0&1	&1&0	&$S_2$\\\hline
+\multirow{2}{*}{$S_3$}
+&0&-&-&		1	&0&-	&0&0&-	&0&0&-	&0&-	&$S_1$\\
+&1&-&-&		1	&0&-	&0&0&-	&0&0&-	&0&-	&$S_3$\\
+\end{tabular}
+\caption{Toestandstabel van de controller van het leidend voorbeeld via de basisprincipes.}
+\label{tbl:sprocessorControllerGenericLeadingExample}
+\end{table}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=4cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state] (S1) {$S_1$};
+\node[state] (S2) [right=of S1] {$S_2$};
+\node[state] (S3) [right=of S2] {$S_3$};
+\path	(S1) edge node[swap] {\texttt{1--/01101-01-11}} (S2)
+	   edge[loop below] node {\texttt{0--/01101-01-11}} (S1)
+	(S2) edge node[swap] {\begin{varwidth}{5cm}\begin{center}\texttt{-00/01010010010}\\\texttt{-10/01010110110}\end{center}\end{varwidth}} (S3)
+	   edge[loop below] node {\begin{varwidth}{5cm}\begin{center}\texttt{-01/01010010010}\\\texttt{-11/01010110110}\end{center}\end{varwidth}} (S2)
+	(S3) edge[bend right] node {\texttt{0--/10-00-00-0-}} (S1)
+	   edge[loop below] node {\texttt{1--/10-00-00-0-}} (S3);
+%bend left
+%0--/01101-01-11
+\end{tikzpicture}
+\caption{Toestandsdiagram van de controller van het leidend voorbeeld via de basisprincipes.}
+\label{fig:sprocessorControllerGenericLeadingExample}
+\end{figure}
+Deze tabel genereren we opnieuw op basis van het ASM-schema. Het instructiewoord -- een sequentie aan bits die bepaald welke instructies op het datapad worden uitgevoerd -- is afhankelijk van zowel de toestand als de controller-ingang en statussignalen. Bij wijze van voorbeeld zullen we de controller-tabel van het leidend voorbeeld opbouwen. Bij toestand $S_1$ zijn alle opdrachten onafhankelijk van testen. Bijgevolg zal het instructiewoord ook onafhankelijk zijn van de invoer. Dit instructiewoord kunnen we bouwen aan de hand van de instructies bij toestand 1. Zo is de controller-uitgang $co=0$, logischerwijs is dit ook het geval de uitvoer. Daarnaast bevat de toestand de instructie $X\gets N$. Bijgevolg zetten we het set-signaal van het $X$-register hoog, samen met het selectie-signaal van de multiplexer, waardoor deze $N$ doorgeeft. Dit resulteert in $\left(a,b\right)=\left(1,1\right)$. Daarnaast worden $Y$ en $Z$ op $0$ gezet. Dit betekent dat we het set-signaal op laag zetten van beide registers en het reset-signaal op hoog. Vermits de waarde van de multiplexers niet wordt ingelezen, maakt het niet uit welke waarde de multiplexer doorgeeft. Daarom is het volgende deel van het instructiewoord $\left(c,d,e,f,g,h\right)=\left(0,1,-,0,1,-\right)$. De instructie $I\gets N$ bepaald tot slot de rest van het instructiewoord. Het complete instructiewoord wordt dan: 
+\begin{equation}
+S_1:\left(co,a,b,c,d,e,f,g,h,i,j\right)=\left(0,1,1,0,1,-,0,1,-,1,1\right)
+\end{equation}
+Ondanks het feit dat alle instructies onafhankelijk van testen worden uitgevoerd, is de volgende toestand wel afhankelijk van de $ci$-controller-ingang. Bijgevolg plaatsen we twee regels in de toestandstabel: indien $ci=0$ is de volgende toestand opnieuw $S_1$, in het andere geval is de volgende toestand $S_2$. In het geval van toestand $S_2$ zijn sommige instructies wel afhankelijk van de resultaten van enkele testen. Er zijn echter wel enkele instructies die onafhankelijk van testen worden uitgevoerd. Op analoge wijze bekomen we voor deze instructiebits: $\left(co,a,b,i,j\right)=\left(0,1,0,1,0\right)$. De andere instructies zijn afhankelijk van de test die we gespecificeerd hebben als de status-bit \underline{A} ofwel $z_2z_1z_0x_3<D$. In het geval deze test slaagt zijn de rest van de instructie-bits $\left(c,d,e,f,g,h\right)=\left(1,0,0,1,0,0\right)$. In het andere geval is $\left(c,d,e,f,g,h\right)=\left(1,0,1,1,0,1\right)$. Dit kunnen we formaliseren als:
+\begin{equation}
+S_2:\left(co,a,b,c,d,e,f,g,h,i,j\right)=\left\{\begin{array}{ll}
+\left(0,1,0,1,0,0,1,0,0,1,0\right)&\ifun\mbox{\underline{A}}\\
+\left(0,1,0,1,0,1,1,0,1,1,0\right)&\otherwiseun\\
+\end{array}\right.
+\end{equation}
+Opnieuw wordt de volgende toestand gedifferentieerd op basis van een test: \underline{B}. Indien \underline{B} waar is, is $I>0$ bijgevolg is de volgende toestand $S_2$, in het geval de test faalt, is de volgende toestand $S_3$. Tot slot beschouwen we de laatste toestand $S_3$: hierbij worden er geen instructies uitgevoerd. Bijgevolg staan alle set- en reset-signalen van de registers op 0. Opnieuw is ook de selectie-ingang van de multiplexers irrelevant: de inhoud wordt immers niet opgeslagen in de registers. Tot slot is de controller-uitgang $co=1$. Bijgevolg is de volledige uitvoer:
+\begin{equation}
+S_3:\left(co,a,b,c,d,e,f,g,h,i,j\right)=\left(1,0,-,0,0,-,0,0,-,0,-\right)
+\end{equation}
+Ook hier bepaald de controller-ingang $ci$ de volgende toestand. Bijgevolg differenti\"eren we de volgende toestand opnieuw op basis van deze test. Op basis van deze paragraaf kunnen we dus de controller toestandstabel op tabel \ref{tbl:sprocessorControllerGenericLeadingExample} opstellen. Voor de concrete implementatie van de controller met behulp van flipflops verwijzen we naar het vorige hoofdstuk. Eenmaal de controller en het datapad gebouwd zijn, dienen we beide componenten alleen nog met elkaar te verbinden: de instructie-uitgangen van de controller worden gelinkt met de set- en reset-signalen van de registers en de selectie-ingangen van de multiplexers. De testen die op het datapad worden uitgevoerd vormen dan weer de invoer van de controller. Merk verder ook op dat we hier een input-gebaseerd ASM-schema hebben verwezenlijkt. Een toestandsgebaseerd ASM-schema wordt op compleet analoge wijze gesynthetiseerd, alleen zal het instructiewoord niet afhangen van eventuele testen. Opdelingen zoals bij toestand $S_2$ komen dus niet voor.
+\subsubsection{Betere implementatie}
+Zoals reeds eerder vermeld leidt de procedure die we in deze subsectie hebben ontwikkeld hebben niet tot een optimale oplossing. Er zijn verschillende problemen die afhankelijk van het algoritme tot een ineffici\"ente implementatie leiden:
+\begin{itemize}
+ \item In deze implementatie zullen we voor elke operatie een aparte functionele eenheid voorzien. Merk echter op dat indien we in eender welke toestand slechts \'e\'en optelling uitvoeren we dezelfde opteller zouden kunnen gebruiken.
+ \item Nogal wat functionele eenheden hebben gelijkaardige kenmerken. Zo valt $Y\shlcmd1$ te combineren met $y_2y_1y_01$. Functionele eenheden te combineren leidt tot een complexere schakeling maar minder redundante delen.
+ \item In sommige algoritmen wordt slechts een subset van de register tegelijk gebruikt. In dat geval kunnen we een registerbank gebruiken en enkel de adressen uitlezen die bij een bepaalde toestand relevant zijn.
+ \item We dienen niet steeds per register een bus te voorzien. Indien bij elke toestand een deel van de register belangrijk zijn, kunnen we op een beperkt aantal bussen de waardes van de relevante registers plaatsen.
+ \item Soms kunnen we het ASM-schema verder optimaliseren. Dit sluit enigzinds aan bij de discussie over het aantal toestanden die we gebruikten voor de vertaling van het algoritme naar een ASM-schema.
+ \item Logischerwijs kunnen we de toestandstabel van de controller eerst minimaliseren alvorens deze te implementeren.
+\end{itemize}
+In de volgende subsecties zullen we een groot deel van deze problemen bespreken en toepassen op het leidend voorbeeld.
 \subsection{Ontwerp Controller}
 \label{ss:syntheseFSMDController}
+\subsubsection{Patronen in een algoritme}
+Het ontwerp van een controller is in wezen equivalent met de implementatie van een Finite State Machine (FSM). De controller in het leidende voorbeeld is dan ook vrij eenvoudig te implementeren met behulp van de methodes uit hoofdstuk \ref{ch:SeqComp}. Bij complexe programma's is een implementatie van een controller echter niet meer zo triviaal: deze kennen een groot aantal toestanden en tests, en doorgaans een groot instructiewoord. Daarom werd al snel naar een methode gezocht om snel complexe controllers te bouwen. Dit doen we door volgende patronen in een ontwerp (ASM-schema) te zoeken:
+\begin{itemize}
+ \item Natuurlijke volgorde van toestanden.
+ \item Terugkerende sets van toestanden (meestal veroorzaakt door subroutines).
+ \item Eenvoud van het implementeren van logica met behulp van one-hot coderingen.
+\end{itemize}
+Elk van deze elementen wordt in de volgende subsubsecties verder uitgewerkt. Op basis van deze drie elementen zullen we een component bouwen die een algemene controller vertegenwoordigt: de \termen{microprogrammeerbare controller}. Een component die we in een schakeling inpluggen en die we gegeven een ASM-schema vervolgens kunnen programmeren en daardoor omvormen tot een concrete controller.
+\subsubsection{Algemene vorm van een controller}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp] (SR) at (0,0) {SReg};
+\node[subcomp] (NSL) at (3,1.25) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\Logic\end{center}\end{varwidth}};
+\node[subcomp] (OL) at (3,-1.25) {\begin{varwidth}{2 cm}\begin{center}Output\\Logic\end{center}\end{varwidth}};
+%\coordinate (CSP) at ($0.5*(SR)+0.25*(NSL)+0.25*(OL)$);
+\coordinate (CSP) at ($(SR.east)+(1,0)$);
+\coordinate (TL) at (SR.west |- NSL.north);\coordinate (TL) at ($(TL)+(-0.25,0.25)$);
+\pdot{CSP};
+\coordinate (NSLA) at ($0.75*(NSL.south west)+0.25*(NSL.north west)$);
+\coordinate (NSLB) at ($0.5*(NSL.south west)+0.5*(NSL.north west)$);
+\coordinate (NSLC) at ($0.25*(NSL.south west)+0.75*(NSL.north west)$);
+\coordinate (OLA) at ($0.75*(OL.south west)+0.25*(OL.north west)$);
+\coordinate (OLB) at ($0.5*(OL.south west)+0.5*(OL.north west)$);
+\coordinate (OLC) at ($0.25*(OL.south west)+0.75*(OL.north west)$);
+\draw[thick] (SR) -- (CSP);\draw[thick,->] (CSP) |- (NSLA);\draw[thick,->] (CSP) |- (OLC);
+\draw[thick,->] (NSL.east) -- ++(0.25,0) |- (TL) |- (SR.west);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL),inner sep=0.75cm] (CT) {};
+\end{pgfonlayer}
+\coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south,text width=1.5 cm]{Controle-Signalen (CS)};
+\coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
+ node[anchor=south,text width=1.5 cm]{Status-Signalen (SS)};
+\coordinate (CI) at (CT.west);\draw[<-,thick] (CI) -- ++(-0.5,0) node[anchor=east,text width=1.5 cm]{Controle-Ingangen (CI)};
+\coordinate (CO) at (CT.east);\draw[->,thick] (CO) -- ++(0.5,0) node[anchor=west,text width=1.5 cm]{Controle-Uitgangen (CO)};
+\coordinate (COD) at ($0.667*(OL.south east)+0.333*(OL.north east)$);\draw[thick] (COD) -- ++(0.5,0) |- (CO);
+\coordinate (CSD) at ($0.333*(OL.south east)+0.667*(OL.north east)$);\coordinate (CSE) at ($0.75*(NSL.south east)+0.25*(NSL.north east)+(0.5,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- ++(0.25,0) |- (CSE) |- (CSF) -- (CS);
+\coordinate (NSLSS) at ($(NSLC)+(-1.25,0)$);
+\draw[thick,->] (SS) |- (NSLC);\draw[thick,->] (CI) -- ++(0.25,0) |- (NSLB);\draw[thick,->] ($(CI)+(0.25,0)$) |- (OLB);\pdot{$(CI)+(0.25,0)$};\pdot{NSLSS};\draw[thick,dashed,->] (NSLSS) |- (OLA);
+\end{tikzpicture}
+\caption{Algemene vorm van een controller.}
+\label{fig:generalStructureController}
+\end{figure}
+Allereerst grijpen we terug naar de definitie van een controller. En combineren we dit met de defintie van een sequenti\"ele schakeling. In subsectie \ref{ss:specialProcessorGeneralStructure} hebben we reeds de invoer en uitvoer van een controller besproken. We zien dezelfde structuur op figuur \ref{fig:generalStructureController}. Daarnaast weten we uit hoofdstuk \ref{ch:SeqComp} hoe de algemene sequenti\"ele structuur eruit ziet:
+\begin{itemize}
+ \item \termen{State Register} ofwel \termen{toestandsregister}: een register die de huidige toestand bijhoudt.
+ \item \termen{Next State Logic}: combinatorische logica die de volgende toestand berekend.
+ \item \termen{Output Logic} ofwel \termen{uitvoer logica}: een component die het instructiewoord ofwel de controle-signalen berekend, samen met de controle-uitgangen.
+\end{itemize}
+Beide combinatorische componenten zijn afhankelijk van zowel de controle-ingangen en de huidige toestand bijgehouden door het toestandregister. Daarnaast zullen de statussignalen (de resultaten van de testen in het datapad) de volgende toestand mee helpen bepalen. In het geval van een inputgebaseerd ASM-schema is dit zelfs het geval voor de uitvoer logica. We kunnen dus stellen dat figuur \ref{fig:generalStructureController} de algemene structuur van de controller weergeeft. We zullen dit ontwerp in de volgende subsubsecties aanpassen tot een structuur die gericht is op specifieke eigenschappen van een controller.
+\subsubsection{Natuurlijke volgorde van toestanden}
+Men kan de toestand van een controller enigzinds vergelijken met een programmateller. In de meeste gevallen zal een programma dan ook bestaan uit een reeks toestanden waarbij de volgende toestand vaststaat. Omdat het zoeken van een minimale encodering voor grote toestandstabellen tijdrovend is, zullen we deze optie niet beschouwen. Een logisch gevolg hiervan is dat we de opeenvolgende toestanden opeenvolgende toestandscoderingen geven.
+\subsubsection{Ondersteunen van subroutines}
+\subsubsection{Werken met ``One-Hot'' coderingen}
 \subsection{Minimaliseren Datapad}
 \label{ss:syntheseFSMDDatapad}
 \subsection{Andere optimalisaties}
