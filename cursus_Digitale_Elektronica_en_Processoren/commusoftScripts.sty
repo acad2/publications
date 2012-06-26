@@ -328,6 +328,7 @@
 \DeclareMathOperator{\rem}{rem}
 \DeclareMathOperator{\fix}{fix}
 \DeclareMathOperator{\float}{float}
+\DeclareMathOperator{\abs}{abs}
 \DeclareMathOperator{\ifun}{if}
 \DeclareMathOperator{\otherwiseun}{otherwise}
 \DeclareMathOperator{\elseun}{else}
@@ -357,59 +358,62 @@
  (P -| TP) .. (TP);}
 \newcommand{\scpush}[1]{\coordinate (TP) at ($(T)+(0,0.25)$);\coordinate (TPP) at ($(TP)+(0,0.25)$);\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};\draw[->] (P.east) .. controls (P -| TP) and (P -| TP) .. (TP);}
 
-\newenvironment{sprocessor}[4][3]{\begin{tikzpicture}
-\setcounter{tmpC}{0}
-\setcounter{tmpD}{1}
-\setcounter{tmpE}{0}
-\setcounter{tmpF}{0}
-\setcounter{tmpG}{0}
-\foreach \x/\y/\cc/\mx in {#2} {
-  \addtocounter{tmpE}{1}
-}
-\foreach \x/\y in {#3} {
-  \addtocounter{tmpF}{1}
-}
-\foreach \x/\y in {#4} {
-  \addtocounter{tmpG}{1}
-}
-\def\tox{#1*\arabic{tmpE}-#1+1};
-\def\frx{\tox-1.5*\arabic{tmpF}-1.5*\arabic{tmpG}+0.25};
-\foreach \x/\y/\cc/\mx in {#2} {
-  \node[regi] (R\x) at (#1*\arabic{tmpC},0) {\y};
-  \coordinate (B\x) at (\frx,-0.75-0.25*\arabic{tmpC});
-  \coordinate (RR\x-0) at (R\x.D);
-  \draw[thick] (B\x) -- (B\x -| \tox,0);
-  \draw[thick] (R\x.Q) -- (R\x.Q |- B\x);
-  \pdot{R\x.Q |- B\x};
-  \ifthenelse{\isodd{\cc}}{\sprarr{R\x.LDB}}{}
-  \ifthenelse{\cc>1}{\sprarr{R\x.CLR}}{}
-  \ifthenelse{\mx=2}{\node[mux2to1] (M\x) at (R\x |- 0,1) {};\sprarr{M\x.selin0}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxB{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);}{}
-  \addtocounter{tmpC}{1}
-}
-\def\xfuo{#1*\arabic{tmpE}-1.1-1.5*\arabic{tmpF}};
-\setcounter{tmpC}{0}
-\coordinate (BF) at (0,-2.8);
-\foreach \x/\y in {#3} {
-  \coordinate (F\x) at (\xfuo+1.5*\arabic{tmpC},-2.4);
-  \coordinate (FB\x) at (F\x |- BF);
-  \coordinate (FT\x) at ($(FB\x)+(0,0.8)$);
-  \draw[thick] ($(F\x)+(-0.6,0.4)$) rectangle ++(1.2,-0.8);
-  \draw (F\x) node[scale=0.85] {\begin{varwidth}{1.41cm}\begin{center}\y\end{center}\end{varwidth}};
-  \coordinate (FU\x) at (\tox+0.25*\arabic{tmpF}-0.25*\arabic{tmpC},-3.05-\arabic{tmpF}*0.25+0.25*\arabic{tmpC});
-  \coordinate (FUR\x) at (FU\x |- 0,2+0.25*\arabic{tmpF}-0.25*\arabic{tmpC});
-  \draw[thick] (FB\x) |- (FU\x) -- (FUR\x);
-  \addtocounter{tmpC}{1}
-}
-\setcounter{tmpC}{1}
-\coordinate (BF) at (0,-2.8);
-\foreach \x/\y in {#4} {
-  \coordinate (T\x) at (\xfuo-1.5*\arabic{tmpC},-2.4);
-  \coordinate (TB\x) at (T\x |- BF);
-  \coordinate (TT\x) at ($(TB\x)+(0,0.8)$);
-  \draw[thick] ($(T\x)+(-0.6,0.4)$) rectangle ++(1.2,-0.8);
-  \draw (T\x) node[scale=0.85] {\begin{varwidth}{1.41cm}\begin{center}\y\end{center}\end{varwidth}};
-  \draw[->] (TB\x) -- ++(0,-0.375) node[anchor=north]{\underline{\Alph{tmpC}}};
-  \addtocounter{tmpC}{1}
+\newenvironment{sprocessor}[4][1/3]{\begin{tikzpicture}
+\foreach \sc/\rdist in {#1} {
+  \setcounter{tmpC}{0}
+  \setcounter{tmpD}{1}
+  \setcounter{tmpE}{0}
+  \setcounter{tmpF}{0}
+  \setcounter{tmpG}{0}
+  \foreach \x/\y/\cc/\mx in {#2} {
+    \addtocounter{tmpE}{1}
+  }
+  \foreach \x/\y in {#3} {
+    \addtocounter{tmpF}{1}
+  }
+  \foreach \x/\y in {#4} {
+    \addtocounter{tmpG}{1}
+  }
+  \def\tox{\rdist*\arabic{tmpE}-\rdist+1};
+  \def\frx{\tox-1.5*\arabic{tmpF}-1.5*\arabic{tmpG}+0.25};
+  \foreach \x/\y/\cc/\mx in {#2} {
+    \node[regi,scale=\sc] (R\x) at (\rdist*\arabic{tmpC},0) {\y};
+    \coordinate (B\x) at (\frx,-0.75-0.25*\arabic{tmpC});
+    \coordinate (RR\x-0) at (R\x.D);
+    \draw[thick] (B\x) -- (B\x -| \tox,0);
+    \draw[thick] (R\x.Q) -- (R\x.Q |- B\x);
+    \pdot{R\x.Q |- B\x};
+    \ifthenelse{\isodd{\cc}}{\sprarr{R\x.LDB}}{}
+    \ifthenelse{\cc>1}{\sprarr{R\x.CLR}}{}
+    \ifthenelse{\mx=2}{\node[mux2to1] (M\x) at (R\x |- 0,1) {};\sprarr{M\x.selin0}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxB{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);}{}
+    \addtocounter{tmpC}{1}
+  }
+  \def\xfuo{\rdist*\arabic{tmpE}-1.1-1.5*\arabic{tmpF}};
+  \def\yfuo{-1.8-0.25*\arabic{tmpE}};
+  \setcounter{tmpC}{0}
+  \coordinate (BF) at (0,\yfuo);
+  \foreach \x/\y in {#3} {
+    \coordinate (F\x) at (\xfuo+1.5*\arabic{tmpC},\yfuo+0.4);
+    \coordinate (FB\x) at (F\x |- BF);
+    \coordinate (FT\x) at ($(FB\x)+(0,0.8)$);
+    \draw[thick] ($(F\x)+(-0.6,0.4)$) rectangle ++(1.2,-0.8);
+    \draw (F\x) node[scale=0.85] {\begin{varwidth}{1.41cm}\begin{center}\y\end{center}\end{varwidth}};
+    \coordinate (FU\x) at (\tox+0.25*\arabic{tmpF}-0.25*\arabic{tmpC},\yfuo-0.25-\arabic{tmpF}*0.25+0.25*\arabic{tmpC});
+    \coordinate (FUR\x) at (FU\x |- 0,2+0.25*\arabic{tmpF}-0.25*\arabic{tmpC});
+    \draw[thick] (FB\x) |- (FU\x) -- (FUR\x);
+    \addtocounter{tmpC}{1}
+  }
+  \setcounter{tmpC}{1}
+  \coordinate (BF) at (0,-2.8);
+  \foreach \x/\y in {#4} {
+    \coordinate (T\x) at (\xfuo-1.5*\arabic{tmpC},-2.4);
+    \coordinate (TB\x) at (T\x |- BF);
+    \coordinate (TT\x) at ($(TB\x)+(0,0.8)$);
+    \draw[thick] ($(T\x)+(-0.6,0.4)$) rectangle ++(1.2,-0.8);
+    \draw (T\x) node[scale=0.85] {\begin{varwidth}{1.41cm}\begin{center}\y\end{center}\end{varwidth}};
+    \draw[->] (TB\x) -- ++(0,-0.375) node[anchor=north]{\underline{\Alph{tmpC}}};
+    \addtocounter{tmpC}{1}
+  }
 }
 }{\end{tikzpicture}}
 \newcommand{\sprarr}[1]{\draw[<-] (#1) -- ++(-0.175,0) node[anchor=east,scale=0.75]{\underline{\alph{tmpD}}};\addtocounter{tmpD}{1}}
@@ -418,7 +422,7 @@
 \newcommand{\sprbtt}[3]{\coordinate (TMP) at (B#1 -| TT#2);\coordinate (TMP) at ($(TMP)+(#3,0)$);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- TT#2);}
 \newcommand{\sprbtc}[2]{\coordinate (TMP) at (B#1 -| #2);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- #2);}
 \newcommand{\spcort}[3]{\coordinate (#1) at ($(TT#2)+(#3,0)$);}
-
+\newcommand{\spfutr}[3]{\draw[thick] (FUR#1) -| (RR#2-#3);}
 
 \pgfkeys{/sigo/lines/.initial={$n$}}
 \pgfdeclaredecoration{sigo}{start}{

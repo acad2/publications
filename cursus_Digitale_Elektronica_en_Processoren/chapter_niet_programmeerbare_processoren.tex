@@ -1432,9 +1432,30 @@ Indien we dit ASM-schema op de eerder genoemde wijze zouden implementeren zouden
 Het is duidelijk dat dit ASM-schema een grote kost met zich teweeg brengt. We zullen in de volgende subsubsecties dan ook de implementatie significant verbeteren.
 \begin{figure}[hbt]
 \centering
-\begin{sprocessor}[1.5]{t1/$t_1$/1/1,t2/$t_2$/1/1,t3/$t_3$/1/1,t4/$t_4$/1/1,t5/$t_5$/1/1,t6/$t_6$/1/1,t7/$t_7$/1/1,t8/$t_8$/1/1}{shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max1/$\max$, max2/$\max$,min/$\min$}{}
-%, t9/$t_9$/1/1,t10/$t_{10}$/1/1,t11/$t_{11}$/1/1
-%,abs1/$\abs$,abs2/$\abs$
+\begin{sprocessor}[0.75/1.25]{t1/$t_1$/1/1,t2/$t_2$/1/1,t3/$t_3$/1/1,t4/$t_4$/1/1,t5/$t_5$/1/1,t6/$t_6$/1/1,t7/$t_7$/1/1,t8/$t_8$/1/1, t9/$t_9$/1/1,t10/$t_{10}$/1/1,t11/$t_{11}$/1/1}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
+\sprbtf{t1}{abs1}{0};
+\sprbtf{t2}{abs2}{0};
+\sprbtf{t3}{max1}{-0.2};
+\sprbtf{t4}{max1}{0.2};
+\sprbtf{t3}{min}{-0.2};
+\sprbtf{t4}{min}{0.2};
+\sprbtf{t5}{shr3}{0};
+\sprbtf{t6}{shr1}{0};
+\sprbtf{t5}{sub}{-0.2};
+\sprbtf{t7}{sub}{0.2};
+\sprbtf{t8}{add}{-0.2};
+\sprbtf{t9}{add}{0.2};
+\sprbtf{t5}{max2}{-0.2};
+\sprbtf{t10}{max2}{0.2};
+\spfutr{max2}{t11}{0};
+\spfutr{add}{t10}{0};
+\spfutr{sub}{t9}{0};
+\spfutr{shr1}{t8}{0};
+\spfutr{shr3}{t7}{0};
+\spfutr{min}{t6}{0};
+\spfutr{max1}{t5}{0};
+\spfutr{abs2}{t4}{0};
+\spfutr{abs1}{t3}{0};
 \end{sprocessor}
 \caption{Implementatie van het datapad van de benaderende vierkantswortel volgens de basisprincipes.}
 \end{figure}
