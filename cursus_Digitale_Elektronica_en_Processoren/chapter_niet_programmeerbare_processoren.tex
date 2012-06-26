@@ -1382,8 +1382,64 @@ Naast het introduceren van een algemene controller zullen we enkele verbeteringe
 \end{itemize}
 Alvorens we al deze optimalisaties bespreken zullen we eerst een ander leidend voorbeeld introduceren. We zullen telkens \'e\'en van de leidende voorbeelden gebruiken op de plaatsen waar dit relevant is.
 \subsubsection{Leidend voorbeeld: vierkantswortel benadering}
-
+Een tweede leidende voorbeeld is het benaderen van een vierkantswortel. Veel programma's berekenen vaak de vierkantswortel van de som van twee kwadraten (bijvoorbeeld bij het berekenen van een afstand tussen twee punten). Voor de meeste programma's is het echter niet belangrijk dat deze vierkantswortel met een hoge nauwkeurigheid berekend wordt. Daarom maakt men meestal gebruik van een volgende benadering:
+\begin{equation}
+\sqrt{x^2+y^2}\approx\max\left(\max\left(\left|x\right|,\left|y\right|\right),0.875\cdot\max\left(\left|x\right|,\left|y\right|\right)+0.5\cdot\min\left(\left|x\right|,\left|y\right|\right)\right)
+\end{equation}
+Figuur \ref{fig:asmSqrt} toont een ASM-schema die deze vierkantswortel kan uitrekenen. Bemerk dat we ook een controle-ingang $\mbox{start}$ voorzien, die op hoog dient gezet te worden alvorens het algoritme wordt uitgevoerd, en een controle-uitgang $\mbox{ready}$ die aangeeft dat het resultaat berekend is. Daarnaast zijn er twee data-ingangen $A$ en $B$. Daarnaast voorzien we ook een data-uitgang $R$ die het berekende resultaat naar buiten brengt.
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[yscale=-1]
+\node[asmS] (S01) at (0,0) {\begin{varwidth}{3 cm}$t_1\gets A$\\$t_2\gets B$\end{varwidth}};
+\node[asmD] (D01) at (0,1.5) {$\mbox{start}$};\setTrueFalseLabels{D01}
+\node[asmS] (S02) at (0,3) {\begin{varwidth}{3 cm}$t_3\gets \left|t_1\right|$\\$t_4\gets \left|t_2\right|$\end{varwidth}};
+\node[asmS] (S03) at (0,4.5) {\begin{varwidth}{3 cm}$t_5\gets \max\left(t_3,t_4\right)$\\$t_6\gets \min\left(t_3,t_4\right)$\end{varwidth}};
+\node[asmS] (S04) at (3.375,4.5) {\begin{varwidth}{3 cm}$t_7\gets t_5\shrcmd3$\\$t_8\gets t_6\shrcmd1$\end{varwidth}};
+\node[asmS] (S05) at (3.375,3) {$t_9\gets t_5-t_7$};
+\node[asmS] (S06) at (3.375,1.5) {$t_{10}\gets t_8+t_9$};
+\node[asmS] (S07) at (3.375,0) {\begin{varwidth}{3 cm}$t_{11}\gets\max\left(t_5,t_{10}\right)$\end{varwidth}};
+\node[asmS] (S08) at (3.375,-1.5) {$\mbox{ready=1}$};
+\node[asmN] (N01) at (0,-1.5) {$R=t_{11}$};
+\path[->] (S01) edge (D01) (S02) edge (S03) (S03) edge (S04) (S04) edge (S05) (S05) edge (S06) (S06) edge (S07) (S07) edge (S08);
+\draw[->] (S08.west) -- (S01.north);
+\draw[->] (D01.west) -| ++(-0.75,0.75) -| (S02.north);
+\draw[->] (D01.east) -- ++(0.75,0) |- (S01.east);
+\begin{pgfonlayer}{background}
+\node[asmB,fit=(S01) (D01)] (B00) {};\draw (B00.north west) node[anchor=north east]{$S_0$};
+\node[asmB,fit=(S02)] (B01) {};\draw (B01.north west) node[anchor=north east]{$S_1$};
+\node[asmB,fit=(S03)] (B02) {};\draw (B02.north west) node[anchor=north east]{$S_2$};
+\node[asmB,fit=(S04)] (B03) {};\draw (B03.north east) node[anchor=north west]{$S_3$};
+\node[asmB,fit=(S05)] (B04) {};\draw (B04.north east) node[anchor=north west]{$S_4$};
+\node[asmB,fit=(S06)] (B05) {};\draw (B05.north east) node[anchor=north west]{$S_5$};
+\node[asmB,fit=(S07)] (B06) {};\draw (B06.north east) node[anchor=north west]{$S_6$};
+\node[asmB,fit=(S08)] (B07) {};\draw (B07.north east) node[anchor=north west]{$S_7$};
+\end{pgfonlayer}
+\end{tikzpicture}
+\caption{ASM-schema van het vierkantswortel-benaderingsalgoritme.}
+\label{fig:asmSqrt}
+\end{figure}
+Indien we dit ASM-schema op de eerder genoemde wijze zouden implementeren zouden we volgende componenten nodig hebben:
+\begin{itemize}
+ \item 11 registers (van een arbitrair aantal bits).
+ \item 2 absolute waarde functionele eenheden.
+ \item 2 maximum functionele eenheden.
+ \item 1 minumum functionele eenheid.
+ \item 1 opteller functionele eenheden.
+ \item 1 aftrekker functionele eenheid.
+ \item 1 shift 3 posities naar rechts functionele eenheid.
+ \item 1 shift 1 positie naar rechts functionele eenheid.
+\end{itemize}
+Het is duidelijk dat dit ASM-schema een grote kost met zich teweeg brengt. We zullen in de volgende subsubsecties dan ook de implementatie significant verbeteren.
+\begin{figure}[hbt]
+\centering
+\begin{sprocessor}[1.5]{t1/$t_1$/1/1,t2/$t_2$/1/1,t3/$t_3$/1/1,t4/$t_4$/1/1,t5/$t_5$/1/1,t6/$t_6$/1/1,t7/$t_7$/1/1,t8/$t_8$/1/1}{shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max1/$\max$, max2/$\max$,min/$\min$}{}
+%, t9/$t_9$/1/1,t10/$t_{10}$/1/1,t11/$t_{11}$/1/1
+%,abs1/$\abs$,abs2/$\abs$
+\end{sprocessor}
+\caption{Implementatie van het datapad van de benaderende vierkantswortel volgens de basisprincipes.}
+\end{figure}
 \subsubsection{Variabelen samenvoegen}
+Een belangrijke verbetering is het reduceren van het aantal variabelen en dus het aantal registers. We merken immers op in figuur \ref{fig:asmSqrt} dat de meeste variabelen slechts \'e\'enmaal op een waarde gezet worden, en daarna -- meestal in de volgende toestand -- uitgelezen worden. Vanaf dat moment worden deze variabelen niet meer gebruikt, bijgevolg levert het niets op om hun waarde effectief bij te houden. We kunnen de registers die eerst .
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
