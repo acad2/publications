@@ -12,7 +12,7 @@ We kunnen games indelen met behulp van twee parameters:
 Er zijn twee grote problemen waarom zoekalgoritmen meestal niet goed werken:
 \begin{itemize}
  \item Het \termen{``Contingency'' probleem}\footnote{Voor meer hierover: zie publicaties van John Nash over het ``Nash-evenwicht''}: Verschillende spelers hebben tegenstrijdige belangen, de ene speler stelt een andere doel dan de andere speler, bovendien zal de tegenstander niet noodzakelijk de voor hem beste zet doen.
- \item De grote van het zoekprobleem: Spelletjes zijn er meestal op gericht er voor te zorgen dat zoeken onmogelijk is. Een voorbeeld is schaken waar de vertakkingsfactor gemiddeld $b=15$ is en de diepte zo'n $d=80$ zetten. Dit leidt dus tot $b^d=15^{80}\approx1.223\times10^{94}$ knopen, geen enkele hedendaagse machine is in staat een dergelijke boom binnen een redelijke tijd af te zoeken.
+ \item De grootte van het zoekprobleem: Spelletjes zijn er meestal op gericht er voor te zorgen dat zoeken onmogelijk is. Een voorbeeld is schaken waar de vertakkingsfactor gemiddeld $b=15$ is en de diepte zo'n $d=80$ zetten. Dit leidt dus tot $b^d=15^{80}\approx1.223\times10^{94}$ knopen, geen enkele hedendaagse machine is in staat een dergelijke boom binnen een redelijke tijd af te zoeken.
 \end{itemize}
 De oplossing bestaan er dan ook uit om bomen slechts tot een bepaalde diepte te onderzoeken, vanaf de huidige toestand. Door middel van een \termen{evaluatie-functie} $\mathfunc{eval}{S}$ wordt vervolgens de situatie beoordeeld. Dit oordeel wordt vervolgens naar boven gepropageerd in de boom, waardoor we bij iedere knoop op het eerste niveau een waarde bekomen. Afhankelijk van deze waarden kunnen we vervolgens een keuze maken.
 \subsection{Leidend Voorbeeld: Tic-Tac-Toe}
