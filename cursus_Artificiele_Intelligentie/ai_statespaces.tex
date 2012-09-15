@@ -37,7 +37,7 @@ Als leidend voorbeeld voor dit eerste hoofdstuk opteren we voor het Missionaries
 \label{fig:missionariesAndCannibals}
 \end{figure}
 \section{Wat is een State-space?}
-Een \termen{state-space} is de verzameling van de verschillende staten (toestanden) waarin een probleem zich kan bevinden, waarbij de staat deterministisch en ondubbelzinnig uitgedrukt wordt. Daarnaast bevat een state-space ook een set \termen{productieregels}: condities om van de ene staat van het probleem naar een andere te gaan. Verder bezit een state-space ook een set \termen{begin sta(a)t(en)}, en een set voorwaarden waarbij het \termen{doel} is bereikt (we het probleem dus opgelost hebben).
+Een \termenglos{state-space}{De verzameling toestanden waarin een specifiek probleem zich kan bevinden. De toestanden dienen deterministisch en ondubbelzinnig uitgedrukt te worden.} is de verzameling van de verschillende staten (toestanden) waarin een probleem zich kan bevinden, waarbij de staat deterministisch en ondubbelzinnig uitgedrukt wordt. Daarnaast bevat een state-space ook een set \termenglos{productieregels}{Een set van regels (functies) die beschrijven onder welke omstandigheden men van een toestand in een andere toestand kan overgaan.}: condities om van de ene staat van het probleem naar een andere te gaan. Verder bezit een state-space ook een set \termenglos{begin sta(a)t(en)}{Een set toestanden die het begin van een specifiek probleem markeren.}, en een set voorwaarden waarbij het \termenglos{doel}{Een toestand van een specifiek probleem die we dienen te bereiken.} is bereikt (we het probleem dus opgelost hebben).
 \paragraph{}
 \begin{leftbar}
 Hoe zouden we nu het Missionaries \& Cannibals probleem kunnen omzetten naar een statespace? Het enige wat we eigenlijk moeten weten is hoeveel missionarissen en cannibalen er aan \'e\'en van de twee oevers staan, en aan welke oever de boot ligt. Daarom introduceren we een notatie die er als volgt uit ziet: $\left\langle M,K,B\right\rangle$ hierbij stellen $M$ het aantal missionarissen, en $K$ het aantal kannibalen voor op de linkeroever. En schrijven we voor $B$, $l$ indien de boot zich op de linkeroever, en $r$ indien de boot zich op de rechteroever bevindt. De begintoestand noteren we dus als $\left\langle3,3,l\right\rangle$. Het doel is logischerwijs: $\left\langle0,0,r\right\rangle$.
@@ -73,14 +73,14 @@ Er zijn verschillende keuzes te maken:
 \paragraph{}
 Indien we voor een optimale oplossing kiezen moeten we bijhouden wat de geaccumuleerde kost (zie \ref{ss:optimalSearch}) precies inhoud.
 \paragraph{}
-Indien we een keuze maken tussen \termen{voorwaarts redeneren} of \termen{achterwaarts redeneren}, moeten we vooral kijken naar de volgende criteria:
+Indien we een keuze maken tussen \termenglos{voorwaarts redeneren}{Een strategie bij het zoeken door een state-space, waarbij we vanuit een begintoestand het doel proberen te bereiken.} of \termenglos{achterwaarts redeneren}{Een strategie bij het zoeken door een state-space, waarbij we vanuit het doel een begintoestand proberen te bereiken door productieregels omgekeerd toe te passen.}, moeten we vooral kijken naar de volgende criteria:
 \begin{itemize}
  \item Zijn de regels achterwaarts te construeren: (bij schaken kan je niet achteruit denken)
- \item \termen{Branching factor}: het gemiddelde aantal staten die direct afgeleid kan worden uit een staat.
+ \item \termenglos{Branching factor}{Het gemiddelde aantal toestanden die direct afgeleid kunnen worden uit een toestand.}: het gemiddelde aantal staten die direct afgeleid kan worden uit een staat.
  \item Aantal begintoestanden ten opzichte van het aantal eindtoestanden
  \item Een achterwaartse redenering kan meestal meer zijn keuzes verklaren
 \end{itemize}
-Een andere mogelijkheid is \termen{Middle-out reasoning} waarbij vanuit een bepaalde staat naar het doel en een begin gegraven wordt.
+Een andere mogelijkheid is \termenglos{Middle-out reasoning}{Een strategie bij het zoeken door een state-space, waarbij we vanuit een toestand zowel een begintoestand en doel trachtten te bereiken.} waarbij vanuit een bepaalde staat naar het doel en een begin gegraven wordt.
 \paragraph{}
 \begin{leftbar}
 Het is duidelijk dat de het Missionaries \& Cannibals probleem een graaf is, immers kunnen we indien we een bepaalde transactie gedaan hebben, telkens deze ongedaan maken door de overgezette personen terug over te zetten. Op zich zijn we niet op zoek naar de kortste oplossing. We kunnen echter wel oplossingen genereren die heel veel redundant werk doen (door bijvoorbeeld een aantal keer op stappen terug te keren). Omdat dit probleem relatief simpel is, is het niet verder op te delen. We kunnen het probleem ook trachtten op te lossen door achterwaarts vanuit de oplossing te redeneren. Maar deze oplossing is eigenlijk volledig identiek. Op figuur \ref{fig:missionariesAndCannibalsGraph} wordt de graaf weergegeven die alle toestanden van het probleem weergeeft.

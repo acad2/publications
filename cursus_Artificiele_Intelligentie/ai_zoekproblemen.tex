@@ -1,14 +1,14 @@
 \chapter{Zoekmethodes}
 \label{s:searchMethods}
 \chapterquote{Toen ik moe was van zoeken, leerde ik vinden.}{Friedrich Nietzsche, Duits dichter en filosoof (1844-1900)}
-Indien we een state-space gebouwd hebben, kunnen we vervolgens een algoritme ontwikkelen die door deze state-space zoekt naar een oplossing. Hiervoor bestaan er verschillende methodes die kunnen gebruikt worden: De \termen{basic search methods}.
+Indien we een state-space gebouwd hebben, kunnen we vervolgens een algoritme ontwikkelen die door deze state-space zoekt naar een oplossing. Hiervoor bestaan er verschillende methodes die kunnen gebruikt worden: De \termenglos{basic search methods}{Een set van zoekalgoritmen die we kunnen gebruiken om een oplossing te zoeken in een state-space.}.
 \paragraph{Evaluatie-criteria}
 We kunnen een zoekmethode evalueren op volgende criteria:
 \begin{itemize}
- \item \termen{Completeness}: vindt het algoritme altijd een oplossing (indien er een oplossing bestaat)
- \item \termen{Speed}: de worst-case tijdscomplexiteit
- \item \termen{Memory}: de worst-case geheugencomplexiteit
- \item \termen{Optimaliteit}: zoeken we de optimale oplossing, of is \'e\'en oplossing voldoende
+ \item \termenglos{Completeness}{Een eigenschap van een zoek algoritme. Indien een zoekalgoritme compleet is, vindt het altijd de oplossing indien er een oplossing voor het probleem bestaat.}: vindt het algoritme altijd een oplossing (indien er een oplossing bestaat)
+ \item \termenglos{Speed}{Een eigenschap van een zoek algoritme. De snelheid is de worst-case tijdscomplexiteit van het zoekalgoritme.}: de worst-case tijdscomplexiteit
+ \item \termenglos{Memory}{Een eigenschap van een zoek algoritme. De snelheid is de worst-case geheugencomplexiteit van het zoekalgoritme.}: de worst-case geheugencomplexiteit
+ \item \termenglos{Optimaliteit}{Een eigenschap van een zoekalgoritme. Indien een zoekalgoritme optimaal is, vindt het altijd de optimale oplossing (optimaal volgens een zelfgekozen metriek).}: zoeken we de optimale oplossing, of is \'e\'en oplossing voldoende
 \end{itemize}
 Voor complexiteitsanalyses zullen we gebruikmaken van onderstaande parameters:
 \begin{itemize}
@@ -227,9 +227,9 @@ Als overgangsregels beschouwen we iedere weg naar iedere stad die we tot dan toe
 Als heuristiek (zie \ref{sss:heuristicFunction}) nemen we tot slot de afstand in vogelvlucht tussen de stad in kwestie, en $G$ zelf. Deze wordt in het grijs op het wegenplan aangegeven. We zullen in deze sectie heel wat zoekalgoritmen uitvoeren op deze boom, om zo de concrete werking te verduidelijken. Deze afbeeldingen staan niet in de tekst zelf, maar staan in \ref{ss:cityFigures} op pagina \pageref{ss:cityFigures}.
 \end{leftbar}
 \section{Blind Search Methods}
-Indien we geen specifieke kennis over het probleem hebben, of deze te complex/lastig is om te formuleren kunnen we een \termen{Blind Search Method} gebruiken. Het is evident dat zoeken zonder probleemgerelateerde informatie ineffici\"ent is. Bij deze methodes zijn we ook niet ge\"interesseerd in de optimale oplossing.
+Indien we geen specifieke kennis over het probleem hebben, of deze te complex/lastig is om te formuleren kunnen we een \termenglos{Blind Search Method}{Een subset van de basic search methods waarbij we geen specifieke kennis over het probleem hebben.} gebruiken. Het is evident dat zoeken zonder probleemgerelateerde informatie ineffici\"ent is. Bij deze methodes zijn we ook niet ge\"interesseerd in de optimale oplossing.
 \subsection{Depth-First Search}
-Bij \termen{Depth-First Search} of \termen{Diepte-eerst zoeken} volgen we een bepaalde productieregel vanaf de begintoestand. Vervolgens blijven we deze regel recursief toepassen tot we vast zitten. Indien we een doel gevonden hebben is het algoritme ten einde. Indien het niet het doel is, zal het algoritme de laatste productieregel ongedaan maken en een andere in de plaats stellen. Indien er geen ongebruikte regels meer voor handen zijn maken we de regels daarvoor ongedaan tot we terug een regel kunnen kiezen. Een andere naam hiervoor is \termen{Chronological Backtracking}. Deze zoekmethode wordt ge\"illustreerd in \algref{alg:depthFirst}. We voorkomen dat we in een lus terechtkomen (indien de productieregel dit toelaten) door telkens we een toestand genereren te controleren of \'e\'en van zijn voorouders identiek aan die toestand is. Indien dit zo is, zullen we die toestand niet meer verder evalueren. Dit systeem noemen we \termen{Loopdetectie}.
+Bij \termenglos{Depth-First Search}{Een blind search algoritme die blijft productieregels op een toestand toepassen totdat we het doel gevonden hebben, of geen productieregels meer toe te passen zijn. In het laatste geval voeren we backtracking uit tot we terug bij een toestand zijn waar we een alternatieve productieregel kunnen volgen.} of \termen{Diepte-eerst zoeken} volgen we een bepaalde productieregel vanaf de begintoestand. Vervolgens blijven we deze regel recursief toepassen tot we vast zitten. Indien we een doel gevonden hebben is het algoritme ten einde. Indien het niet het doel is, zal het algoritme de laatste productieregel ongedaan maken en een andere in de plaats stellen. Indien er geen ongebruikte regels meer voor handen zijn maken we de regels daarvoor ongedaan tot we terug een regel kunnen kiezen. Een andere naam hiervoor is \termenglos{Chronological Backtracking}{Een backtrackingsmechanisme waarbij we  de laatst gekozen productieregels ongedaan maken totdat we een toestand tegenkomen waarbij we een nog niet onderzocht alternatief tegenkomen.}. Deze zoekmethode wordt ge\"illustreerd in \algref{alg:depthFirst}. We voorkomen dat we in een lus terechtkomen (indien de productieregel dit toelaten) door telkens we een toestand genereren te controleren of \'e\'en van zijn voorouders identiek aan die toestand is. Indien dit zo is, zullen we die toestand niet meer verder evalueren. Dit systeem noemen we \termenglos{Loopdetectie}{Een detectiemechanisme die detecteert dat we door een sequentie van productieregels, in een reeds bezochte toestand tegenkomen. In dat geval dienen we backtracking toe te passen.}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Depth-First zoekalgoritme}          % give the algorithm a caption
 \label{alg:depthFirst}                           % and a label for \ref{} commands later in the document
@@ -268,7 +268,7 @@ Indien we dit samenvatten bekomen we volgende criteria:
 We illustreren de werking van dit algoritme op het wegenplan in figuur \ref{fig:depthFirstCity} op pagina \pageref{fig:depthFirstCity}.
 \end{leftbar}
 \subsection{Breadth-First Search}
-Bij \termen{Breadth-First Search} of de \termen{Breedte-eerst zoeken} zoekmethode wordt een laag aan oplossingen afgewerkt alvorens er een nieuwe laag wordt bekeken. Concreet betekent dit dus dat de kinderen van een ge\"evalueerde knoop achteraan in een wachtrij geplaatst worden, en dus pas behandeld worden wanneer alle andere knopen van dezelfde boom toegevoegd zijn. Dit wordt ge\"illustreerd in \algref{alg:breadthFirst}.
+Bij \termen{Breadth-First Search}{Een blind search algoritme waarbij we gelaagd werken: we houden een lijst bij van alle toestanden (samen met het pad die tot deze toestanden leidde) die we na $i$ productieregels op de begintoestanden kunnen bereiken. Vervolg expanderen we \'e\'en van deze toestanden en voegen de toestanden van de volgende laag achteraan in de wachtrij toe.} of de \termen{Breedte-eerst zoeken} zoekmethode wordt een laag aan oplossingen afgewerkt alvorens er een nieuwe laag wordt bekeken. Concreet betekent dit dus dat de kinderen van een ge\"evalueerde knoop achteraan in een wachtrij geplaatst worden, en dus pas behandeld worden wanneer alle andere knopen van dezelfde boom toegevoegd zijn. Dit wordt ge\"illustreerd in \algref{alg:breadthFirst}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Breadth-First zoekalgoritme}          % give the algorithm a caption
 \label{alg:breadthFirst}                           % and a label for \ref{} commands later in the document
@@ -290,7 +290,7 @@ Bij \termen{Breadth-First Search} of de \termen{Breedte-eerst zoeken} zoekmethod
 \paragraph{Complexiteiten}
 In tijdscomplexiteit is een breedte eerst benadering in de meeste gevallen beter. Het algoritme zal immers alleen de boom expanderen tot de diepte waar een doel zich bevindt. De boom die we bekomen tot een diepte $m$ telt \bigoh{b^m} knopen. Bijgevolg hebben we dus ook \bigoh{b^{m-1}} evaluaties gedaan. Of eenvoudiger \bigoh{b^m}. Een ander voordeel van een Breedte-Eerst benadering is dat ook oneindig diepe bomen ge\"evalueerd kunnen worden. Bovendien zal het algoritme als oplossing een pad teruggeven met het minimale aantal stappen om tot een oplossing te komen (niet te verwarren met goedkoopste bij optimaal zoeken, het is niet omdat we het minste aantal steden passeren, dat we ook het minste kilometers afleggen).
 \paragraph{}
-De ommezijde van deze medaille is dat het geheugen erg oneffici\"ent gebruikt wordt. Dit moet immers telkens alle paden bijhouden op een diepte $m$. Dit is uiteraard eveneens gelijk aan \bigoh{b^m}. Omdat bij een hoge $m$ of $b$ het geheugengebruik makkelijk grote proporties aanneemt waarbij zelf moderne geheugens soms moeten afhaken is Breedte-Eerst alleen geschikt voor kleine problemen.
+De ommezijde van deze medaille is dat het geheugen erg ineffici\"ent gebruikt wordt. Dit moet immers telkens alle paden bijhouden op een diepte $m$. Dit is uiteraard eveneens gelijk aan \bigoh{b^m}. Omdat bij een hoge $m$ of $b$ het geheugengebruik makkelijk grote proporties aanneemt waarbij zelf moderne geheugens soms moeten afhaken is Breedte-Eerst alleen geschikt voor kleine problemen.
 \paragraph{}
 Samenvattend bekomen we dus volgende criteria:
 \begin{center}
@@ -305,7 +305,7 @@ Samenvattend bekomen we dus volgende criteria:
 We illustreren de werking van dit algoritme op het wegenplan in figuur \ref{fig:breadthFirstCity} op pagina \pageref{fig:breadthFirstCity}.
 \end{leftbar}
 \subsection{Non-Deterministic Search}
-Bij \termen{Non-Deterministic Search} of de \termen{Niet-deterministisch zoeken} zoekmethode worden de gegenereerde kinderen op toevallige plaatsen in de wachtrij gezet. Het gevolg is dus dat de we toevallig de boom expanderen. Soms kunnen deze methodes tot snelle resultaten leiden, anderzijds is de tijdsduur niet te berekenen. Dit wordt ge\"illustreerd in \algref{alg:nonDeterministic}.
+Bij \termen{Non-Deterministic Search}{Een blind search algoritme waarbij we in willekeurige volgorde een toestand nemen, de toestanden na het toepassen van een productieregel genereren en deze toevoegen in de wachtrij.} of de \termen{Niet-deterministisch zoeken} zoekmethode worden de gegenereerde kinderen op toevallige plaatsen in de wachtrij gezet. Het gevolg is dus dat de we toevallig de boom expanderen. Soms kunnen deze methodes tot snelle resultaten leiden, anderzijds is de tijdsduur niet te berekenen. Dit wordt ge\"illustreerd in \algref{alg:nonDeterministic}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Non-Deterministic zoekalgoritme}          % give the algorithm a caption
 \label{alg:nonDeterministic}                           % and a label for \ref{} commands later in the document

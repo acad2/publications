@@ -1,4 +1,4 @@
-\documentclass[titlepage,a4paper]{book}
+\documentclass[titlepage,a4paper,openany,]{book}
 \usepackage[dutch]{babel}
 \usepackage{amsmath}
 \usepackage{fullpage}
@@ -18,6 +18,9 @@
 \usepackage{framed}
 \usepackage[amsmath,amsthm,thmmarks]{ntheorem}
 \usepackage{ulem}
+\usepackage{glossaries}
+\makeindex
+\makeglossaries
 %\usepackage{etex}
 %\usepackage{musixtex}
 
@@ -26,7 +29,6 @@
 \algsetup{indent=2em}
 %opening
 %URL: http://www.4shared.com/account/document/-F6FTpw1/cursus_Artificiele_Intelligent.html
-\makeindex
 \title{\includegraphics[width=5cm]{sedesVcrop.pdf}\\Cursus:\\Artifici\"ele Intelligentie\\\texttt{\small versie 1.6.180.340}}
 \author{Willem M. A. Van Onsem BSc.}
 % \\\begin{figure*}[b]
@@ -48,6 +50,8 @@
 \newcommand{\bigoh}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
 \newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
 \newcommand{\termen}[1]{\index{#1}\termenlayout{#1}}
+\newcommand{\termenglos}[2]{\newglossaryentry{#1}{name={#1},description={#2}}\glslink*{#1}{}\index{#1}\termenlayout{#1}}
+\newcommand{\termensee}[2]{\glssee{#1}{#2}\index{#1}\termenlayout{#1}}
 \newcommand{\algref}[1]{\textbf{Algorithm \ref{#1}}}
 \newcommand{\remarksimp}[1]{\fcolorbox{black}{red}{\begin{minipage}{\textwidth}\begin{centering}\textit{#1}\end{centering}\end{minipage}}}
 
@@ -201,6 +205,9 @@ Kudos gaan verder uit naar de volgende groepen/personen (in alfabetische volgord
 \listoffigures
 \newpage
 \printindex
+%\glsaddall
+\glossarystyle{altlist}
+\printglossary
 \newpage
 \chapter*{``And now something completly different''}
 \begin{centering}
