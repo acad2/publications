@@ -1,4 +1,4 @@
-\section{Metaheuristieken}
+\chapter{Metaheuristieken}
 \label{s:metaheuristics}
 \chapterquote{Ik heb geen oplossing, maar ik bewonder het probleem.}{Anthelme Brillat Savarin, Frans politicus en advocaat (1755-1826)}
 Een tak van de Arifici\"ele Intelligentie die zich vooral bezighoudt met optimalisatieproblemen is de \termen{Metaheuristiek} (niet te verwarren met Heuristieken bij zoeken). Optimalisatieproblemen zoals bijvoorbeeld het \termen{Traveling Salesman Problem (TSP)}, het \termen{Knapsack Problem}, enzovoort. Hierbij is het niet de bedoeling dat we een oplossing vinden (zoals in de voorgaande secties eerder het geval was). Maar waarbij we dynamisch tussen oplossingen kunnen wisselen, en waar we op zoek zijn naar een oplossing die \'e\'en of meerdere parameters optimaliseert. Problemen die moeilijk te implementeren constraints op de oplossing opleggen zijn dus beter te vermijden. Typisch  zal een Metaheuristiek dit probleem proberen op te lossen in een polynomiale tijd. Terwijl de problemen meestal een exponentieel gedrag kennen, indien we de optimale oplossing willen kennen. Bijgevolg zal een Metaheuristiek niet altijd de meest optimale oplossing vinden, maar meestal een acceptabele oplossing in ruil voor een realistische rekentijd.
@@ -20,7 +20,7 @@ Algemeen kunnen we dus stellen dat Metaheuristieken hoofdzakelijk bedoeld zijn o
  \item \termen{Electrostatic Potential}
 \end{itemize}
 \end{multicols}
-\subsection{Leidend Voorbeeld: Het binair knapzakprobleem}
+\section{Leidend Voorbeeld: Het binair knapzakprobleem}
 \begin{leftbar}
 Als illustrerend voorbeeld kiezen we voor het binair knapzakprobleem. Hierbij beschikken we over een knapzak en een reeks objecten. Een knapzak heeft een bepaalde capaciteit $c$. Elk object $i$ wordt gekenmerkt door een utility-waarde $u_i$ en door een gewicht $w_i$. Het is de bedoeling een zo groot mogelijke utility in de knapzak te plaatsen, waarbij het totale gewicht de capaciteit niet overschrijdt. Of formeler:
 \begin{equation}
@@ -31,7 +31,7 @@ Als illustrerend voorbeeld kiezen we voor het binair knapzakprobleem. Hierbij be
 \end{equation}
 Hierbij is $b$ een lijst van booleans indien element $i$ zich in de knapzak bevindt is $b_i=1$ anders is $b_i=0$.
 \end{leftbar}
-\subsection{Genetische Algoritmen}
+\section{Genetische Algoritmen}
 \label{ss:geneticAlgorithms}
 Genetische Algoritmen zijn gebaseerd op de genetica die ontwikkeld werd door Darwin\footnote{Charles Robert Darwin (1809-1882)} en Mendel\footnote{Gregor Johann Mendel (1822-1884)}. Hierbij zien we een oplossing als een individu. Dit individu moet om te zetten zijn in een lijst van bits met vaste lengte. Dit kunnen we als het DNA van het individu beschouwen. Het algoritme werkt in 6 fases: Initialisatie, Evaluatie, Selectie, Recombinatie, Mutatie en Vervanging. Deze worden hieronder kort uitgelegd. En geschematiseerd op figuur \ref{fig:geneticAlgorithmsConcept}. Daarna volgen nog enkele bemerkingen.
 \begin{figure}[htb]
@@ -95,22 +95,22 @@ Genetische Algoritmen zijn gebaseerd op de genetica die ontwikkeld werd door Dar
 \caption{Concept van genetische algoritmen.}
 \label{fig:geneticAlgorithmsConcept}
 \end{figure}
-\subsubsection{Initialisatie} Bij de \termen{Initialisatie}-stap crie\"eren we een set van verschillende oplossingen, die we de \termen{populatie} of \termen{population} noemen. Deze populatie wordt meestal per toeval gegenereerd. Anderzijds kan deze uiteraard gegenereerd worden op basis van probleemkennis.
-\subsubsection{Evaluatie}Vervolgens evalueren we in de \termen{Evaluatie}-stap alle individuen in de populatie. Dit doen we hoofdzakelijk op basis van hun utility-waarde. Deze wordt ook wel \termen{fitness value} genoemd.
-\subsubsection{Selectie}Uit de populatie kiezen we in de \termen{Selectie} enkele goede oplossingen. Hierbij hoeven we echter niet per definitie de beste individuen te selecteren. Soms is het beter, om nog een extra toevalscomponent te laten spelen, waardoor we soms gewoon een goede kandidaat uitkiezen.
-\subsubsection{Recombinatie}De kandidaten die we uit de populatie gekozen hebben, zullen we vervolgens \termen{recombineren}. Hierbij crie\"eren we nieuwe oplossingen uit twee bestaande oplossingen, door karakteristieken uit de twee DNA's te combineren, en daaruit nieuwe DNA's te bouwen.
+\subsection{Initialisatie} Bij de \termen{Initialisatie}-stap crie\"eren we een set van verschillende oplossingen, die we de \termen{populatie} of \termen{population} noemen. Deze populatie wordt meestal per toeval gegenereerd. Anderzijds kan deze uiteraard gegenereerd worden op basis van probleemkennis.
+\subsection{Evaluatie}Vervolgens evalueren we in de \termen{Evaluatie}-stap alle individuen in de populatie. Dit doen we hoofdzakelijk op basis van hun utility-waarde. Deze wordt ook wel \termen{fitness value} genoemd.
+\subsection{Selectie}Uit de populatie kiezen we in de \termen{Selectie} enkele goede oplossingen. Hierbij hoeven we echter niet per definitie de beste individuen te selecteren. Soms is het beter, om nog een extra toevalscomponent te laten spelen, waardoor we soms gewoon een goede kandidaat uitkiezen.
+\subsection{Recombinatie}De kandidaten die we uit de populatie gekozen hebben, zullen we vervolgens \termen{recombineren}. Hierbij crie\"eren we nieuwe oplossingen uit twee bestaande oplossingen, door karakteristieken uit de twee DNA's te combineren, en daaruit nieuwe DNA's te bouwen.
 \paragraph{}
 Hoe worden twee bit-lijsten nu concreet gecombineerd? Meestal wordt hiervoor een techniek gebruikt die we \termen{Crossover} noemen. Hierbij hebben we vooraf bepaalde punten bepaald, \termen{$k$-points} genoemd, waarbij we de bron veranderen. Afwisselend tussen deze punten levert ofwel de ene ofwel de andere ouder de code voor het kind. Meestal wordt hierbij een ander kind gegenereerd, die bij ieder stuk de code van de ouder andere krijgt. Deze techniek is bovendien uitbreidbaar zodat een kind meer dan twee ouders kan hebben. Een andere methode die ook wel eens gehanteerd wordt is dat bij iedere bit elke ouder 50\% kans maakt om deze te leveren. Bij een nog andere methode overlopen we de bitlijst, en bij een zekere kans beschouwen we een Crossover.
-\subsubsection{Mutatie}Meestal wordt er enige \termen{mutatie} toegepast op de nieuwe kinderen. Hierbij wordt het DNA door middel van toeval licht gewijzigd. Dit heeft meestal tot doel om bij populaties die erg monotoon zijn toch de nodige ``inspiratie'' te genereren.
+\subsection{Mutatie}Meestal wordt er enige \termen{mutatie} toegepast op de nieuwe kinderen. Hierbij wordt het DNA door middel van toeval licht gewijzigd. Dit heeft meestal tot doel om bij populaties die erg monotoon zijn toch de nodige ``inspiratie'' te genereren.
 \paragraph{}Indien alle ouders op eenzelfde bit dezelfde waarde hebben, zal deze bit bij het kind ook deze waarde krijgen. Het probleem is echter dat indien het grootste (en vooral beste) deel van de populatie deze waarde deelt, we op den duur deze waarde niet meer kunnen veranderen. Dit kan resulteren in het feit dat we een collectie aan slechte oplossingen onderzoeken. Een oplossing voor dit probleem is om sommige bits van de gegenereerde kinderen te doen veranderen. Een zogenoemde \termen{flipover}. Dit doen we door iedere bit te overlopen en indien een toevallig gegenereerd getal aan een bepaalde conditie voldoet (onder een zeer kleine kans), veranderen we de waarde van deze bit naar het omgekeerde.
-\subsubsection{Vervanging}In de \termen{vervanging}sfase worden de kinderen in de populatie opgenomen, meestal worden er vervolgens individuen uit de populatie gezet, zodat de populatie niet al te groot wordt. Het verwijderen van individuen gebeurt opnieuw meestal op basis van de fitness-waarde. Maar ook hier weer hoeft dit geen deterministisch proces te zijn. Nadat een nieuwe generatie oplossingen in de populatie is opgenomen, beginnen we opnieuw met de evaluatie, en begint de lus opnieuw. Tijdens de uitvoer van het algoritme wordt meestal de tot dan toe beste oplossing telkens bijgehouden. Na een aantal maal het hele proces herhaald te hebben. Wordt dit resultaat vervolgens teruggegeven als eindoplossing.
+\subsection{Vervanging}In de \termen{vervanging}sfase worden de kinderen in de populatie opgenomen, meestal worden er vervolgens individuen uit de populatie gezet, zodat de populatie niet al te groot wordt. Het verwijderen van individuen gebeurt opnieuw meestal op basis van de fitness-waarde. Maar ook hier weer hoeft dit geen deterministisch proces te zijn. Nadat een nieuwe generatie oplossingen in de populatie is opgenomen, beginnen we opnieuw met de evaluatie, en begint de lus opnieuw. Tijdens de uitvoer van het algoritme wordt meestal de tot dan toe beste oplossing telkens bijgehouden. Na een aantal maal het hele proces herhaald te hebben. Wordt dit resultaat vervolgens teruggegeven als eindoplossing.
 \paragraph{}In de praktijk worden er zo'n drietal vervangingsstrategie\"en gebruikt:
 \begin{itemize}
  \item \termen{Delete All} We verwijderen de volledige populatie, en voegen de niewe kinderen toe als nieuwe populatie.
  \item \termen{Steady-State} Hierbij verwijderen we telkens $n$ oude leden uit de populatie, de criteria hier voor zijn opnieuw zelf in te stellen (ouders, slechtste, beste,...) en voegen de nieuwe kinderen toe.
  \item \termen{Steady-State No Duplicates} Soms kunnen gegenereerde kinderen kopie\"en zijn van reeds bestaande individuen, in dat geval stijgt de kans op selectie, wat eventueel de evolutie van de populatie kan ondermijnen (indien een bepaald individu succesvol is, riskeren we dat na enige tijd de hele populatie uit dat individu bestaat). Hierbij worden dus de duplicaten verwijdert.
 \end{itemize}
-\subsubsection{Bemerkingen}Genetische Algoritmes zijn vooral geschikt voor \termen{sheduling} (het opstellen van planningen). Maar ze convergeren gegarandeert naar de meest optimale oplossing voor ieder probleem. Meestal wordt een genetisch algoritme hierbij niet alleen toegepast maar wordt het gecombineerd met een ander techniek zoals bijvoorbeeld Local Search. Dit produceert in het algemeen betere resultaten. In dat geval spreken we van \termen{Memetic Algorithms}.
+\subsection{Bemerkingen}Genetische Algoritmes zijn vooral geschikt voor \termen{sheduling} (het opstellen van planningen). Maar ze convergeren gegarandeert naar de meest optimale oplossing voor ieder probleem. Meestal wordt een genetisch algoritme hierbij niet alleen toegepast maar wordt het gecombineerd met een ander techniek zoals bijvoorbeeld Local Search. Dit produceert in het algemeen betere resultaten. In dat geval spreken we van \termen{Memetic Algorithms}.
 \paragraph{Parameters}Parameters die we meestal zelf kunnen kiezen bij genetische algoritmes zijn:
 \begin{itemize}
  \item De grootte van de populatie
@@ -121,7 +121,7 @@ Deze parameters worden meestal bepaald door experimenten op test-data (waarbij d
 \begin{leftbar}
 Door de binaire lijst $b_i$ als het DNA voor een oplossing te nemen bekomen we een eenvoudige representatie. We vullen initieel de populatie door een collectie aan toevallige binaire lijsten te genereren. Oplossingen die niet aan de gewichtsvoorwaarde voldoen worden eenvoudigweg uit de oplossing verwijdert. Als selectie nemen we eenvoudigweg de utility-waarde van de knapzak. Dit kan eventueel aangevuld worden met een stochastisch element, waardoor ook niet optimale oplossingen kunnen geselecteerd worden. Als recombinatie wordt per element in de nieuwe binaire lijst voor 50\% van de gevallen de ene ouder en in het ander geval de andere ouder als bron gebruikt. Eventueel kunnen we dus ook meerdere kinderen uit dezelfde ouders genereren. Als mutatie zullen we een bit omdraaien in de lijst met een kans van 0.1\%. Oplossingen die niet aan de voorwaarden voldoen worden niet toegevoegd aan de populatie. Als vervangstrategie gebruiken we Steady-State.
 \end{leftbar}
-\subsection{Tabu Search}
+\section{Tabu Search}
 \label{ss:tabuSearch}
 Tabu Search is een techniek waarbij we ervan uitgaan dat oplossingen die dicht bij elkaar liggen, meestal ongeveer dezelfde Utility-factor bezitten. We zouden dus de ruimte van oplossingen als een landschap kunnen zien, waarbij goede oplossingen een heuvel voorstellen. Tabu Search probeert hierbij op zoek te gaan naar de top van de hoogste berg. Indien we dit met behulp van een heuristiek zouden oplossen (we nemen de richting waarin we het snelst stijgen) dreigen we echter al snel op een lokaal maximum te stuiten. Een plaats waarbij alle dichte oplossingen slechter zijn, maar waarbij de eigen oplossing niet de beste is. Ook Simulated Annealing (zie \ref{ss:simulatedAnnealing}) werkt op basis van hetzelfde principe.
 \paragraph{}De oplossing die Tabu Search biedt, is gebaseerd op het principe van \termen{tuning}. We bekijken nu een oplossing als een lijst van parameters (uiteraard kunnen we voor iedere parameter een bit nemen, en bekomen we opnieuw een lijst van bits). we zorgen er voor dat onze initi\"ele oplossing aan alle constraints voldoet, vervolgens passen we een bepaalde parameter aan zodat we een nieuwe geldige toestand bekomen. Deze parameter wordt vervolgens in een lijst opgenomen, de \termen{Tabu List}. Dit is een lijst van parameters (en dus bewegingen in de oplossing) die tijdelijk niet mogen veranderen. Bij de volgende keuze van de parameter, mogen we alle parameters kiezen behalve deze in de Tabu List. Uiteraard worden de Tabu parameters na enige tijd weer verwijdert uit de lijst. Meestal heeft de lijst een vaste grootte die meestal vastgelegd wordt op een bepaalde factor van het aantal parameters. Bij de keuze welke parameters de lijst mogen verlaten indien de lijst overloopt zijn er enkele technieken: De parameter die er het langst in zit (de lijst is in dat geval een Queue), of een toevallige parameter zijn hierbij de populairste keuzes. Figuur \ref{fig:tabuSearchConcept} vat het concept achter Tabu Search schematisch samen.
@@ -157,11 +157,11 @@ Tabu Search is een techniek waarbij we ervan uitgaan dat oplossingen die dicht b
 \caption{Concept van Tabu Search.}
 \label{fig:tabuSearchConcept}
 \end{figure}
-\subsubsection{Bemerkingen} Tabu Search is een techniek die vooral gebruikt wordt bij ruimteproblemen zoals het berekenen van de kortste route, het vullen van magazijnen,...
+\subsection{Bemerkingen} Tabu Search is een techniek die vooral gebruikt wordt bij ruimteproblemen zoals het berekenen van de kortste route, het vullen van magazijnen,...
 \begin{leftbar}
 De implementatie van Tabu Search voor het knapzakprobleem is relatief eenvoudig. Als variabelen beschouwen we alle elementen uit de binaire rij. We zullen dus eenvoudigweg een willekeurig element omdraaien, en vervolgens de index hiervan aan de Tabu List toevoegen. Als grootte van de Tabu List nemen we bijvoorbeeld 10\% van de lengte van de binaire rij.
 \end{leftbar}
-\subsection{Simulated Annealing}
+\section{Simulated Annealing}
 \label{ss:simulatedAnnealing}
 Ook Simulated Annealing, ontwikkeld in 1983 door Kirkpatrick\footnote{Scott Kirkpatrick}, maakt gebruik van het dichte oplossings principe. Hierbij werd de inspiratie gehaald bij het stollen van kristallen. Kristallen verkrijgen bij een traag stollingsproces, de meest optimale geometrische structuur op atomair niveau. Dit effect probeert men met Simulated Annealing na te bootsen. Een kristal streeft immers naar een zo minimaal mogelijke potenti\"ele energie. Hoewe we bij optimalisatie meestal op zoek zijn naar de maximale waarde, is het gebruik van een eenvoudig minteken voor de utility-functie, voldoende om van een optimaal minimum naar een optimaal maximum te gaan.
 \paragraph{}De \termen{Vaste Stoffen Fysica} ofwel \termen{Solid State Physics} stelt dat de kans op een overgang tussen twee verschillende geometrie\"en $g_1$ en $g_2$ gekenmerkt wordt door volgende expressie:
@@ -217,12 +217,12 @@ Hierbij is $c$ een controleparameter die we fysisch kunnen zien als $k_B\cdot T$
 \caption{Concept van Simulated Annealing.}
 \label{fig:simulatedAnnealingConcept}
 \end{figure}
-\subsubsection{Bemerkingen}
+\subsection{Bemerkingen}
 Simulated Annealing is een techniek die vooral intressant is bij problemen met grafen (kleuren van grafen) en sheduling. Daarintegen blijkt Simulated Annealing niet echt geschikt te zijn voor problemen zoals het Handelsreizigersprobleem. In de praktijk wordt het dan ook bijvoorbeeld gebruikt voor Image Processing. Hierbij werkt het meestal beter dan tijdsequivalente methodes, en ondergaat het minder problemen wanneer de grootte van het probleem opgedreven wordt. Een probleem is echter dat de kwaliteit van belangrijke factoren zoals het regelen van de temperatuur, en het bepalen van wat dichte oplossingen zijn, hoofdzakelijk bepaald worden door de vaardigheden van de programmeur. Een foute keuze kan tot zeer slechte resultaten leiden.
 \begin{leftbar}
 We gaan van een toestand in een andere door een object toe te voegen aan onze knapzak, en indien hierbij de gewichtvoorwaarde geschonden wordt toevallige objecten uit de knapzak te halen tot het gewicht weer klopt. Als begintemperatuur stellen we bijvoorbeeld $300\mbox{ K}$ in. Per temperatuur zullen we 25 keer van configuratie veranderen. Vervolgens vermenigvuldigen we de temperatuur met $0.9$. We laten het algoritme stoppen indien de temperatuur onder de $1\mbox{ K}$. In totaal zullen we dus $1375$ van toestand proberen te veranderen.
 \end{leftbar}
-\subsection{Variable Neighbourhood Search}
+\section{Variable Neighbourhood Search}
 \label{ss:variableNeighbourhoodSearch}
 Net als Tabu Search en en Simulated Annealing beroept ook Variable Neighbourhood Search zich op het lokaliteitsprincipe. Het stelt dus dat goede oplossingen meestal in de buurt liggen van elkaar. Om echter het probleem met lokale maxima op te lossen, probeert men niet het algoritme te dwingen naar alternatieven te kijken, het stelt gewoon de op dat moment geldende definitie van buurt (lokaliteit) in vraag. Indien we deze definitie veranderen kunnen twee oplossingen die eerst dicht bij elkaar lagen, ineens geen echte band meer hebben. Indien we dus op een lokaal maximum botsen, kunnen we eenvoudigweg door de definitie om te vormen een nieuw landschap bouwen waar het uiteindelijk de bedoeling is om de hoogste berg te beklimmen. Bij iedere definitie zoeken we telkens naar de beste buur, dit proces wordt \termen{Exploring} genoemd. Het algoritme is formeel te beschreven in \algref{alg:variableNeighbourhoodSearch}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
@@ -268,7 +268,7 @@ Meestal ordent men hier de neighbourhood definties zodaning dat de eerst een kle
 \caption{Concept van Variable Neighbourhood Search.}
 \label{fig:variableNeighbourhoodSearchConcept}
 \end{figure}
-\subsubsection{Variable Neighbourhood Search Reduced}
+\subsection{Variable Neighbourhood Search Reduced}
 \termen{Variable Neighbourhood Search Reduced} is een snellere variant. Hierbij wordt niet gezocht naar de beste buur, maar kiezen we gewoon een toevallige buur. Het generen van een toevallige buur wordt \termen{Shaking} genoemd. Alsof een beving in het landschap ons naar dichtbij gelegen punt brengt. Uiteraard leidt dit er toe dat we vaker van Neighbourhood Structure moeten wisselen. Anderzijds kan het generen van een random buur meestal in \bigoh{1} gedaan worden, terwijl het zoeken naar de beste buur \bigoh{n} vereist (waarbij $n$ zeer groot kan zijn). Dit algoritme komt meestal tot een minder goede oplossing, maar werkt meestal opvallend sneller. Bovendien kan het resultaat die we hier mee bereikt hebben opnieuw ingegeven worden in een andere implementatie van Variable Neighbourhood Search die de oplossing verder optimaliseert. Dit algoritme wordt beschreven in \algref{alg:variableNeighbourhoodSearchReduced}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Variable Neighbourhood Search Reduced}          % give the algorithm a caption
@@ -288,7 +288,7 @@ Meestal ordent men hier de neighbourhood definties zodaning dat de eerst een kle
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
-\subsubsection{Variable Neighbourhood Search Basic}
+\subsection{Variable Neighbourhood Search Basic}
 \termen{Variable Neighbourhood Search Basic} is een combinatie van Variable Neighbourhood Search en Variable Neighbourhood Search Reduced. Hierbij genereren we een toevallige buur, waarna we vanuit deze buur een beste buur zoeken. Deze tweede buur wordt dan vervolgens ge\"evalueerd en verworpen of aangenomen. Dit staat beschreven in \algref{alg:variableNeighbourhoodSearchBasic}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Variable Neighbourhood Search Basic}          % give the algorithm a caption
@@ -309,7 +309,7 @@ Meestal ordent men hier de neighbourhood definties zodaning dat de eerst een kle
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
-\subsubsection{Variable Neighbourhood Search General}
+\subsection{Variable Neighbourhood Search General}
 Een implementatie van Variable Neighbourhood Search waarij we blijven zoeken tot we $k_{\mbox{max}}$ keer geen verbetering zien optreden heet \termen{Variable Neighbourhood Search General}. Deze implementatie kan in sommige gevallen zelfs ertoe leiden dat men de omhullende lus die het uiteindelijke stopcriterium bepaald, weglaat. Indien $k_{\mbox{max}}$ goed gekozen is (te klein levert een slechte oplossing, te groot zorgt voor de nodige overhead), kan dit algoritme in de meeste gevallen het meeste effici\"ent met zijn tijd omspringen. Omdat naast de Neighbourhood Structuren we alleen maar een parameter $k_{\mbox{max}}$ nodig hebben, kan deze parameter vaak eenvoudig door testdata bepaald worden. \algref{alg:variableNeighbourhoodSearchGeneral} beschrijft dit concept formeel.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Variable Neighbourhood Search General}          % give the algorithm a caption
@@ -339,8 +339,8 @@ Een implementatie van Variable Neighbourhood Search waarij we blijven zoeken tot
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
-\subsubsection{Bemerkingen}
+\subsection{Bemerkingen}
 Variable Neighbourhood Search is een techniek die vooral gespecialiseerd is in het oplossen van problemen in verband met grafen, sheduling en locatieproblemen.
-\subsection{Hyperheuristics}
+\section{Hyperheuristics}
 \label{ss:hyperheuristics}
 De meeste heuristieken hebben slechts een specialisatie op een bepaald gebied. Dit leid er toe dat we eigenlijk nog steeds geen algemeen algoritme hebben. Hyperheuristics is een poging om tot een algoritme te komen die in principe alle problemen met een zekere optimaliteit kan oplossen. Hyperheuristics zelf is echter geen algoritme, het is een techniek die allerhande Metaheuristieken (zoals deze die in de vorige subsecties besproken werden) combineert, om zo telkens tot de optimale mix te komen. Hierbij defini\"eren we een set van Metaheuristieken die een bepaald probleem kunnen oplossen. Door deze Metaheuristieken op enkele testproblemen te laten lopen, komen we te weten hoe goed iedere Metaheuristiek presteert op het soort probleem dat we willen oplossen. Het komt er dan ook op neer dat we de heuristieken op de \'e\'en of andere manier gaan combineren met elkaar. Volgens een bepaalde keuzefunctie kunnen we dan vervolgens selecteren hoe vaak we een bepaalde Metaheuristiek op het probleem loslaten, alvorens we een andere aan de beurt laten. Doormiddel van Machine Learning kunnen we deze keuzefunctie dan verbeteren, tot we een algoritme bekomen die over het algemeen een zeer optimale oplossing teruggeeft.

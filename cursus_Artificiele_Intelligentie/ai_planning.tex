@@ -1,0 +1,70 @@
+\chapter{Planning}
+\label{s:planning}
+\chapterquote{De meeste mensen zijn niet van plan te falen; ze slagen er alleen niet in een plan te maken.}{John L. Beckley, Amerikaans bibliothecaris (1757-1807)}
+Een planning probleem is ieder probleem waarbij gegeven twee toestanden en een set van acties, we een sequentie van deze acties moeten vinden om een overgang van de ene toestand naar de andere te realiseren. Formeler stellen we dat we volgende gegevens hebben:
+\begin{itemize}
+ \item Een beschrijving van de \termen{initi\"ele toestand van de wereld $S_0$}.
+ \item Een beschrijving van de \termen{gewenste toestand van de wereld $S_f$}.
+ \item Een set acties $A$ waarbij elke \termen{actie $a$} $\in A$ bestaat uit:
+ \begin{itemize}
+  \item \termen{Precondities}: de voorwaarden die vervuld moeten zijn, zodat de actie kan uitgevoerd worden.
+  \item Het \termen{effect}: een beschrijving wat er aan de toestand van de wereld verandert indien we de opdracht uitvoeren.
+ We kunnen dus stellen dat een actie een functie is $a:S\rightarrow S$ die de wereld van de ene toestand in de andere brengt, indien aan de precondities wordt voldaan.
+ \end{itemize}
+\end{itemize}
+Indien we dit formalisme gebruiken zijn we op zoek naar een sequentie $\mathcal{A}$ van acties waarbij na het toepassen van alle acties op de wereld geldt:
+\begin{equation}
+S_f=\mathcal{A}_n\left(\mathcal{A}_{n-1}\left(\cdots \mathcal{A}_1\left(S_0\right)\cdots\right)\right)=\mathcal{A}_n\circ\mathcal{A}_{n-1}\circ\cdots\mathcal{A}_1\left(S_0\right)
+\end{equation}
+Men kan argumenteren dat dit probleem volledig opgelost kan worden met de zoekmethodes in hoofdstuk \ref{s:searchMethods}. We zullen in dit hoofdstuk enerzijds methodes ontwikkelen om een planningsprobleem formeel uit te drukken, anderzijds zullen we algoritmen ontwikkelen die deze formele notatie uitbuiten om snellere de zoekruimte te doorzoeken. Doormiddel van de formele notatie weten we immers iets over de acties, en behandelen we de acties dan ook niet als een ``blackbox'' zoals de productieregels in een zoekruimte.
+\paragraph{}Een belangrijk aspect is het aan elkaar koppelen van acties wat leidt tot een nieuwe actie (de gevormde actie kunnen we dan als een soort van ``combo'' beschouwen). Dit concept noemen we ``\termen{chaining}'' en zal doorheen de cursus een belangrijk concept zijn.
+\section{Leidend voorbeeld}
+\section{Parti\"ele Orde Regressie Planning}
+\subsection{Voorstelling}
+\termen{Parti\"ele Orde Regressie Planning} ofwel \termen{Partial Order Regression Planning} is een methode waarbij we een toestand voorstellen met behulp van logica. We gebruiken hierbij alleen gegronde logica\footnote{Gegronde logica betekent dat we geen variabelen gebruiken: de logica bestaat dus uitsluitend uit constanten en termen.}. De toestand legt verder ook niet uit hoe het gekoppeld is aan andere toestanden. Tot slot is er ook geen notie van tijd: we beschrijven enkel hoe de toestand er nu uitziet, het is onmogelijk om de toestand van enkele acties ervoor terug te halen. Een actie stellen we voor door middel van een groep gegronde feiten (``atomen'') die op dat moment in de toestand aanwezig moeten zijn. We stellen het effect voor door middel van twee lijsten:
+\begin{itemize}
+ \item De \termen{verwijderlijst} ofwel \termen{delete list}: een set van atomen die we uit de toestand moeten verwijderen.
+ \item De \termen{toevoeglijst} ofwel \termen{add list}: een set van atomen die we aan de toestand moeten toevoegen.
+\end{itemize}
+We kunnen dus besluiten door te zeggen dat een toestand $S$ eigenlijk een subset is van een set uitspraken $S\subseteq\mathcal{P}$. Een actie kunnen we beschrijven als een drietuppel $a=\left(I,T,V\right)$ met $I$ de lijst van uitspraken die in de toestand aanwezig moet zijn, $T$ de lijst van predicaten die aan de toestand wordt toegevoegd, en $V$ de lijst van predicaten die uit de toestand verwijdert wordt.
+\begin{equation}
+a\left(S\right)=\left\{\begin{array}{ll}
+\left(S\cup T\right)\setminus V&\alst\ \forall i\in I:i\in S\\
+\errort&\anderst
+\end{array}\right.\mbox{ met }a=\left(I,T,V\right)
+\end{equation}
+\subsection{Forward Chaining}
+Bij \termen{Forward Chaining} gebruiken we het voorwaarts zoeken om tot een oplossing te komen. We gebruiken dus een zoekmethode (diepte-eerste, breedte-eerst,...) die vertrekt vanuit de begintoestand $S_0$ en passen op elke toestand telkens iedere actie toe die enigszins mogelijk is. We duiden deze zoektechniek ook aan met ``\termen{progressie}'': we rekenen vooruit in de tijd. Het probleem met deze methode is dat we niet gericht zoeken: we proberen gewoon acties uit tot we eerder per toeval de juiste oplossing vinden.
+\subsection{Backward Chaining}
+Vermits we een actie relatief formeel uitdrukken kunnen we makkelijk de actie omdraaien en dus werken met $a^{-1}$. De toevoeglijst wordt de verwijderlijst en vice versa en we controleren of de actie mogelijk door nadat we de actie hebben toegepast de toestand te vergelijken met de precondities\footnote{Dit proces kunnen we natuurlijk optimaliseren door de effecten van toevoegen en verwijderen in de precondities op te nemen en dus toch vooraf te testen.}. Op deze manier kunnen we nu vanuit het doel naar de begintoestand rekenen. Deze zoekstrategie noemen we ``\termen{regressie}''. Een mogelijk voordeel is dat de vertakkingsfactor veel lager is. Achteruit redeneren wil echter niet altijd zeggen dat we onmiddellijk tot de oplossing zullen komen. Het kan immers voorkomen dat we verschillende omgekeerde acties kunnen gebruiken.
+\subsection{{\sc{Establish}} en {\sc{Threaten}} links}
+Behalve het inverteren van acties kunnen we acties ook combineren en controleren of twee acties \"uberhaupt ooit na elkaar uitgevoerd kunnen worden. Dit doen we door verbanden ofwel links tussen de acties te trekken:
+\begin{itemize}
+ \item Een \termen{{\sc{Establish}} link $E\left(a_1,a_2\right)$} tussen twee acties $a_1$ en $a_2$ betekent dat $a_1$ ervoor kan zorgen dat we $a_2$ kunnen uitvoeren. Concreet betekent dit dat $a_1$ een term in zijn toevoeglijst heeft staan die in de preconditie van $a_2$ voorkomt. We trekken een {\sc{Establish}} link dan ook tussen een term in de toevoeglijst van $a_1$ en de voorwaardelijst van $a_2$.
+ \item Een \termen{{\sc{Threaten}} link $T\left(a_1,a_2,a_3\right)$} waarschuwt dat het uitvoeren van actie $a_2$ tussen actie $a_1$ en $a_3$ ervoor zal zorgen dat actie $a_3$ niet meer zal kunnen uitgevoerd worden.
+\end{itemize}
+\begin{algorithm}[htb]
+\caption{Goal Reduction zoekalgoritme}
+\label{alg:goalReduction}
+\begin{algorithmic}[1]
+\STATE $\mbox{operators}\gets\emptyset$
+\STATE $\mbox{establishes}\gets\emptyset$
+\STATE $\mbox{before}\gets\emptyset$
+\STATE $\mbox{complete}\gets\false$
+\STATE $\mbox{blocked}\gets\false$
+\WHILE{$\neg\mbox{completed}\wedge\neg\mbox{blocked}$}
+\IF{$\hasloop{\mbox{before}}$}
+\STATE $\mbox{blocked}\gets\true$
+\ELSIF{$\exists O\in\mbox{operators}:\exists \left(O_1,O_2\right)\in\mbox{establishes}:\threatens{O,\left(O_1,O_2\right)}$}
+\STATE b
+\ELSIF{$\exists O\in\mbox{operators}:$}
+\STATE b
+\ELSE
+\STATE $\mbox{completed}\gets\true$
+\ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+\section{Temporele Representatie}
+\section{Deductieve planning in logica}
+\section{Temporele Representatie (bis)}

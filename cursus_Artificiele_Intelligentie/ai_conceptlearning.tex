@@ -1,4 +1,4 @@
-\section{Concept Learning (Machine Learning)}
+\chapter{Concept Learning (Machine Learning)}
 \label{s:conceptLearning}
 \chapterquote{Een hypothese vormt een stimulans om naar bepaalde eigenschappen te zoeken of ze juist te verwaarlozen, of zelfs te ontkennen.}{Umberto Eco, Italiaans schrijver en criticus (1932-)}
 \termen{Machine learning} is een probleem waarbij we proberen een machine in staat te stellen zelf te leren vanuit ervaring. In deze cursus gaan we alleen dieper in op \termen{Concept Learning}. Hierbij proberen we de machine een concept te laten leren. Dit moet vervolgens resulteren in een algoritme die het beslissingsprobleem kan oplossen: ``behoort een bepaalde situatie tot het gekende concept?''. Met andere woorden we geven een bepaalde situatie $s$ en we verwachten dat de machine kan antwoorden met juist of fout of de situatie die we tonen wel degelijk tot het concept behoort. Om de machine te trainen in het begrijpen van het concept geven we een hoeveelheid testdata: een reeks situaties waarbij we zelf vermelden of de situatie deel uitmaakt van het beoogde concept. Algemeen kunnen we dus stellen dat het algoritme in staat moet zijn om de verzameling van situaties op te splitsen in juiste of foute. Dit proces is uiteraard niet deterministisch, we hebben immers alleen maar de volledige notie van het concept indien we de volledige verzameling situaties als testdata zouden ingeven, in dat geval is het algoritme uiteraard zinloos.
@@ -16,7 +16,7 @@ We zijn op zoek naar een hypothese $h$ zodat geldt voor alle testdata $D$:
 \end{equation}
 \paragraph{}
 Voor dit probleem zijn in de loop der tijd verschillende oplossingen bedacht zoals neurale netwerken. De oplossing die we hier behandelen heet \termen{Version Spaces}.
-\subsection{Leidend Voorbeeld: Solliciteren}
+\section{Leidend Voorbeeld: Solliciteren}
 \begin{leftbar}
 Een bedrijf wil enkele nieuwe werknemers aanwerven. Er reageren echter een groot aantal mensen op de vacature. Manueel selecteren van de sollicitanten die een gesprek krijgen lijkt dan ook onbegonnen werk. We zullen in dit hoofdstuk een manier uitwerken zodat een programma op basis van enkele beslissingen die door de personeelsdirecteur zijn gemaakt, de rest van de sollicitanten zal indelen. Er worden slechts enkele parameters uit het curriculum vitae gebruikt: de studie, de leeftijd (dit is overigens verboden) en de hobby van de persoon in kwestie. Bovendien zullen we in dit voorbeeld slechts enkele waarden invullen. We ordenen en groeperen de verschillende mogelijke waarden volgens figuur \ref{fig:sollicitatieConceptTree}. De testdata wordt weergegeven in tabel \ref{tbl:sollicitatieTestData}.
 \end{leftbar}
@@ -81,7 +81,7 @@ Een bedrijf wil enkele nieuwe werknemers aanwerven. Er reageren echter een groot
 \caption{Testdata van het sollicitatie voorbeeld}
 \label{tbl:sollicitatieTestData}
 \end{table}
-% \subsection{Leidend Voorbeeld: Muziek}
+% \section{Leidend Voorbeeld: Muziek}
 % \label{ss:versionSpacesExample}
 % \begin{leftbar}
 % Het leidend voorbeeld komt dit keer uit de muziek. We gaan uit van een fragment uit een muziekstuk. We willen een machine het concept achter het muziekstuk laten leren. Hierdoor moet de machine op termijn in staat zijn om voor een ander fragment te determineren of het al dan niet tot hetzelfde muziekstuk hoort. We willen reeds vooraf melden dat de concrete parameters die we in dit voorbeeld gebruiken niet voldoen om dit te determineren. Dit voorbeeld is dan ook louter een illustratie.
@@ -164,15 +164,15 @@ Een bedrijf wil enkele nieuwe werknemers aanwerven. Er reageren echter een groot
 % \caption{Eigenschapshi\"erarchie van ``Manillen''}
 % \label{fig:manillenConceptHierarchy}
 % \end{figure}
-\subsection{Version Spaces}
+\section{Version Spaces}
 Version spaces is een symbolische oplossingsmethode, waarbij aan de hand van een \termen{hypothesetaal} een concept geleerd wordt, die vervolgens de overige data kan beoordelen.
-\subsubsection{Na\"ieve benadering}
+\subsection{Na\"ieve benadering}
 \label{sss:versionSpacesNaif}
 Een eerste en zeer na\"ieve oplossingsmethode is ervan uitgaan dat alleen de situaties die we gezien hebben in de testdata die positief zijn, ook de situaties zijn die tot het concept behoren. In dat geval bouwen we niets anders dan een zoekalgoritme die kijkt of de ingegeven situatie bij de testdata positief vermeld stond en dan juist teruggeeft, indien niet geeft het vals terug. Een even slechte keuze is natuurlijk net het omgekeerde: alle situatie voldoen aan het concept tenzij de testdata dit tegenspreekt. Aan deze oplossingen hebben we natuurlijk helemaal niets: het is de bedoeling dat we iets kunnen zeggen over situaties die we nog niet kennen. Bij het eerste geval moet we immers het concept \termen{veralgemenen} (verbreden), in het tweede voorbeeld moet we het concept kunnen \termen{specificeren} (vernauwen).
 \begin{leftbar}
 Concreet betekent dit dus dat we bij het voorbeeld alleen juist teruggeven op (informatica, jong, schaken), (wiskunde, jong, lezen) en (fysica, jong, gamen). In het tweede geval is het resultaat altijd juist, behalve indien er (fysica, midden, voetbal), (ingenieur, oud, gamen) en (ingenieur, jong, gamen) ingevoerd wordt. 
 \end{leftbar}
-\subsubsection{Oplossing: bouwen van een hypothesetaal}
+\subsection{Oplossing: bouwen van een hypothesetaal}
 De oplossing van dit probleem bestaat eruit een taal te ontwikkelen, die een concept kan uitleggen: de hypothesetaal. Deze taal moet het mogelijk maken een verzameling van hypotheses of beschrijvingen te genereren: de \termen{hypotheseruimte}. Vervolgens kan een concept alleen uitgelegd worden aan de hand van \'e\'en van de elementen uit de hypotheseruimte. Een goede hypothesetaal moet het probleem van zinloze beschrijvingen tegengaan, zoals gesteld in \ref{sss:versionSpacesNaif}. Daarnaast moet het de machine tot veralgemening of specifi\"ering dwingen, die in de meeste gevallen nuttig is (zo is bijvoorbeeld een veralgemening naar een concept ``alles is toegelaten'', meestal geen goed idee).
 \paragraph{}
 In deze cursussen ontwikkelen we een hypothesetaal die gezien kan worden als een conjunctie van gelijkheden. Hierbij zien we een hypothese als een rij waarbij ieder element een bepaalde eigenschap is van de situatie die we kunnen meten.
@@ -189,7 +189,7 @@ Concreet kunnen volgende voorbeelden, hypotheses zijn voor het leidend voorbeeld
 \end{itemize}
 \end{leftbar}
 Hierbij beperken we de concepten dus niet noodzakelijk tot een equivalentie van alle waarden. Het vraagteken (?) betekent dat deze parameter niet relevant is voor het concept, in dat geval betekent dit dat wat er ook staat op deze plaats in de situatie, dit niet zal bepalen of we de situatie verwerpen. Anderzijds kunnen we ook een hi\"erarchie opbouwen in waarden die bij de parameters horen. Zo staat ``rustig'' duidelijk boven ``lezen'' en ``schaken'', en staat ``wina'' boven ``fysica'' en ``wiskunde'' (zie ook de hi\"erarchie van het leidend voorbeeld op figuur \ref{fig:sollicitatieConceptTree}). Tot slot bestaat er ook nog een lege hypothese: $\perp$, in dat geval zal iedere situatie niet tot het concept behoren. Het spreekt voor zich dat $\left[\mbox{?},\mbox{?},\mbox{?}\right]$ en $\perp$ niet echt de beoogde oplossingen zijn. Daar we hierbij eenvoudigweg stellen dat respectievelijk alles en niets tot het concept behoren.
-\subsubsection{De Inductieve Leer-hypothese}
+\subsection{De Inductieve Leer-hypothese}
 Zal deze taal wel volstaan om een bepaald concept te leren? Hierbij beroepen we ons op de Inductieve Leer-hypothese, dat is een theorema dat stelt:
 \begin{theorem}
 Indien we een hypothese $h$ vinden die de doelfunctie $c$ op de testdata $D$ voldoende benadert, dan zal $h$ $c$ ook voldoende benaderen op situaties die niet behoren tot $D$.
@@ -262,7 +262,7 @@ I&$\left[?,?,?\right]$&\\
 \caption{Dual Find-S toegepast op het leidend voorbeeld.}
 \label{tbl:sollicitatieDualFindS}
 \end{table}
-\subsubsection{Version Spaces: het idee}
+\subsection{Version Spaces: het idee}
 Het idee van Version Spaces is nochtans gebaseerd op Find-S en Dual Find-S. Maar de twee algoritmen worden tegelijk uitgevoerd, en bovendien worden alle nieuwe minimale generalisaties en specificaties bijgehouden in een boomstructuur in tegenstelling tot het kiezen van eentje bij Find-S en Dual Find-S. Nadien worden alle mogelijke generalisaties afgewogen tegen alle mogelijke specificaties. We zullen het algoritme hiervoor stap voor stap opbouwen en verschillende optimalisaties implementeren. Hiervoor beginnen we met een grofstructuur van hoe het algoritme er dient uit te zien in \algref{alg:versionSpacesBase}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Grofstructuur van het Version-Spaces algoritme}          % give the algorithm a caption
@@ -539,7 +539,7 @@ Naast het leren van een concept moeten Version Spaces uiteindelijk ook kunnen be
 \ENDIF
 \end{algorithmic}
 \end{algorithm}
-\subsubsection{De relevantie van de hypothesetaal}
+\subsection{De relevantie van de hypothesetaal}
 \label{sss:relevanceHypothesisLanguage}
 De hierboven gestelde hypothesetaal slaagt er niet in om alle mogelijke concepten te leren (omdat er bijvoorbeeld enkel generalisaties zijn die later tegengesproken worden door een ander voorbeeld). Kunnen we met een expressievere taal eventueel betere concepten aanleren? Stel dat we een nieuwe taal defini\"eren die opnieuw werkt door middel van symbolen. Hierbij defini\"eren we elementen van de vorm $<\mbox{parameter}>=<\mbox{waarde}>$. Verder laten we conjuncties (die ook al toegelaten waren), disjuncties en negaties toe. Deze taal kan met andere woorden iedere deelverzameling van mogelijke staten bevatten (elke staat valt te beschrijven door een conjunctie van al haar parameters, met een disjunctie kunnen we deze combineren). Het probleem is dat we weer tot dezelfde resultaten komen als onze na\"ieve implementatie in het begin (zie \ref{sss:versionSpacesNaif}). En we dus met andere woorden niets kunnen leren. We geven enkel waar indien we de situatie al positieve gedaante zagen in de testdata, en negatief indien de situatie als negatief voorbeeld in de test-data stond. We kunnen dus stellen dat we nood hebben aan een \termen{Inductieve BIAS}, dit is een aanname dat het concept kan geleerd worden door een bepaalde set regels voor een hypothesetaal (Zo is de hypothesetaal hierboven te beschrijven als een conjunctie van eigenschappen).
 \paragraph{}Hoe weten we echter of onze hypothesetaal zal volstaan? Dit is uiteraard niet op voorhand te bepalen. In de loop der tijd zijn er echter verschillende hypothesetalen ontstaan. We kunnen een orde specifi\"eren in de talen naar representatievermogen. Veel praktische algoritmen hebben dan ook een set van dergelijke talen. Indien de gebruiker niet tevreden is met de resultaten van een beperkte hypothesetaal, verandert het algoritme de taal naar een hypothesetaal met een breder representatievermogen. Dit vermijdt de keuze van een taal, bovendien zal de minst representatieve taal het meest algemene concept genereren, waardoor het concept waarschijnlijk dan ook het best gedefinieerd zal zijn.

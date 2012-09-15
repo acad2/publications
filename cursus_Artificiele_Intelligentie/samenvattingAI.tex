@@ -1,4 +1,4 @@
-\documentclass[titlepage,a4paper]{article}
+\documentclass[titlepage,a4paper]{book}
 \usepackage[dutch]{babel}
 \usepackage{amsmath}
 \usepackage{fullpage}
@@ -27,8 +27,22 @@
 %opening
 %URL: http://www.4shared.com/account/document/-F6FTpw1/cursus_Artificiele_Intelligent.html
 \makeindex
-\title{Cursus:\\Artifici\"ele Intelligentie\\\texttt{\small versie 1.6.180.340}}
-\author{Willem M. A. Van Onsem BSc}
+\title{\includegraphics[width=5cm]{sedesVcrop.pdf}\\Cursus:\\Artifici\"ele Intelligentie\\\texttt{\small versie 1.6.180.340}}
+\author{Willem M. A. Van Onsem BSc.}
+% \\\begin{figure*}[b]
+% \centering
+% \begin{tiny}
+% $\mathcal{K}$
+% \end{tiny}
+% \begin{Huge}
+% \textcopyleft
+% \end{Huge}
+% \begin{tiny}
+% $\mathcal{S}$\\
+% $\mathfrak{KOMMUSOFT}$
+% \end{tiny}
+% \caption{Support CopyLeft: All Wrongs Reserved!}
+% \end{figure*}
 \date{Katholieke Universiteit Leuven\\Academiejaar 2009-2010}
 
 \newcommand{\bigoh}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
@@ -50,6 +64,8 @@
 \newcommand{\true}{\mbox{\bf true}}
 \newcommand{\out}{\mbox{\bf out: }}
 \newcommand{\false}{\mbox{\bf false}}
+\newcommand{\alst}{\mbox{\bf als }}
+\newcommand{\anderst}{\mbox{\bf anders }}
 \newcommand{\queue}{\mbox{Queue}}
 \newcommand{\success}{\mbox{success}}
 \newcommand{\failure}{\mbox{failure}}
@@ -74,6 +90,8 @@
 \newcommand{\mathcommand}[2]{\ensuremath{\mbox{\bf #1}\left( #2 \right)}}
 \newcommand{\mathcommandsub}[3]{\ensuremath{\mbox{\bf #1}_{#2}\left( #3 \right)}}
 \newcommand{\notempty}[1]{\ensuremath{\mbox{\bf notEmpty}\left( #1 \right)}}
+\newcommand{\hasloop}[1]{\ensuremath{\mbox{\bf hasLoop}\left( #1 \right)}}
+\newcommand{\threatens}[1]{\ensuremath{\mbox{\bf threatens}\left( #1 \right)}}
 \newcommand{\goalreached}[1]{\ensuremath{\mbox{\bf goalReached}\left( #1 \right)}}
 \newcommand{\dequeue}[1]{\ensuremath{\mbox{\bf dequeue}\left( #1 \right)}}
 \newcommand{\createnewpaths}[1]{\mathcommand{createNewPaths}{#1}}
@@ -125,31 +143,13 @@
 \newtheorem{corollary}[theo]{corollary}
 
 \begin{document}
+\frontmatter
 \begin{titlepage}
-\begin{figure*}[t]
-\centering
-\includegraphics[width=5cm]{sedesVcrop.pdf}
-\end{figure*}
-\begin{figure*}[b]
-\centering
-\begin{tiny}
-$\mathcal{K}$
-\end{tiny}
-\begin{Huge}
-\textcopyleft
-\end{Huge}
-\begin{tiny}
-$\mathcal{S}$\\
-$\mathfrak{KOMMUSOFT}$
-\end{tiny}
-\caption{Support CopyLeft: All Wrongs Reserved!}
-\end{figure*}
 \maketitle
 \end{titlepage}
-%\frontmatter
 \tableofcontents
 \newpage
-\section*{Notities vooraf}
+\chapter*{Notities vooraf}
 \begin{it}
 De index op het einde is bedoelt als een woordenlijst, indien de lezer het grote deel van deze termen kan thuisbrengen en duiden, is het waarschijnlijk dat hij zal slagen voor het examen.
 \\\\
@@ -183,25 +183,26 @@ Kudos gaan verder uit naar de volgende groepen/personen (in alfabetische volgord
 \verb+http://www.4shared.com/document/-F6FTpw1/cursus_Artificiele_Intelligent.html+
 \caption{Link naar deze cursus (meest recente versie).}
 \end{figure}
-%\mainmatter
-\include{ai_voorbeschouwing}
-\include{ai_layout}
-\include{ai_statespaces}
-\include{ai_zoekproblemen}
-\include{ai_conceptlearning}
-\include{ai_constraintprocessing}
-\include{ai_gameplaying}
-\include{ai_automaticreasoning}
-\include{ai_metaheuristics}
-\include{ai_machinelearning}
+\mainmatter
+\input{ai_voorbeschouwing}
+\input{ai_layout}
+\input{ai_statespaces}
+\input{ai_zoekproblemen}
+\input{ai_conceptlearning}
+\input{ai_constraintprocessing}
+\input{ai_gameplaying}
+\input{ai_automaticreasoning}
+\input{ai_planning}
+\input{ai_metaheuristics}
+\input{ai_machinelearning}
 \appendix
-\include{ai_appendices}
+\input{ai_appendices}
 \newpage
 \listoffigures
 \newpage
 \printindex
 \newpage
-\section*{``And now something completly different''}
+\chapter*{``And now something completly different''}
 \begin{centering}
 $\mathfrak{Catharsis}$
 \end{centering}

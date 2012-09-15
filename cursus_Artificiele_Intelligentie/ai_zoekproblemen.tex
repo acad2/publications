@@ -1,4 +1,4 @@
-\section{Zoekmethodes}
+\chapter{Zoekmethodes}
 \label{s:searchMethods}
 \chapterquote{Toen ik moe was van zoeken, leerde ik vinden.}{Friedrich Nietzsche, Duits dichter en filosoof (1844-1900)}
 Indien we een state-space gebouwd hebben, kunnen we vervolgens een algoritme ontwikkelen die door deze state-space zoekt naar een oplossing. Hiervoor bestaan er verschillende methodes die kunnen gebruikt worden: De \termen{basic search methods}.
@@ -17,7 +17,7 @@ Voor complexiteitsanalyses zullen we gebruikmaken van onderstaande parameters:
  \item $m$: de diepte van de minst diepe oplossing
  \item $\delta$: de kleinste kost tussen twee staten (zie \ref{ss:optimalSearch})
 \end{itemize}
-\subsection{Leidend Voorbeeld: Wegenplan}
+\section{Leidend Voorbeeld: Wegenplan}
 \begin{leftbar}
 Doorheen deze sectie zullen we vaak concepten verduidelijken met behulp van een voorbeeld. Dit voorbeeld wordt hieronder kort toegelicht. Het betreft een sterk vereenvoudigd wegenplan. Hierbij willen we vanuit $S$ (de begintoestand), $G$ (het doel) bereiken. We gaan er vanuit dat er slechts 9 steden bestaan: $A$ (Antwerpen), $B$ (Brussel), $C$ (Charleroi), $D$ (Durbuy), $E$ (Eeklo), $F$ (Fosses-la-Ville), $G$ (Geel), $H$ (Hoei) en $S$ (Sint-Niklaas). Verder bestaan er alleen wegen die tussen twee steden lopen met een bepaalde afstand in kilometer. Dit wordt weergegeven op figuur \ref{fig:searchMapCity}.
 \end{leftbar}
@@ -226,9 +226,9 @@ Als overgangsregels beschouwen we iedere weg naar iedere stad die we tot dan toe
 \begin{leftbar}
 Als heuristiek (zie \ref{sss:heuristicFunction}) nemen we tot slot de afstand in vogelvlucht tussen de stad in kwestie, en $G$ zelf. Deze wordt in het grijs op het wegenplan aangegeven. We zullen in deze sectie heel wat zoekalgoritmen uitvoeren op deze boom, om zo de concrete werking te verduidelijken. Deze afbeeldingen staan niet in de tekst zelf, maar staan in \ref{ss:cityFigures} op pagina \pageref{ss:cityFigures}.
 \end{leftbar}
-\subsection{Blind Search Methods}
+\section{Blind Search Methods}
 Indien we geen specifieke kennis over het probleem hebben, of deze te complex/lastig is om te formuleren kunnen we een \termen{Blind Search Method} gebruiken. Het is evident dat zoeken zonder probleemgerelateerde informatie ineffici\"ent is. Bij deze methodes zijn we ook niet ge\"interesseerd in de optimale oplossing.
-\subsubsection{Depth-First Search}
+\subsection{Depth-First Search}
 Bij \termen{Depth-First Search} of \termen{Diepte-eerst zoeken} volgen we een bepaalde productieregel vanaf de begintoestand. Vervolgens blijven we deze regel recursief toepassen tot we vast zitten. Indien we een doel gevonden hebben is het algoritme ten einde. Indien het niet het doel is, zal het algoritme de laatste productieregel ongedaan maken en een andere in de plaats stellen. Indien er geen ongebruikte regels meer voor handen zijn maken we de regels daarvoor ongedaan tot we terug een regel kunnen kiezen. Een andere naam hiervoor is \termen{Chronological Backtracking}. Deze zoekmethode wordt ge\"illustreerd in \algref{alg:depthFirst}. We voorkomen dat we in een lus terechtkomen (indien de productieregel dit toelaten) door telkens we een toestand genereren te controleren of \'e\'en van zijn voorouders identiek aan die toestand is. Indien dit zo is, zullen we die toestand niet meer verder evalueren. Dit systeem noemen we \termen{Loopdetectie}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Depth-First zoekalgoritme}          % give the algorithm a caption
@@ -267,7 +267,7 @@ Indien we dit samenvatten bekomen we volgende criteria:
 \begin{leftbar}
 We illustreren de werking van dit algoritme op het wegenplan in figuur \ref{fig:depthFirstCity} op pagina \pageref{fig:depthFirstCity}.
 \end{leftbar}
-\subsubsection{Breadth-First Search}
+\subsection{Breadth-First Search}
 Bij \termen{Breadth-First Search} of de \termen{Breedte-eerst zoeken} zoekmethode wordt een laag aan oplossingen afgewerkt alvorens er een nieuwe laag wordt bekeken. Concreet betekent dit dus dat de kinderen van een ge\"evalueerde knoop achteraan in een wachtrij geplaatst worden, en dus pas behandeld worden wanneer alle andere knopen van dezelfde boom toegevoegd zijn. Dit wordt ge\"illustreerd in \algref{alg:breadthFirst}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Breadth-First zoekalgoritme}          % give the algorithm a caption
@@ -304,7 +304,7 @@ Samenvattend bekomen we dus volgende criteria:
 \begin{leftbar}
 We illustreren de werking van dit algoritme op het wegenplan in figuur \ref{fig:breadthFirstCity} op pagina \pageref{fig:breadthFirstCity}.
 \end{leftbar}
-\subsubsection{Non-Deterministic Search}
+\subsection{Non-Deterministic Search}
 Bij \termen{Non-Deterministic Search} of de \termen{Niet-deterministisch zoeken} zoekmethode worden de gegenereerde kinderen op toevallige plaatsen in de wachtrij gezet. Het gevolg is dus dat de we toevallig de boom expanderen. Soms kunnen deze methodes tot snelle resultaten leiden, anderzijds is de tijdsduur niet te berekenen. Dit wordt ge\"illustreerd in \algref{alg:nonDeterministic}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Non-Deterministic zoekalgoritme}          % give the algorithm a caption
@@ -339,7 +339,7 @@ Indien we dus het loopdetectie-systeem even buiten beschouwing laten in onze tij
 \begin{leftbar}
  Een mogelijk scenario van dit algoritme is weergegeven in figuur \ref{fig:nonDeterministicCity} op pagina \pageref{fig:nonDeterministicCity}.
 \end{leftbar}
-\subsubsection{Iterative Deepening Search}
+\subsection{Iterative Deepening Search}
 Een in het algemeen interessante zoekmethode is \termen{Iterative Deepening Search} of \termen{Iteratief verdiepend zoeken}. Deze methode maakt gebruik van het \termen{Depth-limited search} algoritme, dit is een algoritme die een implementatie is van Depth First, maar waarbij vanaf een bepaalde diepte gestopt wordt. Iterative Deepening Search maakt van deze methode gebruik door de diepte-limiet parameter op een bepaalde beginwaarde te zetten, en deze telkens te verhogen zolang er niets gevonden wordt. Dit wordt ge\"illustreerd in \algref{alg:iterativeDeepening}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Iterative Deepening zoekalgoritme}          % give the algorithm a caption
@@ -381,7 +381,7 @@ Indien we dus het loopdetectie-systeem even buiten beschouwing laten in onze tij
 \end{tabular}
 \end{center}
 In veel opzichten is dit het beste blind search algoritme. Het is compleet en vindt zelfs de kortste route, daarnaast is het ook nog het snelste en het meest geheugeneffici\"ente algoritme.
-\subsubsection{Bi-Directional Search}
+\subsection{Bi-Directional Search}
 \termen{Bi-Directional Search} of de \termen{bidirectioneel zoeken} zoekmethode is een methode waarbij tegelijk vanuit de bron als uit het doel gerekend wordt, en dit tot een gemeenschappelijke toestand gevonden wordt. Meestal wordt hiervoor breedte-eerst gebruikt, andere implementatie zijn echter ook mogelijk. Dit wordt ge\"illustreerd in \algref{alg:biDirectional}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Bi-Directional zoekalgoritme (met Breedte-Eerst)}          % give the algorithm a caption
@@ -418,11 +418,11 @@ Indien we het loopdetectie-systeem even buiten beschouwing laten in onze tijds- 
 \textbf{Optimaal}:&Nee
 \end{tabular}
 \end{center}
-\subsection{Heuristic Search Methods}
-\subsubsection{De heuristische functie}
+\section{Heuristic Search Methods}
+\subsection{De heuristische functie}
 \label{sss:heuristicFunction}
 \termen{Heuristische zoekmethodes} of \termen{Heuristic Search Methods} maken gebruik van een \termen{heuristische functie} $h:\Ss\rightarrow\Rr:s\mapsto r=h\left(s\right)$. Deze functie vertaalt een bepaalde toestand $s$ in een getal $r$, die een schatting is van hoe goed de toestand is. Dit stelt ons in staat om generische zoekalgoritmen te ontwikkelen die toch \termen{probleem-specifieke kennis} in zich dragen. In het algemeen houdt een heuristiek in dat je een schatting geeft hoeveel productieregels nog op een toestand moeten worden toegepast, alvorens tot het doel te transformeren. Meestal is dit aantal echter niet gekend en blijft het bij een schatting. Maar zelfs vage schattingen kunnen zoekalgoritmen en enorme snelheidswinst geven.
-\subsubsection{Hill climbing}
+\subsection{Hill climbing}
 Vervolgens kunnen we onze zoekmethodes die we eerder gedefinieerd hebben omzetten naar algoritmen die het heuristische aspect bevatten. \termen{Hill Climbing} is de variant van Depth First met heuristische functie. In plaats van echter de productieregels van links naar rechts te volgen zoals bij depth first het geval is, zullen we altijd eerst de gegenereerde kinderen sorteren op heuristiek en zo toevoegen. Zoals formeel gesteld in \algref{alg:hillClimbing}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Hill Climbing zoekalgoritme}          % give the algorithm a caption
@@ -455,7 +455,7 @@ Over het algemeen werkt een algoritme gebaseerd op een heuristiek beter. Indien 
 \begin{leftbar}
 We illustreren de werking van dit algoritme op het wegenplan in figuur \ref{fig:hillClimbingCity} op pagina \pageref{fig:hillClimbingCity}.
 \end{leftbar}
-\subsubsection{Beam Search}
+\subsection{Beam Search}
 \termen{Beam Search} kan gezien worden als de tegenhanger van breedte-eerst. Omdat breedte-eerst slechts weinig ruimte geeft om er een heuristiek aan toe te voegen is het concept licht gewijzigd. In plaats van alle knopen op een bepaald niveau te onderzoeken worden alleen de $w$ beste (laagste $h$-waarde) onderzocht. Dit resulteert in een zoekalgoritme dat niet altijd een oplossing garandeert. Anderzijds indien de heuristiek goed genoeg gekozen is, zodat een pad naar de oplossing telkens gekozen wordt, kan dit algoritme snel tot een oplossing komen. Dit algoritme is weergegeven in \algref{alg:beamSearch}
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Beam Search zoekalgoritme}          % give the algorithm a caption
@@ -496,7 +496,7 @@ Indien we het loopdetectie-systeem even buiten beschouwing laten in onze tijds- 
 \begin{leftbar}
 We illustreren de werking van dit algoritme op het wegenplan in figuur \ref{fig:beamSearchCity} op pagina \pageref{fig:beamSearchCity}.
 \end{leftbar}
-\subsubsection{Hill Climbing 2}
+\subsection{Hill Climbing 2}
 \termen{Hill Climbing 2} is een specifiek geval van Beam Search met $w=1$. De naam doet nochtans vermoeden dat het een variant van Hill Climbing is. We kunnen Hill Climbing 2 echter ook zien als een vorm van Hill Climbing zonder backtrackingsmechanisme. Dit algoritme is weergegeven in \algref{alg:hillClimbing2}
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Hill Climbing 2 zoekalgoritme}          % give the algorithm a caption
@@ -534,7 +534,7 @@ Hill Climbing 2 is een vorm van \termen{Local Search}, dit is een zoekstrategie 
 \begin{leftbar}
 We illustreren de werking van dit algoritme op het wegenplan in figuur \ref{fig:hillClimbing2City} op pagina \pageref{fig:hillClimbing2City}.
 \end{leftbar}
-\subsubsection{Greedy Search}
+\subsection{Greedy Search}
 \termen{Greedy Search} is samen met Hill Climbing de enige complete heuristische oplossing. Greedy Search expandeert telkens de knoop die de kleinste heuristiek heeft, daar deze waarschijnlijk het snelst tot de oplossing komt. Het houdt echter de andere knopen nog steeds in zijn queue. Dit algoritme is weergegeven in \algref{alg:greedy}
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Greedy zoekalgoritme}          % give the algorithm a caption
@@ -564,13 +564,13 @@ Over het algemeen levert greedy search zeer competitieve resultaten. In het slec
 \textbf{Optimaal}:&Nee
 \end{tabular}
 \end{center}
-\subsection{Optimal Search Methods}
+\section{Optimal Search Methods}
 \label{ss:optimalSearch}
 Onder \termen{Optimal Search} of \termen{Optimaal zoeken} verstaan we het zoeken naar een oplossing die daarenboven de kleinste \termen{accumulatieve kost} bevat. Dit leidt tot meer complexe algoritmen die meestal ook gebruikmaken van heuristische functies. De kostfunctie defini\"eren we als $c:\Pp\rightarrow\Rr:p\mapsto r=c\left(p\right)$. Hierbij is de kost van een pad $p$ te berekenen door de som tussen iedere 2 staten te bereken:
 \begin{equation}
 c\left(p\right)=\left.\displaystyle\sum_i{c\left(p_i,p_{i+1}\right)}\ \ \ \ \ \ \ \right|c\left(p_i,p_{i+1}\right)\geq0
 \end{equation}
-\subsubsection{Uniform Cost Algorithm}
+\subsection{Uniform Cost Algorithm}
 Het \termen{Uniform Cost Algorithm}, ook wel \termen{Uniform best-first} algoritme genoemd is een variant van het greedy algoritme waarbij de queue niet gesorteerd wordt op de heuristiek, maar op de geaccumuleerde kost. Dit levert echter niet altijd de optimale oplossing op. Het kan immers zijn dat een toestand die tot dan toe de goedkoopste was een doel bereikt, maar hiervoor een zware prijs betaald. Terwijl een andere toestand in de queue aanvankelijk duurder was, maar naar het doel convergeert zodat de totale kost toch lager is. Dit wordt ge\"illustreerd in figuur \ref{fig:badUniformCost}, die een algemeen geval beschouwd. We zijn immers meer geneigd om hierbij $A$ te evalueren met een lagere kost. Een pad dat echter vanuit $B$ vertrekt, lijkt op het eerste zicht duurder, maar kost uiteindelijk minder.
 \begin{figure}[htb]
 \centering
@@ -619,7 +619,7 @@ Indien we het loopdetectie-systeem even buiten beschouwing laten in onze tijds- 
 \textbf{Optimaal}:&Nee
 \end{tabular}
 \end{center}
-\subsubsection{Optimal Uniform Cost Algorithm}
+\subsection{Optimal Uniform Cost Algorithm}
 Het \termen{Optimal Uniform Cost Algorithm}, garandeert wel een optimale oplossing, dit wordt gegarandeerd door het \termen{Branch-and-Bound Principe}. Dat principe zegt dat eenmaal we een pad dat naar een doel wijst gevonden hebben, we alle paden met een accumulatieve kost groter dan dat pad niet meer dienen te beschouwen (de kost neemt immers alleen maar toe). Indien onze $\queue$ een pad bevat dat naar een doel wijst, en dit komt als eerste voor, weten we zeker dat dit het optimale pad is. Gebasseerd op deze theorie herschrijven we dus onze terminatieconditie van het Uniform Cost Algorithm. Dit algoritme wordt beschreven in \algref{alg:optimalUniformCost}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Optimal Uniform Cost zoekalgoritme}          % give the algorithm a caption
@@ -652,13 +652,13 @@ Indien we het loopdetectie-systeem even buiten beschouwing laten in onze tijds- 
 \begin{leftbar}
 Een concrete uitwerking van dit algoritme wordt weergegeven op figuur \ref{fig:optimalUniformCostCity} op pagina \pageref{fig:optimalUniformCostCity}. We merken op dat deze gegarandeerde optimaliteit echter een grote hoeveelheid extra werk kan betekenen (66\% extra werk voor een oplossing die slechts 13\% beter is).
 \end{leftbar}
-\subsubsection{Extended Uniform Cost}
+\subsection{Extended Uniform Cost}
 Het Optimal Uniform Cost algoritme werkt goed zolang de constraint $c\left(p_i,p_{i+1}\right)>0$ stand houdt, met andere woorden dat de kost tussen elke boog groter is dan 0. Het nadeel van dit zoekalgoritme is echter dat er opnieuw weinig probleem gerelateerde informatie aan te pas komt. Een oplossing bestaat erin een nieuwe functie te defini\"eren: de \termen{Extended Uniform Cost} $f:\Pp\rightarrow\Rr:p\mapsto r=f\left(p\right)$:
 \begin{equation}
 f\left(p\right)=c\left(p\right)+h\left(p_{\mbox{\small{end state}}}\right)
 \end{equation}
 Dit is dus de som van de reeds gemaakte kosten $c$, en een schatting $h$ van de nog te maken kosten tot de oplossing. Samen vormt dit dus een schatting van de kosten die we zullen betalen voor een pad naar het doel, met als subpad het huidige pad. Met deze functie kunnen we algoritmen ontwikkelen die gerichter op zoek gaan naar een oplossing, maar waarbij de optimaliteit behouden blijft.
-\subsubsection{Estimate-extended Uniform Cost Algorithm}
+\subsection{Estimate-extended Uniform Cost Algorithm}
 Een algoritme die gebruik maakt van de Extended Uniform Cost is het \termen{Estimate-extended Uniform Cost Algorithm}. Dit is een variant op het Optimal Uniform Cost Algorithm, maar waarbij de knopen op de Extended Uniform Cost $f$ gesorteerd worden in plaats van de Uniform Cost $c$. Dit algoritme wordt beschreven in \algref{alg:estimateExtendedUniformCost}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Estimate-extended Uniform Cost zoekalgoritme}          % give the algorithm a caption
@@ -695,7 +695,7 @@ Over het algemeen presteren deze algoritmen goed indien een goede heuristische f
 \begin{leftbar}
 Een uitgewerkt voorbeeld van Estimate-Extended Uniform Cost Search op het wegenplan wordt beschreven op figuur \ref{fig:estimateExtendedUniformCostCity} op pagina \pageref{fig:estimateExtendedUniformCostCity}.
 \end{leftbar}
-\subsubsection{Path Deletion}
+\subsection{Path Deletion}
 Een andere uitbreiding die we kunnen toepassen en die algemeen toepasbaar is, is \termen{Path Deletion}. Bij het genereren van de boom genereren we vaak dezelfde toestand in verschillende takken van de boom (volgens het principe ``vele wegen leiden naar Rome''). We kunnen echter door de evaluatie van \'e\'en van deze staten tot een oplossing komen. Evaluatie van de andere versies leidt alleen maar tot overhead, en enkel de versie van de staat met de tot dan toe laagste cummulatieve kost komt in aanmerking voor een optimale oplossing. Path Deletion verwijdert de paden uit de queue die overhead veroorzaken. Indien er al een pad bestaat met dezelfde eindstaat, en de kost van dat pad is lager, is het niet nodig om de paden met eenzelfde eindpunt maar een hogere kost in de wachtrij te houden. Deze zullen immers altijd een hogere kost behouden. Of meer formeel in \algref{alg:pathDeletion}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Path Deletion Principe}          % give the algorithm a caption
@@ -706,7 +706,7 @@ Een andere uitbreiding die we kunnen toepassen en die algemeen toepasbaar is, is
 \ENDIF
 \end{algorithmic}
 \end{algorithm}
-\subsubsection{A* Search}
+\subsection{A* Search}
 Het populairste zoekalgoritme bij uitstek is \termen{A* Search}, die eigenlijk een combinatie is van het beste uit verschillende zoekalgoritmen. A* is een uitbreiding op het Extended Uniform Cost Search Algoritme waarbij men het Branch-and-Bound principe, Heuristische Underestimate en de Redudant Path Deletion uitbreidingen toevoegt. Dit algoritme wordt beschreven in \algref{alg:aStar}. Een uitgewerkt voorbeeld staat op figuur \ref{fig:aStarCity} op pagina \pageref{fig:aStarCity}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{A* zoekalgoritme}          % give the algorithm a caption
@@ -872,7 +872,7 @@ Hierdoor wordt path deletion vrijwel altijd gedaan in \bigoh{1}.
 f'\left(S,\ldots,A,B\right)=\mathfunc{max}{c\left(S,\ldots,A,B\right)+h\left(B\right),f'\left(S,\ldots,A\right)}
 \end{equation}
 \end{itemize}
-\subsubsection{Iterative Deepening A* (IDA*)}
+\subsection{Iterative Deepening A* (IDA*)}
 Een variant van A* is \termen{Iterative Deepening A*} of afgekort \termen{IDA*}. Deze heeft tot doel het geheugengebruik van A* meer onder controle te houden (we kunnen A* immers in de verte vergelijken met breedte-eerst, en dit algoritme is niet zuinig met geheugen). Net als Iterative Deepening een beperking op de diepte stelt voor Depth-First, stelt IDA* een beperking op de $f$ waarde. Indien we verwachten dat de oplossing bijvoorbeeld een $f$-waarde zal hebben van 100 zal het algoritme de kinderen van ge\"evalueerde knopen niet meer opslaan indien deze een $f$-waarde groter hebben dan 100. Uiteraard kan het gebeuren dat onze schatting niet toereikend was om tot een oplossing te komen, in dat geval wordt de $f$-waarde verhoogt en voeren \termen{$f$-limited Search} opnieuw uit. Meestal wordt als begin $f$-waarde de $f$-waarde van de bron $f\left(S\right)$ genomen, al dan niet vermenigvuldigt met een factor. Verder wordt de $f$-limiet meestal verhoogt naar de minimale $f$ die groter was dan de $f$-limiet. Dit wordt beschreven in \algref{alg:iterativeDeepeningAStar}.
 \begin{algorithm}[htb]                      % enter the algorithm environment
 \caption{Iterative Deepening A* zoekalgoritme}          % give the algorithm a caption
@@ -912,7 +912,7 @@ Indien we het loopdetectie- en path deletion-systeem even buiten beschouwing lat
 \textbf{Optimaal}:&Ja\\
 \end{tabular}
 \end{center}
-\subsubsection{Simplified Memory-bounded A* (SMA*)}
+\subsection{Simplified Memory-bounded A* (SMA*)}
 Een gelijkaardig effect probeert \termen{Simplified Memory-bounded A*} (of kortweg \termen{SMA*}) te bereiken. Hierbij is het geheugen echter begrensd, en moeten we proberen om in deze beperkende omstandigheden toch een optimale oplossing te vinden. Dit behoorlijke complexe algoritme heeft als basisidee dat indien het geheugen vol is, en we moeten een knoop evalueren, de knopen met de hoogste $f$-waarde tijdelijk uit het geheugen worden gelaten. Om echter geen overbodig werkt te doen in het herberekenen van alle knopen veranderen we de $f$-waarde van de ouder. De ouder van een te verwijderen knoop houdt telkens de beste (laagste) $f$-waarde van van zijn kinderen bij. Deze $f$-waardes spelen vervolgens nog een rol om de knopen opnieuw te evalueren, en te zoeken naar een eventueel doel.
 \paragraph{}Een belangrijk aspect hierbij is dat kinderen \'e\'en voor \'e\'en gegenereerd worden om geen \termen{Memory Overflow} te bekomen. Indien het geheugen vol is, moet een knoop wijken voor de te genereren knoop. Verder kan dit algoritme uiteraard geen doelen vinden waarbij het pad naar het doel meer geheugen vereist dan er beschikbaar is. Het algoritme is echter wel compleet wanneer er voldoende geheugen voorradig is.%Dit wordt formeel beschreven in \algref{alg:simplifiedMemoryBoundedAStar}.
 %\begin{algorithm}[htb]                      % enter the algorithm environment
@@ -942,17 +942,17 @@ Een gelijkaardig effect probeert \termen{Simplified Memory-bounded A*} (of kortw
 %\textbf{Memory}:&\bigoh{1}\\
 %\end{tabular}
 %\end{center}
-\subsection{Besluitende commentaren}
-\subsubsection{Niet Optimale Varianten}
+\section{Besluitende commentaren}
+\subsection{Niet Optimale Varianten}
 Tot dusver zochten we altijd naar optimale oplossingen, soms is het echter beter om niet de meest optimale oplossing te zoeken indien dit tijdswinst kan opleveren. Indien we gebruik maken van \termen{Non-optimal variants}, is dit meestal door de heuristiek aan te passen. Deze zullen meestal het onderschattings-aspect achterwege laten, en worden meestal \termen{Non-admissible heuristics} genoemd. Een andere mogelijkheid is het toepassen van een ander zoekalgoritme. Een variant van A*, het \termen{Non-admissible A* Search Algorithm} is hier een voorbeeld van. Hierbij wordt $f$ als volgt gedefinieerd:
 \begin{equation}
 f\left(p\right)=\left.\omega\cdot c\left(p\right)+h\left(p_{\mbox{\small{end state}}}\right)\ \ \ \ \right|\omega\in\left[0,1\right]
 \end{equation}
 Met $\omega$ als een parameter. Indien $\omega=1$ verkrijgen we opnieuw het A* algoritme, indien we $\omega=0$ nemen bekomen we opnieuw Greedy Search.
-\subsubsection{Complexiteit in het algemeen}
+\subsection{Complexiteit in het algemeen}
 Bij nature is het vinden van een optimaal pad dat naar een oplossing voor een dergelijke probleem NP-compleet. Er bestaan echter wel parallelle\footnote{Algoritmen die we kunnen uitvoeren op bijvoorbeeld vector-, DNA- en kwantumcomputers met massaparallellisme.} algoritmen die in polynomiale tijd kunnen werken.%Deze algoritmen zijn echter over het algemeen alleen toepasbaar op kwantumcomputers.
 \paragraph{}Meestal leidt dit tot een trade-off waarbij we de optimaliteit reduceren tot een behoorlijke optimale oplossing en hierbij een grote hoeveelheid tijd besparen naar het zoeken van de oplossing. Een voorbeeld hierbij is het instellen van $\omega$ bij Non-admissible A*: hoe meer $\omega$ naar $1$ gaat, hoe meer we in de buurt van een optimale oplossing komen.
-\subsection{Samenvatting}
+\section{Samenvatting}
 \label{app:SearchMethods}
 \begin{table}[H]
 \centering
@@ -983,5 +983,5 @@ Bij nature is het vinden van een optimaal pad dat naar een oplossing voor een de
 \end{table}
 Een samenvattend schema is te vinden in appendix \ref{app:schemaSearch} op pagina \pageref{app:schemaSearch}.
 \newpage
-\subsection{Toepassingen van de zoekalgoritmen (Afbeeldingen)}
+\section{Toepassingen van de zoekalgoritmen (Afbeeldingen)}
 \input{figuresSearch}
