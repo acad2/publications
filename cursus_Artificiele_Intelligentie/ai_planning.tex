@@ -16,9 +16,34 @@ Indien we dit formalisme gebruiken zijn we op zoek naar een sequentie $\mathcal{
 \begin{equation}
 S_f=\mathcal{A}_n\left(\mathcal{A}_{n-1}\left(\cdots \mathcal{A}_1\left(S_0\right)\cdots\right)\right)=\mathcal{A}_n\circ\mathcal{A}_{n-1}\circ\cdots\mathcal{A}_1\left(S_0\right)
 \end{equation}
-Men kan argumenteren dat dit probleem volledig opgelost kan worden met de zoekmethodes in hoofdstuk \ref{s:searchMethods}. We zullen in dit hoofdstuk enerzijds methodes ontwikkelen om een planningsprobleem formeel uit te drukken, anderzijds zullen we algoritmen ontwikkelen die deze formele notatie uitbuiten om snellere de zoekruimte te doorzoeken. Doormiddel van de formele notatie weten we immers iets over de acties, en behandelen we de acties dan ook niet als een ``blackbox'' zoals de productieregels in een zoekruimte.
+Men kan argumenteren dat dit probleem volledig opgelost kan worden met de zoekmethodes in hoofdstuk \ref{s:searchMethods}. We zullen in dit hoofdstuk enerzijds methodes ontwikkelen om een planningsprobleem formeel uit te drukken, anderzijds zullen we algoritmen ontwikkelen die deze formele notatie uitbuiten om sneller de zoekruimte te doorzoeken. Doormiddel van de formele notatie weten we immers iets over de acties, en behandelen we de acties dan ook niet als een ``blackbox'' zoals de productieregels in een zoekruimte.
 \paragraph{}Een belangrijk aspect is het aan elkaar koppelen van acties wat leidt tot een nieuwe actie (de gevormde actie kunnen we dan als een soort van ``combo'' beschouwen). Dit concept noemen we ``\termen{chaining}'' en zal doorheen de cursus een belangrijk concept zijn.
-\section{Leidend voorbeeld}
+% \section{Leidend voorbeeld: Torens van Hanoi}
+% \begin{leftbar}
+% Als leidend voorbeeld zullen we de torens van Hanoi gebruiken. Dit spel bestaat uit drie ``plaatshouders'' en $n$ ringen. Iedere ring heeft een unieke grote en kan alleen geplaatst worden op een ring die groter is. De zetten bestaan eruit een ring bovenaan een bepaalde toren te verplaatsen naar een andere toren. De bedoeling is om de toren die alle blokken bevat op de linker plaatshouder te verplaatsen naar de rechter plaatshouder.
+% \paragraph{}Het is eenvoudig dit spel op te lossen, en er bestaat een algoritme die de exponentieel lange lijst van zetten kan berekenen. Vermits we in dit hoofdstuk echter de nadruk leggen op het vinden van zo'n sequentie, gaan we hier niet verder op in.
+% \paragraph{}Vermits we momenteel nog geen notatie gedefinieerd hebben over hoe we de toestand en acties zullen voorstellen. Zullen dit pas in subsubsectie \ref{sss:notationExample} doen. Om het probleem beschrijfbaar te houden, zullen we het probleem oplossen voor $2$ ringen. Natuurlijk gelden de concepten ook voor een groter aantal ringen.
+% \end{leftbar}
+% \begin{figure}[hbt]
+% \centering
+% \begin{tikzpicture}[scale=0.25]
+% \begin{scope}
+% \filldraw[fill=gray,draw=black] (0,0) -- ++(3,0) -- ++(0,8) -- ++(1,0) -- ++(0,-8) -- ++(6,0) -- ++(0,8) -- ++(1,0) -- ++(0,-8) -- ++(6,0) -- ++(0,8) -- ++(1,0) -- ++(0,-8) -- ++(3,0) -- ++(0,-1) -- ++(-21,0) -- cycle;
+% \foreach \y/\r in {0/2,1/1,2/0} {
+%   \fill[black] (2-\r,1+2*\y) rectangle ++(3+2*\r,1);
+% }
+% \end{scope}
+% \begin{scope}[xshift=27 cm]
+% \filldraw[fill=gray,draw=black] (0,0) -- ++(3,0) -- ++(0,8) -- ++(1,0) -- ++(0,-8) -- ++(6,0) -- ++(0,8) -- ++(1,0) -- ++(0,-8) -- ++(6,0) -- ++(0,8) -- ++(1,0) -- ++(0,-8) -- ++(3,0) -- ++(0,-1) -- ++(-21,0) -- cycle;
+% \foreach \y/\r in {0/2,1/1,2/0} {
+%   \fill[black] (16-\r,1+2*\y) rectangle ++(3+2*\r,1);
+% }
+% \end{scope}
+% \end{tikzpicture}
+% \caption{Torens van Hanoi: begin en einde}
+% \end{figure}
+\section{Leidend voorbeeld: Doolhof}
+Als leidend voorbeeld nemen we een robot die de weg doorheen een doolhof moet vinden. De robot kent drie commando's: \texttt{Rechtdoor}, \texttt{DraaiLinks} en \texttt{DraaiRechts}. Het doolhof zelf bestaat uit een een 2D raster waarbij tussen verschillende cellen muren staan. We kunnen enkel rechtdoor rijden indien er geen muur staat tussen de cel waar we op dat moment staan, en de cel die recht voor de robot staat. Omdat we hier met een educatief voorbeeld werken, houden we het probleem bijzonder klein. We beschouwen een $2\times 2$ veld. Verder bestaat de oplossing uit slechts 
 \section{Parti\"ele Orde Regressie Planning}
 \subsection{Voorstelling}
 \termen{Parti\"ele Orde Regressie Planning} ofwel \termen{Partial Order Regression Planning} is een methode waarbij we een toestand voorstellen met behulp van logica. We gebruiken hierbij alleen gegronde logica\footnote{Gegronde logica betekent dat we geen variabelen gebruiken: de logica bestaat dus uitsluitend uit constanten en termen.}. De toestand legt verder ook niet uit hoe het gekoppeld is aan andere toestanden. Tot slot is er ook geen notie van tijd: we beschrijven enkel hoe de toestand er nu uitziet, het is onmogelijk om de toestand van enkele acties ervoor terug te halen. Een actie stellen we voor door middel van een groep gegronde feiten (``atomen'') die op dat moment in de toestand aanwezig moeten zijn. We stellen het effect voor door middel van twee lijsten:
@@ -33,6 +58,35 @@ a\left(S\right)=\left\{\begin{array}{ll}
 \errort&\anderst
 \end{array}\right.\mbox{ met }a=\left(I,T,V\right)
 \end{equation}
+\begin{leftbar}
+We kunnen een situatie voorstellen met behulp van vier soorten predicaten:
+\begin{enumerate}
+\item \texttt{onTable(Ring,Plaats)}: dit predicaat stelt dat een gegeven ring op een gegeven stapel staat. De ring is de onderste ring van een toren, de stapel is een getal tussen 1 en 3 die aangeeft over welke plaatshouder we spreken.
+\item \texttt{above(Ring,Ring,Plaats)}: dit predicaat stelt dat de eerste gegeven ring bovenop de tweede gegeven ring ligt. Logischerwijs behoren ze tot dezelfde toren en is de bovenste ring kleiner dan de onderste.
+\item \texttt{top(Ring,Plaats)}: een predicaat die stelt dat de gegeven ring bovenaan een specifieke toren staat.
+\item \texttt{leeg(Plaats)}: een predicaat die stelt dat er op de gegeven plaatshouder geen ringen staan.
+\end{enumerate}
+De initi\"ele toestand bestaat uit 5 predicaten. We nummeren de ringen alfabetisch van groot naar klein, $A$ is dus de grote ring, $B$ is de kleine ring:
+\begin{multicols}{3}
+\begin{itemize}
+ \item \texttt{onTable(A,1)}
+ \item \texttt{above(B,A,1)}
+ \item \texttt{top(B,1)}
+ \item \texttt{leeg(2)}
+ \item \texttt{leeg(3)}
+\end{itemize}
+\end{multicols}
+De toestand die we willen bereiken, bestaat ook uit 5 predicaten:
+\begin{multicols}{3}
+\begin{itemize}
+ \item \texttt{leeg(1)}
+ \item \texttt{leeg(2)}
+ \item \texttt{onTable(A,3)}
+ \item \texttt{above(B,A,3)}
+ \item \texttt{top(B,3)}
+\end{itemize}
+\end{multicols}.
+\end{leftbar}
 \subsection{Forward Chaining}
 Bij \termen{Forward Chaining} gebruiken we het voorwaarts zoeken om tot een oplossing te komen. We gebruiken dus een zoekmethode (diepte-eerste, breedte-eerst,...) die vertrekt vanuit de begintoestand $S_0$ en passen op elke toestand telkens iedere actie toe die enigszins mogelijk is. We duiden deze zoektechniek ook aan met ``\termen{progressie}'': we rekenen vooruit in de tijd. Het probleem met deze methode is dat we niet gericht zoeken: we proberen gewoon acties uit tot we eerder per toeval de juiste oplossing vinden.
 \subsection{Backward Chaining}

@@ -1459,8 +1459,28 @@ Het is duidelijk dat dit ASM-schema een grote kost met zich teweeg brengt. We zu
 \end{sprocessor}
 \caption{Implementatie van het datapad van de benaderende vierkantswortel volgens de basisprincipes.}
 \end{figure}
+\subsubsection{Kostprijsberekening}
+Alvorens we een goedkopere realisatie van de processor in kwestie kunnen bekomen, dienen we eerst te weten hoeveel elk component precies kost. Hiervoor kunnen we de implementatie van bijvoorbeeld een multiplexer in \'e\'en van de vorige hoofdstukken herbekijken, en de prijs uitrekenen. We zullen in deze subsubsectie echter een bondig overzicht geven die de kostprijs van de belangrijkste componenten die we zullen tegenkomen samenvat. Per component zullen we de kostprijs zowel in transistoren als in het aantal logische cellen in een FPGA weergeven. Verder zullen we ook telkens de componenten in functie van 1 bit uitdrukken, bijvoorbeeld een 1 bit register. Het vermenigvuldigen met het aantal bits geeft een ruwe schatting maar ervaring uit vorige hoofdstukken zou moeten leren dat we soms ook heel wat transistoren kunnen uitsparen omdat we sommige deelcircuits kunnen hergebruiken.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{lrrrrrr}
+\toprule
+&3-state buffer&\multicolumn{4}{c}{multiplexer}&register\\
+\midrule
+\# Transistoren&10&12&18&24&30&44\\
+\# Logische cellen&0&1&2&2&3&1\\
+\bottomrule
+\toprule
+&Half Adder&Full Adder&Aftrekker&Opteller/Aftrekker\\
+\midrule
+\# Transistoren&18&36&38&48\\
+\# Logische cellen&2&2&2&2\\
+\end{tabular}
+\caption{Samenvatting van de kostprijs van de belangrijkste componenten}
+\label{tbl:costComponentsProcessor}
+\end{table}
 \subsubsection{Variabelen samenvoegen}
-Een belangrijke verbetering is het reduceren van het aantal variabelen en dus het aantal registers. We merken immers op in figuur \ref{fig:asmSqrt} dat de meeste variabelen slechts \'e\'enmaal op een waarde gezet worden, en daarna -- meestal in de volgende toestand -- uitgelezen worden. Vanaf dat moment worden deze variabelen niet meer gebruikt, bijgevolg levert het niets op om hun waarde effectief bij te houden. We kunnen de registers die eerst de waarde van de ene variabele bijhielden echter hergebruiken om de waarde van een andere variabele bij te houden. Hiervoor maken we gebruik van een \termen{levensduurtabel}. Een levensduurtabel is een tabel waarin de variabelen horizontaal worden voorgesteld, en de toestanden verticaal.
+Een belangrijke verbetering is het reduceren van het aantal variabelen en dus het aantal registers. We merken immers op in figuur \ref{fig:asmSqrt} dat de meeste variabelen slechts \'e\'enmaal op een waarde gezet worden, en daarna -- meestal in de volgende toestand -- uitgelezen worden. Vanaf dat moment worden deze variabelen niet meer gebruikt, bijgevolg levert het niets op om hun waarde effectief bij te houden. We kunnen de registers die eerst de waarde van de ene variabele bijhielden echter hergebruiken om de waarde van een andere variabele bij te houden. Hiervoor maken we gebruik van een \termen{levensduurtabel}. Een levensduurtabel is een tabel waarin de variabelen horizontaal worden voorgesteld, en de toestanden verticaal. We markeren een gegeven cel indien we in de gegeven of een latere toestand de waarde van de variabele uitlezen nadat de waarde is toegewezen. Zo zien we bijvoorbeeld op het ASM-schema (figuur \ref{fig:asmSqrt}), dat de variabele $t_5$ toegewezen wordt in toestand $S_2$ en we de waarde uitlezen in toestanden $S_3$, $S_4$ en $S_6$. Dit betekent dus dat de \termen{levensduur} van $t_5$ zich uitstrekt van $S_3$ tot en met $S_6$. Men kan zich misschien afvragen waarom de toestand waarin we de waarde toewijzen niet ook deel uitmaakt van de levensduur. De rede is omdat op dat moment we nog geen register hebben waarin we de variabele opslaan. Let wel: er dient een register te bestaan waarin we plannen de waarde zullen opslaan. In toestand $S_2$ wordt echter enkel de waarde van $t_5$ berekent een aangelegd op \'e\'en van de register. Het register heeft echter de waarde nog niet opgeslagen. Dit doet het bij de klokflank tussen $S_2$ en $S_3$. We stellen de levensduur tabel op door voor elke variabele uit te rekenen wanneer welke variabelen actief zijn. De levensduurtabel van het leidend voorbeeld staat in tabel \ref{tbl:variableLifespanExample}. Onder de rij van variabelen vermelden we telkens het totaal aantal variabelen die in de gegeven toestand actief zijn.
 \begin{table}[hbt]
 \centering
 \small{\begin{tabular}{c|cccccccc}
@@ -1478,31 +1498,38 @@ $t_{10}$&	&	&	&	&	&	&$\bullet$&\\
 $t_{11}$&$\cdot$&	&	&	&	&	&	&\\\hline
 $\#$&1&2&2&2&3&3&2&0\\
 \end{tabular}}
-\small{\begin{tabular}{c|cccccccc}
-&$S_0$&$S_1$&$S_2$&$S_3$&$S_4$&$S_5$&$S_6$&$S_7$\\\hline
-abs&	&2	&	&	&	&	&	&\\
-max&	&	&1	&	&	&	&1	&\\
-min&	&	&1	&	&	&	&	&\\
-shr&	&	&	&2	&	&	&	&\\
-$-$&	&	&	&	&1	&	&	&\\
-$+$&	&	&	&	&	&1	&	&\\\hline
-$\#$&0&2&2&2&1&1&1&0\\
-\end{tabular}}
-\small{\begin{tabular}{c|ccccccccccc}
-&$t_1$&$t_2$&$t_3$&$t_4$&$t_5$&$t_6$&$t_7$&$t_8$&$t_9$&$t_{10}$&$t_{11}$\\\hline
-abs1&I	&	&O	&	&	&	&	&	&	&	&\\
-abs2&	&I	&	&O	&	&	&	&	&	&	&\\
-max1&	&	&I	&I	&O	&	&	&	&	&	&\\
-min&	&	&I	&I	&	&O	&	&	&	&	&\\
-shr 3&	&	&	&	&I	&	&O	&	&	&	&\\
-shr 1&	&	&	&	&	&I	&	&O	&	&	&\\
-$-$&	&	&	&	&I	&	&I	&	&O	&	&\\
-$+$&	&	&	&	&	&	&	&I	&I	&O	&\\
-max2&	&	&	&I	&	&	&	&	&	&I	&O\\
-\end{tabular}}
 \caption{Levensduurtabel van het vierkantswortel voorbeeld.}
 \label{tbl:variableLifespanExample}
 \end{table}
+\paragraph{}Men kan zich terecht afvragen wat het nut is van het opstellen van zo'n tabel. Wanneer welke variabele actief is, is niet zo nuttig. Het interessante aspect zit hem eerder in de onderste rij: het aantal actieve variabelen per toestand. Dit getal specificeert immers hoeveel registers we in die toestand eigenlijk nodig hebben om de variabelen te bewaren. De overige variabelen dienen we immers niet meer op te slaan, ze worden verder nergens meer gebruikt. Vermits we in elke toestand slechts een aantal registers nodig hebben, is het totaal aantal benodigde registers niets anders dan het maximum van de onderste rij over alle toestanden. In het geval van het leidend voorbeeld is dit dus:
+\begin{equation}
+\begin{array}{l|l}
+N_{\small{\mbox{reg.}}}=\max{\left(1,2,2,2,3,3,2,0\right)}=3&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+We kunnen dus onze schakeling implementeren met drie registers op voorwaarde dat een register de waarde van verschillende variabelen op verschillende tijdstippen bijhoudt. We kunnen dus eenvoudigweg aan elk van deze drie registers een lijst met variabelen associ\"eren die dit register zal bijhouden. De enige voorwaarde is dat de variabelen in geen enkele toestand allebei actief zijn. Deze methode zal sowieso tot het minimaal aantal registers leiden, maar introduceert een nieuw probleem: we zullen multiplexers voor de ingang van deze registers moeten plaatsen en bovendien lopen we een gelegenheid mis om multiplexers te elimineren die de waarde van een register doorgeven aan een functionele eenheid.
+% \small{\begin{tabular}{c|cccccccc}
+% &$S_0$&$S_1$&$S_2$&$S_3$&$S_4$&$S_5$&$S_6$&$S_7$\\\hline
+% abs&	&2	&	&	&	&	&	&\\
+% max&	&	&1	&	&	&	&1	&\\
+% min&	&	&1	&	&	&	&	&\\
+% shr&	&	&	&2	&	&	&	&\\
+% $-$&	&	&	&	&1	&	&	&\\
+% $+$&	&	&	&	&	&1	&	&\\\hline
+% $\#$&0&2&2&2&1&1&1&0\\
+% \end{tabular}}
+% \small{\begin{tabular}{c|ccccccccccc}
+% &$t_1$&$t_2$&$t_3$&$t_4$&$t_5$&$t_6$&$t_7$&$t_8$&$t_9$&$t_{10}$&$t_{11}$\\\hline
+% abs1&I	&	&O	&	&	&	&	&	&	&	&\\
+% abs2&	&I	&	&O	&	&	&	&	&	&	&\\
+% max1&	&	&I	&I	&O	&	&	&	&	&	&\\
+% min&	&	&I	&I	&	&O	&	&	&	&	&\\
+% shr 3&	&	&	&	&I	&	&O	&	&	&	&\\
+% shr 1&	&	&	&	&	&I	&	&O	&	&	&\\
+% $-$&	&	&	&	&I	&	&I	&	&O	&	&\\
+% $+$&	&	&	&	&	&	&	&I	&I	&O	&\\
+% max2&	&	&	&I	&	&	&	&	&	&I	&O\\
+% \end{tabular}}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
