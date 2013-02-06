@@ -5,7 +5,7 @@ git add -u
 git add *
 git rm *~
 git clean
-git gc --aggressive --no-prune
+git gc
 if [ $# -eq 0 ]
 then
 	git commit -m "Nieuwe toestand van het project"
