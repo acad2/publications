@@ -423,6 +423,9 @@
 \newcommand{\sprbtc}[2]{\coordinate (TMP) at (B#1 -| #2);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- #2);}
 \newcommand{\spcort}[3]{\coordinate (#1) at ($(TT#2)+(#3,0)$);}
 \newcommand{\spfutr}[3]{\draw[thick] (FUR#1) -| (RR#2-#3);}
+\newcommand{\succst}[1]{\ensuremath{\mbox{succ}\left[#1\right]}}
+\newcommand{\usestt}[1]{\ensuremath{\mbox{use}\left[#1\right]}}
+\newcommand{\defstt}[1]{\ensuremath{\mbox{def}\left[#1\right]}}
 
 \pgfkeys{/sigo/lines/.initial={$n$}}
 \pgfdeclaredecoration{sigo}{start}{
