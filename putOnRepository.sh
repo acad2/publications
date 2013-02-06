@@ -3,8 +3,8 @@ cd "`dirname $0`"
 echo "Execute commit"
 git add -u
 git add *
-git rm *~
-git clean
+git rm -r *~
+git clean -f
 git gc --aggressive --no-prune
 if [ $# -eq 0 ]
 then

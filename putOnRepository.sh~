@@ -3,9 +3,9 @@ cd "`dirname $0`"
 echo "Execute commit"
 git add -u
 git add *
-git rm *~
+git rm -r *~
 git clean
-git gc
+git gc --aggressive --no-prune
 if [ $# -eq 0 ]
 then
 	git commit -m "Nieuwe toestand van het project"
