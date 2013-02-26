@@ -1,0 +1,623 @@
+\documentclass{book}
+\title{Definitions and Theorems in Computer Science}
+\author{Willem Van Onsem\\\url{https://github.com/KommuSoft/publications}}
+\date{Version 0.1}
+\usepackage{amsthm,amsfonts,makeidx,draftwatermark,amssymb,MnSymbol}
+\usepackage[hidelinks,pdfborder=0 0 0,pdfpagelabels,plainpages=false,linktocpage=false,pdfcreator={LaTeX}]{hyperref}
+\SetWatermarkScale{7}
+\usepackage[cm]{fullpage}
+\makeindex
+\newcommand{\fun}[2]{\ensuremath{#1\left(#2\right)}}
+\newcommand{\compclass}[1]{\textsc{\textbf{#1}}}
+\newcommand{\bint}[4]{\ensuremath{\displaystyle\int_{#3}^{#4}{#1\ d#2}}}
+\newcommand{\cd}{\ensuremath{\top\!\!\!\top}}
+\newcommand{\ci}{\ensuremath{\bot\!\!\!\bot}}
+\newcommand{\ffun}[1]{\fun{f}{#1}}
+\newcommand{\gfun}[1]{\fun{g}{#1}}
+\newcommand{\pfun}[1]{\fun{p}{#1}}
+\newcommand{\pcond}[2]{\pfun{#1|#2}}
+\newcommand{\txIf}{\ensuremath{\mbox{If }}}
+\newcommand{\txthen}{\ensuremath{\mbox{ then }}}
+\newcommand{\txwhereas}{\ensuremath{\mbox{ whereas }}}
+\newcommand{\funsig}[3]{\ensuremath{#1:#2 \rightarrow #3}}
+\newcommand{\abs}[1]{\ensuremath{\left|#1\right|}}
+\newcommand{\dtime}[1]{\fun{\compclass{DTIME}}{#1}}
+\newcommand{\ntime}[1]{\fun{\compclass{NTIME}}{#1}}
+\newcommand{\bigoh}[1]{\fun{O}{#1}}
+\newcommand{\bigomega}[1]{\fun{\Omega}{#1}}
+\newcommand{\smallomega}[1]{\fun{\omega}{#1}}
+\newcommand{\bigtheta}[1]{\fun{\Theta}{#1}}
+\newcommand{\binary}{\ensuremath{\left\{0,1\right\}}}
+\newcommand{\binarystrings}{\ensuremath{\left\{0,1\right\}^*}}
+\newcommand{\btobfun}[1]{\funsig{#1}{\binarystrings}{\binarystrings}}
+\newcommand{\btoblfun}[1]{\funsig{#1}{\binarystrings}{\binary}}
+\newcommand{\smalloh}[1]{\fun{o}{#1}}
+\newcommand{\gcdf}[1]{\fun{\mbox{gcd}}{#1}}
+\newcommand{\phif}[1]{\fun{\phi}{#1}}
+\newcommand{\ordf}[1]{\fun{\mbox{ord}}{#1}}
+\newcommand{\neigh}[1]{\fun{\calN}{#1}}
+\newcommand{\term}[1]{{\bf #1}\index{#1}}
+\newcommand{\perm}[1]{\ensuremath{\mbox{Perm}^{#1}}}
+\newcommand{\termor}[2]{{\bf #1} (also called {\bf #2})\index{#1}\index{#2|see{#1}}}
+\newcommand{\termabbrev}[2]{{\bf #1} (sometimes abbreviated as {\bf #2})\index{#1}\index{#2|see{#1}}}
+\newcommand{\argmax}[2][]{\ensuremath{\displaystyle\mbox{argmax}_{#1}\left(#2\right)}}
+\newcommand{\calD}{\ensuremath{\mathcal{D}}}
+\newcommand{\calS}{\ensuremath{\mathcal{S}}}
+\newcommand{\calN}{\ensuremath{\mathcal{N}}}
+\newcommand{\calX}{\ensuremath{\mathcal{X}}}
+\newcommand{\calY}{\ensuremath{\mathcal{Y}}}
+\newcommand{\calZ}{\ensuremath{\mathcal{Z}}}
+\newcommand{\hats}{\ensuremath{\hat{s}}}
+\newcommand{\soplus}{\ensuremath{\left\langle S,\oplus\right\rangle} }
+\newcommand{\sotimes}{\ensuremath{\left\langle S,\otimes\right\rangle} }
+\newcommand{\soplusotimes}{\ensuremath{\left\langle S,\oplus,\otimes\right\rangle} }
+%\newcommand{\mod}{\ensuremath{\mbox{ mod }}}
+\newcommand{\NNN}{\ensuremath{\mathbb{N}}}
+\newcommand{\PPP}{\ensuremath{\mathbb{P}}}
+\newcommand{\QQQ}{\ensuremath{\mathbb{Q}}}
+\newcommand{\RRR}{\ensuremath{\mathbb{R}}}
+\newcommand{\ZZZ}{\ensuremath{\mathbb{Z}}}
+\newcommand{\ZZZstarn}{\ensuremath{\ZZZ^*_n}}
+\newcommand{\slHALT}{\mbox{\sl HALT}}
+\newcommand{\slUC}{\mbox{\sl UC}}
+\newtheorem{defi}{Definition}
+\newtheorem{theo}{Theorem}
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\tableofcontents
+\newpage
+\chapter{Definitions}
+
+\section{Mathematics and Formalisms}
+
+\subsection{Operator Properties}
+
+\begin{defi}[Commutative operation]
+A binary operation $\oplus$ is \term{commutative} if $a\oplus b = b\oplus a$ for all $a,b\in S$.\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Associative operation]
+A binary operation $\oplus$ is \term{associative} if $a\oplus\left(b\oplus c\right) = \left(a\oplus b\right)\oplus c$ for all $a,b,c\in S$.\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Semi-associative]
+A binary operator $\otimes$ is said to be \term{semi-associative} if there is an associative operator $\oplus$ such that for any $a$, $b$, $c$, $\left(a\otimes b\right)\otimes c = a\otimes\left(b\oplus c\right)$.\cite{conf/europar/MatsuzakiHT03}
+\end{defi}
+
+\begin{defi}[Quasi-associative]
+A binary operator $\oplus$ is said to be \term{quasi-associative} if there is a semi-associative operator $\otimes$ and a function $f$ such that for any $a$, $b$, $a\oplus b = a\otimes f b$.\cite{conf/europar/MatsuzakiHT03}
+\end{defi}
+
+\begin{defi}[Bi-quasi-associative]
+A ternary operator $f$ is said to be \term{bi-quasi-associative} if there is a semi-associative operator $\otimes$ and two functions $f_L'$, $f_R'$ such that for any $l$, $n$, $r$, $f l n r = l \otimes f_L' n r = r \otimes f_R' n l$. We can fix a bi-quasi-associative operator $f$ by providing $\otimes$, $\oplus$ (associative operator for $\otimes$), $f_L'$ and $f_R'$, therefore, we will write $f$ with 4-tuple as $f\equiv \left[\left[\otimes,\oplus, f_L', f_R' \right]\right]$.\cite{conf/europar/MatsuzakiHT03}
+\end{defi}
+
+\subsection{Algebraic Structures}
+
+\begin{defi}[Left identity element] Let $S$ be a set and $\oplus$ a binary operation on $S$. An element $e\in S$ is called \term{left identity element} if $e\oplus a = a$ for all $a\in S$.\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Right identity element] Let $S$ be a set and $\oplus$ a binary operation on $S$. An element $e\in S$ is called \term{right identity element} if $a\oplus e = a$ for all $\in S$.\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Identity element] Let $S$ be a set and $\oplus$ a binary operation on $S$. An element $e\in S$ is called \termor{identity element}{neutral element} if it is both a left identity element and a right identity element (i.e., $e\oplus a = a\oplus e = a$ for all $a\in S$).
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Inverse element] Let $S$ be a set, $\oplus$ be a binary operation with an identity element $e$, and $a$ be an element of $S$. If there exists an element $b\in S$ with $a\oplus b = b\oplus a = e$, then $a$ is \term{invertible} and b is the \termor{inverse element}{inverse} of $a$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Semigroup]
+A \term{semigroup} is an algebraic structure $\left\langle S,\oplus\right\rangle$ that consists of a nonempty set $S$ and an associative binary operation $\oplus$. The semigroup must be closed (i.e., for all $a,b\in S$, $a\oplus b$ must also be an element of $S$).
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Monoid]
+A \term{monoid} is a semigroup \soplus that has an identity element $e\in S$ with respect to $\oplus$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Group]
+A \term{group} is a monoid \soplus in which every element $a\in S$ has an inverse element in $S$ (i.e., every element $a\in S$ is invertible).
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Commutative group]
+A group \soplus is a \term{commutative group} if the operation $\oplus$ is commutative (i.e., $a\oplus b = b\oplus a$ for all $a, b\in S$).
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Finite group]
+A group \soplus is a \term{finite group} if it contains only finitely many elements.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Subgroup]
+A subset $H$ of a group $G$ is a \term{subgroup} of $G$ if it is closed under the operation of $G$ and also forms a group.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Left coset]
+Let $G$ be a group and $H\subseteq G$ be a subset of $G$. For all $a\in G$, the sets $a\oplus H := \left\{a\oplus h | h\in H\right\}$ are called \term{left coset}s of $H$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Right coset]
+Let $G$ be a group and $H\subseteq G$ be a subset of $G$. For all $a\in G$, the sets $H\oplus a := \left\{a\oplus h | h\in H\right\}$ are called \term{right coset}s of $H$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Coset]
+Let $G$ be a (commutative) group and $H\subseteq G$. For all $a\in G$, the sets $a\oplus H$ and $H\oplus a$ are equal and are called \term{coset}s of $H$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Ring]
+A \term{ring} is an algebraic structure \soplusotimes with a set $S$ and two associative binary operations $\oplus$ and $\otimes$ that fulfill the following requirements:
+\begin{enumerate}
+ \item \soplus is a commutative group with identity element $e_1$ ;
+ \item \sotimes is a monoid with identity element $e_2$ ;
+ \item The operation $\otimes$ is distributive over the operation $\oplus$. This means that for all $a,b,c\in S$ the following two distributive laws must hold:
+ \begin{equation}
+ \left\{\begin{array}{c}
+  a \otimes (b \oplus c)=(a \otimes b) \oplus (a \otimes c)\\
+ (b \oplus c) \otimes a=(b \otimes a) \oplus (c \otimes a)
+ \end{array}\right.
+ \end{equation}
+\end{enumerate}
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Field]
+A ring \soplusotimes in which $\left\langle S\setminus\left\{e_1\right\},\otimes\right\rangle$ is a group is a \term{field}.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Subfield]
+A subset $H$ of a field $F$ is a \term{subfield} of $F$ if it closed under the operations of $F$ and also forms a field.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Prime field]
+A \term{prime field} is a field that contains no proper subfield.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Homomorphism]
+Let $A$ and $B$ be two algebraic structures. A mapping $f:A\rightarrow B$ is called a \term{homomorphism} of $A$ into $B$ if it preserves the operations of $A$. That is, if $\circ$ is an operation of $A$ and $\bullet$ an operation of $B$, then $\ffun{x\circ y}=\ffun{x}\bullet\ffun{y}$ must hold for all $x,y\in A$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Isomorphism]
+A homomorphism $f:A\rightarrow B$ is an \term{isomorphism} if it is injective (``one to one''). In this case, we say that $A$ and $B$ are isomorphic and we write $A\cong B$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Automorphism]
+An isomorphism $f:A\rightarrow A$ is an \term{automorphism}.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Permutation]
+Let $S$ be a set. A map $f:S\rightarrow S$ is a \term{permutation} if $f$ is bijective (i.e., injective and surjective). The set of all permutations of $S$ is denoted by \perm{S\rightarrow S}, or $\fun{P}{S}$ in short.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Common divisors and greatest common divisor]
+For $a,b\in\ZZZ_0$, $c\in\ZZZ$ is a \term{common divisor} of $a$ and $b$ if $c|a$ and $c|b$. Furthermore, $c$ is the \term{greatest common divisor}, denoted $\fun{gcd}{a,b}$, if it is the largest integer that divides $a$ and $b$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Common multiples and least common multiple]
+For $a,b\in\ZZZ_0$, $c\in\ZZZ$ is a \term{common multiple} of $a$ and $b$ if $a|c$ and $b|c$. Furthermore, $c$ is the \term{least common multiple}, denoted $\fun{lcm}{a,b}$, if it is the smallest integer that is divided by $a$ and $b$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Prime number]
+A natural number $1<n\in\NNN$ is called a \termor{prime number}{prime} if it divisible only by $1$ and itself.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Primality decision problem]
+Given a positive integer $n\in\NNN$, deciding whether $n\in\PPP$ (i.e., $n$ is prime) or not (i.e., $n$ is composite) is called the \term{primality decision problem}.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[B-smooth integer]
+Let $B$ be an integer. An integer $n$ is a \term{B-smooth integer} if every prime factor of $n$ is less than $B$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}
+Let $a,b\in\ZZZ$ and $n\in\NNN$. $a$ is \term{congruent to $b$ modulo $n$}, denoted $a\equiv b \left(\mod n\right)$, if $n$ divides $a-b$ (i.e., $n|a-b$).
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Polynomial]
+Let $A$ be an algebraic structure with addition and multiplication (e.g., a ring or a field). A function $\fun{p}{x}$ is a \term{polynomial} in $x$ over $A$ if it is of the form
+\begin{equation}
+\fun{p}{x}=\displaystyle\sum_{i=0}^{n}{a_ix^i}=a_0+a_1x+a_2x^2+\ldots+a_nx^n
+\end{equation}
+where $n$ is a positive integer (i.e., the \term{degree} of $\fun{p}{x}$, denoted as $\fun{\mbox{deg}}{p}$), the \term{coefficient}s $a_i$ ($0\leq i\leq n$) are elements in $A$, and $x$ is a symbol not belonging to $A$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\begin{defi}[Quadratic residue and square root]
+An element $x\in\ZZZ^*_n$ is a \term{quadratic residue} modulo $n$ if there exists an element $y\in\ZZZstarn$ such that $x=y^2\left(\mod n\right)$. If such a $y$ exists, then it is called a \term{square root} of $x$ modulo $n$.
+\cite{Oppliger:2011:CC:2049860}
+\end{defi}
+
+\subsection{Probability Theory}
+
+\begin{defi}[Conditional Probability (Bayes' rule)]
+The probability of event $x$ conditioned on knowing event $y$ (or more shortly, the \term{conditional probability} of $x$ given $y$) is defined as:
+\begin{equation}
+\pcond{x}{y}\equiv\displaystyle\frac{\pfun{x}}{\pfun{y}}
+\end{equation}
+If $\pfun{y}=0$, then $\pcond{x}{y}$ is not defined. This definition is also called \term{Bayes' rule}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Probability Density Functions]
+For a single continuous variable $x$, the \term{probability density function} $\pfun{x}$ is a function such that:
+\begin{equation}
+\left\{\begin{array}{l}
+\pfun{x}\geq0\\
+\bint{\pfun{x}}{x}{-\infty}{+\infty}=1\\
+\pfun{a<x<b}=\bint{\pfun{x}}{x}{a}{b}
+\end{array}\right.
+\end{equation}
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Independence]
+Events $x$ and $y$ are independent if knowing one event gives no extra information about the other event. Mathematically, this is expressed by:
+\begin{equation}
+\pfun{x,y}=\pfun{x}\pfun{y}
+\end{equation}
+Provided that $\pfun{x}\neq0$ and $\pfun{y}\neq0$ \term{independence} of $x$ and $y$ is equivalent to:
+\begin{equation}
+\pcond{x}{y}=\pfun{x}\leftrightarrow\pcond{y}{x}=\pfun{y}
+\end{equation}
+If $\pcond{x}{y}=\pfun{x}$ for all states of $x$ and $y$, then the variables $x$ and $y$ are said to be independent. If
+\begin{equation}
+\pfun{x,y}=k\ffun{x}\gfun{y}
+\end{equation}
+for some constant $k$, and positive functions $f$ and $g$ then $x$ and $y$ are independent.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Prior likelihood and Posterior]
+For data $\calD$ and variable $\theta$, Bayes' rule tells us how to update our prior beliefs about the variable $\theta$ in light of the data to a posterior belief:
+\begin{equation}
+\underbrace{\pcond{\theta}{\calD}}_{\mbox{\term{posterior}}}=\displaystyle\frac{\underbrace{\pcond{\calD}{\theta}}_{\mbox{\term{likelihood}}}\underbrace{\pfun{\theta}}_{\mbox{\term{prior}}}}{\underbrace{\pfun{\calD}}_{\mbox{\term{evidence}}}}
+\end{equation}
+The evidence is also called the \term{marginal likelihood}. The term likelihood is used for the probability that a model generates observed data. More fully, if we condition on the model $M$, we have
+\begin{equation}
+\pcond{\theta}{\calD,M}=\displaystyle\frac{\pcond{\calD}{\theta,M}\pcond{\theta}{M}}{\pcond{\calD}{M}}
+\end{equation}
+where we see the role of the likelihood $\pcond{\calD}{\theta,M}$ and marginal likelihood $\pcond{\calD}{M}$. likelihood is also called the \term{model likelihood}. The \termabbrev{most probable a posteriori}{MAP} setting is that which maximizes the posterior,
+\begin{equation}
+\theta_*=\argmax[\theta]{\pcond{\theta}{\calD,M}}
+\end{equation}
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Conditional Independence]
+\begin{equation}
+\calX\ci\calY|\calZ
+\end{equation}
+denotes that the two sets of variables $\calX$ and $\calY$ are independent of each other provided we know the state of the set of variables $\calZ$. For full \term{conditional independence}, $\calX$ and $\calZ$ must be independent given all states of $\calZ$. Formally, this means that
+\begin{equation}
+\pcond{\calX,\calY}{\calZ}=\pcond{\calX}{\calZ}\pcond{\calY}{\calZ}
+\end{equation}
+for all states of $\calX$, $\calY$, $\calZ$. In case the conditioning set is empty we may also write $\calX\ci\calY$ for $\calX\ci\calY|\emptyset$, in which case $\calX$ is \term{unconditionally independent} of $\calY$. If $\calX$ and $\calY$ are not conditionally independent, they are \term{conditionally dependent}. This is written:
+\begin{equation}
+\calX\cd\calY|\calZ
+\end{equation}
+\cite{Barber2011}
+\end{defi}
+
+\section{Graph Theory}
+
+\begin{defi}[Graph]
+A \term{graph} $G$ consists of \term{vertices}{nodes} and \termor{edges}{links} between the vertices. Edges may be directed (they have an arrow in a single direction) or undirected. A graph with all edges directed is called a \term{directed graph}, and one with all edges undirected is called an \term{undirected graph}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Path, Ancestors, Descendants]
+A \term{path} $A\mapsto B$ from node $A$ to node $B$ is a sequence of vertices $A=A_0,A1,\ldots,A_{n-1},A_n=B$, with $\left(A_i,A_{i+1}\right)$ an edge in the graph, thereby connecting $A$ to $B$. For a directed graph this means that a path is a sequence of nodes which when we follow the direction of the arrows leads us from $A$ to $B$. The vertices $A$ such that $A\mapsto B$ and $B\nmapsto A$ are the \term{ancestors} of $B$. The vertices $B$ such that $A → B$ and $B\nmapsto A$ are the \term{descendants} of $A$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Directed Acyclic Graph]
+A \termabbrev{Directed Acyclic Graph}{DAG} is a graph $G$ with directed edges (arrows on each link) between the vertices (nodes) such that by following a path of vertices from one node to another along the direction of each edge no path will revisit a vertex. In a DAG the ancestors of $B$ are those nodes who have a directed path ending at $B$. Conversely, the descendants of $A$ are those nodes who have a directed path starting at $A$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Neighbour]
+For an undirected graph G the \term{neighbour}s of $x$, $\fun{\mbox{ne}}{x}$ are those nodes directly connected to $x$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Clique, Cliquo]
+Given an undirected graph, a \term{clique} is a maximally connected subset of vertices. All the members of the clique are connected to each other; furthermore there is no larger clique that can be made from a clique. A non-maximal clique is sometimes called a \term{cliquo}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Singly-Connected Graph, Multiply-Connected Graph, Tree, Loopy]
+A \termor{singly-connected graph}{tree} is a graph where there is only one path from a vertex $a$ to another vertex $b$. Otherwise the graph is a \termor{multiply-connected graph}{loopy}. This definition applies regardless of whether or not the edges in the graph are directed.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Spanning Tree, Maximum Weight Spanning Tree]
+A \term{spanning tree} of an undirected graph $G$ is a singly-connected subset of the existing edges such that the resulting singly-connected graph covers all vertices of $G$. A \term{maximum weight spanning tree} is a spanning tree such that the sum of all weights on the edges of the tree is larger than for any other spanning tree of $G$.
+\cite{Barber2011}
+\end{defi}
+
+
+\section{Automata and Computability}
+
+\begin{defi}
+A \term{nondeterministic finite automaton} consists of a set $S$ of states. One of these states, $s0\in S$, is called the \term{starting state} of the automaton and a subset $F\subseteq S$ of the states are \term{accepting states}. Additionally, we have a set $T$ of \term{transitions}. Each transition $t$ connects a pair of states $s_1$ and $s_2$ and is labeled with a symbol, which is either a character $c$ from the alphabet $\Sigma$, or the symbol $\varepsilon$, which indicates an \term{epsilon-transition}. A transition from state $s$ to state $t$ on the symbol $c$ is written as $s^ct$.\cite{mogensen2009basics}
+\end{defi}
+
+\begin{defi}
+Given a set $M$ of nondeterministic finite automaton states, we define the \term{$\varepsilon$-closure(M)} to be the least (in terms of the subset relation) solution to the set equation:
+\begin{equation}
+\fun{\varepsilon\mbox{-closure}}{M} = M\cup \left\{t|s\in \fun{\varepsilon\mbox{-closure}}{M}\mbox{ and }s^\varepsilon t\in T \right\}
+\end{equation}
+Where $T$ is the set of transitions in the non deterministic finite automaton.\cite{mogensen2009basics}
+\end{defi}
+
+\begin{defi}[Big-Oh notation]
+If $f,g$ are two functions from $\NNN$ to $\NNN$, then we 
+\begin{enumerate}
+ \item say that $f=\term{\bigoh{g}}$ if there exists a constant $c$ such that $\ffun{n}\leq c\gfun{n}$ for every sufficiently large $n$,
+ \item say that $f=\term{\bigomega{g}}$ if $g = \bigoh{f}$,
+ \item say that $f=\term{\bigtheta{g}}$ is $f = \bigoh{g}$ and $g = \bigoh{f}$,
+ \item say that $f=\term{\smalloh{g}}$ if for every $\varepsilon>0$, $\ffun{n}\leq\varepsilon\gfun{n}$ for every sufficiently large $n$, and
+ \item say that $f=\term{\smallomega{g}}$ if $g=\smalloh{f}$.
+\end{enumerate}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Computing a function and running time]
+Let $\btobfun{f}$ and let $\funsig{T}{\NNN}{\NNN}$ be some functions, and let $M$ be a Turing machine. We say that $M$ \term{computes $f$} if for every $x\in\binarystrings$, whenever $M$ is initialized to the start configuration on input $x$, then it halts with $\ffun{x}$ written on its output tape. We say $M$ \term{computes $f$ in $\fun{T}{n}$-time} if its computation on every input $x$ requires at most $\fun{T}{\left|x\right|}$ steps.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{DTIME}]
+Let $\funsig{T}{\NNN}{\NNN}$ be some function. A language $L$ is in $\fun{\term{\compclass{DTIME}}}{\fun{T}{n}}$ if and only f there is a Turing machine that runs in time $c\fun{T}{n}$ for some constant $c>0$ and decides $L$.
+\end{defi}
+
+\begin{defi}[The class \compclass{P}]
+\begin{equation}
+\term{\compclass{P}}=\displaystyle\cup_{c\geq1}\fun{\compclass{DTIME}}{n^c}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{NTIME}]
+For every function $\funsig{T}{\NNN}{\NNN}$ and $L\subseteq\binarystrings$, we say that $L\in\fun{\term{\compclass{NTIME}}}{\fun{T}{n}}$ if there is a constant $c>0$ and a $c\fun{T}{n}$-time non deterministic Turing Machine $M$ such that for every $x\in\binarystrings$, $x\in L\leftrightarrow\fun{M}{x}=1$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{NP}]
+\begin{equation}
+\term{\compclass{NP}}=\displaystyle\cup_{c\geq1}\fun{\compclass{NTIME}}{n^c}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Reduction, \compclass{NP-hard} and \compclass{NP-complete}]
+A language $L\subseteq\binarystrings$ is \term{polynomial-time Karp reducible} to a language $L'\subseteq\binarystrings$ (sometimes shortened to just ``\term{polynomial-time reducible}''), denoted by $L\leq_p L'$, if there is a polynomial-time computable function $\btobfun{f}$ such that for every $x\in\binarystrings$, $x\in L$ if and only if $\ffun{x}\in L'$. We say that $L'$ is \term{\compclass{NP-hard}} if $L\leq_p L'$ for every $L\in\compclass{NP}$. We say that $L$ is \term{\compclass{NP-complete}} if $L'$ is \compclass{NP-hard} and $L'\in\compclass{NP}$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Complement language]
+If $L\subseteq\binarystrings$ is a language, then we denote by $\overline{L}$ the \term{complement language} of $L$. That is, $\overline{L}=\binarystrings\setminus L$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{coNP}]
+\begin{equation}
+\term{\compclass{coNP}}=\left\{\overline{L}:L\in\compclass{NP}\right\}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\section{Artificial Intelligence}
+
+\begin{defi}
+A \term{neighborhood structure} is a function $\calN:\calS\rightarrow 2^\calS$ that assigns to every $s\in\calS$ a set of neighbors $\fun{\calN}{s}\subseteq\calS$. $\fun{\calN}{s}$ is called the neighborhood of $s$. Often, neighborhood structures are implicitly defined by specifying the changes that must be applied to a solution s in order to generate all its neighbors. The application of such an operator that produces a neighbor $s'\in\fun{\calN}{s}$ of a solution s is commonly called a \term{move}.\cite{alba05}
+\end{defi}
+
+\begin{defi}
+A \term{locally minimal solution} (or \term{local minimum}) with respect to a neighborhood structure $\calN$ is a solution $\hat{s}$ such that $\forall s\in\neigh{\hat{s}}:\ffun{\hat{s}}\leq\ffun{s}$. We call $\hat{s}$ a \term{strict locally minimum} if $\forall s\in\neigh{\hat{s}}:\ffun{\hats}<\ffun{s}$.\cite{alba05}
+\end{defi}
+
+
+\chapter{Theorems}
+
+\begin{theo}[Lagrange's Theorem]
+If $H$ is a subgroup of $G$, then $\left|H\right||\left|G\right|$ (i.e., the order of $H$ divides the order of $G$.
+\begin{proof}
+If $H=G$, then $\left|H\right||\left|G\right|$ holds trivially. Consequently, we only consider the case in which $H\subset G$. For any $a\in G\setminus H$, the coset $a\oplus H$ is a subset of $G$. The following can be shown:
+\begin{enumerate}
+ \item \label{i} For any $a \neq a$, if $a\notin a'\oplus H$ then $\left(a\oplus H\right)\cap\left(a'\oplus H\right)=\emptyset$;
+ \item \label{ii} $\left|a\oplus H\right|=\left|H\right|$.
+\end{enumerate}
+For (\ref{i}{}), suppose there exists a $b\in\left(a\oplus H\right)\cap\left(a'\oplus H\right)$. Then there exist $c,c'\in H$ such that $a\oplus c=b=a'\oplus c'$. Applying various group axioms, we have $a=a\oplus e= a\oplus\left(c\oplus c^{-1}\right)=b\oplus c^{-1}=\left(a'\oplus c'\right)\oplus c^{-1}=a'\oplus\left(c'\oplus c^{-1}\right)\in a'\oplus H$. This contradicts our assumption (that $a\notin a'\oplus H$).
+For (\ref{ii}{}), $\left|a\oplus H\right|\leq\left|H\right|$ holds trivially (by the definition of a coset). Suppose that the inequality is rigorous. This is only possible if there are $b,c\in H$ with $b\neq c$ and $a\oplus b = a\oplus c$. Applying the inverse element of $a$ on either side of the equation, we get $b=c$, contradicting to $b\neq c$.
+In summary, $G$ is partitioned by $H$ and the family of its mutually disjoint cosets, each has the size $\left|H\right|$, and hence $\left|H\right||\left|G\right|$. This proves the theorem.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+\begin{theo}
+For all $a,b,c\in\ZZZ$, if $a|b$ and $b|c$, then $a|c$.
+\begin{proof}
+If $a|b$ and $b|c$, then there exist $f,g\in\ZZZ$ with $b=af$ and $c=bg$. Consequently, we can write $c=bg= \left(af\right)g = a\left(fg\right)$ to express $c$ as a multiple of $a$. The claim (i.e., $a|c$) follows directly from this equation.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+\begin{theo}
+For all $a,b,c\in\ZZZ$, if $a|b$, then $ac|bc$ for all $c$.
+\begin{proof}
+If $a|b$, then there exists $f\in\ZZZ$ with $b=af$. Consequently, we can write $bc=\left(af\right)c=f\left(ac\right)$ to express $bc$ as a multiple of $ac$. The claim (i.e., $ac|bc$) follows directly from this equation.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+\begin{theo}
+For all $a,b,c,d,e\in\ZZZ$, if $c|a$ and $c|b$, then $c|da+eb$ for all $d$ and $e$.
+\begin{proof}
+If $c|a$ and $c|b$, then there exist $f,g\in\ZZZ$ with $a=fc$ and $b=gc$. Consequently, we can write $da+eb=dfc+egc=\left(df+eg\right)c$ to express $da+eb$ as a multiple of $c$. The claim (i.e., $c|da+eb$) follows directly from this equation.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+\begin{theo}
+\label{theo4}
+For all $a,b\in\ZZZ$, if $a|b$ and $b\neq0$, then $\left|a\right|\leq\left|b\right|$.
+\begin{proof}
+If $a|b$ and $b=0$, then there exists $0\neq f\in\ZZZ$ with $b=af$. Consequently, $\left|b\right|=\left|af\right|\geq\left|a\right|$ and the claim (i.e., $\left|a\right|\leq\left|b\right|$) follows immediately.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+\begin{theo}
+For all $a,b\in\ZZZ$, if $a|b$ and $b|a$, then $\left|a\right|=\left|b\right|$.
+\begin{proof}
+Let us assume that $a|b$ and $b|a$. If $a=0$ then $b=0$, and vice versa. If $a,b\neq 0$, then it follows from Theorem \ref{theo4}. that $\left|a\right|\leq\left|b\right|$ and $\left|b\right|\leq\left|a\right|$, and hence $\left|b\right|=\left|a\right|$.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+\begin{theo}[Euclid's division theorem]
+For all $n,d\in\ZZZ_0$ there exist unique and efficiently computable $q,r\in\ZZZ$ such that $n=qd+r$ and $0\leq r\leq\left|d\right|$.
+\cite{Oppliger:2011:CC:2049860}
+\end{theo}
+
+\begin{theo}[Prime density theorem]
+\begin{equation}
+\displaystyle\lim_{n\rightarrow\infty}\displaystyle\frac{\pi\left(n\right)\ln\left(n\right)}{n}=1
+\end{equation}
+\cite{Oppliger:2011:CC:2049860}
+\end{theo}
+
+\begin{theo}[Unique factorization]
+Every natural number $n\in\NNN$ can be factored uniquely (up to a permutation of the prime factors):
+\begin{equation}
+n=\displaystyle\prod_{p\in\PPP}{p^{\fun{e_p}{n}}}
+\end{equation}
+In this formula, $\fun{e_p}{n}$ refers to the exponent of $p$ in the factorization of $n$. For almost all $p\in\PPP$ this value is zero, and only for finitely many primes $p$ the value $\fun{e_p}{n}$ is greater than zero.
+\cite{Oppliger:2011:CC:2049860}
+\end{theo}
+
+\begin{theo}[Chinese remainder theorem]
+Let
+\begin{equation}
+\left\{\begin{array}{l}
+x\equiv a_1\left(\mod n_1\right)\\
+x\equiv a_2\left(\mod n_2\right)\\
+\ldots\\
+x\equiv a_k\left(\mod n_k\right)
+\end{array}\right.
+\end{equation}
+be a system of $k$ congruences with pairwise co-prime moduli $n_1,\ldots,n_k$. The system has a unique and efficiently computable solution $x$ in $\ZZZ_n$ with $n=\prod_{i=1}^kn_i$.
+\cite{Oppliger:2011:CC:2049860}
+\end{theo}
+
+\begin{theo}[Fermat's Little Theorem]
+If $p$ is a prime and $a\in\ZZZ^*_p$, then $a^{p-1}\left(\mod p\right)$.
+\begin{proof}
+Because $\fun{\phi}{p}=p-1$ for every prime number $p$, \term{Fermat's Little Theorem} is just a special case of Euler's Theorem.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+\begin{theo}[Euler's Theorem]
+If $\gcdf{a,n}=1$, then $a^{\fun{\phi}{n}}\equiv 1\left(\mod n\right)$.
+\begin{proof}
+Because $\gcdf{a,n}=1$, $a \left(\mod n\right)$ must be an element in $\ZZZ^*_n$. Also, $\left|\ZZZ^*_n\right|=\fun{\phi}{n}$. According to a corollary of Lagrange's Theorem, the order of every element (in a finite group) divides the order of the group. Consequently, the order of a (i.e., $\ordf{a}$) divides $\phif{n}$, and hence if we multiply a modulo $n\phif{n}$ times we always get a value that is equivalent to $1$ modulo $n$.
+\cite{Oppliger:2011:CC:2049860}
+\end{proof}
+\end{theo}
+
+%\begin{theo}[Euler's criterion]
+%\end{theo}TODO
+
+\begin{theo}[Efficient universal Turing machine]
+\label{theo:eutm}
+There exists a Turing Machine $\mathcal{U}$ such that for every $x,\alpha\in\binarystrings$, $\fun{\mathcal{U}}{x,\alpha} = \fun{M_{\alpha}}{x}$, where $M_{\alpha}$ denotes the Turing Machine represented by $\alpha$. Moreover, if $M_{\alpha}$ halts on input $x$ within $T$ steps then $\fun{\mathcal{U}}{x,\alpha}$ halts within $CT\log T$ steps, where $C$ is a number independent of $\left|x\right|$ and depending only on $M_{\alpha}$'s alphabet size, number of tapes, and number of states.
+\cite{arora2009computational}
+\end{theo}
+
+\begin{theo}
+\label{theo:uncomputable}There exists a function $\btoblfun{{\sf UC}}$ that is not computable by any Turing Machine.
+\begin{proof}
+The function $\sl UC$ is defined as follows: For every $\alpha\in\binarystrings$, if $\fun{M_{\alpha}}{\alpha}=1$, then $\fun{\sl UC}{\alpha}=0$; otherwise (if $\fun{M_{\alpha}}{\alpha}$ outputs a different value or enters an infinite loop), $\fun{\sl UC}{\alpha}=1$. Suppose for the sake of contradiction that ${\sl UC}$ is computable and hence there exists a Turing Machine $M$ such that $\fun{M}{\alpha}=\fun{{\sl UC}}{\alpha}$ for every $\alpha\in\binarystrings$. Then, in particular, $\fun{M}{\left\lfloor M\right\rfloor}=\fun{{\sl UC}}{\left\lfloor M\right\rfloor}$. But this is impossible: By the definition of ${\sl UC}$, $\fun{{\sl UC}}{\left\lfloor M\right\rfloor}=1\leftrightarrow\fun{M}{\left\lfloor M\right\rfloor}=1$.
+\cite{arora2009computational}
+\end{proof}
+\end{theo}
+
+\begin{theo}
+{\slHALT} is not computable by any Turing Machine.
+\begin{proof}
+Suppose, for the sake of contradiction, that there was a Turing Machine $M_{\slHALT}$ computing $\slHALT$. We will use $M_{\slHALT}$ to show a Turing Machine $M_{\slUC}$ computing $\slUC$, contradicting Theorem \ref{theo:uncomputable}. The Turing Machine $M_{\slUC}$ is simple: On input $\alpha$, $M_{\slUC}$ runs $\fun{M_{\slHALT}}{\alpha,\alpha}$. If the result is 0 (meaning that $M_\alpha$ does not halt on $\alpha$), then $M_{\slUC}$ outputs $1$. Otherwise, $M_{\slUC}$ uses the universal Turing Machine $\mathcal{U}$ to compute $b=\fun{M_{\alpha}}{\alpha}$. If $b=1$, then $M_{\slUC}$ outputs $0$; otherwise, it outputs $1$. Under the assumption that $\fun{M_{\slHALT}}{\alpha,\alpha}$ outputs $\fun{\slHALT}{\alpha,\alpha}$ within a finite number of steps, the Turing Machine $\fun{M_{\slUC}}{\alpha}$ will output $\fun{\slUC}{\alpha}$.
+\cite{arora2009computational}
+\end{proof}
+\end{theo}
+
+\begin{theo}[\term{Time Hierarchy Theorem}]
+\label{theo:tht}
+If $f,g$ are time-constructible functions satisfying $\ffun{n}\log\ffun{n}=\smalloh{\gfun{n}}$, then
+\begin{equation}
+\dtime{\ffun{n}}\subsetneq\dtime{\gfun{n}}.
+\end{equation}
+\begin{proof}
+To showcase the essential idea of the proof of Theorem \ref{theo:tht} with minimal notation, we prove the simpler statement $\dtime{n}\subsetneq\dtime{n^{1.5}}$. Consider the following Turing machine $D$: ``On input $x$, run for $\abs{x}^{1.4}$ steps the Universal Turing Machine $\mathcal{U}$ of Theorem \ref{theo:eutm} to simulate the execution of $M_x$ on $x$. If $\mathcal{U}$ outputs some bit $b\in\binary$ in this time, then output the opposite answer (i.e., output $1-b$). Else output 0.'' Here $M_x$ is the machine represented by the string $x$. By definition, $D$ halts within $n^{1.4}$ steps and hence the language $L$ decided by $D$ is in $\dtime{n^{1.5}}$. We claim that $L\notin\dtime{n}$. For contradiction's sake, assume that there is some Turing Machine $M$ and constant $c$ such that Turing Machine $M$, given any input $x\in\binarystrings$, halts within $c\abs{x}$ steps and outputs $\fun{D}{x}$. The time to simulate $M$ by the universal Turing machine $\mathcal{U}$ on every input x is at most $c'c\abs{
+x}\log\abs{x}$ for some number $c'$ that depends on the alphabet size and number of tapes and states of $M$ but is independent of $\abs{x}$. There is some number $n_0$ such that $n^{1.4} > c'cn\log n$ for every $n\geq n_0$. Let $x$ be a string representing the machine $M$ whose length is at least $n_0$ (such a string exists since $M$ is represented by infinitely many strings). Then, $\fun{D}{x}$ will obtain the output $b=\fun{M}{x}$ within $\abs{x}^{1.4}$ steps, but by definition of $D$, we have $\fun{D}{x}=1-b=\fun{M}{x}$. Thus we have derived a contradiction. The proof Theorem \ref{theo:tht} for general $f,g$ is similar and uses the observation that the slowdown in simulating a machine using $\mathcal{U}$ is at most logarithmic.
+\cite{arora2009computational}
+\end{proof}
+\end{theo}
+
+\begin{theo}[\term{Nondeterministic Time Hierarchy Theorem}]
+\label{theo:ndtht}
+If $f,g$ are time constructible functions satisfying $\ffun{n+1}= \smalloh{\gfun{n}}$, then
+\begin{equation}
+\ntime{\ffun{n}}\subsetneq\ntime{\gfun{n}}.
+\end{equation}
+\begin{proof}
+We just showcase the main idea by proving $\ntime{n}\subsetneq\ntime{n^{1.5}}$. The first instinct is to duplicate the proof of Theorem \ref{theo:tht}, since there is a universal Turing machine for nondeterministic computation as well. However, this alone does not suffice because the definition of the new machine $D$ requires the ability to ``flip the answer'', in other words, to efficiently compute, given the description of an nondeterminstic Turing machine $M$ and an input $x$, the value $1-\fun{M}{x}$. It is not obvious how to do this using the universal nondeterministic machine: it is unclear how a nondeterministic machine can just ``flip the answer''. Specifically, we do not expect that that the complement of an $\ntime{n}$ language will be in $\ntime{n^{1.5}}$. Now of course, the complement of every $\ntime{n}$ language is trivially decidable in exponential time (even deterministically) by examining all the 
+possibilities for the machine's nondeterministic choices, but on first sight this seems to be completely irrelevant to proving $\ntime{n}\subsetneq\ntime{n^{1.5}}$. Surprisingly, this trivial exponential simulation of a nondeterministic machine does suffice to establish a hierarchy theorem. The key idea will be lazy diagonalization, so named because the new machine $D$ is in no hurry to diagonalize and only ensures that it flips the answer of each linear time nondeterminstic Turing machine $M_i$ in only one string out of a sufficiently large (exponentially large) set of strings. Define the function $\funsig{f}{\NNN}{\NNN}$ as follows: $\ffun{1}=2$ and $\ffun{i+1}=2^{\ffun{i}^{1.2}}$. Given $n$, it's not hard to find in $\bigoh{n^1.5}$ time the number $i$ such that $n$ is sandwiched between $\ffun{i}$ and $\ffun{i+1}$. Our diagonalizing machine $D$ will try to flip the answer of $M_i$ on some input in the set $\left\{1^n:\ffun{i}<n\leq\ffun{i+1}\right\}$. $D$ is defined as follows:
+\begin{quote}
+``On input $x$, if $x\notin1^*$, reject. If $x=1^n$, then compute $i$ such that $\ffun{i}<n\leq\ffun{i+1}$ and
+\begin{enumerate}
+ \item If $\ffun{i}<n<\ffun{i+1}$ then simulate $M_i$ on input $1^{n+1}$ using nondeterminism in $n^{1.1}$ time and output its answer. (If $M_i$ has not halted in this time, then halt and accept.)
+ \item If $n=\ffun{i+1}$, accept $1^n$ if and only if $M_i$ rejects $1^{\ffun{i}+1}$ in $(\ffun{i}+1)^{1.1}$ time.''
+\end{enumerate}
+\end{quote}
+Part 2 requires going through all possible $2^(\ffun{i}+1)^{1.1}$ branches of $M_i$ on input $1^{\ffun{i}+1}$, but that is fine since the input size $\ffun{i+1}$ is $2^{\ffun{i}^{1.2}}$. Hence the nondeterminstic Turing machine $D$ runs in $\bigoh{n^{1.5}}$ time. Let $L$ be the language decided by $D$. We claim that $L\notin\ntime{n}$. Indeed, suppose for the sake of contradiction that $L$ is decided by an nondeterminstic Turing machine $M$ running in $cn$ steps (for some constant $c$). Since each nondeterminstic Turing machine is represented by infinitely many strings, we can find $i$ large enough such that $M=M_i$ and on inputs of length $n\geq\ffun{i}$, $M_i$ can be simulated in less than $n^{1.1}$ steps. This means that the two steps in the description of $D$ ensure, respectively, that 
+
+\begin{eqnarray}
+\txIf\ffun{i}<n<\ffun{i+1},&\txthen\fun{D}{1^n}=\fun{M_i}{1^{n+1}}\label{eqn:ndtht33}\\
+\txwhereas&\fun{D}\neq\fun{M_i}{1^{\ffun{i}+1}}\label{eqn:ndtht34}
+\end{eqnarray}
+
+By our assumption $M_i$ and $D$ agree on all inputs $1^n$ for $n$ in the semi-open interval $\left(\ffun{i},\ffun{i+1}\right]$. Together with (\ref{eqn:ndtht33}), this implies that $\fun{D}{1^{\ffun{i+1}}}=\fun{M_i}{1^{\ffun{i}+1}}$, contradicting (\ref{eqn:ndtht34}).\cite{arora2009computational}
+\end{proof}
+\end{theo}
+
+\begin{twocolumn}
+\bibliographystyle{alpha}
+\bibliography{definitions}
+\printindex
+\end{twocolumn}
+\end{document}
