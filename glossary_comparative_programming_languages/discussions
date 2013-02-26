@@ -1,0 +1,3 @@
+Overriding versus Overloading/{Overloading means their are two or more methods with the same name but with different signatures, therefore static typed languages can resolve them at compile time. Overriding means their is a method in a parent class who is redefined in a subclass (but with the same signature). This must be resolved at runtime (with dynamic bindings). Overriding and overloading can interact with each other in tricky but predictable ways.}
+Problems with Single Inheritance/{The problem with single inheritance is that a class could be the sum of two other classes. Since only one class can be the superclass, the methods of the otherclass should be reimplemented.}
+
