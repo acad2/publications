@@ -1,0 +1,24 @@
+\documentclass{article}
+\title{The SAT problem:\\An in depth analysis}
+\author{Willem Van Onsem}
+\begin{document}
+\maketitle
+\tableofcontents
+\newtheorem{problem}{Problem}
+\newtheorem{definition}{Definition}
+\section{Number of Problems}
+An interesting question is how many unique SAT-problems we can generate given the number of variables $n_x$. The solution to this question is quite straightforward. Since their are $n$ variables, we can give a value to each configuration. Therefore the number of SAT-problems is:
+\begin{equation}
+n\left(\mbox{problems with $n$ variables}\right)=2^n
+\end{equation}
+A more interesting question is therefore how expressive SAT is: how many problems we can represent with $k$ expressions. A problem with this question, is that we can make expressions as long as we want and therefore as long we can write a single expression, the number of SAT-problems is again $2^n$. If we restrict our notation to $3$-SAT however, the problem is more complex.
+\subsection{With 3-SAT expressiveness}
+We can formalize the problem as:
+\begin{problem}[Expressiveness of 3-SAT]
+Given $k$ expressions in the 3-SAT problem, what are the numbers of $3$-SAT problems we can specify?
+\end{problem}
+A first remark is that we can only use $3k$ variables. One could of course argue that the number of expressions, doesn't state that the number of variables are restricted. However defining variables who are not used is quite useless.
+\subsubsection{The expressiveness of a single expression}
+A first problem we have to tackle is the expressiveness of a single expression.
+\subsection{Number of Local Maxima}
+\end{document}
