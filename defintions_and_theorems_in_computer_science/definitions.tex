@@ -7,11 +7,14 @@
 \SetWatermarkScale{7}
 \usepackage[cm]{fullpage}
 \makeindex
+\newcommand{\group}[1]{\ensuremath{\left\{\begin{array}{l}#1\end{array}\right.}}
 \newcommand{\fun}[2]{\ensuremath{#1\left(#2\right)}}
 \newcommand{\compclass}[1]{\textsc{\textbf{#1}}}
 \newcommand{\bint}[4]{\ensuremath{\displaystyle\int_{#3}^{#4}{#1\ d#2}}}
 \newcommand{\cd}{\ensuremath{\top\!\!\!\top}}
 \newcommand{\ci}{\ensuremath{\bot\!\!\!\bot}}
+\newcommand{\tuple}[1]{\ensuremath{\left\langle #1\right\rangle}}
+\newcommand{\brak}[1]{\ensuremath{\left( #1\right)}}
 \newcommand{\ffun}[1]{\fun{f}{#1}}
 \newcommand{\gfun}[1]{\fun{g}{#1}}
 \newcommand{\pfun}[1]{\fun{p}{#1}}
@@ -68,11 +71,10 @@
 \end{titlepage}
 \tableofcontents
 \newpage
-\chapter{Definitions}
 
-\section{Mathematics and Formalisms}
+\chapter{Mathematics and Formalisms}
 
-\subsection{Operator Properties}
+\section{Operator Properties}
 
 \begin{defi}[Commutative operation]
 A binary operation $\oplus$ is \term{commutative} if $a\oplus b = b\oplus a$ for all $a,b\in S$.\cite{Oppliger:2011:CC:2049860}
@@ -94,7 +96,7 @@ A binary operator $\oplus$ is said to be \term{quasi-associative} if there is a 
 A ternary operator $f$ is said to be \term{bi-quasi-associative} if there is a semi-associative operator $\otimes$ and two functions $f_L'$, $f_R'$ such that for any $l$, $n$, $r$, $f l n r = l \otimes f_L' n r = r \otimes f_R' n l$. We can fix a bi-quasi-associative operator $f$ by providing $\otimes$, $\oplus$ (associative operator for $\otimes$), $f_L'$ and $f_R'$, therefore, we will write $f$ with 4-tuple as $f\equiv \left[\left[\otimes,\oplus, f_L', f_R' \right]\right]$.\cite{conf/europar/MatsuzakiHT03}
 \end{defi}
 
-\subsection{Algebraic Structures}
+\section{Algebraic Structures}
 
 \begin{defi}[Left identity element] Let $S$ be a set and $\oplus$ a binary operation on $S$. An element $e\in S$ is called \term{left identity element} if $e\oplus a = a$ for all $a\in S$.\cite{Oppliger:2011:CC:2049860}
 \end{defi}
@@ -250,199 +252,6 @@ An element $x\in\ZZZ^*_n$ is a \term{quadratic residue} modulo $n$ if there exis
 \cite{Oppliger:2011:CC:2049860}
 \end{defi}
 
-\subsection{Probability Theory}
-
-\begin{defi}[Conditional Probability (Bayes' rule)]
-The probability of event $x$ conditioned on knowing event $y$ (or more shortly, the \term{conditional probability} of $x$ given $y$) is defined as:
-\begin{equation}
-\pcond{x}{y}\equiv\displaystyle\frac{\pfun{x}}{\pfun{y}}
-\end{equation}
-If $\pfun{y}=0$, then $\pcond{x}{y}$ is not defined. This definition is also called \term{Bayes' rule}.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Probability Density Functions]
-For a single continuous variable $x$, the \term{probability density function} $\pfun{x}$ is a function such that:
-\begin{equation}
-\left\{\begin{array}{l}
-\pfun{x}\geq0\\
-\bint{\pfun{x}}{x}{-\infty}{+\infty}=1\\
-\pfun{a<x<b}=\bint{\pfun{x}}{x}{a}{b}
-\end{array}\right.
-\end{equation}
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Independence]
-Events $x$ and $y$ are independent if knowing one event gives no extra information about the other event. Mathematically, this is expressed by:
-\begin{equation}
-\pfun{x,y}=\pfun{x}\pfun{y}
-\end{equation}
-Provided that $\pfun{x}\neq0$ and $\pfun{y}\neq0$ \term{independence} of $x$ and $y$ is equivalent to:
-\begin{equation}
-\pcond{x}{y}=\pfun{x}\leftrightarrow\pcond{y}{x}=\pfun{y}
-\end{equation}
-If $\pcond{x}{y}=\pfun{x}$ for all states of $x$ and $y$, then the variables $x$ and $y$ are said to be independent. If
-\begin{equation}
-\pfun{x,y}=k\ffun{x}\gfun{y}
-\end{equation}
-for some constant $k$, and positive functions $f$ and $g$ then $x$ and $y$ are independent.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Prior likelihood and Posterior]
-For data $\calD$ and variable $\theta$, Bayes' rule tells us how to update our prior beliefs about the variable $\theta$ in light of the data to a posterior belief:
-\begin{equation}
-\underbrace{\pcond{\theta}{\calD}}_{\mbox{\term{posterior}}}=\displaystyle\frac{\underbrace{\pcond{\calD}{\theta}}_{\mbox{\term{likelihood}}}\underbrace{\pfun{\theta}}_{\mbox{\term{prior}}}}{\underbrace{\pfun{\calD}}_{\mbox{\term{evidence}}}}
-\end{equation}
-The evidence is also called the \term{marginal likelihood}. The term likelihood is used for the probability that a model generates observed data. More fully, if we condition on the model $M$, we have
-\begin{equation}
-\pcond{\theta}{\calD,M}=\displaystyle\frac{\pcond{\calD}{\theta,M}\pcond{\theta}{M}}{\pcond{\calD}{M}}
-\end{equation}
-where we see the role of the likelihood $\pcond{\calD}{\theta,M}$ and marginal likelihood $\pcond{\calD}{M}$. likelihood is also called the \term{model likelihood}. The \termabbrev{most probable a posteriori}{MAP} setting is that which maximizes the posterior,
-\begin{equation}
-\theta_*=\argmax[\theta]{\pcond{\theta}{\calD,M}}
-\end{equation}
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Conditional Independence]
-\begin{equation}
-\calX\ci\calY|\calZ
-\end{equation}
-denotes that the two sets of variables $\calX$ and $\calY$ are independent of each other provided we know the state of the set of variables $\calZ$. For full \term{conditional independence}, $\calX$ and $\calZ$ must be independent given all states of $\calZ$. Formally, this means that
-\begin{equation}
-\pcond{\calX,\calY}{\calZ}=\pcond{\calX}{\calZ}\pcond{\calY}{\calZ}
-\end{equation}
-for all states of $\calX$, $\calY$, $\calZ$. In case the conditioning set is empty we may also write $\calX\ci\calY$ for $\calX\ci\calY|\emptyset$, in which case $\calX$ is \term{unconditionally independent} of $\calY$. If $\calX$ and $\calY$ are not conditionally independent, they are \term{conditionally dependent}. This is written:
-\begin{equation}
-\calX\cd\calY|\calZ
-\end{equation}
-\cite{Barber2011}
-\end{defi}
-
-\section{Graph Theory}
-
-\begin{defi}[Graph]
-A \term{graph} $G$ consists of \term{vertices}{nodes} and \termor{edges}{links} between the vertices. Edges may be directed (they have an arrow in a single direction) or undirected. A graph with all edges directed is called a \term{directed graph}, and one with all edges undirected is called an \term{undirected graph}.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Path, Ancestors, Descendants]
-A \term{path} $A\mapsto B$ from node $A$ to node $B$ is a sequence of vertices $A=A_0,A1,\ldots,A_{n-1},A_n=B$, with $\left(A_i,A_{i+1}\right)$ an edge in the graph, thereby connecting $A$ to $B$. For a directed graph this means that a path is a sequence of nodes which when we follow the direction of the arrows leads us from $A$ to $B$. The vertices $A$ such that $A\mapsto B$ and $B\nmapsto A$ are the \term{ancestors} of $B$. The vertices $B$ such that $A → B$ and $B\nmapsto A$ are the \term{descendants} of $A$.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Directed Acyclic Graph]
-A \termabbrev{Directed Acyclic Graph}{DAG} is a graph $G$ with directed edges (arrows on each link) between the vertices (nodes) such that by following a path of vertices from one node to another along the direction of each edge no path will revisit a vertex. In a DAG the ancestors of $B$ are those nodes who have a directed path ending at $B$. Conversely, the descendants of $A$ are those nodes who have a directed path starting at $A$.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Neighbour]
-For an undirected graph G the \term{neighbour}s of $x$, $\fun{\mbox{ne}}{x}$ are those nodes directly connected to $x$.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Clique, Cliquo]
-Given an undirected graph, a \term{clique} is a maximally connected subset of vertices. All the members of the clique are connected to each other; furthermore there is no larger clique that can be made from a clique. A non-maximal clique is sometimes called a \term{cliquo}.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Singly-Connected Graph, Multiply-Connected Graph, Tree, Loopy]
-A \termor{singly-connected graph}{tree} is a graph where there is only one path from a vertex $a$ to another vertex $b$. Otherwise the graph is a \termor{multiply-connected graph}{loopy}. This definition applies regardless of whether or not the edges in the graph are directed.
-\cite{Barber2011}
-\end{defi}
-
-\begin{defi}[Spanning Tree, Maximum Weight Spanning Tree]
-A \term{spanning tree} of an undirected graph $G$ is a singly-connected subset of the existing edges such that the resulting singly-connected graph covers all vertices of $G$. A \term{maximum weight spanning tree} is a spanning tree such that the sum of all weights on the edges of the tree is larger than for any other spanning tree of $G$.
-\cite{Barber2011}
-\end{defi}
-
-
-\section{Automata and Computability}
-
-\begin{defi}
-A \term{nondeterministic finite automaton} consists of a set $S$ of states. One of these states, $s0\in S$, is called the \term{starting state} of the automaton and a subset $F\subseteq S$ of the states are \term{accepting states}. Additionally, we have a set $T$ of \term{transitions}. Each transition $t$ connects a pair of states $s_1$ and $s_2$ and is labeled with a symbol, which is either a character $c$ from the alphabet $\Sigma$, or the symbol $\varepsilon$, which indicates an \term{epsilon-transition}. A transition from state $s$ to state $t$ on the symbol $c$ is written as $s^ct$.\cite{mogensen2009basics}
-\end{defi}
-
-\begin{defi}
-Given a set $M$ of nondeterministic finite automaton states, we define the \term{$\varepsilon$-closure(M)} to be the least (in terms of the subset relation) solution to the set equation:
-\begin{equation}
-\fun{\varepsilon\mbox{-closure}}{M} = M\cup \left\{t|s\in \fun{\varepsilon\mbox{-closure}}{M}\mbox{ and }s^\varepsilon t\in T \right\}
-\end{equation}
-Where $T$ is the set of transitions in the non deterministic finite automaton.\cite{mogensen2009basics}
-\end{defi}
-
-\begin{defi}[Big-Oh notation]
-If $f,g$ are two functions from $\NNN$ to $\NNN$, then we 
-\begin{enumerate}
- \item say that $f=\term{\bigoh{g}}$ if there exists a constant $c$ such that $\ffun{n}\leq c\gfun{n}$ for every sufficiently large $n$,
- \item say that $f=\term{\bigomega{g}}$ if $g = \bigoh{f}$,
- \item say that $f=\term{\bigtheta{g}}$ is $f = \bigoh{g}$ and $g = \bigoh{f}$,
- \item say that $f=\term{\smalloh{g}}$ if for every $\varepsilon>0$, $\ffun{n}\leq\varepsilon\gfun{n}$ for every sufficiently large $n$, and
- \item say that $f=\term{\smallomega{g}}$ if $g=\smalloh{f}$.
-\end{enumerate}
-\cite{arora2009computational}
-\end{defi}
-
-\begin{defi}[Computing a function and running time]
-Let $\btobfun{f}$ and let $\funsig{T}{\NNN}{\NNN}$ be some functions, and let $M$ be a Turing machine. We say that $M$ \term{computes $f$} if for every $x\in\binarystrings$, whenever $M$ is initialized to the start configuration on input $x$, then it halts with $\ffun{x}$ written on its output tape. We say $M$ \term{computes $f$ in $\fun{T}{n}$-time} if its computation on every input $x$ requires at most $\fun{T}{\left|x\right|}$ steps.
-\cite{arora2009computational}
-\end{defi}
-
-\begin{defi}[The class \compclass{DTIME}]
-Let $\funsig{T}{\NNN}{\NNN}$ be some function. A language $L$ is in $\fun{\term{\compclass{DTIME}}}{\fun{T}{n}}$ if and only f there is a Turing machine that runs in time $c\fun{T}{n}$ for some constant $c>0$ and decides $L$.
-\end{defi}
-
-\begin{defi}[The class \compclass{P}]
-\begin{equation}
-\term{\compclass{P}}=\displaystyle\cup_{c\geq1}\fun{\compclass{DTIME}}{n^c}.
-\end{equation}
-\cite{arora2009computational}
-\end{defi}
-
-\begin{defi}[The class \compclass{NTIME}]
-For every function $\funsig{T}{\NNN}{\NNN}$ and $L\subseteq\binarystrings$, we say that $L\in\fun{\term{\compclass{NTIME}}}{\fun{T}{n}}$ if there is a constant $c>0$ and a $c\fun{T}{n}$-time non deterministic Turing Machine $M$ such that for every $x\in\binarystrings$, $x\in L\leftrightarrow\fun{M}{x}=1$.
-\cite{arora2009computational}
-\end{defi}
-
-\begin{defi}[The class \compclass{NP}]
-\begin{equation}
-\term{\compclass{NP}}=\displaystyle\cup_{c\geq1}\fun{\compclass{NTIME}}{n^c}.
-\end{equation}
-\cite{arora2009computational}
-\end{defi}
-
-\begin{defi}[Reduction, \compclass{NP-hard} and \compclass{NP-complete}]
-A language $L\subseteq\binarystrings$ is \term{polynomial-time Karp reducible} to a language $L'\subseteq\binarystrings$ (sometimes shortened to just ``\term{polynomial-time reducible}''), denoted by $L\leq_p L'$, if there is a polynomial-time computable function $\btobfun{f}$ such that for every $x\in\binarystrings$, $x\in L$ if and only if $\ffun{x}\in L'$. We say that $L'$ is \term{\compclass{NP-hard}} if $L\leq_p L'$ for every $L\in\compclass{NP}$. We say that $L$ is \term{\compclass{NP-complete}} if $L'$ is \compclass{NP-hard} and $L'\in\compclass{NP}$.
-\cite{arora2009computational}
-\end{defi}
-
-\begin{defi}[Complement language]
-If $L\subseteq\binarystrings$ is a language, then we denote by $\overline{L}$ the \term{complement language} of $L$. That is, $\overline{L}=\binarystrings\setminus L$.
-\cite{arora2009computational}
-\end{defi}
-
-\begin{defi}[The class \compclass{coNP}]
-\begin{equation}
-\term{\compclass{coNP}}=\left\{\overline{L}:L\in\compclass{NP}\right\}.
-\end{equation}
-\cite{arora2009computational}
-\end{defi}
-
-\section{Artificial Intelligence}
-
-\begin{defi}
-A \term{neighborhood structure} is a function $\calN:\calS\rightarrow 2^\calS$ that assigns to every $s\in\calS$ a set of neighbors $\fun{\calN}{s}\subseteq\calS$. $\fun{\calN}{s}$ is called the neighborhood of $s$. Often, neighborhood structures are implicitly defined by specifying the changes that must be applied to a solution s in order to generate all its neighbors. The application of such an operator that produces a neighbor $s'\in\fun{\calN}{s}$ of a solution s is commonly called a \term{move}.\cite{alba05}
-\end{defi}
-
-\begin{defi}
-A \term{locally minimal solution} (or \term{local minimum}) with respect to a neighborhood structure $\calN$ is a solution $\hat{s}$ such that $\forall s\in\neigh{\hat{s}}:\ffun{\hat{s}}\leq\ffun{s}$. We call $\hat{s}$ a \term{strict locally minimum} if $\forall s\in\neigh{\hat{s}}:\ffun{\hats}<\ffun{s}$.\cite{alba05}
-\end{defi}
-
-
-\chapter{Theorems}
-
 \begin{theo}[Lagrange's Theorem]
 If $H$ is a subgroup of $G$, then $\left|H\right||\left|G\right|$ (i.e., the order of $H$ divides the order of $G$.
 \begin{proof}
@@ -550,8 +359,185 @@ Because $\gcdf{a,n}=1$, $a \left(\mod n\right)$ must be an element in $\ZZZ^*_n$
 \end{proof}
 \end{theo}
 
-%\begin{theo}[Euler's criterion]
-%\end{theo}TODO
+\section{Probability Theory}
+
+\begin{defi}[Conditional Probability (Bayes' rule)]
+The probability of event $x$ conditioned on knowing event $y$ (or more shortly, the \term{conditional probability} of $x$ given $y$) is defined as:
+\begin{equation}
+\pcond{x}{y}\equiv\displaystyle\frac{\pfun{x}}{\pfun{y}}
+\end{equation}
+If $\pfun{y}=0$, then $\pcond{x}{y}$ is not defined. This definition is also called \term{Bayes' rule}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Probability Density Functions]
+For a single continuous variable $x$, the \term{probability density function} $\pfun{x}$ is a function such that:
+\begin{equation}
+\left\{\begin{array}{l}
+\pfun{x}\geq0\\
+\bint{\pfun{x}}{x}{-\infty}{+\infty}=1\\
+\pfun{a<x<b}=\bint{\pfun{x}}{x}{a}{b}
+\end{array}\right.
+\end{equation}
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Independence]
+Events $x$ and $y$ are independent if knowing one event gives no extra information about the other event. Mathematically, this is expressed by:
+\begin{equation}
+\pfun{x,y}=\pfun{x}\pfun{y}
+\end{equation}
+Provided that $\pfun{x}\neq0$ and $\pfun{y}\neq0$ \term{independence} of $x$ and $y$ is equivalent to:
+\begin{equation}
+\pcond{x}{y}=\pfun{x}\leftrightarrow\pcond{y}{x}=\pfun{y}
+\end{equation}
+If $\pcond{x}{y}=\pfun{x}$ for all states of $x$ and $y$, then the variables $x$ and $y$ are said to be independent. If
+\begin{equation}
+\pfun{x,y}=k\ffun{x}\gfun{y}
+\end{equation}
+for some constant $k$, and positive functions $f$ and $g$ then $x$ and $y$ are independent.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Prior likelihood and Posterior]
+For data $\calD$ and variable $\theta$, Bayes' rule tells us how to update our prior beliefs about the variable $\theta$ in light of the data to a posterior belief:
+\begin{equation}
+\underbrace{\pcond{\theta}{\calD}}_{\mbox{\term{posterior}}}=\displaystyle\frac{\underbrace{\pcond{\calD}{\theta}}_{\mbox{\term{likelihood}}}\underbrace{\pfun{\theta}}_{\mbox{\term{prior}}}}{\underbrace{\pfun{\calD}}_{\mbox{\term{evidence}}}}
+\end{equation}
+The evidence is also called the \term{marginal likelihood}. The term likelihood is used for the probability that a model generates observed data. More fully, if we condition on the model $M$, we have
+\begin{equation}
+\pcond{\theta}{\calD,M}=\displaystyle\frac{\pcond{\calD}{\theta,M}\pcond{\theta}{M}}{\pcond{\calD}{M}}
+\end{equation}
+where we see the role of the likelihood $\pcond{\calD}{\theta,M}$ and marginal likelihood $\pcond{\calD}{M}$. likelihood is also called the \term{model likelihood}. The \termabbrev{most probable a posteriori}{MAP} setting is that which maximizes the posterior,
+\begin{equation}
+\theta_*=\argmax[\theta]{\pcond{\theta}{\calD,M}}
+\end{equation}
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Conditional Independence]
+\begin{equation}
+\calX\ci\calY|\calZ
+\end{equation}
+denotes that the two sets of variables $\calX$ and $\calY$ are independent of each other provided we know the state of the set of variables $\calZ$. For full \term{conditional independence}, $\calX$ and $\calZ$ must be independent given all states of $\calZ$. Formally, this means that
+\begin{equation}
+\pcond{\calX,\calY}{\calZ}=\pcond{\calX}{\calZ}\pcond{\calY}{\calZ}
+\end{equation}
+for all states of $\calX$, $\calY$, $\calZ$. In case the conditioning set is empty we may also write $\calX\ci\calY$ for $\calX\ci\calY|\emptyset$, in which case $\calX$ is \term{unconditionally independent} of $\calY$. If $\calX$ and $\calY$ are not conditionally independent, they are \term{conditionally dependent}. This is written:
+\begin{equation}
+\calX\cd\calY|\calZ
+\end{equation}
+\cite{Barber2011}
+\end{defi}
+
+\chapter{Graph Theory}
+
+\begin{defi}[Graph]
+A \term{graph} $G$ consists of \term{vertices}{nodes} and \termor{edges}{links} between the vertices. Edges may be directed (they have an arrow in a single direction) or undirected. A graph with all edges directed is called a \term{directed graph}, and one with all edges undirected is called an \term{undirected graph}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Path, Ancestors, Descendants]
+A \term{path} $A\mapsto B$ from node $A$ to node $B$ is a sequence of vertices $A=A_0,A1,\ldots,A_{n-1},A_n=B$, with $\left(A_i,A_{i+1}\right)$ an edge in the graph, thereby connecting $A$ to $B$. For a directed graph this means that a path is a sequence of nodes which when we follow the direction of the arrows leads us from $A$ to $B$. The vertices $A$ such that $A\mapsto B$ and $B\nmapsto A$ are the \term{ancestors} of $B$. The vertices $B$ such that $A → B$ and $B\nmapsto A$ are the \term{descendants} of $A$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Directed Acyclic Graph]
+A \termabbrev{Directed Acyclic Graph}{DAG} is a graph $G$ with directed edges (arrows on each link) between the vertices (nodes) such that by following a path of vertices from one node to another along the direction of each edge no path will revisit a vertex. In a DAG the ancestors of $B$ are those nodes who have a directed path ending at $B$. Conversely, the descendants of $A$ are those nodes who have a directed path starting at $A$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Neighbour]
+For an undirected graph G the \term{neighbour}s of $x$, $\fun{\mbox{ne}}{x}$ are those nodes directly connected to $x$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Clique, Cliquo]
+Given an undirected graph, a \term{clique} is a maximally connected subset of vertices. All the members of the clique are connected to each other; furthermore there is no larger clique that can be made from a clique. A non-maximal clique is sometimes called a \term{cliquo}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Singly-Connected Graph, Multiply-Connected Graph, Tree, Loopy]
+A \termor{singly-connected graph}{tree} is a graph where there is only one path from a vertex $a$ to another vertex $b$. Otherwise the graph is a \termor{multiply-connected graph}{loopy}. This definition applies regardless of whether or not the edges in the graph are directed.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Spanning Tree, Maximum Weight Spanning Tree]
+A \term{spanning tree} of an undirected graph $G$ is a singly-connected subset of the existing edges such that the resulting singly-connected graph covers all vertices of $G$. A \term{maximum weight spanning tree} is a spanning tree such that the sum of all weights on the edges of the tree is larger than for any other spanning tree of $G$.
+\cite{Barber2011}
+\end{defi}
+
+
+\chapter{Automata and Computability}
+
+\begin{defi}
+A \term{nondeterministic finite automaton} consists of a set $S$ of states. One of these states, $s0\in S$, is called the \term{starting state} of the automaton and a subset $F\subseteq S$ of the states are \term{accepting states}. Additionally, we have a set $T$ of \term{transitions}. Each transition $t$ connects a pair of states $s_1$ and $s_2$ and is labeled with a symbol, which is either a character $c$ from the alphabet $\Sigma$, or the symbol $\varepsilon$, which indicates an \term{epsilon-transition}. A transition from state $s$ to state $t$ on the symbol $c$ is written as $s^ct$.\cite{mogensen2009basics}
+\end{defi}
+
+\begin{defi}
+Given a set $M$ of nondeterministic finite automaton states, we define the \term{$\varepsilon$-closure(M)} to be the least (in terms of the subset relation) solution to the set equation:
+\begin{equation}
+\fun{\varepsilon\mbox{-closure}}{M} = M\cup \left\{t|s\in \fun{\varepsilon\mbox{-closure}}{M}\mbox{ and }s^\varepsilon t\in T \right\}
+\end{equation}
+Where $T$ is the set of transitions in the non deterministic finite automaton.\cite{mogensen2009basics}
+\end{defi}
+
+\begin{defi}[Big-Oh notation]
+If $f,g$ are two functions from $\NNN$ to $\NNN$, then we 
+\begin{enumerate}
+ \item say that $f=\term{\bigoh{g}}$ if there exists a constant $c$ such that $\ffun{n}\leq c\gfun{n}$ for every sufficiently large $n$,
+ \item say that $f=\term{\bigomega{g}}$ if $g = \bigoh{f}$,
+ \item say that $f=\term{\bigtheta{g}}$ is $f = \bigoh{g}$ and $g = \bigoh{f}$,
+ \item say that $f=\term{\smalloh{g}}$ if for every $\varepsilon>0$, $\ffun{n}\leq\varepsilon\gfun{n}$ for every sufficiently large $n$, and
+ \item say that $f=\term{\smallomega{g}}$ if $g=\smalloh{f}$.
+\end{enumerate}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Computing a function and running time]
+Let $\btobfun{f}$ and let $\funsig{T}{\NNN}{\NNN}$ be some functions, and let $M$ be a Turing machine. We say that $M$ \term{computes $f$} if for every $x\in\binarystrings$, whenever $M$ is initialized to the start configuration on input $x$, then it halts with $\ffun{x}$ written on its output tape. We say $M$ \term{computes $f$ in $\fun{T}{n}$-time} if its computation on every input $x$ requires at most $\fun{T}{\left|x\right|}$ steps.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{DTIME}]
+Let $\funsig{T}{\NNN}{\NNN}$ be some function. A language $L$ is in $\fun{\term{\compclass{DTIME}}}{\fun{T}{n}}$ if and only f there is a Turing machine that runs in time $c\fun{T}{n}$ for some constant $c>0$ and decides $L$.
+\end{defi}
+
+\begin{defi}[The class \compclass{P}]
+\begin{equation}
+\term{\compclass{P}}=\displaystyle\cup_{c\geq1}\fun{\compclass{DTIME}}{n^c}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{NTIME}]
+For every function $\funsig{T}{\NNN}{\NNN}$ and $L\subseteq\binarystrings$, we say that $L\in\fun{\term{\compclass{NTIME}}}{\fun{T}{n}}$ if there is a constant $c>0$ and a $c\fun{T}{n}$-time non deterministic Turing Machine $M$ such that for every $x\in\binarystrings$, $x\in L\leftrightarrow\fun{M}{x}=1$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{NP}]
+\begin{equation}
+\term{\compclass{NP}}=\displaystyle\cup_{c\geq1}\fun{\compclass{NTIME}}{n^c}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Reduction, \compclass{NP-hard} and \compclass{NP-complete}]
+A language $L\subseteq\binarystrings$ is \term{polynomial-time Karp reducible} to a language $L'\subseteq\binarystrings$ (sometimes shortened to just ``\term{polynomial-time reducible}''), denoted by $L\leq_p L'$, if there is a polynomial-time computable function $\btobfun{f}$ such that for every $x\in\binarystrings$, $x\in L$ if and only if $\ffun{x}\in L'$. We say that $L'$ is \term{\compclass{NP-hard}} if $L\leq_p L'$ for every $L\in\compclass{NP}$. We say that $L$ is \term{\compclass{NP-complete}} if $L'$ is \compclass{NP-hard} and $L'\in\compclass{NP}$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Complement language]
+If $L\subseteq\binarystrings$ is a language, then we denote by $\overline{L}$ the \term{complement language} of $L$. That is, $\overline{L}=\binarystrings\setminus L$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{coNP}]
+\begin{equation}
+\term{\compclass{coNP}}=\left\{\overline{L}:L\in\compclass{NP}\right\}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
 
 \begin{theo}[Efficient universal Turing machine]
 \label{theo:eutm}
@@ -614,6 +600,79 @@ Part 2 requires going through all possible $2^(\ffun{i}+1)^{1.1}$ branches of $M
 By our assumption $M_i$ and $D$ agree on all inputs $1^n$ for $n$ in the semi-open interval $\left(\ffun{i},\ffun{i+1}\right]$. Together with (\ref{eqn:ndtht33}), this implies that $\fun{D}{1^{\ffun{i+1}}}=\fun{M_i}{1^{\ffun{i}+1}}$, contradicting (\ref{eqn:ndtht34}).\cite{arora2009computational}
 \end{proof}
 \end{theo}
+
+\chapter{Artificial Intelligence}
+
+\section{First-Order Logic}
+
+\begin{defi}[Signature]
+$S$ is a \term{signature} if $S$ is a four-tuple \tuple{P,F,r,C} where:
+\begin{enumerate}
+\item $P$ is a set of \term{predicate symbols} \brak{P_1,P_2,\ldots,P_n},
+\item $F$ is a set of \term{function symbols} \brak{F_1,F_2,\ldots,F_m},
+\item $r$ is \term{arity} or \term{degree of functions} and relations. For each $P_i$ respectively $F_j$, \fun{r}{P_i} respectively \fun{r}{F_j} is a non-zero natural number denoting the arity of $P_i$ respectively $F_j$,
+\item $C$ is a set of \term{constant symbols}.
+\end{enumerate}
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
+
+\begin{defi}[Alphabet]
+An \term{alphabet} $\Sigma$ consists of the following symbols:
+\begin{enumerate}
+\item Signature $S=\tuple{P,F,r,C}$.
+\item \term{Collection of variables} $V$.
+\item \term{Operators}: $\neg$ (\term{negation}), $\wedge$ (\term{conjunction}), $\vee$ (\term{disjunction}), $\rightarrow$ (\term{implication}), $\leftrightarrow$ (\term{equivalence}).
+\item \term{Quantifiers}: $\forall$ (\term{forall}), $\exists$ (\term{exists}).
+\item \term{Parentheses} and \term{punctuation symbols}: $($, $)$ and $,$.
+\end{enumerate}
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
+
+\begin{defi}[Term]
+A \term{term} is defined inductively as follows:
+\begin{enumerate}
+\item Variable is term.
+\item Constant is term.
+\item If $f$ is a function symbol ($f\in F$) with arity $m$ and $t_1,t_2,\ldots,t_m$ are terms of $\Sigma$, then \ffun{t_1,t_2,\ldots,t_m} is term of $\Sigma$.
+\end{enumerate}
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
+
+
+\section{Optimization Problems}
+
+\begin{defi}
+A \term{neighborhood structure} is a function $\calN:\calS\rightarrow 2^\calS$ that assigns to every $s\in\calS$ a set of neighbors $\fun{\calN}{s}\subseteq\calS$. $\fun{\calN}{s}$ is called the neighborhood of $s$. Often, neighborhood structures are implicitly defined by specifying the changes that must be applied to a solution s in order to generate all its neighbors. The application of such an operator that produces a neighbor $s'\in\fun{\calN}{s}$ of a solution s is commonly called a \term{move}.\cite{alba05}
+\end{defi}
+
+\begin{defi}
+A \term{locally minimal solution} (or \term{local minimum}) with respect to a neighborhood structure $\calN$ is a solution $\hat{s}$ such that $\forall s\in\neigh{\hat{s}}:\ffun{\hat{s}}\leq\ffun{s}$. We call $\hat{s}$ a \term{strict locally minimum} if $\forall s\in\neigh{\hat{s}}:\ffun{\hats}<\ffun{s}$.\cite{alba05}
+\end{defi}
+
+\chapter{Game Theory}
+
+\begin{defi}
+A \term{game} $A$ consists of the state of the \term{game objects} ($S$), the input of the system (player's input, $M$) and the abstract control system (time-independent, $F$) which governs the $S$ under the current $M$:
+\begin{equation}
+\mbox{Game }A=\tuple{S,M,F}
+\end{equation}
+\cite{journals/procedia/KosmadoudiLRSLSS12}
+\end{defi}
+
+\begin{defi}
+\term{Neutral element} of $M$ (\term{empty input}, $\epsilon$) the current state of the game ($s$) with input ($p$) broken down into two consecutive inputs ($m$,$n$):
+\begin{equation}
+\group{
+\fun{F}{s,\epsilon}=s\mbox{ with }s\in S\\
+\fun{F}{s,mn}=\fun{F}{\fun{F}{s,m},n}\mbox{ with } s\in S\mbox{ and }m,n\in M
+}
+\end{equation}
+\cite{journals/procedia/KosmadoudiLRSLSS12}
+\end{defi}
+
+
+%\begin{theo}[Euler's criterion]
+%\end{theo}TODO
 
 \begin{twocolumn}
 \bibliographystyle{alpha}
