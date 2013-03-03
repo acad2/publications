@@ -9,9 +9,10 @@
 \section{Number of Problems}
 An interesting question is how many unique SAT-problems we can generate given the number of variables $n_x$. The solution to this question is quite straightforward. Since their are $n$ variables, we can give a value to each configuration. Therefore the number of SAT-problems is:
 \begin{equation}
-n\left(\mbox{problems with $n$ variables}\right)=2^n
+n\left(\mbox{problems with $n$ variables}\right)=\displaystyle\frac{2^{2^n}}{2^n\cdot n!}
 \end{equation}
-A more interesting question is therefore how expressive SAT is: how many problems we can represent with $k$ expressions. A problem with this question, is that we can make expressions as long as we want and therefore as long we can write a single expression, the number of SAT-problems is again $2^n$. If we restrict our notation to $3$-SAT however, the problem is more complex.
+\paragraph{$k$-expressions}
+A more interesting question is therefore how expressive SAT is: how many problems we can represent with $k$ expressions. A problem with this question, is that we can make expressions as long as we want and therefore as long we can write a single expression, the number of SAT-problems is again $2^{2^n}/2^n\cdot n!$. If we restrict our notation to $3$-SAT however, the problem is more complex.
 \subsection{With 3-SAT expressiveness}
 We can formalize the problem as:
 \begin{problem}[Expressiveness of 3-SAT]
