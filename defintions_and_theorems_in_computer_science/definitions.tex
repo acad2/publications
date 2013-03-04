@@ -638,6 +638,42 @@ A \term{term} is defined inductively as follows:
 \cite{conf/fedcsis/Telnarova12}
 \end{defi}
 
+\begin{defi}[Atom]
+If $p$ is predicate symbol with arity $m$ and $t_1,t_2,\ldots,t_m$ are terms of $\Sigma$, then $\fun{p}{t_1,t_2,\ldots,t_m}$ is an \termor{atomic formula}{atom}. An atomic formula is a \term{formula} and all occurrences of variables in an atomic formula are free.
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
+
+\begin{defi}[Formula]
+A \term{formula} is defined as follows:
+\begin{enumerate}
+ \item An atom is a formula.
+ \item If $H$ and $G$ are formulas, then:
+ \begin{enumerate}
+  \item $\neg H$ is a formula, the occurrence of variables in $\neg H$ is free respectively bound if it is free respectively bound in $H$,
+  \item $H\wedge G$ is a formula, the occurrence of variables in $H\wedge G$ is free respectively bound if it is free respectively bound in $H$ or $G$,
+  \item $H\vee G$ is a formula, the occurrence of variables in $H\vee G$ is free respectively bound if it is free respectively bound in $H$ or $G$,
+  \item $H\rightarrow G$ is a formula, the occurrence of variables in $H\rightarrow G$ is free respectively bound if it is free respectively bound in $H$ or $G$,
+  \item $H\leftrightarrow G$ is a formula, the occurrence of variables in $H\leftrightarrow G$ is free respectively bound if it is free respectively bound in $H$ or $G$.
+ \end{enumerate}
+ \item If $H$ is a formula and $x$ is a variable, then $\forall x:H$ and $\exists x:H$ are formulas. All occurrences of $x$ are bound.
+\end{enumerate}
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
+
+\begin{defi}[Literal]
+A \term{literal} $L$ is an atom or the negation of an atom.
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
+
+\begin{defi}[Clause]
+A \term{clause} is a formula such as $\forall\vec{x}:L_1\vee L_2\vee\ldots\vee L_m$ where each $L_i$ is a literal and $\vec{x}=\brak{x_1,x_2,\ldots,x_n}$ are all the variables occurring in $L_1\vee L_2\vee\ldots\vee L_m$.
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
+
+\begin{defi}[Horn-clauses]
+\term{Horn-clause}s have the form: $\forall x_1,x_2,\ldots,x_n:L_1\wedge L_2\wedge\ldots\wedge L_m\rightarrow L$ where $L,L_1\wedge L_2\wedge\ldots\wedge L_m$ are a literals and $x_1,x_2,\ldots,x_n$ are all variables having free occurrences in $L,L_1\wedge L_2\wedge\ldots\wedge L_m$.
+\cite{conf/fedcsis/Telnarova12}
+\end{defi}
 
 \section{Optimization Problems}
 
