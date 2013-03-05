@@ -1,0 +1,28 @@
+\chapter{Databases and Web applications}
+\begin{defi}[Web application]
+A \term{web application} $\calA$ is a tuple \tuple{W,S,I,A,W_0,W_{\epsilon},M,T}, where:
+\begin{enumerate}
+\item $S$, $I$, $A$ are disjoint finite sets of state, input, and action values. Constant values can be shared among these sets.
+\item $W$ is finite set of the representations of \term{web pages},
+\item $W_0\in W$ is the representation of \term{home page}, $W_{\epsilon}\notin W$ is the the representation of \term{error page},
+\item $M$ is a set of \term{business metadata} values,
+\item $T$ is a set of \term{technical (non-model) metadata} values
+\end{enumerate}
+In the testing process tester has to pass through all the test case scenario steps defined in selected test case scenario. A specification of an interaction of the tester with system under test is defined in each of test case scenario step. Instructions describing the test case scenario step are defined clearly without ambiguities. For brevity we will limit the user interaction with the SUT to only one action that is captured in the test scenario step.
+\cite{conf/fedcsis/FrajtakBJ12}
+\end{defi}
+
+\begin{defi}[Test case scenario]
+A \term{test case scenario} is a finite sequence $\accol{\tuple{V_i,S_i,I_i,A_i,R_i,TD_i}}_{i\geq 0}$ where $V_i$ is a web page page representation used in step $i$, $S_i\subseteq S$ is set of state values used in step $i$, $I_i\subseteq I$ is set of values of input elements used in step $i$, $A_i\in A$ is an action taken in step $i$, $R_i$ is set of restricting constraints rules, $TD_i\subseteq S_i\cup I_i\cup M\cup T$ is finite set of state, input, business and technical metadata values.
+\cite{conf/fedcsis/FrajtakBJ12}
+\end{defi}
+
+\begin{defi}[Inbound client-side constraint rule]
+An \term{inbound client-side constraint rule} is a function \funsig{\phi_{\mbox{in}}}{I}{\binary}.
+\cite{conf/fedcsis/FrajtakBJ12}
+\end{defi}
+
+\begin{defi}[Inbound server-side constraint rule]
+An \term{inbound server-side constraint rule} is a function \funsig{\Phi_{\mbox{in}}}{S\cup I\cup M\cup T}{\binary}. The outbound server-side constraint rules are the rules validating the state on the server side, any metadata and database right after the server action is executed and before the data is sent back to client.
+\cite{conf/fedcsis/FrajtakBJ12}
+\end{defi}

@@ -1,0 +1,36 @@
+\chapter{Graph Theory}
+
+\begin{defi}[Graph]
+A \term{graph} $G$ consists of \term{vertices}{nodes} and \termor{edges}{links} between the vertices. Edges may be directed (they have an arrow in a single direction) or undirected. A graph with all edges directed is called a \term{directed graph}, and one with all edges undirected is called an \term{undirected graph}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Path, Ancestors, Descendants]
+A \term{path} $A\mapsto B$ from node $A$ to node $B$ is a sequence of vertices $A=A_0,A1,\ldots,A_{n-1},A_n=B$, with $\left(A_i,A_{i+1}\right)$ an edge in the graph, thereby connecting $A$ to $B$. For a directed graph this means that a path is a sequence of nodes which when we follow the direction of the arrows leads us from $A$ to $B$. The vertices $A$ such that $A\mapsto B$ and $B\nmapsto A$ are the \term{ancestors} of $B$. The vertices $B$ such that $A → B$ and $B\nmapsto A$ are the \term{descendants} of $A$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Directed Acyclic Graph]
+A \termabbrev{Directed Acyclic Graph}{DAG} is a graph $G$ with directed edges (arrows on each link) between the vertices (nodes) such that by following a path of vertices from one node to another along the direction of each edge no path will revisit a vertex. In a DAG the ancestors of $B$ are those nodes who have a directed path ending at $B$. Conversely, the descendants of $A$ are those nodes who have a directed path starting at $A$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Neighbour]
+For an undirected graph G the \term{neighbour}s of $x$, $\fun{\mbox{ne}}{x}$ are those nodes directly connected to $x$.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Clique, Cliquo]
+Given an undirected graph, a \term{clique} is a maximally connected subset of vertices. All the members of the clique are connected to each other; furthermore there is no larger clique that can be made from a clique. A non-maximal clique is sometimes called a \term{cliquo}.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Singly-Connected Graph, Multiply-Connected Graph, Tree, Loopy]
+A \termor{singly-connected graph}{tree} is a graph where there is only one path from a vertex $a$ to another vertex $b$. Otherwise the graph is a \termor{multiply-connected graph}{loopy}. This definition applies regardless of whether or not the edges in the graph are directed.
+\cite{Barber2011}
+\end{defi}
+
+\begin{defi}[Spanning Tree, Maximum Weight Spanning Tree]
+A \term{spanning tree} of an undirected graph $G$ is a singly-connected subset of the existing edges such that the resulting singly-connected graph covers all vertices of $G$. A \term{maximum weight spanning tree} is a spanning tree such that the sum of all weights on the edges of the tree is larger than for any other spanning tree of $G$.
+\cite{Barber2011}
+\end{defi}
