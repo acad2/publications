@@ -1,0 +1,58 @@
+\begin{conceptgroup}{0}{3 cm}{12 cm}{Algemeen};
+\pote{0}{0}{Pakketverkeer door \'e\'en of meer netwerken.};
+\pote{0}{1}{\textbf{Issues:}};
+\pote{2}{1}{- Routering};
+\pote{8}{1}{- Accounting};
+\pote{2}{2}{- Verbinden van netwerken};
+\pote{8}{2}{- Logische adressering};
+%\pote{0}{1}{Hoe data van zender naar ontvanger door netwerk \textbf{routeren}};
+%\pote{0}{2}{Mogelijkheden:};
+%\pote{0.5}{3}{- \textbf{Statische routering}: tabellen met vaste routes};
+%\pote{0.5}{4}{- \textbf{Dynamisch}: verandert automatisch bij falend component};
+\end{conceptgroup}
+\begin{conceptgroup}[2]{15 cm}{0.75 cm}{14.25 cm}{Routing};
+\pote{0}{0}{\textbf{Gewenste eigenschappen:}};
+\pote{1}{1}{- Correctheid};
+\pote{5}{1}{- Eenvoud};
+\pote{9}{1}{- Robuust};
+\pote{1}{2}{- Stabiel};
+\pote{5}{2}{- Eerlijk};
+\pote{9}{2}{- Optimaal};
+\pote{0}{4}{\textbf{Optimaliteitsprincipe:}}
+\begin{scope}[xshift=15,yshift=125,xscale=2]
+\draw[thick] (0,-0.8) to node[scale=0.4,above]{Kortste pad} node[scale=0.4,below]{$A$ naar $I$} (5,-0.8);
+\draw[thick] (0,-0.6) -- (0,-1);
+\draw[thick] (5,-0.6) -- (5,-1);
+\node[scale=0.5,draw=black,circle,thick,fill=white] (A) at (0,0) {\textbf{$A$}};
+\node[scale=0.5,draw=black,circle,thick,fill=white] (D) at (1.5,0) {\textbf{$D$}};
+\node[scale=0.5,draw=black,circle,thick,fill=white] (F) at (3.5,0) {\textbf{$F$}};
+\node[scale=0.5,draw=black,circle,thick,fill=white] (I) at (5,0) {\textbf{$I$}};
+\draw[thick] (A) -- (0.5,0);
+\draw[thick] (1,0) -- (D) -- (2.25,0);
+\draw[thick] (2.75,0) -- (F) -- (4,0);
+\draw[thick] (4.5,0) -- (I);
+\draw[dashed,thick] (2.25,0) -- (2.75,0);
+\draw[dashed,thick] (0.5,0) -- (1,0);
+\draw[dashed,thick] (4,0) -- (4.5,0);
+\draw[thick] (1.5,0.8) to node[scale=0.4,above]{Kortste pad} node[scale=0.4,below]{$D$ naar $F$} (3.5,0.8);
+\draw[thick] (1.5,0.6) -- (1.5,1);
+\draw[thick] (3.5,0.6) -- (3.5,1);
+\end{scope}
+\pote{0}{10}{\textbf{Shortest Path Algorithm (Dijkstra)}}
+\pote{15}{0}{\textbf{Routeringsalgoritmen:}}
+\pote{16}{1}{- \underline{Flooding:} elke router stuurt pakket naar alle andere routers}
+\pote{17}{2}{$\rightarrow$duplicaten $\Rightarrow$ hopcounter of sequentienummer}
+\pote{17}{3}{$\rightarrow$\underline{Selective Flooding:} flooding enkel in de juiste richting}
+\pote{16}{5}{- \underline{Distance Vector:} routes uitwisselen met buren}
+\pote{16}{10}{- \underline{Link State:} volledige topologie gebruiken (Dijkstra)}
+%\pote{0}{3}{\textbf{Taxonomie: }Adaptief$\leftrightarrow$ Non-adaptief};
+\end{conceptgroup}
+\begin{conceptgroup}[2]{45 cm}{0.75 cm}{14.25 cm}{Congestie Controle};
+\pote{0}{0}{\textbf{Congestie:} teveel pakketten in (een deel van) het subnet};
+\pote{0}{1}{\textbf{Preventiebeleid:}};
+\pote{5}{1}{- Routeringsalgoritme};
+\pote{5}{2}{- Pakketverwerpingsbeleid};
+\pote{5}{3}{- Pakketverouderingsbeleid};
+\pote{5}{4}{- Pakket-queues en dienstbeleid};
+\pote{5}{5}{- Virtuele verbindigen $\leftrightarrow$ datagrammen};
+\end{conceptgroup}

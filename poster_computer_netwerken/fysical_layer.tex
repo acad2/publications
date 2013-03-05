@@ -1,0 +1,152 @@
+\begin{conceptgroup}{0}{3 cm}{2.5 cm}{Algemeen};
+\pote{0}{0}{Transport van bits over een fysisch kanaal.};
+\pote{0}{1}{\textbf{Issues:}};
+\pote{2}{1}{- Soort kanaal};
+\pote{8}{1}{- Voorstelling van bits};
+\pote{2}{2}{- Kenmerken connectoren};
+\pote{8}{2}{- Data snelheid};
+\end{conceptgroup}
+\begin{conceptgroup}{15 cm}{0.75 cm}{14.25 cm}{Geleide transmissiemedia};
+\pote{0}{0}{\textbf{Getwiste koperparen:} ($0-1\mbox{ MHz}$)}
+\pote{0}{1.25}{Afzonderlijk ge\"isoleerde getwiste koperparen, gebundeld in kabels}
+\begin{scope}[xshift=9 cm, yshift= 0.2 cm, xscale=0.5]
+\def\tct{0.2};
+\foreach \x in {0,2,...,8} {
+\fill[black!30] (\x,0) -- ++(0.25,0) -- ++(0.5,0.4) -- ++(0.25,0) -- ++(0,\tct) -- ++(-0.25,0) -- ++(-0.5,-0.4) -- ++(-0.25,0) -- cycle;
+\fill[black!70] (\x,0.6) -- ++(0.25,0) -- ++(0.5,-0.4) -- ++(0.5,0) -- ++(0.5,0.4) -- ++(0.25,0) -- ++(0,-\tct) -- ++(-0.25,0) -- ++(-0.5,-0.4) -- ++(-0.5,0) -- ++(-0.5,0.4) -- ++(-0.25,0) -- cycle;
+\fill[black!30] (\x+1,0.6) -- ++(0.25,0) -- ++(0.5,-0.4) -- ++(0.25,0) -- ++(0,-\tct) -- ++(-0.25,0) -- ++(-0.5,0.4) -- ++(-0.25,0) -- cycle;
+}
+\end{scope}
+\pote{0}{4}{\textbf{Coaxiale kabel:} ($0-500\mbox{ MHz}$)}
+\pote{0}{5.25}{Buitenste geleider bied een gevlochten schild}
+\pote{0}{6.25}{tegenover ruis. Binnenste geleider bestaat uit}
+\pote{0}{7.25}{metaal met isolatie tussen de twee geleiders.}
+\begin{scope}[xshift=13.7 cm, yshift= 2 cm, xscale=0.5, yscale=0.5]
+\filldraw[fill=black!50,draw=black,thick] (0,1 cm) circle (1 cm);
+\filldraw[fill=white,draw=black,thick] (0,1 cm) circle (0.75 cm);
+\filldraw[fill=black!50,draw=black,thick] (0,1 cm) circle (0.25 cm);
+\draw[thick,->] (-1.5,0) node[scale=0.5,anchor=east]{buitenste geleider} -- (0,0.125 cm);
+\draw[thick,->] (-3,1) node[scale=0.5,anchor=east]{isolatie} -- (0,0.5 cm);
+\draw[thick,->] (-1.5,2) node[scale=0.5,anchor=east]{binnenste geleider} -- (0,1 cm);
+\end{scope}
+\pote{0}{9}{\textbf{Optische vezels:} ($180-370\mbox{ THz}$)}
+\pote{0}{10.25}{Kern van glas of plastiek, bekleding reflecteert}
+\pote{0}{11.25}{de laserstraal volledig.}
+\begin{scope}[xshift=13.7 cm, yshift= 5.6 cm, xscale=0.5, yscale=0.5]
+\filldraw[fill=black!50,draw=black,thick] (0,1 cm) circle (1 cm);
+\filldraw[fill=white,draw=black,thick] (0,1 cm) circle (0.8 cm);
+\filldraw[fill=white,draw=black,thick] (0,1 cm) circle (0.4 cm);
+\draw[thick,->] (-1.5,0) node[scale=0.5,anchor=east]{omhulsel} -- (0,0.1 cm);
+\draw[thick,->] (-3,1) node[scale=0.5,anchor=east]{bekleding} -- (0,0.4 cm);
+\draw[thick,->] (-1.5,2) node[scale=0.5,anchor=east]{kern} -- (0,1 cm);
+\end{scope}
+\end{conceptgroup}
+\begin{conceptgroup}{0}{6 cm}{9 cm}{Draadloze transmissiemedia};
+\pote{0}{0}{\textbf{Elektromagnetisch Spectrum:} $\lambda\cdot f=c\approx 3\cdot 10^8\mbox{ m/s}$}
+\begin{scope}[xshift=1 cm, yshift=2 cm]
+\fill[white] (0,0) rectangle ++(13,1);
+\draw (0,0) -- (13,0);
+\draw (0,1) -- (13,1);
+\foreach \x in{0,2,...,24} {
+\draw (0.5*\x,0) -- ++(0,-0.25) node[scale=0.5,anchor=south] {$10^{\x}$};
+}
+\draw (13,-0.25) node[scale=0.5,anchor=south] {Hz};
+\foreach \x in {0,4,7.8,11,14.6,15,16,22} {
+  \draw (0.5*\x,0) -- (0.5*\x,1);
+}
+\foreach \x/\t in {5.9/radio,9.4/microgolf,12.8/infrarood,15.5/UV,19/X,24/gamma} {
+  \draw (0.5*\x,0.5) node[scale=0.4]{\t};
+}
+\end{scope}
+\pote{0}{5}{\textbf{Radiogolven:}}
+\pote{0}{6}{- doorheen gebouwen}
+\pote{0}{7}{- omnidirectioneel}
+\pote{0}{8}{- lange afstand}
+\pote{0}{9}{- interferentie}
+
+\pote{7.5}{5}{\textbf{Microgolven:}}
+\pote{7.5}{6}{- massieve obstakels}
+\pote{7.5}{7}{- rechte lijnen}
+\pote{7.5}{8}{- refractie}
+\end{conceptgroup}
+\begin{conceptgroup}[2]{30 cm}{0.75 cm}{14.25 cm}{Theoretische Basis};
+\pote{0}{0}{\textbf{Fourier:} periodische functie $g\left(t\right)=\displaystyle\sum_i^\infty a_i\sin{2\pi fti}+b_i\cos{2\pi fti}$};
+\pote{0}{3}{\textbf{Bandbreedte:}};
+\pote{3.6}{3}{bereik frequenties met minimale verzwakking};
+\pote{3.6}{4}{fysische eigenschap $B$ van elk medium in Hz};
+\pote{0}{5}{\textbf{Theorema van Nyquist: } $d_{\mbox{max.}}=2B\log_2 V$};
+\pote{4}{6}{$d_{\mbox{max.}} = $ maximale datarate};
+\pote{4}{7}{$V = $ aantal discrete signaalniveaus (discretisatie)};
+\pote{0}{8}{\textbf{Theorema van Shannon: } $d_{\mbox{max.}}=2B\log_2 \left(1+S/N\right)$};
+\pote{4}{9}{$S/N=$ signaal-tot-ruisvermogensverhouding};
+\end{conceptgroup}
+\begin{conceptgroup}{60 cm}{0.75 cm}{14.25 cm}{Telefoonnetwerk};
+\pote{0}{0}{\textbf{Structuur:}};
+\begin{scope}[xshift = 1cm,yshift=1.5 cm]
+\draw (0,0) -- (2,0);
+\draw (2,0.075) -- (4,0.075);
+\draw (2,-0.075) -- (4,-0.075);
+\draw (4,0.15) -- (8,0.15);
+\draw (4,0) -- (8,0);
+\draw (4,-0.15) -- (8,-0.15);
+\draw (8,0.075) -- (10,0.075);
+\draw (8,-0.075) -- (10,-0.075);
+\draw (10,0) -- (12,0);
+\filldraw[fill=white,draw=black] (-0.25,-0.25) rectangle ++(0.5,0.5);
+\filldraw[fill=white,draw=black] (2,0) circle (0.25);
+\filldraw[fill=white,draw=black] (3.75,0.25) -- ++(0.25,-0.5) -- ++(0.25,0.5) -- cycle;
+\filldraw[fill=white,draw=black] (5.9,-0.25) -- ++(-0.15,0.25) -- ++(0.15,0.25) -- ++(0.2,0) -- ++(0.15,-0.25) -- ++(-0.15,-0.25) -- cycle;
+\filldraw[fill=white,draw=black] (7.75,0.25) -- ++(0.25,-0.5) -- ++(0.25,0.5) -- cycle;
+\filldraw[fill=white,draw=black] (10,0) circle (0.25);
+\filldraw[fill=white,draw=black] (11.75,-0.25) rectangle ++(0.5,0.5);
+\draw (0,0.25) node[anchor=north,scale=0.4]{Telefoon};
+\draw (2,0.25) node[anchor=north,scale=0.4]{End Office};
+\draw (4,0.25) node[anchor=north,scale=0.4]{Toll Office};
+\draw (6,0.25) node[anchor=north,scale=0.4,text width=4 cm]{Intermediate Switching Office};
+\draw (11,-0.15) node[anchor=south,scale=0.4]{Local Loop};
+\draw (9,-0.15) node[anchor=south,scale=0.4]{Trunk};
+\draw (7,-0.15) node[anchor=south,scale=0.4]{Trunk};
+\end{scope}
+\pote{0}{6}{\textbf{Modems: }};
+\pote{2.6}{6}{MOdulator-DEModulator bij $B=20\mbox{ kHz}$};
+\pote{2.6}{7}{met amplitude (AM), frequentie (FM), fase (PM)};
+\pote{0}{8}{Modulatieschemas: QPSK: 2 bit, QAM-16: 4 bit, QAM-64: 6 bit};
+\pote{0}{10}{\textbf{Digital Subscriber Lines (DSL): }$B=1.1\mbox{ MHz}$};
+\pote{0}{11}{=256 kanalen van $4\mbox{ kHz}$, 250 voor data};
+\pote{0}{12}{$\rightarrow$ 1 stem, 6 ongebruikt, 32 upstream, 218 downstream, QAM};
+\pote{0}{14}{\textbf{Modulatie in de trunks: }};
+\pote{1}{15}{- FDM: frequentie, elke stream eigen kanaal};
+\pote{1}{16}{- TDM: tijd, elke stream eigen tijdsslot (SONET/SDH)};
+\pote{1}{17}{- WDM: golflengte, bij fiber door splitter ($\approx$ FDM)};
+\pote{0}{19}{\textbf{Pakket/Circuit/Bericht-geschakeld netwerk}};
+\end{conceptgroup}
+\begin{conceptgroup}{75 cm}{0.75 cm}{14.25 cm}{Kabeltelevisie};
+\pote{0}{0}{Gemeenschappelijke coaxiale kabel bij geografische buren}
+\pote{0}{2}{\textbf{Internet over Cable: } HFC (Hybrid Fiber Coax)}
+\pote{0.5}{3}{Coax naar de huizen ($\approx$1000/kabel segment) $\leftrightarrow$ Fiber backbone}
+\pote{0.5}{4}{$\rightarrow$ 2-richting versterking en coax control sharing}
+\pote{0}{6}{\textbf{Spectrum allocatie: }}
+\begin{scope}[xshift=0.5 cm, yshift=5 cm]
+\filldraw[fill=white,draw=black] (0,0) rectangle ++(13,1);
+\foreach \x/\w/\t/\c in {5/37/data up/30,54/34/TV/10,88/20/FM/30,108/442/TV/10,550/200/data down/30} {
+  \fill[black!\c] (0.017449664*\x-0.087248322,0) rectangle ++(0.017449664*\w,1);
+  \draw (0.017449664*\x-0.087248322+0.5*0.017449664*\w,0.75) node[scale=0.4,text width=1 cm,rotate=90]{\textbf{\t}};
+}
+\foreach \x in {5,54,108,750} {
+  \draw (0.017449664*\x-0.087248322,1) -- ++(0,-1.25) node[scale=0.5,anchor=south]{\x};
+}
+\foreach \x in {42,88,550} {
+  \draw (0.017449664*\x-0.087248322,0) -- ++(0,1.25) node[scale=0.5,anchor=north]{\x};
+}
+\draw (0.017449664*750-0.087248322,1.25) node[scale=0.5,anchor=north]{MHz};
+\end{scope}
+\pote{0}{11}{\textbf{Upstream: }QPSK}
+\pote{7.5}{11}{\textbf{Downstream: }QAM-64/256}
+\pote{0}{13}{\textbf{Kabelmodems:}}
+\pote{0.5}{14}{Zenden: slot aanvragen, eventueel herproberen (slotallocatie)}
+\pote{0.5}{15}{Ontvangen: slechts 1 zender: geen probleem}
+\pote{0.5}{16}{Initialisatie:}
+\pote{3.5}{16}{zoeken naar pakket, en kanalen alloceren}
+\pote{3.5}{17}{berekenen afstand tot headend (voor slotallocatie)}
+\end{conceptgroup}
+

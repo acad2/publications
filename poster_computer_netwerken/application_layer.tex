@@ -1,0 +1,84 @@
+\begin{conceptgroup}{0}{3 cm}{12 cm}{Algemeen};
+\pote{0}{0}{Hoogste laag waar toepassingen staan.};
+\pote{0}{1}{Voorbeelden:};
+\pote{3}{1}{- \textbf{Domain Name System (DNS)}}
+\pote{3}{2}{- \textbf{Email (SMTP, POP, IMAP)}};
+\pote{3}{3}{- Terminal Access (TELNET)};
+\pote{3}{4}{- File Transfer Protocol (FTP)};
+\pote{3}{5}{- World Wide Web (WWW)};
+\pote{0}{7}{Maakt gebruik van twee soorten verbinden:};
+\pote{3}{8}{- UDP: voor multimedia toepassigen};
+\pote{3}{9}{- TCP: voor andere toepassingen};
+\end{conceptgroup}
+\begin{conceptgroup}[2]{15 cm}{0.75 cm}{14.25 cm}{Domain Name System (DNS)};
+\pote{0}{0}{\textbf{Nut:} leesbaar maken van IP-adressen voor mensen};
+\pote{0}{1}{\textbf{Nadelen IP:}};
+\pote{3.5}{1}{- moeilijk te onthouden};
+\pote{3.5}{2}{- veranderlijk (server verplaatsen)};
+\pote{0}{3}{Netwerk zelf kent alleen IP-adressen};
+\pote{0}{4}{$\Rightarrow$ vertaalmachanisme nodig: DNS (1983)};
+\pote{0}{6}{Domein-gebaseerd hi\"erarchisch systeem};
+\pote{0}{7}{Top van de hi\"erarchie: beheert door \textbf{ICANN}};
+\pote{0}{8}{Naamgeving: 2 types:};
+\pote{5}{8}{- landcodes (.be,.nl,.su,...)};
+\pote{5}{9}{- generisch (.edu,.gov,.aero,...)};
+\pote{0}{10}{beheer van top-level domeinen: \textbf{registrars}};
+\pote{0}{12}{Hoe worden \textbf{``Domain Records''} bijgehouden op DNS-server?};
+\pote{0}{13}{5 velden/record:};
+\pote{3.75}{13}{- \texttt{Domain\_Name}};
+\pote{7.5}{13}{- \texttt{Time\_to\_live}};
+\pote{3.75}{14}{- \texttt{Class}};
+\pote{7.5}{14}{- \texttt{Type} (A, NS, MX,...)};
+\pote{3.75}{15}{- \texttt{Value}};
+\pote{0}{17}{Vertaling oplossen met een ``\textbf{Resolver}'':}
+\pote{0.5}{18}{- Iteratief: DNS server geeft adres diepere DNS server terug}
+\pote{0.5}{19}{- Recursief: DNS server lost zelf query recursief op}
+\pote{0}{20}{Caching op verschillende niveaus: antwoord als unauthoritive}
+\pote{0}{21}{\textbf{AnycastDNS:} verschillende DNS servers achter hetzelfde IP adres}
+\pote{15}{0}{\textbf{Protocol: }Request-Reply over UDP (soms TCP)}
+%\begin{clientserver}{23 cm}{0.25 cm}{6 cm}{2 cm}
+%\csmes{1}{0.5 cm}{0.25 cm}{Query}{};
+%\csmes{-1}{1.5 cm}{0.25 cm}{Response}{};
+%\end{clientserver}
+\begin{bitmap}{16.5 cm}{1.5 cm}{0.0075}{0.6}
+\bend[12];
+\bentry[16]{0}{0}{Indentificatie};
+\bentry[16]{16}{0}{Vlaggen};
+\bentry[16]{0}{1}{Aantal aanvragen};
+\bentry[16]{16}{1}{Aantal antwoorden};
+\bentry[16]{0}{2}{Aantal authorisaties};
+\bentry[16]{16}{2}{Aantal extra records};
+\blentry{3}{Query name};
+\bentry[16]{0}{5}{Query type};
+\bentry[16]{16}{5}{Query klasse};
+\blentry{6}{Answer Section (Reply)};
+\blentry{8}{Authoritative Section (Reply)};
+\blentry{10}{Additional Section (Reply)};
+\bgr[3]{0}{Header};
+\bgr[3]{3}{Question Section};
+\bgr{6}{Answer Section};
+\bgr{8}{Authorititative Section};
+\bgr{10}{Additional Section};
+\end{bitmap}
+\pote{15}{15}{\textbf{DNS Security: }spoofing door sneller op request te antwoorden}
+\pote{16}{16}{$\Rightarrow$ Oplossing \textbf{DNSsec}: authorisatie door hogere DNS server}
+\end{conceptgroup}
+\begin{conceptgroup}[2]{45 cm}{0.75 cm}{14.25 cm}{E-mail};
+\pote{0}{0}{Componenten:};
+\pote{3.5}{0}{\textbf{ - User Agents}};
+\pote{3.5}{1}{\textbf{ - Mail Servers (transfer agents):}};
+\pote{6}{2}{\textbf{ - User mailbox}};
+\pote{6}{3}{\textbf{ - Outgoing message queue}};
+\pote{0}{4}{Protocollen:};
+\pote{3}{4}{\textbf{- Transfer: Simple Mail Transfer Protocol}};
+\pote{3}{5}{\textbf{- Toegang: POP, IMAP}};
+\pote{0}{6}{Email adres: login\_naam@domeinnaam};
+\pote{0}{7}{Formaat: RFC 822 (volledig in ASCII)};
+\draw (12,0) rectangle ++(5,5);
+%\pote{0,8}{%\begin{tikzpicture}
+%\draw[thick] (0.5,8) rectangle ++(2,4);\draw[thick] (0.5,8) rectangle ++(2,4);
+%\end{tikzpicture}
+%};
+\end{conceptgroup}
+\begin{conceptgroup}{75 cm}{0.75 cm}{14.25 cm}{Andere};
+\end{conceptgroup}

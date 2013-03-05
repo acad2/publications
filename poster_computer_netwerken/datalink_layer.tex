@@ -1,0 +1,70 @@
+\begin{conceptgroup}{0}{3 cm}{3.5 cm}{Algemeen};
+\pote{0}{0}{Bekomen van een foutloos communicatiekanaal.};
+\pote{0}{1}{\textbf{Issues:}};
+\pote{2}{1}{- Framing};
+\pote{8}{1}{- Fysische adressering};
+\pote{2}{2}{- Foutdetectie};
+\pote{8}{2}{- Flow controle};
+\pote{2}{3}{- Toegangscontrole (Medium Access Control)};
+\end{conceptgroup}
+\begin{conceptgroup}{0}{7 cm}{8 cm}{Framing};
+\pote{0}{0}{Opdelen van streams in discrete ``frames''};
+\pote{0}{1}{\textbf{Methodes:}};
+\pote{0}{2}{Tijdskloof (!)};
+\begin{scope}[xshift=5,yshift=75]
+\filldraw[thick,fill=white,draw=black,semitransparent] (0.5,0) rectangle ++(2.5,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (4,0) rectangle ++(1.5,-0.5);
+\draw[<->,thick] (3,-0.25) -- ++(1,0);
+\draw (3.5,-0.25) node[anchor=south,scale=0.5]{$\Delta t$};
+\draw[->,thick] (0,0) -- (6,0) node[anchor=south,scale=0.5]{$t$};
+\end{scope}
+\pote{7}{2}{Vlag karakters met ``byte stuffing''};
+\begin{scope}[xshift=200,yshift=75]
+\filldraw[thick,fill=white,draw=black,semitransparent] (0.5,0) rectangle ++(0.5,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (1,0) rectangle ++(1.5,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (2.5,0) rectangle ++(0.5,-0.5);
+\draw (0.75,-0.25) -- (0.9,-0.325) -- (0.75,-0.4) -- (0.75,-0.1);
+\draw (1.5,-0.4) -- (1.6,-0.1);
+\draw (1.75,-0.25) -- (1.9,-0.325) -- (1.75,-0.4) -- (1.75,-0.1);
+\draw (2.75,-0.25) -- (2.9,-0.325) -- (2.75,-0.4) -- (2.75,-0.1);
+\filldraw[thick,fill=white,draw=black,semitransparent] (3.5,0) rectangle ++(0.5,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (4,0) rectangle ++(1,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (5,0) rectangle ++(0.5,-0.5);
+\draw (3.75,-0.25) -- (3.9,-0.325) -- (3.75,-0.4) -- (3.75,-0.1);
+\draw (4.4,-0.4) -- (4.5,-0.1);
+\draw (4.6,-0.4) -- (4.7,-0.1);
+\draw (5.25,-0.25) -- (5.4,-0.325) -- (5.25,-0.4) -- (5.25,-0.1);
+\draw[->,thick] (0,0) -- (6,0) node[anchor=south,scale=0.5]{$t$};
+\end{scope}
+\pote{0}{5}{Aantal tekens};
+\begin{scope}[xshift=5,yshift=125]
+\filldraw[thick,fill=white,draw=black,semitransparent] (0.5,0) rectangle ++(0.5,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (1,0) rectangle ++(2,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (4,0) rectangle ++(0.5,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (4.5,0) rectangle ++(1,-0.5);
+\draw (0.75,-0.25) node[scale=0.5]{$n_1$};
+\draw (4.25,-0.25) node[scale=0.5]{$n_2$};
+\draw[->,thick] (0,0) -- (6,0) node[anchor=south,scale=0.5]{$t$};
+\end{scope}
+\pote{7}{5}{Vlag bytes met ``bit stuffing''};
+\begin{scope}[xshift=200,yshift=125]
+\filldraw[thick,fill=white,draw=black,semitransparent] (0.5,0) rectangle ++(0.5,-0.5);
+\draw (0.75,-0.25) -- (0.9,-0.325) -- (0.75,-0.4) -- (0.75,-0.1);
+\filldraw[thick,fill=white,draw=black,semitransparent] (1,0) rectangle ++(1.5,-0.5);
+\filldraw[thick,fill=white,draw=black,semitransparent] (2.5,0) rectangle ++(0.5,-0.5);
+\draw (1.5,-0.4) -- (1.6,-0.1);
+\draw (1.75,-0.25) -- (1.9,-0.325) -- (1.75,-0.4) -- (1.75,-0.1);
+\draw (2.75,-0.25) -- (2.9,-0.325) -- (2.75,-0.4) -- (2.75,-0.1);
+\filldraw[thick,fill=white,draw=black,semitransparent] (4,0) rectangle ++(1.5,-0.5);
+\draw[->,thick] (0,0) -- (6,0) node[anchor=south,scale=0.5]{$t$};
+\end{scope}
+\pote{0}{8}{Fysische code schending};
+%\pote{0.5}{1}{- Foutdetectie en foutcorrectie bij ontvangst};
+%\pote{0.5}{2}{- Opdelen van de boodschap in \textbf{data frames}};
+%\pote{0.5}{3}{- Flow Control: ontvanger niet overvloeden};
+%\pote{0.5}{4}{- Betrouwbare connecties: \textbf{acknowledgement frame} terug};
+%\pote{0.5}{5}{- Broadcast netwerken: hoe toegang tot gedeeld kanaal};
+\end{conceptgroup}
+\begin{conceptgroup}{75 cm}{0.75 cm}{14.25 cm}{Medium Access Control};
+\pote{0}{0}{\textbf{Eigenschap}};
+\end{conceptgroup}

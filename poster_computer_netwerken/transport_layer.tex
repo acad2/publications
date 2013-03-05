@@ -1,0 +1,90 @@
+\begin{conceptgroup}{0}{3 cm}{12 cm}{Algemeen};
+\pote{0}{0}{Bieden van een communicatiekanaal tussen processen.};
+\pote{0}{1}{\textbf{Issues:}};
+\pote{2}{1}{- Effici\"ent kanaal gebruiken};
+\pote{8}{1}{- Segmentatie};
+\pote{2}{2}{- Flow controle};
+%\pote{0}{1}{Het bieden van een logische end-to-end verbinding};
+%\pote{0}{2}{effici\"ent, betrouwbaar en kost-effectieve diensten};
+%\pote{0}{3}{2 types:};
+%\pote{2}{3}{- connectiege\"orienteerd};
+%\pote{2}{4}{- connectieloos};
+%\pote{0}{5}{primitieven:};
+%\pote{3}{5}{- \texttt{connect}};
+%\pote{7}{5}{- \texttt{send}};
+%\pote{11}{5}{- \texttt{listen}};
+%\pote{3}{6}{- \texttt{disconnect}};
+%\pote{7}{6}{- \texttt{receive}};
+%\pote{0}{7}{zelfde problemen als Datalink op End-to-End niveau};
+%\pote{0}{8}{Adressering: \textbf{TSAP} (Transport Service Access Point)};
+\end{conceptgroup}
+\begin{conceptgroup}{30 cm}{0.75 cm}{14.25 cm}{User Datagram Protocol (UDP)};
+\pote{0}{0}{\textbf{Pakketge\"orientieerde onbetrouwbare boodschappen}};
+\pote{0}{1}{Pakketten adresseren naar specifieke poort};
+\pote{0}{2}{Ideaal voor \textbf{Request-Reply} systemen};
+\pote{0}{3}{ondersteuning voor broadcasting en multicasting ($\leftrightarrow$ TCP)};
+\pote{0}{6}{\textbf{Pakket:}};
+\begin{bitmap}{85}{110}{0.0075}{0.6}
+\bend[7];
+\bentry[32]{0}{0}{bron IP adres};
+\bentry[32]{0}{1}{doel IP adres};
+\bentry{0}{2}{0-en};
+\bentry{8}{2}{protocol};
+\bentry[16]{16}{2}{UDP lengte};
+\bentry[16]{0}{3}{bronpoort};
+\bentry[16]{16}{3}{doelpoort};
+\bentry[16]{0}{4}{UDP lengte};
+\bentry[16]{16}{4}{UDP checksum};
+\blentry{5}{Data (modulo 16 bit; padding)};
+\bgr[3]{0}{Pseudo-header};
+\bgr{3}{Header};
+\bgr{5}{Data};
+\end{bitmap}
+\pote{0}{14}{\textbf{Checksum: }};
+\pote{3}{14}{negatie van 16 bit XOR van pseudoheader, header};
+\pote{3}{15}{en data};
+\pote{0}{17}{\textbf{Congestie: }pakketverlies, maar eerlijke en maximale effici\"entie};
+\pote{0}{19}{\textbf{Remote Procedure Call: }typische toepassing};
+\pote{1}{20}{Oproep naar extern programma};
+\pote{1}{21}{Problemen: pointer, globale variabelen, types, representatie,...};
+\end{conceptgroup}
+\begin{conceptgroup}[3]{45 cm}{0.75 cm}{14.25 cm}{Transmission Control Protocol (TCP)};
+\pote{0}{0}{\textbf{Connectiege\"orienteerde betrouwbare sequenti\"ele byte stream}};
+\pote{0}{1}{\textbf{Opzetten verbinding:} Three-way handshake}
+\pote{0}{2}{\textbf{Sequentienummer:} teller, granualiteit: byte, 32-bit wrap around}
+\pote{0}{3}{Opdelen van data in \textbf{``segmenten''} (20 byte header + opties + data)}
+\begin{bitmap}{85}{110}{0.0075}{0.6}
+\bend[9];
+\bentry[16]{0}{0}{bronpoort};
+\bentry[16]{16}{0}{doelpoort};
+\bentry[32]{0}{1}{sequentie nummer};
+\bentry[32]{0}{2}{acknowledgment nummer};
+\bentry[4]{0}{3}{$l$};
+\bentry[6]{4}{3}{0-en};
+\bentry[6]{10}{3}{vlaggen};
+\bentry[16]{16}{3}{window grootte};
+\bentry[16]{0}{4}{Checksum};
+\bentry[16]{16}{4}{Urgent pointer};
+\blentry{5}{Opties (modulo 32 bit; padding)};
+\blentry{7}{Data (optioneel)};
+\bgr[5]{0}{Header};
+\bgr{5}{Opties};
+\bgr{7}{Data};
+\end{bitmap}
+\begin{scope}[xshift=32 cm, yshift=5 cm,yscale=-1]
+\draw[thick,->] (0,-0.2) -- (0,4.5);
+\draw[thick,->] (-0.2,0) -- (12,0);
+\draw[dashed] plot[variable=\x,domain=0:4] (0.5*\x,{0.125*2^{\x}});
+\foreach\y in {1,2,...,35} {
+\draw[dotted] (-0.2,0.125*\y) -- (12,0.125*\y);
+}
+\draw[dashed] (2,2) -- (4,2.5);
+\foreach\x in {0,1,...,4} {
+\fill (0.5*\x,0.125*2^\x) circle (0.07 cm);
+\fill (0.5*\x+2,0.125*\x+2) circle (0.07 cm);
+}
+\end{scope}
+\end{conceptgroup}
+%\begin{conceptgroup}{75 cm}{0.75 cm}{14.25 cm}{Wireless TCP};
+%\draw (0,0) node[anchor=north west]{test};
+%\end{conceptgroup}
