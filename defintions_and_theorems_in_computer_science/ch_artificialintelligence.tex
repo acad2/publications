@@ -72,6 +72,28 @@ A \term{clause} is a formula such as $\forall\vec{x}:L_1\vee L_2\vee\ldots\vee L
 \cite{conf/fedcsis/Telnarova12}
 \end{defi}
 
+\begin{defi}[Negation of a dilemma, Conjunction of dilemmas, Disjunction of dilemmas]
+For a given set $D$ of dilemmas it is defined:
+\begin{enumerate}
+ \item A \term{negation of a dilemma} $d=\dilemma{u}$ as a dilemma $\neg d=\negdilemma{u}$;
+ \item A \term{disjunction of the dilemmas} $d'=\dilemma{u'}$, $d''=\dilemma{u''}$ as a dilemma $d'\vee d''=\flatbrak{u'\vee u''|\neg\brak{u'\vee u''}}$;%
+ \item A \term{conjunction of the dilemmas} $d'=\dilemma{u'}$, $d''=\dilemma{u''}$ as a dilemma $d'\wedge d''=\flatbrak{u'\wedge u''|\neg\brak{u'\wedge u''}}$;%
+\end{enumerate}
+\cite{conf/fedcsis/Kulikowski12}
+\end{defi}
+
+\begin{defi}[Certainty ranking]
+Let $D$ be a set of dilemmas with established equal certainty relation. Then a binary relation $\preceq^c$ described in $D$ and satisfying the conditions of:
+\begin{enumerate}
+ \item reciprocity: for each $d\in D$ it holds $d\preceq^c d$;
+ \item symmetry: for any $d',d''\in D$ $d'\preceq^c d''$ and $d''\preceq^c d'$ hold if and only if $d'\approx^c d''$ holds;
+ \item anti-reflexivity: for any $d',d''\in D$ if $d'\preceq^c d''$ then $\neg d''\preceq^c\neg d'$ holds;
+ \item transitivity: for any $d',d'',d'''\in D$ if $d'\preceq^c d''$ and $d''\preceq^c d'''$ then also $d'\preceq^c d'''$ holds,
+\end{enumerate}
+will be called a \term{certainty ranking}.
+\cite{conf/fedcsis/Kulikowski12}
+\end{defi}
+
 \section{Machine Learning and Probabilistic Reasoning}
 
 \begin{defi}[Beliefs in Conjoint Analysis]
