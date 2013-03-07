@@ -72,6 +72,30 @@ A \term{clause} is a formula such as $\forall\vec{x}:L_1\vee L_2\vee\ldots\vee L
 \cite{conf/fedcsis/Telnarova12}
 \end{defi}
 
+\section{Machine Learning and Probabilistic Reasoning}
+
+\begin{defi}[Beliefs in Conjoint Analysis]
+We allow weighted beliefs with a weight parameter coming from \ocinterval{0}{1} where $1$ means full truth degree (complete certainty, the perfect belief), while a value $\alpha\in\oointerval{0}{1}$ describe a regular belief that can be doubted.
+\begin{enumerate}
+ \item \term{Regular belief}s such as:
+ \begin{equation}
+(\fun{A_1}{a_1}\wedge\ldots\wedge\fun{A_t}{a_t}):\alpha
+ \end{equation}
+ \item \term{Indifference belief}s such as:
+ \begin{equation}
+ \left(L\leftrightarrow R\right):1
+ \end{equation}
+ Indifference beliefs are always have full truth because we claim that if the respondent would distinguish degrees of truth then she is able to express preference.
+ \item \term{Negative belief}s such as:
+ \begin{equation}
+ \left(\neg F\right):1
+ \end{equation}
+\end{enumerate}
+where $A_i$ are attribute predicates and $L$, $R$, $F$ are regular atom conjunctions. Again, it is obvious in conjoint to don't ask user to express thoughts on negative information. As such there are no real negative beliefs such as $F:0$. Moreover, the reader may notice that we adopt the intuitionistic logic approach i.e., there is no assumption on any kind of law of excluded middle, as we don't necessarily assume $F:0\Leftrightarrow\left(\neg F\right):1$.
+\cite{conf/fedcsis/GiurcaSB12}
+\end{defi}
+
+
 \section{Optimization Problems}
 
 \begin{defi}
