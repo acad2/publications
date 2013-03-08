@@ -1,7 +1,7 @@
 \documentclass[8pt,a4paper,twocolumn]{extbook}
 % larger format A4 for easy printing
 % note: B5 format uses 6cm picture width, A4 format 7.2 picture width
-%\documentclass[10pt,a4paper,twocolumn]{extbook} 
+%\documentclass[10pt,a4paper,twocolumn]{extbook}
 \usepackage[top=2cm, headsep=0.4cm, bottom=1.5cm, left=1.5cm, right=1.5cm, twocolumn, landscape]{geometry}
 \usepackage{fancyhdr}
 \usepackage[icelandic, czech, english]{babel}
@@ -103,7 +103,7 @@
 \or oucrimsonred\or cottoncandy\or orchid\or vividcerise\or patriarch\else darkgreen!30\fi}
 
 %COMMANDS
-\newcommand\entry[3][]{\hangpara{2em}{1}{\fontfamily{phv}\selectfont{\textbf{{#2}}}}\ 
+\newcommand\entry[3][]{\hangpara{2em}{1}{\fontfamily{phv}\selectfont{\textbf{{#2}}}}\
 #3\ifx\relax#1\relax\markboth{#2}{#2}\else\markboth{#1}{#1}\fi
 \par}\nopagebreak[4]
 \newcommand*{\dictchar}[1]{\parbox[c][3cm][c]{2cm}{\Huge\textbf{#1}}\par}
@@ -189,7 +189,7 @@ thumb/.style={
  \fancyhead[LE,RO]{\textbf{\chaptitle}}
  \fancyhead[LO,RE]{\textbf{\thepage}}}
 
- % INDEX PAGE STYLE  
+ % INDEX PAGE STYLE
  \fancypagestyle{indexstyle}{%
  \fancyhf{}% Clear header/footer
  \renewcommand{\headrulewidth}{0.4pt}% 0.4pt header rule
@@ -243,7 +243,7 @@ thumb/.style={
 \pagestyle{dictstyle}
 
 % the letters in alphabetical order
-\input{definitions.tex}
+\input{definitions}
 % list of all letters, each letter in separate .tex file, example of letter file, see bellow.
 
 % print the index of authors of photographs

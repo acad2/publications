@@ -82,6 +82,19 @@ For a given set $D$ of dilemmas it is defined:
 \cite{conf/fedcsis/Kulikowski12}
 \end{defi}
 
+\begin{defi}[Equal certainty relation, Ambivalent dilemma, Equivalent dilemmas, Anti-equivalent dilemmas]
+Let $D$ be a set of dilemmas. Then in $D$ a binary relation $\approx^c$ satisfying the conditions of:
+\begin{enumerate}
+\item Reciprocity: for each $d\in D$ it holds $d\approx^c d$;
+\item Symmetry: for any $d',d''\in D$ if $d'\approx^c d''$ then also $d''\approx^c d'$ holds;
+\item Reflexivity: for any $d',d''\in D$ if $d'\approx^c d''$ then also $\neg d'\approx^c\neg d''$ holds;
+\item Transitivity: for any $d',d'',d'''\in D$ if $d'\approx^c d''$ and $d''\approx^c d'''$ then also $d'\approx^c d'''$ holds;
+\item Fixation: for any $d',d''\in D$ if $d'\approx^c\neg d'$ and $d''\approx^c\neg d''$ then also $d'\approx^c d''$ holds,
+\end{enumerate}
+will be called an \term{equal certainty relation}. Any dilemma satisfying the condition $d\approx^c\neg d$ will be called an \term{ambivalent dilemma}; any dilemmas such that $d'\approx^c d''$ holds will be called \term{equivalent dilemmas}; any dilemmas such that $d'\approx^c\neg d''$ holds will be called \term{anti-equivalent dilemmas}.
+\cite{conf/fedcsis/Kulikowski12}
+\end{defi}
+
 \begin{defi}[Certainty ranking]
 Let $D$ be a set of dilemmas with established equal certainty relation. Then a binary relation $\preceq^c$ described in $D$ and satisfying the conditions of:
 \begin{enumerate}
@@ -93,6 +106,18 @@ Let $D$ be a set of dilemmas with established equal certainty relation. Then a b
 will be called a \term{certainty ranking}.
 \cite{conf/fedcsis/Kulikowski12}
 \end{defi}
+
+\begin{theo}
+Let $D$ be a set of dilemmas with established equal certainty and certainty ranking relations. Then for any $d',d''\in D$:
+\begin{enumerate}
+\item if $d'\preceq^c d''$ and not $d''\preceq^c d'$ then $d'\vee d''\preceq^c d''$;
+\item if $d'\preceq^c d''$ and not $d''\preceq^c d'$ then $d'\wedge d''\preceq^c d'$;
+\item if $d'\approx^c d''$ then $d'\vee d''\approx^c d'\wedge d''\approx^c d'\approx^c d''$;
+\item if $d'\approx^c d''$ then $d'\wedge d''\approx^c d',d''$;
+\item if $d'\approx^c d''$ then $d',d''\approx^c d'\vee d''$
+\end{enumerate}
+\cite{conf/fedcsis/Kulikowski12}
+\end{theo}
 
 \section{Machine Learning and Probabilistic Reasoning}
 
