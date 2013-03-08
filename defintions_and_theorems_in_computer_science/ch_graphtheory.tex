@@ -35,6 +35,23 @@ A \term{spanning tree} of an undirected graph $G$ is a singly-connected subset o
 \cite{Barber2011}
 \end{defi}
 
+\begin{defi}[Best path]
+A path would be selected as a \term{''best'' path} if it satisfies in the two following criteria:
+\begin{enumerate}
+\item Selected path must have the maximum reliability in $\prod_ab$.
+\item Selected path must include the minimum number of ''hops''.
+\end{enumerate}
+\cite{}
+\end{defi}
+
+\begin{defi}[Reliability of a path]
+The \term{reliability of a path} is defined by the lowest reliability arc in the path. and
+\begin{equation}
+\fun{reliability}{P}=\displaystyle\min_{\brak{i,j}\in P} s_{ij}
+\end{equation}
+\cite{}
+\end{defi}
+
 \begin{defi}[Minimal node of a Hasse diagram]
 A \term{minimal node of a Hasse diagram} is a node not preceded by any other node of the diagram.
 \cite{conf/fedcsis/Kulikowski12}
