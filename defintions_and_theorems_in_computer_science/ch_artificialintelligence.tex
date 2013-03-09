@@ -119,6 +119,60 @@ Let $D$ be a set of dilemmas with established equal certainty and certainty rank
 \cite{conf/fedcsis/Kulikowski12}
 \end{theo}
 
+\section{Knowledge Representation}
+
+\begin{defi}[Belief change scenario]
+A \term{belief change scenario} is a triple $B=\tuple{K,R,C}$, where $K$, $R$ and $C$ are sets of formula over a fixed propositional language $\calLcalP$. Informally, $K$ is a \term{knowledge base} which is to be modified in such a way that the resulting knowledge base includes all elements from $R$ and does not include any element from $C$. The modified knowledge base corresponding to $B$ will be denoted by $K\dotplus R\dotminus C$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Belief change extension, Unique (inconsistent) belief change extension]
+Let $B=\tuple{K,R,C}$ be a belief change scenario over $\calLcalP$. Define a new set $\calP'$ of atoms, isomorphic with $\calP$, given by $\calP'=\accol{p':p\in\calP}$. Let $K'$ be a knowledge base obtained from $K$ by replacing any $p\in\calP$ by $p'\in\calP'$. Let $EQ$ be a maximal (with respect to set inclusion) set of equivalences $\accol{p\Leftrightarrow p'|p\in\calP}$ such that $\fun{Th}{K'\cup EQ\cup R}\cap\brak{C\cup\bot}=\emptyset$. The set $\fun{Th}{K'\cup EQ\cup R}\cap\calLcalP$ is called a \term{belief change extension} of $B$. If there is no such set $EQ$, then $B$ is inconsistent and $\calLcalP$ is a \term{unique (inconsistent) belief change extension} of $B$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Class of all belief change extensions]
+Let $\accol{E_i}_{i\in I}$ be the \term{class of all belief change extensions} of $B=\tuple{K,R,C}$. Then
+\begin{equation}
+K\dotplus R\dotminus C=\displaystyle\bigcap_{i\in I}E_i
+\end{equation}
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Knowledge base, Observation, Defeasible statement, Domain axiom]
+A \term{knowledge base} is a triple $KB=\tuple{OB,DS,DA}$, where $OB$, $DS$ and $DA$ are finite sets of formulas. These sets are referred to as \term{observation}s, \term{defeasible statement}s and \term{domain axiom}s, respectively.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Revision formula, Revision]
+Let $KB=\tuple{OB,DS,DA}$ be a knowledge base and suppose that $\alpha$ is a \term{revision formula} representing a new observation. A \term{revision} of $KB$ by $\alpha$, written $KB\ast\alpha$, is a new knowledge base given by $\tuple{OB_1,DS,DA}$, where $OB_1=OB\oplus\accol{\alpha}\ominus\accol{\neg DA\hat{}}$. Here $\accol{\alpha}\ominus\accol{\neg DA\hat{}}$ is a finite representation of the modified knowledge base corresponding to belief change scenario $\tuple{OB,\accol{\alpha},\accol{\neg DA\hat{}}}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Belief set corresponding to]
+Let $KB=\tuple{OB,DS,DA}$ be a knowledge base. A \term{belief set corresponding to} $KB$, written $B_{KB}$, is given
+by $DS\dotplus\brak{OB\cup DA}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Prioritized belief revision of $KB$ by $\alpha$]
+Let $KB=\tuple{OB,DS,DA}$ be a knowledge base and $\alpha$ be a revision formula. Let $OB_1=OB\oplus\accol{\alpha}\ominus\accol{\neg DA\hat{}}$. The \term{prioritized belief revision of $KB$ by $\alpha$} with respect to priorities $DS_1<DS_2<\ldots<DS_n$, written $KB\ast^{\flatbrak{DS_1<DS_2<\ldots<DS_n}}\alpha$, is the formula
+\begin{equation}
+DS_1\dotplus\brak{DS_2\oplus\ldots\brak{DS_n\oplus (OB_1\cup DA)\ldots}}.
+\end{equation}
+\cite{}
+\end{defi}
+
+\begin{defi}[Finite representation of the modified knowledge base corresponding to belief change scenario]
+Let $KB=\tuple{OB,DS,DA}$ and suppose that $\alpha$ is a revision formula representing a domain axiom. The revised knowledge base is defined by $KB\ast\alpha=\tuple{OB1,DS,DA\cup\accol{α}}$, where $OB_1=OB\oplus\accol{\top}\ominus\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}$. Here $OB\oplus\accol{\top}\ominus\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}$ is a \term{finite representation of the modified knowledge base corresponding to belief change scenario}, $\tuple{OB,\accol{\top},\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}
+Let $KB=\tuple{OB,DS,DA}$ and suppose that $\alpha$ is a revision formula representing a defeasible statement. The revised knowledge base is defined by $KB\ast\alpha=\tuple{OB,DS_1,DA}$, where $DS_1=DS\oplus\accol{\alpha}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
 \section{Machine Learning and Probabilistic Reasoning}
 
 \begin{defi}[Beliefs in Conjoint Analysis]
