@@ -38,10 +38,10 @@ A \term{spanning tree} of an undirected graph $G$ is a singly-connected subset o
 \begin{defi}[Best path]
 A path would be selected as a \term{''best'' path} if it satisfies in the two following criteria:
 \begin{enumerate}
-\item Selected path must have the maximum reliability in $\prod_ab$.
+\item Selected path must have the maximum reliability in $\displaystyle\prod_{ab}$.
 \item Selected path must include the minimum number of ''hops''.
 \end{enumerate}
-\cite{}
+\cite{conf/fedcsis/MalucelliCR12}
 \end{defi}
 
 \begin{defi}[Reliability of a path]
@@ -49,7 +49,27 @@ The \term{reliability of a path} is defined by the lowest reliability arc in the
 \begin{equation}
 \fun{reliability}{P}=\displaystyle\min_{\brak{i,j}\in P} s_{ij}
 \end{equation}
-\cite{}
+\cite{conf/fedcsis/MalucelliCR12}
+\end{defi}
+
+\begin{defi}[Efficient path]
+A path $P\in\displaystyle\prod_{ab}$ is an \term{efficient path} if and only if no other path $P'\in\displaystyle\prod_{ab}$ has a better value for one criterion and not worse value for the other one.
+\cite{conf/fedcsis/MalucelliCR12}
+\end{defi}
+
+\begin{defi}[Equivalent efficient path]
+Two efficient paths are \term{equivalent efficient paths} if and only if their value agree for both criteria.
+\cite{conf/fedcsis/MalucelliCR12}
+\end{defi}
+
+\begin{defi}[Complete subset of efficient paths]
+A set $C_{ab}\subseteq\displaystyle\prod_{ab}$ of efficient paths is a \term{complete subset of efficient paths}, if any path $P'\notin C_{ab}$ is either dominated or equivalent to at least one efficient path $P\in C_{ab}$.
+\cite{conf/fedcsis/MalucelliCR12}
+\end{defi}
+
+\begin{defi}[Minimal complete subset of efficient paths]
+A complete set $C_{ab}$ is a \term{minimal complete subset of efficient paths} if and only if no two of its efficient paths are equivalent.
+\cite{conf/fedcsis/MalucelliCR12}
 \end{defi}
 
 \begin{defi}[Minimal node of a Hasse diagram]
