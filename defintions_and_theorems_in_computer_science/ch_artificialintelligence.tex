@@ -166,57 +166,70 @@ A $d$-substitution $\sigma$ is a \term{$d$-unifier} of some non-empty and finite
 \cite{conf/ijcai/Hentenryck87}
 \end{defi}
 
-\begin{defi}
-Let $p$ be a $n$-ary predicate symbol, $p$ is a constraint \iffTx for any ground terms either
-has a successful refutation or
-) has
-only finitely failed derivations.
-S. F o r w a r d checking in logic p r o g r a m ming.
-Forward checking is often considered as one of the most
-efficient procedures for solving CSPs. Intuitively, a constraint
-can be used in forward checking as soon as at most one
-variable occurs In it. In this case, the set of possible values
-for the variable Is reduced to the set of values which satisfy
-the constraint. Thus, a program based on forward checking
-gives a value to a variable, uses all constraints which contains
+\begin{defi}[Constraint]
+Let $p$ be a $n$-ary predicate symbol, $p$ is a \term{constraint} \iffTx for any ground terms either has a successful refutation or has only finitely failed derivations.
 \cite{conf/ijcai/Hentenryck87}
 \end{defi}
-%
-% 1\begin{defi}
-% Definition 13s A computation rule is efficient wrt the
-% forward declarations, if it selects only a predicate
-% submitted to forward declaration when it is ground or
-% forward checkable and if, whenever the resolvent contains
-% literals submitted to a forward declaration which are
-% either forward-checkable or ground, it selects one of them.
-% \cite{conf/ijcai/Hentenryck87}
-% \end{defi}
-%
-% 1\begin{defi}
-% Definition 20: A computation rule is efficient wrt the
-% lookahead declarations, if a l i t e r a l i n the
-% resolvent submitted to a lookahead declaration is only
-% selected if either it is lookahead checkable or all its
-% arguments are ground.
-% A efficient computation rule wrt lookahead declarations gives
-% UB few informations about when to select a lookahead
-% constraint. It is clear that selecting it too early can induce
-% some unproductive work (no new informations are inferred)
-% and that a late selection reduces the pruning of the search
-% space. It is not difficult to define efficient computation rules
-% which select only lookahead constraints which are likely to
-% produce new informations. The definition of the LAIR should
-% not be seen as suggesting a particular implementation. Actual
-% implementations should be based, for instance, on
-% generalisation* of AC-3 |ll) or AC-4 |12).
-% Example: Consider a vision problem in a three-faced vertex
-% world.
-% is the set of possible labels for the
-% vertex. Constraints in the problem are given by the "so-called"
-% fork, L, T and arrow junctions. For instance, the fork junction
-% can be defined as follows.
-% \cite{conf/ijcai/Hentenryck87}
-% \end{defi}
+
+\begin{defi}[forward checkable literal, forward-variable]
+A literal $\pfun{x_1,\ldots,x_n}$ in the resolvent is \term[forward checkable literal]{forward checkable} \iffTx{} $p$ is a constraint and all it's arguments are ground but one which is a $d$-variable. This $d$-variable is called the \term{forward-variable}.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[forward checking inference rule]
+Let $G_1$ be the goal $\leftarrow A_1,\ldots,A_{m-1},P,A_{m+1},\ldots A_k$ and $PR$ be a logic program. $G_{i+1}$ is derived from $G_i$ using the mgu $\theta_{i+1}$ via $PR$ if the following conditions hold:
+\begin{enumerate}
+ \item $P$ is forward checkable and $x^d$ is the forward variable
+ \item $d_{\mbox{new}}=\accol{a\in d|PR\vDash P\accol{x/a}}$ and $d_{\mbox{new}}\neq\emptyset$
+ \item $\theta_{i+1}$ is
+ \begin{enumerate}
+  \item $\accol{x^d/e}$ if $d_{\mbox{new}}=\accol{e}$
+  \item $\accol{x^d/z^{d_{\mbox{new}}}}$ where $z^d_{\mbox{new}}$ is a new variable otherwise.
+ \end{enumerate}
+ \item $G_{i+1}$ is the goal $\leftarrow\brak{A_1,\ldots,A_{m-1},A_{m+1},\ldots A_k}\theta_{i+1}$
+\end{enumerate}
+Such a derivation rule is called the \termabbrev{forward checking inference rule}{FCIR}.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[Efficient computation rule with respect to forward declarations]
+A computation rule is \term[Efficient computation rule with respect to forward declarations]{efficient with respect to the forward declarations}, if it selects only a predicate submitted to forward declaration when it is ground or forward checkable and if, whenever the resolvent contains literals submitted to a forward declaration which are either forward-checkable or ground, it selects one of them.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[lookahead checkable literal, lookahead-variable]
+A literal $\pfun{t_1,\ldots,t_n}$ in the resolvent is \term[lookahead checkable literal]{lookahead checkable} \iffTx{} $p$ is a constraint and their exists at least one $t_i$ which is a domain-variable and each other argument is either ground or a domain-variable. The domain-variables in $t_1,\ldots,t_n$ are called the \term{lookahead-variable}s.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[lookahead inference rule]
+Let $G_1$ be the goal $\leftarrow A_1,\ldots,A_{m-1},P,A_{m+1},\ldots A_k$ and $PR$ be a logic program. $G_{i+1}$ is derived from $G_i$ using the mgu $\theta_{i+1}$ via $PR$ if the following conditions hold:
+\begin{enumerate}
+ \item $P$ is lookahead checkable and $x_1,\ldots,x_n$ are the lookahead variables whose domains are $d_{x_1},\ldots d_{x_n}$.
+ \item For each $x_j^{d_{x_j}}$ let:
+ \begin{enumerate}
+  \item $d_{z_j}=\accol{y_j\in d_{x_j}|\exists y_1\in d_{x_1},\ldots,y_{j-1}\in d_{x_{j-1}},y_{j+1}\in d_{x_{j+1}},\ldots,y_n\in d_{x_n}\mbox{ such that }PR\vDash P\theta\mbox{ with }\theta=\accol{x_1/y_1,\ldots,x_n/y_n}}$ and $d_{x_j}\neq\emptyset$.
+  \item $e_j$ as
+  \begin{enumerate}
+   \item a new variable of domain $d_{z_j}$ if $d_{z_j}=\abs{\accol{e_1,\ldots,e_l}}>1$.
+   \item the constant $e$ if $d_{z_j}$ if $d_{z_j}=\accol{e}$.
+  \end{enumerate}
+ \end{enumerate}
+ \item $\theta_{i+1}=\accol{x_1/z_1,\ldots,x_n/z_n}$
+ \item $G_{i+1}$ is the goal
+ \begin{enumerate}
+  \item $\leftarrow\brak{A_1,\ldots,A_{m-1},A_{m+1},\ldots A_k}\theta_{i+1}$ if at most one $z_i$ is a $d$-variable.
+  \item $\leftarrow\brak{A_1,\ldots,A_{m-1},P,A_{m+1},\ldots A_k}\theta_{i+1}$ otherwise.
+ \end{enumerate}
+\end{enumerate}
+Such a derivation rule is called the \termabbrev{lookahead inference rule}{LAIR}.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[Efficient computation rule with respect to the lookahead declarations]
+Definition 20: A computation rule is \term[efficient computation rule with respect to the lookahead declarations]{efficient with respect to the lookahead declarations}, if a literal in the resolvent submitted to a lookahead declaration is only selected if either it is lookahead checkable or all its arguments are ground.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
 
 \section{Knowledge Representation}
 
