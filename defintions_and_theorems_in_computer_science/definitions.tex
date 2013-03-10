@@ -2,8 +2,9 @@
 \title{Definitions and Theorems in Computer Science}
 \author{Willem Van Onsem\\\url{https://github.com/KommuSoft/publications}}
 \date{Version 0.1}
-\usepackage{amsthm,amsfonts,makeidx,draftwatermark,amssymb,MnSymbol}
+\usepackage{amsthm,amsfonts,makeidx,draftwatermark,amssymb,MnSymbol,ifthen}
 \usepackage[nottoc]{tocbibind}
+\usepackage[annataritalic]{tengwarscript}
 \usepackage[hidelinks,pdfborder=0 0 0,pdfpagelabels,plainpages=false,linktocpage=false,pdfcreator={LaTeX}]{hyperref}
 \SetWatermarkScale{7}
 \usepackage[cm]{fullpage}
@@ -30,6 +31,7 @@
 \newcommand{\gfun}[1]{\fun{g}{#1}}
 \newcommand{\pfun}[1]{\fun{p}{#1}}
 \newcommand{\pcond}[2]{\pfun{#1|#2}}
+\newcommand{\iffTx}{if and only if}
 \newcommand{\txIf}{\ensuremath{\mbox{If }}}
 \newcommand{\txthen}{\ensuremath{\mbox{ then }}}
 \newcommand{\txwhereas}{\ensuremath{\mbox{ whereas }}}
@@ -50,10 +52,7 @@
 \newcommand{\phif}[1]{\fun{\phi}{#1}}
 \newcommand{\ordf}[1]{\fun{\mbox{ord}}{#1}}
 \newcommand{\neigh}[1]{\fun{\calN}{#1}}
-\newcommand{\term}[1]{{\bf #1}\index{#1}}
 \newcommand{\perm}[1]{\ensuremath{\mbox{Perm}^{#1}}}
-\newcommand{\termor}[2]{{\bf #1} (also called {\bf #2})\index{#1}\index{#2|see{#1}}}
-\newcommand{\termabbrev}[2]{{\bf #1} (sometimes abbreviated as {\bf #2})\index{#1}\index{#2|see{#1}}}
 \newcommand{\argmax}[2][]{\ensuremath{\displaystyle\mbox{argmax}_{#1}\left(#2\right)}}
 \newcommand{\calA}{\ensuremath{\mathcal{A}}}
 \newcommand{\calB}{\ensuremath{\mathcal{B}}}
@@ -82,18 +81,34 @@
 \newcommand{\slUC}{\mbox{\sl UC}}
 \newtheorem{defi}{Definition}
 \newtheorem{theo}{Theorem}
+
+\newcommand{\term}[2][]{\ifthenelse{\equal{#1}{}}{{\bf #2}\index{#2}}{{\bf #2}\index{#1}}}
+\newcommand{\termor}[2]{{\bf #1} (also called {\bf #2})\index{#1}\index{#2|see{#1}}}
+\newcommand{\termabbrev}[2]{{\bf #1} (sometimes abbreviated as {\bf #2})\index{#1}\index{#2|see{#1}}}
+
 \begin{document}
 \begin{titlepage}
 \maketitle
 \end{titlepage}
 \tableofcontents
 \newpage
+\chapter*{Introduction}
+% \tengwarannataritalic[2.5]
+% \tengwa{254}
+% \Textendedcalma\TTthreedots\Tnuumen\Tessenuquerna\TTthreedots\Tungwe\Tando\Toore\TTrightcurl\Tumbar\Ttinco\TTthreedots\Tlambealt\TTrightcurl\Tquesse\TTdoublerightcurl
+% \Tromanperiod\Ts
+% \Textendedcalma\TTthreedots\Tnuumen\Tessenuquerna\TTthreedots\Tungwe\Tungwe\Tumbar\TTnasalizer\TTdot\Ttinco\TTthreedots\Tlambe\TTrightcurl
+% \tengwa{255}\\
+% \Textendedcalma\TTthreedots\Tnuumen\Tessenuquerna\TTthreedots\Tungwe\Tthuule\Troomen\Tquesse\TTthreedots\Ttinco\TTthreedots\Tlambealt\TTrightcurl\Tquesse\TTdoublerightcurl
+% \Tromanperiod\Ts
+% \Textendedungwe\TTthreedots\Tumbar\Toore\TTrightcurl\Tesse\Tkern{-0.2}\Tmalta\TTrightcurl\Textendedcalma\TTdot\Ttelco\TTdot\Tquesse\Troomen\Tparma\TTnasalizer\TTdot\Ttinco\TTthreedots\Tlambe\TTrightcurl
 \input{ch_mathematics}
 \input{ch_graphtheory}
 \input{ch_automatacomputability}
 \input{ch_artificialintelligence}
 \input{ch_databaseswebservers}
 \input{ch_gametheory}
+\input{ch_programmingparadigms}
 
 
 %\begin{theo}[Euler's criterion]

@@ -1,6 +1,6 @@
 \chapter{Artificial Intelligence}
 
-\section{First-Order Logic}
+\section{First-Order Logic and Logic Programming}
 
 \begin{defi}[Signature]
 $S$ is a \term{signature} if $S$ is a four-tuple \tuple{P,F,r,C} where:
@@ -118,6 +118,105 @@ Let $D$ be a set of dilemmas with established equal certainty and certainty rank
 \end{enumerate}
 \cite{conf/fedcsis/Kulikowski12}
 \end{theo}
+
+\subsection{Logic Programming}
+
+\begin{defi}[Domain declaration for predicate symbol $p$]
+A \term{domain declaration for predicate symbol $p$} of arity n is an expression of the following form.
+\begin{equation}
+\mbox{domain }\fun{p}{a_1,\ldots ,a_n}
+\end{equation}
+where $a_i$ is either $h$ or $d$. When $a$ is equal to $h$, this means that the $i$-th argument of $p$ ranges over the Herbrand universe. Otherwise, it means that the $i$-th argument is a list of variables which ranges over $d_1$ In the following, the domains $d_i$ are finite and explicit sets of values (i.e constants).
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[Domain set of a logic program]
+Let $dl,\ldots ,dn$ the domains appearing in the domain declarations of a logic program $PR$ and different from the Herbrand universe. We note \fun{D}{PR} the set $\accol{d|d\neq\emptyset\wedge d\in 2^{d_i}\accol{1\leq i\leq n}}$ We call it the \term{domain set of the logic program}. The domain set of a logic program contains all domains we possibly need during the computations.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[Range of a term included in a domain]
+We say that the \term{range of $t$ is included in a domain $d_t$} denoted $\abs{t}\in d_i$ if $t$ is a constant $\in d_t$ or a $d$-variable $x^{d_t}$ such that $d_t\subseteq d$
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[$d$-substitution]
+A $d$-substitution $\theta$ is a finite set of the form $\accol{v_1/t_1,\ldots,v_n/t_n}$ where
+\begin{enumerate}
+ \item each $v_i$ is either a variable or $d$-variable
+ \item $t_i$ is a term distinct from $v_i$,
+ \item $v_1,\ldots,v_n$ are all distinct,
+ \item if $v_i$ is a $d$-variable $v^{d_i}$, $\abs{t_i}\in d_i$
+\end{enumerate}
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[$d$-substitutions agree on a set of variables and $d$-variables]
+We say that two \term[$d$-substitutions agree on a set of variables and $d$-variables]{$d$-substitutions $\theta$ and $\lambda$ agree on a set $V$ of variables and $d$-variables}, denoted $\theta=\lambda\abs{V}$ \iffTx{} $x\theta=x\lambda$ for each $x\in V$ where $=$ denotes syntactic equality.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[$d$-instance]
+$\theta$ is a \term{$d$-instance} of $\lambda$ in $V$, denoted $\lambda\leq\theta$ \iffTx{} $x\theta=\delta\circ\lambda$ for some $d$-substitution $\delta$.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[$d$-unifier, unifies, more general $d$-unifier, $d$-mgu]
+A $d$-substitution $\sigma$ is a \term{$d$-unifier} of some non-empty and finite subset $S=\accol{t_1,\ldots,t_n}$ where $t_i$ and a literal of a term \iffTx{} $t_1\sigma=\ldots=t_n\sigma$, we also say that $\sigma$ \term{unifies} $S$. \term{\fun{UNI}{S}} is the set of all $d$-unifiers of $S$. $\sigma$ is called the \termor{more general $d$-unifier}{$d$-mgu} of $S$ \iffTx for each $\theta\in\fun{UNI}{S}$, $\theta\leq\sigma\abs{\fun{vars}{S}}$ implies $\sigma\leq\theta\abs{\fun{vars}{S}}$ where \fun{vars}{S} is the set of all variable or $d$-variable symbols in $S$.
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}
+Let $p$ be a $n$-ary predicate symbol, $p$ is a constraint \iffTx for any ground terms either
+has a successful refutation or
+) has
+only finitely failed derivations.
+S. F o r w a r d checking in logic p r o g r a m ming.
+Forward checking is often considered as one of the most
+efficient procedures for solving CSPs. Intuitively, a constraint
+can be used in forward checking as soon as at most one
+variable occurs In it. In this case, the set of possible values
+for the variable Is reduced to the set of values which satisfy
+the constraint. Thus, a program based on forward checking
+gives a value to a variable, uses all constraints which contains
+\cite{conf/ijcai/Hentenryck87}
+\end{defi}
+%
+% 1\begin{defi}
+% Definition 13s A computation rule is efficient wrt the
+% forward declarations, if it selects only a predicate
+% submitted to forward declaration when it is ground or
+% forward checkable and if, whenever the resolvent contains
+% literals submitted to a forward declaration which are
+% either forward-checkable or ground, it selects one of them.
+% \cite{conf/ijcai/Hentenryck87}
+% \end{defi}
+%
+% 1\begin{defi}
+% Definition 20: A computation rule is efficient wrt the
+% lookahead declarations, if a l i t e r a l i n the
+% resolvent submitted to a lookahead declaration is only
+% selected if either it is lookahead checkable or all its
+% arguments are ground.
+% A efficient computation rule wrt lookahead declarations gives
+% UB few informations about when to select a lookahead
+% constraint. It is clear that selecting it too early can induce
+% some unproductive work (no new informations are inferred)
+% and that a late selection reduces the pruning of the search
+% space. It is not difficult to define efficient computation rules
+% which select only lookahead constraints which are likely to
+% produce new informations. The definition of the LAIR should
+% not be seen as suggesting a particular implementation. Actual
+% implementations should be based, for instance, on
+% generalisation* of AC-3 |ll) or AC-4 |12).
+% Example: Consider a vision problem in a three-faced vertex
+% world.
+% is the set of possible labels for the
+% vertex. Constraints in the problem are given by the "so-called"
+% fork, L, T and arrow junctions. For instance, the fork junction
+% can be defined as follows.
+% \cite{conf/ijcai/Hentenryck87}
+% \end{defi}
 
 \section{Knowledge Representation}
 
