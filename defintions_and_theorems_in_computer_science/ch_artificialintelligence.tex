@@ -227,8 +227,34 @@ Such a derivation rule is called the \termabbrev{lookahead inference rule}{LAIR}
 \end{defi}
 
 \begin{defi}[Efficient computation rule with respect to the lookahead declarations]
-Definition 20: A computation rule is \term[efficient computation rule with respect to the lookahead declarations]{efficient with respect to the lookahead declarations}, if a literal in the resolvent submitted to a lookahead declaration is only selected if either it is lookahead checkable or all its arguments are ground.
+A computation rule is \term[efficient computation rule with respect to the lookahead declarations]{efficient with respect to the lookahead declarations}, if a literal in the resolvent submitted to a lookahead declaration is only selected if either it is lookahead checkable or all its arguments are ground.
 \cite{conf/ijcai/Hentenryck87}
+\end{defi}
+
+\begin{defi}[\fun{Revise}{M,a}]
+Let $a$ be a formula and M a model. \term{\fun{Revise}{M,a}} is the set of models $M'$ such that
+\begin{enumerate}
+\item \label{reviseIt1} $M'$ and $M$ have the same universe and agree on all functions.
+\item \label{reviseIt2} $a$ and the protected formulas of $T$ are true in $M'$.
+\item There is no other model $M''$ such that for some $1<i<1$,
+\begin{enumerate}
+\item $M''$ satisfies (\ref{reviseIt1}) and (\ref{reviseIt2});
+\item $M''$ and $M'$. agree on all predicates in strata $1$ through $i-1$; and
+\item the differences between M" and M on predicates in stratum $i$ are a proper subset of the differences between $M'$ and $M$ on those predicates.
+\end{enumerate}
+\end{enumerate}
+\cite{conf/ijcai/Winslett89}
+\end{defi}
+
+\begin{defi}[Preferred model at the $i$-th stratum]
+A model $\calM_1$ is \term[Preferred model at the $i$-th stratum]{preferred to model $\calM_2$ at the $i$-th stratum} (written $\calM_1<_i\calM_2$) \iffTx{}
+\begin{enumerate}
+\item $\calM_1$ and $\calM_2$ have identical universes;
+\item $\calM_1$ and $\calM_2$ agree on all predicates and functions, except possibly those of $S_i$ and $V_i$;
+\item For all predicates $P$ in stratum $S_t$, and for all $\bar{x}$ such that $\fun{P}{\bar{x}}$ is true in $\calM_1$, $\fun{P}{\bar{x}}$ is true in $\calM_2$; and
+\item For some predicate $P$ in stratum $S_i$ and some $\bar{x}$, $\fun{P}{\bar{x}}$ is false in $\calM_1$ and true in $\calM_2$.
+\end{enumerate}
+\cite{conf/ijcai/Winslett89}
 \end{defi}
 
 \section{Knowledge Representation}
