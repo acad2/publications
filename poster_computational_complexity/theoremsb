@@ -1,0 +1,3 @@
+lt/p/np/0/0/Ladner's Theorem/{Suppose that $\cc{P}\neq\cc{NP}$, then there exists a language $L\in\cc{NP}\setminus\cc{P}$ that is not \ccc{NP}},
+bt/po/npo/0/0/Baker's Theorem/{There exists oracles $A$, $B$ such that $\cc{P}^A=\cc{NP}^A$ and $\cc{P}^B\neq\cc{NP}^B$.},
+st/nspace/space/0/0/Savitch's Theorem/{For any space constructible \NNfunc{S} with $S\left(n\right)\geq \log n$, $\cca{NSPACE}{S\left(n\right)}\subseteq \cca{SPACE}{S\left(n\right)}$}

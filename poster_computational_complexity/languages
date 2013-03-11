@@ -1,0 +1,7 @@
+INDSET/$\left\{\left\langleG{,}k\right\rangle:\exists S\subseteq V\left(G\right)\mbox{ s.t. }\left|S\right|\geq k\mbox{ and }\forall u{,}v\in S{,}\overline{uv}\notin E\left(G\right)\right\}$,
+UC/Uncomputable language,
+HALT/$\left\{\left\langle\alpha{,}x\right\rangle:\mbox{TM }M_{\alpha}\mbox{ halts on }x\right\}$,
+DIVIDES/$\left\{\left\langle\alpha{,}x\right\rangle:\mbox{TM }M_{\alpha}\mbox{ halts on }x\right\}$,
+PRIME/$\left\{y:\mbox{TM }M_{\alpha}\mbox{ halts on }x\right\}$,
+
+Lang/$\left\{\left\langle\right\rangle:\right\}$

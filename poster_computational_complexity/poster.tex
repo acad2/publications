@@ -1,0 +1,327 @@
+\documentclass{article}
+\usepackage[a0paper,landscape,margin=1cm,centering]{geometry}
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\definecolor{backg}{rgb}{0.99,0.96,0.9}
+\definecolor{redback}{rgb}{1,0.88,0.85}
+\definecolor{greenback}{rgb}{0.9,0.98,0.85}
+\definecolor{blueback}{rgb}{0.9,0.88,0.95}
+\definecolor{orangeback}{rgb}{1.0,0.93,0.85}
+\pagecolor{backg}
+%\geometry{papersize={200cm,80cm},total={200cm,80cm}}
+\usepackage{tikz,amsfonts}
+\usetikzlibrary{fit,patterns,snakes,calc,decorations,decorations.text}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{classes}
+\pgfsetlayers{background,classes,main}
+\usepackage{catchfile,varwidth}
+\newcommand{\ssfunc}[1]{\ensuremath{#1:\left\{0,1\right\}^*\rightarrow\left\{0,1\right\}^*}}
+\newcommand{\NNfunc}[1]{\ensuremath{#1:\NN\rightarrow\NN}}
+\newcommand{\slang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^*}}
+\newcommand{\nlang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^n}}
+\newcommand{\sstri}[1]{\ensuremath{#1\in\left\{0,1\right\}^*}}
+\newcommand{\nstri}[1]{\ensuremath{#1\in\left\{0,1\right\}^n}}
+\newcommand{\cstri}[2]{\ensuremath{#1\in\left\{0,1\right\}^{#2}}}
+\newcommand{\cc}[1]{\textbf{#1}}
+\newcommand{\ccc}[1]{\textbf{#1}-\textit{complete}}
+\newcommand{\cch}[1]{\textbf{#1}-\textit{hard}}
+\newcommand{\cca}[2]{\ensuremath{\mbox{\cc{#1}}\left(#2\right)}}
+\newcommand{\red}[1]{\ensuremath{\leq_{#1}}}
+\newcommand{\prb}[1]{\ensuremath{\Pr\left[#1\right]}}
+\newcommand{\bigoh}[1]{\ensuremath{O\left(#1\right)}}
+\newcommand{\smalloh}[1]{\ensuremath{o\left(#1\right)}}
+\newcommand{\bigomega}[1]{\ensuremath{\Omega\left(#1\right)}}
+\newcommand{\smallomega}[1]{\ensuremath{\omega\left(#1\right)}}
+\newcommand{\bigtheta}[1]{\ensuremath{\Theta\left(#1\right)}}
+\newcommand{\xlogx}[1]{\ensuremath{#1\log\left(#1\right)}}
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcounter{tmpA}
+\begin{document}
+\begin{center}
+\begin{tikzpicture}[infl/.style={dashed},special/.style={snake}]
+
+\pgfdeclarepatternformonly{swnestripes}{\pgfpoint{0cm}{0cm}}{\pgfpoint{1cm}{1cm}}{\pgfpoint{1cm}{1cm}}
+{
+\foreach \i in {0.1cm, 0.5cm,...,0.9cm}
+{
+  \pgfpathmoveto{\pgfpoint{\i}{0cm}}
+  \pgfpathlineto{\pgfpoint{1cm}{1cm - \i}}
+  \pgfpathlineto{\pgfpoint{1cm}{1cm - \i + 0.1cm}}
+  \pgfpathlineto{\pgfpoint{\i - 0.1cm}{0cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+  \pgfpathmoveto{\pgfpoint{0cm}{\i}}
+  \pgfpathlineto{\pgfpoint{1cm - \i}{1cm}}
+  \pgfpathlineto{\pgfpoint{1cm - \i - 0.1cm}{1cm}}
+  \pgfpathlineto{\pgfpoint{0cm}{\i + 0.1cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+}
+}
+\pgfdeclarepatternformonly{swneStripes}{\pgfpoint{0cm}{0cm}}{\pgfpoint{1cm}{1cm}}{\pgfpoint{1cm}{1cm}}
+{
+\foreach \i in {0.1cm, 0.5cm,...,0.9cm}
+{
+  \pgfpathmoveto{\pgfpoint{\i}{0cm}}
+  \pgfpathlineto{\pgfpoint{1cm}{1cm - \i}}
+  \pgfpathlineto{\pgfpoint{1cm}{1cm - \i - 0.1cm}}
+  \pgfpathlineto{\pgfpoint{\i + 0.1cm}{0cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+  \pgfpathmoveto{\pgfpoint{0cm}{\i}}
+  \pgfpathlineto{\pgfpoint{1cm - \i}{1cm}}
+  \pgfpathlineto{\pgfpoint{1cm - \i + 0.1cm}{1cm}}
+  \pgfpathlineto{\pgfpoint{0cm}{\i - 0.1cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+}
+}
+\pgfdeclarepatternformonly{senwstripes}{\pgfpoint{0cm}{0cm}}{\pgfpoint{1cm}{1cm}}{\pgfpoint{1cm}{1cm}}
+{
+\foreach \i in {0.1cm, 0.5cm,...,0.9cm}
+{
+  \pgfpathmoveto{\pgfpoint{0cm}{\i}}
+  \pgfpathlineto{\pgfpoint{0cm}{\i + 0.1cm}}
+  \pgfpathlineto{\pgfpoint{\i + 0.1cm}{0cm}}
+  \pgfpathlineto{\pgfpoint{\i}{0cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+  \pgfpathmoveto{\pgfpoint{1cm}{\i}}
+  \pgfpathlineto{\pgfpoint{\i}{1cm}}
+  \pgfpathlineto{\pgfpoint{\i + 0.1cm}{1cm}}
+  \pgfpathlineto{\pgfpoint{1cm}{\i + 0.1cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+}
+}
+\pgfdeclarepatternformonly{senwStripes}{\pgfpoint{0cm}{0cm}}{\pgfpoint{1cm}{1cm}}{\pgfpoint{1cm}{1cm}}
+{
+\foreach \i in {0.0cm, 0.8cm}
+{
+  \pgfpathmoveto{\pgfpoint{\i}{0cm}}
+  \pgfpathlineto{\pgfpoint{0cm}{\i}}
+  \pgfpathlineto{\pgfpoint{0cm}{\i + 0.4cm}}
+  \pgfpathlineto{\pgfpoint{\i + 0.4cm}{0cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+  \pgfpathmoveto{\pgfpoint{1cm}{\i}}
+  \pgfpathlineto{\pgfpoint{\i}{1cm}}
+  \pgfpathlineto{\pgfpoint{\i + 0.4cm}{1cm}}
+  \pgfpathlineto{\pgfpoint{1cm}{\i + 0.4cm}}
+  \pgfpathclose%
+  \pgfusepath{fill}
+}
+}
+
+\def\dwa{95 cm};
+\def\dha{-70 cm};
+\def\dwb{8 cm};
+\def\dwba{12.5 cm};
+\def\dwbb{54.5 cm};
+\def\dwc{8 cm};
+\def\dwca{14.25 cm};
+\def\dwcb{52.5 cm};
+\def\mid{594.5 mm};
+\def\dmar{10 mm};
+\def\dwat{0.333*\dwa+0.1666*\dmar};
+\def\midb{\mid+0.5*\dwa+0.5*\dwb};
+\def\midc{\mid-0.5*\dwa-0.5*\dwc};
+\node[scale=4] (TITLE) at (\mid,0) {\Huge{\textsc{Computational Complexity}}};
+\node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{sedes}};
+\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{10 cm}{Willem Van Onsem\\Master Computer Science (Artificial Intelligence)\\K.U.Leuven}};
+\begin{pgfonlayer}{background}
+\begin{scope}
+\begin{scope}
+%BEGIN SCOPES
+\coordinate (Circ-Off) at (\mid-1.5*\dwat,-3.5 cm);
+\coordinate (Circ-Dx) at (0.5*\dwat,0);
+\coordinate (Circ-Dy) at (0,\dha+3.5 cm);
+\coordinate (Circ-Tit) at ($(Circ-Off)+0.5*(Circ-Dx)$);
+
+\coordinate (Time-Off) at ($(Circ-Off)+(Circ-Dx)$);
+\coordinate (Time-Dx) at (1.5*\dwat,0);
+\coordinate (Time-Dy) at (0,\dha+3.5 cm);
+\coordinate (Time-Tit) at ($(Time-Off)+0.5*(Time-Dx)$);
+
+\coordinate (Size-Off) at ($(Time-Off)+(Time-Dx)$);
+\coordinate (Size-Dx) at (\dwat,0);
+\coordinate (Size-Dy) at (0,\dha+3.5 cm);
+\coordinate (Size-Tit) at ($(Size-Off)+0.5*(Size-Dx)$);
+
+\coordinate (Nond-Off) at ($(Time-Off)+0.6667*(Time-Dx)$);
+\coordinate (Nond-Dx) at ($(Size-Off)+0.3333*(Size-Dx)-(Nond-Off)$);
+\coordinate (Nond-Dy) at ($0.4*(Time-Dy)$);
+\coordinate (Nond-Tit) at ($(Nond-Off)+0.5*(Nond-Dx)$);
+
+\coordinate (Rand-Off) at ($(Time-Off)+0.3333*(Time-Dx)+0.8*(Time-Dy)$);
+\coordinate (Rand-Dx) at ($0.6667*(Time-Dx)+0.6667*(Size-Dx)$);
+\coordinate (Rand-Dy) at ($0.2*(Time-Dy)$);
+\coordinate (Rand-Tit) at ($(Rand-Off)+(Rand-Dy)+0.5*(Rand-Dx)$);
+
+\coordinate (Orac-Off) at ($(Time-Off)+0.6667*(Time-Dx)+0.3*(Time-Dy)$);
+\coordinate (Orac-Dx) at ($0.3333*(Time-Dx)$);%+0.3333*(Size-Dx)
+\coordinate (Orac-Dy) at ($0.2*(Time-Dy)$);
+\coordinate (Orac-Tit) at ($(Orac-Off)+(Orac-Dy)+0.5*(Orac-Dx)$);
+
+\coordinate (Poly-Off) at ($(Time-Off)+0.4*(Time-Dy)$);
+\coordinate (Poly-Dx) at ($0.3334*(Time-Dx)$);
+\coordinate (Poly-Dy) at ($0.2*(Time-Dy)$);
+\coordinate (Poly-Tit) at ($(Poly-Off)+(Poly-Dy)+0.5*(Poly-Dx)$);
+%END
+
+\clip[rectangle] (\mid -0.5*\dwa +0.5*\dmar,-3.5 cm) rectangle (\mid +0.5*\dwa -0.5*\dmar,\dha);
+\clip[rectangle,rounded corners] (\mid -0.5*\dwa +0.5*\dmar,-2 cm) rectangle (\mid +0.5*\dwa -0.5*\dmar,\dha);
+
+\fill[greenback] (Time-Off) rectangle ++($(Time-Dx)+(Time-Dy)$);
+\fill[redback] (Circ-Off) rectangle ++($(Circ-Dx)+(Circ-Dy)$);
+\fill[blueback] (Size-Off) rectangle ++($(Size-Dx)+(Size-Dy)$);
+\fill[pattern=senwStripes, pattern color=orange!20] (Nond-Off) rectangle ++($(Nond-Dx)+(Nond-Dy)$);
+\fill[pattern=senwStripes, pattern color=yellow!20] (Rand-Off) rectangle ++($(Rand-Dx)+(Rand-Dy)$);
+\fill[pattern=senwStripes, pattern color=purple!20] (Orac-Off) rectangle ++($(Orac-Dx)+(Orac-Dy)$);
+\fill[pattern=senwStripes, pattern color=brown!20,shape=ellipse] (Poly-Off) rectangle ++($(Poly-Dx)+(Poly-Dy)$);
+
+\draw[black!50!brown] (Poly-Tit) node[scale=2,anchor=south] {Polynomial Hierarchy};
+\draw[black!50!purple] (Orac-Tit) node[scale=2,anchor=south] {Oracles};
+\draw[black!50!yellow] (Rand-Tit) node[scale=2,anchor=south] {Random};
+\draw[black!50!orange] (Nond-Tit) node[scale=2,anchor=north] {Nondeterminism};
+\draw[black!50!green] (Time-Tit) node[scale=2,anchor=north] {Time};
+\draw[black!50!red] (Circ-Tit) node[scale=2,anchor=north] {Circuit Size};
+\draw[black!50!blue] (Size-Tit) node[scale=2,anchor=north] {Space};
+
+\fill[white] (\mid-0.5*\dwa+0.5*\dmar,\dha) rectangle ++(10,5);
+\draw (\mid-0.5*\dwa+0.5*\dmar,-65 cm) -| ++(10,-5);
+\draw (\mid-0.5*\dwa+0.5*\dmar,-65 cm) node[anchor=north west,scale=2]{Legend};
+
+\draw[dashed] ($(Circ-Off)+(Circ-Dx)$) -- ++(Circ-Dy);
+\draw[dashed] ($(Time-Off)+(Time-Dx)$) -- ++(Time-Dy);
+%\draw[postaction={decorate,decoration={raise=2pt,text along path,text=Polynomial Hierarchy - Polynomial Hierarchy -}}] (\mid,-50 cm) arc (180:-180:1.5cm and 1cm);
+%\pattern[pattern=north east lines,pattern color=purple] (\mid -0.5*\dwa +0.5*\dmar,-50 cm) rectangle (\mid +0.5*\dwa -0.5*\dmar,-70 cm);
+\end{scope}
+\draw (\mid,-2 cm) node[anchor=north,scale=3] {Complexity Classes};
+\draw (\mid-0.5*\dwa+0.5*\dmar,-3.5 cm) -- (\mid+0.5*\dwa-0.5*\dmar,-3.5 cm);
+\draw[draw=black,thick,rectangle,rounded corners] (\mid -0.5*\dwa +0.5*\dmar,-2 cm) rectangle (\mid +0.5*\dwa -0.5*\dmar,-70 cm);
+\end{scope}
+\draw[draw=black,thick,rectangle,rounded corners] (\midb -0.5*\dwb +0.5*\dmar,-2 cm) rectangle ++(\dwb-\dmar,-\dwba);
+\draw (\midb -0.5*\dwb + 0.5*\dmar,-2 cm) node[anchor=north west,scale=2] {Reductions};
+\draw[draw=black,thick,rectangle,rounded corners] (\midb -0.5*\dwb +0.5*\dmar,-2 cm-\dwba-\dmar) rectangle ++(\dwb-\dmar,-\dwbb);
+\draw (\midb -0.5*\dwb + 0.5*\dmar,-2 cm-\dwba-\dmar) node[anchor=north west,scale=2] {Abstract Devices};
+\draw[draw=black,thick,rectangle,rounded corners] (\midc -0.5*\dwc +0.5*\dmar,-2 cm) rectangle ++(\dwc-\dmar,-\dwca);
+\draw (\midc -0.5*\dwb + 0.5*\dmar,-2 cm) node[anchor=north west,scale=2] {Bound Notations};
+\draw[draw=black,thick,rectangle,rounded corners] (\midc -0.5*\dwc +0.5*\dmar,-2 cm-\dwca-\dmar) rectangle ++(\dwc-\dmar,-\dwcb);
+\draw (\midc -0.5*\dwb + 0.5*\dmar,-2 cm-\dwca-\dmar) node[anchor=north west,scale=2] {Concepts};
+\end{pgfonlayer}
+
+%bigohs
+\begin{scope}[xshift=\midc,yshift=-2 cm]
+\coordinate (BOO) at (0,-1.25 cm);
+\CatchFileDef{\tempa}{bigohs}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach \la/\a/\b in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+\node[anchor=north] (BOT) at (BOO) [scale=2]{$f=\a\left(g\right)$};\node[anchor=north] (BOD) at (BOT.south) {\parbox{6 cm}{\b}};
+\begin{pgfonlayer}{background}
+\node[fit=(BOT) (BOD),draw=black,rectangle,fill=white] (BO\la) {};
+\end{pgfonlayer}
+\coordinate (BOO) at ($(BOD.south)+(0,-0.5 cm)$);
+}
+\draw (0,-\dwca) node[anchor=south]{\parbox{6 cm}{For every two functions \NNfunc{f,g}}};
+\end{scope}
+
+%concepts
+\begin{scope}[xshift=\midc,yshift=-2 cm-\dwca-\dmar]
+\coordinate (COO) at (0,-1.25 cm);
+\CatchFileDef{\tempa}{concepts}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach \la/\a/\b in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+\node[anchor=north] (COT) at (COO) [scale=1.5]{\begin{varwidth}{4cm}\begin{center}\a\end{center}\end{varwidth}};\node[anchor=north] (COD) at (COT.south) {\parbox{6 cm}{\b}};
+\begin{pgfonlayer}{background}
+\node[fit=(COT) (COD),draw=black,rectangle,fill=white] (CO\la) {};
+\end{pgfonlayer}
+\coordinate (COO) at ($(COD.south)+(0,-0.5 cm)$);
+}
+%\draw (0,-\dwca) node[anchor=south]{\parbox{6 cm}{For every two functions \NNfunc{f,g}}};
+\end{scope}
+
+% complexity classes
+\setcounter{tmpA}{0}
+\CatchFileDef{\tempa}{ccs}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach \lbl/\fld/\xf/\yf/\ttl/\dsc in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+\node[anchor=north] (CCD\lbl) at ($(\fld-Off)+\xf*(\fld-Dx)+\yf*(\fld-Dy)$) {\begin{varwidth}{6cm}\dsc\end{varwidth}};\node[anchor=north,anchor=south] (CCT\lbl) at (CCD\lbl.north) [scale=2]{\cc{\ttl}};\draw(CCT\lbl.south west) -- (CCT\lbl.south east);
+\begin{pgfonlayer}{classes}
+\node[fit=(CCT\lbl) (CCD\lbl),draw=black,rectangle,dotted,rounded corners,fill=white] (CC\lbl) {};
+\end{pgfonlayer}}
+
+%theorems
+\CatchFileDef{\tempa}{theorems}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach \lbl/\anc/\dx/\dy/\ttl/\dsc in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+\node[anchor=south] (TT) at ($(CC\anc)+(\dx,\dy)$) [scale=1.25]{\textit{\ttl}};\node[anchor=north] (TD) at (TT.south) {\parbox{8 cm}{\dsc}};
+\begin{pgfonlayer}{classes}
+\node[fit=(TT) (TD),draw=black,rectangle,fill=black!10] (T\lbl) {};\draw (T\lbl) -- (CC\anc);
+\end{pgfonlayer}
+}
+\CatchFileDef{\tempa}{theoremsb}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach \lbl/\anca/\ancb/\dx/\dy/\ttl/\dsc in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+\node[anchor=south] (TT) at ($0.5*(CC\anca)+0.5*(CC\ancb)+(\dx,\dy)$) [scale=1.25]{\textit{\ttl}};\node[anchor=north] (TD) at (TT.south) {\parbox{8 cm}{\dsc}};
+\begin{pgfonlayer}{classes}
+\node[fit=(TT) (TD),draw=black,rectangle,fill=black!10] (T\lbl) {};\draw (T\lbl) -- (CC\anca);\draw (T\lbl) -- (CC\ancb);
+\end{pgfonlayer}
+}
+
+%\begin{scope}[xshift=\mid,yshift=-60mm]
+% 
+% %relations
+\begin{pgfonlayer}{background}
+\CatchFileDef{\tempa}{relations}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach\a/\b/\c/\d in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {\draw[thick,->,\c] (CC\a) to node[above,widway,sloped]{\d} (CC\b);}
+\end{pgfonlayer}
+% \end{scope}
+
+%reductions
+\begin{scope}[xshift=\midb,yshift=-2 cm]
+\coordinate (RO) at (0,-1.25 cm);
+\CatchFileDef{\tempa}{reductions}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach\a/\b in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+\node[anchor=north] (RT) at (RO) [scale=2]{$L\red{\a}L'$};\node[anchor=north] (RD) at (RT.south) {\parbox{6cm}{\b}};
+\begin{pgfonlayer}{background}
+\node[fit=(RT) (RD),draw=black,rectangle,fill=white] (R\a) {};
+\coordinate (RO) at ($(RD.south)+(0,-0.5 cm)$);
+\end{pgfonlayer}}
+\draw (0,-\dwba) node[anchor=south]{\parbox{6 cm}{For every two languages \slang{L,L'}}};
+\end{scope}
+
+%machines
+\begin{scope}[xshift=\midb,yshift=-2 cm-\dwba-\dmar]
+\coordinate (MO) at (0,-1.25 cm);
+\CatchFileDef{\tempa}{machines}{\endlinechar=`,}
+  \edef\tempb{\unexpanded{\foreach\la/\a/\b in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+\node[anchor=north] (MT) at (MO) [scale=2]{\a};\node[anchor=north] (MD) at (MT.south) {\parbox{6cm}{\b}};
+\begin{pgfonlayer}{background}
+\node[fit=(MT) (MD),draw=black,rectangle,fill=white] (M\la) {};
+\coordinate (MO) at ($(MD.south)+(0,-0.5 cm)$);
+\end{pgfonlayer}}
+%\draw (0,-\dwba) node[anchor=south]{\parbox{6 cm}{For every two languages \slang{L,L^*}}};
+\end{scope}
+
+% %theorems
+% \begin{scope}[xshift=\mid,yshift=-50 cm]
+% \coordinate (TO) at (0,-1.25 cm);
+% \CatchFileDef{\tempa}{theorems}{\endlinechar=`,}
+%   \edef\tempb{\unexpanded{\foreach \la/\a/\b in }{\unexpanded\expandafter{\tempa}}}
+%   \tempb {
+% \node[anchor=north] (TT) at (TO) [scale=1.5]{\textit{\a}};\node[anchor=north] (TD) at (TT.south) {\parbox{12 cm}{\b}};
+% \begin{pgfonlayer}{background}
+% \node[fit=(TT) (TD),draw=black,rectangle,fill=black!10] (T\la) {};
+% \end{pgfonlayer}
+% \coordinate (TO) at ($(TD.south)+(0,-0.5 cm)$);
+% }
+%\end{scope}
+
+\end{tikzpicture}
+\end{center}
+\end{document}

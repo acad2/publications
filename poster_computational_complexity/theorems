@@ -1,0 +1,3 @@
+tht/dtime/5/-3/Time Hierarchy Theorem/{If $f,g$ are time constructible functions satisfying $\xlogx{f\left(n\right)}=\smalloh{g\left(n\right)}$ then $\cca{DTIME}{f\left(n\right)}\subsetneq\cca{DTIME}{g\left(n\right)}$.},
+ndtht/ntime/5/-3/Nondeterministic Time Hierarchy Theorem/{If $f,g$ are time constructible functions satisfying $\xlogx{f\left(n+1\right)}=\smalloh{g\left(n\right)}$ then $\cca{NTIME}{f\left(n\right)}\subsetneq\cca{NTIME}{g\left(n\right)}$.},
+sht/space/-5/-3/Space Hierarchy Theorem/{If $f,g$ are space-constructible functions satisfying $f\left(n\right)=\smalloh{g\left(n\right)}$, then $\cca{SPACE}{f\left(n\right)}\subsetneq\cca{SPACE}{g\left(n\right)}$}

@@ -1,0 +1,11 @@
+p/np/subseteq/,
+np/exp/subseteq/exhaustive search,
+exp/nexp/subseteq/,
+dtime/space/subseteq/$\cca{DTIME}{s\left(n\right)}\subseteq\cca{SPACE}{s\left(n\right)}$,
+space/nspace/subseteq/$\cca{SPACE}{s\left(n\right)}\subseteq\cca{NSPACE}{s\left(n\right)}$,
+nspace/dtime/subseteq/$\cca{SPACE}{s\left(n\right)}\subseteq\cca{DTIME}{2^{\bigoh{s\left(n\right)}}}$,
+np/pspace/subseteq/,
+l/nl/subseteq/,
+nl/p/subseteq/,
+pspace/exp/subseteq/,
+p/ppoly//

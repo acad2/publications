@@ -1,0 +1,5 @@
+O/{O}/{If there exists a constant $c$ such that $f\left(n\right)\leq c\cdot g\left(n\right)$ for every sufficiently large $n$.},
+Omega/{\Omega}/{If $g=\bigoh{f}$.},
+Theta/{\Theta}/{If $f=\bigoh{g}$ and g=\bigoh{f}.},
+o/{o}/{If for every $\epsilon>0$, $f\left(n\right)\leq \epsilon\cdot g\left(n\right)$ for every sufficiently large $n$.},
+omega/{\omega}/{If $g=\smalloh{f}$.}
