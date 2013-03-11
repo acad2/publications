@@ -1,0 +1,3 @@
+p/{$L$ is \textit{polynomial-time Karp reducible} to $L'$ if there is polynomial time computable function \ssfunc{f} such that for every $x\in L\Leftrightarrow f\left(x\right)\in L'$.},
+l/{$L$ is \textit{logspace reducible} to $L'$ if there exists a function \ssfunc{f} that is implicitly logspace computable and for every $x\in L\Leftrightarrow f\left(x\right)\in L'$.},
+r/{$L$ is \textit{randomized polynomial time reduceable} to $L'$ if there exists a probabilistic polynomial-time turing machine $M$ such that for every \sstri{x}, $\prb{L'\left(M\left(x\right)\right)=B\left(x\right)}\geq 2/3$.}
