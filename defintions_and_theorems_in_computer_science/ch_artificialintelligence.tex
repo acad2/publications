@@ -380,6 +380,35 @@ Let $KB=\tuple{OB,DS,DA}$ and suppose that $\alpha$ is a revision formula repres
 
 \section{Machine Learning and Probabilistic Reasoning}
 
+\begin{defi}[Learning algorithm for a meta-domain]%Problem: SxG??
+Formally, an algorithm $A$ is a \term{learning algorithm for a meta-domain} $M$ in a hypothesis space $H$ with respect to a set of problem distributions $T$, if for any domain $D\in M$, any choice of a problem distribution $P$ in $T$, and any target problem solver $f\in H$,
+\begin{enumerate}
+\item $A$ takes as input the specification of a domain $D\in M$, an error parameter $E$, and a confidence parameter $\sigma$,
+\item $A$ may call \alg{SolvedProblem}, which returns examples $\brak{x,\ffun{x}}$ for $D$, where $x$ is chosen with probability $\Pfun{x}$ from $S\times G$. The number of oracle calls of $A$ and its running time must be polynomial in the maximum problem size and the length of its input.
+\item For all $D\in M$ and distributions $P\in T$, with probability at least $\brak{1-\delta}A$ outputs a program $f'$ that approximates $f$ in the sense that
+\begin{equation}
+\displaystyle\sum_{x\in\Delta}{\Pfun{x}}\leq\epsilon
+\end{equation}
+where $\Delta=\accol{x | f'\mbox{ fails on }x\mbox{ while }f\mbox{ succeeds}}$.
+\item There is a polynomial $R$ such that, for a maximum problem size $n,\frac{1}{\epsilon},|frac{1}{\delta}$, maximum length $I$ and maximum step length $r$ of any solution output by \alg{SolvedProblem}, and an upper bound $t$ on the running times of programs in $D$ on inputs of size $n$, if $A$ outputs $f'$, the run time of $f'$ is bounded by $\fun{R}{n,l,r,t,\frac{1}{\epsilon},\frac{1}{\delta}}$
+\end{enumerate}
+\cite{conf/ijcai/Tadepalli91}
+\end{defi}
+
+\begin{defi}[Satisfying a spare solution space bias]
+A problem solver $f$ for a domain $D$ and a problem distribution $P$ \term[Satisfying a sparse solution space bias]{satisfies a sparse solution space bias} if there is a set of operator sequences $m_f$ such that, on any problem $x\in D$ such that $\Pfun{x}>0$, $\ffun{x}\in m_f$ and $\abs{m_f}$ is bounded by a polynomial $Q$ in the problem size $n$.
+\cite{conf/ijcai/Tadepalli91}
+\end{defi}
+
+\begin{defi}[Satisfying a macro table bias]
+A problem solver $f$ \term[Satisfying a macro table bias]{satisfies a macro table bias} for a domain $D$ in $M$ if there is a feature ordering $O=\brak{l,\ldots,n}$ such that,
+\begin{enumerate}
+ \item $D$ is serially decomposable for $O$, and
+ \item $f$ constructs all its solutions using a macro table $M$ as follows: for each feature $i$ from $1$ to $n$, macros $M_{j,i}$ are successively applied, where $j$ is the value of feature $i$ in the state before applying the macro.
+\end{enumerate}
+\cite{conf/ijcai/Tadepalli91}
+\end{defi}
+
 \begin{defi}[Beliefs in Conjoint Analysis]
 We allow weighted beliefs with a weight parameter coming from \ocinterval{0}{1} where $1$ means full truth degree (complete certainty, the perfect belief), while a value $\alpha\in\oointerval{0}{1}$ describe a regular belief that can be doubted.
 \begin{enumerate}
