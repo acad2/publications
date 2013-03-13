@@ -1,7 +1,7 @@
 $collect = 0;
 $current = "";
 while(<>) {
-	if($_ =~ m/^[ \t\n]*(D|d)(efinition|efinitie) [0-9]+/) {
+	if($_ =~ m/^[ \t\n]*(D|d) *(e *f *i *n *i *t *i *o *n|e *f *i *n *i *t *i *e) +[0-9]+/) {
 		$line = $_;
 		if($collect) {
 			print MoreLaTeX($current);
