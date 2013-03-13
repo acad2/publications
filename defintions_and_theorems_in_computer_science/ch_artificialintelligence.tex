@@ -299,6 +299,15 @@ Given a set of clauses $C$. the \term{connection graph} of $C$ is the graph obta
 \cite{conf/ijcai/Eshghi93}
 \end{defi}
 
+\begin{defi}[Chain]
+Given the set of clauses $C$, the sequence $\flatbrak{\brak{x_1,e_1,y_1},\brak{x_2,e_2,y_2},\ldots,\brak{x_n,e_n,y_n}}$ of $c$-triples is a \term{chain} in $C$ \iffTx{} for all $k$, $e_k$ is a clause in $C$ and $y_k=\neg x_{k+1}$.
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
+
+\begin{defi}[Tied chain]
+$\flatbrak{\brak{x_1,e_1,y_1},\brak{x_2,e_2,y_2},\ldots,\brak{x_n,e_n,y_n}}$ is a \term{tied chain} in $C$ \iffTx{} it is a chain in $C$ and $x_1=y_n$.
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
 
 \section{Knowledge Representation}
 
