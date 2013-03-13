@@ -11,8 +11,23 @@ do
 done
 for f in *.pdf
 do
-	pdftotext "$f" "tmp"
-	w=$(grep -E "(D|d)(efinition|efinitie) [0-9]+" "tmp" | wc -l)
+	if [ ! -f "$f.txt" ];
+	then
+		pdftotext "$f" "listings/tmp2"
+		pdfimages -q "$f" ocrcache/page
+		cd ocrcache
+		for i in page*
+		do
+		  echo doing OCR on page $i
+		  tesseract "$i" tesseract-$i -l eng
+		  rm "$i"
+		done
+		cat *.txt > "alltext"
+		rm *.txt
+		cd ..
+		cat "listings/tmp2" "ocrcache/alltext" > "$f.txt"
+	fi
+	w=$(grep -E "(D|d)(efinition|efinitie) [0-9]+" "$f.txt" | wc -l)
 	echo "Found $w!"
 	if [ $w -gt 0 ]; then
 		echo "Keep"
@@ -20,6 +35,7 @@ do
 	else
 		echo "Will remove this"
 		rm "$f"
+		rm "$f.txt"
 	fi
 done
 rm "tmp"

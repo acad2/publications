@@ -257,6 +257,49 @@ A model $\calM_1$ is \term[Preferred model at the $i$-th stratum]{preferred to m
 \cite{conf/ijcai/Winslett89}
 \end{defi}
 
+\begin{defi}[Abductive problem, Background theory of the abductive problem, Abducible set of the abductive problem, Goal of the abductive problem, Solution of an abductive problem, Minimal solution of an abductive problem]
+The triple $\tuple{\Pi,A,g}$ is an \term{abductive problem} \iffTx{} $\Pi$ is a set of propositional Horn Clauses (called the \term{background theory of the abductive problem}), $A$ a set of propositions (called the \term{abducible set of the abductive problem}) and $g$ is a proposition (called the \term{goal of the abductive problem}). The set of propositions $\Delta$ is a \term[solution of an abductive problem]{solution of the abductive problem} $\tuple{\Pi,A,g}$ \iffTx{}
+\begin{enumerate}
+\item $\Delta\subseteq A$
+\item $\Delta\cup\Pi\vdash g$
+\item $\Delta\cup\Pi$ is consistent
+\item $\brak{a\in A \wedge \Delta+\Pi\vdash a}\rightarrow a\in\Delta$
+\end{enumerate}
+$\Delta$ is a \term[Minimal solution of an abductive problem]{minimal solution of} $\tuple{\Pi,A,g}$ \iffTx{} it is a solution of $\tuple{\Pi,A,g}$ and no subset of $\Delta$ is a solution of $\tuple{\Pi,A,g}$.
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
+
+\begin{defi}[Only-if set, \fun{only-if}{T,S}, \fun{only-if}{T}, \fun{props}{T}]
+Let the clauses $p\leftarrow Q_1,p\leftarrow Q_2,\ldots,p\leftarrow Q_k$. where $Q_1,Q_2,\ldots,O_k$ are conjunctions of propositions, be all the clauses in $\Pi$ which have $p$ at their head. Let $n_{c_1},n_{c_2},...,n_{c_k}$ be the names of these clauses. Then the \term{only-if set} of p with respect to $\Pi$ is $\accol{\neg p\vee n_{c_1}\vee n_{c_2}\vee\ldots\vee n_{c_k},n_{c_1}\rightarrow Q_1,n_{c_2}\rightarrow Q_2,\ldots,n_{c_k}\rightarrow Q_k}$. For at set of propositions $S$ and the Horn clause theory $T$, we use \term{\fun{only-if}{T,S}} to denote the union of only-if sets of all the propositions in $S$ with respect to $T$. We use \term{\fun{only-if}{T}} to denote \fun{only-if}{T,\fun{props}{T}} where \term{\fun{props}{T}} is the set of all propositions in $T$.
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
+
+\begin{defi}[Truth-assignment, Model]
+Let $C$ be a propositional clausal theory. $S$ the set of propositions in $C$, and $M$ a set of propositions. Then the \term{truth-assignment} induced by $M$ is the assignment of true to all propositions in $S$ which are in $M$. and false to those propositions in $S$ which are not in $M$. $M$ is a \term{model} of $C$ \iffTx{} the truth assignment induced by $M$ satisfies all the clauses in $C$.
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
+
+\begin{defi}[Model which minimizes, Minimization with respect to]
+Let $C$ be a propositional clausal theory. and $A$ a set of propositions. Then $M$ is a \term[model which minimizes]{model of $C$ which minimizes $A$} \iffTx{}
+\begin{enumerate}
+ \item $M$ is a model of $C$
+ \item There is no other model $M'$ of $C$ such that $M'\cap A\subseteq M\cap A$
+\end{enumerate}
+We say that $\Delta$ is a \term[minimization with respect to]{minimization of $A$ with respect to $C$} \iffTx{} there is a model $M$ of $C$ which minimizes $A$ and $\Delta=M\cap A$
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
+
+\begin{defi}[Unit refutable]
+A propositional clausal theory $C$ is \term{unit refutable} \iffTx{}, for every set of unit clauses $U$, if $C\cup U$ is inconsistent. then the empty clause is unit-derivable from $C\cup U$.
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
+
+\begin{defi}[Connection graph]
+Given a set of clauses $C$. the \term{connection graph} of $C$ is the graph obtained by drawing a link between each complimentary pair of literals in the set.
+\cite{conf/ijcai/Eshghi93}
+\end{defi}
+
+
 \section{Knowledge Representation}
 
 \begin{defi}[Belief change scenario]
