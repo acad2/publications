@@ -314,6 +314,16 @@ Let $C$ be a set of clauses. Let $T$ be a connection tableau for $C$. Let $s_1,s
 \cite{conf/ijcai/Fuchs99}
 \end{defi}
 
+\begin{defi}[Query tableau, Query clause]
+Let $\calC$ be a set of clauses. Let $T$ be a connection tableau for $\calC$. Let $\calS\subseteq \calC$ be a set of start clauses. Let $S$ be the clause below the unlabeled root of $T$. If $S$ is an instance of a clause from $\calS$ we call$T$ a \term{query tableau} (\wrtTx{} $\calS$) and the subgoal clause of $T$ a \term{query clause} (\wrtTx{} $S$).
+\cite{conf/ijcai/Fuchs99}
+\end{defi}
+
+\begin{defi}[Lemma tableau, Lemma clause]
+Let $\calC$ be a clause set. Let $T$ be a connection tableau for $\calC$. Let $C=s_1\vee s_2\vee\ldots\vee s_n$ be the subgoal clause of $T$. Let $\calH$ be the set of subgoals which are immediate successors of the root. If $\calH\neq\emptyset$ we call $T$ a \term{lemma tableau}. Then, let $s+i$, $1\leq i\leq n$, be the element of $\calH$ which is left-most in $T$. We call the contrapositive $s_i\leftarrow\neg s_1\wedge\neg s_2\wedge\ldots\wedge\neg s_{i-1}\wedge\neg s_{i+1}\wedge\ldots\wedge\neg s_n$ of $C$ the \term{lemma clause} of $T$.
+\cite{conf/ijcai/Fuchs99}
+\end{defi}
+
 \section{Knowledge Representation}
 
 \begin{defi}[Belief change scenario]
