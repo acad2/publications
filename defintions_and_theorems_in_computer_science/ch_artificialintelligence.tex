@@ -309,6 +309,11 @@ $\flatbrak{\brak{x_1,e_1,y_1},\brak{x_2,e_2,y_2},\ldots,\brak{x_n,e_n,y_n}}$ is 
 \cite{conf/ijcai/Eshghi93}
 \end{defi}
 
+\begin{defi}[Subgoal clause]
+Let $C$ be a set of clauses. Let $T$ be a connection tableau for $C$. Let $s_1,s_2,\ldots,s_n$, $n\geq 1$ be the subgoals of $T$ Then we call $s_1\vee s_2\vee\ldots\vee s_n$ the \term{subgoal} clause of $T$.
+\cite{conf/ijcai/Fuchs99}
+\end{defi}
+
 \section{Knowledge Representation}
 
 \begin{defi}[Belief change scenario]
@@ -423,3 +428,11 @@ A \term{neighborhood structure} is a function $\calN:\calS\rightarrow 2^\calS$ t
 \begin{defi}
 A \term{locally minimal solution} (or \term{local minimum}) with respect to a neighborhood structure $\calN$ is a solution $\hat{s}$ such that $\forall s\in\neigh{\hat{s}}:\ffun{\hat{s}}\leq\ffun{s}$. We call $\hat{s}$ a \term{strict locally minimum} if $\forall s\in\neigh{\hat{s}}:\ffun{\hats}<\ffun{s}$.\cite{alba05}
 \end{defi}
+
+\section{Toxicology}
+
+\begin{defi}[Performance comparison]
+The predictive accuracies of two theories are statistically equivalent then the theory with better explanatory power has \term[Performance comparison]{better performance}. Otherwise the one with higher accuracy has better performance.
+\cite{conf/ijcai/SrinivasanKMS97}
+\end{defi}
+
