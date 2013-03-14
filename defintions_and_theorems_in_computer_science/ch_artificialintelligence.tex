@@ -324,6 +324,48 @@ Let $\calC$ be a clause set. Let $T$ be a connection tableau for $\calC$. Let $C
 \cite{conf/ijcai/Fuchs99}
 \end{defi}
 
+\begin{defi}[Legal global instances]
+Given an open global system $\frakG=\accol{\tuple{\varphi_1,v_1},\tuple{\varphi_2,v_2},\ldots,\tuple{\varphi_n,v_n}}$, the set of \term{legal global instances} is $\fun{Linst}{\frakG}=\accol{D\mbox{ instance of }\calR|v_i\subseteq\fun{\varphi_i}{D},i=1,\ldots,n}$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Certain answer]
+Given an open global system $\frakG$ and a query $\fun{Q}{X}$ to the system, a tuple $t$ is a \term{certain answer} to $Q$ in $\frakG$ if for every global instance $D\in\fun{Linst}{\frakG}$, it holds $D\vDash\funf{Q}{t}$. We denote with $\fun{Certain_{\frakG}}{Q}$ the set of certain answers to $Q$ in $\frakG$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Minimal legal global instance, Minimal legal global instances]
+Given a global system, $\frakG$, an instance $D$ is \term[Minimal legal global instance]{minimal} if $D\in\fun{Linst}{\frakG}$ and is minimal \wrtTx{} set inclusion, i.e. there is no other instance in \fun{Linst}{\frakG} that is a proper subset of $D$ (as a set of atoms). We denote by $\fun{Mininst}{\frakG}$ the \term[Minimal legal global instances]{set of minimal legal global instances of $\frakG$ \wrtTx{} set inclusion}.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Consistent global system]
+A global system $\frakG$ is \term[Consistent global system]{consistent} \wrtTx{} $IC$. if for all $D\fun{Mininst}{\frakG}$, $D\vDash IC$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Minimal answer, Minimal answers]
+The ground tuple $\bar{a}$ is a \term{minimal answer} to a query $Q$ posed to $\frakG$ if for every $D\in\fun{Miminst}{\frakG}$, $\bar{a}\in\fun{Q}{D}$, where $\fun{Q}{D}$ is the answer set for $Q$ in $D$. The set of \term{minimal answers} is denoted by $\fun{Minimal_{\frakG}}{Q}$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Database distance]
+Let $D,D'$ be database instances over the same schema and domain. The \term[database distance]{distance} $\fun{\Delta}{D,D'}$, between $D$ and $D'$ is the symmetric difference $\fun{\Delta}{D,D'}=\brak{\fun{\Sigma}{D}\setminus \fun{\Sigma}{D'}}\cup\brak{\fun{\Sigma}{D'}\setminus\fun{\Sigma}{D}}$
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Database order relation]
+For database instances $D,D',D''$, we define $D'\term[Database order relation $\leq_D$]{\leq_D} D''$ if $\fun{\Delta}{D,D'}\subseteq\fun{\Delta}{D,D''}$
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Repair of a global system]
+Let $\frakG$ be a global system and $IC$ a set of global $IC$'s. A \term[repair of a global system]{repair} of $\frakG$ \wrtTx{} $IC$ is a global database instance $D'$. such that $D'\vDash IC$ and $D'$ is $\leq_D$-minimal for some $D\in\fun{Mininst}{\frakG}$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+%defintion 7
+
 \section{Knowledge Representation}
 
 \begin{defi}[Belief change scenario]
