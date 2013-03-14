@@ -364,7 +364,29 @@ Let $\frakG$ be a global system and $IC$ a set of global $IC$'s. A \term[repair 
 \cite{conf/ijcai/BravoB03}
 \end{defi}
 
-%defintion 7
+\begin{defi}[Consistent answer]
+Given a global system $\frakG$, a set of global integrity constraints $IC$. and a global first-order query $\fun{Q}{X}$. we say that a (ground) tuple $t$. is a \term{consistent answer} to $Q$ \wrtTx{} $IC$ \iffTx{} for every repair $D$ of $\frakG$. $D\vDash\funf{Q}{t}$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Consistent answers]
+We denote by $\fun{Consis_{\frakG}}{Q}$ the set of \term{consistent answers} to $Q$ in $\frakG$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Program of an open global system]
+Given an open global system $\frakG$, the \term[Program of an open global system]{program}, $\fun{\Pi}{\frakG}$, contains the following clauses:
+\begin{enumerate}
+\item Fact \dom{a} for every constant $a\in\calU$: and the fact \fun{V}{\bar{a}} whenever $\fun{V}{\bar{a}}\in v_i$ for some source extension $v_i$ in $\frakG$.
+\item \label{item:poags2}For every View (source) predicate V in the system with description $\fun{V}{\bar{X}}\leftarrow\fun{P_1}{X_1}\wedge\fun{P_2}{X_2}\wedge\ldots\wedge\fun{P_n}{X_n}$, the rules $\fun{P_j}{X_j}\wedge\displaystyle\bigwedge_{X_i\in\brak{X_j\setminus\bar{X}}}\fun{F_i}{\bar{X},X_i}$, $j=1,\ldots,n$
+\item For every predicate $\fun{F_i}{\bar{X},X_i}$ introduced in \ref{item:poags2}, the rule $\fun{F_i}{\bar{X},X_i}\leftarrow\fun{V}{\bar{X}}\wedge\dom{\bar{X}}\wedge\fun{choice}{\bar{X},X_i}$.
+\end{enumerate}
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Instance associated to a stable model]
+The \term{instance associated to a stable model} $\calM$ of $\fun{\Pi}{\frakG}$ is $D_{\calM}=\accol{\Pfun{a}|P\in R\wedge\pfun{a}\in\calM}$.
+\end{defi}
 
 \section{Knowledge Representation}
 
