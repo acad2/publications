@@ -432,7 +432,41 @@ The \term{instance associated to a choice model} $\calM$ of \fun{\Pi}{\frakG,IC}
 \cite{conf/ijcai/BravoB03}
 \end{defi}
 
+\section{Game Playing}
 
+\begin{defi}[Maxset, Minset]
+The \term{maxset} $X^M$ is that subset of $X$ at which it is MAX's turn to make a move. The \term{minset} $X^m$ is that subset of $X$ at which it is MIN's turn to make a move.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Evaluation function, Better position]
+An \termabbrev{evaluation function}{EF} over a game graph $\tuple{X,\Gamma}$ is a single valued function $\funsig{f}{X}{\RRR}$. If $\ffun{x}>\ffun{y}$ then $x$ is said to be a \term{better position} than $y$ under $f$.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Strategy]
+$\calS$ is a \term{strategy} which leads to move $xy*$ being made from position $x$ where:
+\begin{equation}
+\group{\ffun{x*}=\displaystyle\max_{y\in\Gamma_x}\ffun{y}\mbox{ if }x\in X^M\\
+\ffun{x*}=\displaystyle\min_{y\in\Gamma_x}\ffun{y}\mbox{ if }x\in X^m}
+\end{equation}
+Ties for $y*$ are broken by some subsidiary rule.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Locally equivalent evaluation functions, Locally perfect evaluation function]
+Evaluation functions $f$ and $g$ are \term[locally equivalent evaluation functions]{locally equivalent} if
+\begin{equation}
+\ffun{x}>\ffun{y}\mbox{ whenever }\gfun{x}>\gfun{y}
+\end{equation}
+where $x,y\in\Gamma_w$ for some $w\in X$. $f$ is \term[locally perfect evaluation function]{locally perfect} if it is locally equivalent to $\lambda_{mm}^w$.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Probabilistic evaluation function]
+A \termabbrev{probabilistic evaluation function}{PEF} over a game graph $\tuple{X,\Gamma}$ is a bounded function $\funsig{p}{X\times\RRR}{\RRR}$ with $\pfun{x,r}\geq0$, $\displaystyle\int{\pfun{x,r}\ dr}=1$ and $\pfun{x,r}=0$ outside some finite range $\fun{r_1}{x}\leq r\leq \fun{r_2}{x}$.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
 
 \section{Knowledge Representation}
 

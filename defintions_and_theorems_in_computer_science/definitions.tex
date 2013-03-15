@@ -1,7 +1,7 @@
 \documentclass{book}
 \title{Definitions and Theorems in Computer Science}
 \author{Willem Van Onsem\\\url{https://github.com/KommuSoft/publications}}
-\date{Version 0.1}
+\date{Version 0.1.1}
 \usepackage{amsthm,amsfonts,makeidx,draftwatermark,amssymb,MnSymbol,ifthen}
 \usepackage[nottoc]{tocbibind}
 \usepackage[annataritalic]{tengwarscript}
@@ -67,30 +67,88 @@
 \newcommand{\calB}{\ensuremath{\mathcal{B}}}
 \newcommand{\calC}{\ensuremath{\mathcal{C}}}
 \newcommand{\calD}{\ensuremath{\mathcal{D}}}
+\newcommand{\calE}{\ensuremath{\mathcal{E}}}
+\newcommand{\calF}{\ensuremath{\mathcal{F}}}
+\newcommand{\calG}{\ensuremath{\mathcal{G}}}
 \newcommand{\calH}{\ensuremath{\mathcal{H}}}
+\newcommand{\calI}{\ensuremath{\mathcal{I}}}
+\newcommand{\calJ}{\ensuremath{\mathcal{J}}}
+\newcommand{\calK}{\ensuremath{\mathcal{K}}}
+\newcommand{\calL}{\ensuremath{\mathcal{L}}}
 \newcommand{\calLcalP}{\ensuremath{\mathcal{L}_{\mathcal{P}}}}
-\newcommand{\calP}{\ensuremath{\mathcal{P}}}
-\newcommand{\calR}{\ensuremath{\mathcal{R}}}
-\newcommand{\calS}{\ensuremath{\mathcal{S}}}
 \newcommand{\calM}{\ensuremath{\mathcal{M}}}
 \newcommand{\calN}{\ensuremath{\mathcal{N}}}
+\newcommand{\calO}{\ensuremath{\mathcal{O}}}
+\newcommand{\calP}{\ensuremath{\mathcal{P}}}
+\newcommand{\calQ}{\ensuremath{\mathcal{Q}}}
+\newcommand{\calR}{\ensuremath{\mathcal{R}}}
+\newcommand{\calS}{\ensuremath{\mathcal{S}}}
+\newcommand{\calT}{\ensuremath{\mathcal{T}}}
 \newcommand{\calU}{\ensuremath{\mathcal{U}}}
+\newcommand{\calV}{\ensuremath{\mathcal{V}}}
 \newcommand{\calW}{\ensuremath{\mathcal{W}}}
 \newcommand{\calX}{\ensuremath{\mathcal{X}}}
 \newcommand{\calY}{\ensuremath{\mathcal{Y}}}
 \newcommand{\calZ}{\ensuremath{\mathcal{Z}}}
 
+\newcommand{\frakA}{\ensuremath{\mathfrak{A}}}
+\newcommand{\frakB}{\ensuremath{\mathfrak{B}}}
+\newcommand{\frakC}{\ensuremath{\mathfrak{C}}}
+\newcommand{\frakD}{\ensuremath{\mathfrak{D}}}
+\newcommand{\frakE}{\ensuremath{\mathfrak{E}}}
+\newcommand{\frakF}{\ensuremath{\mathfrak{F}}}
 \newcommand{\frakG}{\ensuremath{\mathfrak{G}}}
+\newcommand{\frakH}{\ensuremath{\mathfrak{H}}}
+\newcommand{\frakI}{\ensuremath{\mathfrak{I}}}
+\newcommand{\frakJ}{\ensuremath{\mathfrak{J}}}
+\newcommand{\frakK}{\ensuremath{\mathfrak{K}}}
+\newcommand{\frakL}{\ensuremath{\mathfrak{L}}}
+\newcommand{\frakM}{\ensuremath{\mathfrak{M}}}
+\newcommand{\frakN}{\ensuremath{\mathfrak{N}}}
+\newcommand{\frakO}{\ensuremath{\mathfrak{O}}}
+\newcommand{\frakP}{\ensuremath{\mathfrak{P}}}
+\newcommand{\frakQ}{\ensuremath{\mathfrak{Q}}}
+\newcommand{\frakR}{\ensuremath{\mathfrak{R}}}
+\newcommand{\frakS}{\ensuremath{\mathfrak{S}}}
+\newcommand{\frakT}{\ensuremath{\mathfrak{T}}}
+\newcommand{\frakU}{\ensuremath{\mathfrak{U}}}
+\newcommand{\frakV}{\ensuremath{\mathfrak{V}}}
+\newcommand{\frakW}{\ensuremath{\mathfrak{W}}}
+\newcommand{\frakX}{\ensuremath{\mathfrak{X}}}
+\newcommand{\frakY}{\ensuremath{\mathfrak{Y}}}
+\newcommand{\frakZ}{\ensuremath{\mathfrak{Z}}}
 
 \newcommand{\hats}{\ensuremath{\hat{s}}}
 \newcommand{\soplus}{\ensuremath{\left\langle S,\oplus\right\rangle} }
 \newcommand{\sotimes}{\ensuremath{\left\langle S,\otimes\right\rangle} }
 \newcommand{\soplusotimes}{\ensuremath{\left\langle S,\oplus,\otimes\right\rangle} }
 %\newcommand{\mod}{\ensuremath{\mbox{ mod }}}
+
+\newcommand{\AAA}{\ensuremath{\mathbb{A}}}
+\newcommand{\BBB}{\ensuremath{\mathbb{B}}}
+\newcommand{\CCC}{\ensuremath{\mathbb{C}}}
+\newcommand{\DDD}{\ensuremath{\mathbb{D}}}
+\newcommand{\EEE}{\ensuremath{\mathbb{E}}}
+\newcommand{\FFF}{\ensuremath{\mathbb{F}}}
+\newcommand{\GGG}{\ensuremath{\mathbb{G}}}
+\newcommand{\HHH}{\ensuremath{\mathbb{H}}}
+\newcommand{\III}{\ensuremath{\mathbb{I}}}
+\newcommand{\JJJ}{\ensuremath{\mathbb{J}}}
+\newcommand{\KKK}{\ensuremath{\mathbb{K}}}
+\newcommand{\LLL}{\ensuremath{\mathbb{L}}}
+\newcommand{\MMM}{\ensuremath{\mathbb{M}}}
 \newcommand{\NNN}{\ensuremath{\mathbb{N}}}
+\newcommand{\OOO}{\ensuremath{\mathbb{O}}}
 \newcommand{\PPP}{\ensuremath{\mathbb{P}}}
 \newcommand{\QQQ}{\ensuremath{\mathbb{Q}}}
 \newcommand{\RRR}{\ensuremath{\mathbb{R}}}
+\newcommand{\SSS}{\ensuremath{\mathbb{S}}}
+\newcommand{\TTT}{\ensuremath{\mathbb{T}}}
+\newcommand{\UUU}{\ensuremath{\mathbb{U}}}
+\newcommand{\VVV}{\ensuremath{\mathbb{V}}}
+\newcommand{\WWW}{\ensuremath{\mathbb{W}}}
+\newcommand{\XXX}{\ensuremath{\mathbb{X}}}
+\newcommand{\YYY}{\ensuremath{\mathbb{Y}}}
 \newcommand{\ZZZ}{\ensuremath{\mathbb{Z}}}
 
 \newcommand{\nullmath}{\ensuremath{\mbox{\tt null}}}
