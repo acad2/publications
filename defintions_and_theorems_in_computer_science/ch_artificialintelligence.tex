@@ -375,18 +375,64 @@ We denote by $\fun{Consis_{\frakG}}{Q}$ the set of \term{consistent answers} to 
 \end{defi}
 
 \begin{defi}[Program of an open global system]
+\label{def:poaogs}
 Given an open global system $\frakG$, the \term[Program of an open global system]{program}, $\fun{\Pi}{\frakG}$, contains the following clauses:
 \begin{enumerate}
-\item Fact \dom{a} for every constant $a\in\calU$: and the fact \fun{V}{\bar{a}} whenever $\fun{V}{\bar{a}}\in v_i$ for some source extension $v_i$ in $\frakG$.
+\item \label{item:poags1}Fact \dom{a} for every constant $a\in\calU$: and the fact \fun{V}{\bar{a}} whenever $\fun{V}{\bar{a}}\in v_i$ for some source extension $v_i$ in $\frakG$.
 \item \label{item:poags2}For every View (source) predicate V in the system with description $\fun{V}{\bar{X}}\leftarrow\fun{P_1}{X_1}\wedge\fun{P_2}{X_2}\wedge\ldots\wedge\fun{P_n}{X_n}$, the rules $\fun{P_j}{X_j}\wedge\displaystyle\bigwedge_{X_i\in\brak{X_j\setminus\bar{X}}}\fun{F_i}{\bar{X},X_i}$, $j=1,\ldots,n$
-\item For every predicate $\fun{F_i}{\bar{X},X_i}$ introduced in \ref{item:poags2}, the rule $\fun{F_i}{\bar{X},X_i}\leftarrow\fun{V}{\bar{X}}\wedge\dom{\bar{X}}\wedge\fun{choice}{\bar{X},X_i}$.
+\item \label{item:poags3}For every predicate $\fun{F_i}{\bar{X},X_i}$ introduced in \ref{item:poags2}, the rule $\fun{F_i}{\bar{X},X_i}\leftarrow\fun{V}{\bar{X}}\wedge\dom{\bar{X}}\wedge\fun{choice}{\bar{X},X_i}$.
 \end{enumerate}
 \cite{conf/ijcai/BravoB03}
 \end{defi}
 
 \begin{defi}[Instance associated to a stable model]
 The \term{instance associated to a stable model} $\calM$ of $\fun{\Pi}{\frakG}$ is $D_{\calM}=\accol{\Pfun{a}|P\in R\wedge\pfun{a}\in\calM}$.
+\cite{conf/ijcai/BravoB03}
 \end{defi}
+
+\begin{defi}[Repair program]
+The \term{repair program} $\fun{\Pi}{\frakG,IC}$, of $\frakG$ \wrtTx{} $IC$ contains the following clauses:
+\begin{enumerate}
+\item Facts as in \defiref{poaogs} (item \ref{item:poags1}).
+\item Each of the rules of item \ref{item:poags2} in \defiref{poaogs} is replaced by $\fun{P_j}{X_j,t_d}\leftarrow\fun{V}{\bar{X}}\wedge\displaystyle\bigwedge_{X_i\in\brak{X_j\setminus\bar{X}}}\fun{F_i}{\bar{X},X_i}$
+\item Exactly the same rules as in item \ref{item:poags3} in \defiref{poaogs}.
+\item For every predicate $P\in\calR$, the clauses:
+\begin{equation}
+\group{\Pfun{\bar{X},t*}\leftarrow\Pfun{\bar{X},t_d}\wedge\dom{\bar{X}}\\
+\Pfun{\bar{X},t*}\leftarrow\Pfun{\bar{X},t_a}\wedge\dom{\bar{X}}\\
+\Pfun{\bar{X},f*}\leftarrow\Pfun{\bar{X},f_a}\wedge\dom{\bar{X}}\\
+\Pfun{\bar{X},t*}\leftarrow\dom{\bar{X}}\wedge\neg\Pfun{\bar{X},t_d}}
+\end{equation}
+\item For every first-order global universal $IC$ of the form
+\begin{equation}
+\forall\brak{\fun{Q_1}{\bar{Y}_1}\vee\fun{Q_2}{\bar{Y}_2}\vee\ldots\vee\fun{Q_n}{\bar{Y}_n}\leftarrow\fun{P_1}{\bar{X}_1}\wedge\fun{P_2}{\bar{X}_2}\wedge\ldots\wedge\fun{P_m}{\bar{X}_m}\wedge\varphi}
+\end{equation}
+where $P_i,Q_j\in\calR$, and $\varphi$ is a conjunction of built-in atoms. The clause $\displaystyle\bigvee_{i=1}^n\fun{P_i}{X_i,f_a}\displaystyle\bigvee_{j=1}^m\fun{Q_j}{Y_j,t_a}\leftarrow\displaystyle\bigwedge_{i=1}^n\fun{P_i}{X_i,t*}\displaystyle\bigwedge_{j=1}^m\fun{Q_j}{Y_j,f*}\wedge\dom{\bar{X}}\wedge\varphi$ where $\bar{X}$ is the tuple of all variables appearing in database
+atoms in the rule.
+\item For every referential $IC$ of the form $\forall x\brak{\fun{P}{x}\rightarrow\exists y\fun{Q}{x',y}}$. with $x'\subseteq$, the clauses:
+\begin{equation}
+\group{\fun{P}{X,f_a}\vee\fun{Q}{X',\nullmath,t_a}\leftarrow\fun{P}{X,t*}\wedge\fun{\mbox{aux}}{\bar{X'}}\wedge\neg\fun{Q}{\bar{X'},\nullmath,t_d}\wedge\dom{\bar{X}}\\
+\fun{\mbox{aux}}{\bar{X'}}\leftarrow\fun{Q}{\bar{X'},Y,t_d}\wedge\neg\fun{Q}{X',Y,f_a}\wedge\dom{X',Y}\\
+\fun{\mbox{aux}}{\bar{X'}}\leftarrow\fun{Q}{\bar{X'},Y,t_a}\wedge\dom{X',Y}}
+\end{equation}
+\item For every predicate $P\in\calR$, the interpretation clauses:
+\begin{equation}
+\group{\Pfun{\bar{a},f**}\leftarrow\Pfun{\bar{a},f_a}\\
+\Pfun{\bar{a},f**}\leftarrow\neg\Pfun{\bar{a},t_d}\wedge\neg\Pfun{\bar{a},t_a}\\
+\Pfun{\bar{a},t**}\leftarrow\neg\Pfun{\bar{a},t_a}\\
+\Pfun{\bar{a},t**}\leftarrow\neg\Pfun{\bar{a},t_d}\wedge\neg\Pfun{\bar{a},f_a}\\
+}
+\end{equation}
+\end{enumerate}
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+\begin{defi}[Instance associated to a choice model]
+The \term{instance associated to a choice model} $\calM$ of \fun{\Pi}{\frakG,IC} is $D_{\calM}=\accol{\Pfun{a}|\Pfun{a,t**}\in\calM}$.
+\cite{conf/ijcai/BravoB03}
+\end{defi}
+
+
 
 \section{Knowledge Representation}
 
