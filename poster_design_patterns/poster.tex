@@ -1,0 +1,616 @@
+\documentclass[landscape]{a0poster}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{{UML/}}
+%\usetikzlibrary{fit,calc,positioning,decorations.pathreplacing,matrix}
+\usepackage{fullpage}
+\usepackage[dutch]{babel}
+%\usepackage{amsfonts}
+%\usepackage{circuitikz}
+\usepackage{pst-barcode}
+\usepackage{auto-pst-pdf}
+
+
+\newenvironment{desc}{
+\begin{itemize}
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}{\end{itemize}}
+
+\newcommand{\classdef}[1]{\textbf{\textit{#1}}}
+\newcommand{\classref}[1]{\textbf{#1}}
+\begin{document}
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale=1.75,bali/.style={line width=0.1 cm},subbali/.style={line width=0.05 cm,dashed},doctext/.style={text width=252 mm,anchor=north west,scale=0.5,text ragged}]
+\begin{scope}[xshift=0,yshift=0, yscale=-1]
+%\draw[bali] (0,2 cm) -- (594 mm,2 cm);
+
+\def\concbegin{68 mm};
+\def\deelbegin{80.5 mm};
+\def\gevobegin{108 mm};
+\def\zieobegin{135.5 mm};
+\def\colw{74.25 mm};
+\def\rowh{133 mm};
+\definecolor{legend}{rgb}{0.5,0.5,0.5}
+
+\fill[legend!20] (0,0) rectangle (594 mm,20 mm);
+\draw (297 mm,1 cm) node {\Huge{\textbf{\emph{Design Patterns}}}};
+\node[anchor=east,scale=0.33] (Author) at (594 mm,1 cm) {\Huge{$\begin{array}{c}\mbox{Willem M. A. Van Onsem}\\ \mbox{Katholieke Universiteit Leuven}\\ \mbox{Academiejaar 2010-2011}\end{array}$}};
+\node[anchor=west,scale=1.25,fill=white] (Link) at (0,1) {\begin{pspicture}(0.7 in,0.7 in)\psbarcode{http://www.4shared.com/document/PrNfHQLE/posterSoftwareOntwerp.html}{}{qrcode}\end{pspicture}};
+\node[anchor=west,scale=1] (LinkText) at (Link.east) {\small{\texttt{http://www.4shared.com/document/PrNfHQLE/posterSoftwareOntwerp.html}}};
+
+\foreach\x/\y/\t/\f/\c in {0/0/Abstract Factory (Kit)/abstractFactory/red,1/0/Builder/builder/red,2/0/Factory Method/factoryMethod/red,3/0/Prototype/prototype/red,4/0/Singleton/singleton/red,5/0/Chain of Responsibility/chainOfResponsibility/green,6/0/Command (Action)/command/green,7/0/Interpreter/interpreter/green,0/1/Iterator (Cursor)/iterator/green,1/1/Mediator/mediator/green,2/1/Memento (Token)/memento/green,3/1/Observer (Dependents)/observer/green,4/1/State (Objects for State)/state/green,5/1/Strategy (Policy)/strategy/green,6/1/Template Method/templateMethod/green,7/1/Visitor/visitor/green,0/2/Adapter (Wrapper)/adapter/blue,1/2/Bridge (Handle; Body)/bridge/blue,2/2/Composite/composite/blue,3/2/Decorator (Wrapper)/decorator/blue,4/2/Facade/facade/blue,5/2/Flyweight/flyweight/blue,6/2/Proxy (Surrogate)/proxy/blue} {
+  \fill[\c!20] (74.25 mm*\x,133 mm*\y+20 mm) rectangle ++(74.25 mm,133 mm);
+  \fill[white] (74.25 mm*\x,133 mm*\y+30 mm) rectangle ++(74.25 mm,40 mm);
+  \draw (37.125 mm+74.25 mm*\x,25 mm+133 mm*\y) node{\emph{\large{\t}}};
+  \draw (74.25 mm*\x+37.125 mm,50 mm+133 mm*\y) node {\includegraphics[scale=0.5]{\f.pdf}};
+}
+\foreach\x in {1,2,...,7} {
+  \draw[bali] (74.25 mm*\x,20 mm) -- (74.25 mm*\x,419 mm);
+}
+\draw[bali] (594 mm-74.25 mm,419 mm) -- ++(74.25 mm-594 mm,0 mm) -- ++(0,-419 mm) -- ++(594 mm,0 mm) -- ++(0,419 mm-133 mm) -- ++(-74.25 mm,0 mm);
+\foreach\y/\w in {0/594 mm,1/594 mm,2/594 mm-74.25 mm} {
+  \draw[bali] (0 cm,20 mm+133 mm*\y) -- ++(\w,0 mm);
+  \draw[bali] (0,3 cm+133 mm*\y) -- ++(-0.5 cm,0 cm) -- ++ (0 cm,123 mm) -- ++(0.5 cm,0 cm);
+  \draw[subbali] (-0.5 cm,3 cm+133 mm*\y) -- ++(\w+5 mm,0);
+  \draw[subbali] (-0.5 cm,7 cm+133 mm*\y) -- ++(\w+5 mm,0);
+  \draw[subbali] (-0.5 cm,8.25 cm+133 mm*\y) -- ++(\w+5 mm,0);
+  \draw[subbali] (-0.5 cm,11 cm+133 mm*\y) -- ++(\w+5 mm,0);
+  \draw[subbali] (-0.5 cm,13.75 cm+133 mm*\y) -- ++(\w+5 mm,0);
+  \draw (-0.25 cm,5 cm+133 mm*\y) node[rotate=90,scale=0.65]{Structuur};
+  \draw (-0.25 cm,7.625 cm+133 mm*\y) node[rotate=90,scale=0.65]{Concept};
+  \draw (-0.25 cm,9.625 cm+133 mm*\y) node[rotate=90,scale=0.65]{Deelnemers};
+  \draw (-0.25 cm,12.375 cm+133 mm*\y) node[rotate=90,scale=0.65]{Gevolgen};
+  \draw (-0.25 cm,14.525 cm+133 mm*\y) node[rotate=90,scale=0.65]{Zie ook};
+}
+
+\begin{scope}[xshift=74.25 mm*7+1 cm,yshift=133 mm*2+3 cm]
+  \fill[legend!20] (0,0) rectangle ++(74.25 mm,133 mm);
+  \fill[white] (0,10 mm) rectangle ++(74.25 mm,40 mm);
+  \foreach\y/\c/\t in {1/red/Creatie patroon,2/green/Gedragspatroon,3/blue/Structureel patroon} {
+    \fill[\c!40] (10 mm,10 mm +10 mm*\y) circle (1.25 mm);
+    \draw (12 mm,10 mm +10 mm*\y) node[doctext,anchor=west] {\t};
+  }
+  \draw[bali] (0,0) rectangle ++(74.25 mm,133 mm);
+  \draw (37.125 mm,5 mm) node{\emph{\large{Legende}}};
+  \draw[subbali] (0 cm,1 cm) -- ++(74.25 mm,0);
+  \draw[subbali] (0 cm,5 cm) -- ++(74.25 mm,0);
+  \draw (74.25 mm,133 mm) node[anchor=south east,scale=0.5] {\includegraphics[scale=0.5]{../SharedData/kommusoftEmblema.pdf}};
+\end{scope}
+\begin{scope}[xshift=0 mm, yshift=2 mm]%Abstract Factory
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Bieden van een interface voor het cre\"eren van een families van gerelateerde of afhankelijke objecten zonder hun specifieke klassen te specificeren.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{AbstractFactory:} Definieert een interface voor operaties die abstracte producten cre\"eren.
+ \item \classdef{ConcreteFactory:} Implementeert de operaties om concrete producten te cre\"eren.
+ \item \classdef{AbstractProduct:} Definieert een interface voor een soort van producten.
+ \item \classdef{ConcreteProduct:} Implementeert de abstracte product interface.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Isoleren van concrete klassen.
+ \item Makkelijk veranderen van product-familie.
+ \item Promoten van consistentie tussen verschillende producten.
+ \item Ondersteuning voor nieuwe types producten is moeilijk.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Factory Method}, \emph{Prototype}, \emph{Singleton}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=\colw, yshift=2 mm]%Builder
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{De constructie en representatie van een complex object scheiden, zodat hetzelfde constructieproces andere representaties kan cre\"eren.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Builder:} Definieert een interface voor deeloperaties bij de creatie van een product.
+ \item \classdef{ConcreteBuilder:} Construeert en voegt delen samen door de interface te implementeren, en houd het object in aanbouw bij.
+ \item \classdef{Director:} Bouwt object met de \classref{Builder}.
+ \item \classdef{Product:} Representeert een complex object onder constructie, inclusief klassen die als bouwblokken fungeren.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Makkelijk veranderen van de interne voorstelling van het product.
+ \item Isoleert constructie- en voorstellingscode van elkaar.
+ \item Geeft meer controle over de constructie van een object.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Abstract Factory}, \emph{Composite}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=2*\colw, yshift=2 mm]%Factory Method
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Een interface defini\"eren voor de bouw van een object, waarbij de subklasses het type object specificeren. \emph{Factory Method} laat een klasse verschillende typen objecten bouwen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Product:} Definieert een algemene interface voor de producten die de \emph{Factory Method} cre\"eert.
+ \item \classdef{ConcreteProduct:} Implementeert de \classref{Product} interface.
+ \item \classdef{Creator:} Declareert de \emph{Factory Method} die een nieuw \classref{Product} teruggeeft, eventueel met een standaard implementatie.
+ \item \classdef{ConcreteCreator:} Overschrijft de Creator om een \classref{ConcreteProduct} te bouwen.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Meer flexibiliteit bij de constructie van subklassen.
+ \item Verbindt parallelle product hi\"erarchie\"en.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Abstract Factory}, \emph{Prototype}, \emph{Template Method}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=3*\colw, yshift=2 mm]%Prototype
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Specificeren van het type objecten om te cre\"eren met een prototype-object. Nieuwe objecten komen tot stand door de prototypes te kopi\"eren.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Prototype:} Definieert een interface om zichzelf te kunnen klonen.
+ \item \classdef{ConcretePrototype:} Implementeert de \classref{Prototype} interface door een kloon van zichzelf terug te geven.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Nieuwe soorten producten toevoegen en verwijderen tijdens uitvoering.
+ \item Nieuwe objecten specificeren door het veranderen van de eigenschappen.
+ \item Nieuwe objecten specificeren door het veranderen van de structuur.
+ \item Vermindert subclassing (geen parallelle hi\"erarchie\"en zoals bij \emph{Factory Method}).
+ \item Dynamisch toepassingen configureren met klasse-injecties.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Abstract Factory}, \emph{Composite}, \emph{Decorator}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=4*\colw, yshift=2 mm]%Singleton
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Verzekeren van het ontstaan van slechts \'e\'en instantie, en zorgen voor een globaal toegangspunt naar dit object.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Singleton:} Biedt een statische methode die toegang verschaft tot de instantie. Verder is de \classref{Singleton} ook verantwoordelijk voor de bouw van de instantie. En definieert ze een interface van methodes voor deze instantie.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Gecontroleerde toegang tot de enige instantie.
+ \item Vermindert het aantal globale variabelen.
+ \item Laat toe om operaties en voorstellingen verder te verfijnen in subklassen.
+ \item Laat een variabel aantal instanties toe.
+ \item Meer flexibel dan statische methodes.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Abstract Factory}, \emph{Builder}, \emph{Prototype}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=5*\colw, yshift=2 mm]%Chain of Responsibility
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Vermijden van het koppelen van de zender van een vraag en de ontvanger, door meer dan \'e\'en object de kans te geven de vraag te beantwoorden. Op die manier beweegt de vraag zich doorheen de keten tot een object deze behandelt.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Handler:} Definieert een interface om aanvragen te behandelen. Verder houdt het ook een referentie bij naar een eventuele opvolger.
+ \item \classdef{ConcreteHandler:} Behandelt een aanvraag, verder kan het een beroep doen op zijn opvolger indien hij niet in staat is het verzoek af te handelen.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Verlaagt de koppeling.
+ \item Verhoogt de flexibiliteit om verantwoordelijkheden aan objecten toe te kennen.
+ \item Geen gegarandeerde afhandeling.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Composite}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=6*\colw, yshift=2 mm]%Command
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Encapsuleren van een vraag in een object, hierdoor kunnen opdrachten geparametriseerd, bijgehouden, ongedaan gemaakt,... worden.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Command:} Biedt een interface voor het uitvoeren van een operatie.
+ \item \classdef{ConcreteCommand:} Implementeert het commando door de nodige operaties en de \classref{Receiver} aan te roepen. Hierdoor fungeert het als een brug tussen de actie en zijn \classref{Receiver} object.
+ \item \classdef{Invoker:} Roept het commando op.
+ \item \classdef{Receiver:} Weet hoe operaties moeten uitgevoerd worden bij het uitvoeren van een aanvraag.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item De \classref{Command} klasse ontkoppelt de klasse die het commando oproept en de klasse die weet hoe dit commando moet worden uitgevoerd.
+ \item \classref{Commando} objecten kunnen aangepast en uitgebreid worden.
+ \item Het is mogelijk \classref{Command} objecten samen te voegen in een \emph{Composite} patroon.
+ \item Makkelijk om nieuwe commando's toe te voegen (klasses moeten niet aangepast worden).
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Prototype}, \emph{Memento}, \emph{Composite}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=7*\colw, yshift=2 mm]%Interpreter
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Voor een gegeven taal, een representatie van de grammatica defini\"eren samen met een \emph{Interpreter}, deze interpreteert zinnen in de gegeven taal.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{AbstractExpression:} Definieert een abstracte \texttt{interpret} operatie die alle objecten gemeen hebben in de syntax-boom.
+ \item \classdef{TerminalExpression:} Implementeert de \texttt{interpret} operatie voor terminale symbolen in de grammatica.
+ \item \classdef{NonTerminalExpression:} Houdt de kinderen bij die gegenereerd worden uit de expressie, en implementeert de \texttt{interpret} methode zodat deze de structuur uit een expressie kan afgeleid worden.
+ \item \classdef{Context:} Houdt globale informatie bij voor de \emph{Interpreter}.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Makkelijk om de grammatica uit te breiden of te veranderen.
+ \item Implementeren van de grammatica is eenvoudig.
+ \item Complexe grammatica's zijn moeilijk te onderhouden.
+ \item Makkelijk om expressies op een andere manier te interpreteren.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Iterator}, \emph{Visitor}, \emph{Composite}, \emph{Flyweight}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=0 mm, yshift=\rowh+2 mm]%Iterator
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Aanbieden van een manier om sequentieel toegang te verkrijgen tot objecten van een aggregaat-object. Dit zonder de details van het aggregaat-object te kennen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Iterator:} Defineert een interface om de lijst met objecten te kunnen overlopen.
+ \item \classdef{ConcreteIterator:} Implementeert de \classref{Iterator} interface, en houdt de huidige positie bij, bij het overlopen van het \classref{Aggregate} object.
+ \item \classdef{Aggregate:} Definieert een interface voor het cre\"eren van een \classref{Iterator}.
+ \item \classdef{ConcreteAggregate:} Implementeert de creatie van de bijbehorende \classref{ConcreteIterator}.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Ondersteund variatie in het doorlopen van een \classref{Aggregate}.
+ \item Een \classref{Iterator} versimpelt de interface van een \classref{Aggregate}.
+ \item Verschillende \classref{Iterator} objecten kunnen tegelijk een \classref{Aggregate} doorlopen.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Factory Method}, \emph{Memento}, \emph{Composite}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=\colw, yshift=\rowh+2 mm]%Mediator
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Defini\"eren van een object die abstractie maakt over hoe een set van objecten interageren. Dit weerhoud objecten ervan expliciet naar elkaar te verwijzen, en laat toe de interactie dynamisch te wijzigen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Mediator:} Definieert een interface om te kunnen communiceren met \classref{Collegue} objecten.
+ \item \classdef{ConcreteMediator:} Implementeert co\"operatief gedrag door \classref{Collegue} objecten te co\"ordineren.
+ \item \classdef{Collegue:} Definieert een interface om met de \classref{Mediator} te kunnen communiceren, en voorziet hierbij een referentie naar de \classref{Mediator}.
+ \item \classdef{ConcreteCollegue:} Communiceert telkens met het \classref{Mediator} object, wanneer het dit zou doen met een ander object.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Het reduceert subclassing.
+ \item Het gaat het koppelen van \classref{Collegue} objecten tegen.
+ \item Het versimpelt objectprotocollen.
+ \item Het abstraheert hoe objecten met elkaar interageren.
+ \item Het centraliseert de controle.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Observer}, \emph{Facade}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=2*\colw, yshift=\rowh+2 mm]%Memento
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Zonder de encapsulatie tegen te gaan het bekomen en opslaan van de interne toestand van een object. Dit object kan dan opnieuw zijn later toestand herstellen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Memento:} Slaat de interne toestand van een \classref{Originator} op. Een \classref{Memento} object wordt bijgehouden door de \classref{Caretaker}.
+ \item \classdef{Originator:} Bouwt \classref{Memento} objecten als een momentopname van zijn huidige toestand. Het kan dan zijn interne toestand herstellen met behulp van een \classref{Memento} object.
+ \item \classdef{Caretaker:} Houdt de \classref{Memento} objecten bij, maar raadpleegt nooit hun inhoud.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item De \classref{Memento} klasse kan de informatie afschermen van andere objecten.
+ \item Het maakt de \classref{Originator} klasse simpeler.
+ \item \emph{Memento} gebruikt veel geheugen en bewerkingen (kopi\"eren).
+ \item Soms moeilijk om informatie af te schermen.
+ \item Verborgen kosten in het beheren van \classref{Memento} objecten.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Command}, \emph{Iterator}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=3*\colw, yshift=\rowh+2 mm]%Observer
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Defini\"eren van een \'e\'en-naar-veel afhankelijkheid tussen objecten, zodat indien het object van toestand verandert, al zijn afhankelijken verwittigd worden, en zich bijwerken.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Subject:} Kent zijn \classref{Observer} objecten, en bied een interface om \classref{Observer} objecten toe te voegen of te verwijderen.
+ \item \classdef{ConcreteSubject:} Brengt de \classref{Observer} op de hoogte van een veranderde toestand.%Houdt een toestand bij waar de \classref{Observer} objecten in ge\"interesseerd zijn. Verder zend het bij veranderingen meldingen naar de \classref{Observer} objecten.
+ \item \classdef{Observer:} Definieert een update interface dat aangeroepen moet worden, bij veranderingen van het \classref{Subject} object.
+ \item \classdef{ConcreteObserver:} Houdt een referentie bij naar het \classref{ConcreteSubject} object. En implementeert de update interface die de interne toestand actueel houdt.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Abstracte koppeling tussen de \classref{Subject} en \classref{Observer}.
+ \item Ondersteund mogelijkheden ``omroep''-communicatie.
+ \item Onverwachte updates leiden soms tot overhead en kettingreacties.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Singleton}, \emph{Mediator}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=4*\colw, yshift=\rowh+2 mm]%State
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Een object toelaten zijn gedrag te wijzigen indien zijn interne toestand verandert. Het object zal in dat geval van klasse veranderen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Context:} Definieert een interface waarin de gebruiker ge\"interesseerd is. En houdt een referentie bij naar de huidige toestand.
+ \item \classdef{State:} Bied een interface die gedrag -- eigen aan een bepaald \classref{State} object -- definieert van het \classref{Context} object.
+ \item \classdef{ConcreteState:} Implementeert het gedrag specifiek voor deze toestand.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Encapsulatie van toestandsgebonden en opgesplitst gedrag.
+ \item Het maakt toestandsovergangen explicieter.
+ \item \classref{State} objecten kunnen gedeeld worden, en de overhead reduceren.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Singleton}, \emph{Flyweight}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=5*\colw, yshift=\rowh+2 mm]%Strategy
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Defini\"eren en encapsuleren van van een familie van algoritmen die uitwisselbaar zijn. Een \emph{Strategy} laat toe om dynamisch van algoritme te wijzigen onafhankelijk van de gebruikers.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Strategy:} Definieert een interface die geldt voor alle ondersteunde algoritmen. De \classref{Context} gebruikt deze interface om het algoritme in de \classref{ConcreteStrategy} aan te roepen.
+ \item \classdef{ConcreteStrategy:} Implementeert het algoritme gebruik makend van de interface van de \classref{Strategy} klasse.
+ \item \classdef{Context:} Definieert een interface waarin de gebruiker ge\"interesseerd is. En houdt een referentie bij naar de op dat moment gebruikte strategie. Verder biedt het vaak een interface zodat het \classref{Strategy} object toegang heeft tot data.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Promoot families van gerelateerde algoritmen die hergebruikt kunnen worden.
+ \item Biedt een dynamische alternatief voor subclassing.
+ \item \classref{Strategy} objecten elimineren conditionele statements.
+ \item Dynamisch aanbieden van een implementatie-keuze.
+ \item Gebruikers moeten zich bewust zijn van de verschillende strategie\"en.
+ \item Communicatie-overhead tussen de \classref{Strategy} en de \classref{Context}.
+ \item Verhoogt het aantal instanties in het systeem.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Flyweight}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=6*\colw, yshift=\rowh+2 mm]%Template Method
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Defini\"eren van het skelet van een algoritme door operaties. Deze operaties worden dan op het niveau van de subklassen ingevuld. Dit laat subklassen toe een deel van het algoritme te wijzigen, zonder de structuur te veranderen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{AbstractClass:} Definieert het skelet van een operatie waarbij het oproepen doet naar zowel concrete als abstracte operaties.
+ \item \classdef{ConcreteClass:} Implementeert de abstracte operaties van de \classref{AbstractClass} die specifiek zijn aan de klasse.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Promoot hergebruik van code.
+ \item \emph{``Hollywood-principe''}: omgekeerde controlestructuur: ouder roept de kinderen op, niet omgekeerd.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Factory Method}, \emph{Strategy}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=7*\colw, yshift=\rowh+2 mm]%Visitor
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Vertegenwoordigen van een operaties die toegepast moet worden op de objecten van een zekere structuur. Een \emph{Visitor} laat toe de operatie te wijzigen zonder klassen van de objecten te wijzigen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Visitor:} Definieert een \classref{Visitor} operatie voor iedere \classref{ConcreteElement} klasse. De operatie-signatuur is specifiek voor het type element.
+ \item \classdef{ConcreteVisitor:} Implementeert iedere methode voorzien door de \classref{Visitor} vaak wordt hierbij een interne toestand aangepast.
+ \item \classdef{Element:} Definieert een \texttt{accept} operatie die een specifieke \classref{Visitor} accepteert.
+ \item \classdef{ConcreteElement:} Implementeert de \texttt{accept} operatie en roept de operatie van de \classref{Visitor} op.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Eenvoudig om nieuwe operaties toe te voegen.
+ \item Een \classref{Visitor} object verzamelt gerelateerde operaties, en ongerelateerde worden opgesplitst (in verschillende subklassen).
+ \item Nieuwe \classref{ConcreteElement} klassen toevoegen vraagt veel werk.
+ \item Laat toe om een lijst van verschillende types objecten te doorlopen.
+ \item Een \classref{Visitor} kan een geaccumuleerde toestand bijhouden, wat tot minder doorgeven van parameters leidt.
+ \item Verzwakt beschermingsniveaus: Een \classref{Visitor} moet voldoende toegangsrechten hebben tegenover het \classref{ConcreteElement}.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Interpreter}, \emph{Composite}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=0 mm, yshift=2*\rowh+2 mm]%Adapter
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Omzetten van de interface van een klasse in een andere interface die de gebruiker verwacht. Een \emph{Adapter} laat twee klassen met elkaar samenwerken die dit anders niet kunnen omwille van incompatibele interfaces.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Target:} Definieert een domein-specifieke interface die de gebruiker gebruikt.
+ \item \classdef{Adaptee:} Defineert een bestaande interface die aangepast moet worden.
+ \item \classdef{Adapter:} Past de \classref{Adaptee} interface aan, aan de \classref{Target} interface.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Aantal \classref{Adaptee} objecten kan uitgebreid worden.
+ \item Uitbreidbaar naar twee richtingen.
+ \item Inplugbare adapters.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Bridge}, \emph{Decorator}, \emph{Proxy}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=\colw, yshift=2*\rowh+2 mm]%Bridge
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Ontkoppelen van een abstractie en zijn implementatie zodat beide onafhankelijk kunnen vari\"eren.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Abstraction:} Definieert de abstractie interface. En houdt een referentie bij naar een \classref{Implementor} object.
+ \item \classdef{RefinedAbstraction:} Breidt de \classref{Abstraction} interface uit.
+ \item \classdef{Implementor:} Definieert een interface voor een \classref{Implementor}. Deze interface is typisch primitiever dan de \classref{Abstraction} interface.
+ \item \classdef{ConcreteImplementor:} Implementeert de \classref{Implementor} interface en definieert een concrete implementatie.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Ontkoppelen van interface en implementatie.
+ \item Verbeterde uitbreidbaarheid.
+ \item Implementatiedetails verbergen voor gebruikers.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Abstract Factory}, \emph{Prototype}, \emph{Adapter}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=2*\colw, yshift=2*\rowh+2 mm]%Composite
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Schikken van objecten in een boom-structuur bij deel-geheel hi\"erarchie\"en. Dit laat toe om zowel individuele als compositie-objecten uniform te behandelen.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Component:} Definieert een interface voor objecten in de compositie, deze bevat onder meer methodes die de kinderen van een object kunnen manipuleren. Implementeert standaard implementaties.
+ \item \classdef{Leaf:} Implementeert operaties voor primitieve objecten, zonder kinderen.
+ \item \classdef{Composite:} Defineert operaties voor objecten met kinderen, en slaat deze kinderen op. Operaties worden meestal doorgegeven naar de kinderen.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Recursief effect: geen transparante weergave.
+ \item Vereenvoudigt de klasses die de \emph{Composite} gebruiken.
+ \item Makkelijk nieuwe types componenten toevoegen.
+ \item Minder makkelijk om beperkingen op te leggen op de subklassen.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Chain of Responsibility}, \emph{Iterator}, \emph{Visitor}, \emph{Decorator}, \emph{Flyweight}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=3*\colw, yshift=2*\rowh+2 mm]%Decorator
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Voeg dynamisch nieuwe verantwoordelijkheden aan een object toe. Een \emph{Decorator} biedt een flexibel alternatief tegenover subclassing voor uitgebreide functionaliteit.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Component:} Definieert een interface voor objecten waar verantwoordelijkheden dynamisch aan kunnen toegevoegd worden.
+ \item \classdef{ConcreteComponent:} Defineert een object waaraan extra verantwoordelijkheden kunnen worden toegevoegd.
+ \item \classdef{Decorator:} Houdt een referentie naar een \classref{Component} bij. En definieert een interface conform de interface van de \classref{Component}.
+ \item \classdef{ConcreteDecorator:} Voegt een verantwoordelijkheid toe aan het \classref{Component}.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Meer flexibiliteit dan bij klasseovererving.
+ \item Vermijden van hoog verantwoordelijke klasses.
+ \item Een \classref{Component} en zijn \classref{Decorator} zijn niet identiek.
+ \item Veel kleine objecten.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Strategy}, \emph{Adapter}, \emph{Composite}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=4*\colw, yshift=2*\rowh+2 mm]%Facade
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Aanbieden van een algemene interface voor een set van interfaces in een subsysteem. Een \emph{Facade} definieert een interface van hoger niveau om een subsysteem eenvoudiger te kunnen gebruiken.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Facade:} Weet welke klasses welke verantwoordelijkheid hebben in het subsysteem. En leidt aanvragen om naar de juiste objecten in het subsysteem.
+ \item \classdef{Subsystem Classes:} Implementeert subsysteem functionaliteiten. En voert taken uit die door het \classref{Facade} object worden aangevraagd, zonder weet van dit object te hebben.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Schermt de gebruiker af van het subsysteem, waardoor de gebruiker met minder objecten moet omgaan.
+ \item Promoot zwakke koppeling tussen de gebruiker en het subsysteem.
+ \item Houdt toepassingen niet tegen toch rechtstreeks het subsysteem te gebruiken.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Abstract Factory}, \emph{Singleton}, \emph{Mediator}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=5*\colw, yshift=2*\rowh+2 mm]%Flyweight
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Deel objecten binnen een systeem, zodat grote hoeveelheden objecten effici\"ent gebruikt kunnen worden, en duplicaten vermeden worden.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Flyweight:} Definieert een interface voor \classref{Flyweight} objecten.
+ \item \classdef{ConcreteFlyweight:} Implementeert de \classref{Flyweight} interface. Deze objecten worden gedeeld in de \classref{FlyweightFactory}. Bijgevolg moet de interne toestand contextloos zijn.
+ \item \classdef{UnsharedConcreteFlyweight:} Niet alle \classref{Flyweigt} objecten moeten gedeeld worden. Deze objecten implementeren de \classref{Flyweight} interface.
+ \item \classdef{FlyweightFactory:} Bouwt \classref{Flyweight} objecten indien ze nog niet bestaan, anders wordt het gedeelde object teruggegeven.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item Introduceert overhead bij het zoeken, en transfereren van objecten.
+ \item Vermindert het aantal instanties die van een bepaalde klasse bestaan.
+ \item Verlaagt het aantal inwendige toestanden van de objecten.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{State}, \emph{Strategy}, \emph{Composite}};
+\end{scope}
+\end{scope}
+\begin{scope}[xshift=6*\colw, yshift=2*\rowh+2 mm]%Proxy
+\begin{scope}[yshift=\concbegin]%concept
+\draw (0,0) node[doctext]{Een surrogaat-object om de toegang tot een andere object te controleren.};
+\end{scope}
+\begin{scope}[yshift=\deelbegin]%deelnemers
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \classdef{Proxy:} Houdt een referentie bij, waardoor de \classref{Proxy} een \classref{RealSubject} kan aanspreken. Daarbij wordt een interface aangeboden die identiek is aan het \classref{RealSubject} object. De \classref{Proxy} controleert dan toegang tot dit object.
+ \item \classdef{Subject:} Definieert een interface voor een \classref{RealSubject} en \classref{Proxy}. Hierdoor wordt de \classref{Proxy} overal gebruikt waar men ook een \classref{RealSubject} verwacht.
+ \item \classdef{RealSubject:} Definieert het echte object die de \classref{Proxy} vertegenwoordigt.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\gevobegin]%gevolgen
+\draw (0,0) node[doctext]{\begin{desc}
+ \item \emph{Remote Proxy:} verbergt het feit dat de objecten ergens anders bestaan (op een andere computer).
+ \item \emph{Virtual Proxy:} kan informatie intern opslaan, en zo bijvoorbeeld oproepen uitstellen en optimaliseren (\emph{Call-by-Need}, \emph{Copy-on-Write} en \emph{Creation-on-Demand} $\leftrightarrow$ \emph{Call-by-Value}).
+ \item \emph{Protection Proxy:} controleren van toegangsrechten alvorens de oproep uit te voeren.
+\end{desc}};
+\end{scope}
+\begin{scope}[yshift=\zieobegin]%zie ook
+\draw (0,0) node[doctext]{\emph{Adapter}, \emph{Decorator}};
+\end{scope}
+\end{scope}
+
+\end{scope}
+\end{tikzpicture}
+\end{figure}
+\end{document}
