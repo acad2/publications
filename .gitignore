@@ -57,4 +57,13 @@
 *.png
 *.jpg
 *.jpeg
+*.mp3
+*.flac
+*.wav
+*.ogg
+*.mp4
+*.avi
+*.mpg
+*.mpeg
+*.mkz
 *.kilepr
