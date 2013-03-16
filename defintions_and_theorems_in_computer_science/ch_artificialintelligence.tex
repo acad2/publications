@@ -444,8 +444,8 @@ An \termabbrev{evaluation function}{EF} over a game graph $\tuple{X,\Gamma}$ is 
 \cite{conf/ijcai/Boffey73}
 \end{defi}
 
-\begin{defi}[Strategy]
-$\calS$ is a \term{strategy} which leads to move $xy*$ being made from position $x$ where:
+\begin{defi}[Strategy $\calS_o$]
+$\calS_o$ is that \term[Strategy $\calS_o$]{strategy} which leads to move $xy*$ being made from position $x$ where:
 \begin{equation}
 \group{\ffun{x*}=\displaystyle\max_{y\in\Gamma_x}\ffun{y}\mbox{ if }x\in X^M\\
 \ffun{x*}=\displaystyle\min_{y\in\Gamma_x}\ffun{y}\mbox{ if }x\in X^m}
@@ -465,6 +465,25 @@ where $x,y\in\Gamma_w$ for some $w\in X$. $f$ is \term[locally perfect evaluatio
 
 \begin{defi}[Probabilistic evaluation function]
 A \termabbrev{probabilistic evaluation function}{PEF} over a game graph $\tuple{X,\Gamma}$ is a bounded function $\funsig{p}{X\times\RRR}{\RRR}$ with $\pfun{x,r}\geq0$, $\displaystyle\int{\pfun{x,r}\ dr}=1$ and $\pfun{x,r}=0$ outside some finite range $\fun{r_1}{x}\leq r\leq \fun{r_2}{x}$.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Strategy $\calS_o'$]
+$\calS_o'$ is that \term[Strategy $\calS_o'$]{strategy} which leads to move $xy*$ being made from position $x$ where:
+\begin{equation}
+\group{\fun{v}{x*}_p=\displaystyle\max_{y\in\Gamma_x}\fun{v}{y}_p\mbox{ if }x\in X^M\\
+\fun{v}{x*}_p=\displaystyle\min_{y\in\Gamma_x}\fun{v}{y}_p\mbox{ if }x\in X^m}
+\end{equation}
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[(Constant) decision rule, Preference function, Preferred move]
+A (constant) \termor{decision rule}{preference function} for MAX is a single valued function \funsig{\sigma_M}{X}{X} with $\fun{\sigma_M}{x}\in\Gamma_x$. $x\mapsto\fun{\sigma_M}{x}$ is MAX's \term{preferred move} from $x$. A preference function $\sigma_m$ for MIN can be defined in an analogous way.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[(Constant) preference pair]
+If $\sigma_M$ and $\sigma_m$ are preference functions for MAX and MIN respectively then $\sigma=\brak{\sigma_M,\sigma_m}$ is termed a (constant) \term{preference pair} on $\brak{X,\Gamma}$.
 \cite{conf/ijcai/Boffey73}
 \end{defi}
 
