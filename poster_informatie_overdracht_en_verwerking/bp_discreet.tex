@@ -1,0 +1,60 @@
+\filldraw[bigpage,blue!40,draw=black] (\xBPdb,\yBPdb) rectangle (\xBPde,\yBPde);
+\draw[bigpage,dashed] (\xHcb,\yHbb) -- (\xBPde,\yBPdb);
+\draw[bigpage,dashed] (\xHcb,\yHbe) -- (\xBPde,\yBPde);
+\begin{scope}[xshift=\xBPdb,yshift=\yBPdb]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{8.7 cm};
+  \def\varCc{16.9 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Discreet Transmissiekanaal \S5}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw[thick] (\dxBPmm-2.5 cm,\varCa+0.4 cm) rectangle (\dxBPmm+2.5 cm,\varCa+1 cm);
+  \draw[thick,<-] (\dxBPmm-2.5 cm,\varCa+0.7 cm) -- (\dxBPmm-4.5 cm,\varCa+0.7 cm);
+  \draw[thick,->] (\dxBPmm+2.5 cm,\varCa+0.7 cm) -- (\dxBPmm+4.5 cm,\varCa+0.7 cm);
+  \draw (\dxBPmm,\varCa+0.7 cm) node{\tiny{discreeet kanaal}};
+  \draw (\dxBPmm-4.5 cm,\varCa+0.9 cm) node[anchor=south west]{\tiny{$x_i\in\mathbb{X}$}};
+  \draw (\dxBPmm+4.5 cm,\varCa+0.9 cm) node[anchor=south east]{\tiny{$y_j\in\mathbb{Y}$}};
+  \draw[thick] (\dxBPmm-0.7 cm,\varCa+1.9 cm) rectangle (\dxBPmm+0.7 cm,\varCa+2.3 cm);
+  \draw (\dxBPmm,\varCa+2.1 cm) node {\tiny{ruis}};
+  \draw[thick,->] (\dxBPmm,\varCa+1.9 cm) -- (\dxBPmm,\varCa+1 cm);
+  \foreach\x in {0,1,2} {
+    \draw (\dxBPmm-4.2 cm+0.5*\x cm,\varCa+1 cm) circle (0.1 cm);
+    \draw (\dxBPmm+4.2 cm-0.5*\x cm,\varCa+1 cm) circle (0.1 cm);
+  }
+  \draw (\dxBPs,\varCa+1 cm) node[anchor=north west]{\tiny{Kanaalcoderingsalfabet: $\mathbb{X}$}};
+  \draw (\dxBPs,\varCa+2.3 cm) node[anchor=north west]{\tiny{Verstuurkans: $p(x_i|y_j)=p_{ij}$}};
+  \draw (\dxBPs,\varCa+2.8 cm) node[anchor=north west]{\tiny{Symboolkans: $p(x_i)$}};
+  \draw (\dxBPs,\varCa+3.3 cm) node[anchor=north west]{\tiny{$p(x_i|y_j)=p(x_i)q_{ji}/q(y_j)$}};
+  \draw (\dxBPm-\dxBPs,\varCa+1 cm) node[anchor=north east]{\tiny{Ontvangen symbolen: $\mathbb{Y}$}};
+  \draw (\dxBPm-\dxBPs,\varCa+2.3 cm) node[anchor=north east]{\tiny{Ontvangkans: $q(y_j|x_i)=q_{ji}$}};
+  \draw (\dxBPm-\dxBPs,\varCa+2.8 cm) node[anchor=north east]{\tiny{Symboolkans: $q(y_j)$}};
+  \draw (\dxBPm-\dxBPs,\varCa+3.3 cm) node[anchor=north east]{\tiny{$q(y_j)=\sum_i p(x_i)q_{ji}$}};
+  \draw (\dxBPmm,\varCa+4 cm) node[anchor=north]{\tiny{\textbf{Equivocatie/Twijfel:}}};
+  \draw (\dxBPmm,\varCa+4.5 cm) node[anchor=north]{\tiny{$H(X|Y)=-\sum_jq(y_j)\sum_ip_{ij}\log_2p_{ij}$}};
+  \draw (\dxBPmm,\varCa+5.2 cm) node[anchor=north]{\tiny{\textbf{Irrelevantie:}}};
+  \draw (\dxBPmm,\varCa+5.7 cm) node[anchor=north]{\tiny{$H(Y|X)=-\sum_ip(y_j)\sum_iq_{ji}\log_2q_{ji}$}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCb) {\tiny\textbf{Capaciteit}};
+  \draw (\dxBPs,\varCb) node[anchor=north west]{\tiny{\textbf{Overgebrachte hoeveelheid informatie $R$}}};
+  \draw (\dxBPmm,\varCb+0.6 cm) node[anchor=north]{\tiny{$R=H(X)-H(X|Y)=H(Y)-H(Y|X)$ [bit/symbool]}};
+  \draw (\dxBPs,\varCb+1.2 cm) node[anchor=north west]{\tiny{$H(X)$}};
+  \draw (\dxBPm-\dxBPs,\varCb+1.2 cm) node[anchor=north east]{\tiny{$H(Y)$}};
+  \draw[thick,>->] (\dxBPs+2 cm,\varCb+1.7 cm) -- (\dxBPm-\dxBPs-2 cm,\varCb+1.7 cm);
+  \draw[-<,thick] (\dxBPmm+2 cm,\varCb+1.7 cm) arc (270:180:0.5 cm);
+  \draw[->,thick] (\dxBPmm-2 cm,\varCb+1.7 cm) arc (270:360:0.5 cm);
+  \draw (\dxBPmm+1.5 cm,\varCb+2.1 cm) node[anchor=north]{\tiny{$H(Y|X)$}};
+  \draw (\dxBPmm-1.5 cm,\varCb+2.1 cm) node[anchor=north]{\tiny{$H(X|Y)$}};
+  \draw (\dxBPmm,\varCb+1.7 cm) node[anchor=north]{\tiny{$R$}};
+  \draw (\dxBPs,\varCb+2.8 cm) node[anchor=north west]{\tiny{\textbf{Transmissiedebiet: }}};
+  \draw (\dxBPs+5 cm,\varCb+2.8 cm) node[anchor=north west]{\tiny{$r_s$ [\#symb/sec]}};
+  \draw (\dxBPs+5 cm,\varCb+3.3 cm) node[anchor=north west]{\tiny{$r_b$ [bit*/sec]}};
+  \draw (\dxBPs,\varCb+3.8 cm) node[anchor=north west]{\tiny{\textbf{Informatiedebiet: }$R_t=r_s\ R$ [bit/s]}};
+  \draw (\dxBPs,\varCb+4.4 cm) node[anchor=north west]{\tiny{\textbf{$R$ is afhankelijk van bron en kanaal}}};
+  \draw (\dxBPs,\varCb+5 cm) node[anchor=north west]{\tiny{\textbf{Capaciteit:} $\max_{p(x_i)} R$ [bit/symbool]}};
+  \draw (\dxBPs,\varCb+5.6 cm) node[anchor=north west]{\tiny{\textbf{Symboolfoutkans:} $P_e$}};
+  \draw (\dxBPmm,\varCb+6.1 cm) node[anchor=north] {\tiny{$p(e|y_j)=\sum_{i\neq j}p(x_i|y_j)=1-p(x_j|y_j)$}};
+  \draw (\dxBPmm,\varCb+6.7 cm) node[anchor=north] {\tiny{$P_e=\sum_jq(y_j)\ p(e|y_j)$}};
+\end{scope}

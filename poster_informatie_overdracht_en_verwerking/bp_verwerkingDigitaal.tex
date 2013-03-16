@@ -1,0 +1,102 @@
+\filldraw[bigpage,green!40,draw=black] (\xBPib,\yBPib) rectangle (\xBPie,\yBPie);
+\draw[bigpage,dashed] (\xHbSdb,\yHcbs) -- (\xBPib,\yBPie);
+\draw[bigpage,dashed] (\xHbSde,\yHcbs) -- (\xBPie,\yBPie);
+\begin{scope}[xshift=\xBPib,yshift=\yBPib]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{10.3 cm};
+  \def\varCc{28.8 cm};
+  \draw (0,0) node[anchor=north west]{\small\textcolor{purple}{\textbf{Logische Schakelingen \S15}}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=green!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{\textbf{Voorstelling data:}}};
+  \draw (\dxBPs+1 cm,\varCa+0.6 cm) node[anchor=north west] {\tiny{binair (1 en 0)}};
+  \draw (\dxBPs+1 cm,\varCa+1.2 cm) node[anchor=north west] {\tiny{soms groeperen: octaal, hexadecimaal}};
+  \draw (\dxBPs+1 cm,\varCa+1.8 cm) node[anchor=north west] {\tiny{per karakter omzetten: BCD}};
+  \draw (\dxBPs+1 cm,\varCa+2.4 cm) node[anchor=north west] {\tiny{Negatieve getallen: 1-complement, 2-complement}};
+  \draw (\dxBPs,\varCa+3 cm) node[anchor=north west] {\tiny{\textbf{Combinatorische schakelingen:}}};
+  \draw (\dxBPs+1.5 cm,\varCa+3.5 cm) node[anchor=north] {\tiny{$a$}};
+  \draw (\dxBPs+3.5 cm,\varCa+3.5 cm) node[anchor=north] {\tiny{$b$}};
+  \draw (\dxBPs+5.5 cm,\varCa+3.5 cm) node[anchor=north] {\tiny{$\bar{a}$}};
+  \draw (\dxBPs+7.5 cm,\varCa+3.5 cm) node[anchor=north] {\tiny{$a+b$}};
+  \draw (\dxBPs+9.5 cm,\varCa+3.5 cm) node[anchor=north] {\tiny{$ab$}};
+  \draw (\dxBPs+5.5 cm,\varCa+5 cm) node{\begin{circuitikz}
+    \draw[thick] (-5,-0.65) -- (5,-0.65);
+    \draw[thick] (-5,0.65) -- (5,0.65);
+    \draw (-4,0) -- (-4.5,0) |- (-5,0.65);
+    \draw (-2,0) -- (-2.5,0) |- (-3.5,-0.65);
+    \draw (0,0) node[not port,scale=0.75] (mynot) {};
+    \draw (mynot.in) |- (-1,0.65);
+    \draw (2.5,0) node[or port,scale=0.75] (myor) {};
+    \draw (myor.in 1) |- (1.5,0.65);
+    \draw (myor.in 2) |- (1.5,-0.65);
+    \draw (4.5,0) node[and port,scale=0.75] (myand) {};
+    \draw (myand.in 1) |- (3.5,0.65);
+    \draw (myand.in 2) |- (3.5,-0.65);
+  \end{circuitikz}};
+  \foreach\i/\a/\b/\c/\d/\e in {0/0/0/1/0/0,1/0/1/1/0/1,2/1/0/0/0/1,3/1/1/0/1/1} {
+    \draw (\dxBPs+1.5 cm,\varCa+5.5 cm+0.6*\i cm) node[anchor=north] {\tiny{\a}};
+    \draw (\dxBPs+3.5 cm,\varCa+5.5 cm+0.6*\i cm) node[anchor=north] {\tiny{\b}};
+    \draw (\dxBPs+5.5 cm,\varCa+5.5 cm+0.6*\i cm) node[anchor=north] {\tiny{\c}};
+    \draw (\dxBPs+7.5 cm,\varCa+5.5 cm+0.6*\i cm) node[anchor=north] {\tiny{\d}};
+    \draw (\dxBPs+9.5 cm,\varCa+5.5 cm+0.6*\i cm) node[anchor=north] {\tiny{\e}};
+  }
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=green!40] at (\dxBPmm,\varCb) {\tiny\textbf{Synthese van logische schakelingen}};
+  \draw (\dxBPs,\varCb) node[anchor=north west] {\tiny{\textbf{Beschrijving $\Rightarrow$ Waarheidstabel}}};
+  \draw (\dxBPs,\varCb+0.6 cm) node[anchor=north west] {\tiny{voorbeeld:}};
+  \draw (\dxBPs+0.5 cm,\varCb+1.2 cm) node[anchor=north] {\tiny{$A$}};
+  \draw (\dxBPs+1.5 cm,\varCb+1.2 cm) node[anchor=north] {\tiny{$B$}};
+  \draw (\dxBPs+2.5 cm,\varCb+1.2 cm) node[anchor=north] {\tiny{$C$}};
+  \draw (\dxBPs+3.5 cm,\varCb+1.2 cm) node[anchor=north] {\tiny{$D$}};
+  \draw (\dxBPs+0.2 cm,\varCb+1.9 cm) -- (\dxBPs+3.8 cm,\varCb+1.9 cm);
+  \draw (\dxBPs+3 cm,\varCb+1.4 cm) -- (\dxBPs+3 cm,\varCb+5.9 cm);
+  \foreach\i/\a/\b/\c/\d in {0/0/0/0/1,1/0/0/1/0,2/0/1/0/1,3/0/1/1/0,4/1/0/0/0,5/1/0/1/0,6/1/1/0/1,7/1/1/1/1} {
+    \draw (\dxBPs+0.5 cm,\varCb+1.7 cm+0.5*\i cm) node[anchor=north] {\tiny{\a}};
+    \draw (\dxBPs+1.5 cm,\varCb+1.7 cm+0.5*\i cm) node[anchor=north] {\tiny{\b}};
+    \draw (\dxBPs+2.5 cm,\varCb+1.7 cm+0.5*\i cm) node[anchor=north] {\tiny{\c}};
+    \draw (\dxBPs+3.5 cm,\varCb+1.7 cm+0.5*\i cm) node[anchor=north] {\tiny{\d}};
+  }
+  \draw (\dxBPs+3.75 cm,\varCb+0.6 cm) node[anchor=north west] {\tiny{\textbf{$\Rightarrow$ Logische uitdrukking:}}};
+  \draw (\dxBPs+3.75 cm,\varCb+1.2 cm) node[anchor=north west] {\tiny{2 strategie\"en:}};
+  \draw (\dxBPs+4 cm,\varCb+1.8 cm) node[anchor=north west] {\tiny{-\textbf{SOP:} sum of products}};
+  \draw (\dxBPs+4 cm,\varCb+2.4 cm) node[anchor=north west] {\tiny{product van de variabelen van}};
+  \draw (\dxBPs+4 cm,\varCb+2.9 cm) node[anchor=north west] {\tiny{positieve termen sommeren}};
+  \draw (\dxBPs+4 cm,\varCb+3.5 cm) node[anchor=north west] {\tiny{op voorbeeld:}};
+  \draw (\dxBPs+4 cm,\varCb+4 cm) node[anchor=north west] {\tiny{$\bar{A}\bar{B}\bar{C}+\bar{A}B\bar{C}+AB\bar{C}+ABC$}};
+  \draw (\dxBPs+4 cm,\varCb+4.8 cm) node[anchor=north west] {\tiny{-\textbf{POS:} product of sums}};
+  \draw (\dxBPs+4 cm,\varCb+5.4 cm) node[anchor=north west] {\tiny{som van de negatie variabelen van}};
+  \draw (\dxBPs+4 cm,\varCb+5.9 cm) node[anchor=north west] {\tiny{negatieve termen sommeren}};
+  \draw (\dxBPs,\varCb+6.5 cm) node[anchor=north west] {\tiny{op voorbeeld:}};
+  \draw (\dxBPs,\varCb+7 cm) node[anchor=north west] {\tiny{$(A+B+\bar{C})(A+\bar{B}+\bar{C})(\bar{A}+B+C)(\bar{A}+B+\bar{C})$}};
+  \draw (\dxBPs,\varCb+8 cm) node[anchor=north west] {\tiny{\textbf{Vereenvoudigen: Minder poorten}}};
+  \draw (\dxBPs+0.25 cm,\varCb+8.5 cm) node[anchor=north west] {\tiny{-\textbf{Algebra\"ische manipulatie} (wetten van De Morgan)}};
+  \draw (\dxBPs+0.5 cm,\varCb+9 cm) node[anchor=north west] {\tiny{$A_1A_2\ldots A_n\rightleftharpoons\overline{\overline{A_1}+\overline{A_2}+\ldots+\overline{A_n}}$}};
+  \draw (\dxBPs+0.5 cm,\varCb+9.6 cm) node[anchor=north west] {\tiny{$A_1+A_2+\ldots+A_n\rightleftharpoons\overline{\overline{A_1}\overline{A_2}\ldots\overline{A_n}}$}};
+  \draw (\dxBPs+0.5 cm,\varCb+11.4 cm) node[anchor=north west] {\tiny{voorbeeld:}};
+  \draw (\dxBPs+2.5 cm,\varCb+11.4 cm) node[anchor=north west] {\tiny{$\bar{A}\bar{B}\bar{C}+\bar{A}B\bar{C}+AB\bar{C}+ABC$}};
+  \draw (\dxBPs+2.5 cm,\varCb+12 cm) node[anchor=north west] {\tiny{$\rightleftharpoons\bar{A}\bar{C}(\bar{B}+B)+AB(\bar{C}+C)\rightleftharpoons\bar{A}\bar{C}+AB$}};
+  
+  \draw (\dxBPs+0.5 cm,\varCb+13 cm) node[anchor=north west] {\tiny{- \textbf{Karnaugh-kaarten} (visueel optimaliseren)}};
+  \draw (\dxBPs+0.35 cm,\varCb+13.6 cm) node[anchor=north west] {\tiny{voorbeeld:}};
+  \draw (\dxBPs+1.25 cm,\varCb+15.2 cm) to node[midway,above]{\tiny{$B$}} (\dxBPs+2.75 cm,\varCb+15.2 cm);
+  \draw (\dxBPs+2 cm,\varCb+17.1 cm) to node[midway,below]{\tiny{$C$}} (\dxBPs+3.5 cm,\varCb+17.1 cm);
+  \draw (\dxBPs+3.7 cm,\varCb+16.15 cm) to node[midway,right]{\tiny{$A$}} (\dxBPs+3.7 cm,\varCb+16.9 cm);
+  \draw (\dxBPs+0.5 cm,\varCb+15.4 cm) rectangle (\dxBPs+3.5 cm,\varCb+16.9 cm);
+  \draw (\dxBPs+0.5 cm,\varCb+16.15 cm) -- (\dxBPs+3.5 cm,\varCb+16.15 cm);
+  \draw (\dxBPs+1.25 cm,\varCb+15.4 cm) -- (\dxBPs+1.25 cm,\varCb+16.9 cm);
+  \draw (\dxBPs+2 cm,\varCb+15.4 cm) -- (\dxBPs+2 cm,\varCb+16.9 cm);
+  \draw (\dxBPs+2.75 cm,\varCb+15.4 cm) -- (\dxBPs+2.75 cm,\varCb+16.9 cm);
+  \foreach \x/\y/\v in {0/0/1,1/0/1,2/0/0,3/0/0,0/1/0,1/1/1,2/1/1,3/1/0} {
+    \draw (\dxBPs+0.875 cm+0.75*\x cm,\varCb+15.775 cm+0.75*\y cm) node {\tiny{$\v$}};
+  }
+  \draw[dashed,rounded corners] (\dxBPs+0.6 cm,\varCb+15.5 cm) rectangle (\dxBPs+1.9 cm,\varCb+16.05 cm);
+  \draw[dashed,rounded corners] (\dxBPs+1.35 cm,\varCb+16.25 cm) rectangle (\dxBPs+2.65 cm,\varCb+16.8 cm);
+  \draw (\dxBPs+4 cm,\varCb+13.4 cm) node[anchor=north west] {\tiny{waarheidstabel in 2 dimensies}};
+  \draw (\dxBPs+4 cm,\varCb+14 cm) node[anchor=north west] {\tiny{groeperen in rechthoeken}};
+  \draw (\dxBPs+4 cm,\varCb+14.6 cm) node[anchor=north west] {\tiny{zijden: $1$,$2$,$4$}};
+  \draw (\dxBPs+4 cm,\varCb+15.2 cm) node[anchor=north west] {\tiny{rechthoeken herberekenen}};
+  \draw (\dxBPs+4 cm,\varCb+15.8 cm) node[anchor=north west] {\tiny{toegepast: $\bar{A}\bar{C}+AB$}};
+\end{scope}

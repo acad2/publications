@@ -1,0 +1,192 @@
+\filldraw[bigpage,red!40,draw=black] (\xBPab,\yBPab) rectangle (\xBPae,\yBPae);
+\draw[bigpage,dashed] (\xHab,\yHae) -- (\xBPab,\yBPab);
+\draw[bigpage,dashed] (\xHae,\yHae) -- (\xBPae,\yBPab);
+\begin{scope}[xshift=\xBPab,yshift=\yBPab]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{4.8 cm};
+  \def\varCc{9.3 cm};
+  \def\varCd{15 cm};
+  \def\varCe{21.7 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Discreet \S1}};
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{\textbf{Bronalfabet:} $\AAA=\left\{a_1,\ldots,a_n\right\}$}};
+  \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west] {\tiny{Debiteert rij symbolen uit $\AAA$ op discrete tijdstippen.}};
+  \draw (\dxBPs,\varCa+1.2 cm) node[anchor=north west] {\tiny{\textbf{Boodschap: }$M\in\AAA^*$; lengte: $l=\left|M\right|$}};
+  \draw (\dxBPs,\varCa+1.8 cm) node[anchor=north west] {\tiny{\textbf{Bron met/zonder geheugen}}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCb) {\tiny\textbf{Hoeveelheid Informatie}};
+  \draw (\dxBPs,\varCb) node[anchor=north west] {\tiny{\textbf{Hoeveelheid informatie:}}};
+  \draw (\dxBPs+5 cm,\varCb) node[anchor=north west] {\tiny{$H\left(M\right)\ \left[\mbox{bit/boodschap}\right]$}};
+  \draw (\dxBPs+5 cm,\varCb+0.6 cm) node[anchor=north west] {\tiny{$H\left(\AAA\right)\ \left[\mbox{bit/symbool}\right]$}};
+  \draw (\dxBPs,\varCb+1.2 cm) node[anchor=north west] {\tiny{R. Hartley (1928):}};
+  \draw (\dxBPmm,\varCb+1.8 cm) node[anchor=north] {\tiny{$\max H\left(\AAA\right)=\log_2 n\ \left[\mbox{bit/symbool}\right]$}};
+  \draw (\dxBPmm,\varCb+2.4 cm) node[anchor=north] {\tiny{$\max H\left(M\right)=\log_2 n^l=l\cdot\log_2 n\ \left[\mbox{bit/boodschap}\right]$}};
+  \draw (\dxBPs,\varCb+3 cm) node[anchor=north west] {\tiny{$\Rightarrow$ Geen waarschijnlijkheid en afhankelijkheid}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCc) rectangle (\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCc) {\tiny\textbf{Waarschijnlijheid}};
+  \draw (\dxBPs,\varCc) node[anchor=north west] {\tiny{\textbf{Waarschijnlijkheid: }kans op een symbool $a_i$}};
+  \draw (\dxBPmm,\varCc+0.6 cm) node[anchor=north] {\tiny{$P\left(a_i\right)=p_i$}};
+  \draw (\dxBPs,\varCc+1.2 cm) node[anchor=north west] {\tiny{C.E. Shannon (1948):}};
+  \draw (\dxBPmm,\varCc+1.8 cm) node[anchor=north] {\tiny{$H\left(a_i\right)=-\log_2 p_i\ \left[\mbox{bit/symbool $a_i$}\right]$}};
+  \draw (\dxBPmm,\varCc+2.4 cm) node[anchor=north] {\tiny{$H\left(\AAA\right)=-\sum_i^n{p_i\cdot\log_2p_i}\ \left[\mbox{bit/symbool}\right]$}};
+  \draw (\dxBPmm,\varCc+3 cm) node[anchor=north] {\tiny{$H\left(M\right)=l\cdot H\left(\AAA\right)\ \left[\mbox{bit/boodschap}\right]$}};
+  \draw (\dxBPs,\varCc+3.6 cm) node[anchor=north west] {\tiny{\textbf{Redundantie: } $R_w=1-H\left(\AAA\right)/\max H\left(\AAA\right)$}};
+  \draw (\dxBPs,\varCc+4.2 cm) node[anchor=north west] {\tiny{Bij equivalente kansen: geen redundantie}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCd) rectangle (\dxBPm-\dxBPs,\varCe-\varS);
+  \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCd) {\tiny\textbf{Afhankelijkheid }(bron met geheugen)};
+  \draw (\dxBPs,\varCd) node[anchor=north west] {\tiny{\textbf{Afhankelijkheid: }}};
+  \draw (\dxBPs+3.5 cm,\varCd) node[anchor=north west] {\tiny{kans op een symbool $a_i$ na een}};
+  \draw (\dxBPs+3.5 cm,\varCd+0.4 cm) node[anchor=north west] {\tiny{serie tekens $s_{j-k},\ldots,s_{j-1}$.}};
+  \draw (\dxBPmm,\varCd+1 cm) node[anchor=north] {\tiny{$P\left(a_i|s_{j-k},\ldots,s_{j-1}\right)$}};
+  \draw (\dxBPs,\varCd+1.6 cm) node[anchor=north west] {\tiny{\textbf{Markovketen van orde $k$.}}};
+  \draw (\dxBPs,\varCd+2.2 cm) node[anchor=north west] {\tiny{\textbf{Overgangsinformatie:}}};
+  \draw (\dxBPmm,\varCd+2.8 cm) node[anchor=north]{\tiny{$H\left(a_i|s_{j-k},\ldots,s_{j-1}\right)=-\log_2\left(P\left(a_i|s_{j-k},\ldots,s_{j-1}\right)\right)$}};
+  \draw (\dxBPmm,\varCd+3.4 cm) node[anchor=north]{\tiny{$H_a\left(s_1,\ldots,s_l\right)=\sum_j^lH\left(s_j|s_{j-k},\ldots s_{j-1}\right)\ \left[\mbox{bit/boodschap}\right]$}};
+  \draw (\dxBPmm,\varCd+4 cm) node[anchor=north]{\tiny{$H_g\left(s_1,\ldots,s_l\right)=H_a\left(s_1,\ldots s_l\right)/l\ \left[\mbox{bit/symbool}\right]$}};
+  \draw (\dxBPmm,\varCd+4.6 cm) node[anchor=north]{\tiny{$H_g\left(\AAA\right)=\sum_{s_1\ldots s_{k+1}}P\left(s_1,\ldots,s_k+1\right)\cdot H_a\left(s_1,\ldots s_l\right)/k$}};
+  \draw (\dxBPs,\varCd+5.2 cm) node[anchor=north west] {\tiny{\textbf{Redundantie: } $R_a=1-H_g\left(\AAA\right)/H\left(\AAA\right)$}};
+  \draw[bigpage,dashed] (\xBPab,\varCe) -- (\xBPam,\varCe);
+  \begin{scope}[yshift=\varCe]
+    \def\varS{0.5 cm};
+    \def\varCa{1.5 cm};
+    \def\varCb{8.1 cm};
+    \def\varCc{15.4 cm};
+    \def\varCd{5 cm};
+    \draw (0,0) node[anchor=north west]{\small\textbf{Discretisatie \S4}};
+    \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+    \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+    \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{Omzetten van analoge naar digitale signalen}};
+    \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west] {\tiny{\textbf{Waarom? }Intressanter, veel digitale toepassingen}};
+    \draw (\dxBPs,\varCa+1.2 cm) node[anchor=north west] {\tiny{\textbf{Hoe frequent bemonsteren? }}};
+    \draw (\dxBPmm,\varCa+1.8 cm) node[anchor=north] {\tiny{\textbf{Bemonsteringstheorema van Nyquist}}};
+    \begin{scope}[xshift=2*\dxBPs,yshift=\varCa+4.8 cm,yscale=-1]
+      \draw[very thick,->] (-0.1 cm,0 cm) -- (2.5 cm,0 cm);
+      \draw[very thick,->] (0 cm,-0.1 cm) -- (0 cm,2 cm);
+      \draw[blue,very thick,domain=-1:1.5,variable=\x,samples=100,smooth] plot ({\x+1},{(4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)+1});
+      \foreach\x in {-1,-0.8,...,1.5} {
+	\draw[black,dotted] ({\x+1},0) -- ({\x+1},{(4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)+1});
+      }
+    \end{scope}
+    \begin{scope}[xshift=\dxBPmm-1.3 cm,yshift=\varCa+4.8 cm,yscale=-1]
+      \draw[very thick,->] (-0.1 cm,0 cm) -- (2.5 cm,0 cm);
+      \draw[very thick,->] (0 cm,-0.1 cm) -- (0 cm,2 cm);
+      \foreach\x in {-1,-0.8,...,1.5} {
+	\draw[blue,very thick,->] ({\x+1},0) -- ({\x+1},{(4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)+1});
+      }
+      \foreach\y in {0,0.25,...,2} {
+	\draw[black,dotted] (0,\y) -- (2.5,\y);
+      }
+    \end{scope}
+    \begin{scope}[xshift=\dxBPm-2*\dxBPs-2.4 cm,yshift=\varCa+4.8 cm,yscale=-1]
+      \draw[very thick,->] (-0.1 cm,0 cm) -- (2.5 cm,0 cm);
+      \draw[very thick,->] (0 cm,-0.1 cm) -- (0 cm,2 cm);
+      \foreach\x in {-1,-0.8,...,1.5} {
+	\draw[blue,very thick,->] ({\x+1},0) -- ({\x+1},{round(4*(4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)+4)/4});
+      }
+    \end{scope}
+    \draw[->,thick] (2*\dxBPs+2.75 cm,\varCa+3.8 cm) -- (\dxBPmm-1.55 cm,\varCa+3.8 cm);
+    \draw (0.5*\dxBPmm+\dxBPs+0.3 cm,\varCa+3 cm) node[anchor=north] {\tiny{1}};
+    \draw[<-,thick] (\dxBPm-2*\dxBPs-2.65 cm,\varCa+3.8 cm) -- (\dxBPmm+1.55 cm,\varCa+3.8 cm);
+    \draw (1.5*\dxBPmm-\dxBPs-0.3 cm,\varCa+3 cm) node[anchor=north] {\tiny{2}};
+    \draw (0.5*\dxBPmm+\dxBPs+0.3 cm,\varCa+4.9 cm) node[anchor=north] {\tiny{\textbf{1: Bemonsteren}}};
+    \draw (1.5*\dxBPmm-\dxBPs-0.3 cm,\varCa+4.9 cm) node[anchor=north] {\tiny{\textbf{2: Kwantiseren}}};
+
+    \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+    \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCb) {\tiny\textbf{Bemonsteringstheorema van Nyquist}};
+    \draw (\dxBPs,\varCb) node[anchor=north west] {\tiny{\textbf{Voorwaarde: } beperkte absolute bandbreedte $B$}};
+    \draw (\dxBPs,\varCb+0.6 cm) node[anchor=north west] {\tiny{\textbf{Bemonsteringsfrequentie: } $f_s$}};
+    \draw (\dxBPs,\varCb+1.2 cm) node[anchor=north west] {\tiny{\textbf{Perfecte reconstructie: } $f_s\geq 2B$}};
+    \draw (\dxBPs,\varCb+1.8 cm) node[anchor=north west] {\tiny{\textbf{Ingenieursvuistregel} (praktisch): $f_s\geq 2.2B$}};
+
+    \draw[thick,rounded corners] (\dxBPm+\dxBPs,\varCd) rectangle (\dxBPm+\dxBPm-\dxBPs,\varCc-\varS);
+    \node[rectangle,thick,fill=red!40] at (3*\dxBPmm,\varCd) {\tiny\textbf{Kwantiseren}};
+    \draw (\dxBPm+\dxBPs,\varCd) node[anchor=north west] {\tiny{uitgangssignaal heeft oneindig veel mogelijkheden}};
+    \draw (\dxBPm+\dxBPs,\varCd+0.6 cm) node[anchor=north west] {\tiny{omzetten naar symbolen uit eindig alfabet}};
+    \draw (\dxBPm+\dxBPs,\varCd+1.2 cm) node[anchor=north west] {\tiny{verschillende mogelijke kwantisaties}};
+    \draw (\dxBPm+\dxBPs,\varCd+1.8 cm) node[anchor=north west] {\tiny{eenvoudigste: uniform scalair}};
+    \draw (\dxBPm+\dxBPs,\varCd+2.4 cm) node[anchor=north west] {\tiny{\textbf{Aantal symbolen: $K=\#\AAA$} met grote $a=2V/K$}};
+    \draw (\dxBPm+\dxBPs,\varCd+3 cm) node[anchor=north west] {\tiny{\textbf{Afrondingsfout: $\varepsilon$} met $-a/2\leq\varepsilon\leq a/2$}};
+    \draw (\dxBPm+\dxBPs,\varCd+3.6 cm) node[anchor=north west] {\tiny{\textbf{Gemiddelde kwadratische afrondingsfout: $E\left(\varepsilon^2\right)$}}};
+    \draw (\dxBPm+\dxBPmm,\varCd+4.2 cm) node[anchor=north] {\tiny{$E\left(\varepsilon^2\right)=\int_{-a/2}^{a/2}{\varepsilon^2p\left(\varepsilon\right)\ d\varepsilon=a^2/12}$}};
+    \draw (\dxBPm+\dxBPs,\varCd+5 cm) node[anchor=north west] {\tiny{\textbf{Karakteristieken:}}};
+    \draw (\dxBPm+\dxBPs,\varCd+5.6 cm) node[anchor=north west] {\tiny{Pieksignaal tot kwantisatieruisverhouding}};
+    \draw (\dxBPm+\dxBPmm,\varCd+6.1 cm) node[anchor=north] {\tiny{$\left(S/N\right)_s=V/\sqrt{E\left(\varepsilon^2\right)}=\sqrt{3}K$}};
+    \draw (\dxBPm+\dxBPs,\varCd+6.8 cm) node[anchor=north west] {\tiny{Pieksignaal tot kwantisatieruisvermogenverhouding}};
+    \draw (\dxBPm+\dxBPmm,\varCd+7.3 cm) node[anchor=north] {\tiny{$\left(S/N\right)_v=\left(S/N\right)_s^2=3K^2$}};
+    \draw (\dxBPm+\dxBPs,\varCd+8 cm) node[anchor=north west] {\tiny{gemiddeld signaal tot kwantisatieruisvermogenverhouding}};
+    \draw (\dxBPm+\dxBPmm,\varCd+8.6 cm) node[anchor=north] {\tiny{$\left(S/N\right)_0=E\left(x^2\left(t\right)\right)/E\left(\varepsilon^2\right)=K^2+1$}};
+  \end{scope}
+\end{scope}
+\begin{scope}[xshift=\xBPam,yshift=\yBPab]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{4.8 cm};
+  \def\varCc{12.9 cm};
+  \def\varCd{25.9 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Continu \S3}};
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{\textbf{Uitgangssignaal:} $x\left(t\right)$}};
+  \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west] {\tiny{Continu uitgangssignaal verandert continu in de tijd.}};
+  \draw (\dxBPs,\varCa+1.2 cm) node[anchor=north west] {\tiny{\textbf{Kansverdeling: }$p\left(x\right)$}};
+  \draw (\dxBPs,\varCa+1.8 cm) node[anchor=north west] {\tiny{\textbf{Bron met/zonder ``geheugen''}}};
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  
+  \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCb) {\tiny\textbf{Hoeveelheid Informatie}};
+  \draw (\dxBPs,\varCb) node[anchor=north west] {\tiny{\textbf{Hoeveelheid informatie: }}};
+  \draw (\dxBPmm,\varCb+0.6 cm) node[anchor=north] {\tiny{veralgemenen van discrete bronnen}};
+  \draw (\dxBPmm,\varCb+1.2 cm) node[anchor=north] {\tiny{$H\left(X\right)=-\int_{-\infty}^{+\infty}{p\left(x\right)\log_2 p\left(x\right)\
+ dx}\ \mbox{[bit/bem.]}$}};
+  \draw (\dxBPs,\varCb+1.8 cm) node[anchor=north west] {\tiny{\textbf{Problemen:}}};
+  \draw (\dxBPs+3 cm,\varCb+1.8 cm) node[anchor=north west] {\tiny{- bereik van $p\left(x\right)$ begrenzen}};
+  \draw (\dxBPs+3 cm,\varCb+2.4 cm) node[anchor=north west] {\tiny{- $H\left(X\right)$ afhankelijk van eenheid $x$}};
+  \draw (\dxBPs,\varCb+3 cm) node[anchor=north west] {\tiny{\textbf{Begrenzingen:}}};
+  \draw (\dxBPs+3 cm,\varCb+3 cm) node[anchor=north west] {\tiny{- amplitude $-A\leq x\left(t\right)\leq A$}};
+  \draw (\dxBPs+3 cm,\varCb+3.6 cm) node[anchor=north west] {\tiny{- vermogen $P_x\leq\sigma^2$}};
+  \draw (\dxBPs,\varCb+4.2 cm) node[anchor=north west] {\tiny{\textbf{Eenheid: }altijd kwantisatie met grondeenheid $\Delta$:}};
+  \draw (\dxBPmm,\varCb+4.8 cm) node[anchor=north] {\tiny{$H\left(X^{\Delta}\right)=H\left(X\right)-\log_2\Delta\ \mbox{[bit/bem.]}$}};
+  \draw (\dxBPs,\varCb+5.4 cm) node[anchor=north west] {\tiny{\textbf{Maximale $H\left(x\right)$: }}};
+  \draw (\dxBPs+3.5 cm,\varCb+5.4 cm) node[anchor=north west] {\tiny{- amplitudebegrensd $\log_2 2A$}};
+  \draw (\dxBPs+3.5 cm,\varCb+6 cm) node[anchor=north west] {\tiny{- vermogen begrensd $\log_2\sigma\sqrt{2\pi e}$}};
+  \draw (\dxBPs,\varCb+6.6 cm) node[anchor=north west] {\tiny{\textbf{Analoog ook waarschijnlijkheidsredundantie}}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCc) rectangle (\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=red!40] at (\dxBPmm,\varCc) {\tiny\textbf{Bandbreedte}};
+  \draw (\dxBPs,\varCc) node[anchor=north west] {\tiny{\textbf{Fouriertransformatie: }}};
+  \draw (\dxBPmm,\varCc+0.6 cm) node[anchor=north] {\tiny{welke frequenties worden in het signaal gebruikt?}};
+  \begin{scope}[xshift=3*\dxBPs+2.625 cm,yshift=\varCc+4 cm,yscale=-1.5,xscale=1.33]
+    \draw[very thick,->] (-1.75 cm,0) -- (1.75 cm,0);
+    \draw[very thick,->] (0,-0.5 cm) -- (0,1.5 cm);
+    \draw[blue,very thick] (-1.75 cm,0) -- (-0.75 cm,0)  -- (0,1 cm) -- (0.75 cm,0) -- (1.75 cm,0);
+  \end{scope}
+  \draw(3*\dxBPs+2.625 cm,\varCc+4.7 cm) node[anchor=north] {\tiny{$x\left(t\right)$}};
+  \begin{scope}[xshift=\dxBPm-3*\dxBPs-2.625 cm,yshift=\varCc+4 cm,yscale=-3,xscale=0.66]
+    \draw[very thick,->] (-3.5 cm,0) -- (3.5 cm,0);
+    \draw[very thick,->] (0,-0.286 cm) -- (0,0.857 cm);
+    \draw[yellow,very thick,domain=-3.5:3.5,smooth,samples=103,variable=\x] plot({\x},{(1-cos(4.712*\x r))/(14.8044*\x*\x)});
+  \end{scope}
+  \draw(\dxBPm-3*\dxBPs-2.625 cm,\varCc+4.7 cm) node[anchor=north] {\tiny{$X\left(f\right)$}};
+  \draw[->] (3*\dxBPs+3.625 cm,\varCc+5.1 cm) -- (\dxBPm-3*\dxBPs-3.625 cm,\varCc+5.1 cm);
+  \draw[<-] (3*\dxBPs+3.625 cm,\varCc+5.3 cm) -- (\dxBPm-3*\dxBPs-3.625 cm,\varCc+5.3 cm);
+  \draw (\dxBPmm,\varCc+4.3 cm) node[anchor=north]{\tiny{$\Im\left[x\left(t\right)\right]$}};
+  \draw (\dxBPmm,\varCc+5.1 cm) node[anchor=north]{\tiny{$\Im^{-1}\left[X\left(f\right)\right]$}};
+  \draw (\dxBPs,\varCc+5.7 cm) node[anchor=north west] {\tiny{\textbf{Dirichlet-voorwaarden: }}};
+  \draw (\dxBPs+1 cm,\varCc+6.1 cm) node[anchor=north west] {\tiny{- absoluut integreerbaar $\int_{-\infty}^{+\infty}{\left|x\left(t\right)\right|}<\infty$}};
+  \draw (\dxBPs+1 cm,\varCc+6.7 cm) node[anchor=north west] {\tiny{- \#maxima/minima eindig in elk deelinterval}};
+  \draw (\dxBPs+1 cm,\varCc+7.3 cm) node[anchor=north west] {\tiny{- \#discontinue punten eindig in elk deelinterval}};
+  \draw (\dxBPmm,\varCc+7.9 cm) node[anchor=north] {\tiny{$\Im\left[x\left(t\right)\right]=\int_{-\infty}^{+\infty}{x\left(t\right)e^{-2\pi f t i}\ dt}$}};
+  \draw (\dxBPmm,\varCc+8.5 cm) node[anchor=north] {\tiny{$\Im^-1\left[X\left(f\right)\right]=\int_{-\infty}^{+\infty}{X\left(f\right)e^{2\pi f t i}\ df}$}};
+  \draw (\dxBPs,\varCc+9.1 cm) node[anchor=north west] {\tiny{\textbf{Bandbreedte: $\left(f_2-f_1\mbox{ met } f_1,f_2\geq0\right)$}}};
+  \draw (\dxBPs+1 cm,\varCc+9.7 cm) node[anchor=north west] {\tiny{- absoluut $B$: $\forall f>0\wedge f\notin \left[f_1,f_2\right]:X\left(f\right)=0$}};
+  \draw (\dxBPs+1 cm,\varCc+10.3 cm) node[anchor=north west] {\tiny{- nul-tot-nul $B_0$: $X\left(f_1\right)=X\left(f_2\right)=0\wedge f_1\leq f_1\leq f_2$}};
+  \draw (\dxBPs,\varCc+10.9 cm) node[anchor=north west] {\tiny{\textbf{Evenredigheid: }$B_0=k_0/\Delta t$ met $k_0$ pulsvormafhankelijk}};
+  \draw (\dxBPmm,\varCc+11.5 cm) node[anchor=north] {\tiny{zachtere vorm $\Rightarrow$ grotere $k$}};
+
+  \draw[bigpage,dashed] (\xBPab,0) -- (\xBPab,\varCd);
+  \draw[bigpage,dashed] (\xBPab,\varCd) -- (\xBPam,\varCd);
+\end{scope}

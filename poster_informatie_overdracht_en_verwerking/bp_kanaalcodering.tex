@@ -1,0 +1,68 @@
+\filldraw[bigpage,green!40,draw=black] (\xBPcb,\yBPcb) rectangle (\xBPce,\yBPce);
+\draw[bigpage,dashed] (\xHbSdb,\yHaes) -- (\xBPcb,\yBPcb);
+\draw[bigpage,dashed] (\xHbSde,\yHaes) -- (\xBPce,\yBPcb);
+\begin{scope}[xshift=\xBPcb,yshift=\yBPcb]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{7 cm};
+  \def\varCc{11.6 cm};
+  \def\varCd{27.3 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Kanaalcodering \S5}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=green!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{\textbf{Nut:} fouteloze communicatie mogelijk maken}};
+  \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west] {\tiny{\textbf{Hoe:} redundante informatie toevoegen en controleren}};
+  \draw (\dxBPs,\varCa+1.2 cm) node[anchor=north west] {\tiny{\textbf{Achtergrond:} Kanaalcoderingstheorema}};
+  \draw (\dxBPs,\varCa+1.8 cm) node[anchor=north west] {\tiny{\textbf{Kanaaldecodering:} Detecteren en corrigeren van fouten}};
+  \draw (\dxBPmm,\varCa+2.8 cm) node[anchor=north] {\tiny{\textbf{Verschillende types:}}};
+  \draw (\dxBPs,\varCa+3.4 cm) node[anchor=north west] {\tiny{\textbf{Blokcodering}}};
+  \draw (\dxBPs,\varCa+4 cm) node[anchor=north west] {\tiny{na $k$ bits $r$ redundante}};
+  \draw (\dxBPm-\dxBPs,\varCa+3.4 cm) node[anchor=north east] {\tiny{\textbf{Convolutiecodering}}};
+  \draw (\dxBPm-\dxBPs,\varCa+4 cm) node[anchor=north east] {\tiny{vervlochten redundantie}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=green!40] at (\dxBPmm,\varCb) {\tiny\textbf{Kanaalcoderingstheorema}};
+  \draw (\dxBPs,\varCb) node[anchor=north west] {\tiny{\textbf{Fouteloze overdracht mogelijk?} Ja, enkel theoretisch}};
+  \draw (\dxBPs,\varCb+0.6 cm) node[anchor=north west] {\tiny{\textbf{Kanaal theorema:}}};
+  \draw (\dxBPs,\varCb+1.0 cm) node[anchor=north west] {\tiny{Over geheugenloos discreet kanaal met $H\left(X\right)\leq C$}};
+  \draw (\dxBPs,\varCb+1.5 cm) node[anchor=north west] {\tiny{informatie overbrengen met foutkans $P_e\searrow0$}};
+  \draw (\dxBPs,\varCb+2.0 cm) node[anchor=north west] {\tiny{Indien $H\left(X\right)>C$: onzekerheid blijft:}};
+  \draw (\dxBPmm,\varCb+2.5 cm) node[anchor=north] {\tiny{$H\left(Y|X\right)=H\left(X\right)-C$}};
+  \draw (\dxBPs,\varCb+3.1 cm) node[anchor=north west] {\tiny{\textbf{In de praktijk:} $P_e\in\left[10^{-12},10^{-3}\right]$}};
+  
+
+  \draw[thick,rounded corners] (\dxBPs,\varCc) rectangle (\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=green!40] at (\dxBPmm,\varCc) {\tiny\textbf{Blokcoderingen}};
+  \draw (\dxBPs,\varCc) node[anchor=north west] {\tiny{Bron genereert $k$ symbolen $u_i$ uit alfabet $\AAA$}};
+  \draw (\dxBPs,\varCc+0.6 cm) node[anchor=north west] {\tiny{Typisch $\AAA=\left\{0,1\right\}\Rightarrow \#\AAA=2$}};
+  \draw (\dxBPs,\varCc+1.2 cm) node[anchor=north west] {\tiny{Aantal mogelijke boodschappen $M=2^k$}};
+  \draw (\dxBPs,\varCc+1.8 cm) node[anchor=north west] {\tiny{$r$ symbolen uit $\AAA$ genereren uit de boodschap}};
+  \draw (\dxBPs,\varCc+2.4 cm) node[anchor=north west] {\tiny{\textbf{Effici\"entie:} $\varepsilon=k/\left(k+r\right)=k/n$}};
+  \draw (\dxBPs,\varCc+4 cm) node[anchor=north west] {\tiny{\textbf{Broncode}}};
+  \draw (\dxBPs,\varCc+4.6 cm) node[anchor=north west] {\tiny{$U$}};
+  \draw (\dxBPm-\dxBPs,\varCc+4 cm) node[anchor=north east] {\tiny{\textbf{Kanaalcode}}};
+  \draw (\dxBPm-\dxBPs,\varCc+4.6 cm) node[anchor=north east] {\tiny{$C$}};
+  \draw[thick,->] (2*\dxBPs+1 cm,\varCc+5 cm) -- (\dxBPm-2*\dxBPs-1 cm,\varCc+5 cm);
+  \draw (\dxBPmm,\varCc+4.8 cm) node[anchor=north] {\tiny{$C=U\cdot G$}};
+  \draw (\dxBPmm,\varCc+5.2 cm) node[anchor=north] {\tiny{\textbf{Generatormatrix:} $G=\left[I_k|P\right]$}};
+  \draw (\dxBPs,\varCc+8 cm) node[anchor=north west] {\tiny{$S$}};
+  \draw (\dxBPs,\varCc+8.6 cm) node[anchor=north west] {\tiny{\textbf{Foutsyndroomvector}}};
+  \draw (\dxBPm-\dxBPs,\varCc+8 cm) node[anchor=north east] {\tiny{$Y$}};
+  \draw (\dxBPm-\dxBPs,\varCc+8.6 cm) node[anchor=north east] {\tiny{\textbf{Uitgang kanaalcode}}};
+  \draw[thick,<-] (2*\dxBPs+1 cm,\varCc+8.4 cm) -- (\dxBPm-2*\dxBPs-1 cm,\varCc+8.4 cm);
+  \draw (\dxBPmm,\varCc+7.6 cm) node[anchor=north] {\tiny{$S=Y\cdot H^T$}};
+  \draw (\dxBPmm,\varCc+7 cm) node[anchor=north] {\tiny{\textbf{Pariteitscontrolematrix:} $H=\left[P^T|I_r\right]$}};
+  \draw[thick,->] (\dxBPm-2*\dxBPs-0.25 cm,\varCc+5.4 cm) -- (\dxBPm-2*\dxBPs-0.25 cm,\varCc+8 cm);
+  \draw (\dxBPm-2*\dxBPs-0.23 cm,\varCc+6.7 cm) node[anchor=north,rotate=-90] {\tiny{$Y=C+F$}};
+  \draw (\dxBPmm,\varCc+6.6 cm) node {\tiny{\textbf{Foutvector:} $F$}};
+  \draw (\dxBPs,\varCc+9 cm) node[anchor=north west] {\tiny{$=\vec{0}$ indien fouteloos of niet detecteerbaar}};
+  \draw (\dxBPs,\varCc+9.6 cm) node[anchor=north west] {\tiny{anders aanwijzing foute bit(s)}};
+  \draw (\dxBPs,\varCc+10.6 cm) node[anchor=north west] {\tiny{\textbf{Corrigerend/detecterend vermogen:}}};
+  \draw (\dxBPs,\varCc+11.2 cm) node[anchor=north west] {\tiny{Gewicht $w$: \# $1$en in code}};
+  \draw (\dxBPs,\varCc+11.7 cm) node[anchor=north west] {\tiny{Hamming afstand $d$: \# verschillende bits tussen 2 codes}};
+  \draw (\dxBPs,\varCc+12.2 cm) node[anchor=north west] {\tiny{Minimum afstand $d_{\mbox{min}}$ = minimum gewicht $w\neq\vec{0}$}};
+  \draw (\dxBPs,\varCc+12.8 cm) node[anchor=north west] {\tiny{\textbf{Correctievermogen:} $t=\lfloor(d_{\mbox{min}}-1)/2\rfloor$}};
+  \draw (\dxBPs,\varCc+13.4 cm) node[anchor=north west] {\tiny{\textbf{Detectievermogen:} $e=d_{\mbox{min}}-1$}};
+  \draw (\dxBPs,\varCc+14.4 cm) node[anchor=north west] {\tiny{\textbf{Niet geschikt voor kanalen met geheugen}}};
+\end{scope}

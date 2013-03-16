@@ -1,0 +1,141 @@
+\filldraw[bigpage,blue!40,draw=black] (\xBPeb,\yBPeb) rectangle (\xBPee,\yBPee);
+\draw[bigpage,dashed] (\xHcbs,\yHbSbb) -- (\xBPee,\yBPeb);
+\draw[bigpage,dashed] (\xHcbs,\yHbSbe) -- (\xBPee,\yBPee);
+\draw[bigpage,dashed] (\xBPem,\yBPeb) -- (\xBPem,\yBPee);
+\begin{scope}[xshift=\xBPeb,yshift=\yBPeb]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{8 cm};
+  \def\varCc{20.9 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Continu transmissiekanaal \S6}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{discrete kanalen bestaan niet (black box)}};
+  \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west] {\tiny{\textbf{Continu kanaal:} fysisch kanaal + ruis}};
+  \draw (\dxBPs,\varCa+1.2 cm) node[anchor=north west] {\tiny{Omzetting nodig met behulp van modulatie in golfvormen}};
+  \draw (\dxBPs,\varCa+1.8 cm) node[anchor=north west] {\tiny{\textbf{Karakteriseren: }capaciteit met theorema van Shannon}};
+  \draw[thick] (\dxBPmm-2.5 cm,\varCa+3.2 cm) rectangle (\dxBPmm+2.5 cm,\varCa+3.8 cm);
+  \draw[thick,<-] (\dxBPmm-2.5 cm,\varCa+3.5 cm) -- (\dxBPmm-4.5 cm,\varCa+3.5 cm);
+  \draw[thick,->] (\dxBPmm+2.5 cm,\varCa+3.5 cm) -- (\dxBPmm+4.5 cm,\varCa+3.5 cm);
+  \draw (\dxBPmm,\varCa+3.5 cm) node{\tiny{continu fysisch kanaal}};
+  \draw (\dxBPmm-4.5 cm,\varCa+3.7 cm) node[anchor=south west]{\tiny{$x\left(t\right)$}};
+  \draw (\dxBPmm+4.5 cm,\varCa+3.7 cm) node[anchor=south east]{\tiny{$y\left(t\right)$}};
+  \draw[thick] (\dxBPmm-0.7 cm,\varCa+4.7 cm) rectangle (\dxBPmm+0.7 cm,\varCa+5.3 cm);
+  \draw (\dxBPmm,\varCa+5 cm) node {\tiny{ruis}};
+  \draw[thick,->] (\dxBPmm,\varCa+4.7 cm) -- (\dxBPmm,\varCa+3.8 cm);
+  \draw (\dxBPmm+0.3 cm,\varCa+4.25 cm) node[rotate=-90]{\tiny{$n\left(t\right)$}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCb) {\tiny\textbf{Theorema van Shannon}};
+  \draw (\dxBPs,\varCb) node[anchor=north west] {\tiny{\textbf{Ruis: }additieve gaussische witte ruis}};
+  \draw (\dxBPs,\varCb+0.6 cm) node[anchor=north west] {\tiny{\textbf{Ruisvermogen: }$P_n=\sigma_n^2$}};
+  \draw (\dxBPs,\varCb+1.2 cm) node[anchor=north west] {\tiny{\textbf{Ruisinformatie: }}};
+  \draw (\dxBPs+0.5 cm,\varCb+1.8 cm) node[anchor=north west] {\tiny{$H\left(Y|X\right)=H\left(N\right)=\log_2\sigma_n\sqrt{2\pi e}$  [ref. \S3]}};
+  \draw (\dxBPs+0.5 cm,\varCb+2.4 cm) node[anchor=north west] {\tiny{$f_{s,n}=2B\ \left[bem./s\right]$}};
+  \draw (\dxBPs+0.5 cm,\varCb+3 cm) node[anchor=north west] {\tiny{$H_t\left(Y|X\right)=H_t\left(N\right)=B\log_2\sigma_n^22\pi e\ \left[bit/s\right]$}};
+  \draw (\dxBPs,\varCb+3.6 cm) node[anchor=north west] {\tiny{\textbf{Capaciteit: }}};
+  \draw (\dxBPs+0.5 cm,\varCb+4.2 cm) node[anchor=north west] {\tiny{$C=\max_{p\left(x\right)}R=\max_{p\left(x\right)}R$ [ref. \S5]}};
+  \draw (\dxBPs+0.5 cm,\varCb+4.8 cm) node[anchor=north west] {\tiny{$C=\max_{p\left(x\right)}H\left(Y\right)-H\left(Y|X\right)=\max_{p\left(x\right)}H(Y)-H(N)$}};
+  \draw (\dxBPs,\varCb+5.4 cm) node[anchor=north west] {\tiny{\textbf{Wanneer $H\left(Y\right)$ maximaal?}}};
+  \draw (\dxBPs+0.5 cm,\varCb+6 cm) node[anchor=north west] {\tiny{indien $p(y)$ gaussische verdeeld is}};
+  \draw (\dxBPs+0.5 cm,\varCb+6.6 cm) node[anchor=north west] {\tiny{$P_y=\sigma_y^2=\sigma_u^2+\sigma_n^2$}};
+  \draw (\dxBPs+0.5 cm,\varCb+7.2 cm) node[anchor=north west] {\tiny{$H(Y)=\log_2\sqrt{2\pi e}\sqrt{\sigma_u^2+\sigma_n^2}$}};
+  \draw (\dxBPs+0.5 cm,\varCb+7.8 cm) node[anchor=north west] {\tiny{$H_t(Y)=B\log_22\pi e(\sigma_u^2+\sigma_n^2)$}};
+  \draw (\dxBPs+0.5 cm,\varCb+8.4 cm) node[anchor=north west] {\tiny{$C=B\left(\log_22\pi e(\sigma_u^2+\sigma_n^2)-\log_22\pi e \sigma_n^2\right)$}};
+  \draw (\dxBPs+0.5 cm,\varCb+9 cm) node[anchor=north west] {\tiny{$C=B\log_2(1+P_u/P_n)$ \textbf{``Shannon capaciteit''}}};
+  \draw (\dxBPs,\varCb+9.6 cm) node[anchor=north west] {\tiny{\textbf{Oneindige bandbreedte: ($B\rightarrow\infty$)}}};
+  \draw (\dxBPs+0.5 cm,\varCb+10.2 cm) node[anchor=north west] {\tiny{$P_n=n_0B$}};
+  \draw (\dxBPs+0.5 cm,\varCb+10.8 cm) node[anchor=north west] {\tiny{$C=\lim_{B\rightarrow\infty}{B\log_2\left(1+P_u/n_0B\right)}=\log_2e\cdot P_u/n_0$}};
+  \draw (\dxBPs,\varCb+11.4 cm) node[anchor=north west] {\tiny{\textbf{Minimale energie per bit: $W=P_u/C$}}};
+\end{scope}
+\begin{scope}[xshift=\xBPem,yshift=\yBPeb]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{8 cm};
+  \def\varCc{21.5 cm};
+  \def\varCd{34.3 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Fysische transmissiekanaal \S7}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{hoe worden signalen overgedragen?}};
+  \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west] {\tiny{\textbf{Verschillende technieken:}}};
+  \draw (\dxBPs+1 cm,\varCa+1.1 cm) node[anchor=north west] {\tiny{\textbf{- Geleide golfvoortplanting}}};
+  \draw (\dxBPs+2 cm,\varCa+1.6 cm) node[anchor=north west] {\tiny{- Telefoonlijn}};
+  \draw (\dxBPs+2 cm,\varCa+2.1 cm) node[anchor=north west] {\tiny{- Coaxiale kabel}};
+  \draw (\dxBPs+2 cm,\varCa+2.6 cm) node[anchor=north west] {\tiny{- Glasvezel}};
+  \draw (\dxBPs+1 cm,\varCa+3.1 cm) node[anchor=north west] {\tiny{\textbf{- straling} (radiovergelijking)}};
+  \draw (\dxBPs,\varCa+3.7 cm) node[anchor=north west] {\tiny{\textbf{Overdrachtsfunctie: $H(f)=U(f)/X(f)=|H(f)|e^{i\phi(f)}$}}};
+  \draw (\dxBPs,\varCa+4.3 cm) node[anchor=north west] {\tiny{\textbf{Verzwakking: }$|H(f)|$}};
+  \draw (\dxBPs,\varCa+4.9 cm) node[anchor=north west] {\tiny{\textbf{Faseverandering: }$\phi(f)$}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCb) {\tiny\textbf{Geleide golfvoortplanting}};
+  \draw (\dxBPs,\varCb) node[anchor=north west] {\tiny{\textbf{Model van transmissielijn:} (over afstand $dz$)}};
+  \draw (\dxBPs+1 cm,\varCb+0.5 cm) node[anchor=north west] {\tiny{Interne weerstand $R\ [\mbox{$\Omega$/m}]$}};
+  \draw (\dxBPs+1 cm,\varCb+1 cm) node[anchor=north west] {\tiny{Lekstroom $G\ [\mbox{S/m}]$}};
+  \draw (\dxBPs+1 cm,\varCb+1.5 cm) node[anchor=north west] {\tiny{Capaciteit ($E$-veld) $C\ [\mbox{F/m}]$}};
+  \draw (\dxBPs+1 cm,\varCb+2 cm) node[anchor=north west] {\tiny{Inductantie ($B$-veld) $L\ [\mbox{H/m}]$}};
+  \draw (\dxBPmm,\varCb+4 cm) node {
+  \begin{circuitikz}
+    \draw (-0.75,0) -- (0,0) to[R, l=\tiny{$R\ dz$}] (1.25,0) to [L, l=\tiny{$L\ dz$}] (2.5,0) -- (3.75,0) to [R, l=\tiny{$G\ dz$}] (3.75,-1.5) -- (2.5,-1.5);
+    \draw (-0.75,-1.5) -- (2.5,-1.5) to [C, l=\tiny{$C\ dz$}] (2.5,0);
+    \draw (3.75,-1.5) -- (5.25,-1.5);
+    \draw (3.75,0) -- (5.25,0);
+    \draw[dashed,<->,thick] (-0.75,0) -- (-0.75,-1.5);
+    \draw (-0.75,-0.75) node[anchor=east]{\tiny{$v(z,t)$}};
+    \draw[dashed,<->,thick] (5.25,0) -- (5.25,-1.5);
+    \draw (5.25,-0.75) node[anchor=west]{\tiny{$v(z+dz,t)$}};
+  \end{circuitikz}};
+  \draw (\dxBPmm,\varCb+5.5 cm) node[anchor=north] {\tiny{$H\left(f\right)=e^{-\gamma l}$}};
+  \draw (\dxBPmm,\varCb+6.1 cm) node[anchor=north] {\tiny{$\gamma=\sqrt{(R+2\pi fLi)(G+2\pi fCi)}$}};
+  \draw (\dxBPs,\varCb+6.8 cm) node[anchor=north west] {\tiny{\textbf{Karakteristieken:}}};
+  \draw (\dxBPs+1 cm,\varCb+7.3 cm) node[anchor=north west] {\tiny{\textbf{Verzwakkingsconstante: $\alpha=Re(\gamma)$} [Np/m]}};
+  \draw (\dxBPs+1 cm,\varCb+7.8 cm) node[anchor=north west] {\tiny{\textbf{Faseconstante: $\beta=Im(\gamma)$} [rad/m]}};
+  \draw (\dxBPs+1 cm,\varCb+8.3 cm) node[anchor=north west] {\tiny{\textbf{Faseverandering: $\phi(f)=-\beta l$}}};
+  \draw (\dxBPs+1 cm,\varCb+8.8 cm) node[anchor=north west] {\tiny{\textbf{Verzwakking: $A=20\log_{10}e^\alpha$} [dB/m]}};
+  \draw (\dxBPs,\varCb+9.4 cm) node[anchor=north west] {\tiny{\textbf{Technieken:}}};
+  \draw (\dxBPs+0.75 cm,\varCb+9.9 cm) node[anchor=north west] {\tiny{Telefoonlijn: 600 getwiste aderparen koperdraad}};
+  \draw (\dxBPs+1.5 cm,\varCb+10.4 cm) node[anchor=north west] {\tiny{$R=170.26$ [$\Omega$/km]}};
+  \draw (\dxBPs+1.5 cm,\varCb+10.9 cm) node[anchor=north west] {\tiny{$L=0.6$ [mH/km]}};
+  \draw (\dxBPs+5.5 cm,\varCb+10.4 cm) node[anchor=north west] {\tiny{$C=52.2$ [nF/km]}};
+  \draw (\dxBPs+5.5 cm,\varCb+10.9 cm) node[anchor=north west] {\tiny{$G=52.2$ [nS/km]}};
+  \draw (\dxBPs+0.75 cm,\varCb+11.4 cm) node[anchor=north west] {\tiny{Coaxiale kabel: 2 concentrische cilindrische geleiders}};
+  \draw (\dxBPs,\varCb+12 cm) node[anchor=north west] {\tiny{\textbf{Glasvezel: }kritische reflectie van licht}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCc) rectangle (\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCc) {\tiny\textbf{Straling}};
+  \draw (\dxBPs,\varCc) node[anchor=north west] {\tiny{\textbf{Antennes verbonden met EM-golven}}};
+  \draw (\dxBPs,\varCc+0.6 cm) node[anchor=north west] {\tiny{\textbf{Zender:}}};
+  \draw (\dxBPs,\varCc+1.2 cm) node[anchor=north west] {\tiny{Zendvermogen: $P_z$}};
+  \draw (\dxBPs,\varCc+1.8 cm) node[anchor=north west] {\tiny{Uitgestraald vermogen is richtingsafhankelijk}};
+  \draw (\dxBPs,\varCc+2.4 cm) node[anchor=north west] {\tiny{Uniform}};
+  \fill (\dxBPs+1 cm,\varCc+3.9 cm) circle (0.125 cm);
+  \fill (\dxBPs+0.95 cm,\varCc+3.9 cm) rectangle (\dxBPs+1.05 cm,\varCc+4.9 cm);
+  \foreach \r in {0.25, 0.375,..., 0.75} {
+    \draw (\dxBPs+1 cm,\varCc+3.9 cm) circle (\r cm);
+  }
+  \draw (\dxBPmm,\varCc+3.5 cm) node[anchor=north] {\tiny{\textbf{Winstfunctie:} $G(\theta,\phi)$}};
+  \draw (\dxBPs,\varCc+5 cm) node[anchor=north west] {\tiny{$P(R)=\displaystyle\frac{P_z}{4\pi R^2}$}};
+  \draw (\dxBPm-\dxBPs,\varCc+5 cm) node[anchor=north east] {\tiny{$P(\theta,\phi,R)=\displaystyle\frac{P_z\ G(\theta,\phi)}{4\pi R^2}$}};
+  \draw (\dxBPm-\dxBPs,\varCc+2.4 cm) node[anchor=north east] {\tiny{Gericht}};
+  \fill (\dxBPm-\dxBPs-1 cm,\varCc+3.9 cm) circle (0.125 cm);
+  \draw (\dxBPm-\dxBPs-1 cm,\varCc+3.9 cm) -- (\dxBPm-\dxBPs-1.75 cm,\varCc+3.9 cm);
+  \draw[thick] (\dxBPm-\dxBPs-1.75 cm,\varCc+3.9 cm) -- (\dxBPm-\dxBPs-1.75 cm,\varCc+4.9 cm);
+  \draw (\dxBPm-\dxBPs-1 cm,\varCc+3.9 cm) -- (\dxBPm-\dxBPs-1 cm,\varCc+4.65 cm);
+  \draw (\dxBPm-\dxBPs-1 cm,\varCc+3.9 cm) -- (\dxBPm-\dxBPs-1 cm-0.707*0.75 cm,\varCc+3.9 cm+0.707*0.75 cm);
+  \draw[thick] (\dxBPm-\dxBPs-1 cm-0.707*0.75 cm,\varCc+3.9 cm+0.707*0.75 cm) -- (\dxBPm-\dxBPs-1 cm-0.707*0.75 cm,\varCc+4.9 cm);
+  \draw[thick] (\dxBPm-\dxBPs-1 cm+0.707*0.75 cm,\varCc+3.9 cm+0.707*0.75 cm) arc (45:225:0.75 cm);
+  \foreach \r in {0.25, 0.375,..., 0.65} {
+    \draw (\dxBPm-\dxBPs-1 cm,\varCc+3.9 cm-\r cm) arc (270:360:\r cm);
+  }
+  \draw (\dxBPs,\varCc+6.5 cm) node[anchor=north west] {\tiny{\textbf{Ontvanger:} effectief ontvangoppervlak $A_e$}};
+  \draw (\dxBPmm,\varCc+7 cm) node[anchor=north] {\tiny{$A_e(\theta,\phi)=\displaystyle\frac{\lambda^2}{4\pi}G(\theta,\phi)$}};
+  \draw (\dxBPs,\varCc+8 cm) node[anchor=north west] {\tiny{paraboolantenne $A_{e}=\varepsilon\pi d^2/4$}};
+  \draw (\dxBPs,\varCc+8.6 cm) node[anchor=north west] {\tiny{\textbf{Radiovergelijking:}}};
+  \draw (\dxBPmm,\varCc+9.1 cm) node[anchor=north] {\tiny{$P_o=P(\theta,\phi,R)\ A_e(\theta,\phi)=\left(\displaystyle\frac{\lambda}{4\pi R}\right)^2G_oG_zP_z$}};
+  \draw (\dxBPs,\varCc+10.5 cm) node[anchor=north west] {\tiny{\textbf{Thermische ruis:}}};
+  \draw (\dxBPmm,\varCc+11 cm) node[anchor=north] {\tiny{$n_0=k_BT$}};
+  \draw (\dxBPmm,\varCc+11.5 cm) node[anchor=north] {\tiny{$P_n=n_0=k_BTB$}};
+\end{scope}

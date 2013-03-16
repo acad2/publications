@@ -1,0 +1,275 @@
+\filldraw[bigpage,blue!40,draw=black] (\xBPfb,\yBPfb) rectangle (\xBPfe,\yBPfe);
+\draw[bigpage,dashed] (\xHces,\yHbSab) -- (\xBPfb,\yBPfb);
+\draw[bigpage,dashed] (\xHces,\yHbSae) -- (\xBPfb,\yBPfe);
+\begin{scope}[xshift=\xBPfb,yshift=\yBPfb]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{5.6 cm};
+  \def\varCc{9.6 cm};
+  \def\varCd{14 cm};
+  \def\varCe{32.1 cm};
+  \draw[bigpage,dashed] (\dxBPm,\varCb) -- (\dxBPm,\varCe);
+  \draw (0,0) node[anchor=north west]{\small\textbf{Basisbandtransmissie \S8}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm+\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{\textbf{Hoe informatie overdragen op een kanaal}}};
+  \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west] {\tiny{\textbf{3 mogelijke bronnen}}};
+  \draw (\dxBPs+0.5 cm,\varCa+1.1 cm) node[anchor=north west] {\tiny{- Discrete informatiebron}};
+  \draw (\dxBPs+0.5 cm,\varCa+1.6 cm) node[anchor=north west] {\tiny{- Continue informatiebron met discretisatie}};
+  \draw (\dxBPs+0.5 cm,\varCa+2.1 cm) node[anchor=north west] {\tiny{- Continue informatiebron zonder discretisatie}};
+  \draw (\dxBPs,\varCa+2.6 cm) node[anchor=north west] {\tiny{Bron is ofwel discreet (na discretisatie) of continu}};
+
+  \draw (\dxBPm,\varCa+0.6 cm) node[anchor=north west] {\tiny{\textbf{2 mogelijke transmissies}}};
+  \draw (\dxBPm+0.5 cm,\varCa+1.1 cm) node[anchor=north west] {\tiny{- Basisbandtransmissie}};
+  \draw (\dxBPm+0.5 cm,\varCa+1.6 cm) node[anchor=north west] {\tiny{- Doorlaatbandtransmissie}};
+  \draw (\dxBPm,\varCa+2.1 cm) node[anchor=north west] {\tiny{\textbf{afhankelijk van de kanaaleigenschappen}}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCb) {\tiny\textbf{Kanaaleigenschappen}};
+  \begin{scope}[xshift=\dxBPmm,yshift=\varCb+2.4 cm]
+    \draw[thick,->] (-3.5 cm,-1.5 cm) -- (3.5 cm,-1.5 cm) node[anchor=north east]{\tiny{$f$}};
+    \draw[thick,->] (0,0.2 cm) -- (0,-2 cm);
+    \draw[thick,<->] (0,-0.6 cm) -- (1.25,-0.6 cm);
+    \draw (0.625 cm,-0.4 cm) node {\tiny{$B$}};
+    \draw[red,thick] (-3.5 cm,0) -- (-1.25 cm,0) -- (-1.25 cm,-1.2 cm) node[anchor=north east]{\tiny{$\left|H(f)\right|^2$ [dB]}} -- (1.25 cm,-1.2 cm) -- (1.25 cm,0) -- (3.5 cm,0);
+    \draw (0,-0.7 cm) node[anchor=south]{\tiny{$f_1$}};
+    \draw (1.25,-0.7 cm) node[anchor=south]{\tiny{$f_2$}};
+  \end{scope}
+  \draw (\dxBPs,\varCb+2.5 cm) node[anchor=north west] {\tiny{\textbf{Bandbreedte vanaf $f_1=0\mbox{ Hz}$ tot $f_2$}}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCc) rectangle (\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCc) {\tiny\textbf{Continue Informatiebron}};
+  \draw (\dxBPs,\varCc) node[anchor=north west] {\tiny{\textbf{rechtstreeks aanleggen op het kanaal}}};
+  \draw (\dxBPs,\varCc+0.6 cm) node[anchor=north west] {\tiny{\textbf{Voorwaarde:} $f_{\mbox{max}} \leq B$}};
+  \draw (\dxBPs,\varCc+1.2 cm) node[anchor=north west] {\tiny{\textbf{Vervorming:}}};
+  \draw (\dxBPs+2.7 cm,\varCc+1.2 cm) node[anchor=north west] {\tiny{Meestal is $\left|H(f)\right|^2$ niet rechthoekig}};
+  \draw (\dxBPs+2.7 cm,\varCc+1.7 cm) node[anchor=north west] {\tiny{$\Rightarrow$ vervorming van het signaal ``dispersie''}};
+  \draw (\dxBPs,\varCc+2.3 cm) node[anchor=north west] {\tiny{\textbf{Oplossing:} filters bij ontvanger: dispersie tegenwerken}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCd) rectangle (\dxBPm-\dxBPs,\varCe-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCd) {\tiny\textbf{Discrete Informatiebron}};
+  \draw (\dxBPs,\varCd) node[anchor=north west] {\tiny{\textbf{Modulator:} omzetten van symbolen naar golfvormen}};
+  \draw (\dxBPs,\varCd+0.6 cm) node[anchor=north west] {\tiny{\textbf{Keuze van de golfvorm:}}};
+  \draw (\dxBPs+0.5 cm,\varCd+1.2 cm) node[anchor=north west] {\tiny{\textbf{Parameters:}}};
+  \draw (\dxBPs+3.3 cm,\varCd+1.2 cm) node[anchor=north west] {\tiny{- Bandbreedte (van de golfvorm)}};
+  \draw (\dxBPs+3.3 cm,\varCd+1.7 cm) node[anchor=north west] {\tiny{- intersymboolinterferentie}};
+  \draw (\dxBPs+3.8 cm,\varCd+2.2 cm) node[anchor=north west] {\tiny{(verschillende golven tegelijk actief)}};
+  \draw (\dxBPs+0.5 cm,\varCd+2.8 cm) node[anchor=north west] {\tiny{\textbf{Golfvormen:}}};
+  \draw (\dxBPs+2 cm,\varCd+3.3 cm) node[anchor=north west] {\tiny{- Blokgolf: oneindige bandbreedte}};
+  \draw (\dxBPs+2 cm,\varCd+3.8 cm) node[anchor=north west] {\tiny{- Ideale golf?}};
+  \draw (\dxBPmm,\varCd+4.3 cm) node[anchor=north] {\tiny{$u(t)=\displaystyle\frac{\sin 2\pi f_m t}{\pi t}$}};
+  \draw (\dxBPmm-5 cm,\varCd+5.3 cm) node[anchor=north west] {\tiny{+$B$ volledig gebruikt}};
+  \draw (\dxBPmm-5 cm,\varCd+5.8 cm) node[anchor=north west] {\tiny{+geen symboolinterferentie}};
+  \draw (\dxBPmm+0.5 cm,\varCd+5.3 cm) node[anchor=north west] {\tiny{-perfecte synchronisatie}};
+  \draw (\dxBPmm+0.5 cm,\varCd+5.8 cm) node[anchor=north west] {\tiny{-$B$ tijdsafhankelijk}};
+  \draw (\dxBPs+2 cm,\varCd+6.4 cm) node[anchor=north west] {\tiny{- Parameterafhankelijke ideale golf}};
+  \begin{scope}[xshift=\dxBPmm,yshift=\varCd+9.5 cm]
+    \draw[thick,->] (-3.5 cm,0 cm) -- (3.5 cm,0 cm) node[anchor=south east]{\tiny{$t$}};
+    \draw[thick,->] (0,0.2 cm) -- (0,-2.5 cm);
+    \foreach\a/\c in {0/0,0.4/50,0.8/100} {
+      \draw[black!\c!red,thick,variable=\x,domain=-3.5:3.5,samples=113] plot ({\x},{-sin(6.28*\x r)*cos(6.28*\a*\x r)/(3.14*\x*(1-(4*\a*\x)^2))});
+      \draw[black!\c!red] (1.5 cm,1.5*\a cm - 2.5 cm) node[anchor=north west] {\tiny{$\alpha=\a$}};
+    }
+  \end{scope}
+  \begin{scope}[xshift=\dxBPmm,yshift=\varCd+12.5 cm]
+    \draw[thick,->] (-3.5 cm,0 cm) -- (3.5 cm,0 cm) node[anchor=south east]{\tiny{$f$}};
+    \draw[thick,->] (0,0.2 cm) -- (0,-2.5 cm);
+    \draw[red] (1.5 cm,- 2.5 cm) node[anchor=north west] {\tiny{$\alpha=0$}};
+    \draw[red,thick] (-3.5 cm,0) -- (-1 cm,0) -- (-1 cm,-2 cm) -- (1 cm,-2) -- (1 cm,0) -- (3.5 cm,0);
+    \foreach\a/\c in {0.4/50,0.8/100} {
+      \draw[black!\c!red,thick] (-1+\a,-2) -- (-\a+1,-2);
+      \draw[black!\c!red,thick] (1+\a,0) -- (3.5,0);
+      \draw[black!\c!red,thick] (-1-\a,0) -- (-3.5,0);
+      \draw[black!\c!red,thick,variable=\x,domain=(1-\a):(1+\a),samples=113] plot ({\x},{sin(6.28*(abs(\x)-1)/(4*\a) r)-1});
+      \draw[black!\c!red,thick,variable=\x,domain=(-1-\a):(-1+\a),samples=113] plot ({\x},{sin(6.28*(abs(\x)-1)/(4*\a) r)-1});
+      \draw[black!\c!red] (1.5 cm,1.5*\a cm - 2.5 cm) node[anchor=north west] {\tiny{$\alpha=\a$}};
+    }
+  \end{scope}
+  \draw (\dxBPmm,\varCd+12.5 cm) node[anchor=north] {\tiny{$u(t,\alpha)=\displaystyle\frac{\sin 2\pi f_m t}{\pi t}\cdot\displaystyle\frac{\cos 2\pi\alpha f_m t}{1-\left(4\alpha f_m t\right)^2}$}};
+  \draw (\dxBPmm,\varCd+13.5 cm) node[anchor=north] {\tiny{$B=(1+\alpha)f_m$}};
+  \draw (\dxBPmm,\varCd+14 cm) node[anchor=north] {\tiny{$2/1+\alpha$ [pulsen/s Hz]}};
+  \draw (\dxBPs,\varCd+14.6 cm) node[anchor=north west] {\tiny{\textbf{Meervoudige golfvormen:}}};
+  \draw (\dxBPs,\varCd+15.1 cm) node[anchor=north west] {\tiny{$2^n$ golfvormen $\rightarrow$ $n$ bit*/golfvorm}};
+  \draw (\dxBPs,\varCd+15.6 cm) node[anchor=north west] {\tiny{onafhankelijk van de bandbreedte. geen wondermiddel!!}};
+  \draw (\dxBPs,\varCd+16.1 cm) node[anchor=north west] {\tiny{\textbf{verlaagt Signaal-tot-ruisverhouding}}};
+  \draw (\dxBPs,\varCd+16.6 cm) node[anchor=north west] {\tiny{\textbf{transmissiedebiet $r_b=n\ r_s$}}};
+\end{scope}
+\begin{scope}[xshift=\xBPfm,yshift=\yBPfb]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{5.6 cm};
+  \def\varCc{9.6 cm};
+  \def\varCd{20.6 cm};
+  \def\varCe{32.1 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Doorlaatbandtransmissie \S9}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCc-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCb) {\tiny\textbf{Kanaaleigenschappen}};
+  \begin{scope}[xshift=\dxBPmm,yshift=\varCb+2.4 cm]
+    \draw[thick,->] (-3.5 cm,-1.5 cm) -- (3.5 cm,-1.5 cm) node[anchor=north east]{\tiny{$f$}};
+    \draw[thick,->] (0,0.2 cm) -- (0,-2 cm);
+    \draw[thick,<->] (0.75,-0.6 cm) -- (2,-0.6 cm);
+    \draw (1.375 cm,-0.4 cm) node {\tiny{$B$}};
+    \draw[red,thick] (-3.5 cm,0) -- (-2 cm,0) -- (-2 cm,-1.2 cm) node[anchor=north east]{\tiny{$\left|H(f)\right|^2$ [dB]}} -- (-0.75 cm,-1.2 cm) -- (-0.75 cm,0 cm) -- (0.75 cm,0 cm) -- (0.75 cm,-1.2 cm) -- (2 cm,-1.2 cm) -- (2 cm,0) -- (3.5 cm,0);
+    \draw (0.75,-0.7 cm) node[anchor=south]{\tiny{$f_1$}};
+    \draw (2,-0.7 cm) node[anchor=south]{\tiny{$f_2$}};
+  \end{scope}
+  \draw (\dxBPs,\varCb+2.5 cm) node[anchor=north west] {\tiny{\textbf{Bandbreedte vanaf $f_1\neq0\mbox{ Hz}$ tot $f_2$}}};
+  
+  \draw[thick,rounded corners] (\dxBPs,\varCc) rectangle (\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCc) {\tiny\textbf{Continue Informatiebron}};
+  \draw (\dxBPs,\varCc) node[anchor=north west] {\tiny{\textbf{Draaggolf} $x_c$ op draagfrequentie $f_c$:}};
+  \draw (\dxBPmm,\varCc+0.6 cm) node[anchor=north] {\tiny{$x_m(t)=A_c \cos(2\pi f_c t+\phi_c)$}};
+  \draw (\dxBPs,\varCc+1.2 cm) node[anchor=north west] {\tiny{\textbf{Modulator: }Transmissie door grootheid aan te passen}}; %($A_c$, $f_c$, $\phi_c$)
+  \draw (\dxBPs,\varCc+1.8 cm) node[anchor=north west] {\tiny{\textbf{Amplitudemodulatie (AM):}}};
+  \draw (\dxBPmm,\varCc+2.4 cm) node[anchor=north] {\tiny{\textbf{$x_m(t)=A_c\ x(t)\cos(2\pi f_ct+\phi_c)$}}};
+  \begin{scope}[xshift=\dxBPs+2.5 cm, yshift=\varCc+5.5 cm]
+    \draw[very thick,->] (-2 cm,0) -- (2 cm,0);
+    \draw[very thick,->] (0,0.2 cm) -- (0, -2 cm);
+    \draw[very thick,blue,->] (-1 cm,0) node[anchor=north]{\tiny{$-f_c$}} -- (-1 cm,-1.5 cm);
+    \draw[very thick,blue,->] (1 cm,0) node[anchor=north]{\tiny{$f_c$}} -- (1 cm,-1.5 cm) node[anchor=west]{\tiny{$A_c/2$}};
+    \draw[very thick,red] (-2 cm,0) -- (-0.6 cm,0) -- (-0.4 cm,-1 cm) node[anchor=east]{\tiny{$X(f)$}} -- (0.4 cm,-1 cm) -- (0.6 cm,0) -- (2 cm,0);
+  \end{scope}
+  \begin{scope}[xshift=\dxBPm-\dxBPs-2.5 cm, yshift=\varCc+5.5 cm]
+    \draw[very thick,->] (-2 cm,0) -- (2 cm,0);
+    \draw[very thick,->] (0,0.2 cm) -- (0, -2 cm);
+    \draw[very thick,yellow] (-2 cm,0) -- (-1.6 cm,0) -- (-1.4 cm,-1.5 cm) node[anchor=east]{\tiny{$X_m(f)$}} -- (-0.6 cm,-1.5 cm) -- (-0.4 cm,0) -- (0.4 cm,0) -- (0.6 cm,-1.5 cm) -- (1.4 cm,-1.5 cm) -- (1.6 cm,0) -- (2 cm,0);
+  \end{scope}
+  \draw (\dxBPs,\varCc+6 cm) node[anchor=north west] {\tiny{\textbf{Radio:} variant van AM om makkelijker af te stemmen}};
+  \draw (\dxBPmm,\varCc+6.5 cm) node[anchor=north] {\tiny{\textbf{$x_m(t)=A_c\ (x(t)+1)\cos(2\pi f_ct+\phi_c)\ |\ \left|x(t)\right|<1$}}};
+  \draw (\dxBPs,\varCc+7 cm) node[anchor=north west] {\tiny{\textbf{Voorbeeld:}}};
+  \begin{scope}[xshift=\dxBPs+0.5 cm, yshift=\varCc+10 cm]
+    \draw[very thick,->] (0 cm,0) -- (4 cm,0);
+    \draw[very thick,->] (0,0.2 cm) -- (0, -2 cm);
+    \draw[red,very thick,domain=-1:1,variable=\x,samples=100,smooth] plot ({2*\x+2},{-(4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)-1});
+  \end{scope}
+  \begin{scope}[xshift=\dxBPm-\dxBPs-4.5 cm, yshift=\varCc+9 cm]
+    \draw[very thick,->] (0 cm,0) -- (4 cm,0);
+    \draw[very thick,->] (0,1 cm) -- (0, -1 cm);
+    \draw[yellow,very thick,domain=-1:1,variable=\x,samples=100,smooth] plot ({2*\x+2},{-1.5*(4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)*cos(4*6.28*\x r)});
+  \end{scope}
+  \draw[thick,rounded corners] (\dxBPs,\varCd) rectangle (\dxBPm-\dxBPs,\varCe-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCd) {\tiny\textbf{Discrete Informatiebronnen}};
+  \draw (\dxBPs,\varCd) node[anchor=north west] {\tiny{identiek aan continue informatiebronnen}};
+  \draw (\dxBPs,\varCd+0.6 cm) node[anchor=north west] {\tiny{maar met discrete i.p.v. continue veranderingen}};
+  \draw (\dxBPs,\varCd+1.1 cm) node[anchor=north west] {\tiny{\textbf{4 mogelijkheden:}}};
+  \draw (\dxBPs+1 cm,\varCd+1.6 cm) node[anchor=north west] {\tiny{\textbf{Amplitudeverschuiving (A.S.K.):}}};
+  \draw (\dxBPmm,\varCd+2.1 cm) node[anchor=north] {\tiny{\textbf{$x_m(t)=(A_c+x(t)\Delta A_c)\cos(2\pi f_ct+\phi_c)$}}};
+  \draw (\dxBPs+1 cm,\varCd+2.6 cm) node[anchor=north west] {\tiny{\textbf{Frequentieverschuiving (F.S.K.):}}};
+  \draw (\dxBPmm,\varCd+3.1 cm) node[anchor=north] {\tiny{\textbf{$x_m(t)=A_c\cos(2\pi (f_c+x(t)\Delta f_c)t+\phi_c)$}}};
+  \draw (\dxBPs+1 cm,\varCd+3.6 cm) node[anchor=north west] {\tiny{\textbf{Faseverschuiving (P.S.K.):}}};
+  \draw (\dxBPmm,\varCd+4.1 cm) node[anchor=north] {\tiny{\textbf{$x_m(t)=A_c\cos(2\pi f_ct+\phi_c+x(t)\Delta\phi_c)$}}};
+  \draw (\dxBPs+1 cm,\varCd+4.6 cm) node[anchor=north west] {\tiny{\textbf{``Aan-Uit-Modulatie'': } binaire modulatie}};
+  \draw (\dxBPmm,\varCd+5.1 cm) node[anchor=north] {\tiny{golfvorm: $x_i(t)=\displaystyle\frac{\sin 2\pi f_c t}{\pi t}\cdot\displaystyle\frac{\cos 2\pi f_c t}{1-\left(4 f_c t\right)^2}$}};
+  \draw (\dxBPmm,\varCd+6.2 cm) node[anchor=north] {\tiny{$T_b=1/2f_c$}};
+  \draw (\dxBPmm,\varCd+6.7 cm) node[anchor=north] {\tiny{informatiesignaal: $x(t)=\sum_ix_i(t-T_b)$}};
+  \begin{scope}[xshift=\dxBPs+1 cm,yshift=\varCd+9.5 cm]
+    \draw[very thick,->] (-0.1 cm,0) -- (4.1 cm,0);
+    \draw[very thick,->] (0,0.1 cm) -- (0,-2 cm);
+    \draw[red,very thick,domain=-0.5:3.5,variable=\x,samples=113,smooth] plot ({\x+0.5},{-sin(6.28*\x r)*cos(6.28*\x r)/(6.28*\x*(1-(4*\x)^2)) + -sin(6.28*(\x-1.5) r)*cos(6.28*(\x-1.5) r)/(6.28*(\x-1.5)*(1-(4*(\x-1.5))^2)) + -sin(6.28*(\x-2.5) r)*cos(6.28*(\x-2.5) r)/(6.28*(\x-2.5)*(1-(4*(\x-2.5))^2))  + -sin(6.28*(\x-3) r)*cos(6.28*(\x-3) r)/(6.28*(\x-3)*(1-(4*(\x-3))^2))});
+  \end{scope}
+  \begin{scope}[xshift=\dxBPm-\dxBPs-5.1 cm,yshift=\varCd+8.5 cm]
+    \draw[very thick,->] (-0.1 cm,0) -- (4.1 cm,0);
+    \draw[very thick,->] (0,1 cm) -- (0,-1 cm);
+    \draw[yellow,very thick,domain=-0.5:3.5,variable=\x,samples=113,smooth] plot ({\x+0.5},{(-sin(6.28*\x r)*cos(6.28*\x r)/(6.28*\x*(1-(4*\x)^2)) + -sin(6.28*(\x-1.5) r)*cos(6.28*(\x-1.5) r)/(6.28*(\x-1.5)*(1-(4*(\x-1.5))^2)) + -sin(6.28*(\x-2.5) r)*cos(6.28*(\x-2.5) r)/(6.28*(\x-2.5)*(1-(4*(\x-2.5))^2))  + -sin(6.28*(\x-3) r)*cos(6.28*(\x-3) r)/(6.28*(\x-3)*(1-(4*(\x-3))^2)))*cos(4*6.28*\x r)});
+  \end{scope}
+  \draw (\dxBPs,\varCd+9.5 cm) node[anchor=north west] {\tiny{\textbf{Meervoudige golfvormen:}}};
+  \draw (\dxBPs,\varCd+10 cm) node[anchor=north west] {\tiny{reeds in discrete verschuivingen, pas $\Delta A_c$,$\Delta f_c$,$\Delta\phi_c$ aan}};
+\end{scope}
+\begin{scope}[xshift=\xBPfb,yshift=\yBPfb+32 cm]
+  \draw[bigpage,dashed] (0,0) -- (\dxBPm+\dxBPm,0);
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{5.4 cm};
+  \def\varCc{0.5 cm};
+  \def\varCd{14 cm};
+  \draw (0,0) node[anchor=north west]{\small\textbf{Multiplexen \S10}};
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west]{\tiny{Tot nu toe signaal door beperkte bandbreedte krijgen}};
+  \draw (\dxBPs,\varCa+0.6 cm) node[anchor=north west]{\tiny{Meestal: overaanbod aanbod aan bandbreedte.}};
+  \draw (\dxBPs,\varCa+1.2 cm) node[anchor=north west]{\tiny{hoe bandbreedte optimaal benutten?}};
+  \draw (\dxBPs,\varCa+1.8 cm) node[anchor=north west]{\tiny{\textbf{Oplossing: }verschillende bronnen langs zelfde kanaal}};
+  \draw (\dxBPs,\varCa+2.4 cm) node[anchor=north west]{\tiny{\textbf{Strategie\"en: }frequentiemultiplexing/tijdsmultiplexing}};
+
+  \draw[thick,rounded corners] (\dxBPm+\dxBPs,\varCc) rectangle (\dxBPm+\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPm+\dxBPmm,\varCc) {\tiny\textbf{Frequentiemultiplexing}};
+  \draw (\dxBPm+\dxBPs,\varCc) node[anchor=north west] {\tiny{signalen met verschillende draaggolf moduleren}};
+  \draw (\dxBPm+\dxBPs,\varCc+0.6 cm) node[anchor=north west] {\tiny{\textbf{Voorwaarde: }geen overlapping van de bandbreedtes}};
+  \draw (\dxBPm+\dxBPmm,\varCc+1.2 cm) node[anchor=north] {\tiny{$x_M(t)=\sum_i x_i(t)A_{c_i}\cos2\pi f_{c_i}t$}};
+  \draw (\dxBPm+\dxBPs,\varCc+1.7 cm) node[anchor=north west] {\tiny{\textbf{Voorbeeld:}}};
+  \draw (\dxBPm+\dxBPs,\varCc+2.2 cm) node[anchor=north west] {\tiny{$X_1(f)$}};
+  \draw (\dxBPm+\dxBPs,\varCc+4.7 cm) node[anchor=north west] {\tiny{$X_2(f)$}};
+  \draw (\dxBPm+\dxBPm-\dxBPs,\varCc+4.7 cm) node[anchor=north east] {\tiny{$X_M(f)$}};
+  \draw (\dxBPm+\dxBPs,\varCc+7.2 cm) node[anchor=north west] {\tiny{$X_3(f)$}};
+  \draw[thick,->] (\dxBPm+\dxBPs+5 cm,\varCc+3.75 cm) -- (\dxBPm+\dxBPm-\dxBPs-4 cm,\varCc+6.25 cm);
+  \draw[thick,->] (\dxBPm+\dxBPs+5 cm,\varCc+6.75 cm) -- (\dxBPm+\dxBPm-\dxBPs-5 cm,\varCc+6.75 cm);
+  \draw[thick,->] (\dxBPm+\dxBPs+5 cm,\varCc+8.75 cm) -- (\dxBPm+\dxBPm-\dxBPs-4 cm,\varCc+7.25 cm);
+  \begin{scope}[xshift=\dxBPm+\dxBPs+2.5 cm, yshift=\varCc+4.25 cm]
+    \draw[very thick,->] (-2 cm,0) -- (2 cm,0);
+    \draw[very thick,->] (0,0.2 cm) -- (0, -1.5 cm);
+    \draw[very thick,blue,->] (-0.35 cm,0) node[anchor=north]{\tiny{$-f_{c_1}$}} -- (-0.35 cm,-1 cm);
+    \draw[very thick,blue,->] (0.35 cm,0) node[anchor=north]{\tiny{$f_{c_1}$}} -- (0.35 cm,-1 cm) node[anchor=west]{\tiny{$A_{c_1}/2$}};
+    \draw[very thick,red] (-2 cm,0) -- (-0.3 cm,0) -- (-0.15 cm,-1 cm) -- (0.15 cm,-1 cm) -- (0.3 cm,0) -- (2 cm,0);
+  \end{scope}
+  \begin{scope}[xshift=\dxBPm+\dxBPs+2.5 cm, yshift=\varCc+6.75 cm]
+    \draw[very thick,->] (-2 cm,0) -- (2 cm,0);
+    \draw[very thick,->] (0,0.2 cm) -- (0, -1.5 cm);
+    \draw[very thick,blue,->] (-0.95 cm,0) node[anchor=north]{\tiny{$-f_{c_2}$}} -- (-0.95 cm,-0.75 cm);
+    \draw[very thick,blue,->] (0.95 cm,0) node[anchor=north]{\tiny{$f_{c_2}$}} -- (0.95 cm,-0.75 cm) node[anchor=west]{\tiny{$A_{c_2}/2$}};
+    \draw[very thick,red] (-2 cm,0) -- (-0.2 cm,0) -- (-0.2 cm,-1 cm) -- (0.2 cm,-1 cm) -- (0.2 cm,0) -- (2 cm,0);
+  \end{scope}
+  \begin{scope}[xshift=\dxBPm+\dxBPs+2.5 cm, yshift=\varCc+9.25 cm]
+    \draw[very thick,->] (-2 cm,0) -- (2 cm,0);
+    \draw[very thick,->] (0,0.2 cm) -- (0, -1.5 cm);
+    \draw[very thick,blue,->] (-1.55 cm,0) node[anchor=north]{\tiny{$-f_{c_3}$}} -- (-1.55 cm,-0.75 cm);
+    \draw[very thick,blue,->] (1.55 cm,0) node[anchor=north]{\tiny{$f_{c_3}$}} -- (1.55 cm,-0.75 cm) node[anchor=west]{\tiny{$A_{c_3}/2$}};
+    \draw[very thick,red] (-2 cm,0) -- (-0.3 cm,0) arc (180:360:0.3 cm) -- (2 cm,0);
+  \end{scope}
+  \begin{scope}[xshift=\dxBPm+\dxBPm-\dxBPs-2.5 cm, yshift=\varCc+7 cm]
+    \draw[very thick,->] (-2 cm,0) -- (2 cm,0);
+    \draw[very thick,->] (0,0.2 cm) -- (0, -2 cm);
+    \draw[very thick,yellow] (-2 cm,0) -- (-1.85 cm,0) arc(180:360:0.3 cm) -- (-1.15 cm,0) -- (-1.15 cm,-1 cm) -- (-0.75 cm,-1 cm) -- (-0.75 cm,0) -- (-0.65 cm,0) -- (-0.5 cm,-1.333 cm) -- (-0.2 cm,-1.333 cm) -- (-0.05 cm,0) -- (0.05 cm,0) -- (0.2 cm,-1.333 cm) -- (0.5 cm,-1.333 cm) -- (0.65 cm,0) -- (0.75 cm,0) -- (0.75 cm,-1 cm) -- (1.15 cm,-1 cm) -- (1.15 cm,0) -- (1.25 cm,0) arc (180:360:0.3 cm) -- (2 cm,0);
+  \end{scope}
+  \draw (\dxBPm+\dxBPs,\varCc+10 cm) node[anchor=north west] {\tiny{\textbf{C.C.I.T-F.D.M.:} hierarchie van frequentiemultiplexing}};
+  \draw (\dxBPm+\dxBPs+1 cm,\varCc+10.5 cm) node[anchor=north west] {\tiny{\textbf{groep:} $12\times4\mbox{ kHz}$ spraakkanalen}};
+  \draw (\dxBPm+\dxBPs+1 cm,\varCc+11 cm) node[anchor=north west] {\tiny{\textbf{supergroep:} $5$ groepen}};
+  \draw (\dxBPm+\dxBPs+1 cm,\varCc+11.5 cm) node[anchor=north west] {\tiny{\textbf{hoofdgroep:} $5$ supergroepen}};
+  \draw (\dxBPm+\dxBPs+1 cm,\varCc+12 cm) node[anchor=north west] {\tiny{\textbf{superhoofdgroep:} $3$ hoofdgroepen}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCb) {\tiny\textbf{Tijdsmultiplexing}};
+  \draw (\dxBPs,\varCb) node[anchor=north west]{\tiny{Toepasbaar op discrete informatiebronnen}};
+  \draw (\dxBPs,\varCb+0.6 cm) node[anchor=north west]{\tiny{\textbf{afwisselend 1 van de bronnen aan de beurt laten}}};
+  \draw (\dxBPs,\varCb+1.1 cm) node[anchor=north west]{\tiny{na bepaalde tijd beurt doorgeven}};
+  \draw (\dxBPs,\varCb+1.6 cm) node[anchor=north west]{\tiny{\textbf{Voorbeeld:}}};
+  \draw (\dxBPs+2 cm,\varCb+2.2 cm) node[anchor=north west]{\tiny{$x_1(t)$}};
+  \begin{scope}[xshift=\dxBPs+0.5 cm, yshift=\varCb+3.25 cm]
+    \draw[very thick,->] (0 cm,0) -- (4 cm,0);
+    \draw[very thick,->] (0,1 cm) -- (0, -1 cm);
+    \foreach\x in {0,0.4,...,4} {
+      \draw[thick,->,red] (\x,0) -- ({\x},{0.3*(cos(2*\x r)+cos(4*\x r+1.57)+cos(6*\x+0.78 r))});
+    }
+  \end{scope}
+  \draw (\dxBPs+2 cm,\varCb+5.2 cm) node[anchor=north west]{\tiny{$x_2(t)$}};
+  \begin{scope}[xshift=\dxBPs+0.5 cm, yshift=\varCb+6.25 cm]
+    \draw[very thick,->] (0 cm,0) -- (4 cm,0);
+    \draw[very thick,->] (0,1 cm) -- (0, -1 cm);
+    \foreach\x in {-1,-0.8,...,1} {
+      \draw[thick,->,blue] ({2*\x+2},0) -- ({2*\x+2},{0.5*((4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)-1)});
+    }
+  \end{scope}
+  \draw (\dxBPm-\dxBPs-2 cm,\varCb+3.4 cm) node[anchor=north west]{\tiny{$x_M(t)$}};
+  \begin{scope}[xshift=\dxBPm-\dxBPs-4.5 cm, yshift=\varCb+4.75 cm]
+    \draw[very thick,->] (0 cm,0) -- (4 cm,0);
+    \draw[very thick,->] (0,1 cm) -- (0, -1 cm);
+    \foreach\x in {0,0.4,...,4} {
+      \draw[thick,->,red] (\x,0) -- ({\x},{0.3*(cos(2*\x r)+cos(4*\x r+1.57)+cos(6*\x+0.78 r))});
+    }
+    \foreach\x in {-1,-0.8,...,0.8} {
+      \draw[thick,->,blue] ({2*\x+2.2},0) -- ({2*\x+2.2},{0.5*((4*\x*\x*\x-6*\x*\x+1)*sqrt(\x+1)/(3-\x)-1)});
+    }
+  \end{scope}	
+  \draw (\dxBPs,\varCb+7.1 cm) node[anchor=north west]{\tiny{\textbf{C.C.I.T.T.-T.D.M.:} hi\"erarchie van tijdsmultiplexing}};
+\end{scope}

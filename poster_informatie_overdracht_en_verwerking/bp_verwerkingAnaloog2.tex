@@ -1,0 +1,138 @@
+\filldraw[bigpage,blue!40,draw=black] (\xBPhb,\yBPhb) rectangle (\xBPhe,\yBPhe);
+\draw[bigpage,dashed] (\xHcbs,\yHbScb) -- (\xBPhe,\yBPhb);
+\draw[bigpage,dashed] (\xHcbs,\yHbSce) -- (\xBPhe,\yBPhe);
+\begin{scope}[xshift=\xBPhb,yshift=\yBPhb]
+  \def\varS{0.5 cm};
+  \def\varCa{1.5 cm};
+  \def\varCb{9.2 cm};
+  \def\varCc{0.5 cm};
+  \def\varCd{0.5 cm};
+  \def\varCd{14 cm};
+  \draw (0,0) node[anchor=north west]{\small\textcolor{purple}{\textbf{Versterkers \S14}}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCa) rectangle (\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPmm,\varCa) {\tiny\textbf{Algemeen}};
+  \draw (\dxBPs,\varCa) node[anchor=north west] {\tiny{\textbf{Taak}: versterken van de spanning van een signaal}};
+  \draw (\dxBPmm,\varCa+0.6 cm) node[anchor=north] {\tiny{$v_u(t)=A_v v_i(t)$}};
+  \draw (\dxBPmm,\varCa+2.7 cm) node {\begin{circuitikz}
+    \draw[thick,dashed] (-1.75 cm,-1.5 cm) rectangle (1.75 cm,1.5 cm);
+    \draw (-4,0.75) to [R,l_=\tiny{$R_s$}] (-2,0.75) -- (-0.5,0.75) to [R,l_=\tiny{$R_i$}] (-0.5,-0.75) -- (-4,-0.75);
+    \draw[thick,dashed,<->] (-2,-0.75) to node[midway,anchor=east,xshift=0.2]{\tiny{$v_i$}} (-2,0.75);
+    \draw[thick,dashed,<->] (-3.75,-0.75) to node[midway,anchor=east,xshift=0.2]{\tiny{$v_s$}} (-3.75,0.75);
+    \draw (0.25,0) node[anchor=west]{\tiny{$A_{vo}v_i$}};
+    \draw (3.5,-0.75) -- (0.25,-0.75) -- (0.25,-0.5) -- (0,0) -- (0.25,0.5) -- (0.25,0.75) to [R,l=\tiny{$R_u$}] (1.75,0.75) -- (3.5,0.75) to [R,l=\tiny{$R_l$}] (3.5,-0.75);
+    \draw (0.25,-0.5) -- (0.5,0) -- (0.25,0.5);
+    \draw (0.25,0.2) node{\tiny{+}};
+    \draw (0.25,-0.2) node{\tiny{-}};
+    \draw[thick,dashed,<->] (2.5,-0.75) to node[midway,anchor=west,xshift=-0.2]{\tiny{$v_u$}} (2.5,0.75);
+  \end{circuitikz}};
+  \draw (\dxBPs,\varCa+4.4 cm) node[anchor=north west] {\tiny{\textbf{Spanningversterking: }$A_v=v_u/v_i=A_{vo}R_l/R_u+R_l$}};
+  \draw (\dxBPs,\varCa+5 cm) node[anchor=north west] {\tiny{\textbf{Stroomversterking: }$A_i=i_u/i_i=A_{v}R_i/R_l$}};
+  \draw (\dxBPs,\varCa+5.6 cm) node[anchor=north west] {\tiny{\textbf{Vermogenversterking: }$G=P_u/P_i=A_vA_i=A_v^2R_i/R_l$}};
+  \draw (\dxBPs,\varCa+6.2 cm) node[anchor=north west] {\tiny{\textbf{Rendement: }$\eta=P_u/P_s$}};
+
+  \draw[thick,rounded corners] (\dxBPm+\dxBPs,\varCc) rectangle (\dxBPm+\dxBPm-\dxBPs,\varCb-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPm+\dxBPmm,\varCc) {\tiny\textbf{Transistor}};
+  \draw (\dxBPm+\dxBPs,\varCc) node[anchor=north west]{\tiny{\textbf{Transistor}}};
+  \draw (\dxBPm+0.5*\dxBPmm,\varCc+2 cm) node[scale=0.75] {\begin{circuitikz}
+    \draw (0,0) node[npn] (npn) {};
+    \draw (npn.emitter) node[anchor=west]{\tiny{$E$}} -- (0,-1.25 cm) -- (-2 cm,-1.25 cm);
+    \draw (npn.collector) node[anchor=west]{\tiny{$C$}} -- (0,1.25 cm) -- (2 cm,1.25 cm);
+    \draw (npn.base) node[anchor=south east]{\tiny{$B$}} -- (-2,0 cm);
+    \draw[dashed,<->] (-1.75 cm,0) to node[midway,anchor=west]{\tiny{$v_{BE}$}} (-1.75 cm,-1.25 cm);
+    \draw[dashed,<->] (1.75 cm,1.25 cm) to node[midway,anchor=east]{\tiny{$v_{CE}$}} (1.75 cm,-1.25 cm);
+    \draw (2 cm,-1.25 cm) -- (0 cm,-1.25 cm);
+  \end{circuitikz}};
+  \draw (\dxBPm+\dxBPs,\varCc+3 cm) node[anchor=north west]{\tiny{$i_C=\beta i_B$}};
+  \draw (\dxBPm+\dxBPs,\varCc+3.6 cm) node[anchor=north west]{\tiny{$i_B=I_{BS}e^{qV_{BE}/k_BT}$}};
+  \draw (\dxBPm+\dxBPs,\varCc+4.2 cm) node[anchor=north west]{\tiny{$\Rightarrow i_B\approx I_{BS}e^{40V_{BE}}$}};
+  \draw (\dxBPm+\dxBPs,\varCc+4.8 cm) node[anchor=north west]{\tiny{$I_{BS}\in\left[10^{-16},10^{-14}\right]$}};
+  \draw (\dxBPm+\dxBPm-\dxBPs,\varCc) node[anchor=north east]{\tiny{\textbf{Eenvoudig model}}};
+  \draw (\dxBPm+\dxBPm-0.5*\dxBPmm-1 cm,\varCc+1.7 cm) node[scale=0.75] {\begin{circuitikz}
+    \draw (-2.75 cm,1.5 cm) -- (-2.25 cm,1.5 cm) to [R,l=\tiny{$R_{\pi}$}] (-0.75 cm,1.5 cm) to [european current source,l_=\tiny{$V_{BE_O}$}] (-0.75 cm,0 cm) -- (0,0) node[ground]{} -- (0.75 cm,0);
+    \draw (-2.75 cm,0 cm) -- (-0.5 cm,0 cm);
+    \draw (2.75 cm,1.5 cm) -- (0.75 cm,1.5 cm) to [american controlled current source,l=\tiny{$\beta i_B$}] (0.75 cm,0) -- (2.75 cm,0);
+  \end{circuitikz}};
+  \draw (\dxBPm+\dxBPm-\dxBPs,\varCc+3 cm) node[anchor=north east]{\tiny{$V_{BE_0}=0.7\mbox{ V}$ bij Si}};
+  \draw (\dxBPm+\dxBPm-\dxBPs-6.3 cm,\varCc+3.6 cm) node[anchor=north west]{\tiny{$r_{\pi}=\displaystyle\frac{\partial v_{be}}{\partial i_b}$}};
+  \draw (\dxBPm+\dxBPm-\dxBPs-4.3 cm,\varCc+3.6 cm) node[anchor=north west]{\tiny{$\Rightarrow\mbox{DC: }r_{\pi}=0$}};
+  \draw (\dxBPm+\dxBPm-\dxBPs-4.3 cm,\varCc+4.1 cm) node[anchor=north west]{\tiny{$\Rightarrow\mbox{AC: }r_{\pi}=1/40I_{B_Q}$}};
+  \draw (\dxBPm+\dxBPm-\dxBPs,\varCc+4.6 cm) node[anchor=north east]{\tiny{$i_B=I_B+i_b$}};
+
+  \draw[thick,rounded corners] (\dxBPs,\varCb) rectangle (\dxBPm+\dxBPm-\dxBPs,\varCd-\varS);
+  \node[rectangle,thick,fill=blue!40] at (\dxBPm,\varCb) {\tiny\textbf{Versterkerschakelingen}};
+  \draw (\dxBPs+0.5*\dxBPmm,\varCb+2.1 cm) node[scale=0.75] {\begin{circuitikz}
+    \draw (-2.5,2) node {\small{\textbf{1}}};
+    \draw[thick] (0.5,0) node[npn] (npn) {};
+    \draw[thick] (npn.base) -- (-1 cm,0) to [C,l_=\tiny{$C_k$}] (-2 cm,0) -- (-3 cm,0);
+    \draw[thick] (-0.75 cm,0) to [R,l_=\tiny{$R_1$}] (-0.75 cm,2.25 cm);
+    \draw[thick] (npn.emitter) -- (0.5 cm,-2.25 cm);
+    \draw[thick] (-2 cm,2.25 cm) node[anchor=north west]{\tiny{$V_{cc}$}} -- (0.5 cm,2.25 cm) to [R,l=\tiny{$R_c$}] (npn.collector) -- (0.5 cm,0.5 cm) -- (3 cm,0.5 cm);
+    \draw[thick,dashed,<->] (-3 cm,-2.25 cm) to node[midway,anchor=west]{\tiny{$v_i$}} (-3 cm,0 cm);
+    \draw[thick,dashed,<->] (3 cm,-2.25 cm) to node[midway,anchor=east]{\tiny{$v_u$}} (3 cm,0.5 cm);
+    \draw[thick] (3 cm,-2.25 cm) -- (-3 cm,-2.25 cm);
+  \end{circuitikz}};
+  \draw (\dxBPs+1.5*\dxBPmm,\varCb+2.1 cm) node[scale=0.75] {\begin{circuitikz}
+    \draw (-2.5,2) node {\small{\textbf{2}}};
+    \draw[thick] (0.5,0) node[npn] (npn) {};
+    \draw[thick] (npn.base) -- (-1 cm,0) to [C,l_=\tiny{$C_k$}] (-2 cm,0) -- (-3 cm,0);
+    \draw[thick] (-0.75 cm,0) to [R,l_=\tiny{$R_1$}] (-0.75 cm,2.25 cm);
+    \draw[thick] (-0.75 cm,0) to [R,l=\tiny{$R_2$},color=purple] (-0.75 cm,-2.25 cm);
+    \draw[thick] (npn.emitter) -- (0.5 cm,-2.25 cm);
+    \draw[thick] (-2 cm,2.25 cm) node[anchor=north west]{\tiny{$V_{cc}$}} -- (0.5 cm,2.25 cm) to [R,l=\tiny{$R_c$}] (npn.collector) -- (0.5 cm,0.5 cm) -- (3 cm,0.5 cm);
+    \draw[thick,dashed,<->] (-3 cm,-2.25 cm) to node[midway,anchor=west]{\tiny{$v_i$}} (-3 cm,0 cm);
+    \draw[thick,dashed,<->] (3 cm,-2.25 cm) to node[midway,anchor=east]{\tiny{$v_u$}} (3 cm,0.5 cm);
+    \draw[thick] (3 cm,-2.25 cm) -- (-3 cm,-2.25 cm);
+  \end{circuitikz}};
+  \draw (\dxBPs+2.5*\dxBPmm,\varCb+2.1 cm) node[scale=0.75] {\begin{circuitikz}
+    \draw (-2.5,2) node {\small{\textbf{3}}};
+    \draw[thick] (0.5,0) node[npn] (npn) {};
+    \draw[thick] (npn.base) -- (-1 cm,0) to [C,l_=\tiny{$C_k$}] (-2 cm,0) -- (-3 cm,0);
+    \draw[thick] (-0.75 cm,0) to [R,l_=\tiny{$R_1$}] (-0.75 cm,2.25 cm);
+    \draw[thick] (-0.75 cm,0) to [R,l=\tiny{$R_2$}] (-0.75 cm,-2.25 cm);
+    \draw[thick] (npn.emitter) to [R,l=\tiny{$R_e$},color=purple] (0.5 cm,-2.25 cm);
+    \draw[thick] (-2 cm,2.25 cm) node[anchor=north west]{\tiny{$V_{cc}$}} -- (0.5 cm,2.25 cm) to [R,l=\tiny{$R_c$}] (npn.collector) -- (0.5 cm,0.5 cm) -- (3 cm,0.5 cm);
+    \draw[thick,dashed,<->] (-3 cm,-2.25 cm) to node[midway,anchor=west]{\tiny{$v_i$}} (-3 cm,0 cm);
+    \draw[thick,dashed,<->] (3 cm,-2.25 cm) to node[midway,anchor=east]{\tiny{$v_u$}} (3 cm,0.5 cm);
+    \draw[thick] (3 cm,-2.25 cm) -- (-3 cm,-2.25 cm);
+  \end{circuitikz}};
+  \draw (\dxBPs+3.5*\dxBPmm,\varCb+2.1 cm) node[scale=0.75] {\begin{circuitikz}
+    \draw (-2.5,2) node {\small{\textbf{4}}};
+    \draw[thick] (0.5,0) node[npn] (npn) {};
+    \draw[thick] (npn.base) -- (-1 cm,0) to [C,l_=\tiny{$C_k$}] (-2 cm,0) -- (-3 cm,0);
+    \draw[thick] (-0.75 cm,0) to [R,l_=\tiny{$R_1$}] (-0.75 cm,2.25 cm);
+    \draw[thick] (-0.75 cm,0) to [R,l=\tiny{$R_2$}] (-0.75 cm,-2.25 cm);
+    \draw[thick] (npn.emitter) to [R,l=\tiny{$R_e$}] (0.5 cm,-2.25 cm);
+    \draw[thick] (npn.emitter) |- (1.75 cm,-0.5 cm) to [C,l=\tiny{$C_3$},color=purple] (1.75 cm,-2.25 cm);
+    \draw[thick] (-2 cm,2.25 cm) node[anchor=north west]{\tiny{$V_{cc}$}} -- (0.5 cm,2.25 cm) to [R,l=\tiny{$R_c$}] (npn.collector);
+    \draw[thick] (npn.collector) -- (0.5 cm,0.5 cm) to [C,l_=\tiny{$C_2$},color=purple] (1.75 cm,0.5 cm) -- (3 cm,0.5 cm);
+    \draw[thick,dashed,<->] (-3 cm,-2.25 cm) to node[midway,anchor=west]{\tiny{$v_i$}} (-3 cm,0 cm);
+    \draw[thick,dashed,<->] (3 cm,-2.25 cm) to node[midway,anchor=east]{\tiny{$v_u$}} (3 cm,0.5 cm);
+    \draw[thick] (3 cm,-2.25 cm) -- (-3 cm,-2.25 cm);
+  \end{circuitikz}};
+\end{scope}
+
+  %\draw (\dxBPm+\dxBPs,\varCc) node[anchor=north west] {\tiny{\textbf{I.S.S.}}};
+  %\draw (\dxBPm+\dxBPs,\varCc+0.6 cm) node[anchor=north west] {\tiny{Ideale Stroomgecontroleerde Stroombron}};
+  %\draw (\dxBPm+\dxBPs+0.25 cm,\varCc+1.5 cm) -- ++(1.25 cm,0 cm) -- ++ (0,1.5 cm) -- ++(-1.25 cm,0 cm);
+  %\draw (\dxBPm+\dxBPs+1.5 cm,\varCc+3 cm) -- ++(0.5 cm,0 cm);
+  %\draw (\dxBPm+\dxBPs+3.25 cm,\varCc+1.5 cm) -- ++(-1.25 cm,0 cm) -- ++ (0,0.375 cm) -- ++ (-0.1875 cm,0.375 cm) -- ++ (0.1875 cm,0.375 cm) -- ++ (0 cm,0.375 cm) -- ++(1.25 cm,0 cm);
+  %\draw (\dxBPm+\dxBPs+2 cm,\varCc+1.875 cm) -- ++ (0.1875 cm,0.375 cm) -- ++ (-0.1875 cm,0.375 cm);
+  %\draw[->] (\dxBPm+\dxBPs+2 cm,\varCc+2.1 cm) -- (\dxBPm+\dxBPs+2 cm,\varCc+2.4 cm);
+  %\draw (\dxBPm+\dxBPs+2 cm,\varCc+2.25 cm) node[anchor=west]{\tiny{$A_ii_i$}};
+  %\draw (\dxBPm+\dxBPs,\varCc) node[anchor=north west] {\tiny{\textbf{Transistor}}};
+  %\begin{scope}[xshift=\dxBPm+\dxBPs+3 cm,yshift=\varCc+3.6 cm]
+  %  \draw[thick,<->] (-2.5 cm,0) -- (2.5 cm,0);
+  %  \draw[thick,<->] (0,-2.5 cm) -- (0,2.5 cm);
+  %  \draw[variable=\x,domain=0.00001:2.5,red,thick,smooth,samples=1000] plot ({-\x},{0.2*ln(1000*\x+1)});
+  %  \draw[variable=\x,domain=0.00001:2.5,yellow,thick,smooth,samples=1000] plot ({\x},{-0.2*ln(1000*\x+1)});
+  %  \draw[variable=\x,domain=0.00001:2.5,purple,thick,smooth,samples=1000] plot ({-\x},{\x});
+  %\end{scope}
+  %\draw (\dxBPm+\dxBPm-\dxBPs,\varCc+4.2 cm) node[anchor=north east]{\tiny{$\Rightarrow i_B\approx I_{BS}e^{40V_{BE}}$}};
+  %\draw (\dxBPm+\dxBPm-\dxBPs-4 cm,\varCc+4.8 cm) node[anchor=north west]{\tiny{$I_{BS}\in\left[10^{-16},10^{-14}\right]$}};
+  %\draw (\dxBPm+\dxBPm-\dxBPs,\varCc+4.8 cm) node[anchor=north east]{\tiny{$I_{BS}\in\left[10^{-16},10^{-14}\right]$}};
+  %\draw (\dxBPm+\dxBPm-\dxBPs-0.25 cm,\varCc+1.5 cm) -- ++(1.25 cm,0 cm) -- ++ (0,1.5 cm) -- ++(-1.25 cm,0 cm);
+  %\draw (\dxBPm+\dxBPm-\dxBPs-3.25 cm,\varCc+1.5 cm) -- ++(-1.25 cm,0 cm) -- ++ (0,0.375 cm) -- ++ (-0.1875 cm,0.375 cm) -- ++ (0.1875 cm,0.375 cm) -- ++ (0 cm,0.375 cm) -- ++(1.25 cm,0 cm);
+  %\draw (\dxBPm+\dxBPm-\dxBPs-2 cm,\varCc+1.875 cm) -- ++ (0.1875 cm,0.375 cm) -- ++ (-0.1875 cm,0.375 cm);
+  %\draw[->] (\dxBPm+\dxBPs+2 cm,\varCc+2.1 cm) -- (\dxBPm+\dxBPs+2 cm,\varCc+2.4 cm);
+  %\draw (\dxBPm+\dxBPm-\dxBPs-2 cm,\varCc+2.25 cm) node[anchor=west]{\tiny{$A_iv_i$}};

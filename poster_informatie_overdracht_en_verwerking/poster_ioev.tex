@@ -1,0 +1,218 @@
+\documentclass[landscape]{a0poster}
+\usepackage{tikz}
+\usepackage{fullpage}
+\usepackage[dutch]{babel}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{circuitikz}
+\newcommand{\AAA}{\mathbb{A}}
+\newcommand{\BBB}{\mathbb{B}}
+\newcommand{\CCC}{\mathbb{C}}
+\begin{document}
+\begin{figure}
+\centering
+\begin{tikzpicture}[bigconcept/.style={draw=black,very thick},bigconceptarr/.style={bigconcept,->},concept/.style={draw=black,thick},conceptarr/.style={concept,->},bigpage/.style={bigconcept},informatie/.style={information,draw=black},yscale=-1]
+\definecolor{information}{rgb}{0.49,0.98,1}
+\def\dxH{13 cm};
+\def\dxHs{1 cm};
+\def\dyH{5 cm};
+\def\dyHs{1 cm};
+\def\dyCm{0.5*\dyH};
+\def\dyCmm{0.5*\dyCm};
+\def\dyICm{0.5*\dyH-\dyHs};
+\def\dxICm{0.5*\dxH};
+
+\def\xHab{0 cm};
+\def\xHae{\xHab+\dxH};
+\def\xHbb{\xHae+\dxHs};
+\def\xHbSab{\xHbb+\dxHs};
+\def\xHbSae{\xHbSab+\dxH};
+\def\xHbSbb{\xHbSae+\dxHs};
+\def\xHbSbe{\xHbSbb+\dxH};
+\def\xHbScb{\xHbSbe+\dxHs};
+\def\xHbSce{\xHbScb+\dxH};
+\def\xHbSdb{\xHbSce+\dxHs};
+\def\xHbSde{\xHbSdb+\dxH};
+\def\xHbe{\xHbb+4*\dxH+5*\dxHs};
+\def\xHcb{\xHbe+\dxHs};
+\def\xHcbs{\xHcb+\dyHs};
+\def\xHcm{\xHcb+0.5*\dyH};
+\def\xHces{\xHce-\dyHs};
+\def\xHcesl{\xHces+0.5 cm};
+\def\xHce{\xHcb+\dyH};
+
+\def\yHab{0 cm};
+\def\yHabs{\yHab+\dyHs};
+\def\yHabsl{\yHabs-0.5 cm};
+\def\yHam{\yHab+0.5*\dyH};
+\def\yHaes{\yHae-\dyHs};
+\def\yHae{\yHab+\dyH};
+\def\yHbb{\yHae+\dyHs};
+\def\yHbSab{\yHbb+\dxHs};
+\def\yHbSae{\yHbSab+\dxH};
+\def\yHbSbb{\yHbSae+\dxHs};
+\def\yHbm{\yHbb+2*\dxH+2*\dxHs};
+\def\yHbSbe{\yHbSbb+2*\dxH};
+\def\yHbScb{\yHbSbe+\dxHs};
+\def\yHbSce{\yHbScb+\dxH};
+\def\yHbe{\yHbb+4*\dxH+4*\dxHs};
+\def\yHcb{\yHbe+\dyHs};
+\def\yHcbs{\yHcb+\dyHs};
+\def\yHcm{\yHcb+0.5*\dyH};
+\def\yHces{\yHce-\dyHs};
+\def\yHcesl{\yHces+0.5 cm};
+\def\yHce{\yHcb+\dyH};
+
+\def\dxBPs{0.25 cm};
+\def\dxBPm{0.8*\dxH+\dxHs};
+\def\dxBPmm{0.4*\dxH+0.5*\dxHs};
+
+\def\xBPab{\xHab};
+\def\xBPabs{\xBPab+0.5 cm};
+\def\xBPam{\xBPab+0.8*\dxH+\dxHs};
+\def\xBPae{\xBPab+1.6*\dxH+2*\dxHs};
+\def\xBPbb{\xBPae+\dxHs};
+\def\xBPbe{\xBPbb+\dxBPm};
+\def\xBPcb{\xBPbe+\dxHs};
+\def\xBPce{\xBPcb+\dxBPm};
+\def\xBPdb{\xBPcb};
+\def\xBPde{\xBPce};
+\def\xBPeb{\xBPde+\dxHs};
+\def\xBPem{\xBPeb+\dxBPm};
+\def\xBPee{\xBPem+\dxBPm};
+\def\xBPfb{\xHce+2*\dxHs};
+\def\xBPfm{\xBPfb+\dxBPm};
+\def\xBPfe{\xBPfm+\dxBPm};
+\def\xBPgb{\xHce+2*\dxHs};
+\def\xBPgm{\xBPgb+\dxBPm};
+\def\xBPge{\xBPgm+\dxBPm};
+\def\xBPhb{\xBPeb};
+\def\xBPhm{\xBPem};
+\def\xBPhe{\xBPee};
+\def\xBPib{\xBPbb};
+\def\xBPie{\xBPbe};
+
+\def\yBPab{\yHbb};
+\def\yBPae{43 cm};
+\def\yBPbb{\yHbb};
+\def\yBPbe{\yBPbb+17.6 cm};
+\def\yBPcb{\yHbb};
+\def\yBPce{\yHbb+27.5 cm};
+\def\yBPdb{\yBPce+\dxHs};
+\def\yBPde{\yBPdb+16.9 cm};
+\def\yBPeb{\yHbb};
+\def\yBPee{\yBPeb+34.3 cm};
+\def\yBPfb{\yHab};
+\def\yBPfe{\yBPfb+46 cm};
+\def\yBPgb{\yBPfe+\dxHs};
+\def\yBPge{\yBPgb+20.5 cm};
+\def\yBPhb{\yBPee+\dxHs};
+\def\yBPhe{\yBPhb+13.8 cm};
+\def\yBPib{\yBPbe+\dxHs};
+\def\yBPie{\yBPib+28.8 cm};
+
+\draw(\xHbb-13 cm,\yHbm+23cm) node[anchor=west]{\VERYHuge\textbf{Informatie-Overdracht \& -Verwerking}};
+
+\filldraw[bigconcept,fill=red] (\xHab,\yHab) rectangle (\xHae,\yHae);
+\draw (\xHab,\yHab) node[anchor=south west]{\large\textbf{Informatiebron}};
+\begin{scope}[xshift=\xHab,yshift=\yHab]
+  \draw (0,0) node[anchor=north west]{\tiny\textbf{Discreet}};
+  \draw (1 cm,\dyCmm) node {\tiny bron};
+  \draw[thick] (1 cm,\dyCmm) circle (0.5 cm);
+  \draw[->,very thick] (1.5 cm,\dyCmm) -- (\dxH-3 cm,\dyCmm) -- (\dxH-1.5 cm,\dyCm) -- (\dxH,\dyCm);
+  \foreach\m/\ms in {0/3,1/2,2/1} {
+    \foreach\c in {0,1,3} {
+      \draw (2.2 cm+0.4 cm*\c+2.75 cm*\m,\dyCmm-0.3 cm) circle (0.1 cm);
+    }
+    \draw (3 cm+2.75 cm*\m,\dyCmm-0.3 cm) node{\tiny\ldots};
+    \draw[thick] (2.8 cm+2.75 cm*\m,\dyCmm-0.3 cm) ellipse(1.2 cm and 0.18 cm);
+    \draw[thick] (2.8 cm+2.75 cm*\m,\dyCmm-0.1 cm) node[anchor=north]{\tiny$M_{j+\ms}$};
+  }
+\end{scope}
+\draw (\xHab,\yHam) node[anchor=north west]{\tiny\textbf{Continu}};
+\draw[dotted,bigconcept] (\xHab,\yHam) -- (\xHae,\yHam);
+
+\input{bp_informatiebronnen}
+
+
+\draw[bigconceptarr] (\xHae,\yHam) -- (\xHbb,\yHam);
+
+\filldraw[bigconcept,fill=green] (\xHbb,\yHab) rectangle (\xHbe,\yHae);
+\draw (\xHbb,\yHab) node[anchor=south west]{\large\textbf{Zender}};
+\draw[conceptarr] (\xHbb,\yHam) -- (\xHbSab,\yHam);
+\draw[concept] (\xHbSab,\yHabs) rectangle (\xHbSae,\yHaes);
+\draw (\xHbSab,\yHabsl) node[anchor=west]{Datareductie};
+\begin{scope}[xshift=\xHbSab,yshift=\yHabs]
+  \def\varT{0.5 cm};
+  \def\varD{0.75 cm};
+  \def\varE{0.25 cm};
+  \draw (0,0) node[anchor=north west]{\tiny\textbf{Eliminatie van niet relevante informatie.}};
+  \filldraw[informatie] (0,\dyICm) -- ++(0,0.5*\varT) -- ++(\dxICm,0) -- ++(\varD,\varD) -- ++(\varD,0) -- ++(0,-\varE) -- ++(-\varD,0) -- ++(\varE-\varD,\varE-\varD) -- ++(0,-0.5*\varE) -- ++(\dxICm-\varT-0.5*\varE,0) -- ++(0,0.5*\varT) -- ++(\varT-0.5*\varE,0.5*\varE-\varT) -- ++(0.5*\varE-\varT,0.5*\varE-\varT) -- ++(0,0.5*\varT) -- ++(\varT-\dxICm+0.5*\varE,0) -- ++(0,-0.5*\varE) -- ++(-\dxICm-\varE,0) -- cycle;
+\end{scope}
+\draw[conceptarr] (\xHbSae,\yHam) -- (\xHbSbb,\yHam);
+\draw[concept] (\xHbSbb,\yHabs) rectangle (\xHbSbe,\yHaes);
+\draw (\xHbSbb,\yHabsl) node[anchor=west]{Broncodering};
+\draw (\xHbSbb,\yHabs) node[anchor=north west]{\tiny\textbf{Comprimeren van informatie tot meest compacte vorm.}};
+
+\input{bp_broncodering}
+
+\draw[conceptarr] (\xHbSbe,\yHam) -- (\xHbScb,\yHam);
+\draw[concept] (\xHbScb,\yHabs) rectangle (\xHbSce,\yHaes);
+\draw (\xHbScb,\yHabsl) node[anchor=west]{Vercijfering};
+\draw (\xHbScb,\yHabs) node[anchor=north west]{\tiny\textbf{Beveiligt informatie tegen ongeoorloofd gebruik.}};
+\draw[conceptarr] (\xHbSce,\yHam) -- (\xHbSdb,\yHam);
+\draw[concept] (\xHbSdb,\yHabs) rectangle (\xHbSde,\yHaes);
+\draw (\xHbSdb,\yHabsl) node[anchor=west]{Kanaalcodering};
+\draw (\xHbSdb,\yHabs) node[anchor=north west]{\tiny\textbf{Voegt redundante informatie toe voor foutcorrectie.}};
+
+\input{bp_kanaalcodering}
+
+\draw[conceptarr] (\xHbSde,\yHam) -- (\xHbe,\yHam);
+
+\draw[bigconceptarr] (\xHbe,\yHam) -| (\xHcm,\yHbb);
+
+\filldraw[bigconcept,fill=blue] (\xHcb,\yHbb) rectangle (\xHce,\yHbe);
+\draw (\xHce,\yHbb) node[anchor=south west,rotate=-90]{\large\textbf{Discreet Kanaal}};
+
+\input{bp_discreet}
+
+\draw[concept] (\xHcbs,\yHbSab) rectangle (\xHces,\yHbSae);
+\draw (\xHcesl,\yHbSab) node[anchor=west,rotate=-90]{Modulatie};
+
+\input{bp_modulatie}
+
+\draw[concept] (\xHcbs,\yHbSbb) rectangle (\xHces,\yHbSbe);
+\draw (\xHcesl,\yHbSbb) node[anchor=west,rotate=-90]{Continu Kanaal};
+
+\input{bp_fysisch}
+
+
+\draw[concept] (\xHcbs,\yHbScb) rectangle (\xHces,\yHbSce);
+\draw (\xHcesl,\yHbScb) node[anchor=west,rotate=-90]{Demodulatie};
+
+\input{bp_verwerkingAnaloog}
+\input{bp_verwerkingAnaloog2}
+
+\draw[bigconceptarr] (\xHcm,\yHbe) |- (\xHbe,\yHcm);
+
+\filldraw[bigconcept,fill=green] (\xHbb,\yHcb) rectangle (\xHbe,\yHce);
+\draw (\xHbb,\yHce) node[anchor=north west]{\large\textbf{Ontvanger}};
+\draw[concept] (\xHbSdb,\yHcbs) rectangle (\xHbSde,\yHces);
+\draw (\xHbSdb,\yHcesl) node[anchor=west]{Kanaaldecodering};
+\draw[concept] (\xHbScb,\yHcbs) rectangle (\xHbSce,\yHces);
+
+\input{bp_verwerkingDigitaal}
+
+\draw (\xHbScb,\yHcesl) node[anchor=west]{Ontcijfering};
+\draw[concept] (\xHbSbb,\yHcbs) rectangle (\xHbSbe,\yHces);
+\draw (\xHbSbb,\yHcesl) node[anchor=west]{Brondecodering};
+\draw[concept] (\xHbSab,\yHcbs) rectangle (\xHbSae,\yHces);
+\draw (\xHbSab,\yHcesl) node[anchor=west]{Datareconstructie};
+
+\draw[bigconceptarr] (\xHbb,\yHcm) -- (\xHae,\yHcm);
+
+\filldraw[bigconcept,fill=red] (\xHab,\yHcb) rectangle (\xHae,\yHce);
+\draw (\xHab,\yHce) node[anchor=north west]{\large\textbf{Bestemming}};
+\end{tikzpicture}
+\end{figure}
+\end{document}
