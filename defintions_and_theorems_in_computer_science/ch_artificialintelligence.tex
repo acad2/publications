@@ -432,6 +432,127 @@ The \term{instance associated to a choice model} $\calM$ of \fun{\Pi}{\frakG,IC}
 \cite{conf/ijcai/BravoB03}
 \end{defi}
 
+\begin{defi}[Normal logic program]
+A \term{normal logic program} $P$ is a set of rules of the form:
+\begin{equation}
+a\leftarrow b_1\wedge b_2\wedge\ldots\wedge b_n
+\end{equation}
+Where $a$ is an atom and the $b_i$ are in $\mbox{Lit}^{\sim}$.
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Closure of a set of negative literals of a logic program]
+Let $L\subseteq\fun{\mbox{NEG}}{P}$ be a set of negative literals, $P$ a normal logic program. The \term[Closure of a set of negative literals of a logic program]{closure} of $L$ under $P$, $\fun{C_P}{L}$, is the smallest set such that:
+\begin{enumerate}
+ \item $L\subseteq\fun{C_P}{L}$,
+ \item if $a\leftarrow b_1,b_2,\ldots b_n\in P$ and $b_1,b_2,\ldots,b_n\in\fun{C_P}{L}$ then $a\in\fun{C_P}{L}$.
+\end{enumerate}
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Normal logic program-consistent]
+Let $L\subseteq\fun{\mbox{NEG}}{P}$ be it set of negative literals, $P$ a normal logic program. $L$ is \term[Normal logic program-consistent]{$P$-consistent} \iffTx{} $\fun{C_P}{L}$ is consistent.
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Consistent normal logic program]
+Let $P$ be a normal logic program. $P$ is \term[Consistent normal logic program]{consistent} \iffTx{} $\emptyset$ is $P$-consistent.
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Logic program cover of a closure]
+Let $P$ be a logic program, $H\subseteq\fun{\mbox{NEG}}{P}$, and $C$ a $P$-closure of $H$. The \term[Logic program cover of a closure]{$P$-cover} of $C$, \fun{\mbox{COV}_P}{C}, is the set
+\begin{equation}
+H\cup\accol{\neg a\in\fun{\mbox{NEG}}{P}|a\in C}
+\end{equation}
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Extension of a logic program, Extension base of a logic program]
+Let $P$ be a logic program, $H\subseteq\fun{\mbox{NEG}}{P}$, and $C$ a $P$-closure of $H$. $C$ is an \term[Extension of a logic program]{extension of P} \iffTx{}
+\begin{enumerate}
+ \item $C$ is consistent,
+ \item there is no $H'\subseteq\fun{\mbox{NEG}}{P}$ with consistent closure $C'$ such that $\fun{\mbox{COV}_P}{C}\subsetneq\fun{\mbox{COV}_P}{C'}$.
+\end{enumerate}
+if $C$ is an extension, $H$ is called an \term[Extension base of a logic program]{extension base of $P$}.
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+
+\begin{defi}[General logic program]
+A \term{general logic program} $P$ is a set of rules of the form:
+\begin{equation}
+c_1\vee c_2\vee\ldots\vee c_m\leftarrow b_1\wedge b_2\wedge\ldots\wedge b_n
+\end{equation}
+where all the literals $c_i$ and $b_j$ are in $\mbox{Lit}^+$.
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[General logic program closure of a set of literals]%8
+Let $L$ be a set of literals from $\fun{\mbox{NEG}}{P}$. $C$ is a \term[General logic program closure]{$P$-closure of $L$} if it is a smallest set such that:
+\begin{enumerate}
+ \item $L\subseteq C$,
+ \item if $l$ and $\neg l$ or $a$ and $\neg a$ are in $C$, then $C=\mbox{Lit}^+$
+ \item if $c_1\vee c_2\vee\ldots\vee c_m\leftarrow b_1\wedge b_2\wedge\ldots\wedge b_n\in P$ and $b_1,b_2,\ldots,b_n\in C$ then for at least one $c_i$, $c_i\in C$.
+\end{enumerate}
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Extension of a default theory]
+Let $\fun{\Gamma}{S}$ be any least set such that:
+\begin{enumerate}
+ \item $W\subseteq\fun{\Gamma}{S}$
+ \item $\fun{\Gamma}{S}$ is deductively closed
+ \item If $\alpha\in\fun{\Gamma}{S}$ and all $\beta_i$ are consistent with $S$, then one of $\gamma_i$ is in $\fun{\Gamma}{S}$.
+\end{enumerate}
+An \term[Extension of a default theory]{extension of $\tuple{W,D}$} is any set $S$ that is equal to some $\fun{\Gamma}{S}$.
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Cover with respect to a default theory]
+Let $C$ be some $\fun{\Gamma}{S}$ the \term[Cover with respect to a default theory]{cover \fun{\mbox{COV}_\Delta}{C} with respect to $\Delta=\tuple{W,D}$} is the set:
+\begin{equation}
+\bar{S}\cup C
+\end{equation}
+Where $\bar{S}$ are all the sentences not in $S$.
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Abductive extension of a default theory]
+Let $C$ be some $\fun{\Gamma}{S}$. $C$ is an \term[Abductive extension of a default theory]{abductive extension of $\Delta$} \iffTx{}
+\begin{enumerate}
+ \item $C\subseteq S$,
+ \item $\fun{\mbox{COV}_\Delta}{S}$ is maximal.
+\end{enumerate}
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Moderately-grounded extension of a set of set of sentences]
+Let $A$ be a set of sentences of $\calL$. Let $U$ be a subset of $\calL_0$ and $\bar{U}$ its complement $\calL_0\setminus U$. $U$ is a \term[Moderately-grounded extension of a set of set of sentences]{moderately-grounded extension of $A$} \iffTx{} it satisfies the equation:
+\begin{equation}
+U=\accol{\phi\in\calL_0|A\cup\neg L\bar{U}\vdash_{\mbox{K45}}\phi}
+\end{equation}
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Cover of an $A$ theory under hypotheses]
+The \term[[Cover of an $A$ theory under hypotheses]{cover of an $AE$ theory $A$ under hypotheses $S$}, \fun{\mbox{COV}_A}{\fun{C_A}{S}}, is given by:
+\begin{equation}
+S\cup\accol{\neg L\phi|\phi\in\fun{C_A}{S}}
+\end{equation}
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+\begin{defi}[Abductive extension of an $AE$ theory]
+The closure of an $AE$ theory $A$, \fun{C_A}{S}, is an \term[Abductive extension of an $AE$ theory]{abductive extension of $A$} \iffTx{}
+\begin{enumerate}
+ \item \fun{C_A}{S} is consistent
+ \item \fun{\mbox{COV}_A}{\fun{C_A}{S}} is maximal.
+\end{enumerate}
+\cite{conf/ijcai/BrewkaK93}
+\end{defi}
+
+
 \section{Game Playing}
 
 \begin{defi}[Maxset, Minset]
