@@ -1,5 +1,5 @@
 //
-//  Topic.cs
+//  ArvixTopic.cs
 //
 //  Author:
 //       Willem Van Onsem <vanonsem.willem@gmail.com>
@@ -23,7 +23,7 @@ using System;
 namespace PaperMiners {
 
 	[Flags]
-	public enum Topic : long {
+	public enum ArvixTopic : long {
 		None	= 0x0000000000000000,
 		AI		= 0x0000000000000001,
 		CL		= 0x0000000000000002,
@@ -66,5 +66,5 @@ namespace PaperMiners {
 		SC		= 0x0000004000000000,
 		SY		= 0x0000008000000000
 	}
-}
 
+}

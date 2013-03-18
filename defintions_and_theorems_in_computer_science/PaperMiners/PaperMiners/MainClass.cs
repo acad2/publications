@@ -1,5 +1,5 @@
 //
-//  PaperMiner.cs
+//  MainClass.cs
 //
 //  Author:
 //       Willem Van Onsem <vanonsem.willem@gmail.com>
@@ -22,12 +22,12 @@ using System;
 
 namespace PaperMiners {
 
-	public abstract class PaperMiner {
+	public class MainClass {
 
-		protected PaperMiner () {
+		public static void Main () {
+			ArvixPaperMiner apm = new ArvixPaperMiner();
+			apm.FetchPapers();
 		}
-
-		public abstract Paper[] FetchPapers ();
 
 	}
 }

@@ -1,5 +1,5 @@
 //
-//  PaperMiner.cs
+//  Library.cs
 //
 //  Author:
 //       Willem Van Onsem <vanonsem.willem@gmail.com>
@@ -19,16 +19,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace PaperMiners {
 
-	public abstract class PaperMiner {
+	[XmlRoot("Library")]
+	public class Library {
 
-		protected PaperMiner () {
+		[XmlArray("Papers")]
+		[XmlArrayItem("Paper")]
+		public HashSet<Paper> Papers {
+			get;
+			set;
 		}
 
-		public abstract Paper[] FetchPapers ();
+		public Library () {
+
+		}
 
 	}
 }
-

@@ -67,3 +67,6 @@
 *.mpeg
 *.mkz
 *.kilepr
+*.exe
+*.dll
+*.exe.mdb
