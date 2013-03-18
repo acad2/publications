@@ -32,8 +32,9 @@ namespace PaperMiners {
 			set;
 		}
 
-		[XmlAttribute("Author")]
-		public string Author {
+		[XmlArray("Authors")]
+		[XmlArrayItem("Author")]
+		public string[] Author {
 			get;
 			set;
 		}
@@ -85,6 +86,9 @@ namespace PaperMiners {
 			else {
 				return false;
 			}
+		}
+		public override int GetHashCode () {
+			return this.Title.GetHashCode()^this.Author.GetHashCode();
 		}
 
 	}

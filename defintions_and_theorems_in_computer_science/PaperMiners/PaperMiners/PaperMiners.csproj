@@ -39,6 +39,7 @@
     <Compile Include="MainClass.cs" />
     <Compile Include="ArvixTopic.cs" />
     <Compile Include="Library.cs" />
+    <Compile Include="HtmlUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Xml" />

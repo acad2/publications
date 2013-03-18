@@ -38,21 +38,9 @@ namespace PaperMiners {
 					Console.WriteLine("Trying "+"http://arxiv.org/list/cs."+at.ToString()+"/recent");
 					wc.UseDefaultCredentials = true;
 					wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
-					string s = wc.DownloadString("http://arxiv.org/list/cs."+at.ToString()+"/recent");
-					string y = "";
-					for(int i = 0; i < s.Length; i++) {
-						if(s[i] == '<' || s[i] == '>' || s[i] == '"') {
-							y += s[i];
-						}
-						else {
-							y += HttpUtility.HtmlEncode(s[i].ToString());
-						}
-					}
-					Console.WriteLine(y);
-					XDocument xd = XDocument.Parse(y);
-
+					XDocument xd = HtmlUtils.ToXDocument(wc.DownloadString("http://arxiv.org/list/cs."+at.ToString()+"/recent"));
 					foreach(XElement xe in xd.Descendants("{http://www.w3.org/1999/xhtml}dd")) {
-						Console.WriteLine(xe.Value);
+						Console.WriteLine(xe);
 						/*foreach(XElement xe2 in xe.Descendants()) {
 							Console.WriteLine(xe2.Value);
 						}*/
