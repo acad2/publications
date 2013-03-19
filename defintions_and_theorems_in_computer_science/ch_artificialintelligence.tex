@@ -778,45 +778,42 @@ the external structure $C'\sigma$ is called an \term[Instantiation of an explana
 \cite{conf/ijcai/YamamuraK91}
 \end{defi}
 
-% \begin{defi}[Generalization space]
-% 1. For an explanation T
-% T, let T 0 be an uninstantiation of T. Then
-% is an
-% uninstantiation of T. Similarly, let T 0 be an unresolution and T 1, - -, T n are its remainders. Then T' =
-% \cite{conf/ijcai/YamamuraK91}
-% \end{defi}
-% 
-% \begin{defi}[Least EBG]
-% For EBGs T1 • • •, Tn T is a common EBG iff
-% The least generalization in common
-% EBGs is called the least EBG.
-% \cite{conf/ijcai/YamamuraK91}
-% \end{defi}
-% 
-% \begin{defi}[Least EBG space]
-% 1.For
-% let T 0 be the least EBG of S and
-% be its remainder. Then
-% } is called a least EBG generalization of T.
-% 2. S is more general by least EBG than T iff there exists
-% a sequence of least EBG generalizations from T to 5.
-% 3. A class of all least EBG generalizations of the obliged
-% generalization of an example set is called its least EBG
-% space.
-% 0 and 4 of figure 6 are a least EBG generalization.
-% In general, there are combinatorially many least EBG
-% generalizations for more than three examples, and its size
-% can much more increase if remainders are generalizable.
-% However, the searching space is reduced from the raw
-% generalization space.
-% \cite{conf/ijcai/YamamuraK91}
-% \end{defi}
-% 
-% \begin{defi}[Operationally criteria]
-% 1. For a generalization
-% its usage degree is a function s.t.
-% \cite{conf/ijcai/YamamuraK91}
-% \end{defi}
+\begin{defi}[More general explanation, Generalization space]
+\begin{enumerate}
+ \item For an explanation $T\in\calT$, let $T_0$ be an uninstantiation of $T$. Then $\calT'=\brak{\calT\setminus\accol{T}}\cup\accol{T_0}$ is an uninstantiation of $T$. Similarly let $T_0$ be an unresolution and $T_0,T_1,\ldots,T_n$ are its remainders. Then $\calT'=\brak{\calT\setminus\accol{T}}\cup\accol{T_1,T_2,\ldots,T_n}$ is an unresolution of $\calT$.
+ \item An explanation $S$ is \term[More general explanation]{more general} than $T$, denoted by $S<T$ \iffTx{} there exists a sequence of uninstantiations and unresolutions from $T$ to $S$.
+ \item A class of all generalizations of the obliged general of an example set is called a \term{generalization space}.
+\end{enumerate}
+\cite{conf/ijcai/YamamuraK91}
+\end{defi}
+
+\begin{defi}[Common EGB, Least EBG]
+For EBGs $T_1,\ldots,T_n$, $T$ is a \term{common EBG} \iffTx{} $T\preceq T_1,T\preceq T_2,\ldots,T\preceq T_n$. The least generalization in common EBGs is called the \term{least EBG}.
+\cite{conf/ijcai/YamamuraK91}
+\end{defi}
+
+\begin{defi}[Least EGB generalization of an explanation, More general by least EBG, Least EBG space]
+\begin{enumerate}
+ \item For $\calS\subseteq\calT$, let $T_0$ be the least EBG of $\calS$ and $T_1,T_2,\ldots,T_n$ be its remainder. Then $\calT'=\brak{\calT\subseteq S}\cup\accol{T_0,T_1,\ldots,T_n}$ is called a \term[Least EGB generalization of an explanation]{least EBG generalization} of $\calT$.
+ \item $\calS$ is \term{more general by least EBG than} $\calT$ \iffTx{} there exists a sequence of least EBG generalizations from $\calT$ to $\calS$.
+ \item A class of all least EBG generalizations of the obliged generalization of an example set is called its \term{least EBG space}.
+\end{enumerate}
+\cite{conf/ijcai/YamamuraK91}
+\end{defi}
+
+\begin{defi}[Usage degree, Backtrack number \fun{\calB}{\calT,\calE}, Operationally criteria for generalizations]
+\begin{enumerate}
+ \item For a generalization $\calS=\brak{\calT\setminus\accol{T}}\cup\accol{T_0,T_1,\ldots,T_n}$, its \term{usage degree} is a function \stTx{}
+ \begin{equation}
+  \fun{\calU}{\calS,\calT}=\displaystyle\sum_{i=0}^{n}{\left\{\begin{array}{ll}
+  \abs{T_i}&\mbox{if }T_i\in\calT\\0&\mbox{otherwise}\end{array}\right.}
+ \end{equation}
+ Where $\abs{T_i}$ denotes the number of clauses used in $T_i$. In general, when $\calS\preceq\calT$, the usage degree sums up all usage degrees through some generalization path.
+ \item For an example set $\calE$ and its generalization $\calT$, the \term{backtrack number \fun{\calB}{\calT,\calE}} is the minimum of the sum of goal failures which occur during a macrotable of $\calT$ reconstructs all explanations of $\calE$.
+ \item  For two generalizations $\calS$ and $\calT$ of an example set $\calE$, $\calS$ is \term[Operationally criteria for generalizations]{more operational than} $\calT$ \iffTx{} and $\fun{\calU}{\calS,\calE}\geq\fun{\calU}{\calT.\calE}$ and $\fun{\calB}{\calS,\calE}\geq\fun{\calB}{\calT.\calE}$.
+\end{enumerate}
+\cite{conf/ijcai/YamamuraK91}
+\end{defi}
 
 \subsection{Agent Systems, Decision Making and Q-Learning}
 
