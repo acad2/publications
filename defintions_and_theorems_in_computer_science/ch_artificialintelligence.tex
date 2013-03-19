@@ -478,7 +478,6 @@ if $C$ is an extension, $H$ is called an \term[Extension base of a logic program
 \cite{conf/ijcai/BrewkaK93}
 \end{defi}
 
-
 \begin{defi}[General logic program]
 A \term{general logic program} $P$ is a set of rules of the form:
 \begin{equation}
@@ -605,6 +604,46 @@ A (constant) \termor{decision rule}{preference function} for MAX is a single val
 
 \begin{defi}[(Constant) preference pair]
 If $\sigma_M$ and $\sigma_m$ are preference functions for MAX and MIN respectively then $\sigma=\brak{\sigma_M,\sigma_m}$ is termed a (constant) \term{preference pair} on $\brak{X,\Gamma}$.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Strategy order relation $\leq_\sigma$]
+If $u,v\in X$ and $\sigma$ is a preference pair on $\brak{X,\Gamma}$ then \term[Strategy order relation $\leq_\sigma$]{$u\geq_\sigma v$} \iffTx{} there exists an element $t\in X$ such that
+\begin{enumerate}
+ \item $u,v\in\Gamma^t$
+ \item $u=\fun{\sigma_M}{t}$ or $v=\fun{\sigma_m}{t}$
+\end{enumerate}
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Evaluation function reproduces a preference pair]
+An evaluation function $f$ over $\brak{X,\Gamma}$ \term[Evaluation function reproduces]{reproduces} a preference pair $\sigma$ (with respect to a strategy $\calS_0$) if $\ffun{x}>\ffun{y}$ whenever $x>_\sigma y$.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Strategy order relation $\leq_\sigma^*$]
+If $u,v\in X$ and $\sigma$ is a preference pair on $\brak{X,\Gamma}$ then \term[Strategy order relation $\leq_\sigma^*$]{$u\geq_\sigma^* v$} \iffTx{} there exists is a sequence $u=w_0,w_1,\ldots,w_s=v$ such that $w_i>_\sigma w_{i-1}$, $i=1,2,\ldots,s$
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[Fully consistent strategy]
+$\sigma$ is \term[Fully consistent strategy]{fully consistent} if $C_{\pi_1}=C_{\pi_2}$ for any pair of paths $\pi_1,\pi_2$ with the same endpoints.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[(Variable) preference function]
+A \term{(Variable) preference function} for MAX is a single-valued function \funsig{\tau_M}{X^M}{\Gamma\times X^M\setminus I} where $I$ is the unit interval $I=\accol{x|0\leq x\leq 1}$ and
+\begin{enumerate}
+ \item $\fun{\tau_M}{x,u}=0$ if $u\notin\Gamma_x$
+ \item $\fun{\tau_M}{x,u}\geq 0$ if $u\in\Gamma_x$
+ \item $\displaystyle\sum_{u\in\Gamma_x}{\fun{\tau_M}{x,u}}=1$
+\end{enumerate}
+\fun{\tau_M}{x,u} can be thought of as the probability that, when in position $x$, MAX will choose to move to position $u$. A variable preference rule $\tau_m$ for MIN can be defined in an analogous way.
+\cite{conf/ijcai/Boffey73}
+\end{defi}
+
+\begin{defi}[(Variable) preference pair]
+If $\tau_M$ and $\tau_m$ are variable preference functions for MAX and MIN respectively then $\tau=\brak{\tau_M,\tau_m}$ is termed a \term{(variable) preference pair} on \brak{X,\Gamma}.
 \cite{conf/ijcai/Boffey73}
 \end{defi}
 
