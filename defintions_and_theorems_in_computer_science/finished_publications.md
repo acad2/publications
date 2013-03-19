@@ -1,6 +1,8 @@
  == 2013 ==
  
  = March =
+
+Finished:
  
 - 001_014.pdf
 - 001_017.pdf
@@ -11,6 +13,10 @@
 - 002_020.pdf
 - 002_028.pdf
 - 003_002.pdf
+
+Skipped:
+
+- 003_015.pdf
 
  = April =
  = May =

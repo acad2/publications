@@ -753,6 +753,71 @@ where $A_i$ are attribute predicates and $L$, $R$, $F$ are regular atom conjunct
 \cite{conf/fedcsis/GiurcaSB12}
 \end{defi}
 
+\subsection{Explanation Based Learning}
+
+\begin{defi}[Explanation structure, Internal structure of an explanation structure, External structure of an explanation structure, Instantiation of an explanation structure, Uninstanstiation of an explanation structure, Binary resolvent of two explanation structures, Unresolution of an explanation structure, Remainder of an explanation structure, Generalization of an explanation structure]
+\begin{enumerate}
+ \item For a horn clause $C=A\leftarrow B_1\wedge B_2\wedge\ldots\wedge B_n$ let it's equivalent copy be $C'=A'\leftarrow B_1'\wedge B_2'\wedge\ldots\wedge B_n'$. Then the following expression is an \term{explanation structure}.
+ \begin{equation}
+  A':\brak{A\leftarrow \brak{B_1:B_1'}\wedge\brak{B_2:B_2'}\wedge\ldots\wedge\brak{B_n:B_n'}}
+ \end{equation}
+ $C$ and $C'$ are called its \term[Internal structure of an explanation structure]{internal} and \term[External structure of an explanation structure]{external structure} respectively.
+ \item For an explanation structure $T$, let $C'$ be its external structure and $\sigma$ be a substitution. Then, the expression $T\sigma$, which has the same internal structure as $T$ and has
+the external structure $C'\sigma$ is called an \term[Instantiation of an explanation structure]{instantiation of $T$}. Inversely, $T$ is called an \term[Uninstanstiation of an explanation structure]{uninstantiation of $T\sigma$}.
+ \item For two explanation structures $S$ and $T$, let $A'\leftarrow B_1'\wedge B_2'\wedge\ldots\wedge B_n'$ and $B_i'\leftarrow C_1'\wedge C_2'\wedge\ldots\wedge C_m'$ be their external structures respectively. Then, the expression $U$ connected $S$ and $T$ at $B_i'$ is called a \term[Binary resolvent of two explanation structures]{(binary) resolvent of $S$ and $T$}. Inversely $S$ is called the \term[Unresolution of an explanation structure]{unresolution of $U$} and $T$ is called the \term[Remainder of an explanation structure]{remainder}.
+ \item An explanation structure $S$ is \term[Generalization of an explanation structure]{more general} than $T$ denoted by $S\preceq T$ \iffTx{} there exists a sequence of uninstantiations and unresolutions from $T$ to $S$.
+\end{enumerate}
+\cite{conf/ijcai/YamamuraK91}
+\end{defi}
+
+\begin{defi}[Obliged generalization of an explanation structure, EBG, EBG Macro]
+\begin{enumerate}
+ \item An explanation $T$ is an \term{obliged generalization}, \iffTx{} the internal structure of T does not include any facts of a certain example and its external structure is a definite clause.
+ \item Obliged generalizations of an explanation for some example are called \term{EBG}. For an EBG, its external structure is called an \term{EBG macro}.
+\end{enumerate}
+\cite{conf/ijcai/YamamuraK91}
+\end{defi}
+
+% \begin{defi}[Generalization space]
+% 1. For an explanation T
+% T, let T 0 be an uninstantiation of T. Then
+% is an
+% uninstantiation of T. Similarly, let T 0 be an unresolution and T 1, - -, T n are its remainders. Then T' =
+% \cite{conf/ijcai/YamamuraK91}
+% \end{defi}
+% 
+% \begin{defi}[Least EBG]
+% For EBGs T1 • • •, Tn T is a common EBG iff
+% The least generalization in common
+% EBGs is called the least EBG.
+% \cite{conf/ijcai/YamamuraK91}
+% \end{defi}
+% 
+% \begin{defi}[Least EBG space]
+% 1.For
+% let T 0 be the least EBG of S and
+% be its remainder. Then
+% } is called a least EBG generalization of T.
+% 2. S is more general by least EBG than T iff there exists
+% a sequence of least EBG generalizations from T to 5.
+% 3. A class of all least EBG generalizations of the obliged
+% generalization of an example set is called its least EBG
+% space.
+% 0 and 4 of figure 6 are a least EBG generalization.
+% In general, there are combinatorially many least EBG
+% generalizations for more than three examples, and its size
+% can much more increase if remainders are generalizable.
+% However, the searching space is reduced from the raw
+% generalization space.
+% \cite{conf/ijcai/YamamuraK91}
+% \end{defi}
+% 
+% \begin{defi}[Operationally criteria]
+% 1. For a generalization
+% its usage degree is a function s.t.
+% \cite{conf/ijcai/YamamuraK91}
+% \end{defi}
+
 \subsection{Agent Systems, Decision Making and Q-Learning}
 
 \begin{defi}[Sequence of decision elements, decision element, participation, positive set, neutral set, negative set, rate of return, degree of secure of rate $Z$, date of knowledge]
