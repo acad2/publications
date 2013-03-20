@@ -745,6 +745,46 @@ A \term{critical cover} relative to a subset $S$ of $\calA$ is a set $\accol{S_1
 \cite{conf/ijcai/RaimanKS93}
 \end{defi}
 
+\subsection{Argumentation}
+
+\begin{defi}[Argumentation framework, Arguments in an argumentation framework]
+An \term{argumentation framework} is a pair $AF=\tuple{\calA,\calR}$ where $\calA$ is a set of \term[Arguments in an argumentation framework]{arguments}, and $\calR$ is a binary relation representing a defeat relationship between arguments, i.e. $\calR\subseteq\calA\times\calA$. $\brak{A,B}\in\calR$ or equivalently "$A\calR B$" means that argument $A$ defeats argument $B$. We also say "$A$ attacks $B$". Here an argument is an abstract entity whose role is only determined by its relation to other arguments.
+\cite{conf/ijcai/Dung93}
+\end{defi}
+
+\begin{defi}[Acceptable argument with respect to a set of arguments,Admissible conflict-free set of arguments]
+\begin{enumerate}
+ \item An argument $A$ is \term[Acceptable argument with respect to a set of arguments]{acceptable \wrtTx{} a set $S$ of arguments} \iffTx{} for each argument $B$: if $B$ attacks $A$ then $B$ is attacked by some argument in $S$.
+ \item A conflict-free set of arguments $S$ is \term[Admissible conflict-free set of arguments]{admissible} \iffTx{} each argument in $S$ is acceptable \wrtTx{} $S$.
+\end{enumerate}
+\cite{conf/ijcai/Dung93}
+\end{defi}
+
+\begin{defi}[Maximal preferred extension of an argumentation framework]
+A \term{preferred extension of an argumentation framework} $AF$ is a maximal (\wrtTx{} set inclusion) admissible set of arguments of $AF$.
+\cite{conf/ijcai/Dung93}
+\end{defi}
+
+\begin{defi}[Stable extension]
+A conflict-free set of arguments $S$ is called a \term{stable extension} \iffTx{} $S$ attacks each argument which does not belong to $S$.
+\cite{conf/ijcai/Dung93}
+\end{defi}
+
+\begin{defi}[Characteristic function of an argumentation framework]
+The \term{characteristic function of an argumentation framework} $AF=\tuple{\calA,\calR}$ denoted by $F_{AF}$, is defined as follows: \funsig{F_{AF}}{2^{\calA}}{2^{\calA}} where $\fun{F_{AF}}{S}=\accol{A|A\mbox{ is acceptable \wrtTx{} }S}$.
+\cite{conf/ijcai/Dung93}
+\end{defi}
+
+\begin{defi}[Grounded extension of an argumentation framework]
+The \term{grounded extension of an argumentation framework} $AF$, denoted by $G_{AF}$, is the least fixed point of $F_{AF}$.
+\cite{conf/ijcai/Dung93}
+\end{defi}
+
+\begin{defi}[Complete extension]
+An admissible set of arguments $S$ is called a \term{complete extension} \iffTx{} each argument which is acceptable \wrtTx{} $S$, belongs to $S$.
+\cite{conf/ijcai/Dung93}
+\end{defi}
+
 \section{Machine Learning and Probabilistic Reasoning}
 
 \begin{defi}[Learning algorithm for a meta-domain]%Problem: SxG??
