@@ -701,6 +701,50 @@ Let $KB=\tuple{OB,DS,DA}$ and suppose that $\alpha$ is a revision formula repres
 \cite{conf/fedcsis/KorpusikLM12}
 \end{defi}
 
+\subsection{Critical Reasoning}
+
+\begin{defi}[Critical Environment]
+The \term{critical environment} for node $n$ relative to $S\subseteq A$ is:
+\begin{equation}
+\fun{\hat{S}}{n}=\displaystyle\bigcap\accol{E\in\fun{\calE}{n}|E\subseteq S}
+\end{equation}
+\cite{conf/ijcai/RaimanKS93}
+\end{defi}
+
+\begin{defi}[Critical Conflict]
+The \term{critical conflict} for $S\subseteq\calA$ is:
+\begin{equation}
+\fun{\hat{S}}{\bot}=\displaystyle\bigcap\accol{C\mbox{ a conflict}|C\subseteq S}
+\end{equation}
+\cite{conf/ijcai/RaimanKS93}
+\end{defi}
+
+\begin{defi}[Critical abstraction of a theory]
+The \term{critical abstraction of a theory} $\calT$ relative to $S\subseteq A$ is the theory:
+\begin{equation}
+\fun{\hat{S}}{\calT}=\calT\cup\accol{\fun{\hat{S}}{n}\rightarrow n|n\in\calL\cup\accol{\bot}}
+\end{equation}
+\cite{conf/ijcai/RaimanKS93}
+\end{defi}
+
+\begin{defi}[Critical cover]
+A \term{critical cover} relative to a subset $S$ of $\calA$ is a set $\accol{S_1,S_2,\ldots,S_k}$ of subsets of $S$ such that:
+\begin{enumerate}
+ \item \term[Critical consistency in critical cover]{Critical consistency}: $\fun{\hat{S}_i}{\bot}$ is non-empty, for all $i$.
+ \item \term[Covering in critical cover]{Covering}: Every conflict $C\subseteq S$ is subsumed by $\fun{\hat{S}_i}{\bot}$, for some $i$.
+ \item \term[Disjointness in critical cover]{Disjointness} $\fun{\hat{S}_i}{\bot}$ is disjoint from $S_j$, far every distinct $i$ and $j$.
+\end{enumerate}
+\cite{conf/ijcai/RaimanKS93}
+\end{defi}
+
+\begin{defi}[Critical diagnosis] A \term{critical diagnosis} of $\calT$ relative to a $S\subseteq\calA$ is a set $\Delta\cap\bar{S}$ such that:
+\begin{enumerate}
+ \item $\Delta$ is a diagnosis of \fun{\hat{S}}{\calT}.
+ \item There is no other diagnosis $\Delta'$ of \fun{\hat{S}}{\calT}, such that $\Delta'\cap\bar{S}$ is a strict subset of $S\subseteq\calA$.
+\end{enumerate}
+\cite{conf/ijcai/RaimanKS93}
+\end{defi}
+
 \section{Machine Learning and Probabilistic Reasoning}
 
 \begin{defi}[Learning algorithm for a meta-domain]%Problem: SxG??
