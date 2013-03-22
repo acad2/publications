@@ -1,6 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Paper.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BibTeXEntryType.cs">
     <Files>
       <File FileName="PaperMiner.cs" Line="30" Column="42" />
       <File FileName="Topic.cs" Line="26" Column="26" />
@@ -10,7 +10,28 @@
       <File FileName="ArvixTopic.cs" Line="67" Column="27" />
       <File FileName="Library.cs" Line="31" Column="23" />
       <File FileName="HtmlUtils.cs" Line="39" Column="26" />
+      <File FileName="BiBTeXEntry.cs" Line="31" Column="86" />
+      <File FileName="BibTeXEntryType.cs" Line="25" Column="37" />
+      <File FileName="DictionaryProxy.cs" Line="82" Column="18" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="PaperMiners" expanded="True">
+            <Node name="BibTeXEntryType.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="ConnectionManagerPad">
+        <State selected="True" />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

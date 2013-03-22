@@ -697,27 +697,57 @@ Let $*CW\ A$ be any closed world assumption policy among (basic) Closed World As
 \end{defi}
 
 \begin{defi}[Closed World Assumption-free for negation formula]
-Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Closed World Assumption-free}{CWA-free} for negation \iffTx{} $\alpha$ is a positive literal \stTx{} $\Sigma\nvDash\alpha$ holds.
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Closed World Assumption-free}{CW A-free} for negation \iffTx{} $\alpha$ is a positive literal \stTx{} $\Sigma\nvDash\alpha$ holds.
 \cite{conf/ijcai/Coste-MarquisM99}
 \end{defi}
 
 \begin{defi}[Generalized Closed World Assumption-free for negation formula]
-Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Generalized Closed World Assumption-free}{GCWA-free} for negation \iffTx{} $\alpha$ is a positive literal and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Generalized Closed World Assumption-free}{GCW A-free} for negation \iffTx{} $\alpha$ is a positive literal and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
 \cite{conf/ijcai/Coste-MarquisM99}
 \end{defi}
 
 \begin{defi}[Extended Generalized Closed World Assumption-free for negation formula]
-Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Generalized Closed World Assumption-free}{EGCWA-free} for negation \iffTx{} $\alpha$ is a conjunction of positive literals and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Generalized Closed World Assumption-free}{EGCW A-free} for negation \iffTx{} $\alpha$ is a conjunction of positive literals and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
 \cite{conf/ijcai/Coste-MarquisM99}
 \end{defi}
 
 \begin{defi}[Careful Closed World Assumption-free for negation formula]
-Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Careful Closed World Assumption-free}{CCWA-free} for negation \iffTx{} $\alpha$ is a literal from $L_P^+$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Careful Closed World Assumption-free}{CCW A-free} for negation \iffTx{} $\alpha$ is a literal from $L_P^+$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
 \cite{conf/ijcai/Coste-MarquisM99}
 \end{defi}
 
 \begin{defi}[Extended Closed World Assumption-free for negation formula]
-Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Closed World Assumption-free}{ECWA-free} for negation \iffTx{} $\fun{\mbox{Var}}{\alpha}\cap Z=\emptyset$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Closed World Assumption-free}{ECW A-free} for negation \iffTx{} $\fun{\mbox{Var}}{\alpha}\cap Z=\emptyset$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[*CWA clause inference, *CWA literal inference]
+Let $*CWA$ be any closed world assumption policy among (basic) Closed World Assumption (CW A), Generalized Closed World Assumption (GCW A), Extended Generalized Closed World Assumption (EGCW A), Careful Closed World Assumption (CCW A) and Extended Closed World Assumption (ECW A).  \term{*CWA clause inference} is the following decision:
+\begin{enumerate}
+ \item Input: A formula $\Sigma$ and clause $\gamma$ from $\mbox{PROPS}_{\mbox{PS}}$, a partition $\tuple{P,Q,Z}$ of $\funm{Var}{\Sigma}$ and a CWA policy $*CWA$
+ \item Query: Does $\fun{*CW\ A}{\Sigma,\tuple{P,Q,Z}}\vDash\gamma$ holds?
+\end{enumerate}
+\term{*CWA literal inference} is the restriction of the corresponding $*CWA$ clause inference problem where $\gamma$ is restricted to be a literal.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Blake formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \term{Blake formula} \iffTx{} $\Sigma$ is a CNF formula and for every implicate $\gamma$ of $\Sigma$, there exists a clause $\pi$ in $\Sigma$ \stTx{} $\pi\vDash\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Disjunct normal form formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \termabbrev{Disjunction normal form formula}{DNF formula} \iffTx{} $\Sigma$ is a finite disjunction of terms.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Horn cover formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \term{Horn cover formula} \iffTx{} $\Sigma$ is a finite disjunction of Horn CNF formulas.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Renamable Horn cover formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \term{renamable Horn cover formula} \iffTx{} $\Sigma$ is a finite disjunction of renamable Horn CNF formulas.
 \cite{conf/ijcai/Coste-MarquisM99}
 \end{defi}
 
