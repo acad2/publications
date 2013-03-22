@@ -23,7 +23,7 @@ using System;
 namespace PaperMiners {
 
 	[Flags]
-	public enum ArvixTopic : long {
+	public enum ArXivTopic : long {
 		None	= 0x0000000000000000,
 		AI		= 0x0000000000000001,
 		CL		= 0x0000000000000002,

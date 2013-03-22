@@ -1,5 +1,5 @@
 //
-//  MainClass.cs
+//  Blob.cs
 //
 //  Author:
 //       Willem Van Onsem <vanonsem.willem@gmail.com>
@@ -20,24 +20,14 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
-using System.Xml.Serialization;
 
 namespace PaperMiners {
 
-	public class MainClass {
+	public class Blob {
 
-		public static void Main () {
-			Library library = new Library();
-			ArXivPaperMiner apm = new ArXivPaperMiner();
-			foreach(Paper pap in apm.FetchPapers()) {
-				library.Papers.Add(pap);
-			}
-			XmlSerializer xs = new XmlSerializer(typeof(Library));
-			FileStream fs = File.Open("library.xml", FileMode.Create, FileAccess.Write);
-			xs.Serialize(fs, library);
-			fs.Close();
+		public Blob () {
+
 		}
 
 	}
 }
-

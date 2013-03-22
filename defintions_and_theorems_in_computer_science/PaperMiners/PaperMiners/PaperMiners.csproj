@@ -35,14 +35,15 @@
     <Compile Include="PaperMiner.cs" />
     <Compile Include="Topic.cs" />
     <Compile Include="Paper.cs" />
-    <Compile Include="ArvixPaperMiner.cs" />
     <Compile Include="MainClass.cs" />
-    <Compile Include="ArvixTopic.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="HtmlUtils.cs" />
     <Compile Include="BiBTeXEntry.cs" />
     <Compile Include="BibTeXEntryType.cs" />
     <Compile Include="DictionaryProxy.cs" />
+    <Compile Include="ArXivPaperMiner.cs" />
+    <Compile Include="ArXivTopic.cs" />
+    <Compile Include="Blob.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Xml" />

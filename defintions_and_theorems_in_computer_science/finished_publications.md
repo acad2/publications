@@ -16,6 +16,7 @@ Finished:
 - 003_017.pdf
 - 003_018.pdf
 - 003_019.pdf
+- 004_026.pdf
 
 Skipped:
 

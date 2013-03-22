@@ -34,7 +34,7 @@ namespace PaperMiners {
 
 		[XmlArray("Authors")]
 		[XmlArrayItem("Author")]
-		public string[] Author {
+		public string[] Authors {
 			get;
 			set;
 		}
@@ -45,8 +45,8 @@ namespace PaperMiners {
 			set;
 		}
 
-		[XmlAttribute("Topic")]
-		public Topic Topic {
+		[XmlAttribute("Topics")]
+		public Topic Topics {
 			get;
 			set;
 		}
@@ -72,23 +72,27 @@ namespace PaperMiners {
 		public Paper () {
 		}
 
-		public Paper (string source, string url, Topic topic) {
+		public Paper (string source, string url, Topic mainTopic, Topic topics, string title, string[] authors, string comment = "") {
 			this.Source = source;
 			this.Url = url;
-			this.Topic = topic;
+			this.MainTopic = mainTopic;
+			this.Topics = topics;
+			this.Title = title;
+			this.Authors = authors;
+			this.Comment = comment;
 		}
 
 		public override bool Equals (object obj) {
 			if(obj is Paper) {
 				Paper pobj = (Paper)obj;
-				return pobj.Author == this.Author && pobj.Title == this.Title;
+				return pobj.Authors == this.Authors && pobj.Title == this.Title;
 			}
 			else {
 				return false;
 			}
 		}
 		public override int GetHashCode () {
-			return this.Title.GetHashCode()^this.Author.GetHashCode();
+			return this.Title.GetHashCode()^this.Authors.GetHashCode();
 		}
 
 	}
