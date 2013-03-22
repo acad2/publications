@@ -691,6 +691,36 @@ DS_1\dotplus\brak{DS_2\oplus\ldots\brak{DS_n\oplus (OB_1\cup DA)\ldots}}.
 \cite{}
 \end{defi}
 
+\begin{defi}[Closure of a knowledge base]
+Let $*CW\ A$ be any closed world assumption policy among (basic) Closed World Assumption (CW A), Generalized Closed World Assumption (GCW A), Extended Generalized Closed World Assumption (EGCW A), Careful Closed World Assumption (CCW A) and Extended Closed World Assumption (ECW A). Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$ and $\tuple{P,Q,Z}$ a partition of $\fun{\mbox{Var}}{\Sigma}$. The \term[Closure of a knowledge base]{closure} $\fun{*CW\ A}{\Sigma,\tuple{P,Q,Z}}$ of $\Sigma$ given $\tuple{P,Q,Z}$ \wrtTx{} $*CW\ A$ is the formula $\Sigma\cup\accol{\neg\alpha|\alpha\mbox{ is a $*CW\ A$-free for negation formula \wrtTx{} $\Sigma$ and $\tuple{P,Q,Z}$}}$.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Closed World Assumption-free}{CWA-free} for negation \iffTx{} $\alpha$ is a positive literal \stTx{} $\Sigma\nvDash\alpha$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Generalized Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Generalized Closed World Assumption-free}{GCWA-free} for negation \iffTx{} $\alpha$ is a positive literal and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Extended Generalized Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Generalized Closed World Assumption-free}{EGCWA-free} for negation \iffTx{} $\alpha$ is a conjunction of positive literals and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Careful Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Careful Closed World Assumption-free}{CCWA-free} for negation \iffTx{} $\alpha$ is a literal from $L_P^+$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Extended Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Closed World Assumption-free}{ECWA-free} for negation \iffTx{} $\fun{\mbox{Var}}{\alpha}\cap Z=\emptyset$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
 \begin{defi}[Finite representation of the modified knowledge base corresponding to belief change scenario]
 Let $KB=\tuple{OB,DS,DA}$ and suppose that $\alpha$ is a revision formula representing a domain axiom. The revised knowledge base is defined by $KB\ast\alpha=\tuple{OB1,DS,DA\cup\accol{α}}$, where $OB_1=OB\oplus\accol{\top}\ominus\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}$. Here $OB\oplus\accol{\top}\ominus\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}$ is a \term{finite representation of the modified knowledge base corresponding to belief change scenario}, $\tuple{OB,\accol{\top},\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}}$.
 \cite{conf/fedcsis/KorpusikLM12}
