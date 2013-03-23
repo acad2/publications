@@ -1,5 +1,5 @@
 //
-//  ArvixTopic.cs
+//  ArXivTopic.cs
 //
 //  Author:
 //       Willem Van Onsem <vanonsem.willem@gmail.com>

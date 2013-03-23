@@ -1,5 +1,5 @@
 //
-//  ArvixPaperMiner.cs
+//  ArXivPaperMiner.cs
 //
 //  Author:
 //       Willem Van Onsem <vanonsem.willem@gmail.com>
@@ -89,14 +89,11 @@ namespace PaperMiners {
 						primary = ArXivTopic.None;
 						topic = ArXivTopic.None;
 						xe2s = from el in xe1.Descendants("{http://www.w3.org/1999/xhtml}div") where el.Attribute("class").Value == "list-title" select el;
-						title = HttpUtility.HtmlDecode(xe2s.First().Value.Substring(7).Trim());
+						title = ObtainTitle(xe2s.First());
 						xe2s = from el in xe1.Descendants("{http://www.w3.org/1999/xhtml}div") where el.Attribute("class").Value == "list-authors" select el;
 						authors = (from el in xe2s.Elements("{http://www.w3.org/1999/xhtml}a") select HttpUtility.HtmlDecode(el.Value.Trim())).ToArray();
 						xe2s = from el in xe1.Descendants("{http://www.w3.org/1999/xhtml}div") where el.Attribute("class").Value == "list-comments" select el;
-						xe3 = xe2s.FirstOrDefault();
-						if(xe3 != null) {
-							comment = HttpUtility.HtmlDecode(xe3.Value.Substring(9).Trim());
-						}
+						comment = ObtainComment(xe2s.FirstOrDefault());
 						xe2s = from el in xe1.Descendants("{http://www.w3.org/1999/xhtml}div") where el.Attribute("class").Value == "list-subjects" select el;
 						xe3 = xe2s.Elements("{http://www.w3.org/1999/xhtml}span").Where(x => x.Attribute("class").Value == "primary-subject").FirstOrDefault();
 						if(xe3 != null) {
@@ -114,13 +111,25 @@ namespace PaperMiners {
 		public static string ObtainLink (IEnumerable<XElement> xes) {
 			XElement xe = xes.Where(x => x.Attribute("title").Value == "Download PDF").FirstOrDefault();
 			if(xe != null) {
-				return xe.Attribute("href").Value;
+				return xe.Attribute("href").Value+".pdf";
 			}
 			xe = xes.Where(x => x.Attribute("title").Value == "Download PostScript").FirstOrDefault();
 			if(xe != null) {
-				return xe.Attribute("href").Value;
+				return xe.Attribute("href").Value+".ps";
 			}
 			return "/404.html";
+		}
+
+		public static string ObtainTitle (XElement titleElement) {
+			return HttpUtility.HtmlDecode(rx_title.Match(titleElement.Value).Groups[1].Value.Trim());
+		}
+		public static string ObtainComment (XElement commentElement) {
+			if(commentElement != null) {
+				return HttpUtility.HtmlDecode(rx_comme.Match(commentElement.Value).Groups[1].Value.Trim());
+			}
+			else {
+				return null;
+			}
 		}
 
 		public static ArXivTopic ReadTopics (string text) {

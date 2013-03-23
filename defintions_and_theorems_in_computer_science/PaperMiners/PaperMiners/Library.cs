@@ -35,7 +35,7 @@ namespace PaperMiners {
 		}
 
 		public Library () {
-
+			this.Papers = new HashSet<Paper>();
 		}
 
 	}
