@@ -756,7 +756,7 @@ A conditional $A\dashsim B$ will be said to be \term{credulously valid in an epi
 \begin{defi}[Credulous nonmonotonic inference relation, Rational monotony]
 A nonmonotonic inference relation will be called \term[Credulous nonmonotonic inference relation]{credulous} if it is regular and satisfies \term{Rational Monotony}:
 \begin{equation}
-\brak{\mbox{RM}}\ \mbox{If} A\dashsim B\mbox{ and } A\negdashsim C\mbox{, then } A\wedge C\dashsim B
+\brak{\mbox{RM}}\mbox{ If }A\dashsim B\mbox{ and } A\negdashsim C\mbox{, then } A\wedge C\dashsim B
 \end{equation}
 \cite{conf/ijcai/Bochman99}
 \end{defi}
@@ -764,11 +764,11 @@ A nonmonotonic inference relation will be called \term[Credulous nonmonotonic in
 \begin{defi}[Permissive inference relation, Cut rule, Or rule]
 An inference relation will be called \term[Permissive inference relation]{permissive} if it satisfies the basic postulates and the \term{Cut rule}:
 \begin{equation}
-\brak{\mbox{Cut}}\ \mbox{If} A\dashsim B\mbox{ and } A\wedge B\dashsim C\mbox{, then } A\dashsim C
+\brak{\mbox{Cut}}\mbox{ If }A\dashsim B\mbox{ and } A\wedge B\dashsim C\mbox{, then } A\dashsim C
 \end{equation}
 It can be shown that, in the context of $B$, Cut implies the \term[Or rule]{rule Or}:
 \begin{equation}
-\brak{\mbox{Or}}\ \mbox{If} A\dashsim C\mbox{ and } B\dashsim C\mbox{, then } A\vee B\dashsim C
+\brak{\mbox{Or}}\mbox{ If }A\dashsim C\mbox{ and } B\dashsim C\mbox{, then } A\vee B\dashsim C
 \end{equation}
 \cite{conf/ijcai/Bochman99}
 \end{defi}
@@ -776,4 +776,113 @@ It can be shown that, in the context of $B$, Cut implies the \term[Or rule]{rule
 \begin{defi}[Permissively valid conditional in an epistemic state]
 A conditional $A\dashsim B$ will be said to be \term[permissively valid conditional in an epistemic state]{permissively valid in an epistemic state} $\pounds$ if any preferred state in $\brak{A}$ is consistent with $A\wedge B$.
 \cite{conf/ijcai/Bochman99}
+\end{defi}
+
+\section{Temporal Reasoning}
+
+\begin{defi}[Specification of a document]
+A \term[Specification of a document]{specification} $s=\tuple{O,C}$ of a document is made of a set of objects $O$ and a set of constraints $C$ between these objects (i.e., a relation between several objects). The set of all specifications will be noted $S$.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Relation graph of a specification]
+A specification $s=\tuple{O,C}$ can be represented as a complete direct labeled graph called a \term[Relation graph of a specification]{relation graph} $g_s=\tuple{N,E,\lambda}$ such that the elements of $O$ are in bijection with those of $N$ and \funsig{\lambda}{E}{2^{A_{13}}} is a total function from the arcs to temporal relations such that for each $x\ r\ y\in C$, $\fun{\lambda}{\tuple{x,y}}\subseteq r$.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+
+\begin{defi}[Resolved relation graph of a specification].
+A relation graph is \term[Resolved relation graph of a specification]{resolved} \iffTx{} all the labels are singletons.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Interpretation of a specification]
+An \term{interpretation of a specification} is a pair \tuple{I,D} such that $D$ is the domain of interpretation and $I$ is a function from $O$ to $D$ and from $C$ to $D\times D$ (i.e., such that a constraint applied to two elements of the domain of interpretation is either true of false).
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Temporal interpretation of a specification]
+in order to \term[Temporal interpretation of a specification]{interpret the temporal aspects} of multimedia documents, we consider the interpretations such that the objects in $O$ are interpreted as intervals of the positive real numbers and the constraints are interpreted as the corresponding relations in the temporal interval algebra.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Model of a specification]
+A model of a specification \tuple{O,C} is an interpretation \tuple{I,D} such that for each $o\ r\ o'\in C$. $\tuple{\fun{I}{o},\fun{I}{o'}}\in\fun{I}{r}$ is true. The set of models of a specification $s$ is noted $\calM_s$.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Qualitative representation of a model of a specification].
+The \term[Qualitative representation of a model of a specification]{qualitative representation of a model} \tuple{I,D} of a specification \tuple{O,C} is a complete direct labeled graph \tuple{N,E,\lambda} such that the elements of $O$ are in bijection with those of $N$ and \funsig{\lambda}{E}{2^{A_{13}}} is a total function from the arcs to temporal relations such that for each $\fun{I}{x}\ r\ \fun{I}{y}$, $\fun{\lambda}{\tuple{x,y}}=r$.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Adaptation constraint].
+An \term{adaptation constraint} $a$ determines a set of possible executions $M_a$. The set of adaptation constraints will be noted $A$.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Classification of adaptation, Compliant specification, Refining adaption, Transgressive adaption]
+Three types of adaptation can be identified in function of the value of $\calM_s\cap\calM_p$ (inducing three different constraints on the model selection function $\alpha$):
+\begin{description}
+ \item [\term{Compliant specification}] $\calM_s\cap\calM_p=\calM_s$,: the source document satisfies the adaptation constraints (all models of $\calM_s$, satisfy the adaptation constraints. so $\alpha$ is identity).
+ \item [\term{Refining adaptation}] $\emptyset\subset\calM_s\cap\calM_p\subset\calM_s$: there exists some models of $s$ satisfying the adaptation constraints ($\fun{\alpha}{\calM_s}=\calM_s\cap\calM_p$).
+ \item [\term{Transgressive adaptation}] $\calM_s\cap\calM_p=\emptyset$: no model of $s$ satisfies the adaptation constraints ($\alpha$ will then select some models of $\calM_p$, closest to those of the specification $s$).
+\end{description}
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Distance between sets of models]
+The \term{distance between sets of models} is defined as:
+\begin{equation}
+\fun{\Delta}{\calM,\calM'}=F_{m\in\calM,m'\in\calM'}\fun{d}{m,m'}
+\end{equation}
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Distance between resolved relation graphs]
+The \term{distance between resolved relation graphs} is defined as:
+\begin{equation}
+\fun{d}{\lambda,\lambda'}=\displaystyle\sum_{n,n'\in N}\left\{\begin{array}{ll}
+1&\mbox{if }\fun{\lambda}{\tuple{n,n'}}\neq\fun{\lambda'}{\tuple{n,n'}}\\
+0&\mbox{otherwise}
+\end{array}\right.
+\end{equation}
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Distance between interval relations based on endpoints]
+The \term{distance between interval relations based on endpoints} is defined as:
+\begin{equation}
+\fun{\delta}{r,r'}=\displaystyle\sum_{i=1}^4\left\{\begin{array}{ll}
+1&\mbox{if }\fun{\gamma}{r}\flatbrak{i}\neq\fun{\gamma}{r'}\flatbrak{i}\\
+0&\mbox{otherwise}
+\end{array}\right.
+\end{equation}
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Distance between models based on endpoints]
+The \term{distance between models based on endpoints} is defined as:
+\begin{equation}
+\fun{d}{\lambda,\lambda'}=\displaystyle\sum_{n,n'\in N}\fun{\delta}{\fun{\lambda}{\tuple{n,n'}},\fun{\lambda'}{\tuple{n,n'}}}
+\end{equation}
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Conceptual neighborhood relation]
+The \term{conceptual neighborhood relation} is a binary relation $N_{\Gamma}^X$ between elements of a set of relations $\Gamma$ such that $\fun{N_{\Gamma}^X}{r,r'}$ \iffTx{} the continuous transformation $X$ of a situation involving two individuals $x$ and $y$ can transform $\fun{r}{x,y}$ into $\fun{r'}{x,y}$ without transiting by a third relation.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Conceptual distance between two relations]
+The \term[Conceptual distance between two relations]{conceptual distance $\delta'$ between two relations} is the length of the shortest path between $r$ and $r'$ in the graph of $N_{\Gamma}^X$.
+\cite{conf/ijcai/EuzenatLD03}
+\end{defi}
+
+\begin{defi}[Conceptual distance between models]
+The \term{conceptual distance between models} is defined as:
+\begin{equation}
+\fun{d}{\lambda,\lambda'}=\displaystyle\sum_{n,n'\in N}\fun{\delta'}{\fun{\lambda}{\tuple{n,n'}},\fun{\lambda'}{\tuple{n,n'}}}
+\end{equation}
+\cite{conf/ijcai/EuzenatLD03}
 \end{defi}
