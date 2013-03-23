@@ -18,8 +18,9 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
 namespace PaperMiners {
@@ -27,15 +28,58 @@ namespace PaperMiners {
 	[XmlRoot("Library")]
 	public class Library {
 
+		private readonly HashSet<Paper> occurenceCheck = new HashSet<Paper>();
+		private List<Paper> papers = new List<Paper>();
+		private Blob blob;
+		private string blobPath;
+
 		[XmlArray("Papers")]
 		[XmlArrayItem("Paper")]
-		public HashSet<Paper> Papers {
-			get;
-			set;
+		public List<Paper> Papers {
+			get {
+				return this.papers;
+			}
+			set {
+				this.papers = value;
+				this.occurenceCheck.Clear();
+				foreach(Paper pap in value) {
+					this.occurenceCheck.Add(pap);
+				}
+			}
+		}
+		[XmlAttribute("BlobPath")]
+		public string BlobPath {
+			get {
+				return this.blobPath;
+			}
+			set {
+				this.blobPath = value;
+				if(this.blobPath != null && this.blobPath != string.Empty) {
+					this.blob = new Blob(this.blobPath);
+				}
+				else {
+					this.blob = null;
+				}
+			}
 		}
 
 		public Library () {
-			this.Papers = new HashSet<Paper>();
+			this.papers = new List<Paper>();
+			this.occurenceCheck = new HashSet<Paper>();
+		}
+
+		public static Library LoadFromStream (Stream stream) {
+			XmlSerializer xmls = new XmlSerializer(typeof(Library));
+			return (Library)xmls.Deserialize(stream);
+
+		}
+
+		[MethodImpl(MethodImplOptions.Synchronized)]
+		public void AddPaper (Paper paper) {
+			if(this.occurenceCheck.Add(paper)) {
+				this.papers.Add(paper);
+				paper.StoreInBlob(this.blob);
+			}
 		}
 
 	}

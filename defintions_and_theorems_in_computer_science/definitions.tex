@@ -3,12 +3,17 @@
 \author{Willem Van Onsem\\\url{https://github.com/KommuSoft/publications}}
 \date{Version 0.1.1}
 \usepackage{amsthm,amsfonts,makeidx,draftwatermark,amssymb,MnSymbol,ifthen}
-\usepackage[nottoc]{tocbibind}
+\usepackage[nottoc,chapter,numbib,numindex]{tocbibind}
 \usepackage[annataritalic]{tengwarscript}
 \usepackage[hidelinks,pdfborder=0 0 0,pdfpagelabels,plainpages=false,linktocpage=false,pdfcreator={LaTeX}]{hyperref}
 \SetWatermarkScale{7}
 \usepackage[cm]{fullpage}
 \makeindex
+
+\newcommand{\negsim}{\mathop{\sim}} 
+\DeclareRobustCommand\dashsim{\mathrel{|}\joinrel\mathrel{\smash{\sim}}}
+\DeclareRobustCommand\negdashsim{\mathrel{|}\joinrel\mathrel{\smash{\negsim}}}
+
 \newcommand{\cointerval}[2]{\ensuremath{\left[#1,#2\right[}}
 \newcommand{\ocinterval}[2]{\ensuremath{\left]#1,#2\right]}}
 \newcommand{\oointerval}[2]{\ensuremath{\left]#1,#2\right[}}

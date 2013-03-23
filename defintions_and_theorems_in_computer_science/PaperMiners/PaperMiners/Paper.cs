@@ -18,7 +18,7 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-using System;
+using System.Net;
 using System.Xml.Serialization;
 
 namespace PaperMiners {
@@ -93,6 +93,13 @@ namespace PaperMiners {
 		}
 		public override int GetHashCode () {
 			return this.Title.GetHashCode()^Utils.HashEnumerable(this.Authors);
+		}
+
+		public void StoreInBlob (Blob blob) {
+			WebClient wc = new WebClient();
+			wc.UseDefaultCredentials = true;
+			wc.Headers.Add("user-agent", "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6)");
+			blob.AddData(wc.DownloadData(this.Url));
 		}
 
 	}

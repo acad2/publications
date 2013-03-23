@@ -25,7 +25,13 @@ namespace PaperMiners {
 
 	public class Blob {
 
-		public Blob () {
+		Stream stream;// = new Stream();
+
+		public Blob (string path) {
+
+		}
+
+		public void AddData (byte[] data) {
 
 		}
 

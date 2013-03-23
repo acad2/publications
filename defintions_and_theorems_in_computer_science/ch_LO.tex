@@ -728,11 +728,52 @@ $\gamma$ is an \term{admissible type-$k$-system of subsets} of $S$ \iffTx{} \faT
  \item [$C_2$] $s_2\in S_i$ implies $s_1\in S_i$.
  \item [$C_3$] $s_1\in S_i$ \iffTx{} $s_2\in S_i$.
 \end{description}
-
 \cite{conf/ijcai/Florath75}
 \end{defi}
 
 \begin{defi}[Cycle within an operator set of a conjunctive problem space]
 Within the operator set $F$ of a conjunctive problem space, there is a \term[Cycle within an operator set of a conjunctive problem space]{cycle} with respect to the relation $\succ$ \iffTx{} there are operators $f_{i_1},f_{i_2},\ldots,f_{i_l}$ such that $f_{i_1}\succ f_{i_2}\succ\ldots\succ f_{i_l}$.
 \cite{conf/ijcai/Florath75}
+\end{defi}
+
+\section{Epistemic State}
+
+\begin{defi}[Epistemic state, Admissible belief states]
+An \term{epistemic state} $\pounds$ is a triple $\tuple{S,\prec,l}$, where $S$ is a set of objects called \term{admissible belief states}, $\prec$ is a preference relation on $S$, while $l$ is a labeling function assigning each admissible state a deductively closed theory.
+\cite{conf/ijcai/Bochman99}
+\end{defi}
+
+\begin{defi}[Sceptically valid in an epistemic state]
+A conditional $A\dashsim B$ will be said to be \term{sceptically valid in an epistemic state} $\pounds$ if all preferred states in $\brak{A}$ support $A\rightarrow B$.
+\cite{conf/ijcai/Bochman99}
+\end{defi}
+
+\begin{defi}[Credulously valid in an epistemic state]
+A conditional $A\dashsim B$ will be said to be \term{credulously valid in an epistemic state} $\pounds$ if either $\brak{A}$ is empty or at least one preferred state in $\brak{A}$ supports $A\rightarrow B$.
+\cite{conf/ijcai/Bochman99}
+\end{defi}
+
+\begin{defi}[Credulous nonmonotonic inference relation, Rational monotony]
+A nonmonotonic inference relation will be called \term[Credulous nonmonotonic inference relation]{credulous} if it is regular and satisfies \term{Rational Monotony}:
+\begin{equation}
+\brak{\mbox{RM}}\ \mbox{If} A\dashsim B\mbox{ and } A\negdashsim C\mbox{, then } A\wedge C\dashsim B
+\end{equation}
+\cite{conf/ijcai/Bochman99}
+\end{defi}
+
+\begin{defi}[Permissive inference relation, Cut rule, Or rule]
+An inference relation will be called \term[Permissive inference relation]{permissive} if it satisfies the basic postulates and the \term{Cut rule}:
+\begin{equation}
+\brak{\mbox{Cut}}\ \mbox{If} A\dashsim B\mbox{ and } A\wedge B\dashsim C\mbox{, then } A\dashsim C
+\end{equation}
+It can be shown that, in the context of $B$, Cut implies the \term[Or rule]{rule Or}:
+\begin{equation}
+\brak{\mbox{Or}}\ \mbox{If} A\dashsim C\mbox{ and } B\dashsim C\mbox{, then } A\vee B\dashsim C
+\end{equation}
+\cite{conf/ijcai/Bochman99}
+\end{defi}
+
+\begin{defi}[Permissively valid conditional in an epistemic state]
+A conditional $A\dashsim B$ will be said to be \term[permissively valid conditional in an epistemic state]{permissively valid in an epistemic state} $\pounds$ if any preferred state in $\brak{A}$ is consistent with $A\wedge B$.
+\cite{conf/ijcai/Bochman99}
 \end{defi}
