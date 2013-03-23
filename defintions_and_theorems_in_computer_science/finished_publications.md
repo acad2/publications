@@ -17,10 +17,15 @@ Finished:
 - 003_018.pdf
 - 003_019.pdf
 - 004_026.pdf
+- 005_002.pdf
 
 Skipped:
 
 - 003_015.pdf
+
+Errors:
+
+- 005_002.pdf: definition 4 makes no sense
 
  = April =
  = May =

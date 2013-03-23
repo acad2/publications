@@ -1,1 +1,132 @@
 \chapter{Formal Languages and Automata Theory}
+
+\begin{defi}
+A \term{nondeterministic finite automaton} consists of a set $S$ of states. One of these states, $s0\in S$, is called the \term{starting state} of the automaton and a subset $F\subseteq S$ of the states are \term{accepting states}. Additionally, we have a set $T$ of \term{transitions}. Each transition $t$ connects a pair of states $s_1$ and $s_2$ and is labeled with a symbol, which is either a character $c$ from the alphabet $\Sigma$, or the symbol $\varepsilon$, which indicates an \term{epsilon-transition}. A transition from state $s$ to state $t$ on the symbol $c$ is written as $s^ct$.\cite{mogensen2009basics}
+\end{defi}
+
+\begin{defi}
+Given a set $M$ of nondeterministic finite automaton states, we define the \term{$\varepsilon$-closure(M)} to be the least (in terms of the subset relation) solution to the set equation:
+\begin{equation}
+\fun{\varepsilon\mbox{-closure}}{M} = M\cup \left\{t|s\in \fun{\varepsilon\mbox{-closure}}{M}\mbox{ and }s^\varepsilon t\in T \right\}
+\end{equation}
+Where $T$ is the set of transitions in the non deterministic finite automaton.\cite{mogensen2009basics}
+\end{defi}
+
+\begin{defi}[Big-Oh notation]
+If $f,g$ are two functions from $\NNN$ to $\NNN$, then we
+\begin{enumerate}
+ \item say that $f=\term{\bigoh{g}}$ if there exists a constant $c$ such that $\ffun{n}\leq c\gfun{n}$ for every sufficiently large $n$,
+ \item say that $f=\term{\bigomega{g}}$ if $g = \bigoh{f}$,
+ \item say that $f=\term{\bigtheta{g}}$ is $f = \bigoh{g}$ and $g = \bigoh{f}$,
+ \item say that $f=\term{\smalloh{g}}$ if for every $\varepsilon>0$, $\ffun{n}\leq\varepsilon\gfun{n}$ for every sufficiently large $n$, and
+ \item say that $f=\term{\smallomega{g}}$ if $g=\smalloh{f}$.
+\end{enumerate}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Computing a function and running time]
+Let $\btobfun{f}$ and let $\funsig{T}{\NNN}{\NNN}$ be some functions, and let $M$ be a Turing machine. We say that $M$ \term{computes $f$} if for every $x\in\binarystrings$, whenever $M$ is initialized to the start configuration on input $x$, then it halts with $\ffun{x}$ written on its output tape. We say $M$ \term{computes $f$ in $\fun{T}{n}$-time} if its computation on every input $x$ requires at most $\fun{T}{\left|x\right|}$ steps.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{DTIME}]
+Let $\funsig{T}{\NNN}{\NNN}$ be some function. A language $L$ is in $\fun{\term{\compclass{DTIME}}}{\fun{T}{n}}$ if and only f there is a Turing machine that runs in time $c\fun{T}{n}$ for some constant $c>0$ and decides $L$.
+\end{defi}
+
+\begin{defi}[The class \compclass{P}]
+\begin{equation}
+\term{\compclass{P}}=\displaystyle\cup_{c\geq1}\fun{\compclass{DTIME}}{n^c}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{NTIME}]
+For every function $\funsig{T}{\NNN}{\NNN}$ and $L\subseteq\binarystrings$, we say that $L\in\fun{\term{\compclass{NTIME}}}{\fun{T}{n}}$ if there is a constant $c>0$ and a $c\fun{T}{n}$-time non deterministic Turing Machine $M$ such that for every $x\in\binarystrings$, $x\in L\leftrightarrow\fun{M}{x}=1$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{NP}]
+\begin{equation}
+\term{\compclass{NP}}=\displaystyle\cup_{c\geq1}\fun{\compclass{NTIME}}{n^c}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Reduction, \compclass{NP-hard} and \compclass{NP-complete}]
+A language $L\subseteq\binarystrings$ is \term{polynomial-time Karp reducible} to a language $L'\subseteq\binarystrings$ (sometimes shortened to just ``\term{polynomial-time reducible}''), denoted by $L\leq_p L'$, if there is a polynomial-time computable function $\btobfun{f}$ such that for every $x\in\binarystrings$, $x\in L$ if and only if $\ffun{x}\in L'$. We say that $L'$ is \term{\compclass{NP-hard}} if $L\leq_p L'$ for every $L\in\compclass{NP}$. We say that $L$ is \term{\compclass{NP-complete}} if $L'$ is \compclass{NP-hard} and $L'\in\compclass{NP}$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[Complement language]
+If $L\subseteq\binarystrings$ is a language, then we denote by $\overline{L}$ the \term{complement language} of $L$. That is, $\overline{L}=\binarystrings\setminus L$.
+\cite{arora2009computational}
+\end{defi}
+
+\begin{defi}[The class \compclass{coNP}]
+\begin{equation}
+\term{\compclass{coNP}}=\left\{\overline{L}:L\in\compclass{NP}\right\}.
+\end{equation}
+\cite{arora2009computational}
+\end{defi}
+
+\begin{theo}[Efficient universal Turing machine]
+\label{theo:eutm}
+There exists a Turing Machine $\mathcal{U}$ such that for every $x,\alpha\in\binarystrings$, $\fun{\mathcal{U}}{x,\alpha} = \fun{M_{\alpha}}{x}$, where $M_{\alpha}$ denotes the Turing Machine represented by $\alpha$. Moreover, if $M_{\alpha}$ halts on input $x$ within $T$ steps then $\fun{\mathcal{U}}{x,\alpha}$ halts within $CT\log T$ steps, where $C$ is a number independent of $\left|x\right|$ and depending only on $M_{\alpha}$'s alphabet size, number of tapes, and number of states.
+\cite{arora2009computational}
+\end{theo}
+
+\begin{theo}
+\label{theo:uncomputable}There exists a function $\btoblfun{{\sf UC}}$ that is not computable by any Turing Machine.
+\begin{proof}
+The function $\sl UC$ is defined as follows: For every $\alpha\in\binarystrings$, if $\fun{M_{\alpha}}{\alpha}=1$, then $\fun{\sl UC}{\alpha}=0$; otherwise (if $\fun{M_{\alpha}}{\alpha}$ outputs a different value or enters an infinite loop), $\fun{\sl UC}{\alpha}=1$. Suppose for the sake of contradiction that ${\sl UC}$ is computable and hence there exists a Turing Machine $M$ such that $\fun{M}{\alpha}=\fun{{\sl UC}}{\alpha}$ for every $\alpha\in\binarystrings$. Then, in particular, $\fun{M}{\left\lfloor M\right\rfloor}=\fun{{\sl UC}}{\left\lfloor M\right\rfloor}$. But this is impossible: By the definition of ${\sl UC}$, $\fun{{\sl UC}}{\left\lfloor M\right\rfloor}=1\leftrightarrow\fun{M}{\left\lfloor M\right\rfloor}=1$.
+\cite{arora2009computational}
+\end{proof}
+\end{theo}
+
+\begin{theo}
+{\slHALT} is not computable by any Turing Machine.
+\begin{proof}
+Suppose, for the sake of contradiction, that there was a Turing Machine $M_{\slHALT}$ computing $\slHALT$. We will use $M_{\slHALT}$ to show a Turing Machine $M_{\slUC}$ computing $\slUC$, contradicting Theorem \ref{theo:uncomputable}. The Turing Machine $M_{\slUC}$ is simple: On input $\alpha$, $M_{\slUC}$ runs $\fun{M_{\slHALT}}{\alpha,\alpha}$. If the result is 0 (meaning that $M_\alpha$ does not halt on $\alpha$), then $M_{\slUC}$ outputs $1$. Otherwise, $M_{\slUC}$ uses the universal Turing Machine $\mathcal{U}$ to compute $b=\fun{M_{\alpha}}{\alpha}$. If $b=1$, then $M_{\slUC}$ outputs $0$; otherwise, it outputs $1$. Under the assumption that $\fun{M_{\slHALT}}{\alpha,\alpha}$ outputs $\fun{\slHALT}{\alpha,\alpha}$ within a finite number of steps, the Turing Machine $\fun{M_{\slUC}}{\alpha}$ will output $\fun{\slUC}{\alpha}$.
+\cite{arora2009computational}
+\end{proof}
+\end{theo}
+
+\begin{theo}[\term{Time Hierarchy Theorem}]
+\label{theo:tht}
+If $f,g$ are time-constructible functions satisfying $\ffun{n}\log\ffun{n}=\smalloh{\gfun{n}}$, then
+\begin{equation}
+\dtime{\ffun{n}}\subsetneq\dtime{\gfun{n}}.
+\end{equation}
+\begin{proof}
+To showcase the essential idea of the proof of Theorem \ref{theo:tht} with minimal notation, we prove the simpler statement $\dtime{n}\subsetneq\dtime{n^{1.5}}$. Consider the following Turing machine $D$: ``On input $x$, run for $\abs{x}^{1.4}$ steps the Universal Turing Machine $\mathcal{U}$ of Theorem \ref{theo:eutm} to simulate the execution of $M_x$ on $x$. If $\mathcal{U}$ outputs some bit $b\in\binary$ in this time, then output the opposite answer (i.e., output $1-b$). Else output 0.'' Here $M_x$ is the machine represented by the string $x$. By definition, $D$ halts within $n^{1.4}$ steps and hence the language $L$ decided by $D$ is in $\dtime{n^{1.5}}$. We claim that $L\notin\dtime{n}$. For contradiction's sake, assume that there is some Turing Machine $M$ and constant $c$ such that Turing Machine $M$, given any input $x\in\binarystrings$, halts within $c\abs{x}$ steps and outputs $\fun{D}{x}$. The time to simulate $M$ by the universal Turing machine $\mathcal{U}$ on every input x is at most $c'c\abs{
+x}\log\abs{x}$ for some number $c'$ that depends on the alphabet size and number of tapes and states of $M$ but is independent of $\abs{x}$. There is some number $n_0$ such that $n^{1.4} > c'cn\log n$ for every $n\geq n_0$. Let $x$ be a string representing the machine $M$ whose length is at least $n_0$ (such a string exists since $M$ is represented by infinitely many strings). Then, $\fun{D}{x}$ will obtain the output $b=\fun{M}{x}$ within $\abs{x}^{1.4}$ steps, but by definition of $D$, we have $\fun{D}{x}=1-b=\fun{M}{x}$. Thus we have derived a contradiction. The proof Theorem \ref{theo:tht} for general $f,g$ is similar and uses the observation that the slowdown in simulating a machine using $\mathcal{U}$ is at most logarithmic.
+\cite{arora2009computational}
+\end{proof}
+\end{theo}
+
+\begin{theo}[\term{Nondeterministic Time Hierarchy Theorem}]
+\label{theo:ndtht}
+If $f,g$ are time constructible functions satisfying $\ffun{n+1}= \smalloh{\gfun{n}}$, then
+\begin{equation}
+\ntime{\ffun{n}}\subsetneq\ntime{\gfun{n}}.
+\end{equation}
+\begin{proof}
+We just showcase the main idea by proving $\ntime{n}\subsetneq\ntime{n^{1.5}}$. The first instinct is to duplicate the proof of Theorem \ref{theo:tht}, since there is a universal Turing machine for nondeterministic computation as well. However, this alone does not suffice because the definition of the new machine $D$ requires the ability to ``flip the answer'', in other words, to efficiently compute, given the description of an nondeterminstic Turing machine $M$ and an input $x$, the value $1-\fun{M}{x}$. It is not obvious how to do this using the universal nondeterministic machine: it is unclear how a nondeterministic machine can just ``flip the answer''. Specifically, we do not expect that that the complement of an $\ntime{n}$ language will be in $\ntime{n^{1.5}}$. Now of course, the complement of every $\ntime{n}$ language is trivially decidable in exponential time (even deterministically) by examining all the
+possibilities for the machine's nondeterministic choices, but on first sight this seems to be completely irrelevant to proving $\ntime{n}\subsetneq\ntime{n^{1.5}}$. Surprisingly, this trivial exponential simulation of a nondeterministic machine does suffice to establish a hierarchy theorem. The key idea will be lazy diagonalization, so named because the new machine $D$ is in no hurry to diagonalize and only ensures that it flips the answer of each linear time nondeterminstic Turing machine $M_i$ in only one string out of a sufficiently large (exponentially large) set of strings. Define the function $\funsig{f}{\NNN}{\NNN}$ as follows: $\ffun{1}=2$ and $\ffun{i+1}=2^{\ffun{i}^{1.2}}$. Given $n$, it's not hard to find in $\bigoh{n^1.5}$ time the number $i$ such that $n$ is sandwiched between $\ffun{i}$ and $\ffun{i+1}$. Our diagonalizing machine $D$ will try to flip the answer of $M_i$ on some input in the set $\left\{1^n:\ffun{i}<n\leq\ffun{i+1}\right\}$. $D$ is defined as follows:
+\begin{quote}
+``On input $x$, if $x\notin1^*$, reject. If $x=1^n$, then compute $i$ such that $\ffun{i}<n\leq\ffun{i+1}$ and
+\begin{enumerate}
+ \item If $\ffun{i}<n<\ffun{i+1}$ then simulate $M_i$ on input $1^{n+1}$ using nondeterminism in $n^{1.1}$ time and output its answer. (If $M_i$ has not halted in this time, then halt and accept.)
+ \item If $n=\ffun{i+1}$, accept $1^n$ if and only if $M_i$ rejects $1^{\ffun{i}+1}$ in $(\ffun{i}+1)^{1.1}$ time.''
+\end{enumerate}
+\end{quote}
+Part 2 requires going through all possible $2^(\ffun{i}+1)^{1.1}$ branches of $M_i$ on input $1^{\ffun{i}+1}$, but that is fine since the input size $\ffun{i+1}$ is $2^{\ffun{i}^{1.2}}$. Hence the nondeterminstic Turing machine $D$ runs in $\bigoh{n^{1.5}}$ time. Let $L$ be the language decided by $D$. We claim that $L\notin\ntime{n}$. Indeed, suppose for the sake of contradiction that $L$ is decided by an nondeterminstic Turing machine $M$ running in $cn$ steps (for some constant $c$). Since each nondeterminstic Turing machine is represented by infinitely many strings, we can find $i$ large enough such that $M=M_i$ and on inputs of length $n\geq\ffun{i}$, $M_i$ can be simulated in less than $n^{1.1}$ steps. This means that the two steps in the description of $D$ ensure, respectively, that
+
+\begin{eqnarray}
+\txIf\ffun{i}<n<\ffun{i+1},&\txthen\fun{D}{1^n}=\fun{M_i}{1^{n+1}}\label{eqn:ndtht33}\\
+\txwhereas&\fun{D}\neq\fun{M_i}{1^{\ffun{i}+1}}\label{eqn:ndtht34}
+\end{eqnarray}
+
+By our assumption $M_i$ and $D$ agree on all inputs $1^n$ for $n$ in the semi-open interval $\left(\ffun{i},\ffun{i+1}\right]$. Together with (\ref{eqn:ndtht33}), this implies that $\fun{D}{1^{\ffun{i+1}}}=\fun{M_i}{1^{\ffun{i}+1}}$, contradicting (\ref{eqn:ndtht34}).\cite{arora2009computational}
+\end{proof}
+\end{theo}

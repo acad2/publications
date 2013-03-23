@@ -1,1 +1,27 @@
 \chapter{Multiagent Systems}
+
+\begin{defi}[Sequence of decision elements, decision element, participation, positive set, neutral set, negative set, rate of return, degree of secure of rate $Z$, date of knowledge]
+The structure decision $P$ of finite set of decision elements $E=\accol{e_1,e_2,\ldots,e_Y}$ is called as \term{sequence of decision elements}: $P=\tuple{\accol{EW^+},\accol{EW^{\pm}},\accol{EW^-},Z,SP,DT}$, Where:
+\begin{enumerate}
+ \item $EW^+=\tuple{e_0,pe_0},\tuple{e_q,pe_q},\ldots,\tuple{e_p,pe_p}$; couple $\tuple{e_x,pe_x}$, where $e_x\in E$ and $pe_x\in\ccinterval{0}{1}$. Denote a \term{decision element} and \term{participation} this element in set $EW^+$; decision element $e_x\in EW^+$ will be denoted as $e_x^+$; The set $EW^+$ is called \term{positive set}, in other words it is a set of decision elements, about which the agent knows that these elements are in the environment.
+ \item $EW^{\pm}=\tuple{e_r,pe_r},\tuple{e_s,pe_s},\ldots,\tuple{e_t,pe_t}$; couple $\tuple{e_x,pe_x}$, where $e_x\in E$ and $pe_x\in\ccinterval{0}{1}$. Denote a decision element and participation this element in set $EW^+$; decision element $e_x\in EW^+$ will be denoted as $e_x^{\pm}$; The set $EW^{\pm}$ is called \term{neutral set}, in other words it is a set of decision elements, about which the agent does not know that these elements are in the environment.
+ \item $EW^-=\tuple{e_r,pe_r},\tuple{e_s,pe_s},\ldots,\tuple{e_t,pe_t}$; couple $\tuple{e_x,pe_x}$, where $e_x\in E$ and $pe_x\in\ccinterval{0}{1}$. Denote a decision element and participation this element in set $EW^-$; decision element $e_x\in EW^+$ will be denoted as $e_x^-$; The set $EW^{\pm}$ is called a \term{negative set}, in other words it is a set of decision elements, about which the agent knows that these elements are not in the environment.
+ \item $Z\in\ccinterval{0}{1}$ -- \term{rate of return}
+ \item $SP\in\ccinterval{0}{1}$ -- \term{degree of secure of rate $Z$}
+ \item $DT$ -- \term{date of knowledge}.
+\end{enumerate}
+\cite{conf/fedcsis/Sobieska-KarpinskaH12}
+\end{defi}
+
+\begin{defi}[Profile]
+Set of decision elements $E=\accol{e_1,e_2,\ldots,e_Y}$ is given. A \term{profile} $A=\accol{A^{(1)},A^{(2)},\ldots,A^{(M)}}$ is called set of $M$ decisions of finite set of decision elements $E$, such that:
+\begin{equation}
+\group{
+A^{(1)}=\tuple{\accol{EW^+}^{(1)},\accol{EW^{\pm}}^{(1)},\accol{EW^-}^{(1)},Z^{(1)},SP^{(1)},DT^{(1)}}\\\\
+A^{(2)}=\tuple{\accol{EW^+}^{(2)},\accol{EW^{\pm}}^{(2)},\accol{EW^-}^{(2)},Z^{(2)},SP^{(2)},DT^{(2)}}\\\\
+\vdots\\\\
+A^{(M)}=\tuple{\accol{EW^+}^{(M)},\accol{EW^{\pm}}^{(M)},\accol{EW^-}^{(M)},Z^{(M)},SP^{(M)},DT^{(M)}}
+}
+\end{equation}
+\cite{conf/fedcsis/Sobieska-KarpinskaH12}
+\end{defi}

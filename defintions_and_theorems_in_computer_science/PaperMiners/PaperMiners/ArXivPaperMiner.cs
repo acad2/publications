@@ -72,7 +72,7 @@ namespace PaperMiners {
 			foreach(ArXivTopic at in Enum.GetValues(typeof(ArXivTopic))) {
 				if(((long)at) != 0x00) {
 					wc.UseDefaultCredentials = true;
-					wc.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+					wc.Headers.Add("user-agent", "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6)");
 					XDocument xd = HtmlUtils.ToXDocument(wc.DownloadString("http://arxiv.org/list/cs."+at.ToString()+"/recent"));
 					//Console.WriteLine(xd);
 					xe1s = from el in xd.Descendants("{http://www.w3.org/1999/xhtml}dt").Elements("{http://www.w3.org/1999/xhtml}span") where el.Attribute("class").Value == "list-identifier" select el;

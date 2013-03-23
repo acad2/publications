@@ -1,1 +1,132 @@
 \chapter{Artificial Intelligence}
+
+\section{Knowledge Representation}
+
+\begin{defi}[Belief change scenario]
+A \term{belief change scenario} is a triple $B=\tuple{K,R,C}$, where $K$, $R$ and $C$ are sets of formula over a fixed propositional language $\calLcalP$. Informally, $K$ is a \term{knowledge base} which is to be modified in such a way that the resulting knowledge base includes all elements from $R$ and does not include any element from $C$. The modified knowledge base corresponding to $B$ will be denoted by $K\dotplus R\dotminus C$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Belief change extension, Unique (inconsistent) belief change extension]
+Let $B=\tuple{K,R,C}$ be a belief change scenario over $\calLcalP$. Define a new set $\calP'$ of atoms, isomorphic with $\calP$, given by $\calP'=\accol{p':p\in\calP}$. Let $K'$ be a knowledge base obtained from $K$ by replacing any $p\in\calP$ by $p'\in\calP'$. Let $EQ$ be a maximal (with respect to set inclusion) set of equivalences $\accol{p\Leftrightarrow p'|p\in\calP}$ such that $\fun{Th}{K'\cup EQ\cup R}\cap\brak{C\cup\bot}=\emptyset$. The set $\fun{Th}{K'\cup EQ\cup R}\cap\calLcalP$ is called a \term{belief change extension} of $B$. If there is no such set $EQ$, then $B$ is inconsistent and $\calLcalP$ is a \term{unique (inconsistent) belief change extension} of $B$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Class of all belief change extensions]
+Let $\accol{E_i}_{i\in I}$ be the \term{class of all belief change extensions} of $B=\tuple{K,R,C}$. Then
+\begin{equation}
+K\dotplus R\dotminus C=\displaystyle\bigcap_{i\in I}E_i
+\end{equation}
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Knowledge base, Observation, Defeasible statement, Domain axiom]
+A \term{knowledge base} is a triple $KB=\tuple{OB,DS,DA}$, where $OB$, $DS$ and $DA$ are finite sets of formulas. These sets are referred to as \term{observation}s, \term{defeasible statement}s and \term{domain axiom}s, respectively.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Revision formula, Revision]
+Let $KB=\tuple{OB,DS,DA}$ be a knowledge base and suppose that $\alpha$ is a \term{revision formula} representing a new observation. A \term{revision} of $KB$ by $\alpha$, written $KB\ast\alpha$, is a new knowledge base given by $\tuple{OB_1,DS,DA}$, where $OB_1=OB\oplus\accol{\alpha}\ominus\accol{\neg DA\hat{}}$. Here $\accol{\alpha}\ominus\accol{\neg DA\hat{}}$ is a finite representation of the modified knowledge base corresponding to belief change scenario $\tuple{OB,\accol{\alpha},\accol{\neg DA\hat{}}}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Belief set corresponding to]
+Let $KB=\tuple{OB,DS,DA}$ be a knowledge base. A \term{belief set corresponding to} $KB$, written $B_{KB}$, is given
+by $DS\dotplus\brak{OB\cup DA}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}[Prioritized belief revision of $KB$ by $\alpha$]
+Let $KB=\tuple{OB,DS,DA}$ be a knowledge base and $\alpha$ be a revision formula. Let $OB_1=OB\oplus\accol{\alpha}\ominus\accol{\neg DA\hat{}}$. The \term{prioritized belief revision of $KB$ by $\alpha$} with respect to priorities $DS_1<DS_2<\ldots<DS_n$, written $KB\ast^{\flatbrak{DS_1<DS_2<\ldots<DS_n}}\alpha$, is the formula
+\begin{equation}
+DS_1\dotplus\brak{DS_2\oplus\ldots\brak{DS_n\oplus (OB_1\cup DA)\ldots}}.
+\end{equation}
+\cite{}
+\end{defi}
+
+\begin{defi}[Closure of a knowledge base]
+Let $*CW\ A$ be any closed world assumption policy among (basic) Closed World Assumption (CW A), Generalized Closed World Assumption (GCW A), Extended Generalized Closed World Assumption (EGCW A), Careful Closed World Assumption (CCW A) and Extended Closed World Assumption (ECW A). Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$ and $\tuple{P,Q,Z}$ a partition of $\fun{\mbox{Var}}{\Sigma}$. The \term[Closure of a knowledge base]{closure} $\fun{*CW\ A}{\Sigma,\tuple{P,Q,Z}}$ of $\Sigma$ given $\tuple{P,Q,Z}$ \wrtTx{} $*CW\ A$ is the formula $\Sigma\cup\accol{\neg\alpha|\alpha\mbox{ is a $*CW\ A$-free for negation formula \wrtTx{} $\Sigma$ and $\tuple{P,Q,Z}$}}$.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Closed World Assumption-free}{CW A-free} for negation \iffTx{} $\alpha$ is a positive literal \stTx{} $\Sigma\nvDash\alpha$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Generalized Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Generalized Closed World Assumption-free}{GCW A-free} for negation \iffTx{} $\alpha$ is a positive literal and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Extended Generalized Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Generalized Closed World Assumption-free}{EGCW A-free} for negation \iffTx{} $\alpha$ is a conjunction of positive literals and for each positive clause $\gamma$ \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Careful Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Careful Closed World Assumption-free}{CCW A-free} for negation \iffTx{} $\alpha$ is a literal from $L_P^+$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Extended Closed World Assumption-free for negation formula]
+Let $\Sigma$ and $\alpha$ be two formulas from $\mbox{PROP}_{\mbox{ps}}$ and let $\tuple{P,Q,Z}$ be partition of $\fun{\mbox{Var}}{\Sigma}$. $\alpha$ is \termabbrev{Extended Closed World Assumption-free}{ECW A-free} for negation \iffTx{} $\fun{\mbox{Var}}{\alpha}\cap Z=\emptyset$ and for each clause $\gamma$ containing only literals from $L_P^+\cup L_Q$  and \stTx{} $\Sigma\nvDash\gamma$ holds, $\Sigma\nvDash\alpha\vee\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[*CWA clause inference, *CWA literal inference]
+Let $*CWA$ be any closed world assumption policy among (basic) Closed World Assumption (CW A), Generalized Closed World Assumption (GCW A), Extended Generalized Closed World Assumption (EGCW A), Careful Closed World Assumption (CCW A) and Extended Closed World Assumption (ECW A).  \term{*CWA clause inference} is the following decision:
+\begin{enumerate}
+ \item Input: A formula $\Sigma$ and clause $\gamma$ from $\mbox{PROPS}_{\mbox{PS}}$, a partition $\tuple{P,Q,Z}$ of $\funm{Var}{\Sigma}$ and a CWA policy $*CWA$
+ \item Query: Does $\fun{*CW\ A}{\Sigma,\tuple{P,Q,Z}}\vDash\gamma$ holds?
+\end{enumerate}
+\term{*CWA literal inference} is the restriction of the corresponding $*CWA$ clause inference problem where $\gamma$ is restricted to be a literal.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Blake formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \term{Blake formula} \iffTx{} $\Sigma$ is a CNF formula and for every implicate $\gamma$ of $\Sigma$, there exists a clause $\pi$ in $\Sigma$ \stTx{} $\pi\vDash\gamma$ holds.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Disjunct normal form formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \termabbrev{Disjunction normal form formula}{DNF formula} \iffTx{} $\Sigma$ is a finite disjunction of terms.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Horn cover formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \term{Horn cover formula} \iffTx{} $\Sigma$ is a finite disjunction of Horn CNF formulas.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Renamable Horn cover formula]
+Let $\Sigma$ be a formula from $\mbox{PROP}_{\mbox{PS}}$. $\Sigma$ is a \term{renamable Horn cover formula} \iffTx{} $\Sigma$ is a finite disjunction of renamable Horn CNF formulas.
+\cite{conf/ijcai/Coste-MarquisM99}
+\end{defi}
+
+\begin{defi}[Finite representation of the modified knowledge base corresponding to belief change scenario]
+Let $KB=\tuple{OB,DS,DA}$ and suppose that $\alpha$ is a revision formula representing a domain axiom. The revised knowledge base is defined by $KB\ast\alpha=\tuple{OB1,DS,DA\cup\accol{α}}$, where $OB_1=OB\oplus\accol{\top}\ominus\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}$. Here $OB\oplus\accol{\top}\ominus\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}$ is a \term{finite representation of the modified knowledge base corresponding to belief change scenario}, $\tuple{OB,\accol{\top},\accol{\neg\brak{DA\cup\accol{\alpha}}\hat{}}}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\begin{defi}
+Let $KB=\tuple{OB,DS,DA}$ and suppose that $\alpha$ is a revision formula representing a defeasible statement. The revised knowledge base is defined by $KB\ast\alpha=\tuple{OB,DS_1,DA}$, where $DS_1=DS\oplus\accol{\alpha}$.
+\cite{conf/fedcsis/KorpusikLM12}
+\end{defi}
+
+\section{Optimization Problems}
+
+\begin{defi}
+A \term{neighborhood structure} is a function $\calN:\calS\rightarrow 2^\calS$ that assigns to every $s\in\calS$ a set of neighbors $\fun{\calN}{s}\subseteq\calS$. $\fun{\calN}{s}$ is called the neighborhood of $s$. Often, neighborhood structures are implicitly defined by specifying the changes that must be applied to a solution s in order to generate all its neighbors. The application of such an operator that produces a neighbor $s'\in\fun{\calN}{s}$ of a solution s is commonly called a \term{move}.\cite{alba05}
+\end{defi}
+
+\begin{defi}
+A \term{locally minimal solution} (or \term{local minimum}) with respect to a neighborhood structure $\calN$ is a solution $\hat{s}$ such that $\forall s\in\neigh{\hat{s}}:\ffun{\hat{s}}\leq\ffun{s}$. We call $\hat{s}$ a \term{strict locally minimum} if $\forall s\in\neigh{\hat{s}}:\ffun{\hats}<\ffun{s}$.\cite{alba05}
+\end{defi}
+
+\section{Toxicology}
+
+\begin{defi}[Performance comparison]
+The predictive accuracies of two theories are statistically equivalent then the theory with better explanatory power has \term[Performance comparison]{better performance}. Otherwise the one with higher accuracy has better performance.
+\cite{conf/ijcai/SrinivasanKMS97}
+\end{defi}

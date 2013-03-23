@@ -85,14 +85,14 @@ namespace PaperMiners {
 		public override bool Equals (object obj) {
 			if(obj is Paper) {
 				Paper pobj = (Paper)obj;
-				return pobj.Authors == this.Authors && pobj.Title == this.Title;
+				return Utils.EqualEnumerable(pobj.Authors, this.Authors) && pobj.Title == this.Title;
 			}
 			else {
 				return false;
 			}
 		}
 		public override int GetHashCode () {
-			return this.Title.GetHashCode()^this.Authors.GetHashCode();
+			return this.Title.GetHashCode()^Utils.HashEnumerable(this.Authors);
 		}
 
 	}

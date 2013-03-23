@@ -1,24 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BibTeXEntryType.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ArXivPaperMiner.cs">
     <Files>
       <File FileName="PaperMiner.cs" Line="30" Column="42" />
       <File FileName="Topic.cs" Line="26" Column="26" />
-      <File FileName="Paper.cs" Line="91" Column="61" />
-      <File FileName="ArvixPaperMiner.cs" Line="43" Column="27" />
-      <File FileName="MainClass.cs" Line="29" Column="22" />
-      <File FileName="ArvixTopic.cs" Line="67" Column="27" />
-      <File FileName="Library.cs" Line="31" Column="23" />
-      <File FileName="HtmlUtils.cs" Line="39" Column="26" />
-      <File FileName="BiBTeXEntry.cs" Line="31" Column="86" />
-      <File FileName="BibTeXEntryType.cs" Line="25" Column="37" />
-      <File FileName="DictionaryProxy.cs" Line="82" Column="18" />
+      <File FileName="Paper.cs" Line="75" Column="126" />
+      <File FileName="MainClass.cs" Line="33" Column="27" />
+      <File FileName="Library.cs" Line="38" Column="39" />
+      <File FileName="Blob.cs" Line="26" Column="19" />
+      <File FileName="HtmlUtils.cs" Line="36" Column="22" />
+      <File FileName="ArXivPaperMiner.cs" Line="96" Column="54" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="PaperMiners" expanded="True">
-            <Node name="BibTeXEntryType.cs" selected="True" />
+            <Node name="ArXivPaperMiner.cs" selected="True" />
           </Node>
         </State>
       </Pad>
