@@ -2,7 +2,7 @@
 \title{Definitions and Theorems in Computer Science}
 \author{Willem Van Onsem\\\url{https://github.com/KommuSoft/publications}}
 \date{Version 0.1.1}
-\usepackage{amsthm,amsfonts,makeidx,draftwatermark,amssymb,MnSymbol,ifthen}
+\usepackage{amsthm,amsfonts,makeidx,draftwatermark,amssymb,MnSymbol,ifthen,tikz,subfigure}
 \usepackage[nottoc,chapter,numbib,numindex]{tocbibind}
 \usepackage[annataritalic]{tengwarscript}
 \usepackage[hidelinks,pdfborder=0 0 0,pdfpagelabels,plainpages=false,linktocpage=false,pdfcreator={LaTeX}]{hyperref}
@@ -40,6 +40,8 @@
 \newcommand{\Pfun}[1]{\fun{P}{#1}}
 \newcommand{\pcond}[2]{\pfun{#1|#2}}
 \newcommand{\funf}[2]{\ensuremath{#1\left[#2\right]}}
+
+\newcommand{\sqnc}[3]{\ensuremath{#1,#2,\ldots,#3}}
 
 \newcommand{\dom}[1]{\fun{\mbox{dom}}{#1}}
 
@@ -244,6 +246,8 @@
 \part{Appendices}
 
 \begin{twocolumn}
+\listoffigures
+\listoftables
 \bibliographystyle{alpha}
 \bibliography{definitions}
 \printindex

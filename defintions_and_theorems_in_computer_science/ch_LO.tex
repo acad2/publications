@@ -553,59 +553,85 @@ The closure of an $AE$ theory $A$, \fun{C_A}{S}, is an \term[Abductive extension
 
 \section{Theorem Proving}
 
-\begin{defi}[]
+\begin{defi}[Loop in computation paths, Diamond in computation paths]
+A \term[Loop in computation paths]{loop} consists of two different computation paths going from a term $t$ to a term $t'$. A \term[Diamond in computation paths]{diamond} is a loop which has either form I or II in figure \ref{fig:loopdiamond}. We illustrate this using $\cdot$ as the main function symbol.
 \cite{conf/ijcai/Geiser75}
 \end{defi}
 
-\begin{defi}[]
+\begin{figure}[hbt!]
+\centering
+\subfigure[Form I]{\begin{tikzpicture}
+\node (A) at (0,0) {$s\cdot r$};
+\node (B) at (0,-2) {$s'\cdot r'$};
+\draw[dashed] (A) edge[out=225,in=135,->] (B);
+\draw[dashed] (A) edge[out=315,in=45,->] (B);
+\end{tikzpicture}}
+\subfigure[Form II]{\begin{tikzpicture}
+\node (A) at (0,0) {$s\cdot rl$};
+\node (B) at (0,-2) {$s'\cdot r'+s'$};
+\node (C) at (-1,-1) {$s'\cdot r'l$};
+\node (D) at (1,-1) {$s\cdot r+s$};
+\draw[dashed] (A) -- (C);
+\draw (C) -- (B);
+\draw (A) -- (D);
+\draw[dashed] (D) -- (B);
+\end{tikzpicture}}
+\caption{Different forms of a diamond in computation paths}
+\label{fig:loopdiamond}
+\end{figure}
+
+\begin{defi}[Simple variant computation paths, Homologous computation paths]
+Two computation paths are \term[Simple variant computation paths]{simple variants} if they differ by a diamond, i. e. they look like figure \ref{fig:simplevariantshomologous}. Two paths are \term[Homologous computation paths]{homologous} if there is a sequence of computation paths $P_1,P_2,\ldots,P_n$ such that $P_1$ and $P_n$ are two paths in question and for $i=1,2,\ldots,n-1$, $P_i$ and $P_{i+1}$ are simple variants. Note that homologous paths assign the same value to a term.
 \cite{conf/ijcai/Geiser75}
 \end{defi}
 
-\begin{defi}
-D e f i n i t i o n 5. 2 T w o c o m p u t a t i o n paths a r e s i m p l e
-v a r i a n t s if they d i f f e r by a d i a m o n d, i. e. they
-look like
+\begin{figure}[hbt!]
+\centering
+\begin{tikzpicture}
+\node (A) at (0,0) {$t$};
+\node (B) at (0,-1) {$s$};
+\node (C) at (0,-2) {$r$};
+\node (D) at (0,-3) {$t'$};
+\node (Dia) at (0,-1.5) {$\Diamond$};
+\draw[dashed,->] (A) -- (B);
+\draw[dashed] (B) edge[out=225,in=135,->] (C);
+\draw[dashed] (B) edge[out=315,in=45,->] (C);
+\draw[dashed,->] (C) -- (D);
+\end{tikzpicture}
+\caption{Simple variant computation paths}
+\label{fig:simplevariantshomologous}
+\end{figure}
+
+\begin{defi}[Abstract ingredients of a term, Simple ingredients of a term, Raw material in an ingredient, Control element in an ingredient]
+Let \sqnc{q_1}{q_2}{q_n} denote the occurrences of strokes in the term $t$. \funm{Ing}{t} denotes the set of list expressions obtained from \sqnc{q_1}{q_2}{q_n}, and $\cdot$,$\mbox{exp}$, according to the following rules.
+\begin{enumerate}
+ \item \sqnc{q_1}{q_2}{q_n} are in \funm{Ing}{t}
+ \item If $\underline{i}$ and $\underline{j}$ are in \funm{Ing}{t} and $f$ is $\cdot$ or $\mbox{exp}$, then \tuple{\underline{i},\underline{j},f} is in \funm{Ing}{t}.
+\end{enumerate}
+The members of \funm{Ing}{t} are called the \term[Abstract ingredients of a term]{abstract ingredients} of $t$ and are called the \term[Simple ingredients of a term]{simple ingredients} of $t$. \fun{\mbox{Ing}_0}{t} is the set of simple ingredients of $t$. In \tuple{\underline{i},\underline{j},f}, $\underline{i}$ is the raw material and $\underline{j}$ is called the control element.
 \cite{conf/ijcai/Geiser75}
 \end{defi}
 
-1\begin{defi}
-D e f i n i t i o n 6. 1. L e t q1,..., q
-denote the o c c u r e n c e s o f s t r o k e s i n the t e r m t.
-lng(t) denotes the
-set of l i s t e x p r e s s i o n s o b t a i n e d f r o m q1,... q n,
-", a n d e x p, a c c o r d i n g to the f o l l o w i n g r u l e s.
-1)
-2)
+\begin{defi}[Homorphism]
+A mapping \funsig{H}{\funm{Ing}{t}}{\funm{Ing}{t}} is a \termabbrev{homomorphism}{hom} \iffTx{} for all \tuple{\underline{i},\underline{j},f} in \funm{Ing}{t}:
+\begin{equation}
+\fun{H}{\tuple{\underline{i},\underline{j},f}} = \tuple{\fun{H}{\underline{i}},\fun{H}{\underline{j}},f}
+\end{equation}
 \cite{conf/ijcai/Geiser75}
 \end{defi}
 
-1\begin{defi}
-D e f i n i t i o n 6. Z. A m a p p i n g H: I n g ( t ) — * I n g ( s ) is a
-h o m o m o r p h i s m (horn) iff f o r a l l ( i, j, f) in Ing(t)
-H((ifji,0> = <H(iKH£),f).
-Facts about H o m o m o r p h i s m s.
-6. 3a If H, G : I n g ( t ) - * I n g ( s ) a r e h o m o m o r p h i s m s
-w h i c h a g r e e on I n g Q ( t ) t h e n H = G.
-6. 3b A n y m a p H : I n g 0 ( t ) - — * l n g ( 6 ) e x t e n d s to a
-unique horn f r o m Ing(t) into Ing(s).
-6. 3c H o r n H is 1-1 on I n g ( t ) i f f H is 1-1 on
-Ing0(t).
-There are infinitely many abstract i n g r e dients in Ing(t) only some of w h i c h r e p r e s e n t r e a l
-c o m p u t a t i o n s. W e n o w u s e the i d e a o f h o m o m o r p h i s m t o s i n g l e t h e s e out i n a p r e c i s e m a n n e r.
+\begin{defi}[Real ingredient with respect to an evaluation path]
+Let $P=\sqnc{t_1}{t_2}{t_n}$ be an evaluation path for $t$; thus $\abs{t}=t_n$. Define the homomorphism $\funf{H}{P}=\fun{H}{t_1\rightarrow t_2}\circ\fun{H}{t_2\rightarrow t_3}\circ\ldots\circ\fun{H}{t_{n-1}\rightarrow t_n}$ the set of \term[Real ingredient with respect to an evaluation path]{real ingredients with respect to $P$} is the set $\fun{\funf{H}{P}}{\fun{\mbox{Ing}_0}{t_n}}$ and is denoted \funm{Ing}{t;P}.
 \cite{conf/ijcai/Geiser75}
 \end{defi}
 
-1\begin{defi}
-Definition 6. 4. Let P: tl,,..,t be an evalua-
-tion path for t; thus ltl = tn. Define the hom
-HEP) = H[t1—~z ‘J0 Hitz-:3] 0... °H[tn_1—o tn].
-The set of (ILlfmEredients of t w. 1-.t. P is the
-set H[P3(I.ngo(tn)) and is denote.l by lng(t;P).
-\cite{conf/ijcai/Geiser75}
-\end{defi}
-
-1\begin{defi}
-Definition 7.2. Let i_and  be ingredients in
+\begin{defi}[Equivalence relation for ingredients]
+Let $\underline{i}$ and $\underline{j}$ be ingredients in \funm{Ing}{t}. We define \term[Equivalence relation for ingredients]{$\underline{i}\approx\underline{j}$} \iffTx{} there is a sequence of pairs \sqnc{\tuple{\underline{i}_1,\underline{j}_1}}{\tuple{\underline{i}_2,\underline{j}_2}}{\tuple{\underline{i}_n,\underline{j}_n}} of ingredients of \funm{Ing}{t} such that $\underline{i}=\underline{i}_n$, $\underline{j}=\underline{j}_n$ and for $k=\sqnc{1}{2}{n}$ either:
+\begin{enumerate}
+ \item $\underline{i}_k=\underline{j}_k$
+ \item there exists ingredients $\underline{u}$, $\underline{v}$, $\underline{w}$ and function symbols $f$, $g$ such that \accol{\underline{i}_k,\underline{j}_k} equals \accol{\tuple{\tuple{\underline{u},\underline{v},f},\underline{w},g},\tuple{\tuple{\underline{u},\underline{w},g},\tuple{\underline{v},\underline{w},g},f}}, or
+ \item there exists $k'$, $k''$ less than $k$ such that $\underline{i}_k=\tuple{\underline{i}_{k'},\underline{i}_{k''},f}$ and $\underline{j}_k=\tuple{\underline{j}_{k'},\underline{j}_{k''},f}$.
+\end{enumerate}
 \cite{conf/ijcai/Geiser75}
 \end{defi}
 
