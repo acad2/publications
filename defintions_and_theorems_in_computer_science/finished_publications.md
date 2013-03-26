@@ -21,6 +21,7 @@ Finished:
 - 005_024.pdf
 - 005_026.pdf
 - 006_003.pdf
+- 006_022.pdf
 
 Skipped:
 

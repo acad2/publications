@@ -172,9 +172,10 @@
 \newtheorem{defi}{Definition}
 \newtheorem{theo}{Theorem}
 
-\newcommand{\term}[2][]{\ifthenelse{\equal{#1}{}}{{\bf #2}\index{#2}}{{\bf #2}\index{#1}}}
-\newcommand{\termor}[2]{{\bf #1} (also called {\bf #2})\index{#1}\index{#2|see{#1}}}
-\newcommand{\termabbrev}[2]{{\bf #1} (sometimes abbreviated as {\bf #2})\index{#1}\index{#2|see{#1}}}
+\newcommand{\termstyle}[1]{{\bf #1}}
+\newcommand{\term}[2][]{\ifthenelse{\equal{#1}{}}{\termstyle{#2}\index{#2}}{\termstyle{#2}\index{#1}}}
+\newcommand{\termor}[2]{\termstyle{#1} (also called \termstyle{#2})\index{#1}\index{#2|see{#1}}}
+\newcommand{\termabbrev}[2]{\termstyle{#1} (sometimes abbreviated as \termstyle{#2})\index{#1}\index{#2|see{#1}}}
 
 \newcommand{\defiref}[1]{\textbf{\sc definition} \ref{def:#1}}
 

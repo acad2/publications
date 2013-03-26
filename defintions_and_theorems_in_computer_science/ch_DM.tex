@@ -357,3 +357,40 @@ for all states of $\calX$, $\calY$, $\calZ$. In case the conditioning set is emp
 \end{defi}
 
 \section{Number Theory}
+
+\section{Statistics}
+
+\begin{defi}[Related data]
+If data $d_1,d_2,\ldots,d_m$ describe a common phenomenon altogether, or they refer to the same behavior simultaneously, then they can be treated as \term{related data}.
+\cite{conf/ijcai/ZhaoN95}
+\end{defi}
+
+\begin{defi}[Qualitative correlations among related data]
+If $d_i$ and $d_j$ are two related data, then the presence of $d_i$ somewhat (qualitatively) enhances the presence of $d_j$, and the absence of $d_i$ somewhat (qualitatively) depresses the presence of $d_j$. The above effects are called \term{qualitative correlations among related data}.
+\cite{conf/ijcai/ZhaoN95}
+\end{defi}
+
+\begin{defi}[Support coefficient Function (SCF)]
+If there are $m-1$ data related to $d_i$, then the \termabbrev{support coefficient function}{SCF} of $d_i$ calculates the total effects from the related data by considering the qualitative correlations between $d_i$ and each of its related data.
+\cite{conf/ijcai/ZhaoN95}
+\end{defi}
+
+\begin{defi}[Shift interval]
+\term{Shift interval} is a dynamic region for inaccurate data. Given a standard fuzzy region for inaccurate $d_i$, the shift interval of $d_i$ varies around the standard fuzzy region on the basis of $SCF_i$. When $SCF_i$ shows that the related data support $d_i$ the shift interval of $d_i$ becomes wider than the standard fuzzy region. On the other hand, when $SCF_i$ shows that the related data do not support $d_i$, the shift interval of $d_i$ becomes narrower than the standard fuzzy region.
+\cite{conf/ijcai/ZhaoN95}
+\end{defi}
+
+\begin{defi}[Evidence based on a Support Coefficient Function (SCF)]
+$SCF_i$ determines the shift interval of $d_i$, that is, $SCF_i$ determines how widely $d_i$ is allowed to shift. The wider the shift interval, the more easily $d_i$ is identified. Therefore, SCFi provides confirmatory or disconfirmatory \term[Evidence based on a Support Coefficient Function]{evidence} for identifying $d_j$.
+\cite{conf/ijcai/ZhaoN95}
+\end{defi}
+
+\begin{defi}[Rate of correctness (RC)]
+the \term[Rate of correctness]{rate} that the identified partial component set is \termstyle{exactly the same} as the partial component set in the correct solutions.
+\cite{conf/ijcai/ZhaoN95}
+\end{defi}
+
+\begin{defi}[Rate of identification (RI)]
+The \term[Rate of identification]{rate} that the partial components in the correct solutions are \termstyle{identified}.
+\cite{conf/ijcai/ZhaoN95}
+\end{defi}
