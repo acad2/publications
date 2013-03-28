@@ -1091,3 +1091,27 @@ The \term{conceptual distance between models} is defined as:
 \end{equation}
 \cite{conf/ijcai/EuzenatLD03}
 \end{defi}
+
+\section{Model Ranking}
+
+\begin{defi}[Robust with respect to a set of defaults]
+An integer ranking $\kappa$, over models is said to be \term{robust with respect to a set of defaults} \accol{r_i}, with associated strengths \accol{s_i}, if no two defaults share a common minimal falsifying model in $\kappa$.
+\cite{conf/ijcai/BourneP99}
+\end{defi}
+
+\begin{defi}[Me-valid integer ranking]
+An integer ranking $\kappa$, over $\alpha$ set of defaults \accol{r_i}, with associated strengths \accol{s_i}, is said to be \term[Me-valid integer ranking]{me-valid} with respect to that set if it satisfies
+\begin{equation}
+\fun{\kappa}{m}=\displaystyle\sum_{\frac{r_i}{m\vDash a_i\wedge\neg b_i}}{\fun{\kappa}{r_i}}
+\end{equation}
+and for all $r$
+\begin{equation}
+\fun{\kappa}{v_r}+s_r=\fun{\kappa}{f_r}
+\end{equation}
+\cite{conf/ijcai/BourneP99}
+\end{defi}
+
+1\begin{defi}[Distinct me-valid integer rankings]
+Two me-valid rankings, $\kappa$ and $\kappa'$ are said to be \term[Distinct me-valid integer rankings]{distinct} \iffTx{} $\fun{\kappa}{r}\neq\fun{\kappa'}{r}$ for some default $r$. Such a default is said to be distinctly ranked.
+\cite{conf/ijcai/BourneP99}
+\end{defi}
