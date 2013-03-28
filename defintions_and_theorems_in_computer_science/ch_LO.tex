@@ -635,6 +635,127 @@ Let $\underline{i}$ and $\underline{j}$ be ingredients in \funm{Ing}{t}. We defi
 \cite{conf/ijcai/Geiser75}
 \end{defi}
 
+\begin{defi}[Skeptical explanation of a literal, Minimal explanation of a literal]
+Let $P$ be a consistent Extended Logic Program, and $O$ a literal. Suppose that $\Psi$ is a set of candidate priorities on $\calL_p$. A set $\psi$ of priorities is a \term[Skeptical explanation of a literal]{(skeptical) explanation of $O$} (\wrtTx{} \accol{P,\Psi}) if
+\begin{enumerate}
+ \item $\psi\subseteq\Psi$, and
+ \item $P\vDash_\psi O$.
+\end{enumerate}
+Also, $\psi$ is a \term[Minimal explanation of a literal]{minimal explanation of $O$} if no $\psi'\subset\psi$ is an explanation of $O$.
+\cite{conf/ijcai/InoueS99}
+\end{defi}
+
+\begin{defi}[Preference abduction framework, Skeptical explanation of a literal, Minimal explanation of a literal]
+A \term{preference abduction framework} is a triple \tuple{P,\Gamma,\Psi} where P is an Extended Logic Program, $\Gamma\subseteq\calL_P$ is a set of abducibles, and $\Psi$ is a set of candidate priorities on $\calL_P$. A pair \tuple{A,\psi} is a \term[Skeptical explanation of a literal]{(skeptical) explanation of a literal $O$} (\wrtTx{} \tuple{P,\Gamma,\Psi}) if
+\begin{enumerate}
+ \item $A\subseteq\Gamma$,
+ \item $\psi\subseteq\Psi$,
+ \item $P\cup A$ is consistent, and 
+ \item $P\cup A\vDash_\psi O$
+\end{enumerate}
+Also \tuple{A,\psi} is a \term[Minimal explanation of a literal]{minimal explanation of $O$} if for any explanation \tuple{A',\psi'} of $O$, $A'\subseteq A$ and $\psi'\subseteq\psi$ imply $A'=A$ and $\psi'=\psi$.
+\cite{conf/ijcai/InoueS99}
+\end{defi}
+
+\subsection{Proof Normalization}
+
+\begin{defi}[Discharged assumptions by the rule]
+At applications of $\supset I$, $\exists E$ and $\mbox{IND}$ rules, certain assumptions are said to be ``\term[Discharged assumptions by the rule]{discharged}'' by the rule. The conclusion of a proof is said to depend on the assumptions that have not been discharged.
+\cite{conf/ijcai/Goto85}
+\end{defi}
+
+\begin{defi}[Proper parameter of the inference rule]
+In applications of the rule $\forall I$, $\exists E$ and $\mbox{IND}$, the variable ``a'' (see figure \ref{fig:properparameteroftheinferencerule}) is called the \term{proper parameter of the inference rule}.
+\cite{conf/ijcai/Goto85}
+\end{defi}
+
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}
+\begin{scope}[xshift=0cm,yshift=0cm]
+\node[anchor=south] (A) at (-0.5,0) {$A$};
+\node[anchor=south] (B) at (0.5,0) {$B$};
+\node[anchor=west] (O) at (B.south east) {$\wedge I$};
+\node[anchor=north] (R) at (0,0) {$A\wedge B$};
+\draw (A.south west) -- (B.south east);
+\end{scope}
+\begin{scope}[xshift=4cm,yshift=0cm]
+\node[anchor=south] (B) at (0,0) {$A\wedge B$};
+\node[anchor=west] (O) at (B.south east) {$\wedge E$};
+\node[anchor=north] (R) at (0,0) {$A$};
+\draw (B.south west) -- (B.south east);
+\end{scope}
+\begin{scope}[xshift=8cm,yshift=0cm]
+\node[anchor=south] (B) at (0,0) {$B$};
+\node[anchor=south] (Bsup) at (B.north) {$\flatbrak{A}$};
+\draw (Bsup.south west) -- (Bsup.south east);
+\node[anchor=north] (R) at (0,0) {$A\supset B$};
+\draw (R.north west) -- (R.north east);
+\node[anchor=west] (O) at (R.north east) {$\supset I$};
+\end{scope}
+\begin{scope}[xshift=12cm,yshift=0cm]
+\node[anchor=south] (A) at (-0.5,0) {$A$};
+\node[anchor=south] (B) at (0.5,0) {$A\supset B$};
+\node[anchor=west] (O) at (B.south east) {$\supset E$};
+\node[anchor=north] (R) at (0,0) {$B$};
+\draw (A.south west) -- (B.south east);
+\end{scope}
+\begin{scope}[xshift=0cm,yshift=-2cm]
+\node[anchor=south] (B) at (0,0) {$\fun{A}{a}$};
+\node[anchor=north] (R) at (0,0) {$\fun{\forall x}{\fun{A}{x}}$};
+\draw (R.north west) -- (R.north east);
+\node[anchor=west] (O) at (R.north east) {$\forall I$};
+\end{scope}
+\begin{scope}[xshift=4cm,yshift=-2cm]
+\node[anchor=south] (B) at (0,0) {$\fun{\forall x}{\fun{A}{x}}$};
+\node[anchor=west] (O) at (B.south east) {$\forall E$};
+\node[anchor=north] (R) at (0,0) {$\fun{A}{a}$};
+\draw (B.south west) -- (B.south east);
+\end{scope}
+\begin{scope}[xshift=8cm,yshift=-2cm]
+\node[anchor=south] (B) at (0,0) {$\fun{A}{t}$};
+\node[anchor=north] (R) at (0,0) {$\fun{\exists x}{\fun{A}{x}}$};
+\draw (R.north west) -- (R.north east);
+\node[anchor=west] (O) at (R.north east) {$\exists I$};
+\end{scope}
+\begin{scope}[xshift=12cm,yshift=-2cm]
+\node[anchor=south] (A) at (-0.75,0) {$\fun{\exists x}{\fun{A}{x}}$};
+\node[anchor=south] (B) at (0.75,0) {$C$};
+\node[anchor=south] (Bsup) at (B.north) {$\flatbrak{\fun{A}{a}}$};
+\draw (Bsup.south west) -- (Bsup.south east);
+\node[anchor=west] (O) at (B.south east -| Bsup.south east) {$\exists E$};
+\node[anchor=north] (R) at (0,0) {$C$};
+\draw (A.south west) -- (B.south east -| Bsup.south east);
+\end{scope}
+\begin{scope}[xshift=6cm,yshift=-4cm]
+\node[anchor=south] (A) at (-0.75,0) {$\fun{A}{0}$};
+\node[anchor=south] (B) at (0.75,0) {$\fun{A}{\fun{s}{a}}$};
+\node[anchor=south] (Bsup) at (B.north) {$\flatbrak{\fun{A}{a}}$};
+\draw (Bsup.south west) -- (Bsup.south east);
+\node[anchor=west] (O) at (B.south east -| Bsup.south east) {$\mbox{IND}$};
+\node[anchor=north] (R) at (0,0) {$\fun{A}{t}$};
+\draw (A.south west) -- (B.south east -| Bsup.south east);
+\end{scope}
+\end{tikzpicture}
+\caption{Inference rules in natural deduction.}
+\label{fig:properparameteroftheinferencerule}
+\end{figure}
+
+\begin{defi}[Normal proof]
+A proof $\Pi$ is said to be \term[Normal proof]{normal}, if no reduction rule is applicable to $\Pi$.
+\cite{conf/ijcai/Goto85}
+\end{defi}
+
+\begin{defi}[Harrop formula class]
+The \term[Harrop formula class]{class of Harrop formulas} is defined inductively as follows:
+\begin{enumerate}
+ \item Every atomic formula is a Harrop formula
+ \item If $A$ and $B$ are Harrop formula's, then $A\wedge B$ and $\fun{\forall x}{\fun{A}{x}}$ are Harrop formulas.
+ \item If $B$ is a Harrop formula, then $A\supset B$ is a Harrop formula, regardless of the form of $A$.
+\end{enumerate}
+\cite{conf/ijcai/Goto85}
+\end{defi}
+
 \section{Critical Reasoning}
 
 \begin{defi}[Critical Environment]

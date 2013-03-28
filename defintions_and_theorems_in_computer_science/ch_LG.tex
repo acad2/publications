@@ -49,3 +49,10 @@ We allow weighted beliefs with a weight parameter coming from \ocinterval{0}{1} 
 where $A_i$ are attribute predicates and $L$, $R$, $F$ are regular atom conjunctions. Again, it is obvious in conjoint to don't ask user to express thoughts on negative information. As such there are no real negative beliefs such as $F:0$. Moreover, the reader may notice that we adopt the intuitionistic logic approach i.e., there is no assumption on any kind of law of excluded middle, as we don't necessarily assume $F:0\Leftrightarrow\left(\neg F\right):1$.
 \cite{conf/fedcsis/GiurcaSB12}
 \end{defi}
+
+\section{Empirical Law Discovery}
+
+\begin{defi}[$X$-of-$N$ representation]
+Let \accol{A_i|1\leq i\leq\mbox{MaxAtt}} be the set of attributes of a domain, and for each $A_i$, \accol{V_{ij}|1\leq j\leq\mbox{MaxAttVal}_i} be its value set where $\mbox{MaxAtt}$ is the number of attributes, and $\mbox{MaxAttVal}_i$, is the number of different values of $A_i$. An \term{$X$-of-$N$ representation} is a set, denoted as $\mbox{$X$-of-}\accol{AV_k|AV_k\mbox{ is an attribute-value pair denoted as ``}A_i=V_{i,j}\mbox{'', }1\leq k\leq N_+, N\leq N_+, 1\leq N\leq\mbox{MaxAtt}}$, where $N_+$ is the number of attribute-value pairs in the $X$-of-$N$ representation, called the size of the $X$-of-$N$ representation, and $N$ is the number of different attributes that appear in the $X$-of-$N$ representation. The value of an $X$-of-$N$ can be any number between $0$ and $N$. Given an instance, its value is $X$ \iffTx{} $X$ of the $AV_k$ are true. An attribute-value pair $\fun{AV_k}{A_i=V_{ij}}$ is true for an instance \iffTx{} attribute $A_i$, of the instance has value $V_{ij}$.
+\cite{conf/ijcai/Zheng95}
+\end{defi}
