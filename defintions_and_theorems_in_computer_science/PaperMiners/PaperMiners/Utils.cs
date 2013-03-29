@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PaperMiners {
+namespace PaperMiners.Util {
 
 	public static class Utils {
 

@@ -23,7 +23,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 
-namespace PaperMiners {
+namespace PaperMiners.Miners {
 
 	[XmlRoot("Library")]
 	public class Library {

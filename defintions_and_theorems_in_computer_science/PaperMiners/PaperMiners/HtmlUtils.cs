@@ -22,7 +22,7 @@
 using System.Web;
 using System.Xml.Linq;
 
-namespace PaperMiners {
+namespace PaperMiners.Util {
 
 	public static class HtmlUtils {
 

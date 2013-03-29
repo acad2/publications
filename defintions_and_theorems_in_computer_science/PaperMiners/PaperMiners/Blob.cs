@@ -21,7 +21,7 @@
 using System;
 using System.IO;
 
-namespace PaperMiners {
+namespace PaperMiners.Miners {
 
 	public class Blob {
 

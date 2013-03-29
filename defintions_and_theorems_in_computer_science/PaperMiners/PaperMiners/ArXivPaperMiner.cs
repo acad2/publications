@@ -25,6 +25,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Xml.Linq;
 using System.Web;
+using PaperMiners.Util;
 
 /*
 ArXiv data tree:
@@ -42,7 +43,7 @@ ArXiv data tree:
        - span (primary-subject)
 */
 
-namespace PaperMiners {
+namespace PaperMiners.Miners {
 
 	public class ArXivPaperMiner : PaperMiner {
 

@@ -21,12 +21,13 @@
 using System;
 using System.IO;
 using System.Xml.Serialization;
+using PaperMiners.Miners;
 
 namespace PaperMiners {
 
 	public class MainClass {
 
-		public static void Main () {
+		/*public static void Main () {
 			Library library = new Library();
 			ArXivPaperMiner apm = new ArXivPaperMiner();
 			foreach(Paper pap in apm.FetchPapers()) {
@@ -36,7 +37,7 @@ namespace PaperMiners {
 			FileStream fs = File.Open("library.xml", FileMode.Create, FileAccess.Write);
 			xs.Serialize(fs, library);
 			fs.Close();
-		}
+		}*/
 
 	}
 }

@@ -1,5 +1,5 @@
 //
-//  PaperMiner.cs
+//  MainWindow.cs
 //
 //  Author:
 //       Willem Van Onsem <vanonsem.willem@gmail.com>
@@ -19,15 +19,26 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using Gtk;
 
-namespace PaperMiners.Miners {
+namespace PaperMiners.UserInterface {
 
-	public abstract class PaperMiner {
+	public class MainWindow : Window {
 
-		protected PaperMiner () {
+		public MainWindow () : base(WindowType.Toplevel) {
+			this.Title = "PaperMiner";
+			this.Maximize();
+
+			this.ShowAll();
 		}
 
-		public abstract Paper[] FetchPapers ();
+		public static int Main (string[] args) {
+			Application.Init();
+			using(MainWindow mw = new MainWindow()) {
+				Application.Run();
+			}
+			return 0;
+		}
 
 	}
 }

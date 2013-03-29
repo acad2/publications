@@ -22,7 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace PaperMiners {
+namespace PaperMiners.Miners {
 
 	[XmlType("BibTeXEntry")]
 	public class BibTeXEntry {

@@ -20,8 +20,9 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System.Net;
 using System.Xml.Serialization;
+using PaperMiners.Util;
 
-namespace PaperMiners {
+namespace PaperMiners.Miners {
 
 	[XmlType("Paper")]
 	public class Paper {
