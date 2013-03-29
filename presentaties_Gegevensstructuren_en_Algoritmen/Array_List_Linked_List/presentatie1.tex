@@ -1,8 +1,9 @@
 \documentclass[handout]{beamer}
 \usepackage[dutch]{babel}
-\usepackage{tikz,listings,multicol,cclicenses}
+\usepackage{tikz,listings,multicol,cclicenses,graphicx}
 \usetikzlibrary{calc,shapes}
 \usetheme{Antibes}
+\graphicspath{../../SharedData/creative_commons/}
 \setcounter{tocdepth}{2}
 \title{Algoritmen en Gegevensstructuren 1:\\ \texttt{Array}, \texttt{ArrayList} en \texttt{LinkedList}}
 \author{Willem Van Onsem\\ \href{mailto:vanonsem.willem@gmail.com?Subject=Presentatie\%20Algoritmen\%20en\%20Gegevensstructuren\%201}{vanonsem.willem@gmail.com}}
@@ -14,6 +15,8 @@
 \lstloadlanguages{Java}
 \lstset{language=Java,basicstyle=\tiny\ttfamily}
 \tikzset{pointer/.style={->,thick,black}}
+
+\input{../../SharedData/cc_beamer}
 
 \newcounter{tmpC}
 
@@ -60,6 +63,9 @@
 \begin{document}
 \begin{frame}[plain,fragile]
 \maketitle
+\vfill
+\begin{center}\CcGroupByNcSa{0.83}{0.95ex}\\[2.5ex]{\tiny\CcNote{\CcLongnameByNcSa}}\vspace*{-2.5ex}
+\end{center}
 \end{frame}
 \begin{frame}[plain]{Inhoud}
 \begin{multicols}{2}
