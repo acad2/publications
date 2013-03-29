@@ -22,6 +22,36 @@ A binary operator $\oplus$ is said to be \term{quasi-associative} if there is a 
 A ternary operator $f$ is said to be \term{bi-quasi-associative} if there is a semi-associative operator $\otimes$ and two functions $f_L'$, $f_R'$ such that for any $l$, $n$, $r$, $f l n r = l \otimes f_L' n r = r \otimes f_R' n l$. We can fix a bi-quasi-associative operator $f$ by providing $\otimes$, $\oplus$ (associative operator for $\otimes$), $f_L'$ and $f_R'$, therefore, we will write $f$ with 4-tuple as $f\equiv \left[\left[\otimes,\oplus, f_L', f_R' \right]\right]$.\cite{conf/europar/MatsuzakiHT03}
 \end{defi}
 
+\begin{defi}[Convex subset]
+A subset $C\subseteq CDL$ is said to be \term[Convex subset]{convex} \iffTx{} \faTx{} $c_1,c_2\in C$, $c_3\in CDL$, $c_1\preceq c_3\preceq c_2$ implies $c_3\in C$
+\cite{conf/ijcai/Hirsh91}
+\end{defi}
+
+\begin{defi}[Set of minimal elements of a set, Set of maximal elements of a set]
+The \term[Set of minimal elements of a set]{set of minimal elements of $C$} is written \funm{Min}{C}, and is defined by
+\begin{equation}
+\funm{Min}{C}=\accol{c\in C|\neg\exists c'\in C\mbox{ \stTx{} }c'\prec c}
+\end{equation}
+Similarly, the \term[Set of maximal elements of a set]{set of maximal elements of $C$}, \funm{Max}{C} is
+\begin{equation}
+\funm{Max}{C}=\accol{c\in C|\neg\exists c'\in C\mbox{ \stTx{} }c'\succ c}
+\end{equation}
+\cite{conf/ijcai/Hirsh91}
+\end{defi}
+
+\begin{defi}[Definite set]
+$C$ is \term[Definite set]{definite} \iffTx{} \faTx{} $c\in C$ there exists some $s\in\funm{Min}{C}$ and some $g\in\funm{Max}{C}$ \stTx{} $s\preceq c\preceq g$
+\cite{conf/ijcai/Hirsh91}
+\end{defi}
+
+\begin{defi}[Set representable by boundary sets]
+If $C\subseteq CDL$, $S=\funm{Min}{C}$, and $G=\funm{Max}{C}$, $C$ is said to be \term[Set representable by boundary sets]{representable by boundary sets} \iffTx{}
+\begin{equation}
+C=\accol{c\in CDL|\exists s\in S, g\in G\mbox{ \stTx{} }s\preceq c\preceq g}
+\end{equation}
+\cite{conf/ijcai/Hirsh91}
+\end{defi}
+
 \section{Algebraic Structures}
 
 \begin{defi}[Left identity element] Let $S$ be a set and $\oplus$ a binary operation on $S$. An element $e\in S$ is called \term{left identity element} if $e\oplus a = a$ for all $a\in S$.\cite{Oppliger:2011:CC:2049860}

@@ -535,7 +535,7 @@ U=\accol{\phi\in\calL_0|A\cup\neg L\bar{U}\vdash_{\mbox{K45}}\phi}
 \end{defi}
 
 \begin{defi}[Cover of an $A$ theory under hypotheses]
-The \term[[Cover of an $A$ theory under hypotheses]{cover of an $AE$ theory $A$ under hypotheses $S$}, \fun{\mbox{COV}_A}{\fun{C_A}{S}}, is given by:
+The \term[Cover of an $A$ theory under hypotheses]{cover of an $AE$ theory $A$ under hypotheses $S$}, \fun{\mbox{COV}_A}{\fun{C_A}{S}}, is given by:
 \begin{equation}
 S\cup\accol{\neg L\phi|\phi\in\fun{C_A}{S}}
 \end{equation}
@@ -755,6 +755,35 @@ The \term[Harrop formula class]{class of Harrop formulas} is defined inductively
 \end{enumerate}
 \cite{conf/ijcai/Goto85}
 \end{defi}
+
+\section{Automated Reasoning}
+
+\begin{defi}[Conditional declaration]
+A pair \tuple{L,C} is called a \term{conditional declaration} if $C$ is a finite set of literals and $L$ is a declaration.
+\cite{conf/ijcai/Weidenbach93}
+\end{defi}
+
+\begin{defi}[Conditional term]
+A pair \tuple{L,C} is called a \term{conditional term} if $C$ is a finite set of literals and $L$ is a term.
+\cite{conf/ijcai/Weidenbach93}
+\end{defi}
+
+\begin{defi}[Conditional substitution]
+A pair \tuple{L,C} is called a \term{conditional substitution} if $C$ is a finite set of literals and $L$ is a substitution.
+\cite{conf/ijcai/Weidenbach93}
+\end{defi}
+
+\begin{defi}[Conditional well sorted terms]
+The set of \termabbrev{conditional well sorted terms}{cws. terms} $\calT_S$ of sort $S$ is recursively defined by:
+\begin{enumerate}
+ \item for every variable $x\in V_{\Sigma}$, $\tuple{x,\emptyset}\in\calT_{\fun{S}{\Sigma}}$
+ \item for every conditional declaration $\tuple{\fun{S}{t},C}\in\calL$, $\tuple{t,C}\in\calT_S$
+ \item for every conditionally well sorted term $\tuple{t,C}\in\calT_S$ ($S\neq\top$), substitution $\sigma=\accol{\sqnc{x_1\mapsto t_1}{x_2\mapsto t_2}{x_n\mapsto t_n}}$ with $\tuple{t_i,C_i}\in\calT_{\fun{S}{x_i}}$ \faTx{} $i$, $\brak{\displaystyle\cup_iC_i}\subseteq D$ for some finite set of literals $D$, $\tuple{t\sigma,C\sigma\cup D}\in\calT_S$
+ \item for every term $t$ we have $\tuple{t,\emptyset}\in\calT_{\top}$
+\end{enumerate}
+\cite{conf/ijcai/Weidenbach93}
+\end{defi}
+
 
 \section{Critical Reasoning}
 
