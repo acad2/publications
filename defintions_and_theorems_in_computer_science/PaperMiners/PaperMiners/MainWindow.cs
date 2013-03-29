@@ -30,7 +30,7 @@ namespace PaperMiners.UserInterface {
 		public MainWindow () {
 			Assembly ass = Assembly.GetExecutingAssembly();
 			Console.WriteLine(string.Join(",", ass.GetManifestResourceNames()));
-			Glade.XML gxml = new Glade.XML(null, "PaperMiners.MainWindow.glade", "window1", null);
+			Glade.XML gxml = new Glade.XML(null, "PaperMiners.MainWindow.glade", "mainwindow", null);
 			gxml.Autoconnect(this);
 		}
 
