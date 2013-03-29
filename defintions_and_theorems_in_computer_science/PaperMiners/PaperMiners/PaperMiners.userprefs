@@ -1,18 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Blob.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MainWindow.glade">
     <Files>
-      <File FileName="Paper.cs" Line="102" Column="30" />
-      <File FileName="Utils.cs" Line="48" Column="15" />
-      <File FileName="Library.cs" Line="73" Column="20" />
-      <File FileName="Blob.cs" Line="28" Column="17" />
-      <File FileName="ArXivPaperMiner.cs" Line="75" Column="90" />
+      <File FileName="MainWindow.cs" Line="33" Column="84" />
+      <File FileName="MainWindow.glade" Line="30" Column="40" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="PaperMiners" expanded="True">
-            <Node name="Blob.cs" selected="True" />
+            <Node name="MainWindow.glade" selected="True" />
           </Node>
         </State>
       </Pad>
