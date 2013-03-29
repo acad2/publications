@@ -1,0 +1,499 @@
+\subfigure{\begin{tikzpicture}[xscale=0.725,yscale=.8,city/.style={shape=circle,draw=black},costc/.style={yshift=-3},heurh/.style={yshift=4,gray},heurhM/.style={heurh,white},cityG/.style={city,very thick},cityM/.style={city,fill=gray}]
+\def\dy{-0.75};
+\def\dxa{4.75};
+\def\dxb{2.875};
+\def\dxc{1.125};
+\def\dxd{0.75};
+\def\dxe{0.75};
+
+\draw (-0.5*\dxa-0.5*\dxb-\dxc-0.25,0.375) rectangle (0.5*\dxa+0.5*\dxb+\dxc+0.5,6*\dy-0.375);
+
+\node[city,dashed] (S) at (0,0) {\tiny $S$};
+\node[costc] (Sc) at (S.north) {\tiny 0};
+\node[heurh] (Sh) at (S.south) {\tiny 11.8};
+
+\node[city] (A) at (-0.5*\dxa,\dy) {\tiny $A$};
+\node[costc] (Ac) at (A.north) {\tiny 3};
+\node[heurh] (Ah) at (A.south) {\tiny 10.4};
+\draw (S.south) -- (A.north);
+\node[city] (D) at (0.5*\dxa,\dy) {\tiny $D$};
+\node[costc] (Dc) at (D.north) {\tiny 4};
+\node[heurh] (Dh) at (D.south) {\tiny 8.8};
+\draw (S.south) -- (D.north);
+
+\node[city] (B) at (-0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $B$};
+\node[costc] (Bc) at (B.north) {\tiny 7};
+\node[heurh] (Bh) at (B.south) {\tiny 6.8};
+\draw (A.south) -- (B.north);
+\node[city] (D2) at (-0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $D$};
+\node[costc] (D2c) at (D2.north) {\tiny 8};
+\node[heurh] (D2h) at (D2.south) {\tiny 8.8};
+\draw (A.south) -- (D2.north);
+\node[city] (A2) at (0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $A$};
+\node[costc] (A2c) at (A2.north) {\tiny 9};
+\node[heurh] (A2h) at (A2.south) {\tiny 10.4};
+\draw (D.south) -- (A2.north);
+\node[city] (E) at (0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $E$};
+\node[costc] (Ec) at (E.north) {\tiny 6};
+\node[heurh] (Eh) at (E.south) {\tiny 6.8};
+\draw (D.south) -- (E.north);
+
+\node[city] (C) at (-0.5*\dxa-0.5*\dxb-0.5*\dxc,3*\dy) {\tiny $C$};
+\node[costc] (Cc) at (C.north) {\tiny 11};
+\node[heurh] (Ch) at (C.south) {\tiny 4};
+\draw (B.south) -- (C.north);
+\node[city] (E2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,3*\dy) {\tiny $E$};
+\node[costc] (E2c) at (E2.north) {\tiny 12};
+\node[heurh] (E2h) at (E2.south) {\tiny 6.8};
+\draw (B.south) -- (E2.north);
+\node[city] (E3) at (-0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $E$};
+\node[costc] (E3c) at (E3.north) {\tiny 10};
+\node[heurh] (E3h) at (E3.south) {\tiny 6.8};
+\draw (D2.south) -- (E3.north);
+\node[city] (B2) at (0.5*\dxa-0.5*\dxb,3*\dy) {\tiny $B$};
+\node[costc] (B2c) at (B2.north) {\tiny 13};
+\node[heurh] (B2h) at (B2.south) {\tiny 6.8};
+\draw (A2.south) -- (B2.north);
+\node[city] (B3) at (0.5*\dxa+0.5*\dxb-\dxc,3*\dy) {\tiny $B$};
+\node[costc] (B3c) at (B3.north) {\tiny 11};
+\node[heurh] (B3h) at (B3.south) {\tiny 6.8};
+\draw (E.south) -- (B3.north);
+\node[city] (F) at (0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $F$};
+\node[costc] (Fc) at (F.north) {\tiny 10};
+\node[heurh] (Fh) at (F.south) {\tiny 3};
+\draw (E.south) -- (F.north);
+\node[city] (H) at (0.5*\dxa+0.5*\dxb+\dxc,3*\dy) {\tiny $H$};
+\node[costc] (Hc) at (H.north) {\tiny 9};
+\node[heurh] (Hh) at (H.south) {\tiny 6};
+\draw (E.south) -- (H.north);
+
+\node[city] (D3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc-\dxd,4*\dy) {\tiny $D$};
+\node[costc] (D3c) at (D3.north) {\tiny 14};
+\node[heurh] (D3h) at (D3.south) {\tiny 8.8};
+\draw (E2.south) -- (D3.north);
+\node[city] (F2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,4*\dy) {\tiny $F$};
+\node[costc] (F2c) at (F2.north) {\tiny 16};
+\node[heurh] (F2h) at (F2.south) {\tiny 3};
+\draw (E2.south) -- (F2.north);
+\node[city] (H2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,4*\dy) {\tiny $H$};
+\node[costc] (H2c) at (H2.north) {\tiny 15};
+\node[heurh] (H2h) at (H2.south) {\tiny 6};
+\draw (E2.south) -- (H2.north);
+\node[city] (B4) at (-0.5*\dxa+0.5*\dxb-\dxd,4*\dy) {\tiny $B$};
+\node[costc] (B4c) at (B4.north) {\tiny 15};
+\node[heurh] (B4h) at (B4.south) {\tiny 6.8};
+\draw (E3.south) -- (B4.north);
+\node[city] (F3) at (-0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $F$};
+\node[costc] (F3c) at (F3.north) {\tiny 14};
+\node[heurh] (F3h) at (F3.south) {\tiny 3};
+\draw (E3.south) -- (F3.north);
+\node[city] (H3) at (-0.5*\dxa+0.5*\dxb+\dxd,4*\dy) {\tiny $H$};
+\node[costc] (H3c) at (H3.north) {\tiny 13};
+\node[heurh] (H3h) at (H3.south) {\tiny 6};
+\draw (E3.south) -- (H3.north);
+\node[city] (C2) at (0.5*\dxa-0.5*\dxb-0.5*\dxd,4*\dy) {\tiny $C$};
+\node[costc] (C2c) at (C2.north) {\tiny 17};
+\node[heurh] (C2h) at (C2.south) {\tiny 4};
+\draw (B2.south) -- (C2.north);
+\node[city] (E4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd,4*\dy) {\tiny $E$};
+\node[costc] (E4c) at (E4.north) {\tiny 18};
+\node[heurh] (E4h) at (E4.south) {\tiny 6.8};
+\draw (B2.south) -- (E4.north);
+\node[city] (A3) at (0.5*\dxa+0.5*\dxb-\dxc-0.5*\dxd,4*\dy) {\tiny $A$};
+\node[costc] (A3c) at (A3.north) {\tiny 15};
+\node[heurh] (A3h) at (A3.south) {\tiny 10.4};
+\draw (B3.south) -- (A3.north);
+\node[city] (C3) at (0.5*\dxa+0.5*\dxb-\dxc+0.5*\dxd,4*\dy) {\tiny $C$};
+\node[costc] (C3c) at (C3.north) {\tiny 15};
+\node[heurh] (C3h) at (C3.south) {\tiny 4};
+\draw (B3.south) -- (C3.north);
+\node[cityG] (G) at (0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $G$};
+\node[costc] (Gc) at (G.north) {\tiny 13};
+\node[heurh] (Gh) at (G.south) {\tiny 0};
+\draw (F.south) -- (G.north);
+\node[cityG] (G2) at (0.5*\dxa+0.5*\dxb+\dxc,4*\dy) {\tiny $G$};
+\node[costc] (G2c) at (G2.north) {\tiny 15};
+\node[heurh] (G2h) at (G2.south) {\tiny 0};
+\draw (H.south) -- (G2.north);
+
+\node[cityG] (G3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,5*\dy) {\tiny $G$};
+\node[costc] (G3c) at (G3.north) {\tiny 19};
+\node[heurh] (G3h) at (G3.south) {\tiny 0};
+\draw (F2.south) -- (G3.north);
+\node[cityG] (G4) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,5*\dy) {\tiny $G$};
+\node[costc] (G4c) at (G4.north) {\tiny 21};
+\node[heurh] (G4h) at (G4.south) {\tiny 0};
+\draw (H2.south) -- (G4.north);
+\node[city] (C4) at (-0.5*\dxa+0.5*\dxb-\dxd,5*\dy) {\tiny $C$};
+\node[costc] (C4c) at (C4.north) {\tiny 19};
+\node[heurh] (C4h) at (C4.south) {\tiny 4};
+\draw (B4.south) -- (C4.north);
+\node[cityG] (G5) at (-0.5*\dxa+0.5*\dxb,5*\dy) {\tiny $G$};
+\node[costc] (G5c) at (G5.north) {\tiny 17};
+\node[heurh] (G5h) at (G5.south) {\tiny 0};
+\draw (F3.south) -- (G5.north);
+\node[cityG] (G6) at (-0.5*\dxa+0.5*\dxb+\dxd,5*\dy) {\tiny $G$};
+\node[costc] (G6c) at (G6.north) {\tiny 19};
+\node[heurh] (G6h) at (G6.south) {\tiny 0};
+\draw (H3.south) -- (G6.north);
+\node[city] (F4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,5*\dy) {\tiny $F$};
+\node[costc] (F4c) at (F4.north) {\tiny 22};
+\node[heurh] (F4h) at (F4.south) {\tiny 3};
+\draw (E4.south) -- (F4.north);
+\node[city] (H4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,5*\dy) {\tiny $H$};
+\node[costc] (H4c) at (H4.north) {\tiny 21};
+\node[heurh] (H4h) at (H4.south) {\tiny 6};
+\draw (E4.south) -- (H4.north);
+
+\node[cityG] (G7) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,6*\dy) {\tiny $G$};
+\node[costc] (G7c) at (G7.north) {\tiny 25};
+\node[heurh] (G7h) at (G7.south) {\tiny 0};
+\draw (F4.south) -- (G7.north);
+\node[cityG] (G8) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,6*\dy) {\tiny $G$};
+\node[costc] (G8c) at (G8.north) {\tiny 27};
+\node[heurh] (G8h) at (G8.south) {\tiny 0};
+\draw (H4.south) -- (G8.north);
+\end{tikzpicture}}
+
+
+%COMPRESSIVE NON C WITH H
+
+
+\subfigure{\begin{tikzpicture}[xscale=0.725,yscale=.8,city/.style={shape=circle,draw=black},heurh/.style={yshift=4,gray},heurhM/.style={heurh,white},cityG/.style={city,very thick},cityM/.style={city,fill=gray}]
+\def\dy{-0.75};
+\def\dxa{4.75};
+\def\dxb{2.875};
+\def\dxc{1.125};
+\def\dxd{0.75};
+\def\dxe{0.75};
+
+\draw (-0.5*\dxa-0.5*\dxb-\dxc-0.25,0.375) rectangle (0.5*\dxa+0.5*\dxb+\dxc+0.5,6*\dy-0.375);
+
+\node[city,dashed] (S) at (0,0) {\tiny $S$};
+\node[heurh] (Sh) at (S.south) {\tiny 11.8};
+
+\node[city] (A) at (-0.5*\dxa,\dy) {\tiny $A$};
+\node[heurh] (Ah) at (A.south) {\tiny 10.4};
+\draw (S.south) -- (A.north);
+\node[city] (D) at (0.5*\dxa,\dy) {\tiny $D$};
+\node[heurh] (Dh) at (D.south) {\tiny 8.8};
+\draw (S.south) -- (D.north);
+
+\node[city] (B) at (-0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $B$};
+\node[heurh] (Bh) at (B.south) {\tiny 6.8};
+\draw (A.south) -- (B.north);
+\node[city] (D2) at (-0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $D$};
+\node[heurh] (D2h) at (D2.south) {\tiny 8.8};
+\draw (A.south) -- (D2.north);
+\node[city] (A2) at (0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $A$};
+\node[heurh] (A2h) at (A2.south) {\tiny 10.4};
+\draw (D.south) -- (A2.north);
+\node[city] (E) at (0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $E$};
+\node[heurh] (Eh) at (E.south) {\tiny 6.8};
+\draw (D.south) -- (E.north);
+
+\node[city] (C) at (-0.5*\dxa-0.5*\dxb-0.5*\dxc,3*\dy) {\tiny $C$};
+\node[heurh] (Ch) at (C.south) {\tiny 4};
+\draw (B.south) -- (C.north);
+\node[city] (E2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,3*\dy) {\tiny $E$};
+\node[heurh] (E2h) at (E2.south) {\tiny 6.8};
+\draw (B.south) -- (E2.north);
+\node[city] (E3) at (-0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $E$};
+\node[heurh] (E3h) at (E3.south) {\tiny 6.8};
+\draw (D2.south) -- (E3.north);
+\node[city] (B2) at (0.5*\dxa-0.5*\dxb,3*\dy) {\tiny $B$};
+\node[heurh] (B2h) at (B2.south) {\tiny 6.8};
+\draw (A2.south) -- (B2.north);
+\node[city] (B3) at (0.5*\dxa+0.5*\dxb-\dxc,3*\dy) {\tiny $B$};
+\node[heurh] (B3h) at (B3.south) {\tiny 6.8};
+\draw (E.south) -- (B3.north);
+\node[city] (F) at (0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $F$};
+\node[heurh] (Fh) at (F.south) {\tiny 3};
+\draw (E.south) -- (F.north);
+\node[city] (H) at (0.5*\dxa+0.5*\dxb+\dxc,3*\dy) {\tiny $H$};
+\node[heurh] (Hh) at (H.south) {\tiny 6};
+\draw (E.south) -- (H.north);
+
+\node[city] (D3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc-\dxd,4*\dy) {\tiny $D$};
+\node[heurh] (D3h) at (D3.south) {\tiny 8.8};
+\draw (E2.south) -- (D3.north);
+\node[city] (F2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,4*\dy) {\tiny $F$};
+\node[heurh] (F2h) at (F2.south) {\tiny 3};
+\draw (E2.south) -- (F2.north);
+\node[city] (H2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,4*\dy) {\tiny $H$};
+\node[heurh] (H2h) at (H2.south) {\tiny 6};
+\draw (E2.south) -- (H2.north);
+\node[city] (B4) at (-0.5*\dxa+0.5*\dxb-\dxd,4*\dy) {\tiny $B$};
+\node[heurh] (B4h) at (B4.south) {\tiny 6.8};
+\draw (E3.south) -- (B4.north);
+\node[city] (F3) at (-0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $F$};
+\node[heurh] (F3h) at (F3.south) {\tiny 3};
+\draw (E3.south) -- (F3.north);
+\node[city] (H3) at (-0.5*\dxa+0.5*\dxb+\dxd,4*\dy) {\tiny $H$};
+\node[heurh] (H3h) at (H3.south) {\tiny 6};
+\draw (E3.south) -- (H3.north);
+\node[city] (C2) at (0.5*\dxa-0.5*\dxb-0.5*\dxd,4*\dy) {\tiny $C$};
+\node[heurh] (C2h) at (C2.south) {\tiny 4};
+\draw (B2.south) -- (C2.north);
+\node[city] (E4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd,4*\dy) {\tiny $E$};
+\node[heurh] (E4h) at (E4.south) {\tiny 6.8};
+\draw (B2.south) -- (E4.north);
+\node[city] (A3) at (0.5*\dxa+0.5*\dxb-\dxc-0.5*\dxd,4*\dy) {\tiny $A$};
+\node[heurh] (A3h) at (A3.south) {\tiny 10.4};
+\draw (B3.south) -- (A3.north);
+\node[city] (C3) at (0.5*\dxa+0.5*\dxb-\dxc+0.5*\dxd,4*\dy) {\tiny $C$};
+\node[heurh] (C3h) at (C3.south) {\tiny 4};
+\draw (B3.south) -- (C3.north);
+\node[cityG] (G) at (0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $G$};
+\node[heurh] (Gh) at (G.south) {\tiny 0};
+\draw (F.south) -- (G.north);
+\node[cityG] (G2) at (0.5*\dxa+0.5*\dxb+\dxc,4*\dy) {\tiny $G$};
+\node[heurh] (G2h) at (G2.south) {\tiny 0};
+\draw (H.south) -- (G2.north);
+
+\node[cityG] (G3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,5*\dy) {\tiny $G$};
+\node[heurh] (G3h) at (G3.south) {\tiny 0};
+\draw (F2.south) -- (G3.north);
+\node[cityG] (G4) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,5*\dy) {\tiny $G$};
+\node[heurh] (G4h) at (G4.south) {\tiny 0};
+\draw (H2.south) -- (G4.north);
+\node[city] (C4) at (-0.5*\dxa+0.5*\dxb-\dxd,5*\dy) {\tiny $C$};
+\node[heurh] (C4h) at (C4.south) {\tiny 4};
+\draw (B4.south) -- (C4.north);
+\node[cityG] (G5) at (-0.5*\dxa+0.5*\dxb,5*\dy) {\tiny $G$};
+\node[heurh] (G5h) at (G5.south) {\tiny 0};
+\draw (F3.south) -- (G5.north);
+\node[cityG] (G6) at (-0.5*\dxa+0.5*\dxb+\dxd,5*\dy) {\tiny $G$};
+\node[heurh] (G6h) at (G6.south) {\tiny 0};
+\draw (H3.south) -- (G6.north);
+\node[city] (F4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,5*\dy) {\tiny $F$};
+\node[heurh] (F4h) at (F4.south) {\tiny 3};
+\draw (E4.south) -- (F4.north);
+\node[city] (H4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,5*\dy) {\tiny $H$};
+\node[heurh] (H4h) at (H4.south) {\tiny 6};
+\draw (E4.south) -- (H4.north);
+
+\node[cityG] (G7) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,6*\dy) {\tiny $G$};
+\node[heurh] (G7h) at (G7.south) {\tiny 0};
+\draw (F4.south) -- (G7.north);
+\node[cityG] (G8) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,6*\dy) {\tiny $G$};
+\node[heurh] (G8h) at (G8.south) {\tiny 0};
+\draw (H4.south) -- (G8.north);
+\end{tikzpicture}}
+
+
+
+%COMPRESSIVE NON H WITH C
+
+
+\subfigure{\begin{tikzpicture}[xscale=0.75,yscale=1,city/.style={shape=circle,draw=black},costc/.style={anchor=south east},heurh/.style={anchor=north east,gray},cityG/.style={city,very thick},cityM/.style={city,fill=gray}]
+\def\dy{-0.75};
+\def\dxa{4.75};
+\def\dxb{2.875};
+\def\dxc{1.125};
+\def\dxd{0.75};
+\def\dxe{0.75};
+
+\draw (-0.5*\dxa-0.5*\dxb-\dxc-0.45,0.3) rectangle (0.5*\dxa+0.5*\dxb+\dxc+0.5,6*\dy-0.3);
+
+\node[city,dashed] (S) at (0,0) {\tiny $S$};
+\node[costc] (Sc) at (S.west) {\tiny 0};
+
+\node[city] (A) at (-0.5*\dxa,\dy) {\tiny $A$};
+\node[costc] (Ac) at (A.west) {\tiny 3};
+\draw (S.south) -- (A.north);
+\node[city] (D) at (0.5*\dxa,\dy) {\tiny $D$};
+\node[costc] (Dc) at (D.west) {\tiny 4};
+\draw (S.south) -- (D.north);
+
+\node[city] (B) at (-0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $B$};
+\node[costc] (Bc) at (B.west) {\tiny 7};
+\draw (A.south) -- (B.north);
+\node[city] (D2) at (-0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $D$};
+\node[costc] (D2c) at (D2.west) {\tiny 8};
+\draw (A.south) -- (D2.north);
+\node[city] (A2) at (0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $A$};
+\node[costc] (A2c) at (A2.west) {\tiny 9};
+\draw (D.south) -- (A2.north);
+\node[city] (E) at (0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $E$};
+\node[costc] (Ec) at (E.west) {\tiny 6};
+\draw (D.south) -- (E.north);
+
+\node[city] (C) at (-0.5*\dxa-0.5*\dxb-0.5*\dxc,3*\dy) {\tiny $C$};
+\node[costc] (Cc) at (C.west) {\tiny 11};
+\draw (B.south) -- (C.north);
+\node[city] (E2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,3*\dy) {\tiny $E$};
+\node[costc] (E2c) at (E2.west) {\tiny 12};
+\draw (B.south) -- (E2.north);
+\node[city] (E3) at (-0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $E$};
+\node[costc] (E3c) at (E3.west) {\tiny 10};
+\draw (D2.south) -- (E3.north);
+\node[city] (B2) at (0.5*\dxa-0.5*\dxb,3*\dy) {\tiny $B$};
+\node[costc] (B2c) at (B2.west) {\tiny 13};
+\draw (A2.south) -- (B2.north);
+\node[city] (B3) at (0.5*\dxa+0.5*\dxb-\dxc,3*\dy) {\tiny $B$};
+\node[costc] (B3c) at (B3.west) {\tiny 11};
+\draw (E.south) -- (B3.north);
+\node[city] (F) at (0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $F$};
+\node[costc] (Fc) at (F.west) {\tiny 10};
+\draw (E.south) -- (F.north);
+\node[city] (H) at (0.5*\dxa+0.5*\dxb+\dxc,3*\dy) {\tiny $H$};
+\node[costc] (Hc) at (H.west) {\tiny 9};
+\draw (E.south) -- (H.north);
+
+\node[city] (D3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc-\dxd,4*\dy) {\tiny $D$};
+\node[costc] (D3c) at (D3.west) {\tiny 14};
+\draw (E2.south) -- (D3.north);
+\node[city] (F2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,4*\dy) {\tiny $F$};
+\node[costc] (F2c) at (F2.west) {\tiny 16};
+\draw (E2.south) -- (F2.north);
+\node[city] (H2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,4*\dy) {\tiny $H$};
+\node[costc] (H2c) at (H2.west) {\tiny 15};
+\draw (E2.south) -- (H2.north);
+\node[city] (B4) at (-0.5*\dxa+0.5*\dxb-\dxd,4*\dy) {\tiny $B$};
+\node[costc] (B4c) at (B4.west) {\tiny 15};
+\draw (E3.south) -- (B4.north);
+\node[city] (F3) at (-0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $F$};
+\node[costc] (F3c) at (F3.west) {\tiny 14};
+\draw (E3.south) -- (F3.north);
+\node[city] (H3) at (-0.5*\dxa+0.5*\dxb+\dxd,4*\dy) {\tiny $H$};
+\node[costc] (H3c) at (H3.west) {\tiny 13};
+\draw (E3.south) -- (H3.north);
+\node[city] (C2) at (0.5*\dxa-0.5*\dxb-0.5*\dxd,4*\dy) {\tiny $C$};
+\node[costc] (C2c) at (C2.west) {\tiny 17};
+\draw (B2.south) -- (C2.north);
+\node[city] (E4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd,4*\dy) {\tiny $E$};
+\node[costc] (E4c) at (E4.west) {\tiny 18};
+\draw (B2.south) -- (E4.north);
+\node[city] (A3) at (0.5*\dxa+0.5*\dxb-\dxc-0.5*\dxd,4*\dy) {\tiny $A$};
+\node[costc] (A3c) at (A3.west) {\tiny 15};
+\draw (B3.south) -- (A3.north);
+\node[city] (C3) at (0.5*\dxa+0.5*\dxb-\dxc+0.5*\dxd,4*\dy) {\tiny $C$};
+\node[costc] (C3c) at (C3.west) {\tiny 15};
+\draw (B3.south) -- (C3.north);
+\node[cityG] (G) at (0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $G$};
+\node[costc] (Gc) at (G.west) {\tiny 13};
+\draw (F.south) -- (G.north);
+\node[cityG] (G2) at (0.5*\dxa+0.5*\dxb+\dxc,4*\dy) {\tiny $G$};
+\node[costc] (G2c) at (G2.west) {\tiny 15};
+\draw (H.south) -- (G2.north);
+
+\node[cityG] (G3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,5*\dy) {\tiny $G$};
+\node[costc] (G3c) at (G3.west) {\tiny 19};
+\draw (F2.south) -- (G3.north);
+\node[cityG] (G4) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,5*\dy) {\tiny $G$};
+\node[costc] (G4c) at (G4.west) {\tiny 21};
+\draw (H2.south) -- (G4.north);
+\node[city] (C4) at (-0.5*\dxa+0.5*\dxb-\dxd,5*\dy) {\tiny $C$};
+\node[costc] (C4c) at (C4.west) {\tiny 19};
+\draw (B4.south) -- (C4.north);
+\node[cityG] (G5) at (-0.5*\dxa+0.5*\dxb,5*\dy) {\tiny $G$};
+\node[costc] (G5c) at (G5.west) {\tiny 17};
+\draw (F3.south) -- (G5.north);
+\node[cityG] (G6) at (-0.5*\dxa+0.5*\dxb+\dxd,5*\dy) {\tiny $G$};
+\node[costc] (G6c) at (G6.west) {\tiny 19};
+\draw (H3.south) -- (G6.north);
+\node[city] (F4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,5*\dy) {\tiny $F$};
+\node[costc] (F4c) at (F4.west) {\tiny 22};
+\draw (E4.south) -- (F4.north);
+\node[city] (H4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,5*\dy) {\tiny $H$};
+\node[costc] (H4c) at (H4.west) {\tiny 21};
+\draw (E4.south) -- (H4.north);
+
+\node[cityG] (G7) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,6*\dy) {\tiny $G$};
+\node[costc] (G7c) at (G7.west) {\tiny 25};
+\draw (F4.south) -- (G7.north);
+\node[cityG] (G8) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,6*\dy) {\tiny $G$};
+\node[costc] (G8c) at (G8.west) {\tiny 27};
+\draw (H4.south) -- (G8.north);
+\end{tikzpicture}}
+
+
+
+%COMPRESSIVE NON H NON C
+\subfigure{\begin{tikzpicture}[xscale=0.75,yscale=1,city/.style={shape=circle,draw=black},costc/.style={anchor=south east},heurh/.style={anchor=north east,gray},cityG/.style={city,very thick},cityM/.style={city,fill=gray}]
+\def\dy{-0.75};
+\def\dxa{4.75};
+\def\dxb{2.875};
+\def\dxc{1.125};
+\def\dxd{0.75};
+\def\dxe{0.75};
+
+\draw (-0.5*\dxa-0.5*\dxb-\dxc,0.3) rectangle (0.5*\dxa+0.5*\dxb+\dxc+0.5,6*\dy-0.3);
+
+\node[city,dashed] (S) at (0,0) {\tiny $S$};
+
+\node[city] (A) at (-0.5*\dxa,\dy) {\tiny $A$};
+\draw (S.south) -- (A.north);
+\node[city] (D) at (0.5*\dxa,\dy) {\tiny $D$};
+\draw (S.south) -- (D.north);
+
+\node[city] (B) at (-0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $B$};
+\draw (A.south) -- (B.north);
+\node[city] (D2) at (-0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $D$};
+\draw (A.south) -- (D2.north);
+\node[city] (A2) at (0.5*\dxa-0.5*\dxb,2*\dy) {\tiny $A$};
+\draw (D.south) -- (A2.north);
+\node[city] (E) at (0.5*\dxa+0.5*\dxb,2*\dy) {\tiny $E$};
+\draw (D.south) -- (E.north);
+
+\node[city] (C) at (-0.5*\dxa-0.5*\dxb-0.5*\dxc,3*\dy) {\tiny $C$};
+\draw (B.south) -- (C.north);
+\node[city] (E2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,3*\dy) {\tiny $E$};
+\draw (B.south) -- (E2.north);
+\node[city] (E3) at (-0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $E$};
+\draw (D2.south) -- (E3.north);
+\node[city] (B2) at (0.5*\dxa-0.5*\dxb,3*\dy) {\tiny $B$};
+\draw (A2.south) -- (B2.north);
+\node[city] (B3) at (0.5*\dxa+0.5*\dxb-\dxc,3*\dy) {\tiny $B$};
+\draw (E.south) -- (B3.north);
+\node[city] (F) at (0.5*\dxa+0.5*\dxb,3*\dy) {\tiny $F$};
+\draw (E.south) -- (F.north);
+\node[city] (H) at (0.5*\dxa+0.5*\dxb+\dxc,3*\dy) {\tiny $H$};
+\draw (E.south) -- (H.north);
+
+\node[city] (D3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc-\dxd,4*\dy) {\tiny $D$};
+\draw (E2.south) -- (D3.north);
+\node[city] (F2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,4*\dy) {\tiny $F$};
+\draw (E2.south) -- (F2.north);
+\node[city] (H2) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,4*\dy) {\tiny $H$};
+\draw (E2.south) -- (H2.north);
+\node[city] (B4) at (-0.5*\dxa+0.5*\dxb-\dxd,4*\dy) {\tiny $B$};
+\draw (E3.south) -- (B4.north);
+\node[city] (F3) at (-0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $F$};
+\draw (E3.south) -- (F3.north);
+\node[city] (H3) at (-0.5*\dxa+0.5*\dxb+\dxd,4*\dy) {\tiny $H$};
+\draw (E3.south) -- (H3.north);
+\node[city] (C2) at (0.5*\dxa-0.5*\dxb-0.5*\dxd,4*\dy) {\tiny $C$};
+\draw (B2.south) -- (C2.north);
+\node[city] (E4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd,4*\dy) {\tiny $E$};
+\draw (B2.south) -- (E4.north);
+\node[city] (A3) at (0.5*\dxa+0.5*\dxb-\dxc-0.5*\dxd,4*\dy) {\tiny $A$};
+\draw (B3.south) -- (A3.north);
+\node[city] (C3) at (0.5*\dxa+0.5*\dxb-\dxc+0.5*\dxd,4*\dy) {\tiny $C$};
+\draw (B3.south) -- (C3.north);
+\node[cityG] (G) at (0.5*\dxa+0.5*\dxb,4*\dy) {\tiny $G$};
+\draw (F.south) -- (G.north);
+\node[cityG] (G2) at (0.5*\dxa+0.5*\dxb+\dxc,4*\dy) {\tiny $G$};
+\draw (H.south) -- (G2.north);
+
+\node[cityG] (G3) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc,5*\dy) {\tiny $G$};
+\draw (F2.south) -- (G3.north);
+\node[cityG] (G4) at (-0.5*\dxa-0.5*\dxb+0.5*\dxc+\dxd,5*\dy) {\tiny $G$};
+\draw (H2.south) -- (G4.north);
+\node[city] (C4) at (-0.5*\dxa+0.5*\dxb-\dxd,5*\dy) {\tiny $C$};
+\draw (B4.south) -- (C4.north);
+\node[cityG] (G5) at (-0.5*\dxa+0.5*\dxb,5*\dy) {\tiny $G$};
+\draw (F3.south) -- (G5.north);
+\node[cityG] (G6) at (-0.5*\dxa+0.5*\dxb+\dxd,5*\dy) {\tiny $G$};
+\draw (H3.south) -- (G6.north);
+\node[city] (F4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,5*\dy) {\tiny $F$};
+\draw (E4.south) -- (F4.north);
+\node[city] (H4) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,5*\dy) {\tiny $H$};
+\draw (E4.south) -- (H4.north);
+
+\node[cityG] (G7) at (0.5*\dxa-0.5*\dxb+0.5*\dxd-0.5*\dxe,6*\dy) {\tiny $G$};
+\draw (F4.south) -- (G7.north);
+\node[cityG] (G8) at (0.5*\dxa-0.5*\dxb+0.5*\dxd+0.5*\dxe,6*\dy) {\tiny $G$};
+\draw (H4.south) -- (G8.north);
+\end{tikzpicture}}

@@ -1,0 +1,126 @@
+---- PARALLELLE VERMENIGVULDIGERS ----
+
+\begin{figure}[htb]
+\centering
+\subfigure[$1\times 1$-bit]{\begin{tikzpicture}[circuit logic US]
+\node[anchor=east,scale=0.75] (C) at (0,0) {$\begin{array}{lc}
+&a_0\\
+\times&b_0\\\hline
+&a_0b_0
+\end{array}$};
+\node[and gate,rotate=-90] (A) at (0.5,0) {};
+\draw (A.input 1) -- ++(0,0.25) node[scale=0.75,anchor=south]{$a_0$};
+\draw (A.input 2) -- ++(0,0.25) node[scale=0.75,anchor=south]{$b_0$};
+\draw (A.output) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$a_0\times b_0$};
+\end{tikzpicture}}
+\subfigure[$3\times 2$-bit]{\begin{tikzpicture}[circuit logic US]
+\node[anchor=east,scale=0.75] (C) at (0,1.25) {$\begin{array}{lccccc}
+&&&a_2&a_1&a_0\\
+\times&&&&b_1&b_0\\\hline
+&&&a_2b_0&a_1b_0&a_0b_0\\
++&&a_2b_1&a_1b_1&a_0b_1&\\\hline
+&c_4&c_3&c_2&c_1&c_0
+\end{array}$};
+\begin{scope}[xshift=2 cm]
+\node[halfadder,scale=0.75] (HA2) at (0,0) {HA$_2$};
+\node[fulladder,scale=0.75] (FA1) at (1.5,0) {FA$_1$};
+\node[halfadder,scale=0.75] (HA0) at (3,0) {HA$_0$};
+\foreach\x in {0,1} {
+  \coordinate (a\x) at (-1.5,3-1.5*\x);
+  \draw (a\x) node[anchor=east,scale=0.75] {$b_\x$};
+}
+\foreach\x in {0,1,2,3,4} {
+  \coordinate (c\x) at (4.5-1.5*\x,-0.75);
+  \draw (c\x) node[anchor=north,scale=0.75] {$c_\x$};
+}
+\node[and gate,scale=0.75,rotate=-90] (A00) at (c0 |- 0,2.375) {};
+\foreach \ad/\a in {HA0/1,FA1/2,HA2/3} {
+  \node[and gate,scale=0.75,rotate=-90] (A1\a) at (\ad.y |- 0,1) {};
+  \draw (\ad.y) -- (A1\a.output);
+}
+\foreach \a in {2,3} {
+  \draw (A1\a.input 1) -- (a1 -| A1\a.input 1);
+  \pdot{a1 -| A1\a.input 1};
+}
+\foreach \ad/\a in {HA0/1,FA1/2} {
+  \node[and gate,scale=0.75,rotate=-90] (A0\a) at (\ad.x |- 0,2.375) {};
+  \draw (\ad.x) -- (A0\a.output);
+  \draw (A0\a.input 1) -- (A0\a.input 1 |- a0);
+  \pdot{A0\a.input 1 |- a0};
+  \coordinate (ai\a) at (A0\a.input 2 |- 0,2.825);
+  \pdot{ai\a};
+}
+\coordinate (ai0) at (A00.input 2 |- 0,2.825);
+\pdot{ai0};
+\foreach\x/\y in {0/1,1/2,2/3} {
+  \draw (ai\x) -| ++(-0.75,-1) -| (A1\y.input 2);
+}
+\foreach\x in {0,1,2} {
+  \coordinate (b\x) at (A0\x.input 2 |- 0,3.25);
+  \draw (A0\x.input 2) -- (b\x) node[anchor=south,scale=0.75] {$a_\x$};
+}
+\draw (a0) -| (A00.input 1);
+\draw (a1) -| (A11.input 1);
+\draw (A00.output) -- (c0);
+\draw (c1) -- (HA0.s);
+\draw (c2) -- (FA1.s);
+\draw (c3) -- (HA2.s);
+\draw (c4) |- (HA2.co);
+\draw (HA0.co) -- (FA1.ci);
+\draw (FA1.co) -| ++(-0.2,0.6) -| (HA2.x);
+\end{scope}
+\end{tikzpicture}}
+\subfigure[$n\times m$-bit]{\begin{tikzpicture}[circuit logic US]
+\def\dh{2};
+\node[nadder,anchor=sd] (NA4) at (0,0) {$n$-opteller$_{m-1}$};
+\node[nadder,anchor=sd] (NA3) at (NA4.yc |- 0,\dh) {$n$-opteller$_{m-2}$};
+\node[white,nadder,anchor=sd] (NA2) at (NA3.yc |- 0,2*\dh) {$n$-opteller$_{m-3}$};
+\node (NA2x) at (NA2) {$\ldots$};
+\node[nadder,anchor=sd] (NA1) at (NA2.yc |- 0,3*\dh) {$n$-opteller$_2$};
+\node[nadder,anchor=sd] (NA0) at (NA1.yc |- 0,4*\dh) {$n$-opteller$_1$};
+\draw (NA4.sa) -- (NA4.sa |- 0,-0.5) node[anchor=north,scale=0.75]{$s_{m-1}$};
+\draw (NA4.sb) -- (NA4.sb |- 0,-0.5) node[anchor=north,scale=0.75]{$s_m$};
+\draw (NA4.sd) -- (NA4.sd |- 0,-0.5) node[anchor=north,scale=0.75]{$s_{m+n-2}$};
+\draw (NA4.c) -| ++ (-0.25,-0.5) -| (NA4.xd |- 0,-0.5) node[anchor=north,scale=0.75]{$s_{m+n-1}$};
+\foreach \xa/\xb in {0/1,1/2,2/3,3/4} {
+  \draw (NA\xa.sb) -- (NA\xb.ya);
+  \draw (NA\xa.sc) -- (NA\xb.yb);
+  \draw (NA\xa.sd) -- (NA\xb.yc);
+  \draw (NA\xa.c) -| ++ (-0.25,-0.5) -| (NA\xb.yd);
+}
+\foreach \xa/\i in {0/1,1/2,3/m-2} {
+  %\draw (NA\xa.yd) -- ++(0,0.25) node[anchor=south,scale=0.75]{$0$};
+  \draw (NA\xa.sa) |- ++(0.25,-0.5*\dh+0.125) |- ++(-0.25,-\dh+0.5) |- (NA\xa.sa |- 0,-0.5) node[anchor=north,scale=0.75]{$s_{\i}$};
+}
+\foreach \xa/\t in {0/1,1/2,3/m-2,4/m-1} {
+  \node[and gate,rotate=-90,scale=0.5] (Aa\xa) at (NA\xa.xa |- 0,4*\dh+1.125-\dh*\xa) {};
+  \node[and gate,rotate=-90,scale=0.5] (Ab\xa) at (NA\xa.xb |- 0,4*\dh+1.125-\dh*\xa) {};
+  \node[scale=0.75] (Ac\xa) at (NA\xa.xc |- 0,4*\dh+1.125-\dh*\xa) {$\ldots$};
+  \node[and gate,rotate=-90,scale=0.5] (Ad\xa) at (NA\xa.xd |- 0,4*\dh+1.125-\dh*\xa) {};
+  \draw (Aa\xa.input 2) |- (0,4*\dh+1.375-\dh*\xa -| NA4.west) node[scale=0.75,anchor=east]{$b_{\t}$};
+  \draw (Ab\xa.input 2) -- (Ab\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa);
+  \pdot{Ab\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa};
+  \draw (Ad\xa.input 2) -- (Ad\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa);
+  \pdot{Ad\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa};
+  \draw (NA\xa.xa) -- (Aa\xa.output);
+  \draw (NA\xa.xb) -- (Ab\xa.output);
+  \draw (NA\xa.xd) -- (Ad\xa.output);
+  \draw (Aa\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_0$};
+  \draw (Ab\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_1$};
+  \draw (Ad\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_{n-1}$};
+}
+\node[and gate,rotate=-90,scale=0.5] (Aya0) at (NA0.ya |- 0,4*\dh+1.375) {};
+\node[and gate,rotate=-90,scale=0.5] (Ayb0) at (NA0.yb |- 0,4*\dh+1.375) {};
+\node[scale=0.75] (Ayc0) at (NA0.yc |- 0,4*\dh+1.375) {$\ldots$};
+\draw (Aya0.input 2) |- (0,4*\dh+1.625 -| NA4.west) node[scale=0.75,anchor=east]{$b_{0}$};
+\draw (Ayb0.input 2) -- (Ayb0.input 2 |- 0,4*\dh+1.625);
+\pdot{Ayb0.input 2 |- 0,4*\dh+1.625};
+\draw (NA0.ya) -- (Aya0.output);
+\draw (NA0.yb) -- (Ayb0.output);
+\draw (NA0.yd) -- (NA0.yd |- Ayb0.output) node[anchor=south,scale=0.75]{$0$};
+\draw (Aya0.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_1$};
+\draw (Ayb0.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_2$};
+\end{tikzpicture}}
+\caption{Parallelle vermenigvuldigers.}
+\label{fig:parallelMultipliers}
+\end{figure}

@@ -1,0 +1,29 @@
+Hey Willem,
+
+tijdens het leren uit je cursus AI ben ik nog volgende foutjes tegengekomen:
+
+[V] 1.2 definitie state-space: "..., waarbij de staat deterministische ondubbelzinnige uitgedrukt wordt." Dit moet waarschijnlijk deterministisch en ondubbelzinnig zijn.
+[V] 2.1 3e regel: "Het betreft een sterk vereenvoudigt wegenplan." Vereenvoudigd
+[V] 2.2.1 helemaal op het einde: "We illustreren de werking van dit algoritme op het wegenplan in figuur 10 of pagina 26." Dit moet wss 'op' zijn. Op het einde van 2.2.2 staat hetzelfde.
+[V] 2.2.2 Ik zou persoonlijk geen punt zetten na "... achteraan in een wachtrij geplaatst worden." maar gewoon een komma.
+[V] 2.3.1 Begin: "Deze functie vertaalt een bepaalde toestand s in een getal r, die een schatting van de toestand is." Ik zou zetten "die een schatting is van hoe goed de toestand is."
+[V] 2.3.3 "Dit resulteert in een zoekalgoritme die niet altijd een pad oplossing garandeert." Moet dit niet "dat" zijn?
+[V] 2.3.4 Laatste alinea: "Hill Climbing 2 is een vorm van Local Search dit is ..." Komma na Search
+[V] 2.4.3 Laatste 2 zinnen. Een komma zou gepaster zijn i.p.v. een punt
+[V] 2.4.5 "Evaluatie van andere versies leid alleen maar tot overhead,.." Leidt
+[V] 4.5.4 "Hierbij gaat men uit van het idee dat men tijdens de constructie van de boom op situatie stuit die ..." situaties
+[V] 4.6.1 Look Ahead Check,3e zin: "Door te itereren over iedere constraint c(zi,zj), en na te gaan of een bepaalde waarde voor zi in di deze constraint altijd doet falen. Er klopt iets niet aan de zinsconstructie hier denk ik.
+[V] 5.2 2e zin: gaan we -er van-uit
+[V] 5.3 einde 3e alinea Dit fenomeen wordt Deep cut-offs genoemd. ("heet' staat er te veel bij)
+[V] 6.2.1 Logisch gevolg" ___, ____,____. is de huidige zinsconstructie. ____? ____ maar ____. lijkt mij meer leesbaar.
+[V] 6.3.2 voorlaatste zin: dieper ingegaan -worden-  op de materie. In de volgende zin staat nog eens dieper ingaan, mss een ander woord gebruiken daar?
+[V] 6.3.4 2e zin: voortaan zijn variabelen we-l- toegestaan.
+[V] 6.3.4 formule 25, 3e regel: er staat daar een symbool te weinig vermoed ik.
+[V] 6.3.8 Substituties toepassen: "is zeer eenvoudig(e)"
+
+Mijn excuses als het ietwat kort is uitgeschreven maar ik heb deze eerst op een kladblaadje geschreven en dan later gewoon getypt.
+
+Nogmaals bedankt voor de cursus :)
+
+
+Harm
