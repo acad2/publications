@@ -20,23 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using Gtk;
+using System.Reflection;
+using Glade;
 
 namespace PaperMiners.UserInterface {
 
-	public class MainWindow : Window {
+	public class MainWindow {
 
-		public MainWindow () : base(WindowType.Toplevel) {
-			this.Title = "PaperMiner";
-			this.Maximize();
-
-			this.ShowAll();
+		public MainWindow () {
+			Assembly ass = Assembly.GetExecutingAssembly();
+			Console.WriteLine(string.Join(",", ass.GetManifestResourceNames()));
+			Glade.XML gxml = new Glade.XML(null, "PaperMiners.MainWindow.glade", "window1", null);
+			gxml.Autoconnect(this);
 		}
 
 		public static int Main (string[] args) {
 			Application.Init();
-			using(MainWindow mw = new MainWindow()) {
-				Application.Run();
-			}
+			new MainWindow();
+			Application.Run();
 			return 0;
 		}
 
