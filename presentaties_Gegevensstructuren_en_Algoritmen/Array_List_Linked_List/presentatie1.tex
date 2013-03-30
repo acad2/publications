@@ -22,7 +22,7 @@
 
 \theoremstyle{remark}
 \newtheorem{hint}{Hint}
-\newtheorem{letop}{Letop}
+\newtheorem{letop}{Let Op!}
 
 \newcommand{\term}[1]{\textbf{#1}}
 
@@ -112,7 +112,7 @@ double[] rijVanDoubles = new double[n+k];
 \begin{hint}[Declaratie en toewijzing]
 Indien men een array wil initialiseren waarbij de elementen ook al ingevuld worden, kan men gebruik maken van accolades:
 \begin{lstlisting}
-String[] namen = new String[]{"Jan","Piet","Joris","Korneel"};
+String[] namen = new String[]{"Samson","Gert","Alberto","Octaaf"};
 \end{lstlisting}
 \end{hint}
 \end{frame}
@@ -219,16 +219,59 @@ ArrayList<ArrayList<Integer>> lijstMetLijstenMetGetallen =
 \end{lstlisting}
 \end{example}
 \end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: Primitieve types bij generische klasses}
+\begin{letop}[Primitieve types bij generische klasses]
+\small{Men kan een \dsarraylist{} declareren met elk \term{klasse-type}, primitieve types zijn niet toegelaten! Hiervoor heeft Java schaduwklasses ingevoerd:}
+\begin{table}
+\centering
+\small{\begin{tabular}{l|l}
+Primitief type&Klasse-type\\\hline
+\texttt{byte}&\texttt{Byte}\\
+\texttt{short}&\texttt{Short}\\
+\texttt{int}&\texttt{Integer}\\
+\texttt{long}&\texttt{Long}\\
+\texttt{float}&\texttt{Float}\\
+\texttt{double}&\texttt{Double}\\
+\texttt{boolean}&\texttt{Boolean}\\
+\texttt{char}&\texttt{Char}\\
+\end{tabular}}
+\caption{Omzetten van primitieve types naar klasse-types}
+\end{table}
+\end{letop}
+\end{frame}
+\subsubsection{Toevoegen en verwijderen}
+\begin{frame}[fragile]{\dsarraylist{} in Java: toevoegen en verwijderen van elementen}
+Omdat \dsarraylist{} een gewone klasse is, krijgt met toegang tot de elementen via methodes:
+\begin{itemize}
+ \item \texttt{public E add (int index)}
+ \item \texttt{public E remove (int index, E element)}
+\end{itemize}
+\end{frame}
 \subsubsection{Toegang tot elementen}
-\begin{frame}{\dsarraylist{} in Java: toegang tot elementen}
+\begin{frame}[fragile]{\dsarraylist{} in Java: toegang tot elementen}
 Omdat \dsarraylist{} een gewone klasse is, krijgt met toegang tot de elementen via methodes:
 \begin{itemize}
  \item \texttt{public E get (int index)}
  \item \texttt{public E set (int index, E element)}
 \end{itemize}
-
 \end{frame}
-\subsubsection{Toevoegen en verwijderen}
+\subsection{Lengte}
+\begin{frame}[fragile]{\dsarraylist{} in Java: lengte (aantal elementen)}
+We kunnen het aantal elementen in de \dsarraylist{} opvragen met behulp van de \texttt{size()}-methode.
+\begin{example}[Lengte van een \dsarraylist{}]
+\begin{lstlisting}
+ArrayList<String> namen = new ArrayList<String>();
+namen.add("Samson");
+namen.add("Gert");
+namen.add("Alberto");
+namen.add("Octaaf");
+System.out.println(namen.size()); //4
+\end{lstlisting}
+\end{example}
+\begin{letop}[\texttt{length} versus \texttt{size()}]
+Bij een \dsarray{} vragen we de lengte op met behulp van \texttt{.length}. Bij een \dsarraylist{} is dat met de \texttt{size()}-methode. Omgekeerd werkt dit niet!
+\end{letop}
+\end{frame}
 \subsubsection{Andere operaties}
 \subsection{Werking}
 \subsection{Implementatie}
