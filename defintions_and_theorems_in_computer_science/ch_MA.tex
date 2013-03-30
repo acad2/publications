@@ -25,3 +25,54 @@ A^{(M)}=\tuple{\accol{EW^+}^{(M)},\accol{EW^{\pm}}^{(M)},\accol{EW^-}^{(M)},Z^{(
 \end{equation}
 \cite{conf/fedcsis/Sobieska-KarpinskaH12}
 \end{defi}
+
+\section{Negotiation and Task Sharing}
+
+\begin{defi}[Deal]
+A \term{deal} is a division of $L_A\cup L_B$ to two disjoint subsets, \tuple{D_A,D_B} such that $D_A\cup D_B=L_A\cup L_B$ and $D_A\cap D_B=\emptyset$. This deal means that each agent $i$ agrees to deliver all the letters in $D_i$.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Utility for an agent]
+If \tuple{D_A,D_B} is a deal, then
+\begin{equation}
+\fun{\mbox{Utility}_i}{D_A,D_B}=\funm{Cost}{L_i}-\funm{Cost}{D_i}
+\end{equation}
+In other words, the \term[Utility for an agent]{utility for agent $i$} is the difference between the cost of achieving the goal alone and the cost of his part of the deal.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Negotiation strategy]
+A \term{negotiation strategy} is a function from the history of the negotiation to the current message (offer) that is consistent with the negotiation protocol.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Rational negotiation strategy]
+Agent $A$ will be said to be using a \term{rational negotiation strategy} if at any step $t+1$ that $A$ sticks to his last offer $\funm{Risk}{A,t}>\funm{Risk}{B,t}$
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Sufficient concessions, Minimal sufficient concession]
+\funm{SC}{A,t} is the set of all the \term{sufficient concessions} of $A$ at step $t$. That is, if agent $A$ offers the ``next step'' a deal from \funm{SC}{A,t}, then if $B$ does not make a concession in the same ``next step'', $B$ will have to do so in the step after that (assuming that $B$ is using a rational strategy). $\delta^*$ will be a \term{minimal sufficient concession} of $A$ in step $t$ if $\fun{\mbox{Utility}_B}{\delta^*}=\displaystyle\min_{\delta\in\funm{SC}{A,t}}\fun{\mbox{Utility}_B}{\delta}$.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Negotiation strategy in equilibrium]
+A negotiation strategy $s$ will be in \term[Negotiation strategy in equilibrium]{equilibrium} if the following condition holds: under the assumption that $A$ uses $s$, $B$ prefers $s$ to any other strategy.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Extended Zeuthen strategy]
+The \term{extended Zeuthen strategy} will be the Zeuthen strategy, plus the ``last step equilibrium strategy'' in last step situations.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Mixed deal]
+If \tuple{D_A,D_B} is a deal and $0\leq p\leq 1$, $p\in\RRR$, then \flatbrak{\tuple{D_A,D_B}:p} will be a \term{mixed deal}. The meaning of such a deal is that the agents will perform \tuple{D_A,D_B} with probability $p$, or \tuple{D_B,D_A} with probability $1-p$.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
+
+\begin{defi}[Cost for an agent with a mixed deal, Utility for an agent with a mixed deal]
+If \flatbrak{\tuple{D_A,D_B}:p} is a mixed deal then \term[Cost for an agent with a mixed deal]{$\fun{\mbox{Cost}_i}{\flatbrak{\tuple{D_A,D_B}:p}}=p\cdot\funm{Cost}{D_i}+\brak{1-p}\cdot\funm{Cost}{D_j}$}. If \flatbrak{\delta:p} is a mixed deal then \term[Utility for an agent with a mixed deal]{$\fun{\mbox{Utility}_i}{\flatbrak{\delta:p}}=\funm{Cost}{L_i}-\fun{\mbox{Cost}_i}{\flatbrak{\delta:p}}$}.
+\cite{conf/ijcai/ZlotkinR89}
+\end{defi}
