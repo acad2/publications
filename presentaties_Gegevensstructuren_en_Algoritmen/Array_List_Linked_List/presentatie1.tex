@@ -1,24 +1,29 @@
 \documentclass[handout]{beamer}
 \usepackage[dutch]{babel}
-\usepackage{tikz,listings,multicol,cclicenses,graphicx,animate,lstlinebgrd}
-\usetikzlibrary{calc,shapes}
+\usepackage{tikz,listings,multicol,cclicenses,graphicx,lstlinebgrd}
+\usepackage[controls]{animate}
+\usetikzlibrary{calc,shapes,fit}
 \usetheme{Antibes}
 \graphicspath{../../SharedData/creative_commons/}
 \setcounter{tocdepth}{2}
-\title{Algoritmen en Gegevensstructuren 1:\\ \texttt{Array}, \texttt{ArrayList} en \texttt{LinkedList}}
-\author{Willem Van Onsem\\ \href{mailto:vanonsem.willem@gmail.com?Subject=Presentatie\%20Algoritmen\%20en\%20Gegevensstructuren\%201}{vanonsem.willem@gmail.com} \\ \url{http://goo.gl/Qnemv}}
 \AtBeginSection[]{\begin{frame}[plain]{Inhoud}
  \begin{multicols}{2}
  \tableofcontents[currentsection]
  \end{multicols}
 \end{frame}}
 \lstloadlanguages{Java}
-\lstset{language=Java,basicstyle=\tiny\ttfamily}
-\tikzset{pointer/.style={->,thick,black}}
+\lstset{language=Java,basicstyle=\tiny\ttfamily,breaklines=true}
+\tikzset{pointer/.style={->,thick,black},pointerdot/.style={fill=black,circle,inner sep=0pt,minimum size=0.125cm},pointerbox/.style={draw=black,rectangle,minimum size=0.25 cm}}
+\newcounter{tmpA}
+\newcounter{tmpB}
+\newcounter{tmpC}
+\newcounter{tmpD}
+\newcounter{tmpE}
+
+\title{Algoritmen en Gegevensstructuren 1:\\ \texttt{Array}, \texttt{ArrayList} en \texttt{LinkedList}}
+\author{Willem Van Onsem\\ \href{mailto:vanonsem.willem@gmail.com?Subject=Presentatie\%20Algoritmen\%20en\%20Gegevensstructuren\%201}{vanonsem.willem@gmail.com} \\ \url{http://goo.gl/Qnemv}}
 
 \input{../../SharedData/cc_beamer}
-
-\newcounter{tmpC}
 
 \theoremstyle{remark}
 \newtheorem{hint}{Hint}
@@ -37,6 +42,9 @@
 \newcommand{\dsstring}{\texttt{String}}
 \newcommand{\dsobject}{\texttt{Object}}
 
+\newcommand{\strobj}[2]{
+  \node[fill=yellow!20,draw=black] (#1) {\tiny{\texttt{"#2"}}};
+}
 \newcommand{\tikzarray}[2]{
   \filldraw[fill=green!20,draw=black] (-0.25*#1,-0.25) rectangle ++(0.5*#1,0.5);
   \foreach \x in {2,3,...,#1} {
@@ -54,21 +62,57 @@
     \draw (0.5*\x-0.25*#1-0.5,-0.25) -- ++(0,0.5);
   }
   \foreach \x in {1,2,...,#1} {
-    \node[fill=black,circle,inner sep=0pt,minimum size=0.125cm] (#2\x) at (0.5*\x-0.25-0.25*#1,0) {};
+    \node[pointerdot] (#2\x) at (0.5*\x-0.25-0.25*#1,0) {};
   }
 }
-\newcommand{\methodexec}[2]{\begin{tikzpicture}[yscale=-1]
-\draw (0,0) rectangle (10,5);
-\node[anchor=north west] (C) at (-0.5,-0.5) {
-\begin{minipage}{2in}
-\lstinputlisting[linebackgroundcolor={\ifthenelse{\value{lstnumber}=#2}{\color{green}}{}}]{programs/#1}
-\end{minipage}
-};
-#2
-\end{tikzpicture}}
-\newcommand{\strobj}[2]{
-  \node[fill=yellow!20,draw=black] (#1) {\tiny{\texttt{"#2"}}};
+\newcommand{\tikzarraylist}[2]{
+  \fill[fill=green!20] (-0.25*#1-0.25,-0.25) rectangle ++(0.5*#1+0.5,0.5);
+  \draw (-0.25*#1-0.25,-0.25) rectangle ++(0.5*#1,0.5);
+  \draw[dashed] (0.25*#1-0.25,-0.25) -- ++(0.5,0);
+  \draw[dashed] (0.25*#1-0.25,0.25) -- ++(0.5,0);
+  \foreach \x in {2,3,...,#1} {
+    \draw (0.5*\x-0.25*#1-0.75,-0.25) -- ++(0,0.5);
+  }
+  \setcounter{tmpC}{0}
+  \foreach \t in {#2} {
+    \draw (0.5*\arabic{tmpC}-0.25*#1,0) node {$\t$};
+    \addtocounter{tmpC}{1}
+  }
 }
+\newcommand{\tikzarraylistptr}[2]{
+  \coordinate (LB) at (-0.25*#1-0.25,-0.25);
+  \coordinate (RT) at (0.25*#1+0.25,0.25);
+  \fill[fill=green!20] (LB) rectangle (RT);
+  \node[fit=(LB) (RT),inner sep=0pt] (#2) {};
+  \draw (-0.25*#1-0.25,-0.25) rectangle ++(0.5*#1,0.5);
+  \draw[dashed] (0.25*#1-0.25,-0.25) -- ++(0.5,0);
+  \draw[dashed] (0.25*#1-0.25,0.25) -- ++(0.5,0);
+  \foreach \x in {2,...,#1} {
+    \draw (0.5*\x-0.25*#1-0.75,-0.25) -- ++(0,0.5);
+  }
+  \foreach \x in {1,2,...,#1} {
+    \node[pointerdot] (#2\x) at (0.5*\x-0.25*#1-0.5,0) {};
+  }
+}
+\newcommand{\methodexec}[4]{\begin{tikzpicture}[yscale=-1]
+\draw (0,0) rectangle (10,5);
+\begin{scope}[xshift=0cm,yshift=0cm]
+\node[anchor=north west] (C) at (0,0) {\begin{minipage}{3in}\lstinputlisting[linebackgroundcolor={\ifthenelse{\value{lstnumber}=#2}{\color{green}}{}}]{programs/#1}\end{minipage}};
+\end{scope}
+\begin{scope}[yscale=-1,yshift=-5 cm]
+\setcounter{tmpA}{1}
+\foreach \n in {#3} {
+ \coordinate (X) at (8.5,0.5*\arabic{tmpA});
+ \node[pointerbox] (box\n) at (X) {};
+ \node[pointerdot] (ptr\n) at (X) {};
+ \node[anchor=west] (\n) at (box\n.east) {\small{\texttt{\n}}};
+ \addtocounter{tmpA}{1}
+}
+\end{scope}
+\begin{scope}[xshift=0.25,yshift=2.5 cm]
+#4
+\end{scope}
+\end{tikzpicture}}
 
 \begin{document}
 \begin{frame}[plain,fragile]

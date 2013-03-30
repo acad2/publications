@@ -7,16 +7,7 @@ Een \term{\dsarraylist{}} is een gegevensstructuur die bestaat uit een opeenvolg
 Visueel zullen we een \dsarraylist{} in deze presentatie voorstellen als een opeenvolging van hokjes, maar met een open einde. Zoals hier:
 \begin{figure}
 \begin{tikzpicture}
-\fill[fill=green!20] (0,0) rectangle (5.5,0.5);
-\draw (0,0) rectangle (5,0.5);
-\draw[dashed] (5,0) -- ++(0.5,0);
-\draw[dashed] (5,0.5) -- ++(0.5,0);
-\foreach \x in {1,2,...,9} {
-  \draw (0.5*\x,0) -- ++(0,0.5);
-}
-\foreach \x/\t in {0/a,1/b,2/c,3/d,4/e,5/f,6/g,7/h,8/i,9/j} {
-  \draw (0.5*\x+0.25,0.25) node {$\t$};
-}
+\tikzarraylist{10}{a,b,c,d,e,f,g,h,i,j}
 \end{tikzpicture}
 \caption{Voorstelling van een \dsarraylist{}}
 \end{figure}
@@ -71,52 +62,101 @@ Primitief type&Klasse-type\\\hline
 \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (E element)}}
 \begin{methodexample}
 \begin{center}
-\begin{animateinline}[poster=first,controls]{1}
-\methodexec{arraylistadd0me.java}{1}
+\begin{animateinline}{1}
+\methodexec{arraylistadd0me.java}{1}{}{
+}\newframe
+\methodexec{arraylistadd0me.java}{2}{namen}{
+\begin{scope}[xshift=8 cm]
+\tikzarraylistptr{0}{namenlist}
+\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
+\end{scope}
+}\newframe
+\methodexec{arraylistadd0me.java}{3}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=8 cm]
+\tikzarraylistptr{1}{namenlist}
+\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
+\draw[pointer] (namenlist1)  .. controls ([yshift=1cm] namenlist1) and ([xshift=1cm] elem0) .. (elem0);
+\end{scope}
+}\newframe
+\methodexec{arraylistadd0me.java}{4}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=8 cm]
+\tikzarraylistptr{2}{namenlist}
+\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
+\draw[pointer] (namenlist1)  .. controls ([yshift=1cm] namenlist1) and ([xshift=1cm] elem0) .. (elem0);
+\draw[pointer] (namenlist2)  .. controls ([yshift=-1cm] namenlist2) and ([xshift=1cm] elem1) .. (elem1);
+\end{scope}
+}\newframe
+\methodexec{arraylistadd0me.java}{5}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=8 cm]
+\tikzarraylistptr{3}{namenlist}
+\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
+\draw[pointer] (namenlist1)  .. controls ([yshift=1cm] namenlist1) and ([xshift=1cm] elem0) .. (elem0);
+\draw[pointer] (namenlist2)  .. controls ([yshift=-1cm] namenlist2) and ([xshift=1cm] elem1) .. (elem1);
+\draw[pointer] (namenlist3)  .. controls ([yshift=1cm] namenlist3) and ([xshift=1cm] elem2) .. (elem2);
+\end{scope}
+}
 \end{animateinline}
 \end{center}
 \end{methodexample}
 \end{frame}
-\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (int index, E element)}}
-\begin{methodexample}
-
-\end{methodexample}
-\end{frame}
-\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (int index)}}
-\begin{methodexample}
-
-\end{methodexample}
-\end{frame}
-\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (Object o)}}
-\begin{methodexample}
-
-\end{methodexample}
-\end{frame}
-\subsubsection{Toegang tot elementen}
-\begin{frame}[fragile]{\dsarraylist{} in Java: toegang tot elementen}
-Omdat \dsarraylist{} een gewone klasse is, krijgt met toegang tot de elementen via methodes:
-\begin{itemize}
- \item \texttt{public E get (int index)}
- \item \texttt{public E set (int index, E element)}
-\end{itemize}
-\end{frame}
-\subsection{Lengte}
-\begin{frame}[fragile]{\dsarraylist{} in Java: lengte (aantal elementen)}
-We kunnen het aantal elementen in de \dsarraylist{} opvragen met behulp van de \texttt{size()}-methode.
-\begin{example}[Lengte van een \dsarraylist{}]
-\begin{lstlisting}
-ArrayList<String> namen = new ArrayList<String>();
-namen.add("Samson");
-namen.add("Gert");
-namen.add("Alberto");
-namen.add("Octaaf");
-System.out.println(namen.size()); //4
-\end{lstlisting}
-\end{example}
-\begin{letop}[\texttt{length} versus \texttt{size()}]
-Bij een \dsarray{} vragen we de lengte op met behulp van \texttt{.length}. Bij een \dsarraylist{} is dat met de \texttt{size()}-methode. Omgekeerd werkt dit niet!
-\end{letop}
-\end{frame}
-\subsubsection{Andere operaties}
-\subsection{Werking}
-\subsection{Implementatie}
+% \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (int index, E element)}}
+% \begin{methodexample}
+% 
+% \end{methodexample}
+% \end{frame}
+% \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (int index)}}
+% \begin{methodexample}
+% 
+% \end{methodexample}
+% \end{frame}
+% \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (Object o)}}
+% \begin{methodexample}
+% 
+% \end{methodexample}
+% \end{frame}
+% \subsubsection{Toegang tot elementen}
+% \begin{frame}[fragile]{\dsarraylist{} in Java: toegang tot elementen}
+% Omdat \dsarraylist{} een gewone klasse is, krijgt met toegang tot de elementen via methodes:
+% \begin{itemize}
+%  \item \texttt{public E get (int index)}
+%  \item \texttt{public E set (int index, E element)}
+% \end{itemize}
+% \end{frame}
+% \subsection{Lengte}
+% \begin{frame}[fragile]{\dsarraylist{} in Java: lengte (aantal elementen)}
+% We kunnen het aantal elementen in de \dsarraylist{} opvragen met behulp van de \texttt{size()}-methode.
+% \begin{example}[Lengte van een \dsarraylist{}]
+% \begin{lstlisting}
+% ArrayList<String> namen = new ArrayList<String>();
+% namen.add("Samson");
+% namen.add("Gert");
+% namen.add("Alberto");
+% namen.add("Octaaf");
+% System.out.println(namen.size()); //4
+% \end{lstlisting}
+% \end{example}
+% \begin{letop}[\texttt{length} versus \texttt{size()}]
+% Bij een \dsarray{} vragen we de lengte op met behulp van \texttt{.length}. Bij een \dsarraylist{} is dat met de \texttt{size()}-methode. Omgekeerd werkt dit niet!
+% \end{letop}
+% \end{frame}
+% \subsubsection{Andere operaties}
+% \subsection{Werking}
+% \subsection{Implementatie}
