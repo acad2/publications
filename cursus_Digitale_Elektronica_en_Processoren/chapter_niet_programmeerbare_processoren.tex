@@ -1531,13 +1531,14 @@ $\#$&1&2&2&2&3&3&2&0\\
  \item $\usestt{n}$: dit is een verzameling van variabelen die in toestand $n$ gebruikt worden om berekeningen uit te voeren. Voor toestand $S_5$ is dit dus: $\usestt{S_5}=\left\{t_8,t_9\right\}$
  \item $\defstt{n}$: dit is de verzameling van alle variabelen die in een toestand $n$ gedefinieerd worden. Indien we niet weten of een variabele in een bepaalde toestand zal gedefinieerd worden
 \end{itemize}
-Het algoritme berekent vervolgens twee sets per toestand:
+We dienen vervolgens de volgende twee sets te berekenen per toestand:
 \begin{itemize}
- \item $\instt{n}$
- \item $\outstt{n}$
+ \item $\instt{n}$: een variabele zit in $\instt{n}$ voor een toestand $n$ wanneer er een uitvoer-pad bestaat waarbij de variabele levend is bij het binnenkomen van die toestand.
+ \item $\outstt{n}$: een variabele zit in $\outstt{n}$ voor een toestand $n$ wanneer er een uitvoer-pad bestaat waarbij de variabele levend is bij het verlaten van die toestand.
 \end{itemize}
+Het algoritme die deze sets kan berekenen staat in \algoref{alg:calculatingLiveness}.
 \begin{algorithm}[hbt]
-\caption{Berekenen van liveness.}\label{alg:calculatingLiveness.}
+\caption{Berekenen van liveness.}\label{alg:calculatingLiveness}
 \begin{algorithmic}[1]
 \Function{Liveness}{$\succst{n}$,$\usestt{n}$,$\defstt{n}$}
 \ForAll{$n$}
@@ -1552,39 +1553,26 @@ Het algoritme berekent vervolgens twee sets per toestand:
 \State $\outstt{n}\gets\displaystyle\cup_{s\in\succst{n}}\instt{s}$
 \EndFor
 \Until{$\forall n: \inastt{n}=\instt{n}\wedge\outastt{n}=\outstt{n}$}
-\Return $\left(\instt{n},\outstt{n}\right)$
+\State \Return $\left(\instt{n},\outstt{n}\right)$
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+Het algoritme werkt op basis van least-fixed-point theorie. Hierbij berekenen we de sets door ze te initialiseren als lege sets. En vervolgens deze telkens te updaten. Wanneer we een iteratie bereiken waarbij geen enkele set aangepast wordt, weten we dat dit in de volgende iteratie ook niet zal gebeuren. Bijgevolg kunnen we stoppen. In tabel \ref{tbl:lifenessEvolution} staan de $\succst{n}$, $\usestt{n}$ en $\defstt{n}$ tabellen samen met de nodige iteraties om de $\instt{n}$ en $\outstt{n}$ set uit te rekenen. We kunnen opmerken dat de $\instt{n}$ set dus overeenkomt met de levensduurtabel (zie tabel \ref{tbl:variableLifespanExample}).
 \begin{table}[hbt]
 \centering
-\begin{tabular}{c|ccc}
-$n$&$\succst{n}$&$\usestt{n}$&$\defstt{n}$\\\hline
-0&$\left\{0,1\right\}$&$\emptyset$&$\left\{t_1,t_2\right\}$\\
-1&$\left\{2\right\}$&$\left\{t_1,t_2\right\}$&$\left\{t_3,t_4\right\}$\\
-2&$\left\{3\right\}$&$\left\{t_3,t_4\right\}$&$\left\{t_5,t_6\right\}$\\
-3&$\left\{4\right\}$&$\left\{t_5,t_6\right\}$&$\left\{t_7,t_8\right\}$\\
-4&$\left\{5\right\}$&$\left\{t_5,t_7\right\}$&$\left\{t_9\right\}$\\
-5&$\left\{6\right\}$&$\left\{t_8,t_9\right\}$&$\left\{t_{10}\right\}$\\
-6&$\left\{7\right\}$&$\left\{t_5,t_{10}\right\}$&$\left\{t_{11}\right\}$\\
-7&$\left\{0\right\}$&$\emptyset$&$\emptyset$
+\begin{tabular}{c||ccc||cc|cc|cc}
+$n$&$\succst{n}$&$\usestt{n}$&$\defstt{n}$&$\instti{n}{0}$&$\outstti{n}{0}$&$\instti{n}{1}$&$\outstti{n}{1}$&$\instti{n}{2}$&$\outstti{n}{2}$\\\hline
+0&$\left\{0,1\right\}$&$\emptyset$&$\left\{t_1,t_2\right\}$&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}\\
+1&$\left\{2\right\}$&$\left\{t_1,t_2\right\}$&$\left\{t_3,t_4\right\}$&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}\\
+2&$\left\{3\right\}$&$\left\{t_3,t_4\right\}$&$\left\{t_5,t_6\right\}$&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}\\
+3&$\left\{4\right\}$&$\left\{t_5,t_6\right\}$&$\left\{t_7,t_8\right\}$&	\accol{t_5,t_6}&	\accol{t_5,t_7}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}\\
+4&$\left\{5\right\}$&$\left\{t_5,t_7\right\}$&$\left\{t_9\right\}$&	\accol{t_5,t_7}&	\accol{t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}\\
+5&$\left\{6\right\}$&$\left\{t_8,t_9\right\}$&$\left\{t_{10}\right\}$&	\accol{t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}\\
+6&$\left\{7\right\}$&$\left\{t_5,t_{10}\right\}$&$\left\{t_{11}\right\}$&	\accol{t_5,t_{10}}&	$\emptyset$&		\accol{t_5,t_{10}}&	$\emptyset$&		\accol{t_5,t_{10}}&	$\emptyset$\\
+7&$\left\{0\right\}$&$\emptyset$&$\emptyset$&	$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$
 \end{tabular}
-\caption{Tabellen op basis van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
-\end{table}
-\begin{table}[hbt]
-\centering
-\begin{tabular}{c|cc|cc|cc}
-$n$&$\instt{n}$&$\outstt{n}$&$\instt{n}$&$\outstt{n}$&$\instt{n}$&$\outstt{n}$\\\hline
-0&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}\\
-1&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}\\
-2&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}\\
-3&	\accol{t_5,t_6}&	\accol{t_5,t_7}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}\\
-4&	\accol{t_5,t_7}&	\accol{t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}\\
-5&	\accol{t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}\\
-6&	\accol{t_5,t_{10}}&	$\emptyset$&		\accol{t_5,t_{10}}&	$\emptyset$&		\accol{t_5,t_{10}}&	$\emptyset$\\
-7&	$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$
-\end{tabular}
-\caption{Tabellen op basis van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
+\caption{De evolutie van de $\instt{n}$- en $\outstt{n}$-set op basis van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
+\label{tbl:lifenessEvolution}
 \end{table}
 \paragraph{Nut}Men kan zich terecht afvragen wat het nut is van het opstellen van zo'n tabel. Wanneer welke variabele actief is, is niet zo nuttig. Het interessante aspect zit hem eerder in de onderste rij: het aantal actieve variabelen per toestand. Dit getal specificeert immers hoeveel registers we in die toestand eigenlijk nodig hebben om de variabelen te bewaren. De overige variabelen dienen we immers niet meer op te slaan, ze worden verder nergens meer gebruikt. Vermits we in elke toestand slechts een aantal registers nodig hebben, is het totaal aantal benodigde registers niets anders dan het maximum van de onderste rij over alle toestanden. In het geval van het leidend voorbeeld is dit dus:
 \begin{equation}
