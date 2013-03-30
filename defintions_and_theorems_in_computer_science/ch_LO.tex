@@ -1144,3 +1144,15 @@ and for all $r$
 Two me-valid rankings, $\kappa$ and $\kappa'$ are said to be \term[Distinct me-valid integer rankings]{distinct} \iffTx{} $\fun{\kappa}{r}\neq\fun{\kappa'}{r}$ for some default $r$. Such a default is said to be distinctly ranked.
 \cite{conf/ijcai/BourneP99}
 \end{defi}
+
+\section{Model Checking}
+
+\begin{defi}[Model of a default theory]
+An interpretation (validation) $\calM$ is a \term[Model of a default theory]{model of \tuple{D,W}} \iffTx{} $\calM$ is a model of at least one (consistent) extension of \tuple{D,W}.
+\cite{conf/ijcai/BaumgartnerG99}
+\end{defi}
+
+\begin{defi}[Extended Horn Normal Form]
+A default theory \tuple{D,W} is in \termabbrev{extended Horn normal form}{EHNF} \iffTx{} $W$ and all elements of each $\fun{j}{d}$ are disjunctions of Horn theories, each \fun{p}{d} is a conjunction of dual Horn theories, and each consequent \fun{c}{d} is a Horn theory.If \tuple{D,W} is normal, then, trivially, the only element of each \fun{j}{d} is only a Horn theory, too.
+\cite{conf/ijcai/BaumgartnerG99}
+\end{defi}

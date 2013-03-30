@@ -76,3 +76,29 @@ If \tuple{D_A,D_B} is a deal and $0\leq p\leq 1$, $p\in\RRR$, then \flatbrak{\tu
 If \flatbrak{\tuple{D_A,D_B}:p} is a mixed deal then \term[Cost for an agent with a mixed deal]{$\fun{\mbox{Cost}_i}{\flatbrak{\tuple{D_A,D_B}:p}}=p\cdot\funm{Cost}{D_i}+\brak{1-p}\cdot\funm{Cost}{D_j}$}. If \flatbrak{\delta:p} is a mixed deal then \term[Utility for an agent with a mixed deal]{$\fun{\mbox{Utility}_i}{\flatbrak{\delta:p}}=\funm{Cost}{L_i}-\fun{\mbox{Cost}_i}{\flatbrak{\delta:p}}$}.
 \cite{conf/ijcai/ZlotkinR89}
 \end{defi}
+
+\begin{defi}[Agreement]
+Let $Act$ be the set of actions required to satisfy a goal. An \term{agreement} is a pair \tuple{s_i,s_j}, where $i,j\in\calA$, $i\neq j$.
+\cite{conf/ijcai/KrausW91}
+\end{defi}
+
+\begin{defi}[Strategy]
+A \term{strategy} is a sequence of functions. The domain of the $i$th element of a strategy is a sequence of agreements of length $i$ and its range is the set $\accol{Y,N,O,N\circ p}\cup S$.
+\cite{conf/ijcai/KrausW91}
+\end{defi}
+
+\begin{defi}[Outcome function of the negotiation]
+The \term{outcome function of the negotiation} is defined by:
+\begin{equation}
+\fun{P}{f,g,h}=\left\{\begin{array}{ll}
+D&\mbox{if }\fun{T}{f,g,h}=\infty\\
+\tuple{\fun{La}{f,g,h},\fun{T}{f,g,h}-1}&\mbox{otherwise}
+\end{array}\right.
+\end{equation}
+\cite{conf/ijcai/KrausW91}
+\end{defi}
+
+\begin{defi}[Worst agreement that can be reached in a period]
+For every $t\in T$ and $i\in\calA$ we define $\overline{S}^{i^t}_{j\ l}=\accol{s|s\in S_{j\ l},\tuple{s,t}\succ_i\tuple{O,t},i,j,l\in\calA,j\neq l}$. Let $\overline{S}^{i^t}=\overline{S}^{i^t}_{i\ j}\cup\overline{S}^{i^t}_{i\ l}\cup\overline{S}^{i^t}_{j\ l}$, where $i,j,l\in\calA$, $i\neq j\neq l$. If $\overline{S}^{i^t}\neq\emptyset$, we denote $\hat{s}^{i^t}=\displaystyle\min_{\prec_i}\overline{S}^{i^t}$, i.e., $\hat{s}^{i^t}$ is the \term[Worst agreement that can be reached in a period]{worst agreement that can be reached in period} $t$ which is still better to agent $i$ than opting out. In case such an agreement does not exist, we define $\hat{s}^{i^t}=-1$.
+\cite{conf/ijcai/KrausW91}
+\end{defi}
