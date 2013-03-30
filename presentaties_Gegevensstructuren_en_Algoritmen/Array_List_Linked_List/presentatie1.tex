@@ -1,12 +1,12 @@
 \documentclass[handout]{beamer}
 \usepackage[dutch]{babel}
-\usepackage{tikz,listings,multicol,cclicenses,graphicx}
+\usepackage{tikz,listings,multicol,cclicenses,graphicx,animate,lstlinebgrd}
 \usetikzlibrary{calc,shapes}
 \usetheme{Antibes}
 \graphicspath{../../SharedData/creative_commons/}
 \setcounter{tocdepth}{2}
 \title{Algoritmen en Gegevensstructuren 1:\\ \texttt{Array}, \texttt{ArrayList} en \texttt{LinkedList}}
-\author{Willem Van Onsem\\ \href{mailto:vanonsem.willem@gmail.com?Subject=Presentatie\%20Algoritmen\%20en\%20Gegevensstructuren\%201}{vanonsem.willem@gmail.com}}
+\author{Willem Van Onsem\\ \href{mailto:vanonsem.willem@gmail.com?Subject=Presentatie\%20Algoritmen\%20en\%20Gegevensstructuren\%201}{vanonsem.willem@gmail.com} \\ \url{http://goo.gl/Qnemv}}
 \AtBeginSection[]{\begin{frame}[plain]{Inhoud}
  \begin{multicols}{2}
  \tableofcontents[currentsection]
@@ -57,7 +57,15 @@
     \node[fill=black,circle,inner sep=0pt,minimum size=0.125cm] (#2\x) at (0.5*\x-0.25-0.25*#1,0) {};
   }
 }
-
+\newcommand{\methodexec}[2]{\begin{tikzpicture}[yscale=-1]
+\draw (0,0) rectangle (10,5);
+\node[anchor=north west] (C) at (-0.5,-0.5) {
+\begin{minipage}{2in}
+\lstinputlisting[linebackgroundcolor={\ifthenelse{\value{lstnumber}=#2}{\color{green}}{}}]{programs/#1}
+\end{minipage}
+};
+#2
+\end{tikzpicture}}
 \newcommand{\strobj}[2]{
   \node[fill=yellow!20,draw=black] (#1) {\tiny{\texttt{"#2"}}};
 }
@@ -76,6 +84,6 @@
 \end{frame}
 \input{array}
 \input{arraylist}
-\input{linkedlist}
-\input{interface}
+%\input{linkedlist}
+%\input{interface}
 \end{document}
