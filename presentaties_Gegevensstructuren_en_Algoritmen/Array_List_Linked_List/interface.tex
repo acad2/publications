@@ -1,0 +1,41 @@
+\section{Interface}
+\begin{frame}[fragile]{Interface}
+\begin{definition}[Interface]
+Een interface is een lijst van methodes die klasses die de interface implementeren moeten aanbieden.
+\end{definition}
+\begin{example}[\texttt{Praat}-interface]
+\begin{lstlisting}
+public interface Praat {
+
+  void praat ();
+
+}
+\end{lstlisting}
+\end{example}
+\end{frame}
+\subsection{Implementeren}
+\begin{frame}[fragile]{Implementeren van een Interface}
+Alle klasses die de interface \term{implementeren}, moeten de methodes invullen:
+\begin{example}[Gert-klasse]
+\begin{lstlisting}
+public class Gert implements Praat {
+
+  public void praat () {
+    System.out.println("Hallo, mijn naam is Gert.");
+  }
+
+}
+\end{lstlisting}
+\end{example}
+\begin{example}[Samson-klasse]
+\small{\begin{lstlisting}
+public class Samson implements Praat {
+
+  public void praat () {
+    System.out.println("Mwoa en ik ben Samson.");
+  }
+
+}
+\end{lstlisting}}
+\end{example}
+\end{frame}
