@@ -1525,13 +1525,53 @@ $\#$&1&2&2&2&3&3&2&0\\
 \caption{Levensduurtabel van het vierkantswortel voorbeeld.}
 \label{tbl:variableLifespanExample}
 \end{table}
-\paragraph{Formeel algoritme}We hebben tabel \ref{tbl:variableLifespanExample} opgesteld door te redeneren over de levensduurte van een bepaalde variabele. We kunnen de levensduur echter ook berekenen met een formeel algoritme. Dit algoritme is geen leerstof die behoort tot het opleidingsonderdeel ``Digitale Elektronica en Processoren'', maar is desalnietemin ook nuttig voor andere opleidingsonderdelen zoals bijvoorbeeld ``compilerconstructies'', In compilerconstructies wordt het genereren van een dergelijke tabel ook wel de ``liveness analyse genoemd''. In \cite{books/cu/Appel2002} wordt zo'n algoritme aangereikt. In het algoritme zal men eerst code opdelen in toestanden. Dit hoeven we hier niet meer te doen: dit zijn immers de toestanden van het ASM-schema. Verder dient elke toestand ook drie verzamelingen bij te houden:
+\paragraph{Formeel algoritme}We hebben tabel \ref{tbl:variableLifespanExample} opgesteld door te redeneren over de levensduurte van een bepaalde variabele. We kunnen de levensduur echter ook berekenen met een formeel algoritme. Dit algoritme is geen leerstof die behoort tot het opleidingsonderdeel ``Digitale Elektronica en Processoren'', maar is desalniettemin ook nuttig voor andere opleidingsonderdelen zoals bijvoorbeeld ``compilerconstructies'', In compilerconstructies wordt het genereren van een dergelijke tabel ook wel de ``liveness analyse genoemd''. In \cite{books/cu/Appel2002} wordt zo'n algoritme aangereikt. In het algoritme zal men eerst code opdelen in toestanden. Dit hoeven we hier niet meer te doen: dit zijn immers de toestanden van het ASM-schema. Verder dient elke toestand ook drie verzamelingen bij te houden:
 \begin{itemize}
  \item $\succst{n}$: dit is een verzameling toestanden die op toestand $n$ kan volgen. Voor een ASM-blok zonder beslissingskader bestaat de toestand uit juist \'e\'en toestand. Voor ASM blokken met beslissingskaders uit \'e\'en of meerdere toestanden.
  \item $\usestt{n}$: dit is een verzameling van variabelen die in toestand $n$ gebruikt worden om berekeningen uit te voeren. Voor toestand $S_5$ is dit dus: $\usestt{S_5}=\left\{t_8,t_9\right\}$
- \item $\defstt{n}$: dit is de verzameling van alle variablen die in een toestand $n$ gedefinieerd worden. Indien we niet weten of een variabele in een bepaalde toestand zal gedefinieerd worden
+ \item $\defstt{n}$: dit is de verzameling van alle variabelen die in een toestand $n$ gedefinieerd worden. Indien we niet weten of een variabele in een bepaalde toestand zal gedefinieerd worden
 \end{itemize}
-\paragraph{}Men kan zich terecht afvragen wat het nut is van het opstellen van zo'n tabel. Wanneer welke variabele actief is, is niet zo nuttig. Het interessante aspect zit hem eerder in de onderste rij: het aantal actieve variabelen per toestand. Dit getal specificeert immers hoeveel registers we in die toestand eigenlijk nodig hebben om de variabelen te bewaren. De overige variabelen dienen we immers niet meer op te slaan, ze worden verder nergens meer gebruikt. Vermits we in elke toestand slechts een aantal registers nodig hebben, is het totaal aantal benodigde registers niets anders dan het maximum van de onderste rij over alle toestanden. In het geval van het leidend voorbeeld is dit dus:
+Het algoritme berekent vervolgens twee sets per toestand:
+\begin{itemize}
+ \item $\instt{n}$
+ \item $\outstt{n}$
+\end{itemize}
+\begin{algorithm}[hbt]
+\caption{Berekenen van liveness.}\label{alg:calculatingLiveness.}
+\begin{algorithmic}[1]
+\Function{Liveness}{$\succst{n}$,$\usestt{n}$,$\defstt{n}$}
+\ForAll{$n$}
+\State $\instt{n}\gets\emptyset$
+\State $\outstt{n}\gets\emptyset$
+\EndFor
+\Repeat
+\ForAll{$n$}
+\State $\inastt{n}\gets\instt{n}$
+\State $\outastt{n}\gets\outstt{n}$
+\State $\instt{n}\gets\usestt{n}\cup\left(\outstt{n}\setminus\defstt{n}\right)$
+\State $\outstt{n}\gets\displaystyle\cup_{s\in\succst{n}}\instt{s}$
+\EndFor
+\Until{$\forall n: \inastt{n}=\instt{n}\wedge\outastt{n}=\outstt{n}$}
+\Return $\left(\instt{n},\outstt{n}\right)$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|ccc}
+$n$&$\succst{n}$&$\usestt{n}$&$\defstt{n}$\\\hline
+0&$\left\{0,1\right\}$&$\emptyset$&$\left\{t_1,t_2\right\}$\\
+1&$\left\{2\right\}$&$\left\{t_1,t_2\right\}$&$\left\{t_3,t_4\right\}$\\
+2&$\left\{3\right\}$&$\left\{t_3,t_4\right\}$&$\left\{t_5,t_6\right\}$\\
+3&$\left\{4\right\}$&$\left\{t_5,t_6\right\}$&$\left\{t_7,t_8\right\}$\\
+4&$\left\{5\right\}$&$\left\{t_5,t_7\right\}$&$\left\{t_9\right\}$\\
+5&$\left\{6\right\}$&$\left\{t_8,t_9\right\}$&$\left\{t_{10}\right\}$\\
+6&$\left\{7\right\}$&$\left\{t_5,t_{10}\right\}$&$\left\{t_{11}\right\}$\\
+7&$\left\{0\right\}$&$\emptyset$&$\emptyset$\\
+\end{tabular}
+\caption{Tabellen op basis van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
+\end{table}
+\paragraph{Nut}Men kan zich terecht afvragen wat het nut is van het opstellen van zo'n tabel. Wanneer welke variabele actief is, is niet zo nuttig. Het interessante aspect zit hem eerder in de onderste rij: het aantal actieve variabelen per toestand. Dit getal specificeert immers hoeveel registers we in die toestand eigenlijk nodig hebben om de variabelen te bewaren. De overige variabelen dienen we immers niet meer op te slaan, ze worden verder nergens meer gebruikt. Vermits we in elke toestand slechts een aantal registers nodig hebben, is het totaal aantal benodigde registers niets anders dan het maximum van de onderste rij over alle toestanden. In het geval van het leidend voorbeeld is dit dus:
 \begin{equation}
 \begin{array}{l|l}
 N_{\small{\mbox{reg.}}}=\max{\left(1,2,2,2,3,3,2,0\right)}=3&\mbox{(leidend voorbeeld)}
