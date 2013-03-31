@@ -67,3 +67,5 @@
 *.exe.mdb
 *.xml
 *.tex.kate-swp
+*.maf
+
