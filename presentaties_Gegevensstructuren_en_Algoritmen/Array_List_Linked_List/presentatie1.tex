@@ -131,10 +131,16 @@
 \end{scope}
 \begin{scope}[yscale=-1,yshift=-5 cm]
 \setcounter{tmpA}{1}
-\foreach \n in {#3} {
+\foreach \n/\v in {#3} {
  \coordinate (X) at (8.5,0.5*\arabic{tmpA});
- \node[pointerbox] (box\n) at (X) {};
- \node[pointerdot] (ptr\n) at (X) {};
+ \coordinate (Xa) at (8.625,0.5*\arabic{tmpA});
+ \ifthenelse{\equal{\n}{\v}} {
+   \node[pointerbox,anchor=east] (box\n) at (Xa) {};
+   \node[pointerdot] (ptr\n) at (X) {};
+ }
+ {
+   \node[draw=black,rectangle,anchor=east] (box\n) at (Xa) {\tiny{\texttt{\v}}};
+ }
  \node[anchor=west] (\n) at (box\n.east) {\small{\texttt{\n}}};
  \addtocounter{tmpA}{1}
 }
