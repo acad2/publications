@@ -424,3 +424,28 @@ the \term[Rate of correctness]{rate} that the identified partial component set i
 The \term[Rate of identification]{rate} that the partial components in the correct solutions are \termstyle{identified}.
 \cite{conf/ijcai/ZhaoN95}
 \end{defi}
+
+\begin{defi}[Believe in absolute independent events]
+\term[Believe in absolute independence]{Believing $C$ is absolutely independent of $A$} (noted $A\perp_{>} C$) \iffTx{} $\fun{N}{C|A}=\fun{N}>0$
+\cite{conf/ijcai/DuboisCHP97}
+\end{defi}
+
+\begin{defi}[Not informing another event]
+$A$ does \term[Not informing another variable]{not inform about $C$} \iffTx{} $\fun{N}{C|A}=\fun{N}{C}=\fun{N}{\neg C|A}=\fun{N}{\neg C}=0$.
+\cite{conf/ijcai/DuboisCHP97}
+\end{defi}
+
+\begin{defi}[Believe in qualitative independent events]
+\term[Believe in qualitative independence]{Believing $C$ is qualitatively independent of $A$} (denoted $A\neq_{>}C$) \iffTx{} $\fun{N}{C}>0$ and $\fun{N}{C|A}>0$.
+\cite{conf/ijcai/DuboisCHP97}
+\end{defi}
+
+\begin{defi}[Qualitatively relevant events to believe]
+$A$ is \term[Qualitatively relevant to believe]{qualitatively relevant to believing} $C$. denoted ($A=_{>}C$), \iffTx{} $\fun{N}{C}>0$ and $\fun{N}{C|A}=0$.
+\cite{conf/ijcai/DuboisCHP97}
+\end{defi}
+
+\begin{defi}[Event justifies another event]
+$A$ \term[Event justifies another event]{justifies} $C$ \iffTx{} $\fun{N}{C}=\fun{N}{\neg C}$ and $\fun{N}{C|A}>0$.
+\cite{conf/ijcai/DuboisCHP97}
+\end{defi}

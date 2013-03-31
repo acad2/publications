@@ -37,13 +37,30 @@ We zullen de implementatie van volgende methodes bespreken:
 \end{itemize}
 \end{frame}
 \subsubsection{\texttt{setCapaciteit(int capaciteit)}}
-\begin{frame}{\dsarraylist{}: Implementatie Overzicht}
-We zullen de implementatie van volgende methodes bespreken:
-\begin{itemize}
- \item \texttt{setCapaciteit (int capaciteit)}: een methode die de capaciteit (lengte van de \dsarray{}) aanpast. In het geval we deze moeten aanpassen worden de elementen gekopieerd.
- \item \texttt{voegToe (Object object)}
- \item \texttt{voegToe (int index, Object object)}
- \item \texttt{verwijder (int index)}
- \item \texttt{verwijder (int index, Object object)}
-\end{itemize}
+\begin{frame}[fragile]{\dsarraylist{}: \texttt{setCapaciteit (int capaciteit)}}
+\begin{methodexample}[\texttt{setCapaciteit (int capaciteit)}]
+\begin{center}
+\begin{animateinline}{1}
+\methodexec{arraylistsetcapaciteit}{8}{this}{
+\genobj{alo}{elementen,aantal/3}{eenArrayList}
+\begin{scope}[xshift=4 cm,yshift=0.5 cm]
+\tikzarrayptr{9}{aloarray}
+\pointrtlebridge{aloptrelementen}{aloarray.west}
+\end{scope}
+\begin{scope}[xshift=5.5 cm,yshift=2 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=6.5 cm,yshift=1.25 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-0.25 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\pointarraytopleft{aloarray1}{elem0}
+\pointarraytopleft{aloarray3}{elem2}
+\pointarraybotleft{aloarray2}{elem3}
+}
+\end{animateinline}
+\end{center}
+\end{methodexample}
 \end{frame}
