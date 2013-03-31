@@ -1507,7 +1507,7 @@ Een belangrijke verbetering is het reduceren van het aantal variabelen en dus he
 waarde uitlezen in toestanden $S_3$, $S_4$ en $S_6$. Dit betekent dus dat de \termen{levensduur} van $t_5$ zich uitstrekt van $S_3$ tot en met $S_6$. Men kan zich misschien afvragen waarom de toestand waarin we de waarde toewijzen niet ook deel uitmaakt van de levensduur. De rede is omdat op dat moment we nog geen register hebben waarin we de variabele opslaan. Let wel: er dient een register te bestaan waarin we plannen de waarde te zullen opslaan. In toestand $S_2$ wordt echter enkel de waarde van $t_5$ berekent een aangelegd op \'e\'en van de register. Het register heeft echter de waarde nog niet opgeslagen. Dit doet het bij de klokflank tussen $S_2$ en $S_3$. We stellen de levensduur tabel op door voor elke variabele uit te rekenen wanneer welke variabelen actief zijn. De levensduurtabel van het leidend voorbeeld staat in tabel \ref{tbl:variableLifespanExample}. Onder de rij van variabelen vermelden we telkens het totaal aantal variabelen die in de gegeven toestand actief zijn.
 \begin{table}[hbt]
 \centering
-\small{\begin{tabular}{c|cccccccc}
+\begin{tabular}{c|cccccccc}
 &$S_0$&$S_1$&$S_2$&$S_3$&$S_4$&$S_5$&$S_6$&$S_7$\\\hline
 $t_1$&	&$\bullet$&	&	&	&	&	&\\
 $t_2$&	&$\bullet$&	&	&	&	&	&\\
@@ -1519,9 +1519,9 @@ $t_7$&	&	&	&	&$\bullet$&	&	&\\
 $t_8$&	&	&	&	&$\bullet$&$\bullet$&	&\\
 $t_9$&	&	&	&	&	&$\bullet$&	&\\
 $t_{10}$&	&	&	&	&	&	&$\bullet$&\\
-$t_{11}$&$\cdot$&	&	&	&	&	&	&\\\hline
+$t_{11}$&$\cdot$&	&	&	&	&	&	&$\bullet$\\\hline
 $\#$&1&2&2&2&3&3&2&0\\
-\end{tabular}}
+\end{tabular}
 \caption{Levensduurtabel van het vierkantswortel voorbeeld.}
 \label{tbl:variableLifespanExample}
 \end{table}
@@ -1560,16 +1560,16 @@ Het algoritme die deze sets kan berekenen staat in \algoref{alg:calculatingLiven
 Het algoritme werkt op basis van least-fixed-point theorie. Hierbij berekenen we de sets door ze te initialiseren als lege sets. En vervolgens deze telkens te updaten. Wanneer we een iteratie bereiken waarbij geen enkele set aangepast wordt, weten we dat dit in de volgende iteratie ook niet zal gebeuren. Bijgevolg kunnen we stoppen. In tabel \ref{tbl:lifenessEvolution} staan de $\succst{n}$, $\usestt{n}$ en $\defstt{n}$ tabellen samen met de nodige iteraties om de $\instt{n}$ en $\outstt{n}$ set uit te rekenen. We kunnen opmerken dat de $\instt{n}$ set dus overeenkomt met de levensduurtabel (zie tabel \ref{tbl:variableLifespanExample}).
 \begin{table}[hbt]
 \centering
-\begin{tabular}{c||ccc||cc|cc|cc}
+\begin{tabular}{c|ccc|cc|cc|cc}
 $n$&$\succst{n}$&$\usestt{n}$&$\defstt{n}$&$\instti{n}{0}$&$\outstti{n}{0}$&$\instti{n}{1}$&$\outstti{n}{1}$&$\instti{n}{2}$&$\outstti{n}{2}$\\\hline
-0&$\left\{0,1\right\}$&$\emptyset$&$\left\{t_1,t_2\right\}$&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}\\
-1&$\left\{2\right\}$&$\left\{t_1,t_2\right\}$&$\left\{t_3,t_4\right\}$&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}\\
-2&$\left\{3\right\}$&$\left\{t_3,t_4\right\}$&$\left\{t_5,t_6\right\}$&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}\\
-3&$\left\{4\right\}$&$\left\{t_5,t_6\right\}$&$\left\{t_7,t_8\right\}$&	\accol{t_5,t_6}&	\accol{t_5,t_7}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}\\
-4&$\left\{5\right\}$&$\left\{t_5,t_7\right\}$&$\left\{t_9\right\}$&	\accol{t_5,t_7}&	\accol{t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}\\
-5&$\left\{6\right\}$&$\left\{t_8,t_9\right\}$&$\left\{t_{10}\right\}$&	\accol{t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}\\
-6&$\left\{7\right\}$&$\left\{t_5,t_{10}\right\}$&$\left\{t_{11}\right\}$&	\accol{t_5,t_{10}}&	$\emptyset$&		\accol{t_5,t_{10}}&	$\emptyset$&		\accol{t_5,t_{10}}&	$\emptyset$\\
-7&$\left\{0\right\}$&$\emptyset$&$\emptyset$&	$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$&		$\emptyset$
+$S_0$&\accol{S_0,S_1}&$\emptyset$&\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}\\
+$S_1$&\accol{S_2}&\accol{t_1,t_2}&\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}\\
+$S_2$&\accol{S_3}&\accol{t_3,t_4}&\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}&	\accol{t_3,t_4}&	\accol{t_5,t_6}\\
+$S_3$&\accol{S_4}&\accol{t_5,t_6}&\accol{t_7,t_8}&	\accol{t_5,t_6}&	\accol{t_5,t_7}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_6}&	\accol{t_5,t_7,t_8}\\
+$S_4$&\accol{S_5}&\accol{t_5,t_7}&\accol{t_9}&	\accol{t_5,t_7}&	\accol{t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_7,t_8}&	\accol{t_5,t_8,t_9}\\
+$S_5$&\accol{S_6}&\accol{t_8,t_9}&\accol{t_{10}}&	\accol{t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}\\
+$S_6$&\accol{S_7}&\accol{t_5,t_{10}}&\accol{t_{11}}&	\accol{t_5,t_{10}}&	\accol{t_{11}}&		\accol{t_5,t_{10}}&	\accol{t_{11}}&		\accol{t_5,t_{10}}&	\accol{t_{11}}\\
+$S_7$&\accol{S_0}&\accol{t_{11}}&$\emptyset$&	\accol{t_{11}}&		$\emptyset$&		\accol{t_{11}}&		$\emptyset$&		\accol{t_{11}}&		$\emptyset$
 \end{tabular}
 \caption{De evolutie van de $\instt{n}$- en $\outstt{n}$-set op basis van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
 \label{tbl:lifenessEvolution}
@@ -1580,29 +1580,44 @@ $n$&$\succst{n}$&$\usestt{n}$&$\defstt{n}$&$\instti{n}{0}$&$\outstti{n}{0}$&$\in
 N_{\small{\mbox{reg.}}}=\max{\left(1,2,2,2,3,3,2,0\right)}=3&\mbox{(leidend voorbeeld)}
 \end{array}
 \end{equation}
-We kunnen dus onze schakeling implementeren met drie registers op voorwaarde dat een register de waarde van verschillende variabelen op verschillende tijdstippen bijhoudt. Een eenvoudige methode is aan elk van deze drie registers een lijst met variabelen associ\"eren die dit register zal bijhouden. De enige voorwaarde is dat de variabelen in geen enkele toestand allebei actief zijn. Deze methode zal sowieso tot het minimaal aantal registers leiden, maar introduceert een nieuw probleem: we zullen multiplexers voor de ingang van deze registers moeten plaatsen en bovendien lopen we een gelegenheid mis om multiplexers te elimineren die de waarde van een register doorgeven aan een functionele eenheid.
-% \small{\begin{tabular}{c|cccccccc}
-% &$S_0$&$S_1$&$S_2$&$S_3$&$S_4$&$S_5$&$S_6$&$S_7$\\\hline
-% abs&	&2	&	&	&	&	&	&\\
-% max&	&	&1	&	&	&	&1	&\\
-% min&	&	&1	&	&	&	&	&\\
-% shr&	&	&	&2	&	&	&	&\\
-% $-$&	&	&	&	&1	&	&	&\\
-% $+$&	&	&	&	&	&1	&	&\\\hline
-% $\#$&0&2&2&2&1&1&1&0\\
-% \end{tabular}}
-% \small{\begin{tabular}{c|ccccccccccc}
-% &$t_1$&$t_2$&$t_3$&$t_4$&$t_5$&$t_6$&$t_7$&$t_8$&$t_9$&$t_{10}$&$t_{11}$\\\hline
-% abs1&I	&	&O	&	&	&	&	&	&	&	&\\
-% abs2&	&I	&	&O	&	&	&	&	&	&	&\\
-% max1&	&	&I	&I	&O	&	&	&	&	&	&\\
-% min&	&	&I	&I	&	&O	&	&	&	&	&\\
-% shr 3&	&	&	&	&I	&	&O	&	&	&	&\\
-% shr 1&	&	&	&	&	&I	&	&O	&	&	&\\
-% $-$&	&	&	&	&I	&	&I	&	&O	&	&\\
-% $+$&	&	&	&	&	&	&	&I	&I	&O	&\\
-% max2&	&	&	&I	&	&	&	&	&	&I	&O\\
-% \end{tabular}}
+We kunnen dus onze schakeling implementeren met drie registers op voorwaarde dat een register de waarde van verschillende variabelen op verschillende tijdstippen bijhoudt. Een eenvoudige methode is aan elk van deze drie registers een lijst met variabelen associ\"eren die dit register zal bijhouden. De enige voorwaarde is dat de variabelen in geen enkele toestand allebei actief zijn. Deze methode zal sowieso tot het minimaal aantal registers leiden, maar introduceert een nieuw probleem: we zullen multiplexers voor de ingang van deze registers moeten plaatsen en bovendien lopen we een gelegenheid mis om multiplexers te elimineren die de waarde van een register doorgeven aan een functionele eenheid. Daarom zullen we extra tabellen opstellen.
+\paragraph{Functionele-eenhedentabel}
+Een tweede tabel die we zullen opstellen is de \termen{functionele-eenhedentabel}. Deze tabel bevat horizontaal de toestanden en verticaal de types functionele eenheden. In elke cel schrijven we in, hoeveel functionele eenheden van het specifieke type we in de specifieke toestand nodig hebben. Zo zien we bijvoorbeeld op figuur \ref{fig:asmSqrt} dat we in toestand $S_2$ zowel een component nodig hebben die het minimum berekend en component die het maximum berekend. In toestand $S_1$ hebben we twee functionele eenheden nodig die elk de absolute waarde berekenen. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:functionalunittableexample}.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|cccccccc|c}
+	&$S_0$	&$S_1$	&$S_2$	&$S_3$	&$S_4$	&$S_5$	&$S_6$	&$S_7$	&$\#$\\\hline
+abs	&	&2	&	&	&	&	&	&	&2\\
+max	&	&	&1	&	&	&	&1	&	&1\\
+min	&	&	&1	&	&	&	&	&	&2\\
+shr	&	&	&	&2	&	&	&	&	&2\\
+$-$	&	&	&	&	&1	&	&	&	&1\\
+$+$	&	&	&	&	&	&1	&	&	&1\\\hline
+$\#$	&0	&2	&2	&2	&1	&1	&1	&0	&9\\
+\end{tabular}
+\caption{Functionele-eenhedentabel van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
+\label{tbl:functionalunittableexample}
+\end{table}
+De enige potenti\"ele moeilijkheid aan het opstellen van deze tabel is de definitie van ``type functionele eenheid''. Men kan zich afvragen of bijvoorbeeld een shift over 3 bits bijvoorbeeld tot hetzelfde type behoort als een shift over 1 bit. In geval van twijfel kan het geen kwaad om een onderscheid te maken (en dus een rij in de tabel te voorzien voor $\shr1$ en $\shr3$). Als algemene definitie kunnen we stellen dat twee functionele eenheden tot hetzelfde type behoren wanneer we hardware kunnen voorzien die beide operaties op hetzelfde component uitvoert. Indien we dus beslissen om de shift te implementeren met behulp van de verbindingen, is een shift over drie bits een ander operatie dan een shift over 1 bit. Wanneer we echter met een schuifregister werken, kunnen beide operaties op hetzelfde schuifregister worden uitgevoerd.
+\paragraph{Verbindingentabel}
+Een laatste tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs1}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{c|ccccccccccc}
+	&$t_1$	&$t_2$	&$t_3$	&$t_4$	&$t_5$	&$t_6$	&$t_7$	&$t_8$	&$t_9$	&$t_{10}$	&$t_{11}$\\\hline
+abs1	&I	&	&O	&	&	&	&	&	&	&		&\\
+abs2	&	&I	&	&O	&	&	&	&	&	&		&\\
+max1	&	&	&I	&I	&O	&	&	&	&	&		&\\
+min	&	&	&I	&I	&	&O	&	&	&	&		&\\
+shr 3	&	&	&	&	&I	&	&O	&	&	&		&\\
+shr 1	&	&	&	&	&	&I	&	&O	&	&		&\\
+$-$	&	&	&	&	&I	&	&I	&	&O	&		&\\
+$+$	&	&	&	&	&	&	&	&I	&I	&O		&\\
+max2	&	&	&	&I	&	&	&	&	&	&I		&O\\
+\end{tabular}
+\caption{Verbindingentabel van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
+\label{tbl:connectiontableexample}
+\end{table}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}

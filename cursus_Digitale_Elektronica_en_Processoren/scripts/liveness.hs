@@ -4,7 +4,7 @@ succ0 :: [[Int]]
 succ0 = [[0,1],[2],[3],[4],[5],[6],[7],[0]]
 
 use0 :: [Set Char]
-use0 = [fromList "",fromList "ab",fromList "cd",fromList "ef",fromList "eg",fromList "hi",fromList "ej",fromList ""]
+use0 = [fromList "",fromList "ab",fromList "cd",fromList "ef",fromList "eg",fromList "hi",fromList "ej",fromList "k"]
 
 def0 :: [Set Char]
 def0 = [fromList "ab",fromList "cd",fromList "ef",fromList "gh",fromList "i",fromList "j",fromList "k",fromList ""]
