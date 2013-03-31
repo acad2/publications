@@ -5,6 +5,8 @@
 \usepackage{tikz,listings,multicol,cclicenses,graphicx,lstlinebgrd,minted}
 \usepackage[controls]{animate}
 \usetikzlibrary{calc,shapes,fit}
+\pgfdeclarelayer{bg}
+\pgfsetlayers{bg,main}
 \usetheme{Antibes}
 \graphicspath{../../SharedData/creative_commons/}
 \setcounter{tocdepth}{2}
@@ -47,24 +49,56 @@
 \newcommand{\strobj}[2]{
   \node[fill=yellow!20,draw=black] (#1) {\tiny{\texttt{"#2"}}};
 }
+\newcommand{\genobj}[3]{
+  \setcounter{tmpC}{0}
+  \foreach \n/\v in {#2} {
+    \addtocounter{tmpC}{1}
+    \node[anchor=west] (#1\arabic{tmpC}) at (0,0.5*\arabic{tmpC}) {\small{\texttt{\n}}};
+  }
+  \node[fit=(#11),inner sep=0pt] (indu) {};
+  \setcounter{tmpC}{0}
+  \foreach \n/\v in {#2} {
+    \addtocounter{tmpC}{1}
+    \node[fit=(indu) (#1\arabic{tmpC}),inner sep=0pt] (indu) {};
+  }
+  \node[fit=(indu),inner sep=0pt] (indu2) {};
+  \setcounter{tmpC}{0}
+  \foreach \n/\v in {#2} {
+    \addtocounter{tmpC}{1}
+    \coordinate (Xa) at (indu.east |- 0,0.5*\arabic{tmpC});
+    \coordinate (X) at ([xshift=0.125 cm] Xa);
+    \ifthenelse{\equal{\n}{\v}} {
+      \node[pointerbox,fill=white,anchor=west] (#1box\n) at (Xa) {};
+      \node[pointerdot] (#1ptr\n) at (X) {};
+    }{
+      \node[draw=black,fill=white,rectangle,anchor=west] (#1box\n) at (Xa) {\tiny{\texttt{\v}}};
+    }
+    \node[fit=(indu2) (#1box\n),inner sep=0pt] (indu2) {};
+  }
+  \begin{pgfonlayer}{bg}
+  \node[fill=yellow!20,draw=black,fit=(indu2),inner sep=3pt] (#1) {};
+  \end{pgfonlayer}
+}
 \newcommand{\tikzarray}[2]{
-  \filldraw[fill=green!20,draw=black] (-0.25*#1,-0.25) rectangle ++(0.5*#1,0.5);
+  \filldraw[fill=green!20,draw=black] (0,-0.25) rectangle ++(0.5*#1,0.5);
   \foreach \x in {2,3,...,#1} {
-    \draw (0.5*\x-0.25*#1-0.5,-0.25) -- ++(0,0.5);
+    \draw (0.5*\x-0.5,-0.25) -- ++(0,0.5);
   }
   \setcounter{tmpC}{0}
   \foreach \x in {#2} {
-    \draw (0.25-0.25*#1+0.5*\arabic{tmpC},0) node {\x};
+    \draw (0.25+0.5*\arabic{tmpC},0) node {\x};
     \addtocounter{tmpC}{1}
   }
 }
 \newcommand{\tikzarrayptr}[2]{
-  \filldraw[fill=green!20,draw=black] (-0.25*#1,-0.25) rectangle ++(0.5*#1,0.5);
-  \foreach \x in {2,3,...,#1} {
-    \draw (0.5*\x-0.25*#1-0.5,-0.25) -- ++(0,0.5);
+  \coordinate (LT) at (0,-0.25);
+  \coordinate (RB) at (0.5*#1,0.25);
+  \node[fit=(LT) (RB),inner sep=0pt,fill=green!20,draw=black] (#2) {};
+  \foreach \x in {2,...,#1} {
+    \draw (0.5*\x-0.5,-0.25) -- ++(0,0.5);
   }
-  \foreach \x in {1,2,...,#1} {
-    \node[pointerdot] (#2\x) at (0.5*\x-0.25-0.25*#1,0) {};
+  \foreach \x in {1,...,#1} {
+    \node[pointerdot] (#2\x) at (0.5*\x-0.25,0) {};
   }
 }
 \newcommand{\tikzarraylist}[2]{
@@ -87,11 +121,20 @@
 \newcommand{\pointlertbridge}[2]{
   \draw[pointer] (#1)  .. controls ([xshift=-2cm] #1) and ([xshift=2cm] #2) .. (#2);
 }
+\newcommand{\pointrtlebridge}[2]{
+  \draw[pointer] (#1)  .. controls ([xshift=2cm] #1) and ([xshift=-2cm] #2) .. (#2);
+}
 \newcommand{\pointarraytopright}[2]{
   \draw[pointer] (#1)  .. controls ([yshift=1cm] #1) and ([xshift=1cm] #2) .. (#2);
 }
 \newcommand{\pointarraybotright}[2]{
   \draw[pointer] (#1)  .. controls ([yshift=-1cm] #1) and ([xshift=1cm] #2) .. (#2);
+}
+\newcommand{\pointarraytopleft}[2]{
+  \draw[pointer] (#1)  .. controls ([yshift=1cm] #1) and ([xshift=-1cm] #2) .. (#2);
+}
+\newcommand{\pointarraybotleft}[2]{
+  \draw[pointer] (#1)  .. controls ([yshift=-1cm] #1) and ([xshift=-1cm] #2) .. (#2);
 }
 \newcommand{\tikzarraylistptr}[2]{
   \coordinate (LB) at (0,-0.25);
@@ -130,19 +173,18 @@
 \end{minipage}};
 \end{scope}
 \begin{scope}[yscale=-1,yshift=-5 cm]
-\setcounter{tmpA}{1}
+\setcounter{tmpC}{1}
 \foreach \n/\v in {#3} {
- \coordinate (X) at (8.5,0.5*\arabic{tmpA});
- \coordinate (Xa) at (8.625,0.5*\arabic{tmpA});
+ \coordinate (X) at (8.5,0.5*\arabic{tmpC});
+ \coordinate (Xa) at (8.625,0.5*\arabic{tmpC});
  \ifthenelse{\equal{\n}{\v}} {
    \node[pointerbox,anchor=east] (box\n) at (Xa) {};
    \node[pointerdot] (ptr\n) at (X) {};
- }
- {
+ }{
    \node[draw=black,rectangle,anchor=east] (box\n) at (Xa) {\tiny{\texttt{\v}}};
  }
  \node[anchor=west] (\n) at (box\n.east) {\small{\texttt{\n}}};
- \addtocounter{tmpA}{1}
+ \addtocounter{tmpC}{1}
 }
 \end{scope}
 \begin{scope}[xshift=0.25,yshift=2.5 cm]
