@@ -49,27 +49,29 @@ Primitief type&Klasse-type\\\hline
 \end{itemize}}
 \end{frame}
 \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (E element)}}
-\begin{methodexample}
+\begin{methodexample}[\texttt{add (E element)}]
 \begin{center}
 \begin{animateinline}{1}
 \methodexec{arraylistadd0me}{1}{}{
 }\newframe
+
 \methodexec{arraylistadd0me}{2}{namen}{
-\begin{scope}[xshift=8 cm]
+\begin{scope}[xshift=7 cm]
 \tikzarraylistptr{0}{namenlist}
-\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
+\pointleftbridge{ptrnamen}{offsetnamenlist}
 \end{scope}
 }\newframe
 \methodexec{arraylistadd0me}{3}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
 \end{scope}
-\begin{scope}[xshift=8 cm]
+\begin{scope}[xshift=7 cm]
 \tikzarraylistptr{1}{namenlist}
-\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
-\draw[pointer] (namenlist1)  .. controls ([yshift=1cm] namenlist1) and ([xshift=1cm] elem0) .. (elem0);
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
 \end{scope}
 }\newframe
+
 \methodexec{arraylistadd0me}{4}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
@@ -77,13 +79,14 @@ Primitief type&Klasse-type\\\hline
 \begin{scope}[xshift=4 cm,yshift=-0.5 cm]
 \strobj{elem1}{Gert}
 \end{scope}
-\begin{scope}[xshift=8 cm]
+\begin{scope}[xshift=7 cm]
 \tikzarraylistptr{2}{namenlist}
-\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
-\draw[pointer] (namenlist1)  .. controls ([yshift=1cm] namenlist1) and ([xshift=1cm] elem0) .. (elem0);
-\draw[pointer] (namenlist2)  .. controls ([yshift=-1cm] namenlist2) and ([xshift=1cm] elem1) .. (elem1);
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
 \end{scope}
 }\newframe
+
 \methodexec{arraylistadd0me}{5}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
@@ -94,28 +97,142 @@ Primitief type&Klasse-type\\\hline
 \begin{scope}[xshift=5 cm,yshift=1.5 cm]
 \strobj{elem2}{Octaaf}
 \end{scope}
-\begin{scope}[xshift=8 cm]
+\begin{scope}[xshift=7 cm]
 \tikzarraylistptr{3}{namenlist}
-\draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
-\draw[pointer] (namenlist1)  .. controls ([yshift=1cm] namenlist1) and ([xshift=1cm] elem0) .. (elem0);
-\draw[pointer] (namenlist2)  .. controls ([yshift=-1cm] namenlist2) and ([xshift=1cm] elem1) .. (elem1);
-\draw[pointer] (namenlist3)  .. controls ([yshift=1cm] namenlist3) and ([xshift=1cm] elem2) .. (elem2);
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist3}{elem2}
 \end{scope}
 }
 \end{animateinline}
 \end{center}
 \end{methodexample}
 \end{frame}
-% \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (int index, E element)}}
-% \begin{methodexample}
-% 
-% \end{methodexample}
-% \end{frame}
-% \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (int index)}}
-% \begin{methodexample}
-% 
-% \end{methodexample}
-% \end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (int index, E element)}}
+\begin{methodexample}[\texttt{add (int index, E element)}]
+\begin{center}
+\begin{animateinline}{1}
+\methodexec{arraylistadd1me}{5}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{3}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist3}{elem2}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistadd1me}{6}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{4}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist4}{elem2}
+\pointarraybotright{namenlist3}{elem3}
+\end{scope}
+}
+\end{animateinline}
+\end{center}
+\end{methodexample}
+\end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (int index)}}
+\begin{methodexample}[\texttt{remove (int index)}]
+\begin{center}
+\begin{animateinline}{1}
+\methodexec{arraylistremove0me}{6}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{4}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist4}{elem2}
+\pointarraybotright{namenlist3}{elem3}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistremove0me}{7}{namen,verw}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{3}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraytopright{namenlist3}{elem2}
+\pointarraybotright{namenlist2}{elem3}
+\pointlertbridge{ptrverw}{elem1}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistremove0me}{8}{namen,verw}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+% \begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+% \strobj{elem1}{Gert}
+% \end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{2}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem3}
+\pointlertbridge{ptrverw}{elem2}
+\end{scope}
+}
+\end{animateinline}
+\end{center}
+\end{methodexample}
+\end{frame}
 % \begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (Object o)}}
 % \begin{methodexample}
 % 

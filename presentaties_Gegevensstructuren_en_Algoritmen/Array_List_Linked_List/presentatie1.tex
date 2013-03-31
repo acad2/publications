@@ -1,4 +1,6 @@
 \documentclass[handout]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage[dutch]{babel}
 \usepackage{tikz,listings,multicol,cclicenses,graphicx,lstlinebgrd,minted}
 \usepackage[controls]{animate}
@@ -79,20 +81,38 @@
     \addtocounter{tmpC}{1}
   }
 }
+\newcommand{\pointleftbridge}[2]{
+  \draw[pointer] (#1)  .. controls ([xshift=-2cm] #1) and ([xshift=-2cm] #2) .. (#2);
+}
+\newcommand{\pointlertbridge}[2]{
+  \draw[pointer] (#1)  .. controls ([xshift=-2cm] #1) and ([xshift=2cm] #2) .. (#2);
+}
+\newcommand{\pointarraytopright}[2]{
+  \draw[pointer] (#1)  .. controls ([yshift=1cm] #1) and ([xshift=1cm] #2) .. (#2);
+}
+\newcommand{\pointarraybotright}[2]{
+  \draw[pointer] (#1)  .. controls ([yshift=-1cm] #1) and ([xshift=1cm] #2) .. (#2);
+}
 \newcommand{\tikzarraylistptr}[2]{
-  \coordinate (LB) at (-0.25*#1-0.25,-0.25);
-  \coordinate (RT) at (0.25*#1+0.25,0.25);
-  \fill[fill=green!20] (LB) rectangle (RT);
-  \node[fit=(LB) (RT),inner sep=0pt] (#2) {};
-  \draw (-0.25*#1-0.25,-0.25) rectangle ++(0.5*#1,0.5);
-  \draw[dashed] (0.25*#1-0.25,-0.25) -- ++(0.5,0);
-  \draw[dashed] (0.25*#1-0.25,0.25) -- ++(0.5,0);
-  \foreach \x in {2,...,#1} {
-    \draw (0.5*\x-0.25*#1-0.75,-0.25) -- ++(0,0.5);
+  \coordinate (LB) at (0,-0.25);
+  \coordinate (RT) at (0.5*#1,0.25);
+  \coordinate (RTT) at (0.5*#1+0.5,0.25);
+  \fill[fill=green!20] (LB) rectangle (RTT);
+  \node[fit=(LB) (RTT),inner sep=0pt] (#2) {};
+  \coordinate (offset#2) at (0,0);
+  \draw (LB) rectangle (RT);
+  \draw[dashed] (RT |- 0,-0.25) -- ++(0.5,0);
+  \draw[dashed] (RT |- 0,0.25) -- ++(0.5,0);
+  \ifthenelse{#1 > 1}{
+    \foreach \x in {2,...,#1} {
+      \draw (0.5*\x-0.5,-0.25) -- ++(0,0.5);
+    }
+  }{}
+  \ifthenelse{#1 > 0}{
+  \foreach \x in {1,...,#1} {
+    \node[pointerdot] (#2\x) at (0.5*\x-0.25,0) {};
   }
-  \foreach \x in {1,2,...,#1} {
-    \node[pointerdot] (#2\x) at (0.5*\x-0.25*#1-0.5,0) {};
-  }
+  }{}
 }
 \newcommand{\loadcode}[1]{
 \tiny{\inputminted{java}{programs/#1.java}}
