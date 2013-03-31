@@ -24,22 +24,10 @@ Visueel zullen we een \dsarray{} in deze presentatie voorstellen als een opeenvo
 \subsubsection{Declaratie}
 \begin{frame}[fragile]{\dsarray{} in Java: declaratie}
 In Java wordt een \dsarray{} aangemaakt door het type van de elementen te specificeren gevolgd door vierkante haken (\texttt{[]}). Tussen de vierkante haken wordt de lengte geplaatst:
-\begin{example}[Declaratie \dsarray{}]
-\begin{lstlisting}
-int[] rijVanGetallen = new int[5];
-
-int n = 20;
-String[] rijVanStrings = new String[n];
-
-int k = 5;
-double[] rijVanDoubles = new double[n+k];
-\end{lstlisting}
-\end{example}
+\examplecode{Declaratie \dsarray{}}{arraydeclaration0}
 \begin{hint}[Declaratie en toewijzing]
 Indien men een array wil initialiseren waarbij de elementen ook al ingevuld worden, kan men gebruik maken van accolades:
-\begin{lstlisting}
-String[] namen = new String[]{"Samson","Gert","Alberto","Octaaf"};
-\end{lstlisting}
+\loadcode{arraydeclaration1}
 \end{hint}
 \end{frame}
 \begin{frame}[fragile]{\dsarray{} in Java: declaratie: primitief versus klasse}
@@ -83,25 +71,10 @@ Java maakt een onderscheid tussen de declaratie van een array van \term{primitie
 \subsubsection{Toegang tot elementen}
 \begin{frame}[fragile]{\dsarray{} in Java: toegang tot elementen}
 In Java kan men een element in een \dsarray{} opvragen door na de naam van de variabele tussen vierkante haken de index te vermelden. De index telt vanaf 0. Het eerste element staat dus op index 0. Men kan de waarde van een element in een array dan uitlezen en aanpassen.
-\begin{example}[Toegang tot elementen van een \dsarray{}]
-\begin{lstlisting}
-int[] rijVanGetallen = new int[5];
-
-rijVanGetallen[0] = 1;
-rijVanGetallen[1] = 1;
-rijVanGetallen[2] = rijVanGetallen[0]+1;
-rijVanGetallen[3] = 5;
-rijVanGetallen[4] = 8;
-\end{lstlisting}
-\end{example}
+\examplecode{Toegang tot elementen van een \dsarray{}}{arrayaccess0}
 \end{frame}
 \subsubsection{Lengte}
 \begin{frame}[fragile]{\dsarray{} in Java: lengte}
 In Java kan men de lengte van een \dsarray{} opvragen door het \texttt{length} argument op te roepen.
-\begin{example}[Lengte opvragen van een \dsarray{}]
-\begin{lstlisting}
-int[] rijVanGetallen = new int[5];
-System.out.println(rijVanGetallen.length);
-\end{lstlisting}
-\end{example}
+\examplecode{Lengte opvragen van een \dsarray{}}{arraylength0}
 \end{frame}

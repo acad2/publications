@@ -1,6 +1,6 @@
 \documentclass[handout]{beamer}
 \usepackage[dutch]{babel}
-\usepackage{tikz,listings,multicol,cclicenses,graphicx,lstlinebgrd}
+\usepackage{tikz,listings,multicol,cclicenses,graphicx,lstlinebgrd,minted}
 \usepackage[controls]{animate}
 \usetikzlibrary{calc,shapes,fit}
 \usetheme{Antibes}
@@ -94,10 +94,20 @@
     \node[pointerdot] (#2\x) at (0.5*\x-0.25*#1-0.5,0) {};
   }
 }
+\newcommand{\loadcode}[1]{
+\tiny{\inputminted{java}{programs/#1.java}}
+}
+\newcommand{\examplecode}[2]{
+\begin{example}[#1]
+\loadcode{#2}
+\end{example}}
 \newcommand{\methodexec}[4]{\begin{tikzpicture}[yscale=-1]
 \draw (0,0) rectangle (10,5);
 \begin{scope}[xshift=0cm,yshift=0cm]
-\node[anchor=north west] (C) at (0,0) {\begin{minipage}{3in}\lstinputlisting[linebackgroundcolor={\ifthenelse{\value{lstnumber}=#2}{\color{green}}{}}]{programs/#1}\end{minipage}};
+\node[anchor=north west] (C) at (0,0) {\begin{minipage}{3in}
+\loadcode{#1}
+%\lstinputlisting[linebackgroundcolor={\ifthenelse{\value{lstnumber}=#2}{\color{green}}{}}]{programs/#1}
+\end{minipage}};
 \end{scope}
 \begin{scope}[yscale=-1,yshift=-5 cm]
 \setcounter{tmpA}{1}

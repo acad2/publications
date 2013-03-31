@@ -16,18 +16,7 @@ Visueel zullen we een \dsarraylist{} in deze presentatie voorstellen als een ope
 \subsubsection{Declaratie}
 \begin{frame}[fragile]{\dsarraylist{} in Java: declaratie}
 Een \dsarraylist{} is een klasse die uit de Java-bibliotheek komt. Deze klasse is \texttt{java.util.ArrayList}. Daarom kunnen we een \dsarraylist{} aanmaken zoals andere objecten. Een \dsarraylist{} is een \term{generische klasse}: we kunnen een type-parameter tussen scheve haken (\texttt{<>}).
-\begin{example}[Declaratie \dsarraylist{}]
-\begin{lstlisting}
-import java.util.ArrayList;
-
-ArrayList<Integer> lijstMetGetallen = new ArrayList<Integer>();
-
-ArrayList<Paard> lijstMetPaarden = new ArrayList<Paard>();
-
-ArrayList<ArrayList<Integer>> lijstMetLijstenMetGetallen =
-    new ArrayList<ArrayList<Integer>>();
-\end{lstlisting}
-\end{example}
+\examplecode{Declaratie \dsarraylist{}}{arraylistdeclaration0}
 \end{frame}
 \begin{frame}[fragile]{\dsarraylist{} in Java: Primitieve types bij generische klasses}
 \begin{letop}[Primitieve types bij generische klasses]
@@ -63,15 +52,15 @@ Primitief type&Klasse-type\\\hline
 \begin{methodexample}
 \begin{center}
 \begin{animateinline}{1}
-\methodexec{arraylistadd0me.java}{1}{}{
+\methodexec{arraylistadd0me}{1}{}{
 }\newframe
-\methodexec{arraylistadd0me.java}{2}{namen}{
+\methodexec{arraylistadd0me}{2}{namen}{
 \begin{scope}[xshift=8 cm]
 \tikzarraylistptr{0}{namenlist}
 \draw[pointer] (ptrnamen)  .. controls ([xshift=-2cm] ptrnamen) and ([xshift=-2cm] namenlist) .. (namenlist);
 \end{scope}
 }\newframe
-\methodexec{arraylistadd0me.java}{3}{namen}{
+\methodexec{arraylistadd0me}{3}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
 \end{scope}
@@ -81,7 +70,7 @@ Primitief type&Klasse-type\\\hline
 \draw[pointer] (namenlist1)  .. controls ([yshift=1cm] namenlist1) and ([xshift=1cm] elem0) .. (elem0);
 \end{scope}
 }\newframe
-\methodexec{arraylistadd0me.java}{4}{namen}{
+\methodexec{arraylistadd0me}{4}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
 \end{scope}
@@ -95,7 +84,7 @@ Primitief type&Klasse-type\\\hline
 \draw[pointer] (namenlist2)  .. controls ([yshift=-1cm] namenlist2) and ([xshift=1cm] elem1) .. (elem1);
 \end{scope}
 }\newframe
-\methodexec{arraylistadd0me.java}{5}{namen}{
+\methodexec{arraylistadd0me}{5}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
 \end{scope}
