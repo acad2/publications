@@ -1,0 +1,334 @@
+\subsection{Definitie}
+\begin{frame}{\dsarraylist{}: definitie}
+\begin{definition}[\dsarraylist{}]
+Een \term{\dsarraylist{}} is een gegevensstructuur die bestaat uit een opeenvolging van elementen. Elk element in een \dsarraylist{} heeft een unieke \term{index} en is toegankelijk in constante tijd (dit wordt ook wel \term{Random-Access} genoemd). Een \dsarraylist{} heeft een variabele \term{lengte}: we hoeven geen lengte op te geven bij de constructie van een \dsarraylist{} en in principe kunnen we eindeloos elementen toevoegen.
+\end{definition}
+Visueel zullen we een \dsarraylist{} in deze presentatie voorstellen als een opeenvolging van hokjes, maar met een open einde. Zoals hier:
+\begin{figure}
+\begin{tikzpicture}
+\tikzarraylist{10}{a,b,c,d,e,f,g,h,i,j}
+\end{tikzpicture}
+\caption{Voorstelling van een \dsarraylist{}}
+\end{figure}
+\end{frame}
+\subsection{In Java}
+\subsubsection{Declaratie}
+\begin{frame}[fragile]{\dsarraylist{} in Java: declaratie}
+Een \dsarraylist{} is een klasse die uit de Java-bibliotheek komt. Deze klasse is \texttt{java.util.ArrayList}. Daarom kunnen we een \dsarraylist{} aanmaken zoals andere objecten. Een \dsarraylist{} is een \term{generische klasse}: we kunnen een type-parameter tussen scheve haken (\texttt{<>}).
+\examplecode{Declaratie \dsarraylist{}}{arraylistdeclaration0}
+\end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: Primitieve types bij generische klasses}
+\begin{letop}[Primitieve types bij generische klasses]
+\small{Men kan een \dsarraylist{} declareren met elk \term{klasse-type}, primitieve types zijn niet toegelaten! Hiervoor heeft Java schaduwklasses ingevoerd:}
+\begin{table}
+\centering
+\small{\begin{tabular}{l|l}
+Primitief type&Klasse-type\\\hline
+\texttt{byte}&\texttt{Byte}\\
+\texttt{short}&\texttt{Short}\\
+\texttt{int}&\texttt{Integer}\\
+\texttt{long}&\texttt{Long}\\
+\texttt{float}&\texttt{Float}\\
+\texttt{double}&\texttt{Double}\\
+\texttt{boolean}&\texttt{Boolean}\\
+\texttt{char}&\texttt{Char}\\
+\end{tabular}}
+\caption{Omzetten van primitieve types naar klasse-types}
+\end{table}
+\end{letop}
+\end{frame}
+\subsubsection{Toevoegen en verwijderen}
+\begin{frame}[fragile]{\dsarraylist{} in Java: toevoegen/verwijderen van elementen}
+\dsarraylist{} biedt methodes aan om elementen toe te voegen en te verwijderen:
+\small{\begin{itemize}
+ \item \texttt{public boolean add (E element)}: voegt een element toe op het einde van de \dsarraylist{}
+ \item \texttt{public void add (int index, E element)}: voegt een element toe op plaats \texttt{index}, de overige elementen worden naar rechts opgeschoven
+ \item \texttt{public E remove (int index)}: verwijdert het element op \texttt{index}. De elementen erna worden naar links opgeschoven. Het element die oorspronkelijk op deze plaats stond, wordt teruggegeven
+ \item \texttt{public boolean remove (Object o)}: het opgegeven element wordt uit de \dsarraylist{} verwijdert. Geeft \texttt{true} terug indien dit element in de \dsarraylist{} aanwezig was.
+\end{itemize}}
+\end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (E element)}}
+\begin{methodexample}[\texttt{add (E element)}]
+\begin{center}
+\begin{animateinline}{1}
+\methodexec{arraylistadd0me}{1}{}{
+}\newframe
+
+\methodexec{arraylistadd0me}{2}{namen}{
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{0}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\end{scope}
+}\newframe
+\methodexec{arraylistadd0me}{3}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{1}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistadd0me}{4}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{2}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistadd0me}{5}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{3}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist3}{elem2}
+\end{scope}
+}
+\end{animateinline}
+\end{center}
+\end{methodexample}
+\end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (int index, E element)}}
+\begin{methodexample}[\texttt{add (int index, E element)}]
+\begin{center}
+\begin{animateinline}{1}
+\methodexec{arraylistadd1me}{5}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{3}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist3}{elem2}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistadd1me}{6}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{4}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist4}{elem2}
+\pointarraybotright{namenlist3}{elem3}
+\end{scope}
+}
+\end{animateinline}
+\end{center}
+\end{methodexample}
+\end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (int index)}}
+\begin{methodexample}[\texttt{remove (int index)}]
+\begin{center}
+\begin{animateinline}{1}
+\methodexec{arraylistremove0me}{6}{namen}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{4}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem1}
+\pointarraytopright{namenlist4}{elem2}
+\pointarraybotright{namenlist3}{elem3}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistremove0me}{7}{namen,verw}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+\strobj{elem1}{Gert}
+\end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{3}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraytopright{namenlist3}{elem2}
+\pointarraybotright{namenlist2}{elem3}
+\pointlertbridge{ptrverw}{elem1}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistremove0me}{8}{namen,verw}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+% \begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+% \strobj{elem1}{Gert}
+% \end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{2}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem3}
+\pointlertbridge{ptrverw}{elem2}
+\end{scope}
+}
+\end{animateinline}
+\end{center}
+\end{methodexample}
+\end{frame}
+\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{remove (Object o)}}
+\begin{methodexample}[\texttt{remove (Object o)}]
+\begin{center}
+\begin{animateinline}{1}
+\methodexec{arraylistremove1me}{8}{namen,verw}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+% \begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+% \strobj{elem1}{Gert}
+% \end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{2}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem3}
+\pointlertbridge{ptrverw}{elem2}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistremove1me}{9}{namen,verw,wasin/false}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+% \begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+% \strobj{elem1}{Gert}
+% \end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-1 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{2}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+\pointarraybotright{namenlist2}{elem3}
+\pointlertbridge{ptrverw}{elem2}
+\end{scope}
+}\newframe
+
+\methodexec{arraylistremove1me}{10}{namen,verw,wasin/true}{
+\begin{scope}[xshift=3 cm,yshift=1 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+% \begin{scope}[xshift=4 cm,yshift=-0.5 cm]
+% \strobj{elem1}{Gert}
+% \end{scope}
+\begin{scope}[xshift=5 cm,yshift=1.5 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+% \begin{scope}[xshift=6 cm,yshift=-1 cm]
+% \strobj{elem3}{Alberto}
+% \end{scope}
+\begin{scope}[xshift=7 cm]
+\tikzarraylistptr{1}{namenlist}
+\pointleftbridge{ptrnamen}{offsetnamenlist}
+\pointarraytopright{namenlist1}{elem0}
+%\pointarraybotright{namenlist2}{elem3}
+\pointlertbridge{ptrverw}{elem2}
+\end{scope}
+}
+\end{animateinline}
+\end{center}
+\end{methodexample}
+\end{frame}
+% \subsubsection{Toegang tot elementen}
+% \begin{frame}[fragile]{\dsarraylist{} in Java: toegang tot elementen}
+% Omdat \dsarraylist{} een gewone klasse is, krijgt met toegang tot de elementen via methodes:
+% \begin{itemize}
+%  \item \texttt{public E get (int index)}
+%  \item \texttt{public E set (int index, E element)}
+% \end{itemize}
+% \end{frame}
+% \subsection{Lengte}
+% \begin{frame}[fragile]{\dsarraylist{} in Java: lengte (aantal elementen)}
+% We kunnen het aantal elementen in de \dsarraylist{} opvragen met behulp van de \texttt{size()}-methode.
+% \begin{example}[Lengte van een \dsarraylist{}]
+% \begin{lstlisting}
+% ArrayList<String> namen = new ArrayList<String>();
+% namen.add("Samson");
+% namen.add("Gert");
+% namen.add("Alberto");
+% namen.add("Octaaf");
+% System.out.println(namen.size()); //4
+% \end{lstlisting}
+% \end{example}
+% \begin{letop}[\texttt{length} versus \texttt{size()}]
+% Bij een \dsarray{} vragen we de lengte op met behulp van \texttt{.length}. Bij een \dsarraylist{} is dat met de \texttt{size()}-methode. Omgekeerd werkt dit niet!
+% \end{letop}
+% \end{frame}
+% \subsubsection{Andere operaties}
+\input{arraylistimplementatie}

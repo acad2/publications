@@ -75,8 +75,10 @@
     }
     \node[fit=(indu2) (#1box\n),inner sep=0pt] (indu2) {};
   }
+  \node[anchor=south] (#1title) at (indu2.north) {\texttt{#3}};
   \begin{pgfonlayer}{bg}
-  \node[fill=yellow!20,draw=black,fit=(indu2),inner sep=3pt] (#1) {};
+  \node[fill=yellow!20,draw=black,fit=(indu2) (#1title),inner sep=3pt] (#1) {};
+  \draw (indu2.north -| #1.east) -- (indu2.north -| #1.west);
   \end{pgfonlayer}
 }
 \newcommand{\tikzarray}[2]{

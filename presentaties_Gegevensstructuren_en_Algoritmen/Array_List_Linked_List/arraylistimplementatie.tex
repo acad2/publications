@@ -1,0 +1,49 @@
+\subsection{Implementatie}
+\begin{frame}[fragile]{\dsarraylist{}: Implementatie}
+Een \dsarraylist{} is een klasse in Java die werkt op basis van een \dsarray{} en een teller.
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\genobj{alo}{elementen,aantal/3}{eenArrayList}
+\begin{scope}[xshift=4 cm,yshift=0.5 cm]
+\tikzarrayptr{9}{aloarray}
+\pointrtlebridge{aloptrelementen}{aloarray.west}
+\end{scope}
+\begin{scope}[xshift=5.5 cm,yshift=2 cm]
+\strobj{elem0}{Samson}
+\end{scope}
+\begin{scope}[xshift=6.5 cm,yshift=1.25 cm]
+\strobj{elem2}{Octaaf}
+\end{scope}
+\begin{scope}[xshift=6 cm,yshift=-0.25 cm]
+\strobj{elem3}{Alberto}
+\end{scope}
+\pointarraytopleft{aloarray1}{elem0}
+\pointarraytopleft{aloarray3}{elem2}
+\pointarraybotleft{aloarray2}{elem3}
+\end{tikzpicture}
+\caption{Structuur van een \dsarraylist{}-object}
+\end{figure}
+Telkens wanneer de \dsarray{} vol zit en we willen een element toevoegen, maken we een nieuwe (grotere) \dsarray{} aan en kopi\"eren we de oude elementen naar de nieuwe \dsarray{}.
+\end{frame}
+\begin{frame}{\dsarraylist{}: Implementatie Overzicht}
+We zullen de implementatie van volgende methodes bespreken:
+\begin{itemize}
+ \item \texttt{setCapaciteit (int capaciteit)}: een methode die de capaciteit (lengte van de \dsarray{}) aanpast. In het geval we deze moeten aanpassen worden de elementen gekopieerd.
+ \item \texttt{voegToe (Object object)}
+ \item \texttt{voegToe (int index, Object object)}
+ \item \texttt{verwijder (int index)}
+ \item \texttt{verwijder (int index, Object object)}
+\end{itemize}
+\end{frame}
+\subsubsection{\texttt{setCapaciteit(int capaciteit)}}
+\begin{frame}{\dsarraylist{}: Implementatie Overzicht}
+We zullen de implementatie van volgende methodes bespreken:
+\begin{itemize}
+ \item \texttt{setCapaciteit (int capaciteit)}: een methode die de capaciteit (lengte van de \dsarray{}) aanpast. In het geval we deze moeten aanpassen worden de elementen gekopieerd.
+ \item \texttt{voegToe (Object object)}
+ \item \texttt{voegToe (int index, Object object)}
+ \item \texttt{verwijder (int index)}
+ \item \texttt{verwijder (int index, Object object)}
+\end{itemize}
+\end{frame}
