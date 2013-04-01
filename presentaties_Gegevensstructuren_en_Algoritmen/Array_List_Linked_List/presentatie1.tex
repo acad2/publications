@@ -180,8 +180,10 @@
 \begin{scope}[xshift=0cm,yshift=0cm]
 \node[anchor=north west] (C) at (0,0) {\begin{minipage}{3in}
 \loadcode{#1}
-%\lstinputlisting[linebackgroundcolor={\ifthenelse{\value{lstnumber}=#2}{\color{green}}{}}]{programs/#1}
 \end{minipage}};
+\begin{pgfonlayer}{bg}
+  \fill[yellow!20] (0,0.245*#2-0.15) rectangle ++(6,0.25);
+\end{pgfonlayer}
 \end{scope}
 \begin{scope}[yscale=-1,yshift=-5 cm]
 \setcounter{tmpC}{1}
@@ -202,6 +204,8 @@
 #4
 \end{scope}
 \end{tikzpicture}}
+
+\input{arraylistimplementatieheader}
 
 \begin{document}
 \begin{frame}[plain,fragile]
