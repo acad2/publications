@@ -55,3 +55,57 @@
     }
   }
 }}
+
+\newcommand{\voegToeAframe}[3]{
+\methodexec{arraylistvoegtoe0}{#2}{this,obj}{
+  \begin{scope}[xshift=3.5 cm,yshift=0.4 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem0}{Samson}
+  \end{scope}
+  \begin{scope}[xshift=3.75 cm,yshift=0.8 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem3}{Alberto}
+  \end{scope}
+  \begin{scope}[xshift=4 cm,yshift=1.2 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem2}{Octaaf}
+  \end{scope}
+  \begin{scope}[xshift=4.375 cm,yshift=1.6 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem4}{Burgemeester}
+  \end{scope}
+  \ifthenelse{#1>3}{
+  \begin{scope}[xshift=4.75 cm,yshift=2.0 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem5}{Jeannine}
+  \end{scope}}{}
+  \begin{scope}[xshift=6 cm,yshift=-1cm,transform shape,yscale=-1,scale=0.75]
+  \genobj{alo}{elementen,aantal/#3}{eenArrayList}
+  \pointlertbridge{ptrthis}{alo.east}
+  \end{scope}
+  \ifthenelse{#1<6}{
+  \begin{scope}[xshift=6 cm,yshift=-0.75 cm,transform shape,yscale=-1,scale=0.75]
+    \tikzarrayptr{4}{aloarray}
+    \pointarraybotright{aloarray1}{elem0}
+    \pointarraybotright{aloarray2}{elem3}
+    \pointarraybotright{aloarray3}{elem2}
+    \ifthenelse{#1>1}{
+    \pointarraybotright{aloarray4}{elem4}}{}
+  \end{scope}}{
+  \begin{scope}[xshift=5 cm,yshift=-0.5 cm,transform shape,yscale=-1,scale=0.75]
+    \tikzarrayptr{8}{newarray}
+    \pointarraybotright{newarray1}{elem0}
+    \pointarraybotright{newarray2}{elem3}
+    \pointarraybotright{newarray3}{elem2}
+    \pointarraybotright{newarray4}{elem4}
+    \ifthenelse{#1>6}{
+    \pointarraybotright{newarray5}{elem5}}{}
+  \end{scope}}
+  \begin{scope}[transform shape,yscale=-1,scale=0.75]
+    \ifthenelse{#1=1}{
+      \tikzarraybounds{aloarray}{3/3}{-1/2,4/4}}{}
+    \ifthenelse{#1=5}{
+    \tikzarraybounds{aloarray}{4/4}{-1/3,5/7}}{}
+  \end{scope}
+  \ifthenelse{#1<6}{
+  \pointleftbridge{aloptrelementen}{aloarray.west}}{
+  \pointleftbridge{aloptrelementen}{newarray.west}}
+  \ifthenelse{#1<4}{
+  \pointlertbridge{ptrobj}{elem4.east}}{
+  \pointlertbridge{ptrobj}{elem5.east}}
+}}

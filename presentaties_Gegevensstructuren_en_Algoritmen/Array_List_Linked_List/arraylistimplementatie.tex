@@ -29,16 +29,16 @@ Telkens wanneer de \dsarray{} vol zit en we willen een element toevoegen, maken 
 \begin{frame}{\dsarraylist{}: Implementatie Overzicht}
 We zullen de implementatie van volgende methodes bespreken:
 \begin{itemize}
- \item \texttt{setCapaciteit (int capaciteit)}: een methode die de capaciteit (lengte van de \dsarray{}) aanpast. In het geval we deze moeten aanpassen worden de elementen gekopieerd.
- \item \texttt{voegToe (Object object)}
- \item \texttt{voegToe (int index, Object object)}
+ \item \texttt{setCapaciteit (int cap)}: een methode die de capaciteit (lengte van de \dsarray{}) aanpast. In het geval we deze moeten aanpassen worden de elementen gekopieerd.
+ \item \texttt{voegToe (Object obj)}
+ \item \texttt{voegToe (int index, Object obj)}
  \item \texttt{verwijder (int index)}
- \item \texttt{verwijder (int index, Object object)}
+ \item \texttt{verwijder (int index, Object obj)}
 \end{itemize}
 \end{frame}
-\subsubsection{\texttt{setCapaciteit(int capaciteit)}}
-\begin{frame}[fragile]{\dsarraylist{}: \texttt{setCapaciteit (int capaciteit)}}
-\begin{methodexample}[\texttt{setCapaciteit (int capaciteit)}]
+\subsubsection{\texttt{setCapaciteit(int cap)}}
+\begin{frame}[fragile]{\dsarraylist{}: \texttt{setCapaciteit (int cap)}}
+\begin{methodexample}[\texttt{setCapaciteit (int cap)}]
 \begin{center}
 \begin{animateinline}{1}
 \setCapaciteitframe{0}{1}{this,cap/6}\newframe
@@ -56,6 +56,24 @@ We zullen de implementatie van volgende methodes bespreken:
 \setCapaciteitframe{12}{9}{this,cap/6,nieuw,temp,i/2}\newframe
 \setCapaciteitframe{13}{7}{this,cap/6,nieuw,temp,i/3}\newframe
 \setCapaciteitframe{14}{11}{this,cap/6,nieuw,temp}
+\end{animateinline}
+\end{center}
+\end{methodexample}
+\end{frame}
+\subsubsection{\texttt{voegToe(Object obj)}}
+\begin{frame}[fragile]{\dsarraylist{}: \texttt{voegToe(Object obj)}}
+\begin{methodexample}[\texttt{voegToe(Object obj)}]
+\begin{center}
+\begin{animateinline}{1}
+\voegToeAframe{0}{1}{3}\newframe
+\voegToeAframe{1}{2}{3}\newframe
+\voegToeAframe{2}{5}{3}\newframe
+\voegToeAframe{3}{6}{4}\newframe
+\voegToeAframe{4}{1}{4}\newframe
+\voegToeAframe{5}{2}{4}\newframe
+\voegToeAframe{6}{3}{4}\newframe
+\voegToeAframe{7}{5}{4}\newframe
+\voegToeAframe{8}{6}{5}
 \end{animateinline}
 \end{center}
 \end{methodexample}
