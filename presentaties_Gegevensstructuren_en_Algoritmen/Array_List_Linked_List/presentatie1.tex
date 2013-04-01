@@ -103,6 +103,15 @@
     \node[pointerdot] (#2\x) at (0.5*\x-0.25,0) {};
   }
 }
+\newcommand{\tikzarraybounds}[3]{
+  \coordinate (sub) at ([yshift=-0.125 cm] #1.south west);
+  \foreach \f/\t in {#2} {
+    \draw[green] ([xshift=0.5*\f cm] sub) -- ([xshift=0.5*\t cm+0.5 cm] sub);
+  }
+  \foreach \f/\t in {#3} {
+    \draw[red] ([xshift=0.5*\f cm] sub) -- ([xshift=0.5*\t cm+0.5 cm] sub);
+  }
+}
 \newcommand{\tikzarraylist}[2]{
   \fill[fill=green!20] (-0.25*#1-0.25,-0.25) rectangle ++(0.5*#1+0.5,0.5);
   \draw (-0.25*#1-0.25,-0.25) rectangle ++(0.5*#1,0.5);
@@ -117,26 +126,26 @@
     \addtocounter{tmpC}{1}
   }
 }
-\newcommand{\pointleftbridge}[2]{
-  \draw[pointer] (#1)  .. controls ([xshift=-2cm] #1) and ([xshift=-2cm] #2) .. (#2);
+\newcommand{\pointleftbridge}[3][2cm]{
+  \draw[pointer] (#2)  .. controls ([xshift=-#1] #2) and ([xshift=-#1] #3) .. (#3);
 }
-\newcommand{\pointlertbridge}[2]{
-  \draw[pointer] (#1)  .. controls ([xshift=-2cm] #1) and ([xshift=2cm] #2) .. (#2);
+\newcommand{\pointlertbridge}[3][2cm]{
+  \draw[pointer] (#2)  .. controls ([xshift=-#1] #2) and ([xshift=#1] #3) .. (#3);
 }
-\newcommand{\pointrtlebridge}[2]{
-  \draw[pointer] (#1)  .. controls ([xshift=2cm] #1) and ([xshift=-2cm] #2) .. (#2);
+\newcommand{\pointrtlebridge}[3][2cm]{
+  \draw[pointer] (#2)  .. controls ([xshift=#1] #2) and ([xshift=-#1] #3) .. (#3);
 }
-\newcommand{\pointarraytopright}[2]{
-  \draw[pointer] (#1)  .. controls ([yshift=1cm] #1) and ([xshift=1cm] #2) .. (#2);
+\newcommand{\pointarraytopright}[3][1cm]{
+  \draw[pointer] (#2)  .. controls ([yshift=#1] #2) and ([xshift=#1] #3) .. (#3);
 }
-\newcommand{\pointarraybotright}[2]{
-  \draw[pointer] (#1)  .. controls ([yshift=-1cm] #1) and ([xshift=1cm] #2) .. (#2);
+\newcommand{\pointarraybotright}[3][1cm]{
+  \draw[pointer] (#2)  .. controls ([yshift=-#1] #2) and ([xshift=#1] #3) .. (#3);
 }
-\newcommand{\pointarraytopleft}[2]{
-  \draw[pointer] (#1)  .. controls ([yshift=1cm] #1) and ([xshift=-1cm] #2) .. (#2);
+\newcommand{\pointarraytopleft}[3][1cm]{
+  \draw[pointer] (#2)  .. controls ([yshift=#1] #2) and ([xshift=-#1] #3) .. (#3);
 }
-\newcommand{\pointarraybotleft}[2]{
-  \draw[pointer] (#1)  .. controls ([yshift=-1cm] #1) and ([xshift=-1cm] #2) .. (#2);
+\newcommand{\pointarraybotleft}[3][1cm]{
+  \draw[pointer] (#2)  .. controls ([yshift=-#1] #2) and ([xshift=-#1] #3) .. (#3);
 }
 \newcommand{\tikzarraylistptr}[2]{
   \coordinate (LB) at (0,-0.25);

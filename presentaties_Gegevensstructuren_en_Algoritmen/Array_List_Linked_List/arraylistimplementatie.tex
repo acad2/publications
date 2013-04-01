@@ -6,7 +6,7 @@ Een \dsarraylist{} is een klasse in Java die werkt op basis van een \dsarray{} e
 \begin{tikzpicture}
 \genobj{alo}{elementen,aantal/3}{eenArrayList}
 \begin{scope}[xshift=4 cm,yshift=0.5 cm]
-\tikzarrayptr{9}{aloarray}
+\tikzarrayptr{4}{aloarray}
 \pointrtlebridge{aloptrelementen}{aloarray.west}
 \end{scope}
 \begin{scope}[xshift=5.5 cm,yshift=2 cm]
@@ -41,24 +41,45 @@ We zullen de implementatie van volgende methodes bespreken:
 \begin{methodexample}[\texttt{setCapaciteit (int capaciteit)}]
 \begin{center}
 \begin{animateinline}{1}
-\methodexec{arraylistsetcapaciteit}{8}{this}{
-\genobj{alo}{elementen,aantal/3}{eenArrayList}
-\begin{scope}[xshift=4 cm,yshift=0.5 cm]
-\tikzarrayptr{9}{aloarray}
-\pointrtlebridge{aloptrelementen}{aloarray.west}
-\end{scope}
-\begin{scope}[xshift=5.5 cm,yshift=2 cm]
-\strobj{elem0}{Samson}
-\end{scope}
-\begin{scope}[xshift=6.5 cm,yshift=1.25 cm]
-\strobj{elem2}{Octaaf}
-\end{scope}
-\begin{scope}[xshift=6 cm,yshift=-0.25 cm]
-\strobj{elem3}{Alberto}
-\end{scope}
-\pointarraytopleft{aloarray1}{elem0}
-\pointarraytopleft{aloarray3}{elem2}
-\pointarraybotleft{aloarray2}{elem3}
+\methodexec{arraylistsetcapaciteit}{0}{this,cap/6,nieuw,temp,i/2}{
+  \begin{scope}[xshift=6 cm,yshift=-1cm,transform shape,yscale=-1,scale=0.75]
+  \genobj{alo}{elementen,aantal/3}{eenArrayList}
+  \end{scope}
+  \begin{scope}[xshift=6 cm,yshift=-0.75 cm,transform shape,yscale=-1,scale=0.75]
+    \tikzarrayptr{4}{aloarray}
+  \end{scope}
+  \begin{scope}[xshift=5 cm,yshift=1.75 cm,transform shape,yscale=-1,scale=0.75]
+    \tikzarrayptr{6}{newarray}
+  \end{scope}
+  \begin{scope}[xshift=5.5 cm,yshift=0 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem0}{Samson}
+  \end{scope}
+  \begin{scope}[xshift=6 cm,yshift=0.4 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem3}{Alberto}
+  \end{scope}
+  \begin{scope}[xshift=6.5 cm,yshift=0.8 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem2}{Octaaf}
+  \end{scope}
+  
+  \pointleftbridge{aloptrelementen}{aloarray.west}
+  \pointleftbridge[3cm]{aloptrelementen}{newarray.west}
+  
+  \pointarraytopright{aloarray1}{elem0}
+  \pointarraytopright{aloarray3}{elem2}
+  \pointarraytopright{aloarray2}{elem3}
+  
+  \pointleftbridge{ptrnieuw}{newarray.west}
+  
+  \pointarraybotleft{newarray1}{elem0}
+  \pointarraybotleft{newarray3}{elem2}
+  \pointarraybotleft{newarray2}{elem3}
+  
+  \begin{scope}[transform shape,yscale=-1,scale=0.75]
+  \tikzarraybounds{aloarray}{3/5}{-1/2}
+  \end{scope}
+%\end{scope}
+  \pointlertbridge{ptrthis}{alo.east}
+  \pointlertbridge[0.5 cm]{ptrtemp}{elem2.east}
 }
 \end{animateinline}
 \end{center}

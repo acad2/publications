@@ -1,12 +1,14 @@
-private void setCapaciteit (int capaciteit) {
-	if(capaciteit < aantal) {
-		throw new IllegalArgumentException();
-	}
-	if(capaciteit != elementen.length) {
-		Object[] nieuw = new Object[capaciteit];
-		for(int i = 0; i < aantal; i++) {
-			nieuw[i] = elementen[i];
-		}
-		elementen = nieuw;
-	}
+private void setCapaciteit (int cap) {
+  if(cap < aantal) {
+    throw new IllegalArgumentException();
+  }
+  if(cap != elementen.length) {
+    Object[] nieuw = new Object[cap];
+    Object temp;
+    for(int i = 0; i < aantal; i++) {
+      temp = elementen[i];
+      nieuw[i] = temp;
+    }
+    elementen = nieuw;
+  }
 }
