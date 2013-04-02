@@ -202,3 +202,71 @@
     }
   }
 }}
+
+\newcommand{\verwijderBframe}[4]{
+\methodexec{arraylistverwijder1}{#2}{this,obj#4}{
+  \begin{scope}[xshift=4.5 cm,yshift=0 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem0}{Samson}
+  \end{scope}
+  \begin{scope}[xshift=4.5 cm,yshift=0.4 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem1}{Gert}
+  \end{scope}
+  \ifthenelse{#1<13}{
+  \begin{scope}[xshift=4.5 cm,yshift=0.8 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem2}{Octaaf}
+  \end{scope}
+  }{}
+  \begin{scope}[xshift=4.5 cm,yshift=1.2 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem3}{Burgemeester}
+  \end{scope}
+  \begin{scope}[xshift=4.5 cm,yshift=1.6 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem4}{Jeannine}
+  \end{scope}
+  \ifthenelse{#1 < 13}{
+  \begin{scope}[xshift=7 cm,yshift=0.8 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{relem5}{Octaaf}
+  \end{scope}
+    \ifthenelse{#1>8}{\pointlertbridge{ptrtemp}{elem2}}{
+      \ifthenelse{#1>5}{\pointlertbridge{ptrtemp}{elem1}}{
+	\ifthenelse{#1>2}{\pointlertbridge{ptrtemp}{elem0}}{}
+      }
+    }
+  }{
+    \begin{scope}[xshift=7 cm,yshift=1.2 cm,transform shape,yscale=-1,scale=0.75]
+      \strobj{relem6}{Miranda}
+    \end{scope}
+    \ifthenelse{#1>24}{\pointlertbridge{ptrtemp}{elem4}}{
+      \ifthenelse{#1>21}{\pointlertbridge{ptrtemp}{elem3}}{
+	\ifthenelse{#1>18}{\pointlertbridge{ptrtemp}{elem1}}{
+	  \ifthenelse{#1>15}{\pointlertbridge{ptrtemp}{elem0}}{}
+	}
+      }
+    }
+  }
+  \begin{scope}[xshift=6 cm,yshift=-1cm,transform shape,yscale=-1,scale=0.75]
+  \genobj{alo}{elementen,aantal/#3}{eenArrayList}
+  \pointlertbridge{ptrthis}{alo.east}
+  \ifthenelse{#1 < 13}{\pointlertbridge{ptrobj}{relem5}}{\pointlertbridge{ptrobj}{relem6}}
+  \end{scope}
+  \begin{scope}[xshift=5 cm,yshift=-0.5 cm,transform shape,yscale=-0.875,scale=0.75]
+    \tikzarrayptr{8}{newarray}
+    \pointarraybotright{newarray1}{elem0}
+    \pointarraybotright{newarray2}{elem1}
+    \ifthenelse{#1<11}{
+      \pointarraybotright{newarray3}{elem2}
+      \pointarraybotright{newarray4}{elem3}
+      \pointarraybotright{newarray5}{elem4}
+    }{
+      \pointarraybotright{newarray3}{elem3}
+      \pointarraybotright{newarray4}{elem4}
+    }
+  \end{scope}
+  \pointleftbridge{aloptrelementen}{newarray.west}
+  \ifthenelse{#1=4}{\methcall[red]{elem0}{relem5}{equals}}{}
+  \ifthenelse{#1=7}{\methcall[red]{elem1}{relem5}{equals}}{}
+  \ifthenelse{#1=10}{\methcall[green]{elem2}{relem5}{equals}}{}
+  \ifthenelse{#1=17}{\methcall[red]{elem0}{relem6}{equals}}{}
+  \ifthenelse{#1=20}{\methcall[red]{elem1}{relem6}{equals}}{}
+  \ifthenelse{#1=23}{\methcall[red]{elem3}{relem6}{equals}}{}
+  \ifthenelse{#1=26}{\methcall[red]{elem4}{relem6}{equals}}{}
+}}
