@@ -115,14 +115,14 @@
   \begin{scope}[xshift=4.5 cm,yshift=0 cm,transform shape,yscale=-1,scale=0.75]
     \strobj{elem0}{Samson}
   \end{scope}
-  \begin{scope}[xshift=4.5 cm,yshift=0.4 cm,transform shape,yscale=-1,scale=0.75]
+  \begin{scope}[xshift=6.5 cm,yshift=2.0 cm,transform shape,yscale=-1,scale=0.75]
     \strobj{elem1}{Gert}
   \end{scope}
   \begin{scope}[xshift=4.5 cm,yshift=0.8 cm,transform shape,yscale=-1,scale=0.75]
-    \strobj{elem3}{Alberto}
+    \strobj{elem2}{Alberto}
   \end{scope}
   \begin{scope}[xshift=4.5 cm,yshift=1.2 cm,transform shape,yscale=-1,scale=0.75]
-    \strobj{elem2}{Octaaf}
+    \strobj{elem3}{Octaaf}
   \end{scope}
   \begin{scope}[xshift=4.5 cm,yshift=1.6 cm,transform shape,yscale=-1,scale=0.75]
     \strobj{elem4}{Burgemeester}
@@ -137,18 +137,59 @@
   \begin{scope}[xshift=5 cm,yshift=-0.5 cm,transform shape,yscale=-0.875,scale=0.75]
     \tikzarrayptr{8}{newarray}
     \pointarraybotright{newarray1}{elem0}
-    \pointarraybotright{newarray2}{elem3}
-    \pointarraybotright{newarray3}{elem2}
-    \pointarraybotright{newarray4}{elem4}
-    \ifthenelse{#1>6}{
-    \pointarraybotright{newarray5}{elem5}}{}
+    \ifthenelse{#1>16}{\pointarraybotleft{newarray2}{elem1}}{\pointarraybotright{newarray2}{elem2}}
+    \ifthenelse{#1>14}{\pointarraybotright{newarray3}{elem2}}{\pointarraybotright{newarray3}{elem3}}
+    \ifthenelse{#1>11}{\pointarraybotright{newarray4}{elem3}}{\pointarraybotright{newarray4}{elem4}}
+    \ifthenelse{#1> 8}{\pointarraybotright{newarray5}{elem4}}{\pointarraybotright{newarray5}{elem5}}
+    \ifthenelse{#1> 5}{\pointarraybotright{newarray6}{elem5}}{}
   \end{scope}
   \begin{scope}[transform shape,yscale=-1,scale=0.75]
-    \ifthenelse{#1=1}{
-      \tikzarraybounds{newarray}{3/3}{-1/2,4/4}}{}
-    \ifthenelse{#1=5}{
-    \tikzarraybounds{newarray}{4/4}{-1/3,5/7}}{}
+    \ifthenelse{#1=1}{\tikzarraybounds{newarray}{0/5}{-1/-1,6/8}}{}
+    \ifthenelse{#1=2}{\tikzarraybounds{newarray}{5/5}{-1/4,6/8}}{}
   \end{scope}
   \pointleftbridge{aloptrelementen}{newarray.west}
   \pointlertbridge{ptrobj}{elem1.east}
+  \ifthenelse{#1>13}{\pointlertbridge{ptrtemp}{elem2}}{
+    \ifthenelse{#1>10}{\pointlertbridge{ptrtemp}{elem3}}{
+      \ifthenelse{#1> 7}{\pointlertbridge{ptrtemp}{elem4}}{
+	\ifthenelse{#1> 4}{\pointlertbridge{ptrtemp}{elem5}}{}
+      }
+    }
+  }
+}}
+
+\newcommand{\verwijderAframe}[4]{
+\methodexec{arraylistverwijder0}{#2}{this,index/2#4}{
+  \begin{scope}[xshift=4.5 cm,yshift=0 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem0}{Samson}
+  \end{scope}
+  \begin{scope}[xshift=4.5 cm,yshift=0.4 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem1}{Gert}
+  \end{scope}
+  \begin{scope}[xshift=4.5 cm,yshift=0.8 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem2}{Alberto}
+  \end{scope}
+  \begin{scope}[xshift=4.5 cm,yshift=1.2 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem3}{Octaaf}
+  \end{scope}
+  \begin{scope}[xshift=4.5 cm,yshift=1.6 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem4}{Burgemeester}
+  \end{scope}
+  \begin{scope}[xshift=4.5 cm,yshift=2.0 cm,transform shape,yscale=-1,scale=0.75]
+    \strobj{elem5}{Jeannine}
+  \end{scope}
+  \begin{scope}[xshift=6 cm,yshift=-1cm,transform shape,yscale=-1,scale=0.75]
+  \genobj{alo}{elementen,aantal/#3}{eenArrayList}
+  \pointlertbridge{ptrthis}{alo.east}
+  \end{scope}
+  \begin{scope}[xshift=5 cm,yshift=-0.5 cm,transform shape,yscale=-0.875,scale=0.75]
+    \tikzarrayptr{8}{newarray}
+    \pointarraybotright{newarray1}{elem0}
+    \pointarraybotright{newarray2}{elem1}
+  \end{scope}
+  \begin{scope}[transform shape,yscale=-1,scale=0.75]
+    \ifthenelse{#1=1}{\tikzarraybounds{newarray}{0/5}{-1/-1,6/8}}{}
+  \end{scope}
+  \pointleftbridge{aloptrelementen}{newarray.west}
+  \ifthenelse{#1>1}{\pointlertbridge{ptroutp}{elem2}}{}
 }}
