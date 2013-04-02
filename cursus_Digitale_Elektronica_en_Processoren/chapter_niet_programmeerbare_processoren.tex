@@ -1599,8 +1599,9 @@ $\#$	&0	&2	&2	&2	&1	&1	&1	&0	&9\\
 \label{tbl:functionalunittableexample}
 \end{table}
 De enige potenti\"ele moeilijkheid aan het opstellen van deze tabel is de definitie van ``type functionele eenheid''. Men kan zich afvragen of bijvoorbeeld een shift over 3 bits bijvoorbeeld tot hetzelfde type behoort als een shift over 1 bit. In geval van twijfel kan het geen kwaad om een onderscheid te maken (en dus een rij in de tabel te voorzien voor $\shr1$ en $\shr3$). Als algemene definitie kunnen we stellen dat twee functionele eenheden tot hetzelfde type behoren wanneer we hardware kunnen voorzien die beide operaties op hetzelfde component uitvoert. Indien we dus beslissen om de shift te implementeren met behulp van de verbindingen, is een shift over drie bits een ander operatie dan een shift over 1 bit. Wanneer we echter met een schuifregister werken, kunnen beide operaties op hetzelfde schuifregister worden uitgevoerd.
-\paragraph{Verbindingentabel}
-Een laatste tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs2}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
+\paragraph{Verbindingentabel en Invoertabel}
+Een laatste tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij 
+cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs2}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
 \begin{table}[hbt]
 \centering
 \begin{tabular}{c|ccccccccccc}
@@ -1613,11 +1614,53 @@ shr 3	&	&	&	&	&I	&	&O	&	&	&		&\\
 shr 1	&	&	&	&	&	&I	&	&O	&	&		&\\
 $-$	&	&	&	&	&I	&	&I	&	&O	&		&\\
 $+$	&	&	&	&	&	&	&	&I	&I	&O		&\\
-max2	&	&	&	&I	&	&	&	&	&	&I		&O\\
+max2	&	&	&	&	&I	&	&	&	&	&I		&O
 \end{tabular}
 \caption{Verbindingentabel van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
 \label{tbl:connectiontableexample}
 \end{table}
+\begin{table}
+\subtable[In1]{\small{\begin{tabular}{c|cccccc|cccc|ccccccccc}
+In1	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_6$	&$t_8$	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_3$	&$t_4$	&$t_5$	&$t_6$	&$t_7$	&$t_8$	&$t_9$	&$t_{10}$&$t_{11}$\\\hline
+abs1	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&\\\\
+abs2	&	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&\\\\
+max1	&	&	&$\bullet$&	&	&	&$\bullet$&	&	&	&	&	&$\bullet$&	&	&	&	&	&\\\\
+min	&	&	&$\bullet$&	&	&	&$\bullet$&	&	&	&	&	&	&$\bullet$&	&	&	&	&\\\\
+shr 3	&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&\\\\
+shr 1	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&\\\\
+$-$	&	&	&	&$\bullet$&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$&	&\\\\
+$+$	&	&	&	&	&	&$\bullet$&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$&\\\\
+max2	&	&	&	&$\bullet$&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$\\
+\end{tabular}}}
+\subtable[In2]{\small{\begin{tabular}{c|cccc}
+In2	&$t_1$	&$t_2$	&$t_3$	&$t_5$\\\hline
+abs1	&	&	&	&\\
+abs2	&	&	&	&\\
+max1	&$\bullet$	&	&	&\\
+min	&$\bullet$	&	&	&\\
+shr 3	&	&	&	&\\
+shr 1	&	&	&	&\\
+$-$	&	&$\bullet$	&	&\\
+$+$	&	&	&$\bullet$	&\\
+max2	&	&	&	&$\bullet$
+\end{tabular}}}
+\subtable[Out]{\small{\begin{tabular}{c}
+Out	&$t_3$	&$t_4$	&$t_5$	&$t_6$	&$t_7$	&$t_8$	&$t_9$	&$t_{10}$	&$t_{11}$\\\hline
+abs1	&$\bullet$	&	&	&	&	&	&	&	&\\
+abs2	&	&$\bullet$	&	&	&	&	&	&	&\\
+max1	&	&	&$\bullet$	&	&	&	&	&	&\\
+min	&	&	&	&$\bullet$	&	&	&	&	&\\
+shr 3	&	&	&	&	&$\bullet$	&	&	&	&\\
+shr 1	&	&	&	&	&	&$\bullet$	&	&	&\\
+$-$	&	&	&	&	&	&	&$\bullet$	&	&\\
+$+$	&	&	&	&	&	&	&	&$\bullet$	&\\
+max2	&	&	&	&	&	&	&	&		&$\bullet$
+\end{tabular}}}
+\caption{Invoertabellen van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
+\label{tbl:inputtableexample}
+\end{table}
+\paragraph{Opstellen van een compatibiliteitsgrafe}
+Nu we deze tabellen hebben opgesteld, kunnen we met het echte werk beginnen: het samenvoegen van registers.
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
