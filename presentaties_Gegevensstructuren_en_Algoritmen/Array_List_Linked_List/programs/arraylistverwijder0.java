@@ -10,4 +10,5 @@ private Object verwijder (int index) {
   }
   elementen[aantal-1] = null;
   this.aantal--;
+  return outp;
 }

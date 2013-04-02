@@ -186,10 +186,19 @@
     \tikzarrayptr{8}{newarray}
     \pointarraybotright{newarray1}{elem0}
     \pointarraybotright{newarray2}{elem1}
+    \ifthenelse{#1> 5}{\pointarraybotright{newarray3}{elem3}}{\pointarraybotright{newarray3}{elem2}}
+    \ifthenelse{#1> 8}{\pointarraybotright{newarray4}{elem4}}{\pointarraybotright{newarray4}{elem3}}
+    \ifthenelse{#1>11}{\pointarraybotright{newarray5}{elem5}}{\pointarraybotright{newarray5}{elem4}}
+    \ifthenelse{#1<14}{\pointarraybotright{newarray6}{elem5}}{}
   \end{scope}
   \begin{scope}[transform shape,yscale=-1,scale=0.75]
     \ifthenelse{#1=1}{\tikzarraybounds{newarray}{0/5}{-1/-1,6/8}}{}
   \end{scope}
   \pointleftbridge{aloptrelementen}{newarray.west}
   \ifthenelse{#1>1}{\pointlertbridge{ptroutp}{elem2}}{}
+  \ifthenelse{#1>10}{\pointlertbridge{ptrtemp}{elem5}}{
+    \ifthenelse{#1>7}{\pointlertbridge{ptrtemp}{elem4}}{
+      \ifthenelse{#1>4}{\pointlertbridge{ptrtemp}{elem3}}{}
+    }
+  }
 }}
