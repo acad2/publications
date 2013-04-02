@@ -1156,3 +1156,39 @@ An interpretation (validation) $\calM$ is a \term[Model of a default theory]{mod
 A default theory \tuple{D,W} is in \termabbrev{extended Horn normal form}{EHNF} \iffTx{} $W$ and all elements of each $\fun{j}{d}$ are disjunctions of Horn theories, each \fun{p}{d} is a conjunction of dual Horn theories, and each consequent \fun{c}{d} is a Horn theory.If \tuple{D,W} is normal, then, trivially, the only element of each \fun{j}{d} is only a Horn theory, too.
 \cite{conf/ijcai/BaumgartnerG99}
 \end{defi}
+
+\begin{defi}[Stable model for a program]%TODO: definitions of P'
+Let $I$ be an interpretation for a program $\calP$. $I$ is a \term[Stable model for a program]{stable model for $\calP$} if $I\in\funm{MM}{\calP^I}$
+\cite{conf/ijcai/KochL99}
+\end{defi}
+
+\begin{defi}[Unfounded set for a program]
+Let $I$ be an interpretation for a program $\calP$. A set $X\subseteq B_{\calP}$ of ground atoms is an \term[Unfounded set for a program]{unfounded set for $\calP$} \wrtTx{} $I$ if for each rule $r\in\funm{ground}{\calP}$ such that $X\cap\fun{H}{r}\neq\emptyset$, at least one of the following conditions hold:
+\begin{enumerate}
+ \item $\brak{\fun{B^+}{r}\not\subseteq I}\vee\brak{\fun{B^-}{r}\cap I\neq\emptyset}$, that is the body $r$ is false \wrtTx{} $I$.
+ \item $\fun{B^+}{r}\cap X\neq\emptyset$, that is, some positive body literal belongs to $X$.
+ \item $\brak{\fun{H}{r}\setminus X}\cap I\neq\emptyset$, that is, an atom is the head of $r$, distinct from the elements in $X$, is true \wrtTx{} $I$.
+\end{enumerate}
+\cite{conf/ijcai/KochL99}
+\end{defi}
+
+\begin{defi}[Unbounded-free interpretation of a program]
+An interpretation $I$ for a program $\calP$ is \term[unbounded-free interpretation of a program]{unfounded-free} \iffTx{} no nonempty subset of $I$ is an unfounded set for $\calP$ \wrtTx{} $I$.
+\cite{conf/ijcai/KochL99}
+\end{defi}
+
+\begin{defi}[Simplified version of a program]
+Let $\calP$ be a ground DLP program and $M$ be a model for $\calP$. Define the \term[Simplified version of a program]{simplified version} $\fun{\alpha_M}{\calP}$ of $\calP$ \wrtTx{} $M$ as:
+\begin{equation}
+\fun{\alpha_M}{\calP}=\accol{\displaystyle\vee_{x\in\brak{\fun{H}{r}\cap M}}x\leftarrow\displaystyle\wedge_{x\in\fun{B^+}{r}x}|r\in\calP,\mbox{ the body of $r$ is true \wrtTx{} $M$}}
+\end{equation}
+\cite{conf/ijcai/KochL99}
+\end{defi}
+
+\begin{defi}[$\fun{\beta_M}{\calP}$]
+Let $\calP$ be a DLP program and $M$ be a model for $\calP$. Define \term{\fun{\beta_M}{\calP}} as the following set of clauses over $M$:
+\begin{equation}
+\fun{\beta_M}{\calP}=\accol{\displaystyle\vee_{x\in\fun{B}{r}}x\leftarrow\displaystyle\wedge_{x\in\fun{H}{r}}x|r\in\fun{\alpha_M}{\calP}}
+\end{equation}
+\cite{conf/ijcai/KochL99}
+\end{defi}
