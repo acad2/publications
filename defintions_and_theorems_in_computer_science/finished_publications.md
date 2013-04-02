@@ -44,6 +44,8 @@ Errors:
  
  - 011_021.pdf
  - 011_023.pdf
+ - 011_025.pdf
+ - 012_018.pdf
  
  = May =
  = June =

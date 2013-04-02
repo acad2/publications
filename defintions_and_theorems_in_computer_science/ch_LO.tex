@@ -551,6 +551,18 @@ The closure of an $AE$ theory $A$, \fun{C_A}{S}, is an \term[Abductive extension
 \cite{conf/ijcai/BrewkaK93}
 \end{defi}
 
+\section{Constraint Logic Programming}
+
+\begin{defi}[Weak transition, strong transition]
+A transition is \term[Weak transition]{weak} if it does change the device topology. Otherwise it is \term[Strong transition]{strong}.
+\cite{conf/ijcai/GrafHPZ89}
+\end{defi}
+
+\begin{defi}[S-model, G-model]
+A model is an \term{S-model} if it does not contain strong internal transitions. Otherwise it is a \term{G-model}.
+\cite{conf/ijcai/GrafHPZ89}
+\end{defi}
+
 \section{Theorem Proving}
 
 \begin{defi}[Loop in computation paths, Diamond in computation paths]
@@ -784,6 +796,76 @@ The set of \termabbrev{conditional well sorted terms}{cws. terms} $\calT_S$ of s
 \cite{conf/ijcai/Weidenbach93}
 \end{defi}
 
+\begin{defi}[Formula satisfiability of a modal logic interpretation]
+A modal logic interpretation $\calI_M=\tuple{\tuple{\calW,\calR},\calI_{\mbox{loc}},\tau_1\phi}$ is said in \term[Formula satisfiability of a modal logic interpretation]{satisfy} a formula $\Phi$ If $\calI_M\vDash_M\Phi$, where $\vDash_M$ is recursively defined as follows:
+\begin{equation}
+\group{
+\fun{\calI_M}{x}=\fun{\phi}{x}\\
+\fun{\calI_M}{\fun{f}{\ldots,t_i,\ldots}}=\fun{\hat{f}}{\ldots,\fun{\calI_M}{t_i},\ldots}\\
+\calI_M\vDash_M\fun{P}{\ldots,t_i,\ldots}\mbox{ \iffTx{} }\fun{\hat{P}}{\ldots,\fun{\calI_M}{t_i},\ldots}\\
+\calI_M\vDash_M\square\Phi\mbox{ \iffTx{} }\funf{\calI_M}{\calX}\vDash_M\Phi\mbox{ \feTx{} world } \calX\mbox{ with }\fun{\calR}{\tau,\calX}\\
+\calI_M\vDash_M\diamond\Phi\mbox{ \iffTx{} }\funf{\calI_M}{\calX}\vDash_M\Phi\mbox{ \fsTx{} world } \calX\mbox{ with }\fun{\calR}{\tau,\calX}
+}
+\end{equation}
+Where \funf{\calI_M}{\calX} differs from $\calI_M$ only with respect to the new current world $\calX$, $\hat{f}$ denotes the function associated with $f$ by the signature structure \fun{\calI_{\mbox{loc}}}{\tau} and $\hat{P}$ denotes the predicate associated with $P$ by the signature structure \fun{\calI_{\mbox{loc}}}{\tau}.
+\cite{conf/ijcai/Nonnengart93}
+\end{defi}
+
+\begin{defi}[Formula morphism $\floor{\Phi}_w$]
+The \term{formula morphism $\floor{\Phi}_w$} is defined as follows
+\begin{equation}
+\group{
+\floor{x}_w=x\\
+\floor{\fun{f}{\ldots,t_i,\ldots}}_w=\fun{f'}{w,\ldots,\floor{t_i}_w,\ldots}\\
+\floor{\square\Phi}_w=\forall v:W\ \fun{R}{w,v}\Rightarrow\floor{\Phi}_v\\
+\floor{\diamond\Phi}_w=\exists v:W\ \fun{R}{w,v}\wedge\floor{\Phi}_v\\
+}
+\end{equation}
+The remaining cases are treated by the usual homomorphic extension. The initial call for the translation of an arbitrary formula $\Phi$ then simply  is $\floor{\Phi}_i$.
+\cite{conf/ijcai/Nonnengart93}
+\end{defi}
+
+\begin{defi}[Functional simulator of a binary relation, Normal element with respect to a binary relation]
+Let $S$ and $T$ be two non-empty denumerable sets and let $R$ be a non-empty binary relation over $S\times T$. Then define for any pairs \tuple{x,y} and \tuple{u,v} in $S\times T$: $\tuple{x,y}\approx\tuple{u,v}$ \iffTx{} $x=u$. Obviously $\approx$ denotes an equivalence relation. It Is thus possible to introduce equivalence classes $\flatbrak{}_{\approx}$ by:
+\begin{equation}
+\flatbrak{\tuple{x,y}}/_{\approx}=\accol{\tuple{u,v}\in R|\tuple{u,v}\approx \tuple{x,y}}
+\end{equation}
+and
+\begin{equation}
+R/_{\approx}=\accol{\flatbrak{\tuple{x,y}}/_{\approx}|\tuple{x,y}\in R}
+\end{equation}
+Both $\flatbrak{\tuple{x,y}}/_{\approx}$ and $R/_{\approx}$ are denumerable, therefore there exist surjective mapping: \funsig{\theta}{\NNN}{R/_{\approx}} and \funsig{\delta_i}{\NNN}{\fun{\theta}{i}}. Then define $f_j=\accol{\fun{\delta_k}{j}|k\in\NNN}$. We call $F_R=\accol{f_j|j\in\NNN}$ a \term[Functional simulator of a binary relation]{functional simulator of $R$} on $S\times T$. An element $s\in S$ is called \term[Normal element with respect to a binary relation]{normal \wrtTx{} $R$} if \teTx{} a $t\in T$ \stTx{} $\tuple{s,t}\in R$.
+\cite{conf/ijcai/Nonnengart93}
+\end{defi}
+
+
+\begin{defi}[Formula morphism $\floor{\Phi}_u^\star$]
+Let $\Phi$ be a modal logic formula in negation normal form. We define the \term{formula morphism $\floor{\Phi}_u^\star$} as follows:
+\begin{equation}
+\floor{\diamond\Phi}_u^\star=\exists f:F_R\ \floor{\Phi}_{u:f}^\star
+\end{equation}
+In any other case $\floor{\Phi}_u^\star$ behaves as $\floor{\Phi}_u$.
+\cite{conf/ijcai/Nonnengart93}
+\end{defi}
+
+\subsection{Logical Filtering}
+
+\begin{defi}[Logical filtering semantics of a sequence of actions and observations]
+Let $\sigma\subseteq S$ be a belief state. The \term{logical filtering semantics of a sequence of actions and observations} $\tuple{a_1,o_1,a_2,o_2,\ldots,a_t,o_t}$ is defined as follows:
+\begin{enumerate}
+ \item $\fun{\funmf{Filter}{\epsilon}}{\sigma}=\sigma$;
+ \item $\fun{\funmf{Filter}{a}}{\sigma}=\accol{s'|\tuple{s,a,s'}\in\calR,s\in\sigma}$;
+ \item $\fun{\funmf{Filter}{o}}{\sigma}=\accol{s\in\sigma|o\mbox{ is true in }s}$;
+ \item $\fun{\funmf{Filter}{\tuple{a_i,o_i,a_{i+1},o_{i+1},\ldots,a_t,o_t}}}{\sigma}=\fun{\funmf{Filter}{\tuple{a_{i+1},o_{i+1},a_{i+2},o_{i+2},\ldots,a_t,o_t}}}{\fun{\funmf{Filter}{o_i}}{\fun{\funmf{Filter}{a_i}}{\sigma}}}$.
+\end{enumerate}
+\cite{conf/ijcai/AmirR03}
+\end{defi}
+
+
+\begin{defi}[Permuting actions]
+Action $a$ is \term[Permuting actions]{permuting}, if for every state $s'$ there is at most one $s$ such that \fun{\calR}{s,a,s'}.
+\cite{conf/ijcai/AmirR03}
+\end{defi}
 
 \section{Critical Reasoning}
 
