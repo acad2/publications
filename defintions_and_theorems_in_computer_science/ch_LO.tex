@@ -1274,3 +1274,17 @@ Let $\calP$ be a DLP program and $M$ be a model for $\calP$. Define \term{\fun{\
 \end{equation}
 \cite{conf/ijcai/KochL99}
 \end{defi}
+
+\begin{defi}[Extension for a default theory]
+Let \tuple{D,W} be a default theory, and let $E\subseteq\calL$. $E$ is an \term[Extension for a default theory]{extension for \tuple{D,W}} \iffTx{} $W\in E$ and $E$ is the minimal set closed under deduction and closed under the set $\fun{D}{E}$.
+\cite{conf/ijcai/Rosati99}
+\end{defi}
+
+\begin{defi}[Stable expansion for a logic formula]
+A consistent set of formulas $T$ from $\calL_K$ is \term{stable expansion for formula $\Sigma\in\calL_K$} if $T$ satisfies the following equation:
+\begin{equation}
+T=\fun{\mbox{Cn}_{\mbox{\sc KD45}}}{\accol{\Sigma}\cup\accol{\neg K\phi|\phi\notin T}}
+\end{equation}
+Where $\mbox{Cn}_{\mbox{\sc KD45}}$ is the logic consequence operator of modal logic {\sc KD45}.
+\cite{conf/ijcai/Rosati99}
+\end{defi}

@@ -50,6 +50,38 @@ where $A_i$ are attribute predicates and $L$, $R$, $F$ are regular atom conjunct
 \cite{conf/fedcsis/GiurcaSB12}
 \end{defi}
 
+\begin{defi}[Single-controller-stochastic-game, stage game, agent, adversary, probabilistic transition function]
+A \termabbrev{single-controller-stochastic-game}{SCSG} $M$ on states $S=\accol{1,2,\ldots,N}$ and actions $A=\accol{a_1,a_2,\ldots,a_k}$, consists of:
+\begin{enumerate}
+ \item \term[Stage game]{Stage games}: each state $s\in S$ is associated with a zero-sum game in strategic form, where the action set of each player is $A$. The first player is termed \term{agent} and the second player is termed \term{adversary}.
+ \item \term{Probabilistic transition function}: $\fun{P_M}{s,t,a}$ is the probability of a transition from $s$ to $t$ given that the first player (termed agent), plays $a$.
+\end{enumerate}
+\cite{Brafman:1999:NPA:1624312.1624324}
+\end{defi}
+
+\begin{defi}[$\alpha$-approximation of a single-controller-stochastic-game]
+Let $M$ and $\overline{M}$ be single-controller-stochastic-games over the same state space. We say that $\overline{M}$ is an \term[$\alpha$-approximation of a single-controller-stochastic-game]{$\alpha$-approximation of $M$} if for every state $s$ we have:
+\begin{enumerate}
+ \item If \fun{P_M}{s,t,a} and \fun{P_{\overline{M}}}{s,t,a} are the probabilities of transition to $t$ given that the action carried out by the agent is $a$, in $M$ and $\overline{M}$ respectively, then, $\fun{P_M}{s,t,a}-\alpha\leq \fun{P_{\overline{M}}}{s,t,a}\leq \fun{P_M}{s,t,a}+\alpha$
+ \item The game associated with $s$ in $\overline{M}$ is the game associated with it in $M$ restricted to a non-empty subset of the columns.
+\end{enumerate}
+\cite{Brafman:1999:NPA:1624312.1624324}
+\end{defi}
+
+\begin{defi}[Induced single-controller-stochastic-game]
+Let $M$ be an single-controller-stochastic-game, and let $L$ be any subset of $S$. The \term{induced single-controller-stochastic-game}, $M_L$ , has states $L\cup\accol{l_0}$, and transitions and state games as follows:
+\begin{enumerate}
+ \item The states in $M_L$ are associated with the same games as in $M$.
+ \item The state $l_0$ is associated with a game where the adversary obtains the value $P_{\mbox{max}}$ for any joint action (a "worst case" state for the agent).
+ \item For any action $a,\fun{P_{M_L}}{l_0,l_0,a_0}=1$.
+ \item For any states $s,t\in L$, and $a\in A$, we have that $\fun{P_M}{s,t,a}=\fun{P_{M_L}}{s,t,a}$.
+ \item For every $s\in L$, and $t\notin L$, and for every action $a\in A$, we have that $\fun{P_{M_L}}{s,t,a}=0$.
+ \item For every $s\in L$, and $a\in A$, we have that $\fun{P_{M_L}}{s,l_0,a}=\displaystyle\sum_{j\notin L}{\fun{P_M}{s,t,a}}$.
+\end{enumerate}
+\cite{Brafman:1999:NPA:1624312.1624324}
+\end{defi}
+
+
 \section{Empirical Law Discovery}
 
 \begin{defi}[$X$-of-$N$ representation]
