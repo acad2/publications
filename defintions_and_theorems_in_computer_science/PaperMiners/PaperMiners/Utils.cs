@@ -20,11 +20,55 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
+using PaperMiners.Miners;
 
 namespace PaperMiners.Util {
 
 	public static class Utils {
 
+		private static readonly string[] topicnames = new string[] {
+			"None",
+			"Artificial Intelligence",
+			"Computation and Language",
+			"Computational Complexity",
+			"Computational Engineering, Finance, and Science",
+			"Computational Geometry",
+			"Computer Science and Game Theory",
+			"Computer Vision and Pattern Recognition",
+			"Computer and Society",
+			"Cryptography and Security",
+			"Datastructures and Algorithms",
+			"Databases",
+			"Digital Libraries",
+			"Discrete Mathematics",
+			"Distributed, Parallel and Cluster Computing",
+			"Emerging Technologies",
+			"Formal Languages and Automata Theory",
+			"General Literature",
+			"Graphics",
+			"Hardware Architecture",
+			"Human-Computer Interaction",
+			"Information Retrieval",
+			"Information Theory",
+			"Machine Learning",
+			"Logic in Computer Science",
+			"Mathematical Software",
+			"Multiagent Systems",
+			"Multimedia",
+			"Networking and Internet Architecture",
+			"Neural and Evolutionary Computing",
+			"Numerical Analysis",
+			"Operating Systems",
+			"Other",
+			"Performance",
+			"Programming Languages",
+			"Robotics",
+			"Social and Information Networks",
+			"Software Engineering",
+			"Sound",
+			"Symbolic Computation",
+			"Systems and Control"
+		};
 
 		public static bool EqualEnumerable<T,Q> (IEnumerable<T> ea, IEnumerable<Q> eb) {
 			IEnumerator<T> ena = ea.GetEnumerator();
@@ -46,6 +90,19 @@ namespace PaperMiners.Util {
 				hash ^= t.GetHashCode();
 			}
 			return hash;
+		}
+
+		public static int IntegerLog2 (long value) {
+			int index = -1;
+			while(value != 0x00) {
+				value >>= 0x01;
+				index++;
+			}
+			return index;
+		}
+
+		public static string TopicName (Topic top) {
+			return string.Format("{0} ({1})", topicnames[IntegerLog2((long)top)+0x01], top.ToString());
 		}
 
 	}
