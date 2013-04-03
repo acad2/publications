@@ -1599,9 +1599,8 @@ $\#$	&0	&2	&2	&2	&1	&1	&1	&0	&9\\
 \label{tbl:functionalunittableexample}
 \end{table}
 De enige potenti\"ele moeilijkheid aan het opstellen van deze tabel is de definitie van ``type functionele eenheid''. Men kan zich afvragen of bijvoorbeeld een shift over 3 bits bijvoorbeeld tot hetzelfde type behoort als een shift over 1 bit. In geval van twijfel kan het geen kwaad om een onderscheid te maken (en dus een rij in de tabel te voorzien voor $\shr1$ en $\shr3$). Als algemene definitie kunnen we stellen dat twee functionele eenheden tot hetzelfde type behoren wanneer we hardware kunnen voorzien die beide operaties op hetzelfde component uitvoert. Indien we dus beslissen om de shift te implementeren met behulp van de verbindingen, is een shift over drie bits een ander operatie dan een shift over 1 bit. Wanneer we echter met een schuifregister werken, kunnen beide operaties op hetzelfde schuifregister worden uitgevoerd.
-\paragraph{Verbindingentabel en Invoertabel}
-Een laatste tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij 
-cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs2}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
+\paragraph{Verbindingentabel, Invoer- en uitvoertabellen}
+Een andere tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs2}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
 \begin{table}[hbt]
 \centering
 \begin{tabular}{c|ccccccccccc}
@@ -1619,9 +1618,66 @@ max2	&	&	&	&	&I	&	&	&	&	&I		&O
 \caption{Verbindingentabel van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
 \label{tbl:connectiontableexample}
 \end{table}
-\begin{table}
+Als laatste stellen we ook een set \termen{invoer- en uitvoertabellen} op. Deze tabellen worden gedeeltelijk afgeleid uit de verbindingentabel (in dit voorbeeld tabel \ref{tbl:connectiontableexample}). In deze tabel hebben we enkel een onderscheid gemaakt tussen invoer en uitvoer. Sommige functionele elementen hebben echter verschillende ingangen. Door variabelen toe te wijzen aan een specifieke ingang maken we de tabel dus concreter. In sommige gevallen staat deze ingang vast. In toestand $S_4$ trekken we bijvoorbeeld $t_7$ van $t_5$ af. Het spreekt voor zich dat we dus $t_5$ verbinden met de eerste ingang en $t_7$ met de tweede ingang. Bij sommige functionele eenheden kunnen we echter kiezen. In dat geval is de operatie die door de functionele eenheid wordt uitgevoerd ``commutatief''. Formeler kunnen we stellen dat een functie $f$ commutatief is indien:
+\begin{equation}
+f\left(\vec{x}\right)=f\left(\sigma\vec{x}\right)\mbox{ voor elke permutatie $\sigma$}
+\end{equation}
+Concrete voorbeelden van zulke operaties zijn optellen, minimum en maximum. Sommige functionele eenheden hebben meer dan twee ingangen. Ook hier kan er commutativiteit spelen. Soms is de operatie volledig commutatief en is dus elke permutatie geldig. In andere gevallen is er sprake van gedeeltelijke commutativiteit en wordt slechts een subset van permutaties ondersteund. Het toewijzen van ingangen kunnen we natuurlijk willekeurig doen. Toch loont het de moeite om dit op een intelligentere manier te doen. In het leidend voorbeeld (zie figuur \ref{fig:asmSqrt}) zien we bijvoorbeeld dat we zowel in toestand $S_2$ en $S_6$ een maximum berekenen. De kans is relatief groot, dat we in de toekomst deze twee bewerkingen op dezelfde functionele eenheid zullen uitvoeren. In toestand $S_2$ berekenen we $\max\left(t_3,t_4\right)$, in toestand $S_6$ $\max\left(t_5,t_{10}\right)$. Indien we echter in toestand $S_6$, $\max\left(t_5,t_3\right)$ hadden willen uitrekenen, was het zinvol geweest om deze operatie aan te passen naar $\max\left(t_3,t_5\right)$. Indien we dan later de twee functionele eenheden zouden samenvoegen, dienen we geen multiplexer voor de eerste ingang te plaatsen. In het algemeen geldt meestal volgende regel:
+\begin{quote}
+Wijs dezelfde variabele zoveel mogelijk aan dezelfde ingangen en uitgangen toe.
+\end{quote}
+Bij wijze van voorbeeld zullen we deze regel toepassen op het leidend voorbeeld. Hierbij zijn variabelen $t_1$,$t_2$, $t_6$ triviaal: ze worden uitsluitend in functionele eenheden met maar \'e\'en ingang gebruikt. Daarom kennen we dus deze ingangen toe aan:
+\begin{equation}
+\begin{array}{lr}
+\left(\left\langle t_1,\mbox{abs1}\right\rangle,\left\langle t_2,\mbox{abs2}\right\rangle,\left\langle t_6,\mbox{shr 1}\right\rangle\right)\mapsto\left(I_1,I_1,I_1\right)&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+Vervolgens kunnen we $t_5$ en $t_7$ toewijzen: beide variabelen zijn immers betrokken in een aftrekking. In deze bewerking is $t_5$ verplicht gebonden aan ingang $I_1$, $t_7$ is gebonden aan ingang $t_7$:
+\begin{equation}
+\begin{array}{lr}
+\left(\left\langle t_5,-\right\rangle,\left\langle t_7,-\right\rangle\right)\mapsto\left(I_1,I_2\right)&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+We kijken eerst of we de toewijzingen van $t_5$ en $t_7$ kunnen uitbreiden. $t_5$ is verder nog betrokken in $\mbox{shr 3}$ en $\mbox{max2}$, dit zijn beide commutatieve functionele eenheden. We zullen dus ook voor deze operaties $t_5$ toekennen aan ingang $I_1$. $t_7$ is in geen enkele andere operatie betrokken. We vatten samen:
+\begin{equation}
+\begin{array}{lr}
+\left(\left\langle t_5,\mbox{shr 3}\right\rangle,\left\langle t_5,\mbox{max2}\right\rangle\right)\mapsto\left(I_1,I_1\right)&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+Nu we $t_7$ aan deze functionele eenheden hebben toegewezen, kunnen we de andere variabelen die in deze operaties betrokken zijn toewijzen: $\mbox{max2}$ heeft een twee ingangen en aan de andere ingang dient $t_{10}$ te staan:
+\begin{equation}
+\begin{array}{lr}
+\left(\left\langle t_{10},\mbox{max2}\right\rangle\right)\mapsto\left(I_2\right)&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+Voor de overige variabelen hebben we niet meteen een aanwijzing. Daarom zullen we deze eenvoudigweg aan een ingang toewijzen. Zo is $t_3$ betrokken in $\mbox{max1}$ en $\mbox{min}$. Bij beide operaties kennen we $t_3$ toe aan $I_1$. Een logisch gevolg is dat $t_4$ toegewezen wordt aan ingang $I_2$. $t_8$ wijzen we ook arbitrair toe aan $I_1$ voor de $+$ operatie, bijgevolg wijzen we $t_9$ toe aan $I_2$.
+\begin{equation}
+\begin{array}{lr}
+\left(\left\langle t_3,\mbox{max1}\right\rangle,\left\langle t_3,\mbox{min}\right\rangle,\left\langle t_4,\mbox{max1}\right\rangle,\left\langle t_4,\mbox{min}\right\rangle,\left\langle t_8,+\right\rangle,\left\langle t_9,+\right\rangle\right)\mapsto\left(I_1,I_1,I_2,I_2,I_1,I_2\right)&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+Vermits elke eenheid maar \'e\'en uitgang heeft kunnen we ook deze aspecten triviaal oplossen:
+\begin{equation}
+\begin{array}{lr}
+\left(\begin{array}{c}
+\left\langle t_3,\mbox{abs1}\right\rangle\\
+\left\langle t_4,\mbox{abs2}\right\rangle\\
+\left\langle t_5,\mbox{max1}\right\rangle\\
+\left\langle t_6,\mbox{min}\right\rangle\\
+\left\langle t_7,\mbox{shr 3}\right\rangle\\
+\left\langle t_8,\mbox{shr 1}\right\rangle\\
+\left\langle t_9,-\right\rangle\\
+\left\langle t_{10},+\right\rangle\\
+\left\langle t_{11},\mbox{max2}\right\rangle
+\end{array}\right)\mapsto\left(\begin{array}{c}
+O_1\\O_1\\O_1\\O_1\\O_1\\O_1\\O_1\\O_1\\O_1
+\end{array}\right)&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+\begin{table}[hbt]
+\centering
 \small{\begin{tabular}{c|cccccc|cccc|ccccccccc}
-	&\multicolumn{6}{c|}{\bf In1}			&\multicolumn{4}{c|}{\bf In2}	&\multicolumn{9}{c}{\bf Out}\\
+	&\multicolumn{6}{c|}{\bf In $I_1$}			&\multicolumn{4}{c|}{\bf In $I_2$}	&\multicolumn{9}{c}{\bf Out $O_1$}\\
 	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_6$	&$t_8$	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_3$	&$t_4$	&$t_5$	&$t_6$	&$t_7$	&$t_8$	&$t_9$	&$t_{10}$&$t_{11}$\\\hline
 abs1	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&\\
 abs2	&	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&\\
@@ -1633,7 +1689,7 @@ $-$	&	&	&	&$\bullet$&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$&	&\\
 $+$	&	&	&	&	&	&$\bullet$&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$&\\
 max2	&	&	&	&$\bullet$&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$
 \end{tabular}}
-\caption{Invoertabellen van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
+\caption{Invoer- en uitvoertabellen van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
 \label{tbl:inputtableexample}
 \end{table}
 \paragraph{Opstellen van een compatibiliteitsgrafe}
