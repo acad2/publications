@@ -42,32 +42,36 @@ namespace PaperMiners.UserInterface {
 			gxml.Autoconnect(this);
 			overview.Model = treeStore;
 
-			Gtk.TreeViewColumn artistColumn = new Gtk.TreeViewColumn();
-			artistColumn.Title = "Authors";
+			Gtk.TreeViewColumn authorColumn = new Gtk.TreeViewColumn();
+			authorColumn.Title = "Authors";
+			authorColumn.FixedWidth = 100;
+			authorColumn.Expand = false;
+			authorColumn.Resizable = true;
+			authorColumn.Sizing = TreeViewColumnSizing.Fixed;
  
-			Gtk.CellRendererText artistNameCell = new Gtk.CellRendererText();
+			Gtk.CellRendererText authorCell = new Gtk.CellRendererText();
  
-			artistColumn.PackStart(artistNameCell, true);
+			authorColumn.PackStart(authorCell, true);
  
-			Gtk.TreeViewColumn songColumn = new Gtk.TreeViewColumn();
-			songColumn.Title = "Title";
+			Gtk.TreeViewColumn titleColumn = new Gtk.TreeViewColumn();
+			titleColumn.Title = "Title";
  
-			Gtk.CellRendererText songTitleCell = new Gtk.CellRendererText();
-			songColumn.PackStart(songTitleCell, true);
+			Gtk.CellRendererText titleCell = new Gtk.CellRendererText();
+			titleColumn.PackStart(titleCell, true);
 
-			artistColumn.AddAttribute(artistNameCell, "text", 0);
-			songColumn.AddAttribute(songTitleCell, "text", 1);
+			authorColumn.AddAttribute(authorCell, "text", 0);
+			titleColumn.AddAttribute(titleCell, "text", 1);
 			foreach(Topic topic in Enum.GetValues(typeof(Topic))) {
 				if(topic != Topic.None) {
 					TreeIter iter = treeStore.AppendValues(Utils.TopicName(topic));
 					foreach(Paper pap in library.Papers.Where(x => x.MainTopic == topic)) {
-						treeStore.AppendValues(iter, string.Join("\n", pap.Authors), pap.Title);
+						treeStore.AppendValues(iter, Utils.ToCommaAnd(pap.Authors), pap.Title);
 					}
 				}
 			}
  
-			overview.AppendColumn(artistColumn);
-			overview.AppendColumn(songColumn);
+			overview.AppendColumn(authorColumn);
+			overview.AppendColumn(titleColumn);
 		}
 
 		public static int Main (string[] args) {

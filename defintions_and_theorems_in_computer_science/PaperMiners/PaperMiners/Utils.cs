@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Text;
 using System.Collections.Generic;
 using PaperMiners.Miners;
 
@@ -103,6 +104,29 @@ namespace PaperMiners.Util {
 
 		public static string TopicName (Topic top) {
 			return string.Format("{0} ({1})", topicnames[IntegerLog2((long)top)+0x01], top.ToString());
+		}
+
+		public static string ToCommaAnd (IEnumerable<string> items) {
+			IEnumerator<string> ien = items.GetEnumerator();
+			StringBuilder sb = new StringBuilder();
+			if(ien.MoveNext()) {
+				sb.Append(ien.Current);
+				bool nxt = ien.MoveNext();
+				if(nxt) {
+					string val = ien.Current;
+					while(nxt) {
+						nxt = ien.MoveNext();
+						if(nxt) {
+							sb.AppendFormat(", {0}", val);
+							val = ien.Current;
+						}
+						else {
+							sb.AppendFormat(" and {0}", val);
+						}
+					}
+				}
+			}
+			return sb.ToString();
 		}
 
 	}
