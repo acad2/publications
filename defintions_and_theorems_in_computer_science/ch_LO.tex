@@ -848,6 +848,46 @@ In any other case $\floor{\Phi}_u^\star$ behaves as $\floor{\Phi}_u$.
 \cite{conf/ijcai/Nonnengart93}
 \end{defi}
 
+\begin{defi}[Proper knowledge base]
+A knowledge base $\Sigma$ is \term[Proper knowledge base]{proper} if $\calE\cup\Sigma$ is consistent and $\Sigma$ is a finite set of formulas of the form $\forall\brak{e\supset\rho}$ or $\forall\brak{e\supset\neg\rho}$
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[Restriction of a knowledge base with respect to a query]
+Let $\Sigma$ be a proper knowledge base and $\alpha$ a query. The \term[Restriction of a knowledge base with respect to a query]{restriction of $\Sigma$ \wrtTx{} $\alpha$}, denoted $\Sigma|\alpha$ is the set $\accol{\forall\brak{e\supset l}\in\Sigma|\mbox{the predicate of }l\mbox{ appears in }\alpha}$.
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[Answer to a formula with free variables with respect to a proper knowledge base]
+Let $\Sigma$ be a proper knowledge base and $\fun{\alpha}{\overline{x}}$ a formula with free variables. The \term[Answer to a formula with free variables with respect to a proper knowledge base]{answer to $\alpha$ \wrtTx{} $\Sigma$} is the set $\fun{\alpha}{\Sigma}=\accol{\overline{c}|\funf{V}{\Sigma,\fun{\alpha}{\overline{c}}}=1}$.
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[$\fun{H}{\Sigma,\alpha}$ of a proper knowledge base and formula]
+Let $\Sigma$ be a proper knowledge base and $\alpha$ a formula. Then \term[\fun{H}{\Sigma,\alpha} of a proper knowledge base and formula]{\fun{H}{\Sigma,\alpha}} is the finite set of constants consisting of those mentioned in $\Sigma$ or $\alpha$ and the $r$ next ones, lexicographically, where $r$ is the quantifier rank of $\forall\alpha$.
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[Finite answer to a formula with free variables with respect to a proper knowledge base]
+Let $\Sigma$ be a proper knowledge base and $\fun{\alpha}{\overline{x}}$ a formula with free variables. The \term[Finite answer to a formula with free variables with respect to a proper knowledge base]{finite answer to $\alpha$ \wrtTx{} $\Sigma$} is the set $\fun{\alpha_f}{\Sigma}=\accol{\overline{c}\in\fun{H}{\Sigma|\alpha,\alpha}|\funf{V}{\Sigma,\fun{\alpha}{\overline{c}}}=1}$.
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[$k$-guarded fragment]
+The \termabbrev{$k$-guarded fragment}{$GF_k$} of $\calL$ is the smallest set of formulas such that
+\begin{enumerate}
+ \item $GF_k$ contains atom and equalities;
+ \item $GF_k$ is closed under Boolean operations;
+ \item $GF_k$ contains $\exists\overline{x}\brak{G_1\wedge G_2\wedge\ldots\wedge G_m\wedge\phi}$ provided that $G_i$ are atoms or equalities, $m\leq k$, $\phi\in GF_k$, and the free variables of $\phi$ appear among the $G_i$.
+\end{enumerate}
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[Strictly $k$-guarded fragment]
+The \termabbrev{strictly $k$-guarded fragment}{$SGF_k$} are formulas in $GF_k$ of the form $\exists\overline{x}\brak{G_1\wedge G_2\wedge\ldots\wedge G_m\wedge\phi}$ we allow the degenerated cases where $\overline{x}$ is empty or $m=0$ or $\phi$ is true.
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
 \subsection{Logical Filtering}
 
 \begin{defi}[Logical filtering semantics of a sequence of actions and observations]
