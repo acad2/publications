@@ -1680,7 +1680,7 @@ Indien we nu alle voorgaande informatie samenvatten in een tabel, bekomen we de 
 \begin{table}[hbt]
 \centering
 \small{\begin{tabular}{c|cccccc|cccc|ccccccccc}
-	&\multicolumn{6}{c|}{\bf In $I_1$}			&\multicolumn{4}{c|}{\bf In $I_2$}	&\multicolumn{9}{c}{\bf Out $O_1$}\\
+	&\multicolumn{6}{c|}{\bf In $I_1$}		&\multicolumn{4}{c|}{\bf In $I_2$}&\multicolumn{9}{c}{\bf Out $O_1$}\\
 	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_6$	&$t_8$	&$t_4$	&$t_7$	&$t_8$	&$t_9$	&$t_3$	&$t_4$	&$t_5$	&$t_6$	&$t_7$	&$t_8$	&$t_9$	&$t_{10}$&$t_{11}$\\\hline
 abs1	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&\\
 abs2	&	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&\\
@@ -1719,7 +1719,7 @@ Op basis van deze definitie kunnen we de volledige relatie berekenen van variabe
 \end{equation}
 Toegegeven dat er negen paren van variabelen botsen, maar dit geeft ruimte voor een groot aantal manieren om variabelen samen te voegen. De schaduwzijde van het feit dat veel configuraties mogelijk zijn, is dat er een serieuze kans bestaat dat we een foute configuratie uitkiezen. Om meer gericht op zoek te gaan naar welke variabelen we kunnen samennemen, zullen we een heuristiek ontwikkelen: een functie die aangeeft in welke mate het de moeite loont om twee variabelen samen te nemen. Deze functie heeft de signatuur $h:V\times V\rightarrow\mathbb{N}$. Waarbij $V$ de set van variabelen voorstelt, en $\mathbb{N}$ de set van natuurlijke getallen (met 0). Een interessante metriek kunnen we opstellen op basis van de invoer- en uitvoertabellen (zie tabel \ref{tbl:inputtableexample}). De heuristiek defini\"eren we dan als het aantal in- en uitgangen die de twee variabelen gemeenschappelijk hebben met elkaar bij functionele eenheden die het potentieel hebben om samengenomen te worden. De argumentatie is de volgende: indien we effectief functionele eenheden samennemen. Zal dit er meestal toe leiden dat verschillende registers naar eenzelfde ingang van deze samengestelde functionele eenheid worden geleid. Indien alle variabelen die deze ingang gemeenschappelijk hebben, echter in hetzelfde register opgeslagen zitten, zijn deze multiplexers overbodig. Formeel kunnen we deze functie dus defini\"eren als:
 \begin{equation}
-\forall t_i,t_j,t_i\neq t_j:h\left(t_i,t_j\right)=\#\left\{\right\}
+\forall t_i,t_j,t_i\neq t_j:h\left(t_i,t_j\right)=\#\left\{a\right\}
 \end{equation}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}

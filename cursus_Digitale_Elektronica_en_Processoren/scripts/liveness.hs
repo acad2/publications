@@ -1,5 +1,9 @@
 import Data.Set
 
+data Vars = t1 | t2 | t3 | t4 | t5 | t6 | t7 | t8 | t9 | t10 | t11
+data Funs = abs1 | abs2 | max1 | min | shr3 | shr1 | sub | add | max2
+data Cons = in1 | in2 | out1
+
 succ0 :: [[Int]]
 succ0 = [[0,1],[2],[3],[4],[5],[6],[7],[0]]
 
@@ -14,6 +18,18 @@ in0 = [fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",f
 
 out0 :: [Set Char]
 out0 = [fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",fromList ""]
+
+vars0 :: [Char]
+vars0 = "abcdefghijk";
+
+fun0 :: [Char]
+fun0 = "012345678";
+
+mergefun0 :: [Set Char]
+mergefun0 = [fromList "67", fromList "28"];
+
+conn0 :: [(Char,Char,Integer)]
+conn0 = [('a','0',0),('b','1',0),('c','2',0),('c','3',0),('e','4',0),('e','6',0),('e','8',0),('f','5',0),('h','7',0),('d','2',1),('d','3',1),('g','6',1),('h','7',1),('i','8',1),('c','0',2),('d','1',2),('e','2',2),('f','3',2),('g','4',2),('h','5',2),('i','6',2),('j','7',2),('k','8',2)];
 
 -- finalInOut (succ, use, def, in, out) = (in, out)
 finalInOut :: (Ord v) => ([[Int]],[Set v],[Set v],[Set v],[Set v]) -> ([Set v],[Set v])
@@ -47,7 +63,7 @@ clash :: (Ord v) => [Set v] -> v -> v -> Bool
 clash ins a b = any (\x -> (member a x) && (member b x)) ins
 
 priority :: (Ord f, Ord v, Eq c) => [v] -> [(v,f,c)] -> [Set f] -> [(v,v,Int)]
-priority vars conns mergefus = [(v1,v2,coconns mergefus conns v1 v2) | v1 <- vars, v2 <- vars, v1 < v2]
+priority vars conns mergefus = [(v1,v2,coconns mergefus conns v1 v2) | v1 <- vars, v2 <- vars, v1 < v2, (coconns mergefus conns v1 v2) /= 0]
 
 coconns :: (Ord f, Eq v, Eq c) => [Set f] -> [(v,f,c)] -> v -> v -> Int
 coconns [] _ _ _ = 0
