@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cd "`dirname $0`"
 for k in {1..40}
 do

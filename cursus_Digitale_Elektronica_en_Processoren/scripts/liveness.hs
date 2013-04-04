@@ -46,5 +46,9 @@ clashVariables ins = [(a,b)| a <- total, b <- total, a < b, clash ins a b] where
 clash :: (Ord v) => [Set v] -> v -> v -> Bool
 clash ins a b = any (\x -> (member a x) && (member b x)) ins
 
-priority :: (Ord f) => [(v,f,c)] -> [Set f] -> (v,v,Int)
-priority = 
+priority :: (Ord f, Ord v, Eq c) => [v] -> [(v,f,c)] -> [Set f] -> [(v,v,Int)]
+priority vars conns mergefus = [(v1,v2,coconns mergefus conns v1 v2) | v1 <- vars, v2 <- vars, v1 < v2]
+
+coconns :: (Ord f, Eq v, Eq c) => [Set f] -> [(v,f,c)] -> v -> v -> Int
+coconns [] _ _ _ = 0
+coconns (sf : sfs) list v1 v2 = (length [1|(va,fa,ca) <- list, va == v1, member fa sf, (vb,fb,cb) <- list, vb == v2, ca == cb, member fb sf])+(coconns sfs list v1 v2)
