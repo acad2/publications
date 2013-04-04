@@ -1600,7 +1600,8 @@ $\#$	&0	&2	&2	&2	&1	&1	&1	&0	&9\\
 \end{table}
 De enige potenti\"ele moeilijkheid aan het opstellen van deze tabel is de definitie van ``type functionele eenheid''. Men kan zich afvragen of bijvoorbeeld een shift over 3 bits bijvoorbeeld tot hetzelfde type behoort als een shift over 1 bit. In geval van twijfel kan het geen kwaad om een onderscheid te maken (en dus een rij in de tabel te voorzien voor $\shr1$ en $\shr3$). Als algemene definitie kunnen we stellen dat twee functionele eenheden tot hetzelfde type behoren wanneer we hardware kunnen voorzien die beide operaties op hetzelfde component uitvoert. Indien we dus beslissen om de shift te implementeren met behulp van de verbindingen, is een shift over drie bits een ander operatie dan een shift over 1 bit. Wanneer we echter met een schuifregister werken, kunnen beide operaties op hetzelfde schuifregister worden uitgevoerd.
 \paragraph{Verbindingentabel, Invoer- en uitvoertabellen}
-Een andere tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs2}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
+Een andere tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij 
+cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs2}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
 \begin{table}[hbt]
 \centering
 \begin{tabular}{c|ccccccccccc}
@@ -1622,7 +1623,8 @@ Als laatste stellen we ook een set \termen{invoer- en uitvoertabellen} op. Deze 
 \begin{equation}
 f\left(\vec{x}\right)=f\left(\sigma\vec{x}\right)\mbox{ voor elke permutatie $\sigma$}
 \end{equation}
-Concrete voorbeelden van zulke operaties zijn optellen, minimum en maximum. Sommige functionele eenheden hebben meer dan twee ingangen. Ook hier kan er commutativiteit spelen. Soms is de operatie volledig commutatief en is dus elke permutatie geldig. In andere gevallen is er sprake van gedeeltelijke commutativiteit en wordt slechts een subset van permutaties ondersteund. Het toewijzen van ingangen kunnen we natuurlijk willekeurig doen. Toch loont het de moeite om dit op een intelligentere manier te doen. In het leidend voorbeeld (zie figuur \ref{fig:asmSqrt}) zien we bijvoorbeeld dat we zowel in toestand $S_2$ en $S_6$ een maximum berekenen. De kans is relatief groot, dat we in de toekomst deze twee bewerkingen op dezelfde functionele eenheid zullen uitvoeren. In toestand $S_2$ berekenen we $\max\left(t_3,t_4\right)$, in toestand $S_6$ $\max\left(t_5,t_{10}\right)$. Indien we echter in toestand $S_6$, $\max\left(t_5,t_3\right)$ hadden willen uitrekenen, was het zinvol geweest om deze operatie aan te passen naar $\max\left(t_3,t_5\right)$. Indien we dan later de twee functionele eenheden zouden samenvoegen, dienen we geen multiplexer voor de eerste ingang te plaatsen. In het algemeen geldt meestal volgende regel:
+Concrete voorbeelden van zulke operaties zijn optellen, minimum en maximum. Sommige functionele eenheden hebben meer dan twee ingangen. Ook hier kan er commutativiteit spelen. Soms is de operatie volledig commutatief en is dus elke permutatie geldig. In andere gevallen is er sprake van gedeeltelijke commutativiteit en wordt slechts een subset van permutaties ondersteund. Het toewijzen van ingangen kunnen we natuurlijk willekeurig doen. Toch loont het de moeite om dit op een intelligentere manier te doen. In het leidend voorbeeld (zie figuur \ref{fig:asmSqrt}) zien we bijvoorbeeld dat we zowel in toestand $S_2$ en $S_6$ een maximum berekenen. De kans is relatief groot, dat we in de toekomst deze twee bewerkingen op dezelfde functionele eenheid zullen uitvoeren. In toestand $S_2$ berekenen we $\max\left(t_3,t_4\right)$, in toestand $S_6$ $\max\left(t_5,t_{10}\right)$. Indien we echter in toestand $S_6$, $\max\left(t_5,t_3\right)$ hadden willen uitrekenen, was het zinvol geweest om deze operatie aan te passen 
+naar $\max\left(t_3,t_5\right)$. Indien we dan later de twee functionele eenheden zouden samenvoegen, dienen we geen multiplexer voor de eerste ingang te plaatsen. In het algemeen geldt meestal volgende regel:
 \begin{quote}
 Wijs dezelfde variabele zoveel mogelijk aan dezelfde ingangen en uitgangen toe.
 \end{quote}
@@ -1674,11 +1676,12 @@ O_1\\O_1\\O_1\\O_1\\O_1\\O_1\\O_1\\O_1\\O_1
 \end{array}\right)&\mbox{(leidend voorbeeld)}
 \end{array}
 \end{equation}
+Indien we nu alle voorgaande informatie samenvatten in een tabel, bekomen we de invoer- en uitvoertabellen zoals in tabel \ref{tbl:inputtableexample}.
 \begin{table}[hbt]
 \centering
 \small{\begin{tabular}{c|cccccc|cccc|ccccccccc}
 	&\multicolumn{6}{c|}{\bf In $I_1$}			&\multicolumn{4}{c|}{\bf In $I_2$}	&\multicolumn{9}{c}{\bf Out $O_1$}\\
-	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_6$	&$t_8$	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_3$	&$t_4$	&$t_5$	&$t_6$	&$t_7$	&$t_8$	&$t_9$	&$t_{10}$&$t_{11}$\\\hline
+	&$t_1$	&$t_2$	&$t_3$	&$t_5$	&$t_6$	&$t_8$	&$t_4$	&$t_7$	&$t_8$	&$t_9$	&$t_3$	&$t_4$	&$t_5$	&$t_6$	&$t_7$	&$t_8$	&$t_9$	&$t_{10}$&$t_{11}$\\\hline
 abs1	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&\\
 abs2	&	&$\bullet$&	&	&	&	&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&\\
 max1	&	&	&$\bullet$&	&	&	&$\bullet$&	&	&	&	&	&$\bullet$&	&	&	&	&	&\\
@@ -1692,8 +1695,28 @@ max2	&	&	&	&$\bullet$&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$
 \caption{Invoer- en uitvoertabellen van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
 \label{tbl:inputtableexample}
 \end{table}
+We zetten hier de variabelen op de horizontale as, en de functionele eenheden op de verticale as. Variabelen die aan geen enkele functionele eenheid bijdragen hebben we weggelaten uit de kolommen: bijvoorbeeld variabele $t_1$ is nergens verbonden met een ingang $I_2$, bijgevolg staat deze ook niet in dat deel van de tabel. Het weglaten van deze kolommen is vanzelfsprekend optioneel.
 \paragraph{Opstellen van een compatibiliteitsgrafe}
-Nu we deze tabellen hebben opgesteld, kunnen we met het echte werk beginnen: het samenvoegen van registers.
+Nu we deze tabellen hebben opgesteld, kunnen we met het echte werk beginnen: het samenvoegen van registers. Een eerste probleem die we moeten oplossen is bepalen wanneer twee variabelen eenzelfde register kunnen delen. Allereerst kunnen we opmerken dat een variabele eigenlijk niet gebonden is aan een register: we zouden bijvoorbeeld dezelfde variabele in de ene toestand in register 1 kunnen bewaren en de andere toestand in register 2. Dit kan er toe leiden dat we inderdaad tot zeer compacte configuraties komen, maar in de meeste gevallen, maakt het het optimaliseren hopeloos ingewikkeld. Daarom gebruiken we doorgaans de vuistregel:
+\begin{quote}
+We kennen een variabele toe aan strikt \'e\'en register.
+\end{quote}
+De vraag blijft in welke omstandigheden we twee variabelen niet in hetzelfde register kunnen opslaan. Een algemene regel is:
+\begin{quote}
+Twee variabelen kunnen niet in hetzelfde register worden opgeslagen indien de twee variabelen leven in \'e\'en of meer toestanden.
+\end{quote}
+We kunnen dit formaliseren met behulp van de sets die we berekend hebben in het deel over de lifeness analyse:
+\begin{equation}
+\forall t_i,t_j\in\mbox{Variabelen}, t_i\neq t_j:\mbox{niet_samenvoegen}\left(t_i,t_j\right)\Leftrightarrow\left(\exists s\in S: t_i\in\instt{s}\wedge t_j\in\instt{s}\right)
+\end{equation}
+Op basis van deze definitie kunnen we de volledige relatie berekenen van variabelen die we kunnen niet kunnen samenvoegen:
+\begin{equation}
+\begin{array}{ccc}
+\brak{t_1,t_2}&\brak{t_3,t_4}&\brak{t_5,t_6}\\
+\brak{t_5,t_7}&\brak{t_5,t_8}&\brak{t_5,t_9}\\
+\brak{t_5,t_{10}}&\brak{t_7,t_8}&\brak{t_8,t_9}
+\end{array}
+\end{equation}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}

@@ -15,7 +15,12 @@ in0 = [fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",f
 out0 :: [Set Char]
 out0 = [fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",fromList ""]
 
--- nextStep (succ, use, def, in, out) = (succ, use, def, in,out)
+-- finalInOut (succ, use, def, in, out) = (in, out)
+finalInOut :: (Ord v) => ([[Int]],[Set v],[Set v],[Set v],[Set v]) -> ([Set v],[Set v])
+finalInOut inp = (ins2,out2)
+  where (_,_,_,ins2,out2) = fixedPoint nextStep inp
+
+-- nextStep (succ, use, def, in, out) = (succ, use, def, in, out)
 nextStep :: (Ord v) => ([[Int]],[Set v],[Set v],[Set v],[Set v]) -> ([[Int]],[Set v],[Set v],[Set v],[Set v])
 nextStep (succ, use, def, ins, out) = (succ, use, def, ins2,(nextOut succ ins2))
 			where ins2 = (nextIn use def out)
@@ -29,3 +34,17 @@ nextIn (u:us) (d:ds) (o:os) = (union u (difference o d)):(nextIn us ds os)
 nextOut :: (Ord v) => [[Int]] -> [Set v] -> [Set v]
 nextOut [] _ = []
 nextOut (s:ss) ins = (unions [ins!!x | x <- s]) : (nextOut ss ins)
+
+fixedPoint :: (Eq a) => (a -> a) -> a -> a
+fixedPoint f x | x2 == x = x
+               | otherwise = fixedPoint f x2
+                 where x2 = (f x)
+                 
+clashVariables :: (Ord v) => [Set v] -> [(v,v)]
+clashVariables ins = [(a,b)| a <- total, b <- total, a < b, clash ins a b] where total = elems (unions ins)
+
+clash :: (Ord v) => [Set v] -> v -> v -> Bool
+clash ins a b = any (\x -> (member a x) && (member b x)) ins
+
+priority :: (Ord f) => [(v,f,c)] -> [Set f] -> (v,v,Int)
+priority = 
