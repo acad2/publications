@@ -1,6 +1,6 @@
 #!/bin/sh
 cd "`dirname $0`"
-while k in {1..40}
+for k in {1..40}
 do
 	for n in {1..10}
 	do
