@@ -69,3 +69,6 @@
 *.tex.kate-swp
 *.maf
 *.pyg
+*.hi
+*.sch
+*.ods
