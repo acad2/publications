@@ -1,8 +1,8 @@
 import Data.Set
 
-data Vars = t1 | t2 | t3 | t4 | t5 | t6 | t7 | t8 | t9 | t10 | t11
-data Funs = abs1 | abs2 | max1 | min | shr3 | shr1 | sub | add | max2
-data Cons = in1 | in2 | out1
+--data Vars = T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | T11 deriving (Ord, Show)
+--data Funs = Abs1 | Abs2 | Max1 | Min | Shr3 | Shr1 | Sub | Add | Max2 deriving (Ord, Show)
+--data Cons = In1 | In2 | Out1 deriving (Ord, Show)
 
 succ0 :: [[Int]]
 succ0 = [[0,1],[2],[3],[4],[5],[6],[7],[0]]
@@ -19,17 +19,18 @@ in0 = [fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",f
 out0 :: [Set Char]
 out0 = [fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",fromList "",fromList ""]
 
-vars0 :: [Char]
-vars0 = "abcdefghijk";
+vars0 :: [String]
+vars0 = ["t1","t2","t3","t4","t5","t6","t7","t8","t9","t10","t11"];
 
-fun0 :: [Char]
-fun0 = "012345678";
+fun0 :: [String]
+fun0 = ["Abs1","Abs2","Max1","Min","Shr3","Shr1","Sub","Add","Max2"]
 
-mergefun0 :: [Set Char]
-mergefun0 = [fromList "67", fromList "28"];
+mergefun0 :: [Set String]
+mergefun0 = [fromList ["Max1","Max2"], fromList ["Add","Sub"]];
 
-conn0 :: [(Char,Char,Integer)]
-conn0 = [('a','0',0),('b','1',0),('c','2',0),('c','3',0),('e','4',0),('e','6',0),('e','8',0),('f','5',0),('h','7',0),('d','2',1),('d','3',1),('g','6',1),('h','7',1),('i','8',1),('c','0',2),('d','1',2),('e','2',2),('f','3',2),('g','4',2),('h','5',2),('i','6',2),('j','7',2),('k','8',2)];
+conn0 :: [(String,String,String)]
+--conn0 = [('a','0',0),('b','1',0),('c','2',0),('c','3',0),('e','4',0),('e','6',0),('e','8',0),('f','5',0),('h','7',0),('d','2',1),('d','3',1),('g','6',1),('h','7',1),('i','8',1),('c','0',2),('d','1',2),('e','2',2),('f','3',2),('g','4',2),('h','5',2),('i','6',2),('j','7',2),('k','8',2)];
+conn0 = [("t1","Abs1","In1"),("t2","Abs2","In1"),("t3","Max1","In1"),("t3","Min","In1"),("t5","Shr3","In1"),("t5","Sub","In1"),("t5","Max2","In1"),("t6","Shr1","In1"),("t8","Add","In1"),("t4","Max1","In2"),("t4","Min","In2"),("t7","Sub","In2"),("t9","Add","In2"),("t10","Max2","In2"),("t3","Abs1","Out1"),("t4","Abs2","Out1"),("t5","Max1","Out1"),("t6","Min","Out1"),("t7","Shr3","Out1"),("t8","Shr1","Out1"),("t9","Sub","Out1"),("t10","Add","Out1"),("t11","Max2","Out1")]
 
 -- finalInOut (succ, use, def, in, out) = (in, out)
 finalInOut :: (Ord v) => ([[Int]],[Set v],[Set v],[Set v],[Set v]) -> ([Set v],[Set v])
