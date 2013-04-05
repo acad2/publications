@@ -1,66 +1,49 @@
 \subsection{Definitie}
-\begin{frame}{\dsarraylist{}: definitie}
-\begin{definition}[\dsarraylist{}]
-Een \term{\dsarraylist{}} is een gegevensstructuur die bestaat uit een opeenvolging van elementen. Elk element in een \dsarraylist{} heeft een unieke \term{index} en is toegankelijk in constante tijd (dit wordt ook wel \term{Random-Access} genoemd). Een \dsarraylist{} heeft een variabele \term{lengte}: we hoeven geen lengte op te geven bij de constructie van een \dsarraylist{} en in principe kunnen we eindeloos elementen toevoegen.
+\begin{frame}{\dslinkedlist{}: definitie}
+\begin{definition}[\dslinkedlist{}]
+Een \term{\dslinkedlist{}} is een gegevensstructuur die bestaat uit een opeenvolging van elementen. Een \dslinkedlist{} heeft een variabele \term{lengte}. Een \dslinkedlist{} kan sneller elementen toevoegen op het einde en aan het begin van de lijst dan een \dsarraylist{}. De toegang tot een willekeurig element hangt af van de index. (dit noemen we \term{sequential access}).
 \end{definition}
-Visueel zullen we een \dsarraylist{} in deze presentatie voorstellen als een opeenvolging van hokjes, maar met een open einde. Zoals hier:
+Visueel zullen we een \dslinkedlist{} in deze presentatie voorstellen als een opeenvolging van knopen (cirkels), verbonden met elkaar en met een open begin en einde. Zoals hier:
 \begin{figure}
 \begin{tikzpicture}
-\tikzarraylist{10}{a,b,c,d,e,f,g,h,i,j}
+\tikzlinkedlist{10}{a,b,c,d,e,f,g,h,i,j}
 \end{tikzpicture}
-\caption{Voorstelling van een \dsarraylist{}}
+\caption{Voorstelling van een \dslinkedlist{}}
 \end{figure}
 \end{frame}
 \subsection{In Java}
 \subsubsection{Declaratie}
-\begin{frame}[fragile]{\dsarraylist{} in Java: declaratie}
-Een \dsarraylist{} is een klasse die uit de Java-bibliotheek komt. Deze klasse is \texttt{java.util.ArrayList}. Daarom kunnen we een \dsarraylist{} aanmaken zoals andere objecten. Een \dsarraylist{} is een \term{generische klasse}: we kunnen een type-parameter tussen scheve haken (\texttt{<>}).
-\examplecode{Declaratie \dsarraylist{}}{arraylistdeclaration0}
-\end{frame}
-\begin{frame}[fragile]{\dsarraylist{} in Java: Primitieve types bij generische klasses}
-\begin{letop}[Primitieve types bij generische klasses]
-\small{Men kan een \dsarraylist{} declareren met elk \term{klasse-type}, primitieve types zijn niet toegelaten! Hiervoor heeft Java schaduwklasses ingevoerd:}
-\begin{table}
-\centering
-\small{\begin{tabular}{l|l}
-Primitief type&Klasse-type\\\hline
-\texttt{byte}&\texttt{Byte}\\
-\texttt{short}&\texttt{Short}\\
-\texttt{int}&\texttt{Integer}\\
-\texttt{long}&\texttt{Long}\\
-\texttt{float}&\texttt{Float}\\
-\texttt{double}&\texttt{Double}\\
-\texttt{boolean}&\texttt{Boolean}\\
-\texttt{char}&\texttt{Char}\\
-\end{tabular}}
-\caption{Omzetten van primitieve types naar klasse-types}
-\end{table}
-\end{letop}
+\begin{frame}[fragile]{\dslinkedlist{} in Java: declaratie}
+Een \dslinkedlist{} is een klasse die uit de Java-bibliotheek komt. Deze klasse is \texttt{java.util.LinkedList}. Daarom kunnen we een \dslinkedlist{} aanmaken zoals andere objecten. Een \dslinkedlist{} is een \term{generische klasse}: we kunnen een type-parameter tussen scheve haken (\texttt{<>}).
+\examplecode{Declaratie \dslinkedlist{}}{linkedlistdeclaration0}
 \end{frame}
 \subsubsection{Toevoegen en verwijderen}
-\begin{frame}[fragile]{\dsarraylist{} in Java: toevoegen/verwijderen van elementen}
-\dsarraylist{} biedt methodes aan om elementen toe te voegen en te verwijderen:
+\begin{frame}[fragile]{\dslinkedlist{} in Java: toevoegen/verwijderen van elementen}
+\dslinkedlist{} biedt methodes aan om elementen toe te voegen en te verwijderen:
 \small{\begin{itemize}
- \item \texttt{public boolean add (E element)}: voegt een element toe op het einde van de \dsarraylist{}
- \item \texttt{public void add (int index, E element)}: voegt een element toe op plaats \texttt{index}, de overige elementen worden naar rechts opgeschoven
- \item \texttt{public E remove (int index)}: verwijdert het element op \texttt{index}. De elementen erna worden naar links opgeschoven. Het element die oorspronkelijk op deze plaats stond, wordt teruggegeven
- \item \texttt{public boolean remove (Object o)}: het opgegeven element wordt uit de \dsarraylist{} verwijdert. Geeft \texttt{true} terug indien dit element in de \dsarraylist{} aanwezig was.
+ \item \texttt{public boolean add (E element)}: voegt een element toe op het einde van de \dslinkedlist{}
+ \item \texttt{public void add (int index, E element)}: voegt een element toe op plaats \texttt{index}.%, de overige elementen worden naar rechts opgeschoven
+ \item \texttt{public E remove (int index)}: verwijdert het element op \texttt{index}. Het element die oorspronkelijk op deze plaats stond, wordt teruggegeven.%De elementen erna worden naar links opgeschoven.
+ \item \texttt{public boolean remove (Object o)}: het opgegeven element wordt verwijdert. Geeft \texttt{true} terug indien dit element aanwezig was.
 \end{itemize}}
+\begin{letop}
+Merk op dat de methodes volledig overeenkomen met de methodes uit de \dsarraylist{}.
+\end{letop}
 \end{frame}
-\begin{frame}[fragile]{\dsarraylist{} in Java: \texttt{add (E element)}}
+\begin{frame}[fragile]{\dslinkedlist{} in Java: \texttt{add (E element)}}
 \begin{methodexample}[\texttt{add (E element)}]
 \begin{center}
 \begin{animateinline}{1}
-\methodexec{arraylistadd0me}{1}{}{
+\methodexec{linkedlistadd0me}{1}{}{
 }\newframe
 
-\methodexec{arraylistadd0me}{2}{namen}{
+\methodexec{linkedlistadd0me}{2}{namen}{
 \begin{scope}[xshift=7 cm]
-\tikzarraylistptr{0}{namenlist}
+\tikzlinkedlistptr{0}{namenlist}
 \pointleftbridge{ptrnamen}{offsetnamenlist}
 \end{scope}
 }\newframe
-\methodexec{arraylistadd0me}{3}{namen}{
+\methodexec{linkedlistadd0me}{3}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
 \end{scope}
@@ -71,7 +54,7 @@ Primitief type&Klasse-type\\\hline
 \end{scope}
 }\newframe
 
-\methodexec{arraylistadd0me}{4}{namen}{
+\methodexec{linkedlistadd0me}{4}{namen}{
 \begin{scope}[xshift=3 cm,yshift=1 cm]
 \strobj{elem0}{Samson}
 \end{scope}
@@ -305,29 +288,3 @@ Primitief type&Klasse-type\\\hline
 \end{center}
 \end{methodexample}
 \end{frame}
-% \subsubsection{Toegang tot elementen}
-% \begin{frame}[fragile]{\dsarraylist{} in Java: toegang tot elementen}
-% Omdat \dsarraylist{} een gewone klasse is, krijgt met toegang tot de elementen via methodes:
-% \begin{itemize}
-%  \item \texttt{public E get (int index)}
-%  \item \texttt{public E set (int index, E element)}
-% \end{itemize}
-% \end{frame}
-% \subsection{Lengte}
-% \begin{frame}[fragile]{\dsarraylist{} in Java: lengte (aantal elementen)}
-% We kunnen het aantal elementen in de \dsarraylist{} opvragen met behulp van de \texttt{size()}-methode.
-% \begin{example}[Lengte van een \dsarraylist{}]
-% \begin{lstlisting}
-% ArrayList<String> namen = new ArrayList<String>();
-% namen.add("Samson");
-% namen.add("Gert");
-% namen.add("Alberto");
-% namen.add("Octaaf");
-% System.out.println(namen.size()); //4
-% \end{lstlisting}
-% \end{example}
-% \begin{letop}[\texttt{length} versus \texttt{size()}]
-% Bij een \dsarray{} vragen we de lengte op met behulp van \texttt{.length}. Bij een \dsarraylist{} is dat met de \texttt{size()}-methode. Omgekeerd werkt dit niet!
-% \end{letop}
-% \end{frame}
-% \subsubsection{Andere operaties}

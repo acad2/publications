@@ -1,41 +1,22 @@
 \section{Interface}
+\subsection{Motivering}
+\begin{frame}[fragile]{Interface: Motivering}
+\begin{itemize}
+ \item We hebben in de vorige secties een \dsarraylist{} en \dslinkedlist{} geschreven.
+ \item Beide structuren hebben dezelfde methodes
+ \item Wanneer twee klassen een groot aantal methodes gemeenschappelijk hebben, kan met een \term{\texttt{Interface}} defini\"eren
+\end{itemize}
+\end{frame}
+\subsection{Definitie}
 \begin{frame}[fragile]{Interface}
 \begin{definition}[Interface]
 Een interface is een lijst van methodes die klasses die de interface implementeren moeten aanbieden.
 \end{definition}
-\begin{example}[\texttt{Praat}-interface]
-\begin{lstlisting}
-public interface Praat {
-
-  void praat ();
-
-}
-\end{lstlisting}
-\end{example}
+\examplecode{\texttt{Praat}-interface}{praatinterface}
 \end{frame}
 \subsection{Implementeren}
 \begin{frame}[fragile]{Implementeren van een Interface}
-Alle klasses die de interface \term{implementeren}, moeten de methodes invullen:
-\begin{example}[Gert-klasse]
-\begin{lstlisting}
-public class Gert implements Praat {
-
-  public void praat () {
-    System.out.println("Hallo, mijn naam is Gert.");
-  }
-
-}
-\end{lstlisting}
-\end{example}
-\begin{example}[Samson-klasse]
-\small{\begin{lstlisting}
-public class Samson implements Praat {
-
-  public void praat () {
-    System.out.println("Mwoa en ik ben Samson.");
-  }
-
-}
-\end{lstlisting}}
-\end{example}
+Alle klassen die de interface \term{implementeren}, moeten de methodes invullen:
+\examplecode{\texttt{Gert}-klasse}{gertklasse}
+\examplecode{\texttt{Samson}-klasse}{samsonklasse}
 \end{frame}

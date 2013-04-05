@@ -1,4 +1,4 @@
-\documentclass[handout]{beamer}
+\documentclass[handout,notheorems]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage[dutch]{babel}
@@ -11,13 +11,13 @@
 \graphicspath{../../SharedData/creative_commons/}
 \setcounter{tocdepth}{2}
 \AtBeginSection[]{\begin{frame}[plain]{Inhoud}
- \begin{multicols}{2}
+ %\begin{multicols}{2}
  \tableofcontents[currentsection]
- \end{multicols}
+ %\end{multicols}
 \end{frame}}
 \lstloadlanguages{Java}
 \lstset{language=Java,basicstyle=\tiny\ttfamily,breaklines=true}
-\tikzset{pointer/.style={->,thick,black},pointerdot/.style={fill=black,circle,inner sep=0pt,minimum size=0.125cm},pointerbox/.style={draw=black,rectangle,minimum size=0.25 cm}}
+\tikzset{pointer/.style={->,thick,black},pointerdot/.style={fill=black,circle,inner sep=0pt,minimum size=0.125cm},pointerbox/.style={draw=black,rectangle,minimum size=0.25 cm},llnode/.style={draw=black,circle,minimum width=0.5 cm, minimum height=0.5 cm, inner sep=0pt,thick,fill=green!20},llline/.style={thick}}
 \newcounter{tmpA}
 \newcounter{tmpB}
 \newcounter{tmpC}
@@ -30,10 +30,17 @@
 \input{../../SharedData/cc_beamer}
 
 \theoremstyle{remark}
-\newtheorem{hint}{Hint}
+\newtheorem{definition}{Definitie}
 \newtheorem{letop}{Let Op!}
+
+\theoremstyle{example}
+\newtheorem{example}{Voorbeeld}
+\newtheorem{hint}{Hint}
 \newtheorem{methodexample}{Voorbeeld uitvoer}
 \newtheorem{implementationexample}{Implementatie}
+
+%\setbeamercolor{block body alerted}{fg=red}
+%\setbeamercolor{block body example}{fg=green}
 
 \newcommand{\term}[1]{\textbf{#1}}
 
@@ -126,6 +133,22 @@
     \addtocounter{tmpC}{1}
   }
 }
+\newcommand{\tikzlinkedlist}[2]{
+  \node[llnode] (k1) at (0,0) {};
+  \setcounter{tmpC}{1}
+  \draw[llline] (k1.west) -- ++(-0.2,0);
+  \foreach \x in {2,...,#1} {
+    \node[llnode] (k\x) at (0.7*\x-0.7,0) {};
+    \draw[llline] (k\arabic{tmpC}) -- (k\x);
+    \addtocounter{tmpC}{1}
+  }
+  \setcounter{tmpC}{1}
+  \foreach \t in {#2} {
+    \node (kv\arabic{tmpC}) at (k\arabic{tmpC}.center) {\t};
+    \addtocounter{tmpC}{1}
+  }
+  \draw[llline] (k#1.east) -- ++(0.2,0);
+}
 \newcommand{\pointleftbridge}[3][2cm]{
   \draw[pointer] (#2)  .. controls ([xshift=-#1] #2) and ([xshift=-#1] #3) .. (#3);
 }
@@ -152,6 +175,27 @@
 }
 
 \newcommand{\tikzarraylistptr}[2]{
+  \coordinate (LB) at (0,-0.25);
+  \coordinate (RT) at (0.5*#1,0.25);
+  \coordinate (RTT) at (0.5*#1+0.5,0.25);
+  \fill[fill=green!20] (LB) rectangle (RTT);
+  \node[fit=(LB) (RTT),inner sep=0pt] (#2) {};
+  \coordinate (offset#2) at (0,0);
+  \draw (LB) rectangle (RT);
+  \draw[dashed] (RT |- 0,-0.25) -- ++(0.5,0);
+  \draw[dashed] (RT |- 0,0.25) -- ++(0.5,0);
+  \ifthenelse{#1 > 1}{
+    \foreach \x in {2,...,#1} {
+      \draw (0.5*\x-0.5,-0.25) -- ++(0,0.5);
+    }
+  }{}
+  \ifthenelse{#1 > 0}{
+  \foreach \x in {1,...,#1} {
+    \node[pointerdot] (#2\x) at (0.5*\x-0.25,0) {};
+  }
+  }{}
+}
+\newcommand{\tikzlinkedlistptr}[2]{
   \coordinate (LB) at (0,-0.25);
   \coordinate (RT) at (0.5*#1,0.25);
   \coordinate (RTT) at (0.5*#1+0.5,0.25);
@@ -219,12 +263,12 @@
 \end{center}
 \end{frame}
 \begin{frame}[plain]{Inhoud}
-\begin{multicols}{2}
+%\begin{multicols}{2}
 \tableofcontents
-\end{multicols}
+%\end{multicols}
 \end{frame}
 \input{array}
 \input{arraylist}
-%\input{linkedlist}
-%\input{interface}
+\input{linkedlist}
+\input{interface}
 \end{document}
