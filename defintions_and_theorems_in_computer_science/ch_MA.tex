@@ -102,3 +102,50 @@ D&\mbox{if }\fun{T}{f,g,h}=\infty\\
 For every $t\in T$ and $i\in\calA$ we define $\overline{S}^{i^t}_{j\ l}=\accol{s|s\in S_{j\ l},\tuple{s,t}\succ_i\tuple{O,t},i,j,l\in\calA,j\neq l}$. Let $\overline{S}^{i^t}=\overline{S}^{i^t}_{i\ j}\cup\overline{S}^{i^t}_{i\ l}\cup\overline{S}^{i^t}_{j\ l}$, where $i,j,l\in\calA$, $i\neq j\neq l$. If $\overline{S}^{i^t}\neq\emptyset$, we denote $\hat{s}^{i^t}=\displaystyle\min_{\prec_i}\overline{S}^{i^t}$, i.e., $\hat{s}^{i^t}$ is the \term[Worst agreement that can be reached in a period]{worst agreement that can be reached in period} $t$ which is still better to agent $i$ than opting out. In case such an agreement does not exist, we define $\hat{s}^{i^t}=-1$.
 \cite{conf/ijcai/KrausW91}
 \end{defi}
+
+\section{Planning, Scheduling and Reasoning about Actions}
+
+\begin{defi}[Extension 1 $\prec^+$]
+\term{Extension 1 ($\prec^+$)} is a binary relation over $G'$ where $G'=2^{G}$. For any $\accol{g_{k_i}}\in G'$ and any $\accol{g_{h_j}}\in G'$, $\accol{g_{k_i}}\prec^+\accol{g_{h_j}}$ \iffTx{}
+\begin{equation}
+\brak{\forall l\forall s\brak{\fun{T_l}{s}\in S_{\displaystyle\wedge_{i,j}g_{k_i},g_{h_j}}\rightarrow s\in S_{\displaystyle\wedge_ig_{k_i}}}}\wedge\forall g\in\accol{g_{h_j}\exists l\exists s\brak{\fun{T_l}{s}\in S_{\displaystyle\wedge_{i,j}g_{k_i},g_{h_j}}\wedge s\notin S_g}}
+\end{equation}
+\cite{conf/ijcai/ChengI89}
+\end{defi}
+
+\begin{defi}[Extension 2 $\prec^x$]
+\term{Extension 2 ($\prec^x$)} is a binary relation from $2^G$ to $G$. For any $\accol{g_{k_i}}\in 2^G$ and any $g\in G$, $\accol{g_{k_i}}\prec^x g$ \iffTx{}
+\begin{equation}
+\brak{\forall l\forall s\brak{\fun{T_l}{s}\in S_{\displaystyle\wedge_ig_{k_i}\wedge g}\rightarrow s\in S_{\displaystyle\wedge_ig_{k_i}}}}\wedge\brak{\exists l\exists s\brak{\fun{T_l}{s}\in S_{\displaystyle\wedge_ig_{k_i}\wedge g}\wedge s\notin S_g}}
+\end{equation}
+\cite{conf/ijcai/ChengI89}
+\end{defi}
+
+\begin{defi}[$C_G$]
+\term[Binary relation $C_G$]{$C_G$} is a binary relation over $G$. For $g_i\in G$ and $g_j\in G$, $\tuple{g_i,g_j}\in C_G$  \iffTx{} \teTx{} $g_{k_1},g_{k_2},\ldots,g_{k_m}$, \stTx{} $g_i\in\accol{g_{k_i}}$, $g_j\notin\accol{g_{k_i}}$ and $\accol{g_{k_i}}\prec^x g_j$.
+\cite{conf/ijcai/ChengI89}
+\end{defi}
+
+\begin{defi}
+\funsig{F}{2^{\prec^x}}{2^{C_G}} is an injective function. $\fun{F}{\accol{\tuple{\wedge_ig_{k_i},g}}}=\displaystyle\cup_i\accol{\tuple{g_{k_i},g}}$ and for any $S\subseteq\prec^+$, $\fun{F}{S}=\displaystyle\cup_{e\in S}\fun{F}{\accol{e}}$.
+\cite{conf/ijcai/ChengI89}
+\end{defi}
+
+\begin{defi}[More effective subset of extension 2, most effective subrelation of extension 2]
+Let $\prec_{\mbox{sub1}}^x$ and $\prec_{\mbox{sub2}}^x$ be subsets of $\prec^x$. $\prec_{\mbox{sub1}}^x$ is \term[More effective subset of extension 2]{more effective than} $\prec_{\mbox{sub2}}^x$ denoted $\prec_{\mbox{sub1}}^x\sqsubset\prec_{\mbox{sub1}}^x$ if $\abs{\prec_{\mbox{sub1}}^x}<\abs{\prec_{\mbox{sub2}}^x}$ and $\fun{f}{\prec_{\mbox{sub1}}^x}\supseteq\fun{f}{\prec_{\mbox{sub2}}^x}$. A subset of $\prec^x$ is the \term[most effective subrelation of extension 2]{most effective subrelation of $\prec^x$}, denoted by $\prec_{\mbox{min}}^x$ if for any $\prec_{\mbox{sub}}^x\subseteq\prec^x$, $\prec_{\mbox{min}}^x\sqsubset\prec_{\mbox{sub}}^x$
+\cite{conf/ijcai/ChengI89}
+\end{defi}
+
+\begin{defi}[Binding of a postcondition, Binding of a precondition]
+A \term[Binding of a postcondition]{binding $\pi$ of $\mbox{post}_k$} with a goal $G'$ is denoted by $\mbox{post}_k^{\pi}$ and is the result of assigning constants in $G$ to corresponding variables of matching formulas in $\mbox{post}_k$ and assigning arbitrary constants to the rest of the variables. A \term[Binding of a precondition]{binding $\pi$ of $\mbox{prec}_k$} with a goal $G$ is denoted by $\mbox{post}_k^{\pi}$ and is the result of passing the binding from $\mbox{post}_k$ to $\mbox{prec}_k$ and assigning arbitrary constants to the remaining variables.
+\cite{conf/ijcai/ChengI89}
+\end{defi}
+
+\begin{defi}
+A goal $G$ is consistent with a post condition $\mbox{post}_k$ under binding $\pi$ or simply \funm{con}{\mbox{post}_k^{\pi},G} if
+\begin{enumerate}
+ \item for all $g\in G$ it is not true that $\neg g$ is a logical consequence of $\mbox{post}_k^{\pi}$ and the preserved $\mbox{prec}_k^{\pi}$ formulas;
+ \item None of the problem constraints are violated by the conjunction of $\mbox{post}_k^{\pi}$, $G$ and the preserved $\mbox{prec}_k^{\pi}$ formulas.
+\end{enumerate}
+\cite{conf/ijcai/ChengI89}
+\end{defi}

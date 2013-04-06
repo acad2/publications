@@ -888,6 +888,31 @@ The \termabbrev{strictly $k$-guarded fragment}{$SGF_k$} are formulas in $GF_k$ o
 \cite{conf/ijcai/LiuL03}
 \end{defi}
 
+\begin{defi}[Ewff defining a predicate]
+The \term{Ewff defining a predicate} denoted $e_P$ is the disjunction of all $e$ such that $\forall\overline{x}\brak{\fun{e}{\overline{x}}\supset\fun{P}{\overline{x}}}\in\Sigma$. The ewff defining $\neg P$ denoted $e_{\neg P}$ is analogous.
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[Relational ewff, Co-relational ewff, Unrestricted ewff]
+We distinguish among three cases for an ewff:
+\begin{enumerate}
+ \item $e$ is \term[Relational ewff]{relational} if it is of the form: $\overline{x}=\overline{e_1}\vee\overline{x}=\overline{e_2}\vee\ldots\vee\overline{x}=\overline{e_n}$ where $n\geq0$.
+ \item $e$ is \term[Co-relational ewff]{co-relational} if it is of the form: $\overline{x}\neq\overline{e_1}\vee\overline{x}\neq\overline{e_2}\vee\ldots\vee\overline{x}\neq\overline{e_n}$ where $n\geq0$.
+ \item $e$ is \term[Unrestricted ewff]{unrestricted} otherwise.
+\end{enumerate}
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[$e$-size a knowledge base]
+The \term[$e$-size a knowledge base]{$e$-size of $\Sigma$} is the maximum size of an unrestricted $e_P$ or $e_{\neg P}$ in $\Sigma$.
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
+\begin{defi}[$k$-guarded fragment of a proper knowledge base]
+Let $\Sigma$ be a proper knowledge base. The \term[$k$-guarded fragment of a proper knowledge base]{strictly $k$-guarded fragment \fun{SG_k}{\Sigma}} of $\calL$ for $\Sigma$ is the same as $SGF_k$ except that when $\exists\overline{x}\brak{G_1\wedge G_2\wedge\ldots\wedge G_m\wedge\phi}$ is withing scope of an even (\respTx{} odd) number of $\neg s$, the $G_i$ must be equalities or atoms \fun{P}{\overline{t}}, \stTx{} $c_P$ is relational (\respTx{} $e_{\neg P}$ is co-relational) or literals $\neg\fun{P}{\overline{t}}$ \stTx{} $e_{\neg P}$ is relational (\respTx{} $e_P$ is co-relational).
+\cite{conf/ijcai/LiuL03}
+\end{defi}
+
 \subsection{Logical Filtering}
 
 \begin{defi}[Logical filtering semantics of a sequence of actions and observations]
