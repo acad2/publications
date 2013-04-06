@@ -1560,7 +1560,7 @@ Het algoritme die deze sets kan berekenen staat in \algoref{alg:calculatingLiven
 Het algoritme werkt op basis van least-fixed-point theorie. Hierbij berekenen we de sets door ze te initialiseren als lege sets. En vervolgens deze telkens te updaten. Wanneer we een iteratie bereiken waarbij geen enkele set aangepast wordt, weten we dat dit in de volgende iteratie ook niet zal gebeuren. Bijgevolg kunnen we stoppen. In tabel \ref{tbl:lifenessEvolution} staan de $\succst{n}$, $\usestt{n}$ en $\defstt{n}$ tabellen samen met de nodige iteraties om de $\instt{n}$ en $\outstt{n}$ set uit te rekenen. We kunnen opmerken dat de $\instt{n}$ set dus overeenkomt met de levensduurtabel (zie tabel \ref{tbl:variableLifespanExample}).
 \begin{table}[hbt]
 \centering
-\begin{tabular}{c|ccc|cc|cc|cc}
+\small{\begin{tabular}{c|ccc|cc|cc|cc}
 $n$&$\succst{n}$&$\usestt{n}$&$\defstt{n}$&$\instti{n}{0}$&$\outstti{n}{0}$&$\instti{n}{1}$&$\outstti{n}{1}$&$\instti{n}{2}$&$\outstti{n}{2}$\\\hline
 $S_0$&\accol{S_0,S_1}&$\emptyset$&\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}&	$\emptyset$&		\accol{t_1,t_2}\\
 $S_1$&\accol{S_2}&\accol{t_1,t_2}&\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}&	\accol{t_1,t_2}&	\accol{t_3,t_4}\\
@@ -1570,7 +1570,7 @@ $S_4$&\accol{S_5}&\accol{t_5,t_7}&\accol{t_9}&	\accol{t_5,t_7}&	\accol{t_8,t_9}&
 $S_5$&\accol{S_6}&\accol{t_8,t_9}&\accol{t_{10}}&	\accol{t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}&	\accol{t_5,t_8,t_9}&	\accol{t_5,t_{10}}\\
 $S_6$&\accol{S_7}&\accol{t_5,t_{10}}&\accol{t_{11}}&	\accol{t_5,t_{10}}&	\accol{t_{11}}&		\accol{t_5,t_{10}}&	\accol{t_{11}}&		\accol{t_5,t_{10}}&	\accol{t_{11}}\\
 $S_7$&\accol{S_0}&\accol{t_{11}}&$\emptyset$&	\accol{t_{11}}&		$\emptyset$&		\accol{t_{11}}&		$\emptyset$&		\accol{t_{11}}&		$\emptyset$
-\end{tabular}
+\end{tabular}}
 \caption{De evolutie van de $\instt{n}$- en $\outstt{n}$-set op basis van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
 \label{tbl:lifenessEvolution}
 \end{table}
@@ -1707,7 +1707,7 @@ Twee variabelen kunnen niet in hetzelfde register worden opgeslagen indien de tw
 \end{quote}
 We kunnen dit formaliseren met behulp van de sets die we berekend hebben in het deel over de lifeness analyse:
 \begin{equation}
-\forall t_i,t_j\in\mbox{Variabelen}, t_i\neq t_j:\mbox{niet_samenvoegen}\left(t_i,t_j\right)\Leftrightarrow\left(\exists s\in S: t_i\in\instt{s}\wedge t_j\in\instt{s}\right)
+\forall t_i,t_j\in\mbox{Variabelen}, t_i\neq t_j:\mbox{NietSamenvoegen}\left(t_i,t_j\right)\Leftrightarrow\left(\exists s\in S: t_i\in\instt{s}\wedge t_j\in\instt{s}\right)
 \end{equation}
 Op basis van deze definitie kunnen we de volledige relatie berekenen van variabelen die we kunnen niet kunnen samenvoegen:
 \begin{equation}
@@ -1717,10 +1717,36 @@ Op basis van deze definitie kunnen we de volledige relatie berekenen van variabe
 \brak{t_5,t_{10}}&\brak{t_7,t_8}&\brak{t_8,t_9}
 \end{array}
 \end{equation}
-Toegegeven dat er negen paren van variabelen botsen, maar dit geeft ruimte voor een groot aantal manieren om variabelen samen te voegen. De schaduwzijde van het feit dat veel configuraties mogelijk zijn, is dat er een serieuze kans bestaat dat we een foute configuratie uitkiezen. Om meer gericht op zoek te gaan naar welke variabelen we kunnen samennemen, zullen we een heuristiek ontwikkelen: een functie die aangeeft in welke mate het de moeite loont om twee variabelen samen te nemen. Deze functie heeft de signatuur $h:V\times V\rightarrow\mathbb{N}$. Waarbij $V$ de set van variabelen voorstelt, en $\mathbb{N}$ de set van natuurlijke getallen (met 0). Een interessante metriek kunnen we opstellen op basis van de invoer- en uitvoertabellen (zie tabel \ref{tbl:inputtableexample}). De heuristiek defini\"eren we dan als het aantal in- en uitgangen die de twee variabelen gemeenschappelijk hebben met elkaar bij functionele eenheden die het potentieel hebben om samengenomen te worden. De argumentatie is de volgende: 
-indien we effectief functionele eenheden samennemen. Zal dit er meestal toe leiden dat verschillende registers naar eenzelfde ingang van deze samengestelde functionele eenheid worden geleid. Indien alle variabelen die deze ingang gemeenschappelijk hebben, echter in hetzelfde register opgeslagen zitten, zijn deze multiplexers overbodig. Formeel kunnen we deze functie dus defini\"eren als:
+Toegegeven dat er negen paren van variabelen botsen, maar dit geeft ruimte voor een groot aantal manieren om variabelen samen te voegen. De schaduwzijde van het feit dat veel configuraties mogelijk zijn, is dat er een serieuze kans bestaat dat we een foute configuratie uitkiezen. Om meer gericht op zoek te gaan naar welke variabelen we kunnen samennemen, zullen we een heuristiek ontwikkelen: een functie die aangeeft in welke mate het de moeite loont om twee variabelen samen te nemen. Deze functie heeft de signatuur $h:V\times V\rightarrow\mathbb{N}$. Waarbij $V$ de set van variabelen voorstelt, en $\mathbb{N}$ de set van natuurlijke getallen (met 0). Een interessante metriek kunnen we opstellen op basis van de invoer- en uitvoertabellen (zie tabel \ref{tbl:inputtableexample}). De heuristiek defini\"eren we dan als:
+\begin{quote}
+Het aantal in- en uitgangen die de twee variabelen gemeenschappelijk hebben met elkaar bij functionele eenheden die het potentieel hebben om samengenomen te worden.
+\end{quote}
+De argumentatie is de volgende: indien we effectief functionele eenheden samennemen. Zal dit er meestal toe leiden dat verschillende registers naar eenzelfde ingang van deze samengestelde functionele eenheid worden geleid. Indien alle variabelen die deze ingang gemeenschappelijk hebben, echter in hetzelfde register opgeslagen zitten, zijn deze multiplexers overbodig. Formeel kunnen we deze functie dus defini\"eren als:
 \begin{equation}
-\forall t_i,t_j,t_i\neq t_j:h\left(t_i,t_j\right)=\#\left\{\tuple{}|(va,fa,ca) <- list, va == v1, member fa sf, (vb,fb,cb) <- list, vb == v2, ca == cb, member fb sf\right\}
+\forall t_i,t_j,t_i\neq t_j:\mbox{prioriteit}\left(t_i,t_j\right)=\#\left\{\begin{array}{l|l}
+&\forall\brak{t_i,f_a,c},\brak{t_j,f_b,c}\in\mbox{Verbindingen}, a<b,\\
+\brak{f_a,f_b,c}&\exists F\in\mbox{SamenvoegbareFunctioneleEenheden},\\
+&f_a,f_b\in F
+\end{array}\right\}
+\end{equation}
+Ook deze definitie zullen we toepassen op leidend voorbeeld. We verwachten dat we $\mbox{max1}$ en $\mbox{max 2}$ kunnen samennemen alsook $+$ en $-$. Daarom wordt de set \mbox{SamenvoegbareFunctioneleEenheden} gelijk aan:
+\begin{equation}
+\begin{array}{ll}
+\mbox{SamenvoegbareFunctioneleEenheden}=\accol{\accol{\mbox{max1},\mbox{max2}},\accol{+,-}}&\mbox{(leidend voorbeeld)}
+\end{array}
+\end{equation}
+De \mbox{Verbindingen}-set hebben we eigenlijk al opgesteld en kunnen we bekijken in de in- en uitvoertabellen (zie tabel \ref{tbl:inputtableexample}). De set bestaat uit tuples met als volgorde: \brak{\mbox{variable},\mbox{functionele eenheid},\mbox{verbinding}}. De \mbox{Verbindingen} bevat dus onder andere de volgende elementen:
+\begin{equation}
+\begin{array}{ll}
+\mbox{Verbindingen}=\accol{\brak{t_1,\mbox{abs1},I_1},\brak{t_3,\mbox{abs1},O_1},\brak{t_2,\mbox{abs2},I_1},\brak{t_4,\mbox{abs1},O_1},\ldots}&\mbox{(leidend voorbeeld)}%,\brak{t_3,\mbox{max1},I_1},\brak{t_4,\mbox{max1},I_2}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{lll}
+\mbox{prioriteit}\brak{t_3,t_5}=1&\mbox{prioriteit}\brak{t_4,t_{10}}=1&\mbox{prioriteit}\brak{t_5,t_8}=1\\
+\mbox{prioriteit}\brak{t_5,t_{11}}=1&\mbox{prioriteit}\brak{t_7,t_9}=1&\mbox{prioriteit}\brak{t_9,t_{10}}=1
+\end{array}
 \end{equation}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
