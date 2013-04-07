@@ -1752,8 +1752,8 @@ De \mbox{Verbindingen}-set hebben we eigenlijk al opgesteld en kunnen we bekijke
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[shorten >=1pt,auto,node distance=2.8cm]
-\foreach \n/\t/\p in {t1/$t_1$/,t2/$t_2$/below of=t1,t3/$t_3$/right of=t1,t4/$t_4$/below of=t3,t11/$t_7$/right of=t3,t10/$t_10$/below of=t11,t5/$t_5$/right of=t11,t9/$t_9$/below of=t5,t7/$t_7$/right of=t9,t8/$t_8$/right of=t7,t6/$t_6$/above of=t7} {
-  \node[draw=black,circle] (\n)[\p] {\t};
+\foreach \n/\t/\p in {t1/$t_1$/,t2/$t_2$/[below of=t1],t3/$t_3$/[right of=t1],t4/$t_4$/[below of=t3],t11/$t_7$/[right of=t3],t10/$t_10$/[below of=t11],t5/$t_5$/[right of=t11],t9/$t_9$/[below of=t5],t7/$t_7$/[right of=t9],t8/$t_8$/[right of=t7],t6/$t_6$/[above of=t8]} {
+  \node[draw=black,minimal width=1 cm, minimal height=1cm,circle] (\n) \p {\t};
 }
 \foreach \a/\b/\o in {t1/t2/,t3/t4/,t5/t10/,t5/t9/,t5/t7/,t5/t8/,t5/t6/,t7/t8/,t8/t9/bend left} {
   \path [dashed] (\a) edge [\o] (\b);
@@ -1761,8 +1761,13 @@ De \mbox{Verbindingen}-set hebben we eigenlijk al opgesteld en kunnen we bekijke
 \foreach \a/\b/\t/\o in {t3/t5/1/bend left,t11/t5/1/,t4/t10/1/,t10/t9/1/,t9/t7/1/} {
   \path (\a) edge [\o] node {\t} (\b);
 }
-\foreach \tim/\vars in {} {
-  \node [fit=\vars,draw=dashed,rectangle,black] {};
+\foreach \tim/\off/\vars in {1/t5/,1/t7/,1/t8/,2/t5/{t3,t11},2/t8/{t6,t8},2/t7/{t4,t9,t10},3/t5/{t1,t3,t11},3/t7/{t2,t4,t9,t10}} {
+  \node[fit=(\off),inner sep=5pt] (fitnode) {};
+  \foreach \var in {\vars} {
+    \node[fit=(\var),inner sep=5pt] (thick\var) {};
+    \node[fit=(fitnode) (thick\var),inner sep=0pt] (fitnode) {};
+  }
+  %\node [fit=\vars,draw=dashed,rectangle,black] {};
 }
 \end{tikzpicture}
 \caption{De evolutie van de compatibiliteitsgraaf}
