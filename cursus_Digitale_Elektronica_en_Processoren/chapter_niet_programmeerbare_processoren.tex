@@ -1696,7 +1696,7 @@ max2	&	&	&	&$\bullet$&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$
 \label{tbl:inputtableexample}
 \end{table}
 We zetten hier de variabelen op de horizontale as, en de functionele eenheden op de verticale as. Variabelen die aan geen enkele functionele eenheid bijdragen hebben we weggelaten uit de kolommen: bijvoorbeeld variabele $t_1$ is nergens verbonden met een ingang $I_2$, bijgevolg staat deze ook niet in dat deel van de tabel. Het weglaten van deze kolommen is vanzelfsprekend optioneel.
-\paragraph{Opstellen van een compatibiliteitsgrafe}
+\paragraph{Onsamenvoegbaarheid en Prioriteit}
 Nu we deze tabellen hebben opgesteld, kunnen we met het echte werk beginnen: het samenvoegen van registers. Een eerste probleem die we moeten oplossen is bepalen wanneer twee variabelen eenzelfde register kunnen delen. Allereerst kunnen we opmerken dat een variabele eigenlijk niet gebonden is aan een register: we zouden bijvoorbeeld dezelfde variabele in de ene toestand in register 1 kunnen bewaren en de andere toestand in register 2. Dit kan er toe leiden dat we inderdaad tot zeer compacte configuraties komen, maar in de meeste gevallen, maakt het het optimaliseren hopeloos ingewikkeld. Daarom gebruiken we doorgaans de vuistregel:
 \begin{quote}
 We kennen een variabele toe aan strikt \'e\'en register.
@@ -1748,6 +1748,26 @@ De \mbox{Verbindingen}-set hebben we eigenlijk al opgesteld en kunnen we bekijke
 \mbox{prioriteit}\brak{t_5,t_{11}}=1&\mbox{prioriteit}\brak{t_7,t_9}=1&\mbox{prioriteit}\brak{t_9,t_{10}}=1
 \end{array}
 \end{equation}
+\paragraph{Opstellen van een compatibiliteitsgraaf}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[shorten >=1pt,auto,node distance=2.8cm]
+\foreach \n/\t/\p in {t1/$t_1$/,t2/$t_2$/below of=t1,t3/$t_3$/right of=t1,t4/$t_4$/below of=t3,t11/$t_7$/right of=t3,t10/$t_10$/below of=t11,t5/$t_5$/right of=t11,t9/$t_9$/below of=t5,t7/$t_7$/right of=t9,t8/$t_8$/right of=t7,t6/$t_6$/above of=t7} {
+  \node[draw=black,circle] (\n)[\p] {\t};
+}
+\foreach \a/\b/\o in {t1/t2/,t3/t4/,t5/t10/,t5/t9/,t5/t7/,t5/t8/,t5/t6/,t7/t8/,t8/t9/bend left} {
+  \path [dashed] (\a) edge [\o] (\b);
+}
+\foreach \a/\b/\t/\o in {t3/t5/1/bend left,t11/t5/1/,t4/t10/1/,t10/t9/1/,t9/t7/1/} {
+  \path (\a) edge [\o] node {\t} (\b);
+}
+\foreach \tim/\vars in {} {
+  \node [fit=\vars,draw=dashed,rectangle,black] {};
+}
+\end{tikzpicture}
+\caption{De evolutie van de compatibiliteitsgraaf}
+\label{fig:asmSqrtCompatibilityGraph}
+\end{figure}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
