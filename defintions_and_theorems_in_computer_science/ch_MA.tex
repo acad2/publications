@@ -149,3 +149,74 @@ A goal $G$ is consistent with a post condition $\mbox{post}_k$ under binding $\p
 \end{enumerate}
 \cite{conf/ijcai/ChengI89}
 \end{defi}
+
+\section{Action and Perception}
+
+\begin{defi}[Abstract robotic domain, Configuration space in an abstract robotic domain, Transitions in an abstract robotic domain]
+An \termabbrev{Abstract robotic domain}{ARD} is a pair \tuple{C,T} where $C$, the \term[Configuration space in an abstract robotic domain]{configuration space}, is a set of states, and $T$, the \term[Transitions in an abstract robotic domain]{transitions}, is a set of functions from $C$ to $2^C\setminus\emptyset$, containing the identity function.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[History over a set]
+A \term{history over a set} $W$ is a function \funsig{h}{\NNN}{W} where $\NNN$ are the integers.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[Task]
+A \term{task} is a pair $\funmt{Task}{I,G}$ where $I,G\subset\calC$.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[Protocol of an abstract robotic unit]
+A \term{protocol for an abstract robotic unit} is a function \funsig{\calP}{\mbox{States}}{\mbox{Actions}}.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[Distributed protocol of an $n$-abstract robotic unit]
+A \term{distributed protocol for an $n$-abstract robotic unit} is a set of functions \funsig{\calP}{\mbox{States}_i}{\mbox{Actions}_i} for $i=1,2,\ldots,n$.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[Joint protocol]
+A \term{joint protocol} is a (centralized) protocol for an $n$-abstract robotic unit, i.e., a function from $\mbox{States}_1\times\mbox{States}_2\times\ldots\times\mbox{States}_n$ to $\mbox{Actions}_1\times\mbox{Actions}_2\times\ldots\times\mbox{Actions}_n$.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[Protocol performs a task]
+A \term[Protocol performs a task]{protocol $\calP$ performs a task \funmt{Task}{I,G}} if every execution of $\calP$ that starts in \accol{\brak{c,l}|c\in I\wedge I\in\funm{Init}{c}} passes through a configuration in $G$.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[Abstract robotic unit can perform a task]
+An \term[Abstract robotic unit can perform a task]{abstract robotic unit can perform a task \funmt{Task}{I,G}} if \tiTx{} a protocol for it that performs \funmt{Task}{I,G}.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[$K$-capable abstract robotic unit]
+An abstract robotic unit is $K$-capable of $\accol{\varphi_0,\varphi_1,\ldots,\varphi_k}\subseteq\calL$ in a set of global states $S$ if \teTx{} a protocol $\calP$ \stTx{} \feTx{} $s\in\calS$, every execution of $\calP$ that starts at $s$ reaches a states $s'$ such that:
+\begin{enumerate}
+ \item $S,s'\vDash K\varphi_0\vee K\varphi_1\vee\ldots\vee K\varphi_k$;
+ \item\label{itemb:kcapableabstractroboticunit} $s$ and $s'$ differ at most in the local state of the abstract robotic unit; and
+ \item the abstract robotic unit knows that (\ref{itemb:kcapableabstractroboticunit}) holds.
+\end{enumerate}
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[upper bound on the $K$-complexity of a task]
+\accol{\varphi_0,\varphi_1,\ldots,\varphi_k} is an \term{upper bound on the $K$-complexity of a task} \funmt{Task}{I,G} written \funmt{Task}{I,G}=\bigoh{\accol{\varphi_0,\varphi_1,\ldots,\varphi_k}} if:
+\begin{enumerate}
+ \item any abstract robotic unit that is $K$-capable of \accol{\varphi_0,\varphi_1,\ldots,\varphi_k} in \funf{\calS}{I} can perform \funmt{Task}{I,G};
+ \item some abstract robotic unit is $K$-capable of \accol{\varphi_0,\varphi_1,\ldots,\varphi_k} in \funf{\calS}{I}.
+\end{enumerate}
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}[Progress measure for an abstract robotic domain]
+A \term{progress measure for an abstract robotic domain} \tuple{C,T} is a function \funsig{\rho}{\calC}{W}, where $W$ is a well-ordered set.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
+
+\begin{defi}
+Given a task \funmt{Task}{I,G} and a knowledge-based protocol $\calP$, the function $\rho_{\calP,\funmt{Task}{I,G}}$ is defined for each $c\in\calC$ as the least upper bound on the number of steps along any execution of $V$ from initial configuration \accol{c} until the first time a configuration in $G$ is reached, or as if no such upper bound exists or if a configuration is reached on which $V$ is undefined. We say that $\tau\in\calT$ makes progress on $c\in\calC$ according to $\rho$ if for any $c'\in\fun{\calT}{c}\brak{c}$, $\fun{\rho}{c'}<\fun{\rho}{c}$.
+\cite{conf/ijcai/BrafmanS95}
+\end{defi}
