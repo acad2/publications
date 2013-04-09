@@ -31,6 +31,7 @@ Finished:
 - 010_015.pdf
 - 010_016.pdf
 - 010_023.pdf
+- 013_026.pdf
 
 Skipped:
 
@@ -53,7 +54,8 @@ Errors:
  - 013_015.pdf
  - 013_018.pdf
  - 013_020.pdf
- 
+ - 013_025.pdf
+ - 
  
  = May =
  = June =

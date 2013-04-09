@@ -150,6 +150,16 @@ A goal $G$ is consistent with a post condition $\mbox{post}_k$ under binding $\p
 \cite{conf/ijcai/ChengI89}
 \end{defi}
 
+\begin{defi}[Plan, start, finish]
+The ordered pair $\Pi=\brak{O,<}$ is a \term{plan} \iffTx{}
+\begin{enumerate}
+ \item $O$ is a set of nodes containing at least the nodes \term{start} and \term{finish}, and
+ \item $<\subseteq O\times O$ is a strict partial ordering on $O$ \stTx{} $\mbox{start}<\mbox{finish}$ and $\forall N\in O\setminus\accol{\mbox{start},\mbox{stop}}:\mbox{start}<N<\mbox{finish}$.
+\end{enumerate}
+\cite{conf/ijcai/HertzbergH89}
+\end{defi}
+
+
 \section{Action and Perception}
 
 \begin{defi}[Abstract robotic domain, Configuration space in an abstract robotic domain, Transitions in an abstract robotic domain]

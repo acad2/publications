@@ -88,3 +88,30 @@ Let $M$ be an single-controller-stochastic-game, and let $L$ be any subset of $S
 Let \accol{A_i|1\leq i\leq\mbox{MaxAtt}} be the set of attributes of a domain, and for each $A_i$, \accol{V_{ij}|1\leq j\leq\mbox{MaxAttVal}_i} be its value set where $\mbox{MaxAtt}$ is the number of attributes, and $\mbox{MaxAttVal}_i$, is the number of different values of $A_i$. An \term{$X$-of-$N$ representation} is a set, denoted as $\mbox{$X$-of-}\accol{AV_k|AV_k\mbox{ is an attribute-value pair denoted as ``}A_i=V_{i,j}\mbox{'', }1\leq k\leq N_+, N\leq N_+, 1\leq N\leq\mbox{MaxAtt}}$, where $N_+$ is the number of attribute-value pairs in the $X$-of-$N$ representation, called the size of the $X$-of-$N$ representation, and $N$ is the number of different attributes that appear in the $X$-of-$N$ representation. The value of an $X$-of-$N$ can be any number between $0$ and $N$. Given an instance, its value is $X$ \iffTx{} $X$ of the $AV_k$ are true. An attribute-value pair $\fun{AV_k}{A_i=V_{ij}}$ is true for an instance \iffTx{} attribute $A_i$, of the instance has value $V_{ij}$.
 \cite{conf/ijcai/Zheng95}
 \end{defi}
+
+\section{Reinforcement Learning}
+
+\begin{defi}[$\mu$-approximation $T$-step planning algorithm for a Dynamic Bayesian Network-Markov Decision Processes]
+A \term{$\mu$-approximation $T$-step planning algorithm for a Dynamic Bayesian Network-Markov Decision Processes} is one that, given a Dynamic Bayesian Network-Markov Decision Processes, produces a (compactly represented) policy n such that $\fun{U_M^{\pi}}{x,T}\geq\brak{1-\mu}\fun{U_M^{\star}}{x,T}$.
+\cite{conf/ijcai/KearnsK99}
+\end{defi}
+
+\begin{defi}[induced Dynamic Bayesian Network-Markov Decision Processes on a subset of the transition components of a Dynamic Bayesian Network-Markov Decision Processes]
+Let $M$ be a Dynamic Bayesian Network-Markov Decision Processes and let $T$ be any subset of the transition components in the model. The \term[induced Dynamic Bayesian Network-Markov Decision Processes on a subset of the transition components of a Dynamic Bayesian Network-Markov Decision Processes]{induced Dynamic Bayesian Network-Markov Decision Processes on $T$}, denoted $M_T$, is defined as follows:
+\begin{enumerate}
+ \item $M_T$ has the same set of sate variables as $M$; however in $M_T$ each variable $X_i$ has, in addition to its original set of values \fun{\mbox{Val}^M}{X_i}, a new value $w$.
+ \item $M_T$ has the same transition graphs as $M$. For each $a$, $i$ and $u\in\fun{\mbox{Val}^M}{\fun{\mbox{Pa}_a}{X'_i}}$, we have that $\fun{P_a^{M_T}}{X_i'|u}=\fun{P_a^M}{X_i'|u}$ if the corresponding transition component is in $T$; in all other cases, $\fun{P_a^{M_T}}{w|u}=1$ and $\fun{P_a^{M_T}}{x_i|u}=0$ for all $x_i\in\fun{\mbox{Val}^M}{X_i}$.
+ \item $M_T$ has the same set $\calR$ as $M$. For each $i=1,2,\ldots,k$ and $c\in\fun{\mbox{Val}^M}{C_i}$, we have that $\fun{R_i^{M_T}}{c}=\fun{R_i^M}{c}$. For other vectors $c$, we have that $\fun{R_i^{M_T}}{c}=-R_{\mbox{max}}$.
+\end{enumerate}
+\cite{conf/ijcai/KearnsK99}
+\end{defi}
+
+\begin{defi}[$\epsilon$-mixed Markov chain at a certain moment in time]
+Let $Q$ be a transition model for a Markov chain and let $\accol{X^{\brak{t}}}_{t=0}^{\infty}$ represent the state of the chain. Let $S=\accol{x_1,x_2,\ldots,x_s}$. Let $\mu_j$ be the stationary probability of $x_j$ in the Markov chain. We say that Markov chain $Q$ is \term[$\epsilon$-mixed Markov chain at a certain moment in time]{$\epsilon$-mixed at time $m$} if $\max_{i,j}\abs{\fun{P}{X^{\brak{t}}=x_j|X^{\brak{1}}=x_i}-\mu_j}\leq\epsilon$.
+\cite{conf/ijcai/KearnsK99}
+\end{defi}
+
+\begin{defi}[Dependency graph for the Dynamic Bayesian Network]
+Consider a Dynamic Bayesian Network over the state variables $X_1,X_2,\ldots,X_n$ .The \term[Dependency graph for the Dynamic Bayesian Network]{dependency graph $V$ for the Dynamic Bayesian Network} is a directed cyclic graph whose nodes are $X_1,X_2,\ldots,X_n$ and where there is a directed edge from $X_i$ to $X_j$ if there is an edge in the transition graph of the Dynamic Bayesian Network from $X_i'$ to $X_j'$.
+\cite{conf/ijcai/KearnsK99}
+\end{defi}
