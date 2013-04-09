@@ -159,6 +159,44 @@ The ordered pair $\Pi=\brak{O,<}$ is a \term{plan} \iffTx{}
 \cite{conf/ijcai/HertzbergH89}
 \end{defi}
 
+\begin{defi}[Plan, Start, Finish]
+The ordered pair $\Pi=\brak{O,<}$ is a \term{plan} \iffTx{}
+\begin{enumerate}
+ \item $O$ is a set of nodes containing at least the nodes \term{start} and \term{finish}, and
+ \item $<\subseteq O\times O$ is a strict partial ordering on $O$ \stTx{} $\mbox{start}<\mbox{finish}$ and $\forall N\in O\setminus\accol{\mbox{start},\mbox{stop}}:\mbox{start}<N<\mbox{finish}$.
+\end{enumerate}
+\cite{conf/ijcai/HertzbergH89}
+\end{defi}
+
+\begin{defi}[User of a condition, Producer of a condition]
+Let $N$ be a node with preconditions $\mbox{Pre}$ and postconditions $\mbox{Post}$, and $C$ a condition;
+\begin{enumerate}
+ \item $N$ is a \term[Producer of a condition]{producer of $C$} \iffTx{} $\mbox{Post}\vdash C$,
+ \item $N$ is a \term[User of a condition]{user of $C$} \iffTx{} $C\in\mbox{Pre}$.
+\end{enumerate}
+\cite{conf/ijcai/HertzbergH89}
+\end{defi}
+
+\begin{defi}[Well formed plan]
+Let $\Pi=\brak{O,<}$ be a plan, $\Pi$ is \term[Well formed plan]{well formed} \iffTx{} $\forall C\in\Lambda,\forall U\in O:$ if $U$ is user of $C$ then $\exists P\in O:$ $P$ is producer of $C$ and $P<U$.
+\cite{conf/ijcai/HertzbergH89}
+\end{defi}
+
+\begin{defi}[Dependencies between producers and users of conditions]
+Let $\Pi=\brak{O,<}$ be a plan, $C$ a condition and $P,U\in O$. Then $D=\tuple{P,C,U,\Pi}$ is a \term[Dependencies between producers and users of conditions]{dependency between $P$ and $U$ concerning $C$ in $\Pi$} \iffTx{}
+\begin{enumerate}
+ \item $P$ is a producer of $C$,
+ \item $U$ is a user of $C$,
+ \item $P<U$, and
+ \item $\forall N\in O:$ if $P<N<U$ then $N$ is not a producer of $C$.
+\end{enumerate}
+\cite{conf/ijcai/HertzbergH89}
+\end{defi}
+
+\begin{defi}[Enclosure of a node in a dependency]
+Let $\Pi=\brak{O,<}$ be a plan and $D=\tuple{P,C,U,\Pi}$ be a dependency between $P$ and $U$ concerning $C$. Then $D$ encloses $N\in O$ \iffTx{} $\exists<'\subseteq O\times O:<\subseteq<'$ and $P<'N<'U$. $<'$ is called the \term[Enclosure of a node in a dependency]{enclosure of $N$ in $D$}.
+\cite{conf/ijcai/HertzbergH89}
+\end{defi}
 
 \section{Action and Perception}
 
