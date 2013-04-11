@@ -40,8 +40,10 @@
 \newcommand{\pfun}[1]{\fun{p}{#1}}
 \newcommand{\Pfun}[1]{\fun{P}{#1}}
 \newcommand{\pcond}[2]{\pfun{#1|#2}}
-\newcommand{\funf}[2]{\ensuremath{#1\left[#2\right]}}
+\newcommand{\funf}[2]{\ensuremath{#1\flatbrak{#2}}}
+\newcommand{\funt}[2]{\ensuremath{#1\tuple{#2}}}
 \newcommand{\funmf}[2]{\funf{\mbox{#1}}{#2}}
+\newcommand{\funmt}[2]{\funt{\mbox{#1}}{#2}}
 
 \newcommand{\sqnc}[3]{\ensuremath{#1,#2,\ldots,#3}}
 

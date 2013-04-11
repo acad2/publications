@@ -1598,7 +1598,7 @@ $\#$	&0	&2	&2	&2	&1	&1	&1	&0	&9\\
 \caption{Functionele-eenhedentabel van het leidend voorbeeld (zie figuur \ref{fig:asmSqrt})}
 \label{tbl:functionalunittableexample}
 \end{table}
-De enige potenti\"ele moeilijkheid aan het opstellen van deze tabel is de definitie van ``type functionele eenheid''. Men kan zich afvragen of bijvoorbeeld een shift over 3 bits bijvoorbeeld tot hetzelfde type behoort als een shift over 1 bit. In geval van twijfel kan het geen kwaad om een onderscheid te maken (en dus een rij in de tabel te voorzien voor $\shr1$ en $\shr3$). Als algemene definitie kunnen we stellen dat twee functionele eenheden tot hetzelfde type behoren wanneer we hardware kunnen voorzien die beide operaties op hetzelfde component uitvoert. Indien we dus beslissen om de shift te implementeren met behulp van de verbindingen, is een shift over drie bits een ander operatie dan een shift over 1 bit. Wanneer we echter met een schuifregister werken, kunnen beide operaties op hetzelfde schuifregister worden uitgevoerd.
+De enige potenti\"ele moeilijkheid aan het opstellen van deze tabel is de definitie van ``type functionele eenheid''. Men kan zich afvragen of bijvoorbeeld een shift over 3 bits bijvoorbeeld tot hetzelfde type behoort als een shift over 1 bit. In geval van twijfel kan het geen kwaad om een onderscheid te maken (en dus een rij in de tabel te voorzien voor $\mbox{shr1}$ en $\mbox{shr3}$). Als algemene definitie kunnen we stellen dat twee functionele eenheden tot hetzelfde type behoren wanneer we hardware kunnen voorzien die beide operaties op hetzelfde component uitvoert. Indien we dus beslissen om de shift te implementeren met behulp van de verbindingen, is een shift over drie bits een ander operatie dan een shift over 1 bit. Wanneer we echter met een schuifregister werken, kunnen beide operaties op hetzelfde schuifregister worden uitgevoerd.
 \paragraph{Verbindingentabel, Invoer- en uitvoertabellen}
 Een andere tabel is de zogenaamde \termen{verbindingentabel}. Deze tabel bevat horizontaal de variabelen, en verticaal de functionele eenheden (niet verwarren met ``type functionele eenheid''). In een cel plaatsen we een ``I'' wanneer de variabele als invoer dient voor de functionele eenheid, en ``O'' wanneer het resultaat van deze functionele eenheid wordt weggeschreven in de variabele. We gaan er hier altijd van uit dat we in de verschillende toestanden verschillende functionele eenheden gebruiken. Hierdoor ligt het aantal functionele eenheden in deze tabel meestal hoger dan het uiteindelijke aantal functionele eenheden in de implementatie. In deze cursus zullen we de functionele eenheden dan ook nummeren. Zo maken we in toestand $S_1$ gebruik van twee functionele eenheden die de absolute waarde berekenen: abs1 en abs2. Hierbij zorgen $t_1$ en $t_2$ respectievelijk voor de invoer bij abs1 en abs2. De resultaten worden weggeschreven naar respectievelijk $t_3$ en $t_4$. Daarom noteren we in de tabel bij 
 cellen \brak{t_1,\mbox{abs1}} en \brak{t_2,\mbox{abs2}} een ``I'' en in cellen \brak{t_3,\mbox{abs1}} en \brak{t_4,\mbox{abs2}} een ``O''. Indien we dit voor alle toestanden doen, bekomen we tabel \ref{tbl:connectiontableexample}.
@@ -1696,7 +1696,7 @@ max2	&	&	&	&$\bullet$&	&	&	&	&	&$\bullet$&	&	&	&	&	&	&	&	&$\bullet$
 \label{tbl:inputtableexample}
 \end{table}
 We zetten hier de variabelen op de horizontale as, en de functionele eenheden op de verticale as. Variabelen die aan geen enkele functionele eenheid bijdragen hebben we weggelaten uit de kolommen: bijvoorbeeld variabele $t_1$ is nergens verbonden met een ingang $I_2$, bijgevolg staat deze ook niet in dat deel van de tabel. Het weglaten van deze kolommen is vanzelfsprekend optioneel.
-\paragraph{Opstellen van een compatibiliteitsgrafe}
+\paragraph{Onsamenvoegbaarheid en Prioriteit}
 Nu we deze tabellen hebben opgesteld, kunnen we met het echte werk beginnen: het samenvoegen van registers. Een eerste probleem die we moeten oplossen is bepalen wanneer twee variabelen eenzelfde register kunnen delen. Allereerst kunnen we opmerken dat een variabele eigenlijk niet gebonden is aan een register: we zouden bijvoorbeeld dezelfde variabele in de ene toestand in register 1 kunnen bewaren en de andere toestand in register 2. Dit kan er toe leiden dat we inderdaad tot zeer compacte configuraties komen, maar in de meeste gevallen, maakt het het optimaliseren hopeloos ingewikkeld. Daarom gebruiken we doorgaans de vuistregel:
 \begin{quote}
 We kennen een variabele toe aan strikt \'e\'en register.
@@ -1748,6 +1748,33 @@ De \mbox{Verbindingen}-set hebben we eigenlijk al opgesteld en kunnen we bekijke
 \mbox{prioriteit}\brak{t_5,t_{11}}=1&\mbox{prioriteit}\brak{t_7,t_9}=1&\mbox{prioriteit}\brak{t_9,t_{10}}=1
 \end{array}
 \end{equation}
+\paragraph{Opstellen van een compatibiliteitsgraaf}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[auto,node distance=2.8cm]
+\setcounter{tmpC}{0}
+\foreach \n/\t/\p in {t1/$t_1$/,t2/$t_2$/{below right of=t1},t3/$t_3$/right of=t1,t4/$t_4$/below of=t3,t11/$t_{11}$/right of=t3,t10/$t_{10}$/below of=t11,t5/$t_5$/right of=t11,t9/$t_9$/below of=t5,t7/$t_7$/right of=t9,t8/$t_8$/right of=t7,t6/$t_6$/above of=t8} {
+  \node[draw=black,xshift=\arabic{tmpC} cm,minimal width=1 cm, minimal height=1cm,circle,\p] (\n) {\t};
+  \addtocounter{tmpC}{1}
+}
+\foreach \a/\b/\o in {t1/t2/,t3/t4/,t5/t10/,t5/t9/,t5/t7/,t5/t8/,t5/t6/,t7/t8/,t8/t9/bend left} {
+  \path [dashed] (\a) edge [\o] (\b);
+}
+\foreach \a/\b/\t/\o in {t3/t5/1/bend left,t11/t5/1/,t4/t10/1/,t10/t9/1/,t9/t7/1/} {
+  \path (\a) edge [\o] node {\t} (\b);
+}
+% \foreach \tim/\off/\vars in {1/t5/,1/t7/,1/t8/,2/t5/{t3,t11},2/t8/{t6,t8},2/t7/{t4,t9,t10},3/t5/{t1,t3,t11},3/t7/{t2,t4,t9,t10}} {
+%   \node[fit=(\off),inner sep=5pt] (fitnode) {};
+%   \foreach \var in \vars {
+%     \node[fit=(\var),inner sep=5pt] (thick\var) {};
+%     \node[fit=(fitnode) (thick\var),inner sep=0pt] (fitnode) {};
+%   }
+%   \node [fit=(fitnode),inner sep=0pt,draw=dashed,rectangle,black] {};
+% }
+\end{tikzpicture}
+\caption{De evolutie van de compatibiliteitsgraaf}
+\label{fig:asmSqrtCompatibilityGraph}
+\end{figure}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
