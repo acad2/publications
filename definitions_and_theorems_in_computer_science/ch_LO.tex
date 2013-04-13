@@ -1041,6 +1041,40 @@ For a pair of $r$-descriptions $D_1=\accol{\tuple{\varphi,\accol{\delta}}}$ and 
 \cite{conf/ijcai/Walther93}
 \end{defi}
 
+\begin{defi}[Order relation-closure of a program]
+Given a program $\calP=\tuple{\Pi,\calN,<}$. \fun{\calP}{<^+} is the \term[Order relation-closure of a program]{$<$-closure of $\calP$} \iffTx{} \fun{\calP}{<^+} is the smallest set containing \fun{\calP}{<} and closed under transitivity.
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Rule defeated by an extended logic program]
+Let $\Pi$ be an extended logic program and $r$ a rule with the form $L_0\leftarrow L_1,L_2,\ldots L_m,\neg L_{m+1},\neg L_{m+2},\ldots,\neg L_n$ ($r$ does not necessarily belongs to $\Pi$). \term[Rule defeated by an extended logic program]{Rule $r$ is defeated by $\Pi$} \iffTx{} \fanTx{} answer set \funm{Ans}{\Pi} of $\Pi$, \teTx{} some $L_i\in\funm{Ans}{\Pi}$, where $m+1\leq i\leq n$.
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Reduct of a prioritized extended logic program with respect to an order relation]
+Let $\calP=\tuple{\Pi,\calN,<}$ be a prioritized extended logic program. We define a \term[Reduct of a prioritized extended logic program with respect to an order relation]{reduct of $\calP$ with respect to $<$}, denoted as $\calP^{<}$, as follows:
+\begin{enumerate}
+ \item $\Pi_0=\Pi$,
+ \item $\Pi_i=\Pi_{i-1}\setminus\accol{r_1,r_2,\ldots,r_k|\mbox{\teTx{} }r\in\Pi_{i-1}\mbox{ \stTx{} }\fun{\calN}{r}<\fun{\calN}{r_i}\in\fun{\calP}{<^+}\mbox{ with }i=1,2,\ldots,k\mbox{ and }r_1,r_2,\ldots,r_k\mbox{ are defeated by }\Pi_{i-1}\setminus\accol{r_1,r_2,\ldots,r_k}}$,
+ \item $\calP^<=\displaystyle\cap_{i=0}^{\infty}\Pi_i$.
+\end{enumerate}
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Answer set of a prioritized logic program]
+Let $\calP=\tuple{\Pi,\calN,<}$ be a prioritized logic program and $\mbox{Lit}$ the set of all ground literals in the language of $\calP$. \fanTx{} subset $S$ of $\mbox{Lit}$, $S$ is an \term[Answer set of a prioritized logic program]{answer set of $\calP$}, denoted as $\fun{\mbox{Ans}^P}{\calP}$, \iffTx{} $S=\funm{Ans}{\calP^<}$.
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Concrete domain, Domain of a concrete domain, Admissible concrete domain]
+A \term{concrete domain} $\calD$ is a pair \tuple{\Delta_{\calD},\Phi_{\calD}} where $\Delta_{\calD}$ is a set called the \term[Domain of the concrete domain]{domain}, and $\Phi_{\calD}$ is a set of predicate names. Each predicate $P$ in $\Phi_{\calD}$ is associated with an arity $n$ and an $n$-ary predicate $P^{\calD}\subseteq\Delta_{\calD}^n$. A concrete domain is called \term[Admissible concrete domain]{admissible} \iffTx{}:
+\begin{enumerate}
+ \item the set of its predicate names is closed under negation and contains a name $T_{\calD}$ for $\Delta_{\calD}$, and
+ \item the satisfiability problem for finite conjunctions of predicates is decidable.
+\end{enumerate}
+\cite{conf/ijcai/Lutz99}
+\end{defi}
+
 \subsection{Logical Filtering}
 
 \begin{defi}[Logical filtering semantics of a sequence of actions and observations]
