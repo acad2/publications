@@ -950,11 +950,129 @@ Suppose that we are given a rewrite system $R$ and a test set \fun{S}{R}. Then a
 \end{defi}
 
 \begin{defi}[Case rewriting]
-Lct $R$ be a rewrite system and $C\equiv\brak{a=b}^{\epsilon}\vee r$ be a clause. We define $G$ as the set $\accol{\tuple{\funf{a}{d\sigma}_u,P\sigma}; \mbox{\teTx{} }P\Rightarrow g\rightarrow d\mbox{ in}R,\mbox{a position }u\mbox{ in }a\mbox{ \stTx{} }a/u=g\sigma, g\sigma\mbox{ is R-irreducible and does not contain an inductive variable}}$. Then \funm{Case\_rewriting}{\brak{a=b}^{\epsilon},r} is the following set of clauses:
+Let $R$ be a rewrite system and $C\equiv\brak{a=b}^{\epsilon}\vee r$ be a clause. We define $G$ as the set $\accol{\tuple{\funf{a}{d\sigma}_u,P\sigma}; \mbox{\teTx{} }P\Rightarrow g\rightarrow d\mbox{ in}R,\mbox{a position }u\mbox{ in }a\mbox{ \stTx{} }a/u=g\sigma, g\sigma\mbox{ is R-irreducible and does not contain an inductive variable}}$. Then \funm{Case\_rewriting}{\brak{a=b}^{\epsilon},r} is the following set of clauses:
 \begin{equation}
 \accol{\neg P\vee\brak{a'=b}^{\epsilon}\vee r; \tuple{a',P}\in G}\cup\accol{\displaystyle\vee_{\tuple{a',P}\in G}P}
 \end{equation}
 \cite{conf/ijcai/BouhoulaR93}
+\end{defi}
+
+\begin{defi}[Separated union of $r$-descriptions]
+For a pair of $r$-descriptions $D_1=\accol{\tuple{\varphi_1,\Delta_1},\tuple{\varphi_2,\Delta_2},\ldots,\tuple{\varphi_k,\Delta_k}}$ and $D_2=\accol{\tuple{\eta_1,\Theta_1},\tuple{\eta_2,\Theta_2},\ldots,\tuple{\eta_h,\Theta_h}}$, the \term[Separated union of $r$-descriptions]{separated union $D_1\oplus D_2$} of $D_1$ and $D_2$ is the smallest $r$-description such that for each atomic $r$-description $\tuple{\varphi_i,\Delta_i}\in D_1$ and each atomic $r$-description $\tuple{\eta_j,\Theta_j}\in D_2$:
+\begin{enumerate}
+ \item $\tuple{\varphi_i\wedge\eta_0,\Delta_i}\in D_1\oplus D_2$;
+ \item $\tuple{\varphi_0\wedge\eta_j,\Theta_j}\in D_1\oplus D_2$; and
+ \item $\tuple{\varphi_i\wedge\eta_j,\Delta_i\cup\Theta_j}\in D_1\oplus D_2$;
+\end{enumerate}
+where $\varphi_0$ abbreviates $\neg\varphi_1\wedge\neg\varphi_2\wedge\ldots\wedge\neg\varphi_k$ and $\eta_0$ abbreviates $\neg\eta_1\wedge\neg\eta_2\wedge\ldots\wedge\neg\eta_h$.
+\cite{conf/ijcai/Walther93}
+\end{defi}
+
+\begin{defi}[Relation quasi-commutes over another relation]
+For a pair of relations $<_1$ and $<_2$ on some set $S$. \term[Relation quasi-commutes over another relation]{$<_1$ quasi-commutes over $<_2$} \iffTx{} \faTx{} $q,t,r\in S$ with $q<_2t<_1r$ some $t'\in S$ exists such that $q<_{1\cup2}^{\star}t'<_2r$ (see figure \ref{fig:quasiCommutesRelation}), where $<_{1\cup2}^{\star}$ denotes the reflexive and transitive closure of $<_1\cup<_2$.
+\cite{conf/ijcai/Walther93}
+\end{defi}
+
+\begin{figure}[hbt]
+\centering
+\subfigure[Quasi-commutation]{\begin{tikzpicture}
+\node (q) at (0,3) {$q$};
+\node (t2) at (3,3) {$t'$};
+\node (t) at (0,0) {$t$};
+\node (r) at (3,0) {$r$};
+\draw[->] (r) to node[midway,below] {$<_1$} (t);
+\draw[dashed,->] (r) to node[midway,right] {$<_2$} (t2);
+\draw[->] (t) to node[midway,left] {$<_2$} (q);
+\draw[dashed,->] (t2) to node[midway,above] {$\brak{<_1\cup<_2}^{\star}$} (q);
+\end{tikzpicture}\label{fig:quasiCommutesRelation}}
+\subfigure[$\Lambda$-commutation]{\begin{tikzpicture}
+\node (q) at (0,3) {$q$};
+\node (t2) at (3,3) {$t'$};
+\node (t) at (0,0) {$t$};
+\node (r) at (3,0) {$r$};
+\draw[->] (r) to node[midway,below] {$<_1$} (t);
+\draw[dashed,->] (r) to node[midway,right] {$<_2$} (t2);
+\draw[->] (t) to node[midway,left] {$<_2$} (q);
+\draw[dashed,->] (t2) to node[midway,above] {$<_{\Lambda}$} (q);
+\end{tikzpicture}\label{fig:lambdaCommutesRelation}}
+\subfigure[$\varepsilon$-commutation]{\begin{tikzpicture}
+\node (q) at (0,3) {$q$};
+\node (t) at (0,0) {$t$};
+\node (r) at (3,0) {$r$};
+\draw[->] (r) to node[midway,below] {$<_1$} (t);
+\draw[->] (t) to node[midway,left] {$<_2$} (q);
+\draw[dashed,->] (r) to node[midway,above] {$<_2$} (q);
+\end{tikzpicture}\label{fig:epsilonCommutesRelation}}
+\subfigure[$1$-commutation]{\begin{tikzpicture}
+\node (q) at (0,3) {$q$};
+\node (t2) at (3,3) {$t'$};
+\node (t) at (0,0) {$t$};
+\node (r) at (3,0) {$r$};
+\draw[->] (r) to node[midway,below] {$<_1$} (t);
+\draw[dashed,->] (r) to node[midway,right] {$<_2$} (t2);
+\draw[->] (t) to node[midway,left] {$<_2$} (q);
+\draw[dashed,->] (t2) to node[midway,above] {$<_1$} (q);
+\end{tikzpicture}\label{fig:oneCommutesRelation}}
+\caption{Different types of quasi-commutation.}
+\end{figure}
+
+\begin{defi}[Relation $\Lambda$-commutes over another relation]
+For a pair of relations $<_1$ and $<_2$ on some set $S$. \term[Relation $\Lambda$-commutes over another relation]{$<_1$ quasi-commutes over $<_2$ with type $\Lambda$} \iffTx{} \faTx{} $q,t,r\in S$ with $q<_2t<_1r$ some $t'\in S$ exists such that $q<_{\Lambda}t'<_2r$, where $\Lambda$ is some finite string over \accol{1,2} (see figure \ref{fig:lambdaCommutesRelation}), $a<_{\Lambda\circ d}b$ stands for ``some $c\in S$ exists \stTx{} $a<_{\Lambda}c<_db$'' and $a<_{\varepsilon}b$ means $a = b$ (where $\varepsilon$ is the empty string, see figure \ref{fig:epsilonCommutesRelation}).
+\cite{conf/ijcai/Walther93}
+\end{defi}
+
+\begin{defi}[$r$-description quasi-commutes over another $r$-description with type $1$]
+For a pair of $r$-descriptions $D_1=\accol{\tuple{\varphi,\accol{\delta}}}$ and $D_1=\accol{\tuple{\eta,\accol{\theta}}}$, \term[$r$-description quasi-commutes over another $r$-description with type $1$]{$D_1$ quasi-commutes over $D_2$ with type $1$} \tabbrev{$r$-description quasi-commutes over another $r$-description with type $1$}{$1$-commutes} \iffTx{} \fsTx{} variables $x^{\star}$:
+\begin{enumerate}
+ \item $\fun{rV}{D_1}=\funm{Dom}{\delta}=\fun{rV}{D_2}=\funm{Dom}{\theta}=x^{\star}$,
+ \item $\flatbrak{\forall x^{\star}.\varphi\wedge\fun{\delta}{\eta}\rightarrow\eta\wedge\fun{\theta}{\varphi}}\in\mbox{Th}_{\mbox{Ind}}$, and
+ \item $\flatbrak{\forall x^{\star}.\varphi\wedge\fun{\delta}{\eta}\rightarrow\displaystyle\wedge_{x\in x^{\star}}\fun{\theta}{\fun{\delta}{x}}=\fun{\delta}{\fun{\theta}{x}}}\in\mbox{Th}_{\mbox{Ind}}$.
+\end{enumerate}
+\cite{conf/ijcai/Walther93}
+\end{defi}
+
+\begin{defi}[$r$-description quasi-commutes over another $r$-description with type $\varepsilon$]
+For a pair of $r$-descriptions $D_1=\accol{\tuple{\varphi,\accol{\delta}}}$ and $D_1=\accol{\tuple{\eta,\accol{\theta}}}$, \term[$r$-description quasi-commutes over another $r$-description with type $\varepsilon$]{$D_1$ quasi-commutes over $D_2$ with type $\varepsilon$} \tabbrev{$r$-description quasi-commutes over another $r$-description with type $\varepsilon$}{$\varepsilon$-commutes} \iffTx{} for $x^{\star}=\fun{rV}{D_1}=\fun{rV}{D_2}$:
+\begin{enumerate}
+ \item $\mbox{all variables in }\eta\subseteq\funm{Dom}{\delta}$,
+ \item $\flatbrak{\forall x^{\star}.\varphi\wedge\fun{\delta}{\eta}\rightarrow\eta}\in\mbox{Th}_{\mbox{Ind}}$, and
+ \item $\flatbrak{\forall x^{\star}.\varphi\wedge\fun{\delta}{\eta}\rightarrow\displaystyle\wedge_{x\in\funm{Dom}{\theta}}\fun{\theta}{\fun{\delta}{x}}=\fun{\theta}{x}}\in\mbox{Th}_{\mbox{Ind}}$.
+\end{enumerate}
+\cite{conf/ijcai/Walther93}
+\end{defi}
+
+\begin{defi}[Order relation-closure of a program]
+Given a program $\calP=\tuple{\Pi,\calN,<}$. \fun{\calP}{<^+} is the \term[Order relation-closure of a program]{$<$-closure of $\calP$} \iffTx{} \fun{\calP}{<^+} is the smallest set containing \fun{\calP}{<} and closed under transitivity.
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Rule defeated by an extended logic program]
+Let $\Pi$ be an extended logic program and $r$ a rule with the form $L_0\leftarrow L_1,L_2,\ldots L_m,\neg L_{m+1},\neg L_{m+2},\ldots,\neg L_n$ ($r$ does not necessarily belongs to $\Pi$). \term[Rule defeated by an extended logic program]{Rule $r$ is defeated by $\Pi$} \iffTx{} \fanTx{} answer set \funm{Ans}{\Pi} of $\Pi$, \teTx{} some $L_i\in\funm{Ans}{\Pi}$, where $m+1\leq i\leq n$.
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Reduct of a prioritized extended logic program with respect to an order relation]
+Let $\calP=\tuple{\Pi,\calN,<}$ be a prioritized extended logic program. We define a \term[Reduct of a prioritized extended logic program with respect to an order relation]{reduct of $\calP$ with respect to $<$}, denoted as $\calP^{<}$, as follows:
+\begin{enumerate}
+ \item $\Pi_0=\Pi$,
+ \item $\Pi_i=\Pi_{i-1}\setminus\accol{r_1,r_2,\ldots,r_k|\mbox{\teTx{} }r\in\Pi_{i-1}\mbox{ \stTx{} }\fun{\calN}{r}<\fun{\calN}{r_i}\in\fun{\calP}{<^+}\mbox{ with }i=1,2,\ldots,k\mbox{ and }r_1,r_2,\ldots,r_k\mbox{ are defeated by }\Pi_{i-1}\setminus\accol{r_1,r_2,\ldots,r_k}}$,
+ \item $\calP^<=\displaystyle\cap_{i=0}^{\infty}\Pi_i$.
+\end{enumerate}
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Answer set of a prioritized logic program]
+Let $\calP=\tuple{\Pi,\calN,<}$ be a prioritized logic program and $\mbox{Lit}$ the set of all ground literals in the language of $\calP$. \fanTx{} subset $S$ of $\mbox{Lit}$, $S$ is an \term[Answer set of a prioritized logic program]{answer set of $\calP$}, denoted as $\fun{\mbox{Ans}^P}{\calP}$, \iffTx{} $S=\funm{Ans}{\calP^<}$.
+\cite{conf/ijcai/ZhangF97}
+\end{defi}
+
+\begin{defi}[Concrete domain, Domain of a concrete domain, Admissible concrete domain]
+A \term{concrete domain} $\calD$ is a pair \tuple{\Delta_{\calD},\Phi_{\calD}} where $\Delta_{\calD}$ is a set called the \term[Domain of the concrete domain]{domain}, and $\Phi_{\calD}$ is a set of predicate names. Each predicate $P$ in $\Phi_{\calD}$ is associated with an arity $n$ and an $n$-ary predicate $P^{\calD}\subseteq\Delta_{\calD}^n$. A concrete domain is called \term[Admissible concrete domain]{admissible} \iffTx{}:
+\begin{enumerate}
+ \item the set of its predicate names is closed under negation and contains a name $T_{\calD}$ for $\Delta_{\calD}$, and
+ \item the satisfiability problem for finite conjunctions of predicates is decidable.
+\end{enumerate}
+\cite{conf/ijcai/Lutz99}
 \end{defi}
 
 \subsection{Logical Filtering}
