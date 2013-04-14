@@ -1075,6 +1075,93 @@ A \term{concrete domain} $\calD$ is a pair \tuple{\Delta_{\calD},\Phi_{\calD}} w
 \cite{conf/ijcai/Lutz99}
 \end{defi}
 
+\begin{defi}[Feature chain, Concept, Negation as concept, Conjunction as concept, Disjunction as concept, Value restriction as concept, Exists restriction as concept, Predicate operator as concept, Feature agreement as concept, Feature disagreement as concept]
+Let $C$, $R$, and $F$ be disjoint sets of concept, role, and feature names. A composition $f_1f_2\ldots f_n$ of features is called a \term{feature chain}. Any element of $C$ is a \term{concept}. If $C$ and $D$ are concepts, $R$ is a role or feature, $P\in\Phi_{\calD}$ is a predicate name with arity $n$, and $u_1,u_2,\ldots,u_n$ are feature chains, then the following expressions are also concepts:
+\begin{enumerate}
+ \item $\neg C$ (\term[Negation as concept]{negation}), $C\sqcap D$(\term[Conjunction as concept]{conjunction}), $C\sqcup D$ (\term[Disjunction as concept]{disjunction}), $\forall R.C$ (\term[Value restriction as concept]{value restriction}), $\exists R.C$ (\term[Exists restriction as concept]{exists restriction})
+ \item $\exists u_1,u_2,\ldots,u_n.P$ (\term[Predicate operator as concept]{predicate operator})
+ \item $u_1\downarrow u_2$ (\term[Feature agreement as concept]{feature agreement}), $u_1\uparrow u_2$ (\term[Feature disagreement as concept]{feature disagreement})
+\end{enumerate}
+\label{def:featurechain}
+\cite{conf/ijcai/Lutz99}
+\end{defi}
+
+\begin{defi}[Interpretation, Abstract domain of an interpretation, Interpretation function, Model of a concept, Satisfiable concept, Concept subsumes other concept]
+An \term{interpretation} $\calI$ consists of a set $\Delta_{\calI}$ (the \term[Abstract domain of an interpretation]{abstract domain}) and an \term{interpretation function} $.^{\calI}$. The sets $\Delta_{\calD}$ and $\Delta_{\calD}$ must be disjoint. The interpretation function maps each concept name $C$ to a subset $C^{\calI}$ of $\Delta_{\calI}$, each role name $R$ to a subset $R^{\calI}$ of $\Delta_{\calI}\times\Delta_{\calI}$, and each feature name $f$ to a partial function $f^{\calI}$ from $\Delta_{\calI}$ to $\Delta_{\calD}\cup\Delta_{\calI}$, where $\fun{f^{\calI}}{a}=x$ will be written as $\tuple{a,x}\in f^{\calI}$. If $u=f_1f_2\ldots f_k$ is a feature chain, then $u^{\calI}$ is defined as the composition $f_1^{\calI}\circ f_2^{\calI}\circ\ldots f_k^{\calI}$ of the partial functions $f_1^{\calI},f_2^{\calI},\ldots,f_k^{\calI}$. Let the symbols $C$, $D$, $R$, $P$, and $u_1,u_2,\ldots u_n$ be defined as in \defref{featurechain}. Then the interpretation function can be extended to complex concepts as follows:
+\begin{align}
+\brak{C\sqcap D}^{\calI}&:=C^{\calI}\cap D^{\calI}\\
+\brak{C\sqcup D}^{\calI}&:=C^{\calI}\cup D^{\calI}\\
+\brak{\neg C}^{\calI}&:=\Delta_{\calI}\setminus C^{\calI}\\
+\brak{\exists R.C}^{\calI}&:=\accol{a\in\Delta_{\calI}|\exists b\in\Delta_{\calI}:\tuple{a,b}\in R^{\calI}\wedge b\in C^{\calI}}\\
+\brak{\forall R.C}^{\calI}&:=\accol{a\in\Delta_{\calI}|\forall b:\tuple{a,b}\in R^{\calI}\rightarrow b\in C^{\calI}}\\
+\brak{\exists u_1,u_2\ldots,u_n.P}^{\calI}&:=\accol{a\in\Delta_{\calI}|\exists x_1,x_2,\ldots,x_n\in\Delta_{\calD}:\tuple{a,x_1}\in u_1^{\calI}\wedge\tuple{a,x_2}\in u_2^{\calI}\wedge\ldots\wedge\tuple{a,x_n}\in u_n^{\calI}\wedge\tuple{x_1,x_2,\ldots,x_n}\in P^{\calD}}\\
+\brak{u_1\uparrow u_2}^{\calI}&:=\accol{a\in\Delta_{\calI}|\exists b_1,b_2\in\Delta_{\calI}:b_1\neq b_2\wedge\tuple{a,b_1}\in u_1^{\calI}\wedge\tuple{a,b_2}\in u_2^{\calI}}\\
+\brak{u_1\downarrow u_2}^{\calI}&:=\accol{a\in\Delta_{\calI}|\exists b\in\Delta_{\calI}:\tuple{a,b}\in u_1^{\calI}\wedge\tuple{a,b}\in u_2^{\calI}}
+\end{align}
+An interpretation $\calI$ is a \term{model of a concept} $C$ \iffTx{} $C^{\calI}\neq\emptyset$. A concept $C$ is \term[Satisfiable concept]{satisfiable} \iffTx{} there exists a model $\calI$ of $C$. A concept $C$ \term[Concept subsumes other concept]{subsumes} a concept $D$ (written $D\preceq C$) \iffTx{} $D^{\calI}\subseteq C^{\calI}$ for all interpretations $\calI$.
+\cite{conf/ijcai/Lutz99}
+\end{defi}
+
+% \begin{defi}[Concrete objects, Abstract objects, Assertional axioms, ABox]
+% Let $O_D$ and $O_A$ be disjoint sets of object names. Elements of $O_D$ are called \term{concrete objects} and elements of $O_A$ are called \term{abstract objects}. If $C$, $R$, $f$, and $P$ are defined as in \defref{featurechain}, $a$ and $b$ are elements of $O_A$ and $x_1,x_2,\ldots,x_n$ are elements of $O_D$, then the following expressions are \term{assertional axioms}:
+% \begin{equation}
+% a:C,\tuple{a,b}:R,\tuple{a,b}:f,a\neq b,\tuple{x_1,x_2,\ldots,x_n}:P
+% \end{equation}
+% A finite set of assertional axioms is called an \term{ABox}.
+% An interpretation for the concept language can
+% be extended to the assertional language by mapping
+% every object name from
+% to an element of
+% and every object name from
+% to an element of
+% The unique name assumption is not imposed, i.e.
+% may hold even if
+% and b are distinct ob-
+% ject names. An interpretation satisfies an assertional axiom
+% An interpretation is a model of an ABox A iff it satisfies all
+% assertional axioms in A. An ABox is consistent iff it has a
+% model.
+% \cite{conf/ijcai/Lutz99}
+% \end{defi}
+% 
+% 1\begin{defi}
+% Definition 5. The following completion rules replace a given
+% ABox A nondeterministically by an ABox A''. An ABox.4
+% is said to contain a fork (for a feature/) iff it contains the
+% two axioms
+% and
+% or the two axioms
+% and
+% where
+% and
+% A fork can be
+% eliminated by replacing all occurrences of c in A with b, or
+% of x with y, resp. It is assumed that forks are eliminated as
+% soon as they appear (as part of the rule application) with the
+% proviso that newly generated objects are replaced by older
+% ones and not vice versa. In the following, C and D denote
+% concepts, a role, f a feature, P a predicate name from
+% \cite{conf/ijcai/Lutz99}
+% \end{defi}
+% 
+% 1\begin{defi}
+% Definition 6. Let the same naming conventions be given as
+% in Definition 5. An ABox A is called contradictory if one
+% of the following clash triggers is applicable. If none of the
+% clash triggers is applicable to an ABox A, then A is called
+% clash-free.
+% • Primitive clash:
+% • Feature domain clash:
+% • All domain clash:
+% • Agreement clash:
+% An ABox to which no completion rule is applicable is called
+% complete. An ABox A is called concrete domain satisfiable iff there exists a mapping
+% from
+% . s u c h that
+% is true in
+% \cite{conf/ijcai/Lutz99}
+% \end{defi}
+
 \subsection{Logical Filtering}
 
 \begin{defi}[Logical filtering semantics of a sequence of actions and observations]
