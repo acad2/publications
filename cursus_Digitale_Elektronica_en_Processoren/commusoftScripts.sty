@@ -359,6 +359,21 @@
  (P -| TP) .. (TP);}
 \newcommand{\scpush}[1]{\coordinate (TP) at ($(T)+(0,0.25)$);\coordinate (TPP) at ($(TP)+(0,0.25)$);\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};\draw[->] (P.east) .. controls (P -| TP) and (P -| TP) .. (TP);}
 
+
+%ENVIRONMENT sprocessor
+%used to draw an implementation of the datapad of a special purpose processor
+%variables:	settings a/b/c/d/e/f where
+%				- a is the width of a register
+%				- b is the distance between two registers
+%				- c is the width of a functional unit
+%				- d is the distance between two functional units
+%				- e the distance between two paths of lines
+%				- f the y-distance between the registers and functional units?
+%			variables: comma separated tuples a/b/c/d
+%				- a label for reference and lines
+%				- b text put on the register
+%				- c set and reset options: 0 no set/reset, 1 set, 2 reset, 3 set and reset
+%				- d mux options: the number of input of the linked multiplexer
 \newenvironment{sprocessor}[4][1/3/1.2/1.5/0.25/0.8]{\begin{tikzpicture}
 \foreach \ax/\bx/\cx/\dx/\lns/\ay in {#1} {
   \setcounter{tmpC}{0}
@@ -387,6 +402,7 @@
     \ifthenelse{\isodd{\cc}}{\sprarr{R\x.LDB}}{}
     \ifthenelse{\cc>1}{\sprarr{R\x.CLR}}{}
     \ifthenelse{\mx=2}{\node[mux2to1] (M\x) at (R\x |- 0,1) {};\sprarr{M\x.selin0}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxB{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);}{}
+    \ifthenelse{\mx>2\and\mx<5}{\node[mux4to1] (M\x) at (R\x |- 0,1) {};\sprarr{M\x.selin0}\sprarr{M\x.selin1}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxD{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);\coordinate (RR\x-2) at (M\x.data2);\coordinate (RR\x-3) at (M\x.data3);}{}
     \addtocounter{tmpC}{1}
   }
   \def\xfuo{\tox-0.5*\cx-\dx*\arabic{tmpF}};
