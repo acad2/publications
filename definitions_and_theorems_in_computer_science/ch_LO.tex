@@ -1087,7 +1087,8 @@ Let $C$, $R$, and $F$ be disjoint sets of concept, role, and feature names. A co
 \end{defi}
 
 \begin{defi}[Interpretation, Abstract domain of an interpretation, Interpretation function, Model of a concept, Satisfiable concept, Concept subsumes other concept]
-An \term{interpretation} $\calI$ consists of a set $\Delta_{\calI}$ (the \term[Abstract domain of an interpretation]{abstract domain}) and an \term{interpretation function} $.^{\calI}$. The sets $\Delta_{\calD}$ and $\Delta_{\calD}$ must be disjoint. The interpretation function maps each concept name $C$ to a subset $C^{\calI}$ of $\Delta_{\calI}$, each role name $R$ to a subset $R^{\calI}$ of $\Delta_{\calI}\times\Delta_{\calI}$, and each feature name $f$ to a partial function $f^{\calI}$ from $\Delta_{\calI}$ to $\Delta_{\calD}\cup\Delta_{\calI}$, where $\fun{f^{\calI}}{a}=x$ will be written as $\tuple{a,x}\in f^{\calI}$. If $u=f_1f_2\ldots f_k$ is a feature chain, then $u^{\calI}$ is defined as the composition $f_1^{\calI}\circ f_2^{\calI}\circ\ldots f_k^{\calI}$ of the partial functions $f_1^{\calI},f_2^{\calI},\ldots,f_k^{\calI}$. Let the symbols $C$, $D$, $R$, $P$, and $u_1,u_2,\ldots u_n$ be defined as in \defref{featurechain}. Then the interpretation function can be extended to complex concepts as follows:
+An \term{interpretation} $\calI$ consists of a set $\Delta_{\calI}$ (the \term[Abstract domain of an interpretation]{abstract domain}) and an \term{interpretation function} $.^{\calI}$. The sets $\Delta_{\calD}$ and $\Delta_{\calD}$ must be disjoint. The interpretation function maps each concept name $C$ to a subset $C^{\calI}$ of $\Delta_{\calI}$, each role name $R$ to a subset $R^{\calI}$ of $\Delta_{\calI}\times\Delta_{\calI}$, and each feature name $f$ to a partial function $f^{\calI}$ from $\Delta_{\calI}$ to $\Delta_{\calD}\cup\Delta_{\calI}$, where $\fun{f^{\calI}}{a}=x$ will be written as $\tuple{a,x}\in f^{\calI}$. If $u=f_1f_2\ldots f_k$ is a feature chain, then $u^{\calI}$ is defined as the composition $f_1^{\calI}\circ f_2^{\calI}\circ\ldots f_k^{\calI}$ of the partial functions $f_1^{\calI},f_2^{\calI},\ldots,f_k^{\calI}$. Let the symbols $C$, $D$, $R$, $P$, and $u_1,u_2,\ldots u_n$ be defined as in \defref{featurechain}. Then the interpretation function can be extended to complex concepts as 
+follows:
 \begin{align}
 \brak{C\sqcap D}^{\calI}&:=C^{\calI}\cap D^{\calI}\\
 \brak{C\sqcup D}^{\calI}&:=C^{\calI}\cup D^{\calI}\\
@@ -1102,65 +1103,67 @@ An interpretation $\calI$ is a \term{model of a concept} $C$ \iffTx{} $C^{\calI}
 \cite{conf/ijcai/Lutz99}
 \end{defi}
 
-% \begin{defi}[Concrete objects, Abstract objects, Assertional axioms, ABox]
-% Let $O_D$ and $O_A$ be disjoint sets of object names. Elements of $O_D$ are called \term{concrete objects} and elements of $O_A$ are called \term{abstract objects}. If $C$, $R$, $f$, and $P$ are defined as in \defref{featurechain}, $a$ and $b$ are elements of $O_A$ and $x_1,x_2,\ldots,x_n$ are elements of $O_D$, then the following expressions are \term{assertional axioms}:
-% \begin{equation}
-% a:C,\tuple{a,b}:R,\tuple{a,b}:f,a\neq b,\tuple{x_1,x_2,\ldots,x_n}:P
-% \end{equation}
-% A finite set of assertional axioms is called an \term{ABox}.
-% An interpretation for the concept language can
-% be extended to the assertional language by mapping
-% every object name from
-% to an element of
-% and every object name from
-% to an element of
-% The unique name assumption is not imposed, i.e.
-% may hold even if
-% and b are distinct ob-
-% ject names. An interpretation satisfies an assertional axiom
-% An interpretation is a model of an ABox A iff it satisfies all
-% assertional axioms in A. An ABox is consistent iff it has a
-% model.
-% \cite{conf/ijcai/Lutz99}
-% \end{defi}
-% 
-% 1\begin{defi}
-% Definition 5. The following completion rules replace a given
-% ABox A nondeterministically by an ABox A''. An ABox.4
-% is said to contain a fork (for a feature/) iff it contains the
-% two axioms
-% and
-% or the two axioms
-% and
-% where
-% and
-% A fork can be
-% eliminated by replacing all occurrences of c in A with b, or
-% of x with y, resp. It is assumed that forks are eliminated as
-% soon as they appear (as part of the rule application) with the
-% proviso that newly generated objects are replaced by older
-% ones and not vice versa. In the following, C and D denote
-% concepts, a role, f a feature, P a predicate name from
-% \cite{conf/ijcai/Lutz99}
-% \end{defi}
-% 
-% 1\begin{defi}
-% Definition 6. Let the same naming conventions be given as
-% in Definition 5. An ABox A is called contradictory if one
-% of the following clash triggers is applicable. If none of the
-% clash triggers is applicable to an ABox A, then A is called
-% clash-free.
-% • Primitive clash:
-% • Feature domain clash:
-% • All domain clash:
-% • Agreement clash:
-% An ABox to which no completion rule is applicable is called
-% complete. An ABox A is called concrete domain satisfiable iff there exists a mapping
-% from
-% . s u c h that
-% is true in
-% \cite{conf/ijcai/Lutz99}
-% \end{defi}
+\begin{defi}[Concrete objects, Abstract objects, Assertional axioms, ABox, Interpretation satisfies an assertional axiom, Model of an ABox, Consistent ABox]
+Let $O_D$ and $O_A$ be disjoint sets of object names. Elements of $O_D$ are called \term{concrete objects} and elements of $O_A$ are called \term{abstract objects}. If $C$, $R$, $f$, and $P$ are defined as in \defref{featurechain}, $a$ and $b$ are elements of $O_A$ and $x_1,x_2,\ldots,x_n$ are elements of $O_D$, then the following expressions are \term{assertional axioms}:
+\begin{equation}
+a:C,\tuple{a,b}:R,\tuple{a,b}:f,a\neq b,\tuple{x_1,x_2,\ldots,x_n}:P
+\end{equation}
+A finite set of assertional axioms is called an $\fun{\calA\calL\calC\calF}{\calD}$ \term{ABox}. An interpretation for the concept language can be extended to the assertional language by mapping every object name from $O_A$ to an element of $\Delta_{\calI}$ and every object name from $O_D$ to an element of $\Delta_{\calD}$. The unique name assumption is not imposed, i.e. $a^{\calI}=b^{\calI}$ may hold even if $a$ and $b$ are distinct object names. An \term{interpretation satisfies an assertional axiom}
+\begin{align}
+a:C&\mbox{\iffTx{} }a^{\calI}\in C^{\calI},\\
+\tuple{a,b}:R&\mbox{\iffTx{} }\tuple{a^{\calI},b^{\calI}}\in R^{\calI},\\
+\tuple{a,x}:f&\mbox{\iffTx{} }\tuple{a^{\calI},x^{\calI}}\in f^{\calI},\\
+a\neq b&\mbox{\iffTx{} }a^{\calI}\neq b^{\calI},\\
+\tuple{x_1,x_2,\ldots,x_n}:P&\mbox{\iffTx{} }\tuple{x_1^{\calI},x_2^{\calI},\ldots,x_n^{\calI}}\in P^{\calI}.
+\end{align}
+An interpretation is a \term{model of an ABox} $\calA$ \iffTx{} it satisfies all assertional axioms in $\calA$. An ABox is \term[Consistent ABox]{consistent} \iffTx{} it has a model.
+\cite{conf/ijcai/Lutz99}
+\end{defi}
+
+\begin{defi}[Completion rules, ABox containing a fork, Conjugate rule, (Nondeterministic) disjunction rule, Role exists restriction rule, Feature exists restriction rule, Role value restriction rule, Feature value restriction rule, Predicate exists restriction rule, Agreement rule, Disagreement rule, Generating rule applications, Non-generating rule applications]
+The following \term{completion rules} replace a given ABox $\calA$ nondeterministically by an ABox $\calA'$. An ABox $\calA$ is said to \term[ABox containing a fork]{contain a fork} (for a feature $f$) \iffTx{} it contains the two axioms $\tuple{a,b}:f$ and $\tuple{a,c}:f$ or the two axioms $\tuple{a,x}:f$ and $\tuple{a,y}:f$ where $b,c\in O_A$ and $x,y\in O_D$. A fork can be eliminated by replacing all occurrences of $c$ in $\calA$ with $b$, or of $x$ with $y$, resp. It is assumed that forks are eliminated as soon as they appear (as part of the rule application) with the proviso that newly generated objects are replaced by older ones and not vice versa. In the following, $C$ and $D$ denote concepts, $\hat{R}$ a role, $f$ a feature, $P$ a predicate name from $\Phi_{\calD}$ with arity $n$, $u_1,u_2,\ldots,u_n$ feature chains, $a$ and $b$ objects for $O_A$ and $x_1,x_2,\ldots,x_n$ objects from $O_D$.
+\begin{enumerate}
+ \item $R\sqcap$, The \term{conjugate rule}. If $a:C\sqcap D\in\calA,\accol{a:C,a:D}\not\subseteq\calA$, then $\calA'=\calA\cup\accol{a:C,a;D}$.
+ \item $R\sqcup$, The \term{(nondeterministic) disjunction rule}. If $a:C\sqcup D\in\calA,\accol{a:C,a:D}\cap\calA=\emptyset$, then $\calA'=\calA\cup\accol{a:C}\vee\calA'=\calA\cup\accol{a:D}$.
+ \item $Rr\exists C$, The \term{role exists restriction rule}. If $a:\exists\hat{R}.C\in\calA,\not\exists b\in O_A:\accol{\tuple{a,b}:\hat{R},b:C}\subseteq\calA$, then $\calA'=\calA\cup\accol{\tuple{a,b}:\hat{R},b:C}$ where $b\in O_A$ is fresh in $\calA$.
+ \item $Rf\exists C$, The \term{feature exists restriction rule}. If $a:\exists f.C\in\calA,\not\exists b\in O_A:\accol{\tuple{a,b}:f,b:C}\subseteq\calA$, then $\calA'=\calA\cup\accol{\tuple{a,b}:f,b:C}$ where $b\in O_A$ is fresh in $\calA$.
+ \item $Rr\forall C$, The \term{role value restriction rule}. If $a:\forall\hat{R}.C\in\calA,\exists b\in O_A:\tuple{a,b}:\hat{R}\in\calA\wedge b:C\notin\calA$, then $\calA'=\calA\cup\accol{b:C}$
+ \item $Rf\forall C$, The \term{feature value restriction rule}. If $a:\forall f.C\in\calA,\exists b\in O_A:\tuple{a,b}:f\in\calA\wedge b:C\notin\calA$, then $\calA'=\calA\cup\accol{b:C}$
+ \item $R\exists P$, The \term{predicate exists restriction rule} (may create forks). If $a:\exists u_1,u_2,\ldots,u_n.P\in\calA,\not\exists x_1,x_2,\ldots,x_n\in O_D:\brak{\fun{\mbox{succ}_{\calA}}{a,u_1}=x_1\wedge\fun{\mbox{succ}_{\calA}}{a,u_2}=x_2\wedge\ldots\wedge\wedge\fun{\mbox{succ}_{\calA}}{a,u_n}=x_n\wedge\tuple{x_1,x_2,\ldots,x_n}:P\in\calA}$, then $\calC_0:=\calA\cup\accol{\tuple{x_1,x_2,\ldots,x_n}:P}$ where $x_1\in O_D$ are distinct and fresh in $\calA$. $\calC_1:=\fun{\mbox{chain}_{\calC_0}}{a,x_1,u_1},\calC_2:=\fun{\mbox{chain}_{\calC_1}}{a,x_2,u_2},\ldots,\calC_n:=\fun{\mbox{chain}_{\calC_{n-1}}}{a,x_n,u_n}$ and $\calA'=\displaystyle\cup_{i=0}^n\calC_i$
+ \item $R\downarrow$, The \term{agreement rule} (may create forks). If $a:u_1\downarrow u_2\in\calA,\not\exists b\in O_A:\fun{\mbox{succ}_{\calA}}{a,u_1}=\fun{\mbox{succ}_{\calA}}{a,u_2}=b$ then $\calC=\calA\cup\fun{\mbox{chain}_{\calA}}{a,b,u_1}$ where $b\in O_A$ is fresh in $\calA$. $\calA'=\calC\cup\fun{\mbox{chain}_{\calC}}{a,b,u_2}$.
+ \item $R\uparrow$, The \term{disagreement rule} (may create forks). If $a:u_1\uparrow u_2\in\calA,\not\exists b_1,b_2\in O_A:\brak{\fun{\mbox{succ}_{\calA}}{a,u_1}=b_1\wedge\fun{\mbox{succ}_{\calA}}{a,u_2}=b_2\wedge b_1\neq b_2\in\calA}$ then $\calC=\calA\cup\fun{\mbox{chain}_{\calA}}{a,b_1,u_1}$, $\calA'=\calC\cup\fun{\mbox{chain}_{\calC}}{a,b_2,u_2}\cup\accol{b_1\neq b_2}$ where $b_1b_2\in O_A$ are distinct and fresh in $\calA$.
+\end{enumerate}
+Rule applications that generate objects are called \term[Generating rule applications]{generating}. All other rule applications are called \term[Non-generating rule applications]{non-generating}. All applications of $Rr\exists C$ are generating. Applications of the rules $Rf\exists C$, $R\exists P$, $R\downarrow$, $R\uparrow$ are usually generating but may non-generating if fork elimination takes place.
+\label{def:completionrulesabox}
+\cite{conf/ijcai/Lutz99}
+\end{defi}
+
+\begin{defi}[Concrete domain satisfiable ABox, Contradictory ABox, Clash triggers for an ABox, Primitive clash for an ABox, Feature domain clash for an ABox, All domain clash for an ABox, Agreement clash for an ABox, Complete ABox]
+Let the same naming conventions be given as in \defref{completionrulesabox}.. An ABox $\calA$ is called \term[Concrete domain satisfiable ABox]{concrete domain satisfiable} \iffTx{} \teTx{} a mapping $\delta$ from $O_D$ to $\Delta_{\calD}$ \stTx{} $\displaystyle\wedge_{\tuple{x_1,x_2,\ldots,x_n}:P\in\calA}\tuple{\fun{\delta}{x_1},\fun{\delta}{x_2},\ldots,\fun{\delta}{x_n}}\in P^{\calD}$ is true in $\calD$. An ABox $\calA$ is called \term[Contradictory ABox]{contradictory} if it is not concrete domain satisfiable or one of the following \term[Clash triggers for an ABox]{clash triggers} is applicable:
+\begin{enumerate}
+ \item \term[Primitive clash for an ABox]{Primitive clash}: $\accol{a:C,a:\neg C}\subseteq\calA$
+ \item \term[Feature domain clash for an ABox]{Feature domain clash}: $\accol{\tuple{a,x}:f,\tuple{a,b}:f}\subseteq\calA$
+ \item \term[All domain clash for an ABox]{All domain clash}: $\accol{\tuple{a,x}:f,a\forall f.C}\subseteq\calA$
+ \item \term[Agreement clash for an ABox]{Agreement clash}: $a\neq a\in\calA$
+\end{enumerate}
+An ABox to which no completion rule is applicable is called \term[Complete ABox]{complete}.
+\cite{conf/ijcai/Lutz99}
+\end{defi}
+
+\begin{defi}[Size of a concept, Size of an axiom, Size of an ABox]
+The size $\dabs{C}$ of a concept $C$ is defined inductively. Let $C$ and $D$ be concepts. $A$ a concept name, $R$ a role or feature, $u=f_1f_2\ldots f_k$ a feature chain and let $u_1,u_2,\ldots,u_n$ also be feature chains.
+\begin{equation}
+\group{\dabs{A}=\dabs{\neg A}=1\\
+\dabs{f_1f_2\ldots f_k}=k\\
+\dabs{C\sqcup D}=\dabs{C\sqcap D}=\dabs{C}+\dabs{D}+2\\
+\dabs{\forall R.C}=\dabs{\exists R.C}=\dabs{C}+1\\
+\dabs{\exists u_1,u_2,\ldots,u_n.P}=\dabs{u_1}+\dabs{u_2}+\ldots+\dabs{u_n}+1\\
+\dabs{u_1\downarrow u_2}=\dabs{u_1\uparrow u_2}=\dabs{u_1}+\dabs{u_2}+1}
+\end{equation}
+The \term{size of an axiom} $\alpha$ is \dabs{C} if $\alpha$ is of the form $x:C$ and 1 otherwise. The \term{size of an ABox} $\calA$ is the sum of the sizes of all axioms in $\calA$.
+\cite{conf/ijcai/Lutz99}
+\end{defi}
+
 
 \subsection{Logical Filtering}
 
