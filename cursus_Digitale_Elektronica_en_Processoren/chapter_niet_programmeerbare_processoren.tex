@@ -1811,7 +1811,37 @@ Vervolgens beginnen we met toevoegen. De eerste boog die aan de voorwaarden vold
 \end{equation}
 \end{enumerate}
 \paragraph{Minimalisering}
-
+\begin{figure}[hbt]
+\centering
+%\begin{sprocessor}[0.75/1.25/1.3/1.4/0.25/0.8]{t1/$t_1$/1/1,t2/$t_2$/1/1,t3/$t_3$/1/1,t4/$t_4$/1/1,t5/$t_5$/1/1,t6/$t_6$/1/1,t7/$t_7$/1/1,t8/$t_8$/1/1, t9/$t_9$/1/1,t10/$t_{10}$/1/1,t11/$t_{11}$/1/1}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
+%\begin{sprocessor}[2.75/4.6/1.3/1.4/0.25/0.8]{t1/{$t_1,t_3,t_5,t_{11}$}/1/1,t2/{$t_2,t_4,t_7,t_9,t{10}$}/1/1,t6/{$t_6,t_8$}/1/1}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
+\begin{sprocessor}[2.75/4.6/1.3/1.4/0.25/0.8]{t1/{$t_1$}/1/3,t2/{$t_2$}/1/4,t6/{$t_6$}/1/2}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
+\sprbtf{t1}{abs1}{0};
+\sprbtf{t2}{abs2}{-0.2};
+\sprbtf{t1}{max1}{-0.3};
+\sprbtf{t2}{max1}{0.3};
+\sprbtf{t1}{min}{0};
+\sprbtf{t2}{min}{0.3};
+\sprbtf{t1}{shr3}{0};
+\sprbtf{t6}{shr1}{0};
+\sprbtf{t1}{sub}{-0.2};
+\sprbtf{t2}{sub}{0.2};
+\sprbtf{t6}{add}{-0.2};
+\sprbtf{t2}{add}{0.2};
+\sprbtf{t1}{max2}{-0.3};
+\sprbtf{t2}{max2}{0};
+\spfutr{max2}{t1}{0};
+\spfutr{add}{t2}{0};
+\spfutr{sub}{t2}{1};
+\spfutr{shr1}{t6}{0};
+\spfutr{shr3}{t2}{2};
+\spfutr{min}{t6}{1};
+\spfutr{max1}{t1}{1};
+\spfutr{abs2}{t2}{3};
+\spfutr{abs1}{t1}{2};
+\end{sprocessor}
+\caption{Implementatie van het datapad van het leidend voorbeeld na het minimaliseren van de variabelen.}
+\end{figure}
 \subsubsection{Bewerkingen samenvoegen}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
