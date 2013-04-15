@@ -130,3 +130,106 @@ A \term{locally minimal solution} (or \term{local minimum}) with respect to a ne
 The predictive accuracies of two theories are statistically equivalent then the theory with better explanatory power has \term[Performance comparison]{better performance}. Otherwise the one with higher accuracy has better performance.
 \cite{conf/ijcai/SrinivasanKMS97}
 \end{defi}
+
+\section{Production Systems}
+
+\begin{defi}[Object pattern, Object body, Object instance]
+An \term{object pattern} is an $n$-tuple with an \term{object body}. It has the following format:
+\begin{equation}
+\fun{OP}{x_1,x_2,\ldots,x_n}:\mbox{object body}
+\end{equation}
+where $OP$ is the calss-name of this object pattern and $x_i$ is the value of the $i$-th attribute in $OP$, and $x_i$ must meet some constraint $C_i$. An object body is an associated list composed of object calss and attribute-value pairs. It has the following format:
+\begin{equation}
+\tuple{\mbox{object-class}\ \hat{}\mbox{attr}_1\ \mbox{value}_1\ \hat{}\mbox{attr}_2\ \mbox{value}_2\ \hat{}\ldots\ \hat{}\mbox{attr}_n\ \mbox{value}_n}
+\end{equation}
+where $\mbox{value}_i$ can be a constant or a variable with some constraint. Let \fun{P}{x_1,x_2,\ldots,x_n} be an object body, then we call \fun{P}{c_1,c_2,\ldots,c_n} is an \term{object instance} of $P$, where $c_i$ is a constant and must meet the constraint of $\mbox{value}_i$. Its instance body is
+\begin{equation}
+\tuple{\mbox{object-class}\ \hat{}\mbox{attr}_1\ c_1\ \hat{}\mbox{attr}_2\ c_2\ \hat{}\ldots\ \hat{}\mbox{attr}_n\ c_n}
+\end{equation}
+\fun{I}{P} denotes the set of all possible object instances of object pattern $P$.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Precondition set of a rule]
+The \term[Precondition set of a rule]{precondition set $\mbox{PRESET}_i$ of a rule $i$} is a set of marked object patterns, i.e., the condition elements (positively/negatively referenced) in the left-hand side of rule $i$. If an object pattern $C_j$ is positively referenced, then it will be marked as $+C_j$ in $\mbox{PRESET}_i$; if negatively referenced, then marked as $-C_j$.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Changed set of a rule]
+The \term[Changed set of a rule]{changed set $\mbox{CHANGE}_i$ of a rule $i$} is a set of marked object patterns, i.e., the added or deleted object patterns in the right-hand side of rule $i$. If an object pattern $W_i$ is added by a make action, then it will be marked as $+W_j$ in $\mbox{CHANGE}_j$ ; if deleted by a remove or a modify action, then marked as $-W_j$.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Rule having interference dependency on another rule]
+\term[Rule having interference dependency on another rule]{Rule $r_i$ has an interference dependency on rule $r_j$}\tabbrev{Rule having interference dependency on another rule}{I-DEP} \iffTx{} the set formed by all the naged instances of the changed set of rule $r_i$ and the set formed by all the instances of the precondition set of rule $r_j$ are disjoint. That is,
+\begin{equation}
+\fun{\neg I}{\mbox{CHANGE}_i}\cap\fun{I}{\mbox{PRESET}_j}=\emptyset
+\end{equation}
+Let IN be the set formed as follows:
+\begin{equation}
+\mbox{IN}=\accol{p|p\in\mbox{PRESET}_j,\fun{I}{p}\cap\fun{\neg I}{\mbox{CHANGE}_i}=\emptyset}
+\end{equation}
+Where $\fun{\neg I}{\mbox{CHANGE}_i}$ means to negate the elements in $\fun{I}{\mbox{CHANGE}_i}$, i.e., \funm{added}{\mbox{deleted}} object pattern will become \funm{deleted}{\mbox{added}}. If rule $r_i$ has an inference dependency on rule $r_j$ \wrtTx{} the set $IN$, then in the i-dependency augmented digraph, there exists one subdigraph shown in figure \ref{fig:subdigraphin}.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{figure}[hbt]
+\centering
+\subfigure[Inference dependency]{\begin{tikzpicture}
+\node (ri) at (0,0) {$r_i$};
+\node (rj) at (2,0) {$r_j$};
+\draw (ri) to node[above,midway] {$IN$} (rj);
+\end{tikzpicture}
+\label{fig:subdigraphin}}
+\subfigure[Input-output]{\begin{tikzpicture}
+\node (ri) at (0,0) {$r_i$};
+\node (rj) at (2,0) {$r_j$};
+\draw (ri) to node[above,midway] {$IO$} (rj);
+\end{tikzpicture}
+\label{fig:subdigraphio}}
+\caption{Subdigraphs in the i-dependency and io-dependency augmented digraph.}
+\end{figure}
+
+
+\begin{defi}[Rule having input-output dependency on another rule \wrtTx{} a set]
+\term[Rule having input-output dependency on another rule \wrtTx{} a set]{Rule $r_i$ has an input-output dependency on rule $r_j$ \wrtTx{} a set $IO$}\tabbrev{Rule having input-output dependency on another rule \wrtTx{} a set}{IO-DEP} \iffTx{}
+\begin{equation}
+\fun{I}{\mbox{CHANGE}_i}\cap\fun{I}{\mbox{PRESET}_j}=\emptyset
+\end{equation}
+Where $IO=\accol{p|p\in\mbox{PRESET}_j\wedge\fun{I}{P}\cap\fun{I}{\mbox{CHANGE}_i}=\emptyset}$. If rule $r_i$ has an input-output dependency on rule $r_j$ \wrtTx{} the set $IO$, then in the io-dependency augmented digraph, there exists one subdigraph shown in figure \ref{fig:subdigraphio}.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Following rule set of a rule]
+The \term{following rule set of a rule} $r$, \funm{Follow}{r}, is the set of all rules that are reachable from rule $r$ in the io-dependency augmented digraph unioned with the rule $r$ itself.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Descent rule of another rule]
+If rule $r\in\funm{Follow}{r_i}$, then we call rule $r$ a \term{descent rule} of $r_i$.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Rule having an inference relation on another rule]
+\term[Rule having an inference relation on another rule]{Rule $r_i$ has an inference relation on rule $r_j$} \tabbrev{Rule having an inference relation on another rule}{I-R} if there exists at least one rule $r\in\funm{Follow}{r_i}$ \stTx{} rule $r$ has an I-DEP on rule $r_j$ or rule $r_j$ has an I-DEP on rule $r$.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Derivation step, Derivation sequence]
+Let $G_0$ be a set of object instantiations. We call $G_0\rightarrow^r G_1$ a \term{derivation step} if:
+\begin{enumerate}
+ \item for all $p\in\mbox{PRESET}_r$, if $p$ is marked $+$ and there exists one element $x$ of \fun{I}{p}, \stTx{} $x\in G_0$, or if $p$ is marked $-$, and \faTx{} $x$ in \fun{I}{p}, $x$ is not in $G_0$, and
+ \item $G_1=G_0+\fun{A}{r}-\fun{D}{r}$ where \fun{A}{r} is the set of all object instances added by rule $r$, and \fun{D}{r} is the set of all object instances deleted by rule $r$. And let \fun{ILHS}{r} be the set of positive marked object instances, then \fun{D}{r} is a subset of \fun{ILHS}{r}.
+\end{enumerate}
+If $G_0\rightarrow^{r_1}G_1\rightarrow^{r_2}\ldots\rightarrow^{r_n}G_n$ we call $r_1\rightarrow r_2\rightarrow\ldots\rightarrow r_n$ a \term{derivation sequence}, which can be denoted by $r^{\star}$, then: $G_0\rightarrow^{r^{\star}}G_n$.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
+
+\begin{defi}[Equivalent derivation sequences]
+Two derivation sequences $r_1^{\star}$ and $r_2^{\star}$ are called \term[Equivalent derivation sequences]{equivalent} if:
+\begin{equation}
+G_0\rightarrow^{r_1^{\star}}G_n\wedge G_0\rightarrow^{r_2^{\star}}G_m\wedge G_n=G_m
+\end{equation}
+The relation is denoted as $r_1^{\star}=r_2^{\star}$.
+\cite{conf/ijcai/HsuW89}
+\end{defi}
