@@ -1164,6 +1164,68 @@ The \term{size of an axiom} $\alpha$ is \dabs{C} if $\alpha$ is of the form $x:C
 \cite{conf/ijcai/Lutz99}
 \end{defi}
 
+\begin{defi}
+For $K\in\calK$ and $F\in\calF$, $K'\in K\|F$ \iffTx{}
+\begin{enumerate}
+ \item $K'\subseteq K$
+ \item $F\cup K'$ is consistent, and
+ \item $\forall K''\subseteq K:\brak{K'\subsetneq K''\rightarrow K'\cup F\mbox{ is inconsistent}}$
+\end{enumerate}
+\cite{conf/ijcai/ZhangCZC97}
+\end{defi}
+
+\begin{defi}[Selection function for a set of propositional sentences]
+For any $K\in\calK$, a \term[Selection function for a set of propositional sentences]{selection function for $K$} is a function \funsig{S}{U_K}{2^{\calU_K}} \stTx{}
+\begin{equation}
+\forall H\in U_K:\brak{\fun{S}{H}\subseteq H\wedge\brak{H\neq\empty\rightarrow\fun{S}{H}}}
+\end{equation}
+\cite{conf/ijcai/ZhangCZC97}
+\end{defi}
+
+\begin{defi}[Partial meet contraction over a set of propositional sentences]
+An operation \funsig{K\ominus}{\calF}{\calF} is a \term[Partial meet contraction over a set of propositional sentences]{partial meet contraction over $K$} \iffTx{} \teTx{} a selection function $S$ \stTx{} \fanTx{} $F\in\calF$,
+\begin{equation}
+\fun{K\ominus}{F}=\group{\begin{array}{ll}
+K&\mbox{If $F$ is inconsistent}\\
+\cap\fun{S}{K\|F}&\mbox{otherwise}
+\end{array}}
+\end{equation}
+\cite{conf/ijcai/ZhangCZC97}
+\end{defi}
+
+\begin{defi}[Complete selection function for a set of propositional sentences, Complete partial meet contraction over a set of propositional sentences]
+Let $K\in\calK$. A selection function $S$ for $K$ is \term[Complete selection function for a set of propositional sentences]{complete} if \faTx{} $H\in U_K$
+\begin{equation}
+\fun{S}{H}=\accol{K'\in H:\cap\fun{S}{H}\subseteq K'}
+\end{equation}
+A partial meet contraction function is \term[Complete partial meet contraction over a set of propositional sentences]{complete} if it can be generated from such a selection function.
+\cite{conf/ijcai/ZhangCZC97}
+\end{defi}
+
+\begin{defi}[Rational selection function for a set of propositional sentences, Rational partial meet contraction over a set of propositional sentences, Transitive rational selection function for a set of propositional sentences, Transitive rational partial meet contraction over a set of propositional sentences]
+Let $K\in\calK$. A selection function $S$ for $K$ is \term[Rational selection function for a set of propositional sentences]{rational} when \tiTx{} a relation $\leq$ on $\calU_K$ \stTx{} \fanTx{} $H\in U_K$,
+\begin{equation}
+\fun{S}{H}=\accol{X\in H:\forall Y\in\fun{H}{Y\leq X}}
+\end{equation}
+The meet contraction function generated from such $S$ is called a \term[Rational partial meet contraction over a set of propositional sentences]{rational partial meet contraction function}. If the relation $\leq$ is transitive, we cal $S$ a \term[Transitive rational selection function for a set of propositional sentences]{transitive rational selection function} and the meet contraction function generated from $S$ a \term[Transitive rational partial meet contraction over a set of propositional sentences]{transitive rational partial meet contraction}.
+\cite{conf/ijcai/ZhangCZC97}
+\end{defi}
+
+% \begin{defi}[Selection function for a set of propositional sentences]
+% Definition 4.5 Let E = (K,‘P, <) In my NOP afa belief
+% m K. Deﬁne n contrnctian funchon 9 : IF —~ 7-" aver
+% I\’ an /alluwss for any F E.7
+% \cite{conf/ijcai/ZhangCZC97}
+% \end{defi}
+% 
+% \begin{defi}
+% Definition 4.2 [Zhang.l996]Lrt E = (K,’P, <) be an
+% NIH’ of a brlmf set K. Define a function  :.7" —~ }',
+% rlzllrd NOP rnntr-action over I\', as follows.‘ for any F E
+% 7"
+% \cite{conf/ijcai/ZhangCZC97}
+% \end{defi}
+
 
 \subsection{Logical Filtering}
 
