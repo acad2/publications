@@ -1211,21 +1211,53 @@ The meet contraction function generated from such $S$ is called a \term[Rational
 \cite{conf/ijcai/ZhangCZC97}
 \end{defi}
 
-% \begin{defi}[Selection function for a set of propositional sentences]
-% Definition 4.5 Let E = (K,‘P, <) In my NOP afa belief
-% m K. Deﬁne n contrnctian funchon 9 : IF —~ 7-" aver
-% I\’ an /alluwss for any F E.7
-% \cite{conf/ijcai/ZhangCZC97}
-% \end{defi}
-% 
-% \begin{defi}
-% Definition 4.2 [Zhang.l996]Lrt E = (K,’P, <) be an
-% NIH’ of a brlmf set K. Define a function  :.7" —~ }',
-% rlzllrd NOP rnntr-action over I\', as follows.‘ for any F E
-% 7"
-% \cite{conf/ijcai/ZhangCZC97}
-% \end{defi}
+\begin{defi}[Total-ordered partition of a belief set, Nice-ordered partition of a belief set]
+For any belief set $K$, let $\calP$ be a partial of $K$ and $<$ a total order relation on $\calP$. The triple $\Sigma=\tuple{K,\calP,<}$ is called a \term[Total-ordered partition of a belief set]{Total-ordered partition of $K$} \tabbrev{Total-ordered partition of a belief set}{TOP}. For any $p\in\calP$, if $A\in p$, $p$ is called the rank of $A$, denoted by \fun{b}{A}. A total-ordered partition $\Sigma=\tuple{K,\calP,<}$ is a \term[Nice-ordered partition of a belief set]{nice-ordered partition of $K$} \tabbrev{Nice-ordered partition of a belief set}{NOP}, if it satisfies the following logical constraint:
+\begin{equation}
+\mbox{If }A_1,A_2,\ldots,A_n\vdash B\mbox{, then }\funm{sup}{\accol{\fun{b}{A_1},\fun{b}{A_2},\ldots,\fun{b}{A_n}}}\geq\fun{b}{B}
+\end{equation}
+\cite{conf/ijcai/ZhangCZC97}
+\end{defi}
 
+\begin{defi}[Nice-ordered partition contraction over a belief set]
+Let $\Sigma=\tuple{K,\calP,<}$ be an nice-ordered partition of a belief set $K$. Define a function \funsig{\ominus}{\calF}{\calF}, called \termabbrev[Nice-ordered partition contraction over a belief set]{nice-ordered partition contraction}{NOP-contraction} over $K$, as follows; \faTx{} $F\in\calF$:
+\begin{enumerate}
+ \item If $F\cup K$ is consistent, then $K\ominus F=K$; otherwise
+ \item $B\in K\ominus F$ \iffTx{} $B\in K$ and \teTx{} $A\in K$ \stTx{} $F\vdash\neg A$ and
+ \begin{equation}
+  \forall C\in K:\brak{A\vdash C\wedge F\vdash\neg C\rightarrow \brak{\fun{b}{A\vee B}<\fun{b}{C}\vee\vdash A\vee B}}
+ \end{equation}
+ in particular, when $F$ is finite, then $B\in K\ominus F$ \iffTx{}
+ \begin{equation}
+  B\in K\wedge\fun{b}{\neg\brak{\wedge F}\vee B}<\fun{b}{\neg\brak{\wedge F}}\vee\vdash\neg\brak{\wedge F}\vee B
+ \end{equation}
+\end{enumerate}
+\cite{conf/ijcai/ZhangCZC97}
+\end{defi}
+
+\begin{defi}[$\calA\calL\calC_{\calM}$-model based on a frame, Domain of a $\calA\calL\calC_{\calM}$-model based on a frame, Values of a concept in a world, Values of a role in a world, Truth relation in a $\calA\calL\calC_{\calM}$-model based on a frame, Satisfiable formula]
+An \term{$\calA\cal\calL\calC_{\calM}$-model based on a frame} $\mathfrak{G}=\tuple{W,\vartriangleleft}^2$ is a pair $\mathfrak{M}=\tuple{\mathfrak{G},I}$, in which $I$ is a function associating with each $w\in W$ an $\calA\calL\calC$-model
+\begin{equation}
+\fun{I}{w}=\tuple{\Delta,R_0^{I,w},R_1^{I,w},\ldots,R_n^{I,w},C_0^{I,w},C_1^{I,w},\ldots,C_n^{I,w},a_0^{I,w},a_1^{I,w},\ldots,a_n^{I,w}}
+\end{equation}
+where $\Delta$ is a non-empty set. The \term[Domain of a $\calA\calL\calC_{\calM}$-model based on a frame]{domain} of $\calM$, $R_i^{I,w}$ are binary relations on $\Delta$, $C_i^{I,w}\subseteq\Delta$ and $a_i^{I,w}$ are objects in $\Delta$ such that $a_i^{I,u}=a_i^{I,v}$ \fanTx{} $u,v\in W$. The \tindex{Values of a concept in a world}\term[Values of a role in a world]{values $C^{I,w},R^{I,w}$ of a concept $C$ and a role $R$ in a world $w\in W$}, and the \term[Truth relation in a $\calA\calL\calC_{\calM}$-model based on a frame]{truth-relation $\brak{\calM,W}\vDash\varphi$} (or simply $w\vDash\varphi$) are defined inductively as follows:
+\begin{enumerate}
+ \item $x\brak{\diamond R}^{I,w}y$ \iffTx{} $\exists v\vartriangleright w\ xR^{I,v}y$;
+ \item $x\brak{\square R}^{I,w}y$ \iffTx{} $\forall v\vartriangleright w\ xR^{I,v}y$;
+ \item $x\brak{C\wedge D}^{I,w}=C^{I,w}\cap D^{I,w}$;
+ \item $x\brak{\neg C}^{I,w}=\Delta\setminus C^{I,w}$;
+ \item $x\in\brak{\diamond C}^{I,w}$ \iffTx{} $\exists v\vartriangleright w\ x\in C^{I,v}$;
+ \item $x\in\brak{\exists R.C}^{I,w}$ \iffTx{} $\exists y\in C^{I,w}\ xR^{I,w}y$;
+ \item $w\vDash C=D$ \iffTx{} $C^{I,w}=D^{I,w}$;
+ \item $w\vDash a:C$ \iffTx{} $a^{I,w}\in C^{I,w}$;
+ \item $w\vDash aRb$ \iffTx{} $a^{I,w}R^{I,w}b^{I,w}$;
+ \item $w\vDash\diamond\varphi$ \iffTx{} $\exists v\vartriangleright w\ v\vDash\varphi$;
+ \item $w\vDash\varphi\wedge\psi$ \iffTx{} $w\vDash\varphi$ and $w\vDash\psi$;
+ \item $w\vDash\neg\varphi$ \iffTx{} $w\not\vDash\varphi$;
+\end{enumerate}
+A formula $\varphi$ is \term[Satisfiable formula]{satisfiable} if \tiTx{} a model $\calM$ and a world $w$ in $\calM$ \stTx{} $w\vDash\varphi$.
+\cite{conf/ijcai/WolterZ99}
+\end{defi}
 
 \subsection{Logical Filtering}
 
