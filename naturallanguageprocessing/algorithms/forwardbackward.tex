@@ -1,13 +1,28 @@
 \Begin{
-$\beta\gets\alMatrix{T,N+2}$\;
-\ForEach{$q_i\in Q$}{
-  $\beta_{T\,i}\gets a_{i\,F}$\;
-}
-\For{\downfromto{t}{T-1}{1}}{
-  \ForEach{$q_i\in Q$}{
-    $\beta_{t\,i}\gets\displaystyle\sum_{q_j\in Q}\beta_{t+1,j}\cdot a_{i\,j}\cdot\fun{b_{j}}{o_{t+1}}$\;
+\KwIn{$O$: observations of length $T$, $V$: output vocabulary, $Q$ hidden states with $\abs{Q}=N$}
+$\hat{A}\gets\alMatrix{N+2,N+2}$\;
+$\hat{B}\gets\alMatrix{N+2,V}$\;
+\Repeat{$\hat{A}\approx A\wedge \hat{B}\approx B$}{
+  $A\gets\hat{A}$\;
+  $B\gets\hat{B}$\;
+  \tcc{Expectation phase}
+  \For{\fromto{t}{1}{T}}{
+    \ForEach{$q_j\in Q$} {
+      $\gamma_{t\,j}\gets\displaystyle\frac{\alpha_{t\,j}\cdot\beta_{t\,j}}{\Prob{O|A,B}}$\;
+      \ForEach{$q_i\in Q$} {
+	$\xi_{t\,i\,j}\gets\displaystyle\frac{\alpha_{t\,i}\cdot a_{i\,j}\cdot\fun{b_{j}}{o_{t+1}}\cdot\beta_{t+1\,j}}{\alpha_{T\,N}}$\;
+      }
+    }
+  }
+  \tcc{Maximization phase}
+  \ForEach{$q_j\in Q$} {
+    \ForEach{$q_i\in Q$} {
+      $\hat{a}_{i\,j}\gets\displaystyle\frac{\displaystyle\sum_{t=1}^{T-1}\xi_{t\,i\,j}}{\displaystyle\sum_{t=1}^{T-1}\displaystyle\sum_{j=1}^{N}\xi_{t\,i\,j}}$\;
+    }
+    \ForEach{$v_k\in V$} {
+      $\hat{b}_{t\,j}\gets\displaystyle\frac{\displaystyle\sum_{t=1,o_t=v_k}^{T}\gamma_{t\,j}}{\displaystyle\sum_{t=1}^{T}\gamma_{t\,j}}$\;
+    }
   }
 }
-$\beta_{1\,0}\gets\displaystyle\sum_{q_j\in Q}\beta_{1,j}\cdot a_{0\,j}\cdot\fun{b_{j}}{o_1}$\;
-\Return{$\beta_{1\,0}$}
+\Return{$\tupl{A,B}$}
 }

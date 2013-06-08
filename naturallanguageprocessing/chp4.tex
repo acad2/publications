@@ -72,7 +72,7 @@ The \sb{} is a law in probability theory stating that one can calculate the prob
 \end{equation}
 \end{df}
 \begin{df}{Hidden Markov Model}
-A \sb{} is a 5-tuple $\tupl{Q,A,B,q_0,q_F}$. Where $Q=\accl{q_1,q_1,\ldots,q_N}$ is a set of $N$ \flv{state}s. $A$ is a \flv{Transition probability matrix} where each $a_{i\,j}$ represents the probability of moving from state $q_i$ to $q_j$ such that for all $i$, $\sum_{j=1}^{n}{a_{i\,j}}=1$. $o=\accl{o_1,o_2,\ldots,o_T}$ a set of $T$ \flv{Observation}s, each one drawn from a \flv{vocabulary} $V=\accl{v_1,v_2,\ldots,v_V}$. $B_{i\,t}=\fun{b_i}{o_t}$ a sequence of \flv{Observation likelihoods} (also called \flv{Emission probabilities}) each expressing the probability of an observation $o_t$ being generated from state $q_i$. $q_0$ is a special \flv{Start state} not associated with any observations but with transition probabilities $a_{0\,1},a_{0\,2},\ldots,a_{0\,n}$. Finally $q_F$ is called the \flv{End state} of \flv{Final state}. This state is not associated with observations either. The probabilities $a_{1\,F},a_{2\,F},\ldots,a_{n\,F}$ are associated with $q_F$. Popular problems in \sb{} are \flv{Hidden Markov Model Likelihood}, \flv{Hidden Markov Model Training} and \flv{Hidden Markov Model Decoding}. In a \sb{} one does not know the state sequence that the model past through when generating the training examples.
+A \sb{} is a 5-tuple $\tupl{Q,A,B,q_0,q_F}$. Where $Q=\accl{q_1,q_1,\ldots,q_N}$ is a set of $N$ \flv{state}s. $A$ is a \flv{Transition probability matrix} where each $a_{i\,j}$ represents the probability of moving from state $q_i$ to $q_j$ such that for all $i$, $\sum_{j=1}^{n}{a_{i\,j}}=1$. $o=\accl{o_1,o_2,\ldots,o_T}$ a set of $T$ \flv{Observation}s, each one drawn from a \flv{vocabulary} $V=\accl{v_1,v_2,\ldots,v_V}$. $B_{i\,t}=\fun{b_i}{o_t}$ a sequence of \flv{Observation likelihoods} (also called \flv{Emission probabilities}) each expressing the probability of an observation $o_t$ being generated from state $q_i$. $q_0$ is a special \flv{Start state} not associated with any observations but with transition probabilities $a_{0\,1},a_{0\,2},\ldots,a_{0\,n}$. Finally $q_F$ is called the \flv{End state} of \flv{Final state}. This state is not associated with observations either. The probabilities $a_{1\,F},a_{2\,F},\ldots,a_{n\,F}$ are associated with $q_F$. Popular problems in \sb{} are \flv{Hidden Markov Model Likelihood}, \flv{Hidden Markov Model Training} and \flv{Hidden Markov Model Encoding}. In a \sb{} one does not know the state sequence that the model past through when generating the training examples. A \sb{} is basically a model of a \flv{2-gram model}. One can extend this model by using a $N$-dimensional matrix for $A$ and $B$.
 \end{df}
 %TODO: image?
 \begin{df}[Cluster $N$-gram]{Class Based $N$-gram}
@@ -112,8 +112,18 @@ The \sb{} an algorithm that calculates the probability $\beta_{t\,i}$ of seeing 
 \end{df}
 \importalgo{backward}{The \algostyle{Backward}-algorithm}
 \begin{df}{Forward-Backward algorithm}
-
+The \sb{} is an algorithm that calculates the weights in a \flv{Hidden Markov Model}. This task is sometimes called \flv{Hidden Markov Model Training}. It is an \flv{Expectation-Maximization algorithm} where in the \flv{Expectation phase} two tables $\xi$ and $\gamma$ are calculated: $\xi_{t\,i\,j}$ is the probability of being in state $i$ at time $t$ and state $j$ at time $t+1$ given the observation sequence and the model. $\gamma_{t\,j}$ is the probability of being in state $j$ at time $t$. Or more formally:
+\begin{eqnarray}
+\xi_{t\,i\,j}&=&\Prob{\kappa_t=q_i,\kappa_{t+1}=j|O,M}=\displaystyle\frac{\alpha_{t\,i}\cdot a_{i\,j}\cdot\fun{b_{j}}{o_{t+1}}\cdot\beta_{t+1\,j}}{\alpha_{T\,N}}\\
+\gamma_{t\,j}&=&\displaystyle\frac{\alpha_{t\,j}\cdot\beta_{t\,j}}{\Prob{O|A,B}}
+\end{eqnarray}
+In the \flv{Maximization phase} one uses these parameters to update the model by calculating the most probable parameters for $A$ and $B$. \algref{forwardbackward} presents a full listing of this method.
 \end{df}
-\begin{df}{Hidden Markov Model Decoding}
-
+\importalgo{forwardbackward}{The \algostyle{Forward-Backward}-algorithm}
+\begin{df}{Hidden Markov Model Encoding}
+\sb{} is a problem where given a \flv{Hidden Markov Model} $M$ and a sequence of \flv{Observation}s, one wants to find the most likely sequence of states the \flv{Hidden Markov Model} used to generate this sequence. This problem can be solved recursively using the \flv{Viterbi algorithm}.
 \end{df}
+\begin{df}{Viterbi algorithm}
+The \sb{} is an algorithm to calculate the most likely sequence of states given a sequence of observations. The algorithm first calculates this probabilities based of being in a state at time $t-1$. Probabilities are propagated back when the next time step $t$ is taken into consideration. Therefore the algorithm is a variant of the \flv{Max-Product algorithm}.
+\end{df}
+\importalgo{viterbi}{The \algostyle{Viterbi}-algorithm}
