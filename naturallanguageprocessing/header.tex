@@ -21,6 +21,7 @@
 \newcommand{\fbrk}[1]{\ensuremath{\left[#1\right]}}
 \newcommand{\accl}[1]{\ensuremath{\left\{#1\right\}}}
 \newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
+\newcommand{\funm}[2]{\fun{\mbox{#1}}{#2}}
 \newcommand{\funf}[2]{\ensuremath{#1\fbrk{#2}}}
 
 \newcommand{\Pow}[1]{\fun{\mathcal{P}}{#1}}
@@ -29,7 +30,8 @@
 
 \newcommand{\refmoth}[3]{#1~\ref{#2:#3}}
 \newcommand{\tblref}[1]{\refmoth{Table}{tbl}{#1}}
-\newcommand{\imgref}[1]{\refmoth{Image}{img}{#1}}
+\newcommand{\figref}[1]{\refmoth{Figure}{fig}{#1}}
+\newcommand{\algref}[1]{\refmoth{Algorithm}{alg}{#1}}
 
 \newcommand{\newSt}[4]{\node[state,#3](#1)[#4]{#2};}
 \newcommand{\newLo}[3]{\path[->] (#1) edge [loop above,#3] node[above,sloped,midway] {#2} (#1);} 
@@ -56,6 +58,6 @@
 \input{automata/#1.tex}
 \end{tikzpicture}
 \caption{#2.}
-\label{img:#1}
+\label{fig:#1}
 \end{figure}
 }
