@@ -72,7 +72,7 @@ The \sb{} is a law in probability theory stating that one can calculate the prob
 \end{equation}
 \end{df}
 \begin{df}{Hidden Markov Model}
-A \sb{} is a 6-tuple $\tupl{Q,A,O,B,q_0,q_F}$. Where $Q=\accl{q_1,q_1,\ldots,q_N}$ is a set of $N$ \flv{state}s. $A$ is a \flv{Transition probability matrix} where each $a_{i\,j}$ represents the probability of moving from state $q_i$ to $q_j$ such that for all $i$, $\sum_{j=1}^{n}{a_{i\,j}}=1$. $O=\accl{o_1,o_2,\ldots,o_T}$ a set of $T$ \flv{Observation}s, each one drawn from a \flv{vocabulary} $V=\accl{v_1,v_2,\ldots,v_V}$. $B_{i\,t}=\fun{b_i}{o_t}$ a sequence of \flv{Observation likelihoods} (also called \flv{Emission probabilities}) each expressing the probability of an observation $o_t$ being generated from state $q_i$. $q_0$ is a special \flv{Start state} not associated with any observations but with transition probabilities $a_{0\,1},a_{0\,2},\ldots,a_{0\,n}$. Finally $q_F$ is called the \flv{End state} of \flv{Final state}. This state is not associated with observations either. The probabilities $a_{1\,F},a_{2\,F},\ldots,a_{n\,F}$ are associated with $q_F$. Popular problems in \sb{} are \flv{Hidden Markov Model Likelihood}, \flv{Hidden Markov Model Training} and \flv{Hidden Markov Model Decoding}.
+A \sb{} is a 5-tuple $\tupl{Q,A,B,q_0,q_F}$. Where $Q=\accl{q_1,q_1,\ldots,q_N}$ is a set of $N$ \flv{state}s. $A$ is a \flv{Transition probability matrix} where each $a_{i\,j}$ represents the probability of moving from state $q_i$ to $q_j$ such that for all $i$, $\sum_{j=1}^{n}{a_{i\,j}}=1$. $o=\accl{o_1,o_2,\ldots,o_T}$ a set of $T$ \flv{Observation}s, each one drawn from a \flv{vocabulary} $V=\accl{v_1,v_2,\ldots,v_V}$. $B_{i\,t}=\fun{b_i}{o_t}$ a sequence of \flv{Observation likelihoods} (also called \flv{Emission probabilities}) each expressing the probability of an observation $o_t$ being generated from state $q_i$. $q_0$ is a special \flv{Start state} not associated with any observations but with transition probabilities $a_{0\,1},a_{0\,2},\ldots,a_{0\,n}$. Finally $q_F$ is called the \flv{End state} of \flv{Final state}. This state is not associated with observations either. The probabilities $a_{1\,F},a_{2\,F},\ldots,a_{n\,F}$ are associated with $q_F$. Popular problems in \sb{} are \flv{Hidden Markov Model Likelihood}, \flv{Hidden Markov Model Training} and \flv{Hidden Markov Model Decoding}. In a \sb{} one does not know the state sequence that the model past through when generating the training examples.
 \end{df}
 %TODO: image?
 \begin{df}[Cluster $N$-gram]{Class Based $N$-gram}
@@ -89,7 +89,7 @@ A \sb{} uses information about the \flv{Word class}es or \flv{Cluster}s to predi
 \end{equation}
 One can efficiently calculate this using the \flv{Forward algorithm}.
 \end{df}
-\begin{df}{Forward Algorithm}
+\begin{df}{Forward algorithm}
 The \sb{} an algorithm that calculates the \flv{Hidden Markov Model Likelihood} using dynamic programming. Therefore a table $a_{t\,j}$ is calculated where $\alpha_{t\,j}$ is the probability of being in state $q_j$ after seeing the first $t$ observations of $O=\tupl{o_1,o_2,\ldots,o_T}$, or more formally:
 \begin{equation}
 \alpha_{t\,j}=\Prob{o_1,o_2,\ldots,o_t,\kappa_t=q_j|M}
@@ -100,9 +100,20 @@ Where $\kappa_t$ is the $t$-th state in a sequence. Once this table is computed,
 \end{equation}
 The entire algorithm is listed in \algref{forward}.
 \end{df}
+\importalgo{forward}{The \algostyle{Forward}-algorithm}
+\begin{df}{Visible Markov Model}
+A \sb{} is a variant of a \flv{Hidden Markov Model}. In a \sb{} we can identify the path that was taken inside the model to produce the training sequence.
+\end{df}
 \begin{df}{Hidden Markov Model Training}
-\sb{} is a problem where given a \flv{Hidden Markov Model} $M=\tupl{Q,A,O,B,q_0,q_F}$, and a observation sequence $O$, one tries to find the probability of this observation $\Prob{O|M}$.
+\sb{} is a problem where given a set of observation sequences $O=\accl{O_1,O_2,\ldots,O_T}$ and a set of states $Q=\accl{q_1,q_2,\ldots,q_N}$, one tries to learn the parameters of the \flv{Transition probability matrix} $A$ and the \flv{Emission probabilities} $B$. The \flv{Forward-Backward algorithm} listed in \algref{forwardbackward} can learn these parameters.
+\end{df}
+\begin{df}{Backward algorithm}
+The \sb{} an algorithm that calculates the probability $\beta_{t\,i}$ of seeing the observations from time $t+1$ to the end, given that we are in state $i$ at time $t$ in a Hidden Markov Model $M=\tupl{Q,A,B}$. This by applying the reverse effects of the \flv{Forward algorithm}. The entire algorithm is listed in \algref{backward}.
+\end{df}
+\importalgo{backward}{The \algostyle{Backward}-algorithm}
+\begin{df}{Forward-Backward algorithm}
+
 \end{df}
 \begin{df}{Hidden Markov Model Decoding}
-\sb{} is a problem where given a \flv{Hidden Markov Model} $M=\tupl{Q,A,O,B,q_0,q_F}$, and a observation sequence $O$, one tries to find the probability of this observation $\Prob{O|M}$.
+
 \end{df}

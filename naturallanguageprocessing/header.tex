@@ -1,4 +1,5 @@
 \usepackage[cm]{fullpage}
+\usepackage[ruled,vlined]{algorithm2e}
 \usepackage{amsmath,amsthm,amsfonts,hyperref,makeidx,booktabs,tikz}
 \usetikzlibrary{arrows,positioning,automata}
 
@@ -28,6 +29,8 @@
 \newcommand{\Prob}[1]{\funf{\Pr}{#1}}
 \newcommand{\Count}[1]{\funf{\#}{#1}}
 
+%\newcommand{\gets}{\ensuremath{\leftarrow}}
+
 \newcommand{\refmoth}[3]{#1~\ref{#2:#3}}
 \newcommand{\tblref}[1]{\refmoth{Table}{tbl}{#1}}
 \newcommand{\figref}[1]{\refmoth{Figure}{fig}{#1}}
@@ -38,6 +41,8 @@
 \newcommand{\newTr}[4]{\path[->] (#1) edge [#4] node[above,sloped,midway] {#3} (#2);}
 
 \newcommand{\conv}[2]{\emph{#1$\rightarrow$#2}}
+
+\newcommand{\algostyle}[1]{\textsc{#1}}
 
 \newcommand{\contenttable}[5]{
 \begin{table}[hbt]
@@ -60,4 +65,11 @@
 \caption{#2.}
 \label{fig:#1}
 \end{figure}
+}
+\newcommand{\importalgo}[2]{
+\begin{algorithm}[hbt]
+\input{algorithms/#1.tex}
+\caption{#2.}
+\label{alg:#1}
+\end{algorithm}
 }
