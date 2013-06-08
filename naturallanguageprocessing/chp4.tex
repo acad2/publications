@@ -1,0 +1,25 @@
+\section{Language modeling and Sequential tagging}
+\begin{df}{Probabilistic model}
+A \sb{} is a model which predicts the next item based on probability theory.
+\end{df}
+\begin{df}{markov chain}
+A \sb{} is a model where the next variable depends only on a limited amount of previous variables. For a \flv{$k$-order Markov model} this means that:
+\begin{equation}
+\Prob{X_1,X_2,\ldots,X_t}=\displaystyle\prod_{i=1}^t{\Prob{X_i|X_{i-1},X_{i-2},\ldots,X_{\fun{\max}{i-k,1}}}}
+\end{equation}
+\end{df}
+\begin{df}{$N$-gram model}
+A \sb{} is a model which predicts the next item based on the previous $N-1$ items. Such models come in two flavors: \flv{Smoothed $N$-grams} and \flv{Unsmoothed $N$-grams}.
+\end{df}
+\begin{df}{Unsmoothed $N$-gram model}
+In an \sb{}, the probability is estimated by:
+\begin{equation}
+\Prob{X_t|X_{t-1},X_{t-2},\ldots,X_{t-N+1}}\approx\displaystyle\frac{\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}{\sum_{X_t}\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}
+\end{equation}
+\end{df}
+\begin{df}{Smoothed $N$-gram model}
+In an \sb{}, the probability is estimated by:
+\begin{equation}
+\Prob{X_t|X_{t-1},X_{t-2},\ldots,X_{t-N+1}}\approx\displaystyle\frac{1+\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}{V+\sum_{X_t}\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}
+\end{equation}
+\end{df}

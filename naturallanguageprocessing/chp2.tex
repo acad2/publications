@@ -1,0 +1,42 @@
+\section{Finite state automata}
+\begin{df}[FSA]{Finite State Automaton}
+A \sb{} is a 5-tuple $\tupl{Q,\Sigma,q_0,F,\delta}$ where $Q=\accl{q_0,q_1,\ldots,q_{N-1}}$ is a finite set of $N$ \flv{state}s. $\Sigma$  a finite \flv{input alphabet of symbols}, $q_0\in Q$ the \flv{start state}, $F\subseteq Q$ the set of \flv{final states} and $\delta:Q\times\Sigma\rightarrow Q$ the \flv{transition function} or \flv{transition matrix} between states. Given a state $q\in Q$ and the next input symbol $\gamma\in\Sigma$, $\fun{\delta}{q,\gamma}$ returns the new state $q'\in\Sigma$. A \sb{} can be described by a \flv{Regular Expression} and recognizes a \flv{Regular Language}. \sb{} are used to break words into syllables, \flv{morphology}, \flv{dictionary building}, and parts of \flv{machine translation}.
+\end{df}
+\begin{df}{Recognizer}
+A \sb{} is an abstract machine accepting or rejecting strings.
+\end{df}
+\begin{df}[NFSA]{Non-deterministic Finite State Automaton}
+A \sb{} is a variant of a Finite State Automaton where the signature of the \flv{transition function} is modified to $\delta:Q\times\Sigma^*\rightarrow\Pow{Q}$. An \ab{} accepts a string if there exists at least one path who ends in a state $q_f\in F$. Since we might follow the wrong arc, there are a couple of methods to avoid this:
+\begin{itemize}
+ \item \flvb{Backup}: a method where one puts a marker at choice points. Therefore one can return to that point when the first try turned out to be wrong.
+ \item \flvb{Look-ahead}: a method where the program looks to future characters to decide which state to choose.
+ \item \flvb{Parallelism}: a method where a program evaluates every alternative path in parallel.
+\end{itemize}
+\end{df}
+\begin{df}{Regular Language}
+A \sb{} over an alphabet $\Sigma$ is a set of strings. We define regular languages inductively:
+\begin{itemize}
+ \item $\emptyset$ is a \sb{}
+ \item $\forall a\in\Sigma\cup\accl{\epsilon}$, $\accl{a}$ is a regular language.
+ \item For two regular languages $L_1$ and $L_2$:
+ \begin{itemize}
+  \item $L_1\cdot L_2=\accl{xy|x\in L_1,y\in L_2}$, the \flvb{concatenation} of $L_1$ and $L_2$.
+  \item $L_1\cup L_2$, the \flvb{union} or \flvb{disjunction} of $L_1$ and $L_2$.
+  \item $L_1^{\star}$, the \flvb{Kleene closure} of $L_1$
+ \end{itemize}
+\end{itemize}
+\end{df}
+\begin{df}{Regular Grammar}
+\sb{} over an alphabet $\Sigma$ is a form of grammar where the following transition rules are allowed:
+\begin{itemize}
+ \item $B\rightarrow a$: where $B$ is a \flv{non-terminal} and $a\in\Sigma$
+ \item $B\rightarrow aC$: where $B$ and $C$ are \flv{non-terminal}s and $a\in\Sigma$
+ \item $B\rightarrow \epsilon$: where $B$ is a non-terminal and $\epsilon$ denotes the empty string.
+\end{itemize}
+\end{df}
+\begin{df}[Regexp]{Regular Expression}
+A regular expression is a mean for identifying strings or text of interest, such as particular characters, words or patterns of characters.
+\end{df}
+\begin{df}[FST]{Finite State Transducer}
+A \sb{} is a 6-tuple $\tupl{Q,\Sigma,q_0,F,\delta,\sigma}$ where $Q=\accl{q_0,q_1,\ldots,q_{N-1}}$ is a finite set of $N$ \flv{state}s. $\Sigma$  a finite \flv{input alphabet of symbols}, $q_0\in Q$ the \flv{start state}, $F\subseteq Q$ the set of \flv{final states}, $\delta:Q\times\Sigma^{\star}\rightarrow\Pow{Q}$ the \flv{transition function} or \flv{transition matrix} between states and $\sigma:Q\times\Sigma^{\star}\rightarrow\Pow{\Sigma}$ the \flv{output function}. Given a state $q\in Q$ and the next input symbol $\gamma\in\Sigma$, $\fun{\delta}{q,\gamma}$ returns a set of new states. $\fun{\sigma}{q,\gamma}$ returns a set of possible output strings. Examples are the two transducers for the two-level morphology of Koskenniemi.
+\end{df}

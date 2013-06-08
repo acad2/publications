@@ -1,7 +1,10 @@
 \usepackage[cm]{fullpage}
-\usepackage{amsmath,amsthm,amsfonts,hyperref,makeidx}
+\usepackage{amsmath,amsthm,amsfonts,hyperref,makeidx,booktabs,tikz}
+\usetikzlibrary{arrows,positioning,automata}
+
 \newtheorem{defin}{Definition}
-\newenvironment{df}[2][]{\renewcommand{\sb}{#2}\begin{defin}[#2]\index{#2}}{\end{defin}}
+\newcommand{\ab}{}
+\newenvironment{df}[2][]{\renewcommand{\sb}{#2}\renewcommand{\ab}{#1}\ifx&#1&\begin{defin}[#2]\else\begin{defin}[#2 (#1)]\index{#1|see{#2}}\fi\index{#2|textbf}}{\end{defin}}
 \newcommand{\nlp}{natural language processing}
 \newcommand{\alnlp}{analysis level in \nlp{}}
 \newcommand{\pnc}{pronunciation}
@@ -11,3 +14,48 @@
 \newcommand{\tcq}{technique}
 \newcommand{\stc}[1]{``\emph{#1}''}
 \newcommand{\flv}[1]{\index{#1}\emph{#1}}
+\newcommand{\flvb}[1]{\index{#1 [\sb]|textbf}\emph{#1}}%\ifx&\ab{}&\else\index{#1 [\ab]|textbf}\fi
+
+\newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\newcommand{\tupl}[1]{\ensuremath{\left\langle#1\right\rangle}}
+\newcommand{\fbrk}[1]{\ensuremath{\left[#1\right]}}
+\newcommand{\accl}[1]{\ensuremath{\left\{#1\right\}}}
+\newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
+\newcommand{\funf}[2]{\ensuremath{#1\fbrk{#2}}}
+
+\newcommand{\Pow}[1]{\fun{\mathcal{P}}{#1}}
+\newcommand{\Prob}[1]{\funf{\Pr}{#1}}
+\newcommand{\Count}[1]{\funf{\#}{#1}}
+
+\newcommand{\refmoth}[3]{#1~\ref{#2:#3}}
+\newcommand{\tblref}[1]{\refmoth{Table}{tbl}{#1}}
+\newcommand{\imgref}[1]{\refmoth{Image}{img}{#1}}
+
+\newcommand{\newSt}[4]{\node[state,#3](#1)[#4]{#2};}
+\newcommand{\newLo}[3]{\path[->] (#1) edge [loop above,#3] node[above,sloped,midway] {#2} (#1);} 
+\newcommand{\newTr}[4]{\path[->] (#1) edge [#4] node[above,sloped,midway] {#3} (#2);}
+
+\newcommand{\conv}[2]{\emph{#1$\rightarrow$#2}}
+
+\newcommand{\contenttable}[5]{
+\begin{table}[hbt]
+\centering
+\begin{tabular}{#1}
+\toprule
+#4\\\midrule
+#5\\\bottomrule
+\end{tabular}
+\caption{#3.}
+\label{tbl:#2}
+\end{table}
+}
+\newcommand{\importfsm}[2]{
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm and 1cm]
+\input{automata/#1.tex}
+\end{tikzpicture}
+\caption{#2.}
+\label{img:#1}
+\end{figure}
+}
