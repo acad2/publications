@@ -1,13 +1,13 @@
 \usepackage[cm]{fullpage}
 \usepackage[ruled,vlined]{algorithm2e}
-\usepackage{amsmath,amsthm,amsfonts,hyperref,makeidx,booktabs,tikz}
+\usepackage{amsmath,amsthm,amsfonts,hyperref,makeidx,booktabs,tikz,rail}
 \usetikzlibrary{arrows,positioning,automata}
 
 \newtheorem{defin}{Definition}
 \newtheorem{therm}{Theorem}
 \newcommand{\ab}{}
 \newenvironment{df}[2][]{\renewcommand{\sb}{#2}\renewcommand{\ab}{#1}\ifx&#1&\begin{defin}[#2]\else\begin{defin}[#2 (#1)]\foreach \x in {#1}{\index{\x|see{#2}}}\fi\index{#2|textbf}\label{dfn:#2}}{\end{defin}}
-\newenvironment{tm}[2][]{\renewcommand{\sb}{#2}\renewcommand{\ab}{#1}\ifx&#1&\begin{therm}[#2]\else\begin{therm}[#2 (#1)]\foreach \x in {#1}{\index{\x|see{#2}}}\fi\index{#2|textbf}\label{the:#2}}{\end{therm}}
+\newenvironment{tm}[2][]{\renewcommand{\sb}{#2}\renewcommand{\ab}{#1}\ifx&#1&\begin{therm}[#2]\else\begin{therm}[#2 (#1)]\foreach \x in {#1}{\index{\x|see{#2}}}\fi\index{#2|textbf}\label{dfn:#2}}{\end{therm}}
 \newcommand{\nlp}{natural language processing}
 \newcommand{\alnlp}{analysis level in \nlp{}}
 \newcommand{\pnc}{pronunciation}
@@ -18,6 +18,7 @@
 \newcommand{\stc}[1]{``\emph{#1}''}
 \newcommand{\flv}[1]{\index{#1}\hyperref[dfn:#1]{\emph{#1}}}
 \newcommand{\flvb}[1]{\index{#1 [\sb]|textbf}\emph{#1}}%\ifx&\ab{}&\else\index{#1 [\ab]|textbf}\fi
+\newcommand{\postag}[1]{\index{Tags!#1|textbf}\label{pos:#1}\texttt{#1}}
 
 \newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
 \newcommand{\tupl}[1]{\ensuremath{\left\langle#1\right\rangle}}
@@ -75,6 +76,13 @@
 \caption{#2.}
 \label{alg:#1}
 \end{algorithm}
+}
+\newcommand{\importgram}[1]{
+%\begin{grammar}[(colon){$\rightarrow$}][(semicolon)$|$][(comma){}][(period){\\}][(quote){\begin{bf}}{\end{bf}}][(nonterminal){$\langle$}{$\rangle$}]
+\begin{rail}
+\input{grammars/#1.tex}
+\end{rail}
+%\end{grammar}
 }
 
 \DeclareMathOperator{\argmax}{argmax}

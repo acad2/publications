@@ -1,4 +1,4 @@
-\section{Part-of-Speech Tagging}
+\section{Part-of-Speech Tagging and Shallow Parsing}
 \begin{df}{Part-of-Speech tagging}
 \sb{} is a process where one assigns a \pos{} or other syntactic class marker to each word in a corpus. This tagging requires tokenization. Punctuations are tagged as well.
 \end{df}
@@ -59,7 +59,7 @@ A \sb{} is a \flv{Part-of-Speech class}. They resemble \flv{Preposition}s and ar
 \begin{df}{Determiner}
 A \sb{} is a \flv{Part-of-Speech class} that occurs with nouns. \sb{}s mark the beginning of a \flv{Noun phrase}. A subtype of a \sb{} is a \flv{Article}. Other \sb{}s are \stc{this} and \stc{that}.
 \end{df}
-\begin{tm}{Marker hypothesis}
+\begin{tm}{Marker hypotheses}
 There is a set of words in every language that marks boundaries of phrases in a sentence.
 \end{tm}
 \begin{df}{Article}
@@ -103,4 +103,50 @@ The \sb{} is a \flv{Part-of-Speech class} which contains markers for the fact th
 \end{df}
 \begin{df}{Rule-based Part-of-Speech tagging}
 \sb{} is a method where \flv{Part-of-Speech tagging} is handled by using a \flv{Dictionary} to assing a list of potential tags to each word, and use a large list of hand-written disambiguation rules. The result is a fragment where each word has one \flv{Part-of-Speech tag} per word. For different tag sets ore languages, one has to use different rules.
+\end{df}
+\begin{df}[Voutilainen]{EngCGTagger}
+\sb{} is a \flv{Rule-based Part-of-Speech tagger} that uses a set of $56'000$ word stems and performs a \flv{Morphological analysis}. The analysis is done by running the text through a two level \flv{Lexicon transducer}. Next the tagger rules out incorrect \flv{Part of Speech tags} using \flv{Constraint}s.
+\end{df}
+\begin{tm}{Bayes rule}
+\sb{} is a rule in \flv{Probability theory} stating the following:
+\begin{equation}
+\Prob{x|y}=\displaystyle\frac{\Prob{y|x}\cdot\Prob{x}}{\Prob{y}}
+\end{equation}
+If one is only interested in the maximum likelihood of of $x$, one may drop the denominator since it's the same of each item:
+\begin{equation}
+x^{\star}=\argmax_{x\in X}\Prob{y|x}\cdot\Prob{x}
+\end{equation}
+\end{tm}
+\begin{tm}{Part-of-Speech simplification assumption}
+In order to perform \flv{Part-of-Speech tagging}, most systems use the following two assumptions:
+\begin{itemize}
+ \item The probability of a word only depends on its own \flv{Part-of-Speech tag}:
+ \begin{equation}
+  \Prob{\vec{w}|\vec{t}}\approx\displaystyle\prod_{i=1}^n{\Prob{w_i|t_i}}
+ \end{equation}
+ \item The probability of a tag only depends on the previous tag (this is sometimes called the \flv{Bigram assumption}):
+ \begin{equation}
+  \Prob{\vec{t}}\approx\displaystyle\prod_{i=1}^{n}\Prob{t_i|t_{i-1}}
+ \end{equation}
+\end{itemize}
+\end{tm}
+\begin{df}{Hidden Markov Model Part-of-Speech tagging}
+\sb{} is a form of \flv{Part-of-Speech tagging} where one uses a \flv{Hidden Markov Model}. This system is based on the \flv{Part-of-Speech simplification assumption}s (otherwise one could model this with a \flv{Hidden Markov Model}). One can simply train the network by counting tuples in a \flv{Training set}:
+\begin{eqnarray}
+\Prob{t_i|t_{i-1}}&=&\displaystyle\frac{\Count{t_{i-1},t_i}}{\Count{t_{i-1}}}\\
+\Prob{w_i|t_i}&=&\displaystyle\frac{\Count{t_i,w_i}}{\Count{t_i}}
+\end{eqnarray}
+In this context, the \flv{emission probabilities} are sometimes called the \flv{Lexical likelihood}. Unknown words are in most cases handled by using a \stc{unknown word} tag. In other cases the probabilities are equally distributed over the different \flv{Part-of-Speech tag}s who represent \flv{Open class}es. In this case, the result mainly depends on the previous tag. A better system is using \flv{Morphology}: analyzing the word in order to determine its type. Finally one may allso consider all final letter sequences of all words and for each suffix compute the probability of a tag $t$ given the suffix\footnote{This method works fine for most European languages, but is not considered to be universally applicable.}.
+\end{df}
+\begin{df}[Brill tagging]{Hybrid Part-of-Speech tagging}
+\sb{} is a method to perform \flv{Part-of-Speech tagging} using \flv{Transformation-based Part-of-Speech tagging}. By mixing \flv{Rule-based Part-of-Speech tagging} and \flv{Stochastic Part-of-Speech tagging} one hopes to generate better results. Rules specify which tags should be assigned to what words and these rules are automatically induced from data (by \flv{Supervised learning}). When the system tags a fragment, the rules are ordered so the most broadest rule is applied first. The algorithm then chooses more specific rules modifying a smaller number of tags. The rules are learned automatically but limited by a template.
+\end{df}
+\begin{df}{Combination Part-of-Speech tagging}
+\sb{} is a \flv{Part-of-Speech tagging} mechanism where a couple of taggers are used concurrently. The results are compared and an algorithm decides about the final \flv{Part-of-Speech tag}s for each word.
+\end{df}
+\begin{df}[Chunking]{Shallow parsing}
+\sb{} is a process where one groups \flv{Word}s in linguistically meaningful \flv{Chunk}s. By applying this process recursively we get a \flv{Shallow parse tree}. This process of courses requires \flv{Part-of-Speech tag}s. \sb{} is based on the \flv{Marker hypotheses}.
+\end{df}
+\begin{df}{Machine learning chunker}
+A \sb{} is a system that performs \flv{Shallow parsing}. Therefore each word is either: the \flv{Beginning of a chunk}, \flv{End of a chunk} or nor the beginning or end of a chunk. No \flv{Part-of-Speech tagging} is required, but it can help. The program learns the rules by using a traing set. For a chunk $X$, the beginning is annotated as $\mbox{\texttt{B}}X$ and the end as $\mbox{\texttt{E}}X$. Machine learnings don't consider \flv{Crossing chunk}s: if one marks the end of a chunk $X$, all embedded chunks end as well.
 \end{df}

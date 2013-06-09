@@ -1,1 +1,19 @@
-\section{Shallow Parsing}
+\section{Formal Grammars and Parsers}
+\begin{df}{Formal grammar}
+A \sb{} is a system where a group of items can behave as an item themselves. Therefore a sequence of items can be seen as a tree of items with the original items in the leafs. In the context of \nlp{} the introduced items are called \flv{Phrase}s. For instance a \flv{Noun phrase}. \sb{}s are used to define grammatical relations and thus the formalization of traditional grammar. They introduce relations and dependencies between words and phrases. A popular category of \sb{}s are \flv{Context-free grammar}s.
+\end{df}
+\begin{df}[CFG, Phrase-Structure grammar]{Context-free grammar}
+\sb{}s are a type of \flv{Formal grammar}s. They consist out of a \flv{Lexicon} of \flv{Word}s and \flv{Symbol}s and a set of \flv{Production rule}s expressing how these symbols can be grouped and ordered. \sb{}s can be used both for generating sentences and assigning a structure to a given sentence. More formally a \sb{} is a 4-tuple $G=\tupl{N,\Sigma,R,S,n_0}$ where $N$ is a set of \flv{Non-terminal symbol}s (sometimes called \flv{Variable}s), $\Sigma$ a set of \flv{Terminal symbol}s (disjoint from $N$), $R$ a set of \flv{Production rule}s each of the form $n\rightarrow\beta$ where $n\in N$ and $\beta$ a string of symbols from the infinite set of strings $\brak{\Sigma\cup N}^{\star}$. $n_0\in N$ is called the \flv{Start symbol}. Sentences that can be generated from $n_0$ are called \flv{Grammatical sentence}s. Sentences who fail on this condition are called \flv{Ungrammatical sentence}s.
+\end{df}
+\begin{df}[NP]{Noun phrase}
+A \sb{} (tagged as \postag{NP}) is a sequence of words surrounding at least one \flv{Noun}. What holds up for a \sb{} however, is not true for the individual words making up the \sb{}. For instance \stc{Harry the Horse} or \stc{the Broadway coppers}. Formally a \sb{} is defined by the following grammatical rules: \importgram{np}
+\end{df}
+\begin{df}[PP]{Prepositional phrase}
+A \sb{} (tagged as \postag{PP}) is a \flv{Phrase} where one puts a \flv{Preposition} before a \flv{Noun phrase}. \sb{}s are used to express relations with time, dates and other nouns. They can be rather complex. Examples include \stc{to Seattle}, \stc{in Minneapolis} and \stc{on the ninth of July}. Formally a \sb{} is defined by the following grammatical rules: \importgram{pp}
+\end{df}
+\begin{df}[VP]{Verb phrase}
+A \sb{} (tagged as \postag{VP}) is a \flv{Phrase} combining a \flv{Verb} with a \flv{Leading object}. Formally a \sb{} is defined by the following grammatical rules: \importgram{vp}
+\end{df}
+\begin{df}[S]{Sentence}
+A \sb{} (tagged as \postag{S}) is a \flv{Phrase} where one combines a \flv{Noun phrase} and \flv{Verb phrase}. Formally a \sb{} is defined by the following grammatical rules: \importgram{s}
+\end{df}
