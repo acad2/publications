@@ -4,8 +4,10 @@
 \usetikzlibrary{arrows,positioning,automata}
 
 \newtheorem{defin}{Definition}
+\newtheorem{therm}{Theorem}
 \newcommand{\ab}{}
-\newenvironment{df}[2][]{\renewcommand{\sb}{#2}\renewcommand{\ab}{#1}\ifx&#1&\begin{defin}[#2]\else\begin{defin}[#2 (#1)]\index{#1|see{#2}}\fi\index{#2|textbf}}{\end{defin}}
+\newenvironment{df}[2][]{\renewcommand{\sb}{#2}\renewcommand{\ab}{#1}\ifx&#1&\begin{defin}[#2]\else\begin{defin}[#2 (#1)]\foreach \x in {#1}{\index{\x|see{#2}}}\fi\index{#2|textbf}\label{dfn:#2}}{\end{defin}}
+\newenvironment{tm}[2][]{\renewcommand{\sb}{#2}\renewcommand{\ab}{#1}\ifx&#1&\begin{therm}[#2]\else\begin{therm}[#2 (#1)]\foreach \x in {#1}{\index{\x|see{#2}}}\fi\index{#2|textbf}\label{the:#2}}{\end{therm}}
 \newcommand{\nlp}{natural language processing}
 \newcommand{\alnlp}{analysis level in \nlp{}}
 \newcommand{\pnc}{pronunciation}
@@ -14,7 +16,7 @@
 \newcommand{\app}{application}
 \newcommand{\tcq}{technique}
 \newcommand{\stc}[1]{``\emph{#1}''}
-\newcommand{\flv}[1]{\index{#1}\emph{#1}}
+\newcommand{\flv}[1]{\index{#1}\hyperref[dfn:#1]{\emph{#1}}}
 \newcommand{\flvb}[1]{\index{#1 [\sb]|textbf}\emph{#1}}%\ifx&\ab{}&\else\index{#1 [\ab]|textbf}\fi
 
 \newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}

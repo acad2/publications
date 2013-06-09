@@ -1,1 +1,106 @@
 \section{Part-of-Speech Tagging}
+\begin{df}{Part-of-Speech tagging}
+\sb{} is a process where one assigns a \pos{} or other syntactic class marker to each word in a corpus. This tagging requires tokenization. Punctuations are tagged as well.
+\end{df}
+\begin{df}{Part-of-Speech tag}
+A \sb{} specifies the meaning or function of a word in the corpus. The tag is based on both the syntactical and morphological function. The tag can be extracted by the words that occur nearby or the affixes they use. \sb{} are grouped in \flv{Class}es.
+\end{df}
+\begin{df}{Part-of-Speech class}
+A \sb{} is a group of different \flv{Part-of-Speech tag}s. \sb{}es come in two flavors: \flv{Closed class}es and \flv{Open class}es. \flv{Closed class}es have fixed membership (no new words), they mainly consist out of articles, conjugations and prepositions and function words (\stc{of}, \stc{it}, \stc{and}, \stc{you},...). \flv{Open class}es can contain new (introduced) words. They contain \flv{Noun}s, \flv{Verb}s, \flv{Adjective}s and \flv{Adverb}s.
+\end{df}
+\begin{df}{Noun}
+A \sb{} is a \flv{Syntactic class} in which the word occurs. Semantically it points to people, places and things. A \sb{} can has a plural declension, can occur with determiners and takes possessives.
+\end{df}
+\begin{df}{Proper noun}
+\sb{} are names of specific persons or entities. For instance \stc{Regina}, \stc{Leuven} and \stc{IBM}. Usually \sb{} are no articles and are capitalized.
+\end{df}
+\begin{df}[Common name]{Common noun}
+A \sb{} is a noun who is not a specific person or entity. \sb{} are subdivided into \flv{Count noun}s and \flv{Mass noun}s.
+\end{df}
+\begin{df}{Count noun}
+A \sb{} is a \flv{Noum} which allows enumeration. \sb{}s require an article and have a singular and plural form. Examples are \stc{goat/goats} and \stc{relationship}.
+\end{df}
+\begin{df}{Mass noun}
+A \sb{} is a \flv{Noun} which is conceptualized as a homogeneous group. Examples are \stc{snow} and \stc{communism}.
+\end{df}
+\begin{df}{Verb}
+A \sb{} is a \flv{Syntactic class}. \sb{}s describe \flv{Action}s and \flv{Process}es. They have different \flv{Morphological form}s. Subclasses of \sb{} are \flv{Auxiliaries} and \flv{Modal verb}s.
+\end{df}
+\begin{df}{Auxiliaries}
+\sb{} is a closed subclass of \flv{Verb}s. They mark semantic features of the main verb (tense, aspect, polarity, mood). In general it connects a \flv{Subject} with \flv{Predicate}s. \sb{}s include \stc{to have} and \stc{to be}, \stc{to do} and \flv{Modal verb}s.
+\end{df}
+\begin{df}[Modal,Modal auxiliary verb, Modal auxiliary]{Modal verb}
+A \sb{} is a type of \flv{Verb} that is used to indicate modality: likelihood, ability, permission, and obligation. Examples are \stc{shall/shoud}, \stc{will/would}. \tblref{modalverbs} lists a set of \sb{}s.
+\end{df}
+\begin{df}{Adjective}
+An \sb{} is a \flv{Part-of-Speech class} which describes properties or qualities of an object. For instance its color, age, value. Other adjectives describe some degrees of comparison. For instance \stc{good}, \stc{better}, \stc{nicest}. Not all languages have \sb{}s.
+\end{df}
+\begin{df}{Adverb}
+An \sb{} is a diverse \flv{Part-of-Speech class} which modifies something, usually a verb. Adverbs come in different flavors: \flv{Directional adverb}, \flv{Degree adverb}, \flv{Manner adverb}, \flv{Temporal adverb}.
+\end{df}
+\begin{df}[Locative adverb]{Directional adverb}
+A \sb{} is a type of \flv{Adverb} describing the location where something takes place. For instance \stc{home}, \stc{here} and \stc{downhill}.
+\end{df}
+\begin{df}{Degree adverb}
+A \sb{} is a type of \flv{Adverb} describing the severity of the action. For instance \stc{extremely}, \stc{very} and \stc{somewhat}.
+\end{df}
+\begin{df}{Manner adverb}
+A \sb{} is a type of \flv{Adverb} describing in which manner the action takes place. For instance \stc{slowly}, \stc{delicately}.
+\end{df}
+\begin{df}{Temporal adverb}
+A \sb{} is a type of \flv{Adverb} describing when an action takes place. For instance \stc{yesterday}, \stc{Monday}. Some of these adverbs are \flv{Noun}s as well.
+\end{df}
+\begin{df}{Preposition}
+A \sb{} is a \flv{Part-of-Speech class} that comes before \flv{Noun} phrases. They express \flv{Spatial relation}s or \flv{Temporal relation}s. Since \sb{}s are a closed class, \tblref{prepositions} lists all \sb{}s.
+\end{df}
+\begin{df}{Particle}
+A \sb{} is a \flv{Part-of-Speech class}. They resemble \flv{Preposition}s and are combined with a verb. Often this verb has a different meaning. Examples of such combinations are \stc{turn down} and \stc{rule out}. Since \sb{}s are a closed group, \tblref{particles} lists all the single word \sb{}s.
+\end{df}
+\begin{df}{Determiner}
+A \sb{} is a \flv{Part-of-Speech class} that occurs with nouns. \sb{}s mark the beginning of a \flv{Noun phrase}. A subtype of a \sb{} is a \flv{Article}. Other \sb{}s are \stc{this} and \stc{that}.
+\end{df}
+\begin{tm}{Marker hypothesis}
+There is a set of words in every language that marks boundaries of phrases in a sentence.
+\end{tm}
+\begin{df}{Article}
+An \sb{} is a subclass of a \flv{Determiner}. \sb{}s come in two flavors: \flv{Definite article}s like \stc{the} and \flv{Indefinite article}s like \stc{a} and \stc{an}.
+\end{df}
+\begin{df}{Conjugation}
+A \sb{} is a \flv{Part-of-Speech class} who joins two \flv{Phrase}s, \flv{Clause}s or \flv{Sentence}s. \sb{}s come in different flavors: \flv{Coordinating conjugation}s and \flv{Subordinate conjugation}s. \tblref{conjugations} lists a set of \sb{}s.
+\end{df}
+\begin{df}{Coordinating conjugation}
+A \sb{} is a subclass of \flv{Conjugation}s. They join elements of equal status. Examples are \stc{and}, \stc{or} and \stc{but}.
+\end{df}
+\begin{df}{Subordinate conjugation}
+A \sb{} is a subclass of \flv{Conjugation}s. They join elements where one element is of embedded status. An example is \stc{I thought \underline{that} you might like that}. \sb{}s that link a \flv{Verb} to its \flv{Argument}s are called \flv{Complementizer}s.
+\end{df}
+\begin{df}{Pronoun}
+A \sb{} is a \flv{Part-of-Speech class} which is a shorthand for referring to a \flv{Noun phrase}, \flv{Entity} or \flv{Event}. \sb{}s come in different flavors: \flv{Personal pronouns}, \flv{Possessive pronouns} and \flv{Wh-pronouns}. \tblref{pronouns} lists a set of \sb{}s.
+\end{df}
+\begin{df}{Personal pronoun}
+\sb{}s are \flv{Pronoun}s who refers to \flv{Person}s, \flv{Entitie}s.
+\end{df}
+\begin{df}{Possessive pronoun}
+\sb{}s are \flv{Pronoun}s who express actual \flv{Possession} or an abstract relation between a \flv{Person} and an \flv{Object}.
+\end{df}
+\begin{df}{Wh-pronoun}
+\sb{}s are \flv{Pronoun}s used in \flv{Question}s. They can act as \flv{Complementizer}s.
+\end{df}
+\begin{df}{Interjection}
+An \sb{} is a \flv{Part-of-Speech class} which contains for instance \stc{oh}, \stc{ah}, \stc{yes} and \stc{uh}.
+\end{df}
+\begin{df}{Negative}
+A \sb{} is a \flv{Part-of-Speech class} which contains for instance \stc{no} and \stc{not}.
+\end{df}
+\begin{df}{Politeness marker}
+A \sb{} is a \flv{Part-of-Speech class} which contains for instance \stc{thank you} and \stc{please}.
+\end{df}
+\begin{df}{Greeting}
+A \sb{} is a \flv{Part-of-Speech class} which contains for instance \stc{hello} and \stc{goodbye}.
+\end{df}
+\begin{df}{Existential there}
+The \sb{} is a \flv{Part-of-Speech class} which contains markers for the fact that some object exists. For instance \stc{\underline{there} are two apples on the table}.
+\end{df}
+\begin{df}{Rule-based Part-of-Speech tagging}
+\sb{} is a method where \flv{Part-of-Speech tagging} is handled by using a \flv{Dictionary} to assing a list of potential tags to each word, and use a large list of hand-written disambiguation rules. The result is a fragment where each word has one \flv{Part-of-Speech tag} per word. For different tag sets ore languages, one has to use different rules.
+\end{df}
