@@ -50,7 +50,7 @@ The \sb{} theorem states that when the number of lexical items in the model is l
 \begin{df}{Lexicalized grammar}
 A \sb{} is a \flv{Formal grammar} where each \flv{Non-terminal symbol} in the tree is annotated with its lexical head, possibly augmented with the \flv{Part-of-Speech tag} of the head words. For instance:
 \begin{equation}
-\fun{\mbox{\texttt{VP}}}{\mbox{dumped},\mbox{\texttt{VBD}}}\rightarrow\fun{\mbox{\texttt{VBD}}}{\mbox{dumped},\mbox{\texttt{VBD}}}\ \fun{\mbox{\texttt{NP}}}{\mbox{sacks},\mbox{\texttt{NNS}}}\ \fun{\mbox{\texttt{VP}}}{\mbox{into},\mbox{\texttt{IN}}}
+\fun{\tagref{VP}}{\mbox{dumped},\tagref{VBD}}\rightarrow\fun{\tagref{VBD}}{\mbox{dumped},\tagref{VBD}}\ \fun{\tagref{NP}}{\mbox{sacks},\tagref{NNS}}\ \fun{\tagref{VP}}{\mbox{into},\tagref{IN}}
 \end{equation}
 This method offers a solution for \flv{Coordinate ambiguity}.
 \end{df}
@@ -62,5 +62,30 @@ The \sb{} is an algorithm that can parse \flv{Probabilistic lexicalized context-
 \begin{equation}
 a\rightarrow L_n, L_{n-1},\ldots,L_1,H,R_1,R_2,\ldots,R_m
 \end{equation}
-Since each \flv{Non-terminal symbol} represents the category, head and head tag. The \sb{}
+Since each \flv{Non-terminal symbol} represents the category, head and head tag. The \sb{} considers three probabilities: $P_H$ for generating heads, $P_L$ for generating dependents on the left and $P_R$ for generating dependents on the right. Therefore the probability of the following rule is estimated by:
+\begin{equation}
+\begin{array}{r}
+\Prob{\fun{\tagref{VP}}{\mbox{dumped},\tagref{VBD}}\rightarrow\fun{\tagref{VBD}}{\mbox{dumped},\tagref{VBD}}\ \fun{\tagref{NP}}{\mbox{sacks},\tagref{NNS}}\ \fun{\tagref{VP}}{\mbox{into},\tagref{IN}}}\approx\\
+\fun{P_H}{\tagref{VBD}|\tagref{VP},\mbox{dumped}}\\\cdot\fun{P_L}{\tagref{STOP}|\tagref{VP},\tagref{VBD},\mbox{dumped}}\\\cdot\fun{P_R}{\fun{\tagref{NP}}{\mbox{sacks},\tagref{NNS}}|\tagref{VP},\tagref{VBD},\mbox{dumped}}\\\cdot\fun{P_R}{\fun{\tagref{PP}}{\mbox{into},\tagref{P}}|\tagref{VP},\tagref{VBD},\mbox{dumped}}\\\cdot\fun{P_R}{\tagref{STOP}|\tagref{VP},\tagref{VBD},\mbox{dumped}}
+\end{array}
+\end{equation}
+More formally, the following method is used:
+\begin{enumerate}
+ \item Generate the head of the phrase $\fun{H}{h_w,h_t}$ with probability
+ \begin{equation}
+  \fun{P_H}{\fun{H}{h_w,h_t}|P_a,h_w,h_t}
+ \end{equation}
+ \item Generate modifiers to the left of the head with total probability:
+ \begin{equation}
+  \fun{P_L}{\tagref{STOP}|P_a,h_w,h_t}\cdot\displaystyle\prod_{i=1}^n\fun{P_L}{\fun{L_i}{l_{w_i},l_{t_i}}|P_a,h_w,h_t}
+ \end{equation}
+ \item Generate modifiers to the right of the head with total probability:
+ \begin{equation}
+  \fun{P_H}{\tagref{STOP}|P_a,h_w,h_t}\cdot\displaystyle\prod_{i=1}^m\fun{P_R}{\fun{R_i}{r_{w_i},r_{t_i}}|P_a,h_w,h_t}
+ \end{equation}
+\end{enumerate}
+Since zero probabilities are no exceptions, one needs to perform smoothing, for instance using \flv{Backoff} models. For unseen words the \tagref{UNKNOWN} word token is used. Each of these probabilities can be estimated from a much smaller data set than the the full probability. Some parsers use more complex models and use for instance distance functions.
+\end{df}
+\begin{df}{Discriminative reranking}
+\sb{} is a concept where a generative parser (like the \flv{Collins parser}) does not generate the most probable parse tree, but a set of $N$-best \flv{Syntax tree}s. By using a \flv{Discriminative classifier} one reranks the trees and picks the best one. This reranking can use more sophisticated metrics.
 \end{df}
