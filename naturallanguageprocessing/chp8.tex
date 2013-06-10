@@ -21,7 +21,7 @@ The \sb{} of a word is the \flv{Lexical meaning}: the meaning defined by the ori
 \sb{} means a word is more general than another word. For instance \stc{fruit} is a \flv{Hypernym} of \stc{apple}. This property can be defined in terms of entailment: sense $A$ is a hypernym of sense $B$ if $\forall x:\fun{A}{x}\Leftarrow\fun{B}{x}$. These relations are usually transitive.
 \end{df}
 \begin{df}[Subordinate]{Hyponymy}
-\sb{} means a word is more specific than another word. For instance \stc{apple} is a \flv{Hyponym} of \stc{fruit}. This property can be defined in terms of entailment: sense $A$ is a hyponym of sense $B$ if $\forall x:\fun{A}{x}\Rightarrow\fun{B}{x}$. These relations are usually transitive.
+\sb{} means a word is more specific than another word. For instance \stc{apple} is a \flv{Hyponym} of \stc{fruit}. This property can be defined in terms of entailment: sense $A$ is a hyponym of sense $B$ if $\forall x:\fun{A}{x}\Rightarrow\fun{B}{x}$. These relations are usually transitive. \sb{} can be acquired based on handcrafted lexico-semantic patterns (like \stc{such as}) or based on frequency. This task is quite difficult since we expect a lot of false positives and false negatives.
 \end{df}
 \begin{df}{Meronymy}
 \sb{} means a word is a part of another word. For instance \stc{wheel} is a \flv{Meronym} of a \stc{car}.
@@ -192,4 +192,7 @@ The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
 \funm[\mbox{JS}]{div}{\vec{v},\vec{w}}=\fun{\Delta}{\vec{v},\vec{w}}+\fun{\Delta}{\vec{w},\vec{v}}
 \end{equation}
 With $\Delta$ the \flv{Kullback-Leibler} distance.
+\end{df}
+\begin{df}{Collocation}
+\sb{} is an expression consisting of two or more words (usually phrases) that correspond to some convectional way of saying things. Usually an element of meaning is added to the collocation that can not be predicted from the meanings of the composing parts. Corpus based association techniques can be used for the detection of \sb{}s.
 \end{df}
