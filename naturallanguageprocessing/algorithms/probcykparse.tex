@@ -1,0 +1,20 @@
+\Begin{
+  $t\gets\alMatrix{n+1,n+1,V}$\;
+  $b\gets\alMatrix{n+1,n+1,V}$\;
+  \For{\fromto{j}{1}{n}}{
+    \ForEach{$x\in\accl{a|a\rightarrow w_j\in G}$}{
+    $t_{j-1\,j\,x}\gets\Prob{A\rightarrow w_j}$\;
+    }
+    \For{\downfromto{i}{j-2}{0}}{
+      \For{\fromto{k}{i+1}{j-1}}{
+	\ForEach{$x\in\accl{a|a\rightarrow b\,c\in G\wedge t_{i\,k\,b}>0\wedge t_{k\,j\,c}>0}$}{
+	  \If{$t_{i\,j\,a}<\Prob{a\rightarrow b\,c}\cdot t_{i\,k\,b}\cdot t_{k\,j\,c}$}{
+	    $t_{i\,j\,a}\gets\Prob{a\rightarrow b\,c}\cdot t_{i\,k\,b}\cdot t_{k\,j\,c}$\;
+	    $b_{i\,j\,a}\gets\tupl{k,b,c}$\;
+	  }
+	}
+      }
+    }
+  }
+  \Return{$b,t$}\;
+}
