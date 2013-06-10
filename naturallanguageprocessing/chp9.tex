@@ -1,1 +1,25 @@
 \section{Named Entity Recognition and Semantic Role Labeling}
+\begin{df}{Named entity recognition}
+\sb{} is a process where one recognizes and classifies named expressions in text (such as persons, companies, locations, protein names,...). For instance \stc{\underline{John Smith} works for \underline{IBM}.}. Two problems in this context are \flv{Segmentation} and \flv{Classification}.
+\end{df}
+\begin{df}{Segmentation}
+sb{} is a process where one tries to find segments in a sequence which satisfy some constraint. In other words one determines which constituents in a sentence are semantic arguments. Since these constraints can be rather complex and fuzzy, \sb{} is sometimes a problem.
+\end{df}
+\begin{df}[Recognition]{Classification}
+sb{} is a process where tries to determine the role for each of the segments found by the \flv{Segmentation} in the sentence.
+\end{df}
+\begin{df}[Thematic role labeling, Case role assignment, Shallow semantic parsing]{Semantic role labeling}
+\sb{} is a process where one recognizes the basic event structure of a sentence (like \stc{who?}, \stc{does what?}, \stc{to whom/what?}, \stc{when?}, \stc{where?}).
+\end{df}
+\begin{df}{Semantic frame labeling}
+\sb{} is an extension of \flv{Semantic role labeling} where one does not only label the individual roles but the entire frame structure. This might involve the analysis of several sentences and disambiguation of the meaning of the predicate.
+\end{df}
+\begin{df}[ProBank]{Proposition bank}
+A \sb{} is a resource of sentences annotated with semantic roles. These roles differ per language. The semantic roles are encoded in the for of numbers specific to the verb sense. For instance the \stc{agree} relation: \funm{agree}{\mbox{agreer},\mbox{object of the agreement},\mbox{other entity agreeing}}.
+\end{df}
+\begin{df}{Frame}
+A \sb{} is a script-like structure that instantiates a set of frame-specific semantic rules called \flv{Frame elements}. It assigns the \flv{Core-role}s and \flv{Non-core role}s across the different verbs. Also relations like causality are expressed.
+\end{df}
+\begin{df}{FrameNet}
+A \sb{} is a resource containing a large number of \flv{Frame} elements as roles.
+\end{df}
