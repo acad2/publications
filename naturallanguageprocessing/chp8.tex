@@ -102,4 +102,94 @@ Where \funm{pathlength}{c_1,c_2} is the number of edges in the shortest path in 
 \begin{equation}
 \funm{wordsim}{w_1,w_2}=\fun{\max_{c_1\in\funm{senses}{w_1},c_2\in\funm{senses}{w_2}}}{\funm{sim}{c_1,c_2}}
 \end{equation}
+Another metric is the \flv{Information-conent word similarity}. This method relies both on the Thesaurus graph and probabilistic information. One calculates this similarity by calculating the probability of the \flv{Lowest common subsumer}:
+\begin{equation}
+\funm[resnik]{similarity}{c_1,c_2}=-\fun{\log}{\Prob{\funm{LCS}{c_1,c_2}}}
+\end{equation}
+The \flv{Similarity theorem of Lin} and \flv{Jing-Conrath} uses the \flv{Lowest common subsumer} as well:
+\begin{eqnarray}
+\funm[lin]{similarity}{c_1,c_2}&=&\displaystyle\frac{2\cdot\fun{\log}{\Prob{\funm{LCS}{c_1,c_2}}}}{\fun{\log}{\Prob{c_1}}+\fun{\log}{\Prob{c_2}}}\\
+\funm[JC]{similarity}{c_1,c_2}&=&\displaystyle\frac{1}{2\cdot\fun{\log}{\Prob{\funm{LCS}{c_1,c_2}}}-\fun{\log}{\Prob{c_1}}\fun{\log}{\Prob{c_2}}}\\
+\end{eqnarray}
+Finally the \flv{Extended gloss overlap} or \flv{Extended Lesk algorithm} uses a set of relations $R$ (like \flv{Hypernym},...):
+\begin{equation}
+\funm[eLesk]{similarity}{c_1,c_2}=\displaystyle\sum_{r,q\in R}\funm{overlap}{\funm{gloss}{\fun{r}{c_1}},\funm{gloss}{\fun{q}{c_2}}}
+\end{equation}
+The probabilities for a class can be calculating by counting them in a corpus:
+\begin{equation}
+\Prob{c_i}=\displaystyle\frac{\Count{c_i}}{\displaystyle\sum_{l=1}^{n}\Count{c_l}}
+\end{equation}
+Note that since a word can have multiple classes, the sum in the denominator can be larger than the number of words in the corpus.
+\end{df}
+\begin{df}[LCS]{Lowest common subsumer}
+The \sb{} of two elements in a graph is the lowest node in the hierarchy that subsumes both elements.
+\end{df}
+\begin{df}{Overlap}
+The overlap between two sets is measured by the number of elements both sets contains:
+\begin{equation}
+\funm{overlap}{A,B}=\Count{\accl{x|x\in A\wedge x\in B}}
+\end{equation}
+\end{df}
+\begin{df}{Corpus based word similarity}
+\sb{} are a group of \flv{Word similarity} methods who perform this task by using a corpus. They are based on word co-occurrences. By using this metric one can generate a \flv{Co-occurrence vector} $\vec{f}$ for each word $w$ where an element in the vector expresses a frequency or a binary value of the occurrence of word $i$ in the context of $w$. By doing this for each word, one can generate a \flv{Term co-occurrence matrix}. One then calculates the similarity by using statistical tests (\flv{Point wise mutual information}, \flv{Lin-association measure}, \flv{T-test}, ...) or the similarity between the two vectors (\flv{Inner product}, \flv{Cosine}, ...).
+\end{df}
+\begin{df}[MI]{Point wise mutual information}
+The \sb{} is a metric that measures the similarity between two elements $w_i$, $w_j$ with the following formula:
+\begin{equation}
+\funm{MI}{w_i,w_j}=\fun{\log_2}{\displaystyle\frac{\Prob{w_i,w_j}}{\Prob{w_i}\cdot\Prob{w_j}}}
+\end{equation}
+Where \Prob{w_i} is the probability of the occurrence in the corpus and \Prob{w_i,w_j} is the probability of co-occurrence.
+\end{df}
+\begin{df}{Lin-association measure}
+The \sb{} calculates the correlation between a word $w$ and a feature $f$. A feature is defined as tuple containing another word $w'$ and a relation $r$. The \sb{} extends the \flv{Point wise mutual information} by including this relation:
+\begin{equation}
+\funm[Lin]{assoc}{w,f}=\fun{\log_2}{\displaystyle\frac{\Prob{w,f}}{\Prob{w}\cdot\Prob{r|w}\cdot\Prob{w'|w}}}
+\end{equation}
+\end{df}
+\begin{df}{T-test}
+The \sb{} computes the difference between the observed and expected means normalized by variance:
+\begin{equation}
+t=\displaystyle\frac{\brak{\overline{x}-\mu}\cdot\sqrt{N}}{s}
+\end{equation}
+One tests the \flv{Null hypothesis} that the words occur independently: $\Prob{w_i,w_j}=\Prob{w_i}\cdot\Prob{w_j}$. The associativity is based on the difference between these two:
+\begin{equation}
+\funm[T-test]{assoc}{w_i,w_j}=\fun{\log_2}{\displaystyle\frac{\Prob{w_i,w_j}-\Prob{w_i}\cdot\Prob{w_j}}{\sqrt{\Prob{w_i}\cdot\Prob{w_j}}}}
+\end{equation}
+\end{df}
+\begin{df}{Manhattan distance}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\fun{\Delta}{\vec{v},\vec{w}}=\displaystyle\sum_{i=1}^{n}{\abs{v_i-w_i}}
+\end{equation}
+\end{df}
+\begin{df}{Euclidean distance}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\fun{\Delta}{\vec{v},\vec{w}}=\sqrt{\displaystyle\sum_{i=1}^{n}{\brak{v_i-w_i}^2}}
+\end{equation}
+\end{df}
+\begin{df}{Inner product similarity}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm{similarity}{\vec{v},\vec{w}}=\transpose{\vec{v}}\cdot\vec{w}=\displaystyle\sum_{i=1}^{n}{v_i\cdot w_i}
+\end{equation}
+\end{df}
+\begin{df}{Cosine similarity}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm{similarity}{\vec{v},\vec{w}}=\displaystyle\frac{\transpose{\vec{v}}\cdot\vec{w}}{\dabs{\vec{v}}\cdot\dabs{\vec{w}}}
+\end{equation}
+\end{df}
+\begin{df}{Dice similarity}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm{similarity}{\vec{v},\vec{w}}=\displaystyle\frac{2\cdot\transpose{\vec{v}}\cdot\vec{w}}{\dabs{\vec{v}}+\dabs{\vec{w}}}
+\end{equation}
+\end{df}
+\begin{df}{Jenson-Shannon divergence}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm[\mbox{JS}]{div}{\vec{v},\vec{w}}=\fun{\Delta}{\vec{v},\vec{w}}+\fun{\Delta}{\vec{w},\vec{v}}
+\end{equation}
+With $\Delta$ the \flv{Kullback-Leibler} distance.
 \end{df}
