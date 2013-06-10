@@ -1,0 +1,15 @@
+\Begin{
+%\KwIn{$O$: observations of length $T$, $V$: output vocabulary, $Q$ hidden states with $\abs{Q}=N$}
+$C\gets\funm{contexts}{\mbox{corpus}}$\;
+\ForEach{$s_k\in\funm{senses}{w}$} {
+  $F_k'\gets\accl{f_m|f_m\in\mbox{initial set of collocations}}$\;
+  $E_k'\gets\accl{c_i\in C|\exists f_m\in F_k':\funm{applies}{f_m,c_i}}$\;
+}
+\Repeat{$E_k=E_k'$}{
+  $F_k\gets F_k'$\;
+  $E_k\gets E_k'$\;
+  $F_k'\gets\accl{f_m\in F_k|\forall n\neq k:\fun{\log}{\displaystyle\frac{\Prob{s_k|f_m}}{\Prob{s_n|f_m}}}>\alpha}$\;
+  $E_k'\gets\accl{c_i\in C|\exists f_m\in F_k':\funm{applies}{f_m,c_i}}$\;
+}
+\Return{$F_k$}
+}
