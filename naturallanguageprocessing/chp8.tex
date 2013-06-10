@@ -1,1 +1,49 @@
 \section{Computational Lexical Semantics}
+\begin{df}{Word sense}
+The \sb{} of a word is the \flv{Lexical meaning}: the meaning defined by the origin and the usage of the word. This might vary according to the context. Such knowledge is stored in dictionaries.
+\end{df}
+\begin{df}{Homonymy}
+\sb{} means a word has two rather different meanings. For instance \stc{bark}.
+\end{df}
+\begin{df}{Plysemy}
+\sb{} means a word has two somehow rather meanings. For instance \stc{opening}.
+\end{df}
+\begin{df}{Metonymy}
+\sb{} is the use of one aspect of a concept or entity to refer to other aspects of the entity or to the entity itself. For instance \stc{White House} refers to the administration whose office is in the White House.
+\end{df}
+\begin{df}{Synonymy}
+\sb{} means two words have the same propositional meaning: they are substitutable by one another without changing the truth conditions of the sentence. For instance \stc{vermin} and \stc{pests}. Many words are near synonyms: they slightly differ in meaning.
+\end{df}
+\begin{df}{Antonymy}
+\sb{} means two words have the opposite meaning. For instance \stc{cold} and \stc{hot}.
+\end{df}
+\begin{df}[Superordinate]{Hypernymy}
+\sb{} means a word is more general than another word. For instance \stc{fruit} is a \flv{Hypernym} of \stc{apple}. This property can be defined in terms of entailment: sense $A$ is a hypernym of sense $B$ if $\forall x:\fun{A}{x}\Leftarrow\fun{B}{x}$. These relations are usually transitive.
+\end{df}
+\begin{df}[Subordinate]{Hyponymy}
+\sb{} means a word is more specific than another word. For instance \stc{apple} is a \flv{Hyponym} of \stc{fruit}. This property can be defined in terms of entailment: sense $A$ is a hyponym of sense $B$ if $\forall x:\fun{A}{x}\Rightarrow\fun{B}{x}$. These relations are usually transitive.
+\end{df}
+\begin{df}{Meronymy}
+\sb{} means a word is a part of another word. For instance \stc{wheel} is a \flv{Meronym} of a \stc{car}.
+\end{df}
+\begin{df}{Holonymy}
+\sb{} means a word is the whole of another word. For instance \stc{wheel} is a \flv{Holonym} of a \stc{car}.
+\end{df}
+\begin{df}{WordNet}
+\sb{} is a lexical database containing \flv{Noun}s, \flv{Verb}s, \flv{Adjective}s and \flv{Adverb}s in English together with their senses. Each of these words has different \flv{Sense}s and each of these senses contains a \flv{Gloss}: a dictionary style definition and a \flv{Synset}: a set of (near) synonyms for the sense. Sometimes usage examples are provided. Besides meanings, \sb{} also defines relations between words.
+\end{df}
+\begin{df}{Word sense disambiguation}
+\sb{} is a process where one tries to select the correct sense of each word in a discourse. In order to do this, the correct context is needed. The processes usually relies on machine learning techniques. Usually these systems rely on two assumptions: \flv{One sense per discourse} and \flv{One sense per collocation}. The context is encoded using \flv{Bag-of-word feature}s and \flv{Collocational feature}s. The process can be carried out 
+\end{df}
+\begin{tm}{One sense per discourse}
+The \sb{}-assumption assumes that the sense of the target word is highly consistent within a document.
+\end{tm}
+\begin{tm}{One sense per collocation}
+The \sb{}-assumption assumes that nearby words provide strong and consistent clues to the sense of a target word, conditional on relative distance, order and syntactical relationship.
+\end{tm}
+\begin{df}{Bag-of-word feature}
+A \sb{} means one assigns a binary value to each word of the vocabulary encoding whether or not a word is present in the context.
+\end{df}
+\begin{df}{Collocational feature}
+A \sb{} means one encodes information about specific positions for a certain scope around the target word, this information for instance consists out of the word and its \flv{Part-of-Speech tag}.
+\end{df}
