@@ -1,6 +1,0 @@
-[NOOT: als ge kudos wil voor u errata beter u naam erbij schrijven.]
-description figuur 2.1: cubus -> kubus [done 20120309]
-paragraaf onder figuur 2.1: veranderT is -> veranderD is [done 20120309]
-3.2.11: is een formaat die hoofdzakelijk bedoelt is -> is een formaat DAT hoofdzakelijk bedoelD is [done 20120309]
-3.2.7: Zo zien we . Naast parallelle (incomplete zin?) [done 20120309]
-3.2.10: wiskunde operaties -> wiskundige operaties [done 20120309]

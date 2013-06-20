@@ -1,0 +1,30 @@
+\documentclass[a4paper,8pt]{article}
+\title{Codex}
+\author{Willem Van Onsem}
+\usepackage{songs}
+\songcolumns{2}
+\renewcommand{\lyricfont}{\small}
+%\renewcommand{\spenalty}{\vvpenalty}
+%\renewcommand{\lastcolglue}{0pt}
+%\renewcommand{\colbotglue}{0pt plus .5\textheight minus 0pt}
+\songpos{0}
+\indexeson
+\newindex{titleidx}{titleidx}
+\begin{document}
+\maketitle
+\showindex{Overzicht van de Liederen}{titleidx}
+\begin{songs}{titleidx}
+
+\input{codex-iovivat}
+\input{codex-dielore}
+\input{codex-jucheidi}
+\input{codex-thesislied}
+\input{codex-mybonnie}
+\input{codex-auclairdelalune}
+\input{codex-yankeedoodledandy}
+\input{codex-wildrover}
+\input{codex-lochlomon}
+
+\end{songs}
+
+\end{document}

@@ -1,0 +1,170 @@
+\section{Definite Programs}
+\subsection{First order Languages}
+\defe{First Order Language}{A \sub{} is a language containing both language dependent and independent parts. The language independent parts consist out of \inre{Variable}s ($x$, $y$, $L$, ...), \inre{Propositional constant}s (true and false), punctuation symbols (``('', ``)'' and ``,'') and \inre{Connective}s ($\neg$, $\wedge$, $\vee$, $\leftarrow$ and $\rightarrow$). The language dependent parts consists out of \inre{Constant}s ($a$, $b$, ...), \inre{Functional symbol}s or \inre{Functor}s ($f$, $g$, ...), \inre{Predicate symbol}s ($p$, $q$, ...), \inre{Term}s (a composition of variables, constants and functors) and \inre{Formula}s (atoms and compositions of atoms).}
+\subsection{Logic Programs}
+\defe{Literal}{A \sub{} is a predicate with the appropriate number of terms.}
+\defe{Positive literal}{A \sub{} is a \inre{Literal} with no negation before the \inre{Predicate}.}
+\defe{Negative literal}{A \sub{} is a \inre{Literal} with a negation before the \inre{Predicate}.}
+\defe{Clause}{A \sub{} is a \inre{Disjunction} of \inre{Literal}s. One implicitly defines \inre{Universal quantification} over all \inre{Variable}s.}
+\defe{Theory}{A \sub{} is a \inre{Conjunction} of \inre{Clause}s.}
+\defe{Logic Program}{A \sub{} is a theory proposed in the \inre{Clausal form} notated as $\mbox{head}\leftarrow\mbox{body}$. The \inre{Head} is a \inre{Disjunction} of \inre{Atom}s and the \inre{Body} a \inre{Conjunction} of \inre{Atom}s.}
+\defe{Definite clause}{A \sub{} is a \inre{Clause} with one \inre{Literal} in the \inre{Head}.}
+\defe[Negative clause]{Definite goal}{A \sub{} is a \inre{Clause} with no \inre{Literal} in the \inre{Head}.}
+\defe{Normal clause}{A \sub{} is an extension on a \inre{Definite clause} where negative literals are allowed in the \inre{Body}.}
+\defe{Disjunctive clause}{A \sub{} is an extension on a \inre{Normal clause} where \inre{Disjunction}s are allowed in the \inre{Head}.}
+\defe{Fact}{A \sub{} is a \inre{Clause} with an empty \inre{Body}.}
+\defe{Unit clause}{A \sub{} is a \inre{Clause} with only one literal.}
+\subsection{Semantics of First Order Logic}
+\defe{Interpretation}{An \sub{} is a mapping between \inre{Symbol}s and \inre{Meaning}. This means \inre{Term}s are mapped to \inre{Object}s and \inre{Atom}s to \inre{Truth}. It specifies a \inre{Domain of objects} together with functions and relations over this domain. More formally an \sub{} of a \inre{Theory} $L$ has a \inre{Pre-interpretation}: a non-empty \inre{Domain} $D$, for each \inre{Constant} $c$ in $L$ an assignment $c_I\in D$ and for each $n$-ary \inre{Functor} an assignment $f_I:D^n\rightarrow D$. An interpretation proposes a $n$-ary relation\footnote{With $n=0$, there are two relations, the empty relation and the relation with the empty tuple.} over $D^n$ for each $n$-ary \inre{Predicate} $p/n$.}
+\defe{Truth}{The truth of an \inre{Atom} $\fun{p}{t_1,\ldots,t_n}$ is true if $\tupl{\fun{V}{t_1},\ldots,\fun{V}{t_n}}$ is in the relation $p_I$. This is notated as $I\vDash_V\fun{p}{t_1,\ldots,t_n}$. The \sub{} of a compound formula is defined as follows:
+\begin{itemize}
+ \item $I\vDash_V\neg F$ if and only if $\neg\brak{I\vDash_V F}$
+ \item $I\vDash_V F\vee G$ if and only if $\brak{I\vDash_V F}\vee\brak{I\vDash_V G}$
+ \item $I\vDash_V\forall x: F$ if and only if $I\vDash_{\funf{V}{x/d}} F$ for all $x\in D$.
+\end{itemize}
+Other forms can be reduced by logical rewrite rules.
+}
+\defe{Empty formula}{A \sub{} is a \inre{Clause} with an empty \inre{Head} and \inre{Body}. The \sub{} is always false. The \sub{} is sometimes notated as $\square$.}
+\defe{True formula}{A \sub{} $F$ is true in \inre{Interpretation} if and only if $F$ is true for all \inre{Variable assignment}s $V$.}
+\defe{Program}{A \sub{} is a set of \inre{Formula}s.}
+\defe{Model}{A \sub{} is an \inre{Interpretation} $I$ for a \inre{Program} $P$ where $I\vDash F$ for all $F\in S$.}
+\defe[Consistent program]{Satisfiable program}{A program $S$ is consistent if and only if $S$ has a \inre{Model}.}
+\defe[Inconsistent program]{Unsatisfiable program}{A program $S$ is inconsistent if and only if $S$ has no \inre{Model}s.}
+\defe{Valid program}{A program $S$ is valid if and only if $S$ has only \inre{Model}s.}
+\subsection{Substitutions}
+\defe{Substitution}{A \sub{} is a function mapping \inre{Expression}s to \inre{Expression}s by replacing \inre{Variable}s by \inre{Term}s. \sub{}s are represented in the following form: $\theta=\accl{x_1/t_1,\ldots,x_n/t_n}$ where $x_i$ is a \inre{Variable} and $t_i$ a \inre{Term}. When one applies a \sub{} to an expression all occurrences of the \inre{Variable}s are replaced simultaneously. This is notated as $E\theta$.}
+\defe{Renaming substitution}{A \sub{} is a form of \inre{Substitution} where one changes the names of the variables in a reversible way. The motivation of such substitutions is that names are often irrelevant. Different formalizations are possible including \inre{Apt renaming substitution} and \inre{Lloyd renaming substitution}.}
+\defe{Apt renaming substitution}{The \sub{} is a \inre{Renaming substitution} where one maps \inre{Variable}s to a permutation of these \inre{Variable}s. For example: $\theta=\accl{y/y',z/z',y'/y,z'/z}$.}
+\defe{Variant}{We call $E$ a \inre{Variant} of $E'$ if $E'=\theta E$ with $\theta$ a \sub{}.}
+\lema{Apt renaming substitution lemma}{If $E$ is a \inre{Variant} of $F$, $E$ is an \inre{Instance} of $F$ and $F$ an \inre{Instance} of $E$.}
+\defe{Lloyd renaming substitution}{The \sub{} states that two expressions $E$ and $F$ are \inre{Variant}s if they are \inre{Instance}s of each other. Therefore a renaming substitution is of the form $\theta=\accl{x_1/y_1,\ldots,x_n/y_n}$ where $x_i\in\funm{Var}{E}$ and $y_i\notin\funm{Var}{E}\setminus\accl{x_1,\ldots,x_n}$ where $y_i\neq y_j$ for all $i\neg j$.}
+\lema{Lloyd renaming substitution lemma}{If $E$ and $F$ are \inre{Variants}, then a \inre{Lloyd renaming substitution} exists.}
+\defe{Substitution composition}{Given two \inre{Substitution}s $\theta=\accl{x_1/t_1,\ldots,x_n/t_n}$ and $\sigma=\accl{y_1/s_1,\ldots,y_m/s_m}$, then the composition $\theta\sigma=\accl{x_1/t_1\sigma,\ldots,x_n/t_n\sigma,y_1/s_1,y_m/s_m}\setminus\brak{\accl{x_i/t_i\sigma|x_i=t_i\sigma}\cup\accl{y_i/s_i|y_i\in\accl{x_1,\ldots,x_n}}}$.}
+\lema{Substitution composition associativity}{For each three \inre{Substitution}s $\theta,\sigma,\gamma$ and an \inre{Expression} $E$, it holds that $\brak{E\theta}\sigma=E\brak{\theta\sigma}$ and $\brak{\theta\sigma}\gamma=\theta\brak{\sigma\gamma}$.}
+\defe{More general substitution}{A \inre{Substitution} $\theta$ is more general than a \inre{Substitution} $\sigma$ if $\exists\gamma:\sigma=\theta\gamma$. One can define such relation between equivalence classes of terms. This relation is \inre{Reflexive} and \inre{Transitive}. The \inre{Variant} relation is \inre{Transitive}, \inre{Reflexive} and \inre{Symmetric}, therefore it is an \inre{Equivalence relation}. Another solution is to use a reference domain $V$ where $\theta\geq_V\sigma$ if and only if $\exists\gamma:\theta\gamma|_V=\sigma|_V$.}
+\subsection{Unifiers}
+\defe{Unifier}{$\theta$ is a \sub{} of $A$ and $B$ if and only if $A\theta=B\theta$.}
+\defe{Most general unifier}{The \sub{} is an \inre{Unifier} more general than any other. Algorithm than can calculate the \sub{} are \inre{Robinson's algorithm}, \inre{Paterson and Wegman's algorithm} and the \inre{Martelli-Montanari algorithm}.}
+\defe{Robinson's algorithm}{\sub{} is an algorithm that computes the \inre{Most general unifier} given two expressions. The algorithm uses a \inre{Disagreement set} containing the first pair of sub-terms in the expression which are still different. The algorithm adds this to the unifier and substitutes one of the expressions by this mapping. \algref{robinson} lists the entire algorithm. The algorithm can be quite expensive since substitutions can blow up the expressions.}
+\defe{Paterson and Wegman's algorithm}{The \sub{} is an algorithm that computes the \inre{Most general unifier}. The algorithm works with tree structures of the expressions where differences are propagated downwards in the trees. \algref{paterson} lists the entire algorithm. The algorithm works linear in the input size. Potential optimizations to the algorithm are the fact that each class should only propagate once and thus one always selects the \inre{Root class} for propagation: a class such that the classes of parent nodes have been propagated.}
+\defe{Martelli-Montanari algorithm}{The \sub{} is an algorithm that computes the \inre{Most general unifier}. It manipulates a set of expressions until the set has a trivial \inre{Most General Unifier}. Basically their are four operations: remove, peel, switch and substitute. The termination can be proven by counting the number of elements in the set.}
+\defe{Relevant unifier}{A \inre{Unifier} of terms $A$ and $B$ is relevant if and only if it contains only \inre{Variable}s from $A$ and $B$.}
+\lema{Idempotent substitution}{For each \inre{Substitution} $\theta=\accl{x_1/t_1,\ldots,x_n/t_n}$, $\theta\theta=\theta$ if and only if for all $i,j: x_i\notin\funm{Var}{t_j}$.}
+\lema{Unification algorithm}{Unification algorithms produce always an \inre{Most General Unifier} who is idempotent and relevant.}
+\lema{Substitution variable elimination}{An \inre{Idempotent substitution} eliminates all the variables from the domain of the substitution.}
+\subsection{SLD-proof procedure}
+\defe{SLD}{\sub{} SLD is an abbreviation of \inre{Selection Rule}, Linear and \inre{Definite program}. It is a collection of procedures to derive a linear resolution for \inre{Definite programs} using a \inre{Selection rule}.}
+\defe{SLD-resolution}{\sub{} is a procedure were given a \inre{Definite program} $P$ and a \inre{Definite goal} $N=\leftarrow A_1,\ldots,A_n$ and a clause $C=A\leftarrow B_1,\ldots,B_k\in P$, one replaces the initial goal with $N'=\leftarrow\brak{A_1,\ldots,A_{i-1},B_1,\ldots,B_k,A_{i+1},\ldots,A_n}\theta$ with $\theta=\funm{mgu}{A,A_i}$. The procedure consists out of four steps:
+\begin{enumerate}
+ \item Select $A_i$
+ \item \inre{Unify} $A$ and $A_i$
+ \item If successful, then replace $A_i$ by $B_1,\ldots,B_k$
+ \item Apply $\theta$ on the resolvent
+\end{enumerate}
+The \sub{} is a sound inference rule.}
+\defe{SLD-derivation}{\sub{} is a process where one repeats the \inre{SLD-proof procedure} until no further rule can be derived. The procedure works with the following variables:
+\begin{enumerate}
+ \item $C_i$: a standardized apart \inre{Variant} of a \inre{Clause} in $P$ where the variables have not been used in the derivation so far.
+ \item $N_{i+1}$ the \inre{Resolvent} of $N_i$ and $C_i$
+ \item $\theta_i$ the \inre{Most general unifier} obtained from unifying the \inre{Head} of $C_i$ and the selected \inre{Atom} in $N_i$.
+\end{enumerate}.
+The process ends with \inre{SLD-refutation} if a finite SLD-derivation ends with $\square$. Otherwise when a finite SLD-derivation does not result in a refutation but the last goal is not empty (but one cannot derive any rules anymore) the answer is \inre{SLD-failure}. When \inre{SLD-refutation} is derived $P\wedge N$ is an \inre{Inconsistent theory} (assuming $P$ us consistent. Therefore $\neg N$ is true in every model of $P$: $P\vDash\neg N$). The \inre{Composition} of $\theta_0\theta_1\ldots\theta_l$ gives bindings for the variables of the goal such that $N\theta_0\ldots\theta_l$ is a \inre{Valid theory}. This composition is also called the \inre{Computed answer substitution}. In order to compute such answer, we restrict the substitutions to variables of the initial goal.}
+\defe[Selection rule]{Computation rule}{A \sub{} is a mechanism that selects the derivation rule $C_i$ given the current goal $N_k$ and the history of the previous selections.}
+\lema{Disjunction of SLD-derivations}{For all $n>m$, $\funm{Var}{N_n}\cap\funm{Dom}{\theta_m}=\emptyset$ and $\funm{Var}{N_n\theta_n}\cap\funm{Dom}{\theta}=\emptyset$. This can be proven by induction using the fact that the substitutions are idempotent and relevant.}
+\lema{Variant lemma}{Consider a partial \inre{SLD-derivation} $N_0,\ldots,N_i$ and consider a second derivation $N_0',\ldots,N_i'$ with $N_0'$ a \inre{Variant} of $N_0$. With each step: the derivation selects the atom at the same position as the first and $C_i'$ is a variant of $C_i$, then $N_i'$ is a \inre{Variant} of $N_i$ more the resultants at level $i$ are also variants.}
+\coro{Consider an \inre{SLD-derivation} $N_0\ldots\square$ with \inre{Computed answer substitution} $\theta$ and a second derivation starting from $N_0$ as well. If the second methods selects the atoms at the same positions but uses other \inre{Variant}s of the \inre{Clause}s $C_i$, and which has \inre{Computed answer set} $\sigma$, then $N_0\theta$ and $N_0\sigma$ are \inre{Variant}s. This however does not mean that $\theta$ and $\sigma$ are \inre{Variant}s in general.}
+\subsection{Semantics of SLD}
+\subsubsection{Soundness of SLD-resolution}
+\lema{Soundness of the SLD-resolution step}{Given a goal $N=\leftarrow\calA=\leftarrow A_1,\ldots A_n$ and a clause $C=A\leftarrow B_1,\ldots,B_k$. Then the resolvent $R=\leftarrow\calB=\leftarrow A_1\theta,A_{i-1}\theta,B_1\theta,\ldots,B_k\theta,A_{i+1}\theta,\ldots,A_{n}\theta$ with $\theta=\funm{mgu}{A_i,A}$, then $C\vDash\calB\rightarrow\calA\theta$.
+\begin{proof}
+We will show that \fun{I}{\calB\rightarrow\calA\theta} is true for every interpretation $I$ for which \fun{I}{C} is true. We consider two cases:
+\begin{itemize}
+ \item If \fun{I}{\calB} is false, then \fun{I}{\calB\rightarrow\calA\theta} is clearly true (definition of \inre{Implication}).
+ \item If \fun{I}{\calB} is true and \fun{I}{A_1\theta,\ldots,A_{i-1}\theta,A_{i+1}\theta,\ldots,A_n\theta} is true. Since $I$ is a model of $C$ then \fun{I}{A\theta} is true, but $A\theta=A_i\theta$, so \fun{I}{A_i\theta} is true. Thus \fun{I}{A_1\theta,\ldots,A_n\theta}=\fun{I}{\calA\theta} is true. Thus \fun{I}{\calB\rightarrow\calA\theta} is true.%then \fun{I}{B_1\theta,\ldots,B_k\theta} is true
+\end{itemize}
+\end{proof}\lemlab{soundnesssldstep}}
+\lema{Soundness of SLD-resolution}{
+Given a program $P$ and a goal $N=\leftarrow\calA=\leftarrow A_1,\ldots,A_n$, then there exists an SLD-refutation of $P\cup\accl{\leftarrow\calA}$ with \inre{Substitution}s $\theta_0,\ldots,\theta_{m-1}$ (the \inre{Computed answer set}), then $P\vDash\brak{A_1\wedge\ldots\wedge A_n}\theta_0\ldots\theta_{m-1}$.
+\begin{proof}
+We define the refutation as $\leftarrow\calA_0=\leftarrow\calA$ and therefore $\leftarrow\calA_1,\ldots,\leftarrow\calA_m=\square=\leftarrow\mbox{true}$. Since we can apply \lemref{soundnesssldstep} we can state that $P\vDash\calA_i\rightarrow\calA_{i-1}\theta_{i-1}$. By applying the \inre{Modus Ponens} we can state that $P\vDash\calA_i\rightarrow\calA_0\calA_0\theta_0\ldots\theta_{m-1}$. Since $\calA_0=\brak{A_1\wedge\ldots\wedge A_n}\theta_0\ldots\theta_{m-1}$, we can state that $P\vDash\brak{A_1\wedge\ldots\wedge A_n}\theta_0\ldots\theta_{m-1}$
+\end{proof}
+\lemlab{soundnesssld}}
+\coro{If there exists an \inre{SLD-refutation} of $P\cup\accl{\leftarrow\calA}$, then $P\cup\accl{\leftarrow\calA}$ is inconsistent.
+\begin{proof}
+According to \lemref{soundnesssld}, $P\vDash\calA\theta_0\ldots\theta_{m-1}$, thus $P\vDash\exists\vec{x}\calA$. Therefore $P\cup\accl{\neg\exists\vec{x}\calA}$ is inconsistent and $P\cup\accl{\forall\vec{x}\neg\calA}$ as well. Thus $P\cup\accl{\forall\vec{x}\brak{\leftarrow\calA}}$ is inconsistent and therefore $P\cup\accl{\leftarrow\calA}$.
+\end{proof}}
+\subsubsection{Herbrand Models}
+\defe{Herbrand universe}{The \sub{} $U_L$ of a \inre{Language} $L$ (with at least one constant) is the set of all ground terms.}
+\defe{Herbrand interpretation}{The \sub{} is an \inre{Interpretation} with a fixed \inre{Pre-interpretation}: the domain is the \inre{Herbrand Universe} and constants $c$ are preinterpreted as $\fun{J}{c}=c$ as well as functions: $\fun{J}{\fun{f}{t_1,\ldots,t_n}}=\fun{f}{\fun{J}{t_1},\ldots,\fun{J}{t_n}}$. Variable assignments happens by mapping the variables to the ground terms $U_L$. Term assignment maps the term to the ground term of $U_L$. Predicates are interpreted as a set of ground tuples in $U_L^n$ thus $\fun{p}{t_1,\ldots,t_n}$ is true under variable assignment $V$ if $\tupl{\fun{V}{t_1},\ldots,\fun{V}{t_n}}$ belongs to \fun{I}{p/n}.}
+\defe{Herbrand base}{A \sub{} $B_L$ is the set of all ground atoms in the \inre{Language} $L$. Therefore a \inre{Herbrand interpretation} is a subset of the \sub{}.}
+\defe{Herbrand model}{A \sub{} is a \inre{Herbrand interpretation} which is a \inre{Model}.}
+\lemma{Completeness of the Herbrand model}{Given $S$ is a set of universal formulas, thus of the form $\forall x:F$, with $F$ quantifier free. If $S$ has a \inre{Model}, it has a \inre{Herbrand model}. Therefore for proving validity or inconsistency of a set of clauses, it suffices to check \inre{Herbrand interpretation}s. The lemma however does not hold for all formula's: for instance existential formulas with negations need to introduce \inre{Skolem constant}s.
+\begin{proof}
+Given an interpretation $I$, constructs $I_H$ as follows:
+\begin{equation}
+I_H=\accl{\fun{p}{t_1,\ldots,t_n}|\funm{ground}{\fun{p}{t1,\ldots,t_n}}\wedge\fun{p_I}{\fun{I}{t_1},\ldots,\fun{I}{t_n}}}
+\end{equation}
+For every formula, one can show, by induction over the structure, if $I\vDash F$, then $I_H\vDash F$.
+\end{proof}}
+\lema{Herbrand model intersection property}{The intersection of \inre{Herbrand model}s is a \inre{Herbrand model}. Therefore there exists a least model: the subset of all others and what is true in the least model is true in all models. One can construct the minimal model with the \inre{Immediate consequence operator} $T_P$.}
+\subsubsection{Fixpoint Semantics}
+\defe{Immediate consequence operator}{The \sub{} $T_P$ is an operator which transforms given a herbrand interpretation with ground atoms and clauses from the ground atoms $P$ this set in a new set of ground atoms. More formally $A\in\fun{T_P}{I}$ if and only if $A\leftarrow B_1,\ldots,B_n$ is a ground instance of a clause in $P$ and $\accl{B_1,\ldots,B_n}\subseteq I$.}
+\lema{Monotonicity of the immediate consequence operator}{$T_P$ is monotonic: $\forall I,J,P:I\subseteq J\rightarrow\fun{T_P}{I}\subseteq\fun{T}{J}$.}
+\lema{Continuity of the immediate consequence operator}{For an infinite sequence $I_0\subseteq I_1\subseteq\ldots$, $\fun{T_P}{\displaystyle\cup_{i=0}^\infty I_i}=\displaystyle\cup_{i=0}^{\infty}\fun{T_P}{I_i}$}
+\lema{Immediate consequence operator model}{$I_H$ is a model of $P$ if and only if $\fun{T_P}{I_H}\subseteq I_H$ with $I_H$ a pre-fixpoint of $T_P$.
+\begin{proof}
+Consider all ground clauses $A\leftarrow\calB$.
+\begin{description}
+ \item [$\Rightarrow$] Assume $I_H$ is a model, thus: $A\in\fun{T_P}{I_H}$ if $\calB\subseteq I_H$. Since $I_H$ is a model, also $A\in I_H$ hence $\fun{T_P}{I_H}\subseteq I_H$.
+ \item [$\Leftarrow$] Assume $\fun{T_P}{I_H}$, then $\calB$ implies $A\in\fun{T_P}{I_H}$ and by assumption $A\in I_H$, hence $I_H$ is a model of the clause.
+\end{description}
+\end{proof}}
+\lema{Powerset of the Herbrand base is a complete lattice}{The set of all subsets of the \inre{Herbrand base} $B_P$ is a \inre{Complete lattice} under the partial order $\subseteq$ with \inre{Least upper bound} $\funm{lub}{I,J}=I\cup J$ and the \inre{Greatest lower bound} $\fun{glb}{I,J}=I\cap J$.}
+\lema{Upwards continuity of a complete lattice}{Consider $x_0\leq x_1\leq\ldots$, then $\tpo{\lub{x_0,x_1,\ldots}}=\lub{\tpo{x_0},\tpo{x_1},\ldots}$.}
+\lema{Downwards continuity of a complete lattice}{Consider $x_0\geq x_1\geq\ldots$, then $\tpo{\glb{x_0,x_1,\ldots}}=\glb{\tpo{x_0},\tpo{x_1},\ldots}$.}
+\defe{Fixpoint}{$I$ is a \sub{} of $T$ if $\fun{T}{I}=I$.}
+\defe{Pre-fixpoint}{$I$ is a \sub{} of $T$ if $\fun{T}{I}\subseteq I$.}
+\defe{Post-fixpoint}{$I$ is a \sub{} of $T$ if $\fun{T}{I}\supseteq I$.}
+\lema{Fixpoint theorem from Knaster and Tarski}{A \inre{Monotonic} operator $T$ over a \inre{Complete lattice} has a \inre{Least fixpoint} \lfp{T} which is also the \inre{Least pre-fixpoint} and the \inre{Greatest fixpoint} \gfp{T} which is also the \inre{Greatest post-fixpoint}.}
+\defe{Upwards powers of monotonic operators}{We define the $n$-th upward power of $T$ with respect to $I$ recursively as follows:
+\begin{equation}
+\groupa{\funup{T}{0}{I}=I\\
+\funup{T}{\brak{n+1}}{I}=\fun{T}{\funup{T}{n}{I}}\\
+\funup{T}{\omega}{I}=\displaystyle\cup_{n<\omega}\funup{T}{n}{I}
+}
+\end{equation}
+With $\omega$ the \inre{First infinite ordinal}: the limit of $0,1,\ldots$. In this document we will abbreviate $\tpupn=\funup{T_P}{n}{\emptyset}$.
+}
+\defe{Downwards powers of monotonic operators}{We define the $n$-th downward power of $T$ with respect to $I$ recursively as follows:
+\begin{equation}
+\groupa{\fundn{T}{0}{I}=I\\
+\fundn{T}{\brak{n+1}}{I}=\fun{T}{\fundn{T}{n}{I}}\\
+\fundn{T}{\omega}{I}=\displaystyle\cap_{n<\omega}\fundn{T}{n}{I}
+}
+\end{equation}
+With $\omega$ the \inre{First infinite ordinal}: the limit of $0,1,\ldots$. In this document we will abbreviate $\tpdnn=\fundn{T_P}{n}{B_P}$.}
+\lema{Kleene fixed point}{If $T$ is \inre{Upwards continuous} then $\tpupw$ is the \inre{Least fixpoint} and the \inre{Least pre-fixpoint} of $T_P$. If $T$ is \inre{Downwards continuous} then $\tpdnw$ is the \inre{Greatest fixpoint} and \inre{Greatest post-fixpoint}. $T_P$ is not \inre{Downwards continuous}.}
+\lema{Characterization theorem Van Emden-Kowalski}{A \inre{Definite program} $P$ has \inre{Herbrand model} $M_P$ which satisfies:
+\begin{itemize}
+ \item $M_P$ is the \inre{Least Herbrand model} of $P$.
+ \item $M_P$ is the \inre{Least pre-fixpoint} of $T_P$.
+ \item $M_P$ is the \inre{Least fixpoint} of $T_P$.
+ \item $M_P=\tpupw$.
+\end{itemize}.}
+\subsubsection{Completeness of SLD}
+\defe{Success set}{The \sub{} of $P$ is the set of all \inre{Ground atom}s $A$ such that $P\cup\accl{\leftarrow A}$ has an \inre{SLD-refutation}.}
+\coro{The \inre{Success set} is contained in $M_P$.
+\begin{proof}
+SLD is sound so $P\vDash A$, so every model of $P$ is a model of $A$, so also $M_P$ is, and $\fun{I_H}{A}$ so $A\in M_P$.
+\end{proof}}
+\lema{Lifting lemma}{If there exists a refutation of $P\cup\accl{\leftarrow\calA\theta}$, then also for $P\cup\accl{\leftarrow\calA}$.}
+\lema{Completeness results for SDL}{The \inre{Success set} of a program is equal to $M_P$.}
+\lema{SLD-refutation for an inconsistent set}{If $P\cup\accl{\leftarrow\calA}$ is inconsistent then an SLD-refutation starting from $\leftarrow\calA$ exists.
+\begin{proof}
+The set is inconsistent if $\mbox{false}\leftarrow\calA$ is false in the minimal model $M_P$. Since there exists a \inre{Variable assignment} $\theta$, $\leftarrow\calA\theta$ is false in $M_P$ as well and $\calA\theta=\brak{\ldots,A_i,\ldots}\theta$ is true in $M_P$. $A_i\theta\in M_P$ is ground, so a refutation of $A_i$ exists. By using the \inre{Lifting lemma}, there exists a refutation for $\leftarrow\calA$.
+\end{proof}}
+\lema{Genaral refutation}{If $P\vDash\calA\tau$ then there exists an \inre{SLD-refutation} of $\leftarrow\calA$ with \inre{Computed answer set} $\sigma$ such that $\calA\sigma$ is more general than $\calA\sigma$ is more general than $\calA\tau$. This does not mean that $\sigma$ is more general than $\tau$.}
+\lema{Independence of the computation rule}{If \pcuplaa{} is inconsistent, then in every \inre{SLD-tree} for \pcuplaa{}, there exists a refutation of \pcuplaa{}. The selection of the literal in a resolution step does not matter. But one selection can cause infinite brances, another keeps the tree finite.}
+\lema{Switching lema}{If steps are reordered, the resolvent obtained after the reordered steps is identical up to renaming. In other words you can completely reshuffle a derivation.}
+\subsection{Constraint Logic Programming}
+\defe{Resolution step in constraint logic programming}{Constraint logic programming works with a set of equations $E_i$ which is initially empty. In a resolution step, one selects an \inre{Atom} $A_j$ and a clause \clausea{A}{B}{k} where $\funm{pred}{A}=\funm{pred}{A_j}$. If $E_{i+1}=E_i\cup\accl{A=A_j}$ is solvable. Then one derives the resolvent $A_1,\ldots,A_{j-1},B_1,\ldots,B_k,A_{j+1},\ldots A_m;E_{i+1}$.}

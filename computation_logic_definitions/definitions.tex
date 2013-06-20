@@ -1,0 +1,57 @@
+\documentclass[a4paper]{article}
+\usepackage[cm]{fullpage}
+\usepackage{amsthm,amsfonts,amsmath,amssymb}
+\makeindex
+\newtheorem{defen}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corol}{Corollary}
+\newcommand{\sub}{}
+\newcommand{\defe}[3][]{\renewcommand{\sub}{\emph{#2}}\begin{defen}[#2]\index{#2|textbf}#3\end{defen}}
+\newcommand{\lema}[2]{\begin{lemma}[#1]#2\end{lemma}}
+\newcommand{\coro}[1]{\begin{corol}#1\end{corol}}
+\newcommand{\inre}[1]{\index{#1}\emph{#1}}
+\newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\newcommand{\brkf}[1]{\ensuremath{\left[#1\right]}}
+\newcommand{\accl}[1]{\ensuremath{\left\{#1\right\}}}
+\newcommand{\tupl}[1]{\ensuremath{\left\langle #1\right\rangle}}
+\newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
+\newcommand{\funm}[2]{\fun{\mbox{#1}}{#2}}
+\newcommand{\funf}[2]{\ensuremath{#1\brkf{#2}}}
+\newcommand{\funup}[3]{\fun{#1\uparrow #2}{#3}}
+\newcommand{\fundn}[3]{\fun{#1\downarrow #2}{#3}}
+\newcommand{\tpo}[1]{\fun{T_P}{#1}}
+\newcommand{\lub}[1]{\funm{lub}{#1}}
+\newcommand{\glb}[1]{\funm{glb}{#1}}
+\newcommand{\lfp}[1]{\funm{lfp}{#1}}
+\newcommand{\gfp}[1]{\funm{gfp}{#1}}
+
+\newcommand{\tpupn}{\ensuremath{T_P\uparrow n}}
+\newcommand{\tpdnn}{\ensuremath{T_P\downarrow n}}
+\newcommand{\tpupw}{\ensuremath{T_P\uparrow \omega}}
+\newcommand{\tpdnw}{\ensuremath{T_P\downarrow \omega}}
+\newcommand{\pcuplaa}{\ensuremath{P\cup\accl{\leftarrow\calA}}}
+\newcommand{\clausea}[3]{\ensuremath{#1\leftarrow #2_{1},\ldots,#2_{#3}}}
+
+\newcommand{\lemlab}[1]{\label{lem:#1}}
+\newcommand{\algref}[1]{Algorithm~\ref{alg:#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{lem:#1}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+
+\newcommand{\groupa}[1]{\ensuremath{\left\{\begin{array}{l}#1\end{array}\right.}}
+\newcommand{\groupb}[1]{\ensuremath{\left\{\begin{array}{ll}#1\end{array}\right.}}
+
+\title{Computational Logic:\\Definitions and Theorems}
+\author{Willem Van Onsem}
+\date{June 2013}
+\begin{document}
+\maketitle
+\tableofcontents
+\input{definite}
+\input{general}
+\input{termination}
+\input{specialization}
+\input{abstraction}
+\theindex
+\end{document}
