@@ -1,0 +1,53 @@
+Realism/A phylosophical position arguing that there is a real world to sense.
+Positivism/A phylosophical position arguing that all we really have to go on is the evidence of the senses, so the world might be nothing more than elaborate hallucination.
+Euclidean/Reffering to the geometry of the world, so named in honor of Euclid, the ancient Greek geometer of the third century BCE. In Euclidean geometry parallel lines remain parallel as they are extended in space, objects maintain the same size and shape as they move around in space, the internal angles of a trianglee always add up to 180 degrees, and so forth.
+Binocular summation/The combination (or summation) of signals from each eye in ways that make performance on many tasks better with both eyes than with either eye alone.
+Binocular disparity/The differences between the two retinal image of the same scene. Disparity is the basis of stereopsis, a vivid perception of the three-dimensionality of the world that is not available with monocular vision.
+Monocular/With one eye.
+Stereopsis/The ability to use binocular disparity as a cue to depth.
+Depth cues/Information about the third dimension (dept) of visual space. Depth cues may be monocular or binocular.
+Monocular depth cue/A depth cue that is available even when the world is viewed with one eye alone.
+Binocular depth cue/A depth cue that relies on information from both eyes. Sterepsis is the basic example in humans, but convergance and the ability of an object to see more of an object than one eye sees are also binocular depth cues.
+Occlusion/A cue to relative depth order in which, for example, one object obstructs the view of part of another object.
+Nonmetrical depth cue/A depth cue that provides information about the depth order (relative depth), but not depth magnitude (e.g., his nose is in front of his face).
+Metrical depth cue/A depth cue that provides quantitative information about the distance in the third dimension.
+Projective geometry/For purpose of studying perception of the three-dimensional world, the geometry that describes that transformations that occur when the three dimensional world is projected onto a two dimensional surface. For example, parallel lines do not converge in the world, but they do in the two-dimensional projection.
+Relative size/A comparision of size between objects without knowing the absolute size of either one.
+Texture gradient/A depth cue based on the geometric fact that items of the same size from smaller images when they are farther away. An array of items that change in size accross the image will appear to form a surface in depth.
+Relative height/As depth cue, the observation that objects at different distances from their view on the ground plane will form images at different heights in the retinal image. Object fariter away will be seen as higher in the image.
+Familiar size/A depth cue based on the knowledge of the typical size of objects like humans and pennies.
+Relative metrical depth cue/A depth cue that could specify, for example, that object A was twice as far away as object B without providing information about the absolute distance to either A or B.
+Absolute metrical depth cue/A depth cue that provides absolute information abou the distance in the third dimension (e.g., his nose sticks out 4 centimeter in front of his face).
+Arial perspective (or haze)/ A depth cue based on the implicit understanding that light is scattered by the atmosphere. More light is scattered by the atmosphere. Thus more distant objects are subject to more scatter and appear fainter, bluer, and less destinct.
+Linear perspective/A depth cue based on the fact that lines that are parallel in the three dimenional world will appear to converge in a two-dimensiona image.
+Vanish point/The apparent point to which parallel lines receding in depth converge.
+Pictoral depth cue/A cue to distance or depth used by artist to depict three dimensional depth in two-dimensional pictures.
+Anamorphosis (or anamorphosis projection)/Use of the rule of linear respective to create a two-dimensional image so distorted that it looks correct only when viewed from special angle or with a mirror that conters the distoration.
+Motion parallax/An important depth cue that is based on the head movement. The geometric information obtained from an eye in two different postions at two different tims is simular to the information from tow eyes in different positions in the head at the same time.
+Accommodation/The process by which the eye changes it's focus (in which the lens gets fatter as gaze is directed towards nearer objects).
+Convergence/The ability of the two eyes to turn inward, often used to place the two images of a feature in the world on corresponding location in the two retinal images (typically on the fovea of each eye). Convergence reduces the disparity of that feature to zero (or near zero).
+Divergence/The ability of the two eyes to turn outward, often used to place the two images of a feature in the world on corresponding location in the two retinal images (typically on the fovea of each eye). Convergence reduces the disparity of that feature to zero (or near zero).
+Corresponding retinal points/A geometric concept stating that points on the retina of each eye were the monocular retinal images of a single object are formed are at the same distance from the fovea in each eye. The two foveas are also corresponding points.
+Vieth-Müller circle/The location of objects whose images fall on the geometrically corresponding points in the two retinas. If life were simple, this circle would be the horopter, but life is not simple.
+Horopter/The location of objects whose images lie on corresponding points. The surface of zero disparity.
+Diplopia/Double vision. If visible in bouth eyes, stimuli falling outside the Panum's fusional area will appear diplopic.
+Panum's fusional area/The region of space in from and behond the horopther. Within which binocular single vision is possible.
+Crossed disparity/The sign of disparity created by objects in from of the place of fixation (the horopther). The term crossed is used because images of objects located in from of the horopther appear to be displaced to the left in the right eye, and to the right in the left eye.
+Uncrossed disparity/The sign of disparity created by objects behind the place of fixation (the horopther). The term uncrossed is used because images of objects located in from of the horopther appear to be displaced to the right in the right eye, and to the left in the left eye.
+Stereoscope/A device for presenting one image to one eye and another image to the other eye. Stereopscos can be used to present dichoptic stimuli for stereopsis and binocular rivalry.
+Free fusion/The technique of converging (crossing) or diverging the eyes in order to view a stereogram without stereoscope.
+Correspondance problem (binocular vision)/The problem of figuring out which bit of image in the left eye should be matched with which bit in the right eye. The problem is particulary vexing when the images consist of thousands of simular features like dots in random dot stereograms.
+Uniqueness constraint/In stereopsis, the observation that a feature of the world is represented exactly once in each retinal image. The constraint simplifies the correspondence problem.
+Continuity constraint/In stereopsis, the observation that except the edges of objects, neighbouring points in the world lie at a similar distances from the viewer. This is one of the several constraints that have been proposed to solve the corespondence problem.
+Absolute disparity/A difference in the acual retinal coordinates in the left and the right eyes of the images of a feature in a visual scene.
+Relative disparity/The difference in absolutie disparity of two elements in a visual scene.
+Bayesian approach/A statistical model based on Revend Thomas Bayes insight that prior knowledge could influence our estimates of the probability of current event.
+Ideal observer/A theoretical observer witch complete access to the best available information and the ability to combine different sources of information in the optimal manner. It can be usefull to compare human performance to that of an ideal observer.
+Binocular rivalry/The competion between tow eyes to control of vision perception, which is evident when completely different stimuli are presented to the two eyes.
+Stereoacuity/A mesure of the smallest binocular disparity that can generate a sensation of depth.
+Diochoptic/Reffering to the presentation of two stimuli/One to each eye. Different from binocular presentation, which could involve both eyes looking at a single stimulus.
+Critical period/In the study of development, a period of time when the organism is particulary susceptible to develop mental change. There are critical periods in the development of binocular vision, human language and so on.
+Strabismus/A misalginment of the two eyes such that a single object in space is imaged on the fovea of one eye and on a nonfovea area of the other (turned eye).
+Estropia/Strabismus wich one eye deviates inward.
+Exotropia/Strabismus wich one eye deviates outward.
+Suppression/In vision, the inhibition of unwanted image. Suppression occurs frequently in persons with strabismus.

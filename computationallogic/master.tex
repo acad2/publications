@@ -1,0 +1,193 @@
+\documentclass{article}
+\usepackage{amsmath,amsfonts,amsthm}
+\usepackage[cm]{fullpage}
+\title{Computational Logic:\\glossary, definition and theorems}
+\author{Willem Van Onsem}
+\newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\newcommand{\acl}[1]{\ensuremath{\left\{#1\right\}}}
+\newcommand{\acl}[1]{\ensuremath{\left\langle #1\right\rangle}}
+\newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
+\newcommand{\funm}[2]{\ensuremath{\fun{\mbox{#1}}{#2}}}
+
+\newcommand{\Var}[1]{\funm{Var}{#1}}
+\newcommand{\COMP}[1]{\funm{COMP}{#1}}
+\newcommand{\IFF}[1]{\funm{IFF}{#1}}
+\newcommand{\ONLYIF}[1]{\funm{ONLY-IF}{#1}}
+\newcommand{\notf}[1]{\funm{not}{#1}}
+
+\newcommand{\fls}[0]{\mbox{false}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Definitions}
+\subsection{Definite Programs}
+\subsection{Normal Programs}
+\begin{definition}[Negation As Finite Failure (NAF)]
+ 
+\end{definition}
+\begin{definition}[Closed World Assumption (CWA)]
+A Closed World Assumption for a program $P$ is a set of all ground atoms where there is no refutation for $\leftarrow A$.
+\end{definition}
+\begin{definition}[Finite Failure Set (FFS)]
+A finite failure set for a program $P$ is a set of all ground atoms $A$ such that there exists a finite failed SLD-tree for $\leftarrow A$.
+\end{definition}
+\begin{definition}[Fair SLD-derivation]
+An SLD-derivation is \emph{fair} if it is finite or if every atom introduced in a goal is eventually selected in one of the following goals.
+\end{definition}
+\begin{definition}[Fair SLD-tree]
+A \emph{fair} SLD-tree is an SLD-tree where if every branch is a fair SLD-derivation.
+\end{definition}
+\begin{definition}[Completion of a program (COMP)]
+The completion of a program $\funm{COMP}{P}$ is the IFF-form of that program $\funm{IFF}{P}$ together with the Free Equality Axioms (FEQ).
+\end{definition}
+\begin{definition}[Inductive Definition]
+An inductive definition is a description of a concept in terms of itself and more primitive concepts.
+\end{definition}
+\begin{definition}[Inductive Logic]
+An inductive logic program \IND{P} is the union of that program, the Free Equality Axioms (FEQ), the Domain Closure Axioms (DCL) and the Minimal Model Axioms (MIM).
+\end{definition}
+\begin{definition}[Domain Closure Axioms (DCL)]
+The Domain Closure Axioms define that the elements of the Herbrand Universe are the only objects.
+\end{definition}
+\begin{definition}[Minimal Model Axioms]
+The Minimal Model Axioms are a set of second order axioms expressing that an interpretation is only a model if it is a minimal model of all the other axioms.
+\end{definition}
+\begin{definition}[General Programs or Normal Programs]
+General or Normal Programs are programs with negative literals in the goals and bodies of the expressions of the program.
+\end{definition}
+\begin{definition}[SLDNF resolvent]
+The SLDNF resolvent is defined for two cases:
+\begin{enumerate}
+ \item The case with $\leftarrow L_1,\ldots,L_i,\ldots,L_n$, a standardized apart clause $H\leftarrow B_1,\ldots,B_k$ and the most general unifier $\sigma$ for the positive literal $L_i$ and the head $H$. Then the resolvent is equal to: $\leftarrow\brak{L_1,\ldots,L_{i-1},B_1,\ldots,B_k,L_{i+1},\ldots,L_n}\sigma$
+ \item The case with $\leftarrow L_1,\ldots,L_i,\ldots,L_n$ where $L_i$ is a negative literal. In this calse the substitution is $\epsilon$, the empty substitution. The resolvent is: $\leftarrow L_1,\ldots,L_{i-1},L_{i+1},\ldots,L_n$.
+\end{enumerate}
+\end{definition}
+\begin{definition}[Successful tree in an SLDNF proof procedure]
+A tree is successful if a the tree has a leaf labeled $\square$.
+\end{definition}
+\begin{definition}[Finite failed tree in an SLDNF proof procedure]
+A finite failed tree is a finite tree where all leaves are marked with failure.
+\end{definition}
+\begin{definition}[Forest in an SLDNF proof procedure]
+A forest is a set of trees with one main tree and with some nodes having a subsidiary tree.
+\end{definition}
+\begin{definition}
+A partial SLDNF-tree for a program $P$ and a query $\leftarrow A$ is defined inductively:
+\begin{enumerate}
+ \item A forest with a main tree with $\leftarrow A$ as single node and no subsidiary trees is a partial SLDNF-tree.
+ \item An extension of a partial SLDNF-tree.
+\end{enumerate}
+\end{definition}
+\begin{definition}[Extension of an SLDNF-tree]
+An extension of an SLDNF-tree is obtained by applying the following operation on all unmarked leaves different from $\square$:
+\begin{itemize}
+ \item If nu literal selected: select one
+ \item If positive literal selected:
+ \begin{enumerate}
+  \item If no resolvents, then mark leaf with failure
+  \item If resolvents, then add them as the children of the node
+ \end{enumerate}
+ \item If negative literal \brak{\notf{A}} selected:
+ \begin{enumerate}
+  \item If $A$ is non-ground then mark leaf with floundering
+  \item If $A$ is ground then
+  \begin{enumerate}
+   \item If it has no subsidiary tree, create subsidiary tree with root $\leftarrow A$
+   \item If it has a successful subsidiary tree, mark leaf with failure
+   \item If it has a finitely failed subsidiary tree, add the resolvent as child
+  \end{enumerate}
+ \end{enumerate}
+\end{itemize}
+\end{definition}
+\begin{definition}[Safe computation rule]
+A computation rule is \emph{safe} if and only if it never selects a non-ground negative literal.
+\end{definition}
+\begin{definition}[Blocked goal]
+A goal is \emph{blocked} if and only if all literals are non-ground and negative.
+\end{definition}
+\begin{definition}[Floundering program]
+A program $P$ flounders for a query $\leftarrow A$ if and only if the SLDNF-tree has a blocked goal. It is an undecidable problem to know if a given program will flounder, but restricted classes of non-floundering programs/queries exist.
+\end{definition}
+\begin{definition}[Allowed query]
+A query is \emph{allowed} if and only if every variable of the query occurs in a positive literal.
+\end{definition}
+\begin{definition}[Allowed clause or range restricted clause]
+An allowed clause or range restricted clause is a clause where every clause variable has an occurrence in a positive literal.
+\end{definition}
+\begin{definition}[Admissible clause]
+An admissible clause is a clause where each clause variable has an occurrence in the head or a positive literal of that clause.
+\end{definition}
+\begin{definition}[General clause]
+A clause is \emph{general} if and only if it has one positive literal in the head. Therefore they are true in $B_P$.
+\end{definition}
+\begin{definition}[Three valued logic]
+A logic paradigm where there are three results for every query: true, false or undefined (undecidable).
+\end{definition}
+\begin{definition}[Three valued interpretation]
+A three valued interpretation is an interpretation $I$ who consist out of two sets $I=\tupl{I^+,I^-}$. Where $I^+$ are the set of true atoms, $I^-$ the set of false atoms and $B_P\setminus\brak{I^+\cup I^-}$ the undefined atoms. With respect to the real model, $I^+$ is an underestimation of true atoms and $I^-$ an underestimation of the false atoms.
+\end{definition}
+\begin{definition}[Four valued logic]
+A logic paradigm where every clause can have four answers: true, false, top and bottom. Elements both in the true and false set are considered to be top.
+\end{definition}
+\begin{definition}[Total interpretation]
+An interpretation $I$ is \emph{total} when $I^+\cup I^-=B_p$.
+\end{definition}
+\begin{definition}[Truth order]
+Truth order $<_t$ is an ordering in three valued logic where false is considered smaller than undecided and undecided smaller than true.
+\end{definition}
+
+\subsection{Termination Analysis}
+\subsection{Abstract Interpretation}
+\subsection{Program Specialization}
+\section{Theorems}
+\subsection{Definite Programs}
+\subsection{Normal Programs}
+\begin{theorem}
+The following expressions are equivalent:
+\begin{enumerate}
+ \item $A$ is an element of the finite failure set of $P$;
+ \item $A\notin T_P\downarrow\omega$;
+ \item Every fair SLD-tree with $\leftarrow A$ as root is finite failed.
+\end{enumerate}
+\end{theorem}
+\begin{theorem}[Free (Clark) Equality Axioms (FEQ)]
+\begin{enumerate}
+ \item $\forall\brak{x=x}$ (reflexivity)
+ \item $\forall\brak{x=y}\rightarrow\brak{y=x}$ (symmetry)
+ \item $\forall\brak{x=y}\wedge\brak{y=x}\rightarrow\brak{x=z}$ (transitivity)
+ \item For each $f/n$: equals can be replaced by equals: $\forall\brak{x_1=y_1}\wedge\ldots\wedge\brak{x_n=y_n}\rightarrow\fun{f}{x_1,\ldots,x_n}=\fun{f}{y_1,\ldots,y_n}$
+ \item For each $p/n$: equals can be replaced by equals: $\forall\brak{x_1=y_1}\wedge\ldots\wedge\brak{x_n=y_n}\rightarrow\brak{\fun{p}{x_1,\ldots,x_n}\leftrightarrow\fun{p}{y_1,\ldots,y_n}}$
+ \item For each functor: corresponding arguments of equal terms are equal: $\forall\fun{f}{x_1,\ldots,x_n}=\fun{f}{y_1,\ldots,y_n}\rightarrow\brak{x_1=y_1}\wedge\ldots\wedge\brak{x_n=y_n}$
+ \item For each pair of distinct functions: $\forall\fun{f}{x_1,\ldots,x_n}=\fun{g}{y_1,\ldots,y_m}\rightarrow\fls$
+ \item $\forall x=t\rightarrow\fls$ if $t$ is not $x$ and $x\in\Var{t}$
+\end{enumerate}
+\end{theorem}
+\begin{theorem}[Apt and Van Emden]
+\begin{enumerate}
+ \item A Herbrand interpretation $I_H$ is a model of $\funm{COMP}{P}$ if and only if $\fun{T_P}{I_H}=I_H$.
+ \item \COMP{P} has a Herbrand model.
+ \item Ground atom $A$: $\COMP{P}\cup A$ has a Herbrand model if and only if $A\in\funm{gfp}{T_P}$
+\end{enumerate}
+\end{theorem}
+\begin{theorem}
+There exists a program $P$ and a ground atom $A$ such that $\COMP{P}\cup\acl{A}$ has a model but no Herbrand model.
+\end{theorem}
+\begin{theorem}[Finite Failure Theorem]
+Let $P$ be a program and $A$ a ground atom. Then the following expressions are equivalent:
+\begin{enumerate}
+ \item $A$ is in the finite failure set of $P$
+ \item $A\notin T_P\downarrow\omega$
+ \item Every fair SLD-tree for $\leftarrow A$ has finitely failed
+ \item $\COMP{P}\vDash\neg A$
+\end{enumerate}
+\end{theorem}
+\subsection{Termination Analysis}
+\subsection{Abstract Interpretation}
+\subsection{Program Specialization}
+\end{document}

@@ -1,0 +1,113 @@
+\section{Formal Grammars and Parsers}
+\begin{df}{Formal grammar}
+A \sb{} is a system where a group of items can behave as an item themselves. Therefore a sequence of items can be seen as a tree of items with the original items in the leafs. In the context of \nlp{} the introduced items are called \flv{Phrase}s. For instance a \flv{Noun phrase}. \sb{}s are used to define grammatical relations and thus the formalization of traditional grammar. They introduce relations and dependencies between words and phrases. A popular category of \sb{}s are \flv{Context-free grammar}s.
+\end{df}
+\begin{df}[CFG, Phrase-Structure grammar]{Context-free grammar}
+\sb{}s are a type of \flv{Formal grammar}s. They consist out of a \flv{Lexicon} of \flv{Word}s and \flv{Symbol}s and a set of \flv{Production rule}s expressing how these symbols can be grouped and ordered. \sb{}s can be used both for generating sentences and assigning a structure to a given sentence. More formally a \sb{} is a 4-tuple $G=\tupl{N,\Sigma,R,S,n_0}$ where $N$ is a set of \flv{Non-terminal symbol}s (sometimes called \flv{Variable}s), $\Sigma$ a set of \flv{Terminal symbol}s (disjoint from $N$), $R$ a set of \flv{Production rule}s each of the form $n\rightarrow\beta$ where $n\in N$ and $\beta$ a string of symbols from the infinite set of strings $\brak{\Sigma\cup N}^{\star}$. $n_0\in N$ is called the \flv{Start symbol}. Sentences that can be generated from $n_0$ are called \flv{Grammatical sentence}s. Sentences who fail on this condition are called \flv{Ungrammatical sentence}s.
+\end{df}
+\begin{df}[NP]{Noun phrase}
+A \sb{} (tagged as \postag{NP}) is a sequence of words surrounding at least one \flv{Noun}. What holds up for a \sb{} however, is not true for the individual words making up the \sb{}. For instance \stc{Harry the Horse} or \stc{the Broadway coppers}. A \sb{} can divided into components with a specific meaning: \flv{Head}, \flv{Determiner}, \flv{Nominal} and \flv{Predeterminer}. Formally a \sb{} is defined by the following grammatical rules: \importgram{np}
+\end{df}
+\begin{df}[PP]{Prepositional phrase}
+A \sb{} (tagged as \postag{PP}) is a \flv{Phrase} where one puts a \flv{Preposition} before a \flv{Noun phrase}. \sb{}s are used to express relations with time, dates and other nouns. They can be rather complex. Examples include \stc{to Seattle}, \stc{in Minneapolis} and \stc{on the ninth of July}. Formally a \sb{} is defined by the following grammatical rules: \importgram{pp}
+\end{df}
+\begin{df}[VP]{Verb phrase}
+A \sb{} (tagged as \postag{VP}) is a \flv{Phrase} combining a \flv{Verb} with a \flv{Leading object}. Formally a \sb{} is defined by the following grammatical rules: \importgram{vp}
+\end{df}
+\begin{df}[S]{Sentence}
+A \sb{} (tagged as \postag{S}) is a \flv{Phrase} where one combines a \flv{Noun phrase} and \flv{Verb phrase}. In English, one distinguishes between different forms of sentences: \flv{Declarative sentence}s, \flv{Imperative sentence}s, \flv{Yes-no question}s and \flv{Wh-phrase}s. Formally a \sb{} is defined by the following grammatical rules: \importgram{s}
+\end{df}
+\begin{df}{Clause}
+A \sb{} is a part of \flv{Sentence} that stands on its own as a fundamental unit in discourse. A \sb{} is thus a \flv{Sentence} embedded within a larger \flv{Sentence}. It describes a complete thought since the verb has all its arguments. An example is \stc{I told him that \underline{he should see a doctor}.}.
+\end{df}
+\begin{df}[Nom]{Nominal}
+A \sb{} is a part of \flv{Noun phrase} that follows a \flv{Determiner} or \flv{Pre-head Modifiers}.
+\end{df}
+\begin{df}{Pre-head modifier}
+A \sb{} is a part of \flv{Noun phrase}. It expresses quantity by \flv{Cardinal number}s (\stc{one}, \stc{two}), \flv{Ordinal number}s (\stc{first} and \stc{second}) or quantifiers (\stc{some}, \stc{many}). Another subclass of \sb{}s are \flv{Adjectival phrase}s.
+\end{df}
+\begin{df}{Post-head modifier}
+A \sb{} is a part of \flv{Noun phrase}. \sb{}s fall into three categories: \flv{Propositional phrase}s, \flv{Non-finite clause}s and \flv{Relative clause}s.
+\end{df}
+\begin{df}{Relative clause}
+A \sb{} is a special type of a \flv{Clause} which begins with a \flv{Relative pronoun} (\stc{that}, \stc{who}) and the \flv{Relative pronoun} is subject to the embedded \flv{Verb}. For instance \stc{a flight that serves breakfast}.
+\end{df}
+\begin{df}{Subject-verb agreement}
+The \sb{} is a form of \flv{Agreement} where the \flv{Subject} and the \flv{Verb} agree in number (person). This means that for \flv{3sg verb}s in the \flv{Third person}, one adds an \stc{-s}. Such agreements can be resolved by considering them in the grammar by paying a penalty for performance (the grammar size doubles).
+\end{df}
+\begin{df}{Determiner-noun agreement}
+The \sb{} is a form of \flv{Agreement} where the \flv{Determiner} and the \flv{Noun} agree on the number. For instance \stc{this flight} and \stc{these flights}.
+\end{df}
+\begin{df}{Subcategorization}
+\sb{} is a concept where one adds additional information to a \flv{Chunk}. Fur instance in a \flv{Propositional phrase} one can add the \flv{Proposition} as data.
+\end{df}
+\begin{df}{Coordination}
+\sb{} is a concept where one cojoins two or more phrase types by using a \flv{Conjunction} (CC) (\stc{and}, \stc{or}, \stc{but}). For instance:
+\importgram{coordination}
+\end{df}
+\begin{df}{Treebank}
+A \sb{} is a collection of syntactically annotated texts. This means the database contains a tree for each sentence in the text. This is done automatically, however \flv{Manually corrected treebank}s are quite popular. A \sb{} is important for empirical parsers and empirical investigations of syntactic phenomena. \sb{}s are used to extract \flv{Context-free grammar} rules from the sentences. After the treebank is analyzed and turned into a \flv{Context-free grammar}, the \flv{Context-free grammar} accepts the strings in the \sb{} and much more. \sb{} are stored using brackets to notate the groups or in \flv{XML}. One can use for instance \flv{XPath} queries to search for data.
+\end{df}
+\begin{df}{Manually corrected treebank}
+A \sb{} is a \flv{Treebank} which is tagged semi-automatically and corrected by a human.
+\end{df}
+\begin{df}{Fully automated treebank}
+A \sb{} is a \flv{Treebank} which is generated based on some text and a robust parser. The parser analyzes the text and the result is added to the \flv{Treebank}.
+\end{df}
+\begin{df}{Parallel treebank}
+A \sb{} is a \flv{Treebank} used for \flv{Syntax-based machine translation}. For a text, the \flv{Treebank} contains the source text (in the source language), the target text (in the target language) together with \flv{Parse tree}s and \flv{Word alignment}s.
+\end{df}
+\begin{df}{Dependency grammar}
+A \sb{} is a syntactical structure described in terms of words an binary syntactic relations between these words. The label on the links depend on the type of the words. The advantages of \sb{}s are strong predictive parsing powers of words for their dependents since knowing the identity of a verb can help deciding what the subject or object is. Furthermore the ability to handle free word order languages (like Russian).
+\end{df}
+%TODO: image?
+\begin{df}{Syntactic Parsing}
+\sb{} is a process where given a string a system recognizes the sentence and assigns a syntactic structure to it. Algorithms take as input the \flv{Formal grammar} and the string and produces a \flv{Syntax tree} consistent with the grammar.
+\end{df}
+\begin{df}{Top-down parsing}
+\sb{} is a strategy where ones builds a \flv{Syntax tree} from the rood note (and \flv{Start symbol}). Algorithms who use this strategy don't spent processing power to trees who can't be derived from the \flv{Start symbol}. On the other hand will this strategy invest processing power in trees who are inconsistent with the input.
+\end{df}
+\begin{df}{Bottom-up parsing}
+\sb{} is a strategy where ones builds a \flv{Syntax tree} where a sequence of symbols are folded into new symbols until the root is reached. Algorithms who use such strategy use a lexicon lookup in order to find the proper \flv{Part-of-Speech tag}s. Algorithms who use this strategy spent processing power to trees who can't be derived from the \flv{Start symbol}. On the other hand will this strategy never invest processing power in trees who are inconsistent with the input.
+\end{df}
+\begin{df}{Structural ambiguity}
+\sb{} is a condition of a \flv{Formal Grammar} where given a certain string, this can result in multiple consistent syntax trees. \sb{} comes in two flavors: \flv{Attachment ambiguity} and \flv{Coordinate
+ ambiguity}. In most real life sentences we find a lot of syntactical ambiguities. These ambiguities are resolved because most of them are semantically unreasonable. The process of finding the correct syntactical tree is called \flv{Syntactic disambiguation}.
+\end{df}
+\begin{df}{Attachment ambiguity}
+\sb{} is a form of \flv{Structural ambiguity} where the ambiguity is caused because a subtree can be attached to different parents.
+\end{df}
+\begin{df}[Scope]{Coordinate ambiguity}
+\sb{} is a form of \flv{Structural ambiguity} where the ambiguity is because different sets of phrases can be cojoined by the same conjunction. For instance \stc{\underline{old men} and women} versus \stc{old \underline{men and women}}.
+\end{df}
+\begin{df}{Syntactic disambiguation}
+\sb{} is a process where one chooses the correct syntactic tree out of a set of valid trees. This process requires \flv{Statistical information}, \flv{Semantical knowledge} and \flv{Pragmatic knowledge}. Since this information is not available while the system performs \flv{Syntactic parsing}, this method has to return all possible syntactic trees. This can be exponentially large. Therefore the problem is solved dynamically: the algorithm generates tables containing subtrees. The result is still a set of syntactical trees. But the common parts are stored only once.\footnote{One can compare this approach by using a flightweight.}. Popular implementations are the \flv{Cocke-Kasami-Younger algorithm}, the \flv{Earley algorithm} and \flv{Chart parsing}.
+\end{df}
+\begin{df}[CNF]{Chomsky Normal Form}
+The \sb{} is a normal form for \flv{Context-free grammar}s. \flv{Context-free grammar}s in \sb{} contain only two types of rules:
+\begin{eqnarray}
+a&\rightarrow&b\ c\\
+a&\rightarrow&\gamma
+\end{eqnarray}
+With $a,b,c\in N$ (the non-terminals) and $\gamma\in\Sigma$. All \flv{Context-free grammar}s can be converted into \sb{}. With the following process:
+\begin{enumerate}
+ \item Convert terminals within rules to dummy non-terminals;
+ \item Convert unit-productions (single non-terminals);
+ \item Make all rules binary.
+\end{enumerate}
+\end{df}
+\begin{df}[CKY]{Cocke-Kasami-Younger algorithm}
+The \sb{} is an algorithm that uses \flv{Bottum-up parsing} and dynamic programming. It requires that the grammar is entirely in \flv{Chomsky Normal Form}. Since each non-terminal above the \flv{Part-of-speech tag}-level has two daughters, one can generate a 2D matrix $A$ that encodes the tree structure. Therefore the algorithm uses the uses the upper triangle where each cell $A_{i\,j}$ contains a set of \flv{Non-terminal symbol}s representing all constituents spanning $i$ through $j$. Each of these entries is paired so it points to the entries from which it was derived. The algorithm has to permit multiple versions of the same non-terminal to be entered in the table. The entire algorithm is listed in \algref{cykparse}.
+\end{df}
+\importalgo{cykparse}{The Cocke-Kasami-Younger algorithm}
+\begin{df}{Earley algorithm}
+The \sb{} is an algorithm that uses \flv{Top-down parsing} and dynamic programming. It processes a string with a single left-to-right pass that fills a \flv{Chart} (array). For each word position, the chart contains a list of states representing the partial parse trees so far. At the end of the sentence, the chart encodes all possible syntactic trees. Individual states in each chart entry contain: a subtree corresponding to a single grammar rule, information about the progress made in completing this subtree and the position of the subtree with respect to the input. For instance one such entry can be represented by the following expression:
+\begin{equation}
+VP\rightarrow\mbox{Verb}\ \diamond\ \mbox{NP}\ \mbox{PP}\ \mbox{[0,1]}
+\end{equation}
+Where $VP\rightarrow\mbox{Verb}\ \mbox{NP}\ \mbox{PP}$ is the deepest derivation rule at the moment, we already parsed the verb, we parsed $1$ word and we are looking for incomplete states at position $0$. Each entry can be in three state: \flv{Predicator}, \flv{Scanner} and \flv{Completer}. We are in a \flv{Predicator} state when we create new states representing top-down expectations. These are applied to any state that has a non-terminal immediately right of the marker. The new states generated are marked as a \flv{Generating} sate. An entry is in a \flv{Scanner} state when the state has a \flv{Part-of-Speech tag} to the right of the marker. The algorithm examines the input and adds a state into the chart when the input corresponds to the expected tag. Otherwise the entry is discarded. Entries are in the \flv{Completer} state when its dot has reached the end. This state represents the fact that the tree has discovered a particular grammatical category over some span of the input. The algorithm reassembles 
+such trees and copies the older state to new states. These states are then installed in the current chart entry.
+\end{df}
+\begin{df}{Chart parsing}
+\sb{} is a variant of the \flv{Cocke-Kasami-Younger algorithm} and \flv{Earley algorithm} where the order of parsing (\flv{Bottom-up parsing} versus \flv{Top-down parsing}) is determined dynamically instead of statically. This is done by using an explicit \flv{Agenda}. New states are added and the ordering of the agenda is separated from the parsing algorithm.
+\end{df}

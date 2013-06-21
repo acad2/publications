@@ -1,1 +1,74 @@
 \section{Termination}
+\subsection{Introduction}
+\defe{Kolawski slogan}{The \sub{} states the following:
+\begin{quote}
+An \inre{Algorithm} is \inre{Logic} and \inre{Control}
+\end{quote} Where \inre{Logic} is the declarative semantics and \inre{Control} a aspect yielding efficient proofs where \inre{Termination} is a minimum. \inre{Termination} in general however is undecidable. Basically there are two research lines regarding this problem:
+\begin{enumerate}
+ \item Necessary and sufficient conditions: manual methods to prove termination of a specific program.
+ \item Decidable sufficient conditions: automated systems that can conservatively decide wether a program will terminate.
+\end{enumerate} Termination also depends on the query: for some queries a program will terminate while for other it will get stuck in a loop. Therefore there are several forms of termination: \inre{Universal termination}, \inre{Existential termination} and \inre{Strong termination}.}
+\lema{Incompletenss results}{Assume there exists a function $\mbox{terminates}:P\rightarrow\BB$, which returns true if the program terminates and false otherwise. Then we can construct a program which calls that function and goes into a loop when the function returns true and stops otherwise. Since the program terminates when the program will not terminate and will not terminate when it would terminate, we have a contradiction.}
+\defe{Universal termination}{Universal termination states that the program can find all solutions for a query and terminate.}
+\defe{Existential termination}{This form of termination states that the program can at least will finitely fail or find a solution. After the first solution, the program may loop. Universal termination implies existential termination. Proving existential termination in the absence of universal termination however is much harder because of the order of branches in the \inre{SLDNF tree}s on must take into account.}
+\defe{Strong termination}{\sub{} states that a program terminates independent of the computational rule. This is a quite rare condition.}
+\defe{Termination proof}{A termination proof proves one of the termination conditions for a specific program and a specific query. All proofs are based in \inre{Well-founded ordering}: by defining a partial order on the \inre{Well-founded set}. Sequences with a decreasing set are always finite and thus will terminate. Therefore by taking the states of computation as elements and defining an order on the we can decide about termination in some situations.}
+\defe{Well-founded order}{For every two states we define the \sub{} such that: if $s_2$ is the successor of $s_1$, $\fun{f}{s_1}<\fun{f}{s_2}$. If this rule is satisfied then the set of states of the computation is a \inre{Well-founded set} and the computation will terminate.}
+\lema{Decreasing sequence}{Each finite computation can be mapped on a decreasing sequence in a \inre{Well-founded ordering}.
+\begin{proof}
+$s_0,s_1,\ldots,s_n$ is a finite sequence. By defining $\fun{f}{s_i}=n-i$ we have $\fun{f}{s_i}=n-i>n-i-1=\fun{f}{s_{i+1}}$ and $\NN$ is a \inre{Well-founded set}.
+\end{proof}}
+\lema{Termination of programs without variables}{For programs without variables, one can define the order by de size of the ground atom in $\NN$. If for all clauses \clausea{A}{B}{n}, $\forall i:\funm{size}{A}>\funm{size}{B_i}$, then this is a \inre{Well-founded order} over the nodes of any \inre{SLD-tree}. Note that this rule is only applicable for programs without variables.
+\begin{proof}
+Define $\fun{f}{\clausez{A}{n}}=\accl{\funm{size}{A_1},\ldots,\funm{size}{A_n}}$\footnote{This is a multiset: each item can occur more than once.} Then we define the order relation as: $\accl{a}\cup S>\accl{b_1,\ldots,b_n}\cup S$ if $\forall i: a > b_i$. Since the resolvent is of $\leftarrow A_1,\ldots,A_i,\ldots,A_n$ is $\leftarrow A_1,\ldots,A_{i-1},B_1,\ldots,B_m,A_{i+1},\ldots,A_n$, we have $\fun{f}{\leftarrow A_1,\ldots,A_i,\ldots,A_n}>\fun{f}{\leftarrow A_1,\ldots,A_{i-1},B_1,\ldots,B_m,A_{i+1},\ldots,A_n}$ thus the program is finite.
+\end{proof}}
+\note{Problems with the termination of problems with variables}{
+One could try to set the size of the predicate by the number of functors and for all ground substitutions ensure that the size of the number of functions goes down. But one can also apply non-terminating queries using variables. For instance $\leftarrow\funm{append}{L_1,[],L_3}$. One resolution step can yield the goal, but also instantiates the next goal. The \inre{Backpropagation effect} of unification therefore can lead to the unbounded increase in size of the original goal. This can be countered by reducing to programs where unification only happens in one way: instantiating variables in the head but not in the original goal. In that case the ``size'' looks only at parts of terms of calls which are not further initiated. Another difficulty are the variables local to the body. When one calls the head with the first argument ground, the size cannot consider the second argument due to bacpropagation. Therefore there is no size possible such that the size for the head can be an upperbound for every grounded substitution in the body. Therefore one will need to find a relationship between the size of the variables in the head and the size of the variables in the body.
+}
+\subsection{Termination for definite programs}
+\subsubsection{Strong termination}
+\defe{Level mapping}{A \sub{} maps all the elements of the \inre{Herbrand universe} to the \inre{Natural numbers} thus $f:B_P\rightarrow\NN$.}
+\defe{Recurrent program}{A program is a \sub{} if and only if there exist a \inre{Level mapping} $f$ such that for every $A\leftarrow B_1,\ldots,B_n\in\funm{ground}{P}$, $\forall i:\fun{f}{A}>\fun{f}{B_i}$.}
+\lema{Recurrent programs terminate}{$P$ is \inre{Recurrent} if and only if $P$ is terminating for all ground queries $\leftarrow A$. Therefore it is independent of the computational rule and thus \inre{Strong termination}.
+\begin{proof}
+\begin{description}
+ \item [$\Rightarrow$] Assume $P$ terminates for all ground queries $\leftarrow A$, let $\fun{f}{A}$ be the length of the longest derivation in the SLD-tree of $\leftarrow A$. For each ground rule $A\leftarrow B_1,\ldots,B_n$, the longest derivation of $\leftarrow A$ is greater than the longest derivation of $\leftarrow B_i$ and therefore $P_i$ is recurrent.
+ \item [$\Leftarrow$] Assume $P$ is recurrent. Assume there is an infinite derivation $\leftarrow A,\ \leftarrow G_1,\ \leftarrow G_2,\ \ldots$. Let $\leftarrow G_i\theta=\leftarrow A_1\theta,\ldots,A_i\theta,\ldots,A_m\theta$ and let $\leftarrow G_{i+1}\theta=\leftarrow A_1\theta,\ldots,A_{i-1}\theta,B_1\theta,\ldots,B_k\theta,A_{i+1}\theta,\ldots,A_m\theta$. Further we define the size of $\leftarrow G_1\theta$ as $\accl{\fun{f}{A_1\theta},\ldots,\fun{f}{A_i\theta},\ldots,\fun{f}{A_m\theta}}$. Then $\funm{size}{\leftarrow G_i\theta}>\funm{size}{\leftarrow G_{i+1}\theta}$ according to order relations over the multisets, thus the successive states in the derivation are a \inre{Well-founded set} and the derivation is finite. This lead to a contradiction of the infinite derivation.
+\end{description}
+\end{proof}}
+\defe[Boundedness]{Bounded atom}{Let $f$ be a \inre{Level mapping}. An atom $A$ is bounded with respect to $f$ if $\accl{\fun{f}{A\theta}|A\theta\mbox{ is ground}}$ is bounded in $\NN$. Therefore the predicate has an upper bound and back propagation cannot infinitely increase the size of the original query.}
+\lema{Termination of bounded queries}{If $P$ is \inre{Recurrent} with respect to a level mapping $f$, then $P$ is strongly terminating for all atomic queries which are bounded with respect to $f$.
+\begin{proof}
+Assume a bounded query for which an infinite derivation exists. By applying a ground substitution we get a bounded size which contradicts the lemma an recurrency of $P$.
+\end{proof}}
+\lema{Termination of atomic queries}{If atomic queries bounded with respect to $f$ always strongly terminate, then $P$ is recurrent with respect to some \inre{Level mapping} $g$.
+\begin{proof}
+All ground queries are bounded with respect to $f$ hence strongly terminate. Hence $P$ is recurrent with some level mapping (according to the previous lemma).
+\end{proof}}
+\subsubsection{LD-termination}
+\defe{Left termination}{\sub{} is a form of termination where the resolution phase always selects the \inre{Leftmost atom}. All ``good'' programs are left terminating.}
+\defe{Acceptable program}{A program $P$ is acceptable if there exists a level mapping $f$ and a model $I$ such that for each clause $A\leftarrow B_1,\ldots,B_k\in\funm{ground}{P}$, if $I\vDash B_1,\ldots, B_i$ then $\forall i:\fun{f}{A}>\fun{f}{B_i}$.}
+\lema{Acceptable programs are left terminating}{$P$ is acceptable if and only if $P$ is left terminating for all ground queries $\leftarrow A$.
+\begin{proof}
+\begin{description}
+ \item [$\Rightarrow$] Assume $\leftarrow A$ is \inre{Left terminating}, let $\fun{f}{A}$ be the length of the longest derivation (under the computation rule) of $\leftarrow A$. Consider the ground clause $A\leftarrow B_1,\ldots,B_k$. If $B_1,\ldots,B_{i-1}$ succeeds, thus true in $M_P$, a model of $P$, then $\fun{f}{B_i}<\fun{f}{A}$. Thus $P$ is acceptable with respect to the \inre{Level mapping} $f$.
+ \item [$\Leftarrow$] Assume an acceptable program $P$ and an infinite derivation $\leftarrow A,\ \leftarrow B_1,\ldots,B_k,\ ...$. By applying grounding on it there is a ground clause $A\leftarrow B_1\theta,\ldots,B_k\theta$. Since the derivation is infinite, there exists an $i$ such that $\leftarrow B_1\theta,\ldots,\leftarrow B_{i-1}\theta$ succeeds and $\leftarrow B_i\theta$ does not terminate. Thus $M_P\vDash B_1\theta,\ldots,B_{i-1}\theta$ and $M_P\subseteq I$ thus due to acceptability $\fun{f}{A}>\fun{f}{B_i\theta}$. By induction, one can construct an infinite decreasing sequence $\fun{f}{A}>\fun{f}{B_i}>\fun{f}{C_j\sigma}>\ldots$ of natural numbers, which is a contradiction.
+\end{description}
+\end{proof}}
+\lema{Acceptable and left terminating for atomic queries}{If $P$ is \inre{Acceptable} with respect to \inre{Level mapping} $f$ and \inre{Model} $I$, then $P$ is \inre{Left terminating} for all atomic queries which are bounded with respect to $f$.
+\begin{proof}
+An infinite derivation for a bounded query can be instantiated into a infinite derivation for a ground query, which contradicts acceptability.
+\end{proof}}
+\lema{Atomic queries always terminate for acceptable programs}{If atomic queries bounded with respect to $f$ always \inre{Left terminate}, then $P$ is \inre{Acceptable} with respect to some \inre{Level mapping} $g$.
+\begin{proof}
+All ground queries are bounded with respect to $f$ hence \inre{Left terminate}. Thus $P$ is \inre{Acceptable} (according to the previous lemma).
+\end{proof}}
+\lema{Undecidability of termination}{No algorithm is possible for constructing the \inre{Level mapping}s.}
+\subsection{Termination of Normal Programs}
+\subsubsection{Strong termination}
+\subsubsection{LDNF termination}
+\subsection{Framework for Automated Termination Analysis}
+\subsubsection{Introduction}
+\subsubsection{LD-termination}
+\subsubsection{Binary unfolding}
+\subsubsection{Rounding up}

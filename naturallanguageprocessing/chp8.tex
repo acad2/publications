@@ -1,0 +1,198 @@
+\section{Computational Lexical Semantics}
+\begin{df}{Word sense}
+The \sb{} of a word is the \flv{Lexical meaning}: the meaning defined by the origin and the usage of the word. This might vary according to the context. Such knowledge is stored in dictionaries.
+\end{df}
+\begin{df}{Homonymy}
+\sb{} means a word has two rather different meanings. For instance \stc{bark}.
+\end{df}
+\begin{df}{Plysemy}
+\sb{} means a word has two somehow rather meanings. For instance \stc{opening}.
+\end{df}
+\begin{df}{Metonymy}
+\sb{} is the use of one aspect of a concept or entity to refer to other aspects of the entity or to the entity itself. For instance \stc{White House} refers to the administration whose office is in the White House.
+\end{df}
+\begin{df}{Synonymy}
+\sb{} means two words have the same propositional meaning: they are substitutable by one another without changing the truth conditions of the sentence. For instance \stc{vermin} and \stc{pests}. Many words are near synonyms: they slightly differ in meaning.
+\end{df}
+\begin{df}{Antonymy}
+\sb{} means two words have the opposite meaning. For instance \stc{cold} and \stc{hot}.
+\end{df}
+\begin{df}[Superordinate]{Hypernymy}
+\sb{} means a word is more general than another word. For instance \stc{fruit} is a \flv{Hypernym} of \stc{apple}. This property can be defined in terms of entailment: sense $A$ is a hypernym of sense $B$ if $\forall x:\fun{A}{x}\Leftarrow\fun{B}{x}$. These relations are usually transitive.
+\end{df}
+\begin{df}[Subordinate]{Hyponymy}
+\sb{} means a word is more specific than another word. For instance \stc{apple} is a \flv{Hyponym} of \stc{fruit}. This property can be defined in terms of entailment: sense $A$ is a hyponym of sense $B$ if $\forall x:\fun{A}{x}\Rightarrow\fun{B}{x}$. These relations are usually transitive. \sb{} can be acquired based on handcrafted lexico-semantic patterns (like \stc{such as}) or based on frequency. This task is quite difficult since we expect a lot of false positives and false negatives.
+\end{df}
+\begin{df}{Meronymy}
+\sb{} means a word is a part of another word. For instance \stc{wheel} is a \flv{Meronym} of a \stc{car}.
+\end{df}
+\begin{df}{Holonymy}
+\sb{} means a word is the whole of another word. For instance \stc{wheel} is a \flv{Holonym} of a \stc{car}.
+\end{df}
+\begin{df}{WordNet}
+\sb{} is a lexical database containing \flv{Noun}s, \flv{Verb}s, \flv{Adjective}s and \flv{Adverb}s in English together with their senses. Each of these words has different \flv{Sense}s and each of these senses contains a \flv{Gloss}: a dictionary style definition and a \flv{Synset}: a set of (near) synonyms for the sense. Sometimes usage examples are provided. Besides meanings, \sb{} also defines relations between words.
+\end{df}
+\begin{df}{Word sense disambiguation}
+\sb{} is a process where one tries to select the correct sense of each word in a discourse. In order to do this, the correct context is needed. Formally one has a word $w$ with senses $s_1,s_2,\ldots s_n$. Furthermore a corpus has a number of contexts $c_1,c_2,\ldots,c_m$ and one can uses word $v_1,v_2,\ldots,v_p$ as contextual features for disambiguation. The processes usually relies on machine learning techniques. Usually these systems rely on two assumptions: \flv{One sense per discourse} and \flv{One sense per collocation}. The context is encoded using \flv{Bag-of-word feature}s and \flv{Collocational feature}s. The process can be carried out using resources like \flv{WordNet}, or by using a large corpus. The baseline for each \sb{} algorithm is the same. For each word, the given dictionary contains \flv{Semantic categorie}s (also known as \flv{Subject code}s) for each word sense. The score for a certain sense is the number of words in context $c_i$ that are compatible with the subject code of sense $s_k$. The algorithm will select the sense with the maximum score. Formally the score is calculated by the following formula:
+\begin{equation}
+\funm{score}{s_k}=\displaystyle\sum_{v_j\in c_i}\krdelta{\fun{t}{s_k},v_j}
+\end{equation}
+A typical algorithm to do this is the \flv{Simplified Lesk algorithm}. In other cases supervised learning is used, like for instance the \flv{Yarowski algorithm}.
+\end{df}
+\begin{tm}{One sense per discourse}
+The \sb{}-assumption assumes that the sense of the target word is highly consistent within a document.
+\end{tm}
+\begin{tm}{One sense per collocation}
+The \sb{}-assumption assumes that nearby words provide strong and consistent clues to the sense of a target word, conditional on relative distance, order and syntactical relationship.
+\end{tm}
+\begin{df}{Bag-of-word feature}
+A \sb{} means one assigns a binary value to each word of the vocabulary encoding whether or not a word is present in the context.
+\end{df}
+\begin{df}{Collocational feature}
+A \sb{} means one encodes information about specific positions for a certain scope around the target word, this information for instance consists out of the word and its \flv{Part-of-Speech tag}.
+\end{df}
+\begin{df}{Simplified Lesk algorithm}
+The \sb{} is an algorithm used for \flv{Word sense disambiguation}. It counts the number of words in a certain context and returns the context with the most votes. A full listing is presented in \algref{simplifiedlesk}.
+\end{df}
+\importalgo{simplifiedlesk}{The Simplified Lesk algorithm}
+\begin{df}{Yarowski algorithm}
+The \sb{} is an algorithm used for \flv{Word sense disambiguation}. For each ambiguous word $w$ it learns a dictionary of collocations. It uses two sets for each sense $s_k$ of the ambiguous word $w$:
+\begin{description}
+ \item [$F_k$] The \flv{Set of collocations}: this set contains rules who describe a context. Each collections has a score that corresponds to the likelihood that the collection is specific to the sense $s_k$.
+ \item [$E_k$] The \flv{Set of contexts}: The different contexts of the ambiguous word $w$ with sense $s_k$.
+\end{description}
+The algorithm is initialized with the corpus and collects all the contexts of the ambiguous word in the corpus. Next it filters out the senses below a certain threshold $\alpha$. A full listing is presented in \algref{yarowski}.
+\end{df}
+\importalgo{yarowski}{The Yarowski algorithm}
+\begin{df}{Unsupervised word sense disambiguation}
+The \sb{} is an algorithm used for \flv{Word sense disambiguation}. This method is quite popular since labeling is expensive. One does not labels based on human-readable senses but clusters texts according to some ``meaning'' with a \flv{Cluster algorithm}. Therefore a word is represented by a \flv{Feature vector} $w=\vec{f}$. Such system is trained by computing a context vector $\vec{c}$. Therefore each cluster defines a sense for a word. In order to cluster new words, \flv{Vector centroid}s are computed for each cluster. The context vector is calculated using the following formula:
+\begin{equation}
+\vec{c}=\displaystyle\frac{\displaystyle\sum_{i=1}^{n}\vec{x}_i}{n}
+\end{equation}
+With $x_i$ the feature vector of the context word $w_i$. Words in a new text are clustered by the sense which \flv{Vector centroid} is the closest.
+\end{df}
+\begin{df}{Selectional preferences}
+\sb{} are a set of rules who determine which words are combinable for a given semantical role. For instance the sentence \stc{I eat gold for lunch.} doesn't make any sense. These restrictions are not rigid but express some preferences (and are thus executed by a probabilistic framework). A popular implementation is \flv{Resnik's model} of selection association: \flv{Selectional preference strength}. The system computes the difference in information a verb $v$ expresses about a class and the information the class itself expresses. The difference is calculated using the \flv{Kullback-Leibler} metric:
+\begin{equation}
+\fun{S_R}{v}=\displaystyle\sum_c\Prob{c|v}\cdot\fun{\log}{\displaystyle\frac{\Prob{c|v}}{\Prob{c}}}
+\end{equation}
+The specific preference of a verb in a class is calculated by the \flv{Selectional association}. The probabilites can be estimated by couning them from the corpus.
+\end{df}
+\begin{df}[Relative entropy]{Kullback-Leibler}
+The \sb{} difference is a measurement of the difference between two distributions $P$ and $Q$. The \sb{} difference is defined as:
+\begin{equation}
+\fun{\Delta}{P,Q}=\displaystyle\sum_x\fun{P}{x}\cdot\fun{\log}{\displaystyle\frac{\fun{P}{x}}{\fun{P}{y}}}
+\end{equation}
+\end{df}
+\begin{df}{Selectional association}
+The \sb{} is a matric who measures the relative contribution of that class to the general selectional preference of the verb.
+\begin{equation}
+\fun{A_R}{v,c}=\displaystyle\frac{\Prob{c|v}}{\fun{S_R}{v}}\cdot\fun{\log}{\displaystyle\frac{\Prob{c|v}}{\Prob{c}}}
+\end{equation}
+\end{df}
+\begin{df}{Word similarity}
+\sb{} is a metric defined as the inverse \flv{Semantic distance}. One calculates the \sb{} by looking at the number of features two words share. Algorithm who calculate this metric are the \flv{Thesaurus based word similarity} or the \flv{Corpus based word similarity} systems.
+\end{df}
+\begin{df}{Thesaurus based word similarity}
+The \sb{} is a way to calculate the word similarity. Therefore the algorithm stores a semantic network with for instance a \flv{Hypernym} hierarchy. The similarity is calculated based on the \flv{Path-length based similarity}:
+\begin{equation}
+\funm[path]{similarity}{c_1,c_2}=-\fun{\log}{\funm{pathlength}{c_1,c_2}}
+\end{equation}
+Where \funm{pathlength}{c_1,c_2} is the number of edges in the shortest path in the Thesaurus graph between the senses nodes $c_1$ and $c_2$. The \flv{Word similarity} is then defined as:
+\begin{equation}
+\funm{wordsim}{w_1,w_2}=\fun{\max_{c_1\in\funm{senses}{w_1},c_2\in\funm{senses}{w_2}}}{\funm{sim}{c_1,c_2}}
+\end{equation}
+Another metric is the \flv{Information-conent word similarity}. This method relies both on the Thesaurus graph and probabilistic information. One calculates this similarity by calculating the probability of the \flv{Lowest common subsumer}:
+\begin{equation}
+\funm[resnik]{similarity}{c_1,c_2}=-\fun{\log}{\Prob{\funm{LCS}{c_1,c_2}}}
+\end{equation}
+The \flv{Similarity theorem of Lin} and \flv{Jing-Conrath} uses the \flv{Lowest common subsumer} as well:
+\begin{eqnarray}
+\funm[lin]{similarity}{c_1,c_2}&=&\displaystyle\frac{2\cdot\fun{\log}{\Prob{\funm{LCS}{c_1,c_2}}}}{\fun{\log}{\Prob{c_1}}+\fun{\log}{\Prob{c_2}}}\\
+\funm[JC]{similarity}{c_1,c_2}&=&\displaystyle\frac{1}{2\cdot\fun{\log}{\Prob{\funm{LCS}{c_1,c_2}}}-\fun{\log}{\Prob{c_1}}\fun{\log}{\Prob{c_2}}}\\
+\end{eqnarray}
+Finally the \flv{Extended gloss overlap} or \flv{Extended Lesk algorithm} uses a set of relations $R$ (like \flv{Hypernym},...):
+\begin{equation}
+\funm[eLesk]{similarity}{c_1,c_2}=\displaystyle\sum_{r,q\in R}\funm{overlap}{\funm{gloss}{\fun{r}{c_1}},\funm{gloss}{\fun{q}{c_2}}}
+\end{equation}
+The probabilities for a class can be calculating by counting them in a corpus:
+\begin{equation}
+\Prob{c_i}=\displaystyle\frac{\Count{c_i}}{\displaystyle\sum_{l=1}^{n}\Count{c_l}}
+\end{equation}
+Note that since a word can have multiple classes, the sum in the denominator can be larger than the number of words in the corpus.
+\end{df}
+\begin{df}[LCS]{Lowest common subsumer}
+The \sb{} of two elements in a graph is the lowest node in the hierarchy that subsumes both elements.
+\end{df}
+\begin{df}{Overlap}
+The overlap between two sets is measured by the number of elements both sets contains:
+\begin{equation}
+\funm{overlap}{A,B}=\Count{\accl{x|x\in A\wedge x\in B}}
+\end{equation}
+\end{df}
+\begin{df}{Corpus based word similarity}
+\sb{} are a group of \flv{Word similarity} methods who perform this task by using a corpus. They are based on word co-occurrences. By using this metric one can generate a \flv{Co-occurrence vector} $\vec{f}$ for each word $w$ where an element in the vector expresses a frequency or a binary value of the occurrence of word $i$ in the context of $w$. By doing this for each word, one can generate a \flv{Term co-occurrence matrix}. One then calculates the similarity by using statistical tests (\flv{Point wise mutual information}, \flv{Lin-association measure}, \flv{T-test}, ...) or the similarity between the two vectors (\flv{Inner product}, \flv{Cosine}, ...).
+\end{df}
+\begin{df}[MI]{Point wise mutual information}
+The \sb{} is a metric that measures the similarity between two elements $w_i$, $w_j$ with the following formula:
+\begin{equation}
+\funm{MI}{w_i,w_j}=\fun{\log_2}{\displaystyle\frac{\Prob{w_i,w_j}}{\Prob{w_i}\cdot\Prob{w_j}}}
+\end{equation}
+Where \Prob{w_i} is the probability of the occurrence in the corpus and \Prob{w_i,w_j} is the probability of co-occurrence.
+\end{df}
+\begin{df}{Lin-association measure}
+The \sb{} calculates the correlation between a word $w$ and a feature $f$. A feature is defined as tuple containing another word $w'$ and a relation $r$. The \sb{} extends the \flv{Point wise mutual information} by including this relation:
+\begin{equation}
+\funm[Lin]{assoc}{w,f}=\fun{\log_2}{\displaystyle\frac{\Prob{w,f}}{\Prob{w}\cdot\Prob{r|w}\cdot\Prob{w'|w}}}
+\end{equation}
+\end{df}
+\begin{df}{T-test}
+The \sb{} computes the difference between the observed and expected means normalized by variance:
+\begin{equation}
+t=\displaystyle\frac{\brak{\overline{x}-\mu}\cdot\sqrt{N}}{s}
+\end{equation}
+One tests the \flv{Null hypothesis} that the words occur independently: $\Prob{w_i,w_j}=\Prob{w_i}\cdot\Prob{w_j}$. The associativity is based on the difference between these two:
+\begin{equation}
+\funm[T-test]{assoc}{w_i,w_j}=\fun{\log_2}{\displaystyle\frac{\Prob{w_i,w_j}-\Prob{w_i}\cdot\Prob{w_j}}{\sqrt{\Prob{w_i}\cdot\Prob{w_j}}}}
+\end{equation}
+\end{df}
+\begin{df}{Manhattan distance}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\fun{\Delta}{\vec{v},\vec{w}}=\displaystyle\sum_{i=1}^{n}{\abs{v_i-w_i}}
+\end{equation}
+\end{df}
+\begin{df}{Euclidean distance}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\fun{\Delta}{\vec{v},\vec{w}}=\sqrt{\displaystyle\sum_{i=1}^{n}{\brak{v_i-w_i}^2}}
+\end{equation}
+\end{df}
+\begin{df}{Inner product similarity}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm{similarity}{\vec{v},\vec{w}}=\transpose{\vec{v}}\cdot\vec{w}=\displaystyle\sum_{i=1}^{n}{v_i\cdot w_i}
+\end{equation}
+\end{df}
+\begin{df}{Cosine similarity}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm{similarity}{\vec{v},\vec{w}}=\displaystyle\frac{\transpose{\vec{v}}\cdot\vec{w}}{\dabs{\vec{v}}\cdot\dabs{\vec{w}}}
+\end{equation}
+\end{df}
+\begin{df}{Dice similarity}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm{similarity}{\vec{v},\vec{w}}=\displaystyle\frac{2\cdot\transpose{\vec{v}}\cdot\vec{w}}{\dabs{\vec{v}}+\dabs{\vec{w}}}
+\end{equation}
+\end{df}
+\begin{df}{Jenson-Shannon divergence}
+The \sb{} for two vectors $\vec{v}$ and $\vec{w}$ is defined as:
+\begin{equation}
+\funm[\mbox{JS}]{div}{\vec{v},\vec{w}}=\fun{\Delta}{\vec{v},\vec{w}}+\fun{\Delta}{\vec{w},\vec{v}}
+\end{equation}
+With $\Delta$ the \flv{Kullback-Leibler} distance.
+\end{df}
+\begin{df}{Collocation}
+\sb{} is an expression consisting of two or more words (usually phrases) that correspond to some convectional way of saying things. Usually an element of meaning is added to the collocation that can not be predicted from the meanings of the composing parts. Corpus based association techniques can be used for the detection of \sb{}s.
+\end{df}

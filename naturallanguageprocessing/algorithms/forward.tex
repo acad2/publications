@@ -1,0 +1,13 @@
+\Begin{
+$\alpha\gets\alMatrix{N+2,T}$\;
+\ForEach{$q_i\in Q$}{
+  $\alpha_{1\,i}\gets a_{0\,i}\cdot\fun{b_{i}}{o_1}$\;
+}
+\For{\fromto{t}{2}{T}}{
+  \ForEach{$q_i\in Q$}{
+    $\alpha_{t\,i}\gets\displaystyle\sum_{q_j\in Q}\alpha_{t-1,j}\cdot a_{j\,i}\cdot\fun{b_{i}}{o_t}$\;
+  }
+}
+$\alpha_{F\,i}\gets\displaystyle\sum_{q_j\in Q}\alpha_{T,j}\cdot a_{j\,F}$\;
+\Return{$\alpha_{F\,i}$}
+}

@@ -1,0 +1,72 @@
+\documentclass[a4paper,10pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[dutch]{babel}
+\usepackage{booktabs,tabularx,keystroke,framed,tikz,fullpage}
+\title{Technische handleidingen}
+\author{Willem Van Onsem}
+
+\newcounter{tmpC}
+
+\newcommand{\menucc}[1]{
+  \setcounter{tmpC}{0}
+  \foreach \x in {#1} {
+    \addtocounter{tmpC}{1}
+  }
+  \foreach \x in {#1} {
+    \texttt{\framebox{\x}}
+    \addtocounter{tmpC}{-1}
+    \ifnum\value{tmpC} > 0%
+      \texttt{>}
+    \fi
+  }
+}
+\newcommand{\keyst}[1]{\keystroke{#1}}
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\listoftables
+\tableofcontents
+\chapter{Lijst met Afkortingen}
+\begin{table}[hbt]
+\centering
+\begin{tabularx}{\textwidth}{l l X}
+\toprule
+\textbf{Afkorting}&\textbf{Voluit}&\textbf{Betekenis}\\\midrule
+CD&Compact Disc&Schijf met muziek.\\
+CD-ROM&CD Read-Only Memory&CD, kan slechts \'e\'enmaal worden beschreven.\\
+DVD&Digital Video Disc&Schijf met video.\\
+HDD&Hard Disk Drive&Harde Schijf.\\
+\bottomrule
+\end{tabularx}
+\caption{Lijst met afkortingen}
+\end{table}
+\chapter{Panasonic DMR-EH57}
+\section{Video naar HDD}
+\begin{enumerate}
+ \item Stop de video in de videorecorder
+ \item Zorg ervoor dat de video teruggespoeld is
+ \item Zet de videorecorder uit
+ \item Zet de \emph{Panasonic DMR-EH57} aan
+ \item Druk op \keyst{PROG/CHECK}
+ \item Gebruik \UArrow and \DArrow zodat \menucc{Nieuw Timerprogramma} geselecteerd wordt.
+ \item Druk op \keyst{OK}
+ \item Druk op \LArrow en \RArrow om de juiste kolom te selecteren en \UArrow en \DArrow om de gegevens in de tabel aan te passen. Pas de tabel zo aan zodat:
+ \begin{itemize}
+  \item \texttt{NAAM} op \texttt{AV1} staat
+  \item \texttt{DATUM} op de huidige datum staat
+  \item \texttt{START} op het tijdstip binnen $2$~minuten staat
+  \item \texttt{STOP} op het tijdstip binnen $2$~minuten en de duur van de film staat. Eventueel verder in de tijd.
+  \item \texttt{HDD/DVD} op \texttt{HDD} staat
+  \item \texttt{FUN} op \texttt{SP} staat
+  \item \texttt{VPS/PDC} op \texttt{UIT} staat
+ \end{itemize}
+ \item Druk op \keyst{OK}
+ \item Zet de \emph{Panasonic DMR-EH57} uit
+ \item Wachten tot de \emph{Panasonic DMR-EH57} begint op te nemen: \textt{REC} verschijnt zonder knipperen.
+ \item Videorecorder de video laten afspelen laten afspelen
+ \item Wachten totdat de video volledig is afgespeeld
+\end{enumerate}
+
+\end{document}

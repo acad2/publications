@@ -1,0 +1,129 @@
+\section{Language modeling and Sequential tagging}
+\begin{df}{Probabilistic model}
+A \sb{} is a model which predicts the next item based on probability theory.
+\end{df}
+\begin{df}{markov chain}
+A \sb{} is a model where the next variable depends only on a limited amount of previous variables. For a \flv{$k$-order Markov model} this means that:
+\begin{equation}
+\Prob{X_1,X_2,\ldots,X_t}=\displaystyle\prod_{i=1}^t{\Prob{X_i|X_{i-1},X_{i-2},\ldots,X_{\fun{\max}{i-k,1}}}}
+\end{equation}
+\end{df}
+\begin{df}{$N$-gram model}
+A \sb{} is a model which predicts the next item based on the previous $N-1$ items. Such models come in two flavors: \flv{Smoothed $N$-grams} and \flv{Unsmoothed $N$-grams}.
+\end{df}
+\begin{df}{Unsmoothed $N$-gram model}
+In an \sb{}, the probability is estimated by:
+\begin{equation}
+\Prob{X_t|X_{t-1},X_{t-2},\ldots,X_{t-N+1}}\approx\displaystyle\frac{\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}{\sum_{X_t}\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}
+\end{equation}
+\end{df}
+\begin{df}{Smoothed $N$-gram model}
+In order to eliminate zero-probabilities, a \sb{}, will modify the probabilities using some smoothing model. Popular smoothing models are for instance \flv{laplace smoothing}, \flv{Kneser-Ney smoothing}, ...
+\end{df}
+\begin{df}{Laplace smoothing}
+\sb{} adds a small value to all counts before normalizing. Therefore the probabilities of an $N$-gram model look like:
+\begin{equation}
+\Prob{X_t|X_{t-1},X_{t-2},\ldots,X_{t-N+1}}\approx\displaystyle\frac{1+\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}{V+\sum_{X_t}\Count{X_{t-N+1},X_{t-N+2},\ldots,X_{t}}}
+\end{equation}
+With $V$ the number of words in the vocabulary.
+\end{df}
+\begin{df}{Good discounting}
+\sb{} is a belief that the count of things you have seen helps estimating the count of things you have never seen. 
+\end{df}
+\begin{df}[Singleton]{Hapax legomenon}
+A \sb{} is an $N$ gram that occurs only once.
+\end{df}
+\begin{df}{Good Turing discounting}
+\sb{} is a method to count unseen things by using the frequency of \flv{Hapax legomenon}s as a re-estimate of the frequency of zero-count $N$-grams. Therefore it uses the following formula:
+\begin{equation}
+c^{\star}=\displaystyle\frac{\brak{c+1}\cdot N_{c+1}}{N_c}
+\end{equation}
+With $N_c$ the number of $N$-grams that occur $c$ times and $c^*$ the revised counts. Zero counts are estimated as $N$ (or the total number of events). If $N_c$ is zero (or smaller than a threshold $k$), one has to smooth this value a priori. In such case we use:
+\begin{equation}
+c^{\star}=\displaystyle\frac{\displaystyle\frac{\brak{c+1}\cdot N_{c+1}}{N_c}-\displaystyle\frac{c\cdot\brak{k+1}\cdot N_{k+1}}{N_1}}{1-\displaystyle\frac{\brak{k+1}\cdot N_{k+1}}{N_1}}
+\end{equation}
+\end{df}
+\begin{df}{Interpolation with lower order $N$-grams}
+\sb{} is a method where the probability of a $N$-gram is estimated based on the probabilities of $N$-grams with a lower $N$. If one uses linear interpolation the general formula is:
+\begin{equation}
+\Prob{X_T|X_{T-N+1},X_{T-N+1},\ldots,X_{T-1}}=\displaystyle\sum_{i=1}^{N}\mu_i\Prob{X_T|X_{T-N+i},X_{T-N+i+1},\ldots,X_{T-1}}\mbox{ where }\displaystyle\sum_{i=1}^{N}\mu_i=1
+\end{equation}
+The weights $\mu_i$ can be learned based on a corpus (with an \flv{Expectation-Maximization algorithm}), empirically or with prior knowledge.
+\end{df}
+\begin{df}{Backoff}
+\sb{} is a method where the probability of a $N$-gram is only estimated when we have zero evidence for a higher order $N$-gram. If data is available, we use that data.
+\end{df}
+\begin{df}{Katz backoff}
+\sb{} is a \flv{Backoff} method where one uses the original value if data is available. If the required data is missing, one uses interpolation with lower-order $N$-grams (for instance \flv{Good Turing discounting}).
+\end{df}
+\begin{df}{Log probabilities}
+\sb{} are a system where probabilities are represented by their logarithm. This is done when the probabilities are exceptionally low and could result in numerical underflows. By calculating the logarithm the probability fits in a floating point representation.
+\end{df}
+\begin{df}{Perplexity}
+\sb{} is thew probability of the test corpus $W$, normalized by the number of words in the test corpus:
+\begin{equation}
+\funm{Perplexity}{W}=\Prob{W}=\sqrt[L]{\displaystyle\frac{1}{\Prob{w_1w_2\ldots w_L}}}
+\end{equation}
+\end{df}
+\begin{df}{Chain rule}
+The \sb{} is a law in probability theory stating that one can calculate the probability of a sequence by the product of a set of conditional probabilities:
+\begin{equation}
+\Prob{X_1,X_2,\ldots,X_n}=\displaystyle\prod_{i=1}^{n}\Prob{X_i|X_1,X_2,\ldots X_{i-1}}
+\end{equation}
+\end{df}
+\begin{df}{Hidden Markov Model}
+A \sb{} is a 5-tuple $\tupl{Q,A,B,q_0,q_F}$. Where $Q=\accl{q_1,q_1,\ldots,q_N}$ is a set of $N$ \flv{state}s. $A$ is a \flv{Transition probability matrix} where each $a_{i\,j}$ represents the probability of moving from state $q_i$ to $q_j$ such that for all $i$, $\sum_{j=1}^{n}{a_{i\,j}}=1$. $o=\accl{o_1,o_2,\ldots,o_T}$ a set of $T$ \flv{Observation}s, each one drawn from a \flv{vocabulary} $V=\accl{v_1,v_2,\ldots,v_V}$. $B_{i\,t}=\fun{b_i}{o_t}$ a sequence of \flv{Observation likelihoods} (also called \flv{Emission probabilities}) each expressing the probability of an observation $o_t$ being generated from state $q_i$. $q_0$ is a special \flv{Start state} not associated with any observations but with transition probabilities $a_{0\,1},a_{0\,2},\ldots,a_{0\,n}$. Finally $q_F$ is called the \flv{End state} of \flv{Final state}. This state is not associated with observations either. The probabilities $a_{1\,F},a_{2\,F},\ldots,a_{n\,F}$ are associated with $q_F$. Popular problems in \sb{} are \flv{Hidden Markov Model Likelihood}, \flv{Hidden Markov Model Training} and \flv{Hidden Markov Model Encoding}. In a \sb{} one does not know the state sequence that the model past through when generating the training examples. A \sb{} is basically a model of a \flv{2-gram model}. One can extend this model by using a $N$-dimensional matrix for $A$ and $B$.
+\end{df}
+%TODO: image?
+\begin{df}[Cluster $N$-gram]{Class Based $N$-gram}
+A \sb{} uses information about the \flv{Word class}es or \flv{Cluster}s to predict the next word. This is useful when for instance the \stc{to Shanghai} never occurs in the training set, but the bigrams \stc{to London} and \stc{to Beijing} occur. One can approximate the probability with the following formula:
+\begin{equation}
+\Prob{w_i|w_{i-1}}\approx\Prob{c_i|c_{i-1}}\cdot\Prob{w_i|c_i}\mbox{ where }\Prob{w|c}=\displaystyle\frac{\Count{w}}{\Count{c}}\mbox{ and }\Prob{c_i|c_{i-1}}=\displaystyle\frac{\Count{c_{i-1},c_i}}{\sum_k\Count{c_{i-1},c_k}}
+\end{equation}
+\sb{} are often mixed with regular \flv{Word-based $N$-grams}.
+\end{df}
+\begin{df}{Hidden Markov Model Likelihood}
+\sb{} is a problem where given a \flv{Hidden Markov Model} $M=\tupl{Q,A,O,B,q_0,q_F}$, and a observation sequence $o=\brak{o_1,o_2,\ldots,o_T}$, one tries to find the probability of this observation $\Prob{O|M}$. One can calculate the likelihood by using the \flv{Transition probability matrix} and \flv{Emission probabilities} with the following formula:
+\begin{equation}
+\Prob{O|M}=\displaystyle\sum_{\kappa\in Q^T}\Prob{O|M,\kappa}=\displaystyle\sum_{\kappa\in Q^T}\brak{\displaystyle\prod_{i=1}^T\Prob{o_i|M,\kappa_i}}\cdot\brak{\displaystyle\prod_{i=2}^T\Prob{\kappa_i|M,\kappa_{i-1}}\cdot}
+\end{equation}
+One can efficiently calculate this using the \flv{Forward algorithm}.
+\end{df}
+\begin{df}{Forward algorithm}
+The \sb{} an algorithm that calculates the \flv{Hidden Markov Model Likelihood} using dynamic programming. Therefore a table $a_{t\,j}$ is calculated where $\alpha_{t\,j}$ is the probability of being in state $q_j$ after seeing the first $t$ observations of $O=\tupl{o_1,o_2,\ldots,o_T}$, or more formally:
+\begin{equation}
+\alpha_{t\,j}=\Prob{o_1,o_2,\ldots,o_t,\kappa_t=q_j|M}
+\end{equation}
+Where $\kappa_t$ is the $t$-th state in a sequence. Once this table is computed, we only have to sum over the probabilities of every path that could lead up to this observation. One can calculate the table by exploiting the following relation:
+\begin{equation}
+\alpha_{t\,j}=\displaystyle\sum_{i=0}^N\alpha_{t-1\,i}\cdot a_{i\,j}\cdot \fun{b_{j}}{o_t}
+\end{equation}
+The entire algorithm is listed in \algref{forward}.
+\end{df}
+\importalgo{forward}{The \algostyle{Forward}-algorithm}
+\begin{df}{Visible Markov Model}
+A \sb{} is a variant of a \flv{Hidden Markov Model}. In a \sb{} we can identify the path that was taken inside the model to produce the training sequence.
+\end{df}
+\begin{df}{Hidden Markov Model Training}
+\sb{} is a problem where given a set of observation sequences $O=\accl{O_1,O_2,\ldots,O_T}$ and a set of states $Q=\accl{q_1,q_2,\ldots,q_N}$, one tries to learn the parameters of the \flv{Transition probability matrix} $A$ and the \flv{Emission probabilities} $B$. The \flv{Forward-Backward algorithm} listed in \algref{forwardbackward} can learn these parameters.
+\end{df}
+\begin{df}{Backward algorithm}
+The \sb{} an algorithm that calculates the probability $\beta_{t\,i}$ of seeing the observations from time $t+1$ to the end, given that we are in state $i$ at time $t$ in a Hidden Markov Model $M=\tupl{Q,A,B}$. This by applying the reverse effects of the \flv{Forward algorithm}. The entire algorithm is listed in \algref{backward}.
+\end{df}
+\importalgo{backward}{The \algostyle{Backward}-algorithm}
+\begin{df}{Forward-Backward algorithm}
+The \sb{} is an algorithm that calculates the weights in a \flv{Hidden Markov Model}. This task is sometimes called \flv{Hidden Markov Model Training}. It is an \flv{Expectation-Maximization algorithm} where in the \flv{Expectation phase} two tables $\xi$ and $\gamma$ are calculated: $\xi_{t\,i\,j}$ is the probability of being in state $i$ at time $t$ and state $j$ at time $t+1$ given the observation sequence and the model. $\gamma_{t\,j}$ is the probability of being in state $j$ at time $t$. Or more formally:
+\begin{eqnarray}
+\xi_{t\,i\,j}&=&\Prob{\kappa_t=q_i,\kappa_{t+1}=j|O,M}=\displaystyle\frac{\alpha_{t\,i}\cdot a_{i\,j}\cdot\fun{b_{j}}{o_{t+1}}\cdot\beta_{t+1\,j}}{\alpha_{T\,N}}\\
+\gamma_{t\,j}&=&\displaystyle\frac{\alpha_{t\,j}\cdot\beta_{t\,j}}{\Prob{O|A,B}}
+\end{eqnarray}
+In the \flv{Maximization phase} one uses these parameters to update the model by calculating the most probable parameters for $A$ and $B$. \algref{forwardbackward} presents a full listing of this method.
+\end{df}
+\importalgo{forwardbackward}{The \algostyle{Forward-Backward}-algorithm}
+\begin{df}{Hidden Markov Model Encoding}
+\sb{} is a problem where given a \flv{Hidden Markov Model} $M$ and a sequence of \flv{Observation}s, one wants to find the most likely sequence of states the \flv{Hidden Markov Model} used to generate this sequence. This problem can be solved recursively using the \flv{Viterbi algorithm}.
+\end{df}
+\begin{df}{Viterbi algorithm}
+The \sb{} is an algorithm to calculate the most likely sequence of states given a sequence of observations. The algorithm first calculates this probabilities based of being in a state at time $t-1$. Probabilities are propagated back when the next time step $t$ is taken into consideration. Therefore the algorithm is a variant of the \flv{Max-Product algorithm}.
+\end{df}
+\importalgo{viterbi}{The \algostyle{Viterbi}-algorithm}

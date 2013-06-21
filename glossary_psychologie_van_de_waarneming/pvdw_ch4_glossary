@@ -1,0 +1,36 @@
+Midlle (midlevel) vision/A loosely defined stage of visual processing that comes after basic features have been extracted from the image (early vision) and before object recognition and scene understanding (high-level vision).
+Illusory Contour/A contour that is perceived, even though nothing changes from one side of te contour to the other in the image.
+Structuralism/A school of thought believing that complex objects or perceptions could be understood by analysis of the components.
+Gestalt/In german literally "form". In perception, the name of a school of thought stressing that the perceptual whole could be greater than the apperent sum of the parts.
+Gestalt grouping rules/A set of rules decribing which elements in an image will appear to group together. The original list was assembled by members of the Gestalt school of thought.
+Good continuation/A Gestalt grouping rule stating that two elements will tend to group together if they seem to lie on the same contour.
+Texture segmentation/Carving an image into regions of common texture properties.
+Similarity/A Gestalt grouping rule stating that the tendency of features to group together will increase as the similarity between them increases.
+Proximity/A Gestalt grouping rule stating that the tendency of features to group together will increase as the distance between them decreases.
+Parallelism/A rule for figure-ground assignment stating that parallel contours are likely to belong to the same figure.
+Symmetry/A rule for figure-ground assignment stating that the symmetrical regions are more likely to be seen as figure.
+Common region/A gestalt grouping rule stating that two features will tend to group together if they appear to be part of the same larger region.
+Connectedness/A Gestalt grouping rule stating that two intems will tend to group together if they are connected.
+Ambiguous figure/A visual stimulus that give rise to two or more interpretations of its identity or structure.
+Necker cube/An outline that is perceptually bi-stable. Unlike the situation with most stimuli, two interpretations continually battle for perceptual dominance.
+Accidental viewpoint/A viewing position that produces some regularity in the visual image that is not present in the world (e.g., the sides of two independent objects lining up perfectly).
+Figure-ground assignment/The process of determining that some regions of an image belong to aforeground object (figure) and other regions are part of the background (ground).
+Surroundedness/A rule for figure-ground assignment stating that if one region is entirely surrounded by another, it is likely that the surrounded region is the figure.
+Relatability/The degree of which two line segments appear to be part of the same contour.
+Heuristic/A mental shortcut.
+Nonaccidental Feature/A feature of an object that is not dependent on the exact (or accidental) viewing position of the observer.
+Global superiority effect/The finding in various experiments that the properties that whole objects take precedence over the properties of parts of the object.
+Naïve template theory/The proposal that the visual system recognizes objects by matching the neural representation of the image with a stored representation of the same "shape" in the brain.
+Structural description/A description of an object in terms of the nature of its consituent parts and the relationships between those parts.
+Geons/In Biederman's "Recognition by components" model, the "geometric iones" out which perceptual objects are build.
+"Recognition by components" model/Biederman's model of object recognition, which holds that objects are recognized by the identities and relationships of their component parts.
+Viewpoint invariance/1. A property of an object that does not change when observer viewpoint changes. 2. A class of theories of object recognition that proposes representations of objects that do not change when viewpoint changes.
+Entry-level category/For an object, the label to come to mind most quickly when we identify the object (e.g., bird). The object might be more specially named: that's the "subordinate level" (e.g., eagle). The object might be more generally named; that's the "superordinate level" (e.g., animal).
+Prosopagnosia/An inability to recognize faces.
+Double dissocation/The phenomenon which one of two functions such as being and sight can be damaged without harm to the other, and vice versa.
+Extrastriate cortex/The region of cortex bordering the primary visual cortex and containing multiple areas involved in visual processing.
+Lesion/In neuropsychology: 1. A region of damaged brain. 2. To destroy a section of the brain.
+Agnosia/A failure to recognize objects in spite of the ability to see them. Agnoisa is typically due to brain damage.
+Inferotemporal (IT) cortex/Part of the cerebral cortex in the low portion of the temporal lobe. Important in object recognition.
+Homologous regions/Brain regions that appear to have the same function in different species.
+Feed-forward process/A process that caries out computation (e.g., object recognition) one nneural stap after another, without need for feedback from a later stage o an earlier stage.

@@ -1,0 +1,11 @@
+\Begin{
+  $t\gets\alMatrix{n+1,n+1}$\;
+  \For{\fromto{j}{1}{n}}{
+    $t_{j-1\,j}\gets\accl{a|a\rightarrow w_j\in G}$\;
+    \For{\downfromto{i}{j-2}{0}}{
+      \For{\fromto{k}{i+1}{j-1}}{
+	$t_{i\,j}\gets t_{i\,j}\cup\accl{a|a\rightarrow b\,c\in G,b\in t_{i\,k},c\in t_{k\,j}}$\;
+      }
+    }
+  }
+}

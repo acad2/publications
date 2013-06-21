@@ -1,0 +1,30 @@
+\newSt{q0}{$q_0$}{initial}{accepting}
+\newSt{q1}{$q_1$}{right of=q0}{accepting}
+\newSt{q2}{$q_2$}{right of=q1}{accepting}
+\newSt{q3}{$q_3$}{right of=q2}{}
+\newSt{q4}{$q_4$}{right of=q3}{}
+\newSt{q5}{$q_5$}{below of=q1}{}
+
+\newLo{q0}{\^{}:$\epsilon$,\#,other}{}
+\newTr{q0}{q1}{s,x,z}{}
+
+\newTr{q1}{q0}{\#,other}{bend left}
+\newLo{q1}{s,x,z}{}
+\newTr{q1}{q2}{\^{}:$\epsilon$}{}
+
+\newTr{q2}{q0}{\^{}:$\epsilon$,\#,other}{bend right}
+\newTr{q2}{q1}{x,z}{bend left}
+\newTr{q2}{q3}{$\epsilon:e$}{}
+\newTr{q2}{q5}{s}{}
+
+\newTr{q3}{q4}{s}{}
+\newTr{q4}{q0}{\#}{bend right}
+
+\newTr{q5}{q0}{other}{}
+\newTr{q5}{q1}{s,x,z}{}
+\newTr{q5}{q2}{\^{}:$\epsilon$}{bend right}
+
+
+% \newTr{q0}{q1}{$\epsilon$}{bend right}
+% \newTr{q1}{q2}{adjective root}{}
+% \newTr{q2}{q3}{-er -est -ly}{}

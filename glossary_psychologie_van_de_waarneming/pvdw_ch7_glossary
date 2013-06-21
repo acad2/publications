@@ -1,0 +1,25 @@
+Motion Aftereffect (MAE)/The illusion of motion of a stationary object that occurs after prolonged exposure to a moving object.
+Apperent Motion/The (illusory) impression of smooth motion resulting from the rapid alternation of objects that appear in different locations in rapid succession.
+Aperture/An opening that allows only a partial view of the object.
+Corresponding problem (motion)/The problem faced by the motion detection system of knowing which feature in frame 2 corresponding to a particular feature in frame 1.
+Aperture problem/The fact when a moving object is viewed through an apperture (or receptive field), the direction of motion on a local feature or part of the object may be ambiguous.
+Middle temporal lobe (MT)/An area of the brain thought to be important in the perception of motion.
+Interocular transfer/The tranfer of an effect (such as adaption) from one eye to the other.
+First-order motion/The motion of an object that is defined by changes in luminance.
+Luminance-defined object/An object that is delineated by changes in reflexted light.
+Second-order motion/The motion of an object that is defined by changes in the contrast or texture, but not by luminiance.
+Texture-defined (constrast-defined) objec/An object that is defined by changes in constrast or texture, but not by luminance.
+Optic array/The collection of light rays that interact with objects in the world in front of a viewer. Term coined by J.J. Gibson.
+Optic flow/The changing angular position of points in a perspective image that we experience as we move through the world.
+Focus of expansion/The point of the center of the horizontal form which, when we are in motion (e.g., driving on the highway), all points in the perspective image seem to emenate. The focus of expansion is one aspect of optic flow.
+Biological motion/The pattern of movement of living beings (humans and animals).
+Time to collision (TTC)/The time required for a moving object (such as a cricket ball) to hit a stationary object (such as a batsman's head). TTC=distance/rate.
+Tau/Information in the optic flow that could signal TTC (time to collision) without the neccesity of estimationg either absolute distances or rates. The ratio of the retinal image size at any moment to the rate whih the image is expanding is tau, and TTC is proportional to tau.
+Smooth pursuit/A type of eye movement in which the eye moves smoothly to following a moving object.
+Superio colliculus/A structure in the midbrain that is important in intiating and guiding eye movements.
+Vergence/A type of eye movement in which the two eyes move in opposite directions -- for example, both eyes turn toward the noce (convergence) or away from the nose (divergence).
+Saccade/A rapid movement of the eyes that changes fixation from one object or location to another.
+Reflexive eye movements/A movement of the eye that is automatic and involutary.
+Saccadic supression/The reduction of visual sensitivity that occurs when we make saccadic eye movements. Saccadic suppression eliminates the smear from retinal image motion during an eye movement.
+Comparator/An area of the visual system that receives one copy of the order issued by the motor system when the eye move (the other copy goes to the eye muscle). The comparator can compensate for the image changes caused by the eye movement.
+Akinetopsia/A rare neuropsychological disorder in which the affected individual has no perception of motion.

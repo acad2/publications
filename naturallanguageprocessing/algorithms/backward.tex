@@ -1,0 +1,13 @@
+\Begin{
+$\beta\gets\alMatrix{T,N+2}$\;
+\ForEach{$q_i\in Q$}{
+  $\beta_{T\,i}\gets a_{i\,F}$\;
+}
+\For{\downfromto{t}{T-1}{1}}{
+  \ForEach{$q_i\in Q$}{
+    $\beta_{t\,i}\gets\displaystyle\sum_{q_j\in Q}\beta_{t+1,j}\cdot a_{i\,j}\cdot\fun{b_{j}}{o_{t+1}}$\;
+  }
+}
+$\beta_{1\,0}\gets\displaystyle\sum_{q_j\in Q}\beta_{1,j}\cdot a_{0\,j}\cdot\fun{b_{j}}{o_1}$\;
+\Return{$\beta$}
+}

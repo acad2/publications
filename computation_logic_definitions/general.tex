@@ -1,1 +1,267 @@
 \section{General Programs}
+\subsection{Negative information from definite programs}
+\subsubsection{Non-monotonic reasoning}
+\defe{Monotonic reasoning}{A reasoning is monotonic when a refutation remains valid after extending the program.}
+\defe{Sound reasoning}{A reasoning is sound if $P\vdash\varphi$ implies $P\vDash\varphi$.}
+\defe{Weakly sound reasoning}{A reasoning is weakly sound if $P\vdash\varphi$ implies that $P\cup\varphi$ has a \inre{Model}.}
+\lema{No negative weakly sound method}{There is no weakly sound method $\rightsquigarrow$ which allows to derive negative information from \inre{Definite program}s and which is \inre{Monotonic}.
+\begin{proof}
+Suppose otherwise, then $P\rightsquigarrow\leftarrow A$, by monotonicity one can derive: $P\cup\accl{A\leftarrow}\rightsquigarrow\leftarrow A$ thus $P\cup\accl{A\leftarrow}\cup\accl{\leftarrow A}$ should be consistent, which is a contradiction.
+\end{proof}}
+\subsubsection{Closed World Assumption}
+\defe{Closed world assumption}{The \sub{} states the following:
+\begin{equation}
+\deriva{\funm{not}{P\vdash A}}{\neg A}
+\end{equation} Thus this method derives $A$ when $A$ is not provable in first order logic and thus by extent by \inre{SLD-resolution}.}
+\defe{Closed world assumption of a program}{The \sub{} $P$ is defined as:
+\begin{equation}
+\funm{CWA}{P}=\accl{A|A\mbox{ is ground and there is no refutation of }A}=B_P\setminus M_P
+\end{equation}
+$P\cup\accl{\neg A|A\in\funm{CWA}{P}}$ is always consistent, therefore the Closed World Assumption is \inre{Weakly sound}. The problem is that this set is not always \inre{Recursively enumerable} and therefore it is \inre{Semi-decidable}.}
+\subsection{Negation as Finite Failure and Completion Semantics}
+\defe[FFS]{Finte failure set}{A \sub{} is a set which contains all ground atoms such that there exists a finitely \inre{Failed SLD-tree} for $\leftarrow A$.}
+\defe[NAF rule]{Negation as Finite Failure}{It is a \inre{Non-monotonic} rule. It uses a \inre{Finite failure set} and derives the rule:
+\begin{equation}
+\deriva{A\in\funm{FFS}{P}}{\neg A}
+\end{equation} $P\cup\accl{A|A\in\funm{FFS}{P}}$ is always consistent thus \sub{} is \inre{Weakly sound}.}
+\defe{Fair SLD-derivation}{An \inre{SLD-derivation} is fair if it is finite or if every atom which is introduced in a goal is eventually selected in one of the following goals.}
+\defe{Fair SLD-tree}{An \inre{SLD-tree} is fair if every branch is a \inre{Fair SLD-derivation}.}
+\lema{Fairness equivalence}{
+The following expressions are equivalent:
+\begin{enumerate}
+ \item\itmllab{a} $A\in\funm{FFS}{P}$
+ \item\itmllab{b} $A\notin\tpdnw$
+ \item\itmllab{c} Every \inre{Fair SLD-tree} with $\leftarrow A$ as root is finitely failed.
+\end{enumerate}
+\begin{proof}
+\begin{description}
+ \item [$\itmrref{c}\rightarrow\itmrref{a}$] If every \inre{Fair SLD-tree} with $\leftarrow A$ finitely fails, then there definitely exists a finitely failing tree, so by definition, $A\in\funm{FFS}{P}$.
+ \item [$\itmrref{a}\rightarrow\itmrref{b}$] One can prove by induction that a finite failed tree of depth $k$ implies $A\notin T_P\downarrow k$. For $k=1$, $A$ is a failing literal, hence even with the whole \inre{Herbrand base}, nor rule can derive $A$, thus $A\notin T_P\downarrow 1$. Now assume it holds for $k-1$. After $k$ steps, every derivation ends with selection of a failing literal. For any \inre{ground instance} of any derivation it starts with a ground clause \clausea{A}{B}{1}. Hence \clausez{B}{k} fails after most $k-1$ steps. That derivation can be split in partial derivations for each atom $\exists i$ the derivation of atom $B_i$ selects a a failing literal after at most $k-1$ steps. Therefore $B_i\notin T_P\downarrow k-1$ (by induction). Hence that derivation cannot show that $A\in T_P\downarrow k$, neither can any other ground instance of any other derivation.
+ \item [$\itmrref{b}\rightarrow\itmrref{c}$] So $\exists k:A\notin T_P\downarrow k$. If there is a fair non-failing derivation, then it can be instantiated to a fair non-failing ground derivation. So sufficient to show there is no fair non-failing ground derivation. Take $k=1$, $A\notin T_P\downarrow 1$, hence $\leftarrow A$ fails in the first step. Now by induction one can prove that $A\notin T_P\downarrow k$. For every ground clause \clausea{A}{B}{k} there exists a $B_i$ such that $B_i\notin T_P\downarrow k-1$. Hence by induction, every fair tree for $\leftarrow B_i$ fails finitely. Hence fair a fair derivation of \clausez{B}{k} fails finitely as selection of atoms leading to failure in derivation $B_i$ cannot be layered for every. Hence also a fair derivation of $\leftarrow A$ fails finitely.
+\end{description}
+\end{proof}}
+\defe{Completion semantics}{\sub{} states that what you write logically is not what you mean. When one writes two predicates, one implicitly means there are no others.}
+\defe{Construction of completion}{One can construct complete semantics in the following way:
+\begin{enumerate}
+ \item Replace terms from the head and make conjunctions explicit. This means that a rule $\fun{p}{t_1,\ldots,t_n}\clausez{B}{k}$ becomes $\fun{p}{x_1,\ldots,x_n}\leftarrow\brak{x_1=t_1}\wedge\brak{x_n=t_n}\wedge B_1\wedge\ldots\wedge B_k$ with $x_1,\ldots,x_n$ new variables.
+ \item Introduce existential quantifiers. One converts a rule $\fun{p}{x_1,\ldots,x_n}\leftarrow F$ with $y_1,\ldots,y_m$ the variables not occuring in the head by: $\fun{p}{x_1,\ldots,x_n}\leftarrow\exists y_1\ldots\exists y_m: F$.
+ \item Group similar formulas. Replace
+ \begin{equation}
+  \groupa{
+   \fun{p}{x_1,\ldots,x_n}\leftarrow F_1\\
+   \vdots\\
+   \fun{p}{x_1,\ldots,x_n}\leftarrow F_k\\
+  }
+ \end{equation}
+ by $\fun{p}{x_1,\ldots,x_n}\leftarrow F_1\vee\ldots\vee F_k$
+ \item Handle undefined predicates. For each $q/n$ used in a \inre{Body} but not in a \inre{Head} add $\fun{q}{x_1,\ldots,x_n}\leftarrow\mbox{false}$
+ \item Introduce universal quantifiers. Replace $\fun{p}{x_1,\ldots,x_n}\leftarrow F$ by $\forall x_1\ldots\forall x_n\brak{\fun{p}{x_1,\ldots,x_n}\leftarrow F}$.
+ \item Introduce the intended meaning. Replace $\forall x_1\ldots\forall x_n\brak{\fun{p}{x_1,\ldots,x_n}\leftarrow F}$ with $\forall x_1\ldots\forall x_n\brak{\fun{p}{x_1,\ldots,x_n}\leftrightarrow F}$ this form is abbreviated as \inre{\fun{IFF}{P}}. \inre{\fun{ONLY-IF}{P}} is an abbreviation of $\forall x_1\ldots\forall x_n\brak{\fun{p}{x_1,\ldots,x_n}\rightarrow F}$
+\end{enumerate}}
+\defe{Free Clarke equality axioms}{The \sub{} are a set of axioms listed below:
+\begin{enumerate}
+ \item $\forall\brak{x=x}$ (\inre{Reflexivity})
+ \item $\forall\brak{x=y}\rightarrow\brak{y=x}$ (\inre{Symmetry})
+ \item $\forall\brak{x=y}\wedge\brak{y=z}\rightarrow\brak{x=z}$ (\inre{Transitivity})
+ \item $\forall\brak{x_1=y_1}\wedge\brak{x_n=y_n}\rightarrow\fun{f}{x_1,\ldots,x_n}=\fun{f}{y_1,\ldots,y_n}$ (Equals can be replaced by equals for each \inre{Functor})
+ \item $\forall\brak{x_1=y_1}\wedge\brak{x_n=y_n}\rightarrow\brak{\fun{p}{x_1,\ldots,x_n}\leftrightarrow\fun{p}{y_1,\ldots,y_n}}$ (Equals can be replaced by equals for each \inre{Predicate})
+ \item $\forall\fun{f}{x_1,\ldots,x_n}=\fun{f}{y_1,\ldots,y_n}\rightarrow\brak{x_1=y_1}\wedge\brak{x_n=y_n}$ (Corresponding arguments of equal terms are equal for each \inre{Functor})
+ \item $\forall\fun{f}{x_1,\ldots,x_n}=\fun{g}{y_1,\ldots,y_m}\rightarrow\mbox{false}$ (For each pair of distinct \inre{Functor})
+ \item $\forall x=t\rightarrow\mbox{false}$ (If $t$ is not $x$ and $x\in\funm{Var}{t}$)
+\end{enumerate}.}
+\defe{Completion of a program}{The \sub{} $P$ is the \inre{If-and-only-if form} of that program together with the \inre{Free Clarke equality} (FEQ) axioms. Therefore we can state:
+\begin{equation}
+\funm{COMP}{P}=\funm{IFF}{P}+\mbox{FEQ}
+\end{equation}.}
+\lema{Apt and Van Emden}{
+\begin{enumerate}
+ \item A \inre{Herbrand intepretation} $I_H$ is a model of \funm{COMP}{P} if $\fun{T_P}{I_H}=I_H$. The terms under the \inre{Herbrand model} satisfy the \inre{Free Clarke axioms}.
+ \item \funm{COMP}{P} has a \inre{Herbrand model} because $T_P$ has \inre{Fixpoint}s for \inre{Definite program}s.
+ \item Given ground atom $A$, $\funm{COMP}{P}\cup\accl{A}$ has a \inre{Herbrand Model} if and only if $A\in\funm{gfp}{T_P}$. Because \funm{gfp}{T_P}, the largest \inre{Fixpoint} includes all others, thus it is the largest \inre{Herbrand model} of \funm{COMP}{P}.
+\end{enumerate}}
+\lema{Incompleteness}{There exists a program $P$ and a ground atom $A$ such that $\funm{COMP}{P}\cup\accl{A}$ has a \inre{Model} but no \inre{Herbrand model}.
+\begin{proof}
+Consider $\fun{p}{\fun{f}{x}}\leftarrow\fun{p}{x}$ and $\fun{q}{a}\leftarrow\funm{p}{x}$. Then $\funm{gfp}{T_P}=\emptyset$. So $\funm{COMP}{P}\cup\accl{A}$ has no \inre{Herbrand model}. $A$ is false in the only \inre{Herbrand model} of the \inre{Completion}.
+\end{proof}}
+\defe{Finite failure theorem}{Given a program $P$ and a ground clause $A$, then the following are equivalent:
+\begin{enumerate}
+ \item $A$ is in the \inre{Finite failure set} of $P$.
+ \item $A\notin T_P\downarrow\omega$.
+ \item Every \inre{fair SLD-tree} for $\leftarrow A$ is finitely failed.
+ \item $\fun{COMP}{P}\vDash\neg A$
+\end{enumerate}. For programs where $T_P\uparrow\omega=T_P\downarrow\omega$ all notions of negation coincide.}
+\subsection{Inductive definitions}
+\defe{Inductive definition}{A description of a concept in terms of more primitive concepts and itself. One can derive the meaning of a definition by deriving the \inre{If-and-only-if-form} \funm{IFF}{P} of the program. When the definition is recursive however, both \funm{IFF}{P} and \funm{COMP}{P} are too weak to capture the intended meaning\footnote{Since we mean the \inre{Least fixpoint} $M_P$ which is captured by the \inre{Non-monotonic closed world assumption}}. One can however specify such definitions in \inre{Second order logic}. In order to obtain the meaning, we can introduce a new semantical meaning model: \funm{IND}{P} where \begin{equation}
+\funm{IND}{P}=P\cup\mbox{FEQ}\cup\mbox{DCL}\cup\mbox{MIM}
+\end{equation}
+With DCL the \inre{Domain closure axioms} and MIM the \inre{Minimal model assumption}. The \inre{SLD-derivation} method produces \inre{Sound} but no \inre{Complete results}\footnote{Because of infinite branches}. If \inre{Functors} are omitted, one can built a complete procedure based on \inre{Tabulation}\footnote{For instance a \inre{OLDT} proof procedure like \inre{XSB Prolog}.} or \inre{Bottom-up method}s.}
+\defe[DCA]{Domain closure axiom}{The \sub{} is a set of axioms defining that the elements of the \inre{Herbrand universe} are the only objects.}
+\defe[MIM]{Minimal model assumption}{The \sub{} is a set of \inre{Second order logic} axioms expressing that the \inre{Interpretation} is only a model if it is a \inre{Minimal model} of all the other axioms. Or more formally:
+\begin{equation}
+\funm{IND}{P}\vDash\neg A\mbox{ if and only if }\neg A\in\funm{CWA}{P}
+\end{equation}.}
+\subsection{General/Normal Programs}
+\defe{Floundering negation}{\sub{} states that execution can block when one calls with a negation but where the predicate is not ground. It is undecidable if a program will flounder, But restricted classes of non-floundering programs and queries exist.}
+\defe{Constructive negation}{\sub{} is a paradigm where the program looks for values which make unifications fail.}
+\subsubsection{The SLDNF proof procedure}
+\defe{SLDNF-tree}{The basic intuition behind a \sub{} is that $\funm{not}{P}$ succeeds if $P$ finitely fails and $\fun{not}{P}$ finitely fails when $P$ succeeds. If $\funm{not}{P}$ does not terminate than soo does $P$. The top level query \inre{Flounders} when somewhere $\funm{not}{x}$ is selected with $x$ not grounded.}
+\defe{Lloyd's SLDNF proof procedure}{Lloyd states that the concept of an \inre{SLDNF-tree} is undefined when a \inre{Subderivation} does not terminate.}
+\defe{Successful SLDNF-tree}{A \sub{} is a tree which has a leaf labeled $\square$.}
+\defe{Finitely failed SLDNF-tree}{A \sub{} is a tree where all leaves are marked with \inre{Failure}.}
+\defe{Forest}{A \sub{} is a set of trees with one main tree and with some nodes having a \inre{Subsidiary tree}\footnote{Nodes with negative literals will be given a \inre{Subsidiary tree}.}.}
+\defe{SLDNF resolvent}{In order to process the \sub{}, we consider two cases for $\leftarrow L_1,\ldots,L_i,\ldots L_n$ with $L_i$ selected:
+\begin{itemize}
+ \item A standardized apart clause \clausea{H}{B}{k} with \inre{Most general unifier} $\sigma$ of a \inre{Positive literal} $L_i$ and \inre{Head} $H$. The resolvent is:
+ \begin{equation}
+  \leftarrow\brak{L_1,\ldots,L_{i-1},B_1,\ldots,B_k,L_{i+1},\ldots,L_n}\sigma
+ \end{equation}
+ \item $L_i$ is negative. The substitution is $\epsilon$: the \inre{Empty substitution}: the resolvent is then:
+ \begin{equation}
+  \leftarrow L_1,\ldots,L_{i-1},L_{i+1},\ldots,L_n
+ \end{equation}
+\end{itemize}
+.}
+\defe{Partial SLDNF-tree}{A forest where the main tree with $\leftarrow\calA$ as single node and no subsidiary trees is a \sub{}. Also an extension of a \sub{} is a \sub{}.}
+\defe{Extension of a partial SLDNF-tree}{One obtains a \sub{} by applying the following operation on all unmarked leaves different from $\square$:
+\begin{enumerate}
+ \item If no literal selected: select one.
+ \item If positive literal selected:
+ \begin{enumerate}
+  \item if no resolvents, then mark leaf with failure.
+  \item If resolvent, then add them as the children of the node.
+ \end{enumerate}
+ \item If negative literal $\funm{not}{A}$ selected:
+ \begin{enumerate}
+  \item If $A$ is non-ground, then mark leaf with \inre{Floundering}.
+  \item If $A$ is ground then:
+  \begin{enumerate}
+   \item If it has no subsidiary tree, create subsidiary tree with root $\leftarrow A$.
+   \item If it has a successful subsidiary tree, mark leaf with failure.
+   \item If it has a finitely failed subsidiary tree, add the resolvent as child.
+  \end{enumerate}
+ \end{enumerate}
+\end{enumerate}
+.}
+\defe{Successful SLDNF-tree}{A \sub{} is a \inre{SLDNF-tree} where the main tree is successful.}
+\defe{Failed SLDNF-tree}{A \sub{} is a \inre{SLDNF-tree} where the main tree has failed.}
+\defe{SLDNF-tree for a query}{A \sub{} $Q$ is the limit of the sequence $\calF_0,\calF_1,\ldots$. With $\calF_0$ the initial \inre{Partial SLDNF-tree} and $\calF_{i+1}$ the extension of $\calF_i$.}
+\defe{SLDNF-derivation}{A \sub{} is a branch of the main tree together with subsidiary trees.}
+\defe{Computed answer substitution of SLDNF-refutation}{The \sub{} is the composition of the substitutions\footnote{$\epsilon$ was the substitution when the negative literal was selected.} of the branch of the main tree restricted to variables of the query.}
+\defe{Safe computation rule}{A \inre{Computation rule} is safe if it never selects a non-ground negative literal.}
+\defe{Blocked goal}{A \sub{} is a query where all literals are non-grounded and negative.}
+%\defe[Computation rule of the SLDNF procedure]{Selection rule of the SLDNF procedure}{×}
+\defe{Allowed query}{An \sub{} is a \inre{Query} where every variable occurs in a positive literal.}
+\defe[Range restricted clause]{Allowed clause}{A \sub{} is a \inre{Clause} where the defining predicates occur positively in the bodies: every clause variable has an occurence in a positive body literal.}
+\defe{Admissible clause}{An \sub{} is a clause defining predicates occuring only negatively in bodies: every clause variable has an occurence in the \inre{Head} or a \inre{Positive body literal}.}
+\subsection{Semantics of Normal Programs}
+\subsubsection{Completion Semantics}
+\defe{General clause}{A \sub{} has one positive \inre{Literal} in the \inre{Head}, so they are true in $B_P$, the \inre{Interpretation} consists of all ground atoms.}
+\defe{Melvin fitting}{Mevin fitting is a method to capture the behavior of \inre{SLDNF resolution} using three valued logic.}
+\defe{Three valued logic}{\sub{} is a form of logic where each expression is devided into three categories: true, false and undefined ($\bot$). A ground clause $A\leftarrow B_1,\ldots,B_m,\neg C_1,\ldots,\neg C_n$ if for all $\fun{I}{\neg C}=\neg\brak{\fun{I}{C}}$ with $\neg\brak{u}=u$, $\fun{\neg}{t}=f$ and $\fun{\neg}{f}=t$. \inre{Completing} is consistent with \sub{}.}
+\defe{Three valued interpretation}{A \sub{} $I=\tupl{I^+,I^-}$ where $I^+$ is the set of true atoms, $I^-$ the set of false atoms and $B_P\setminus\brak{I^+\cup I^-}$ the set of undefined atoms. With respect to the real model both $I^+$ and $I^-$ are underestimations and $B_P\setminus\brak{I^+\cup I^-}$ is an overestimation. A logical corollary is that $I^+\cap I^-=\emptyset$. The interpretation is total when $I^+\cup I^-=B_P$.}
+\defe{Four valued logic}{Four valued logic is an extension of three valued logic where one considers a fourth value $\top=I^+\cap I^-$.}
+\defe{Truth ordering}{One can define a truth ordering for \inre{Three valued logic} where $\mbox{false}<_t\mbox{undecidable}<_t\mbox{true}$.}
+\defe{Fitting operator}{The \sub{} $\Phi_P$ is an \inre{Immediate consequence operator} extension for general programs. Consider all ground clauses for atom $A$: $A\leftarrow\calB_1\ \ldots\ A\leftarrow\calB_m$. Then:
+\begin{equation}
+\funb{\Phi_P}{I}{A}=\fun{\max_t}{\fun{I}{\calB_1},\ldots,\fun{I}{\calB_m}}
+\end{equation}
+Therefore an atom $A$ is true if and only if there exists a true body. The atom is false if and only if all bodies are false. When applied to an \inre{Interpretation} we get:
+\begin{equation}
+\groupa{\fun{\Phi_P}{\tupl{I^+,I^-}}=\tupl{S^+,S^-}\\
+H\in S^+\mbox{ if and only if }\funb{\Phi_P}{I}{H}=\mbox{true}\\
+H\in S^-\mbox{ if and only if }\funb{\Phi_P}{I}{H}=\mbox{false}}
+\end{equation}}
+\defe{Knowledge order}{We define the \sub{} as $\mbox{undecidable}<_k\mbox{true}$, $\mbox{undecidable}<_k\mbox{false}$, $\mbox{true}<_k\top$ and $\mbox{false}<_k\top$.}
+\lema{Properties of $\Phi_P$}{
+\begin{enumerate}
+ \item If $I$ is consistent, then $\fun{\Phi_P}{I}$ is consistent.
+ \item $\tupl{I_1^+,I_1^-}\leq_k\tupl{I_2^+,I_2^-}$ if and only if $I_1^+\subseteq I_2^+$ and $I_1^-\subseteq I_2^-$
+ \item $\tupl{I_1^+,I_1^-}\geq_k\tupl{I_2^+,I_2^-}$ implies $\fun{\Phi_P}{\tupl{I_1^+,I_1^-}}\geq_k\fun{\Phi_P}{\tupl{I_2^+,I_2^-}}$ thus \inre{Monotonicity} and existence of \inre{Fixpoint}s.
+ \item In \inre{Least fixpoint}: $I^+\cap I^-=\emptyset$.
+ \item $\Phi_P$ is not \inre{Continuous} for a pp programs. Since $S^-=B_P\setminus\fun{T_P}{B_P\setminus I^-}$ and $T_P\downarrow$ is not \inre{Continuous}, false atoms are not recursively enumerable for all programs.
+ \item \inre{Fixpoint} of $\Phi_P$ are \inre{Three valued model}s of \funm{COMP}{P}.
+ \item With $\funm{lfp}{\Phi_P}=\tupl{I^+,I^-}$, if $A\in I^+$ then $\funm{COMP}{P}\vDash_3 A$ and if $A\in I^-$ then $\funm{COMP}{P}\vDash_3\neg A$.
+\end{enumerate}}
+\lema{Soundness of SLDNF}{If SLDNF computes answer $\theta$ for query $\leftarrow\calA$ then $\funm{COMP}{P}\vDash_3\forall\calA\theta$. If SLDNF finitely fails for query $\leftarrow\calA$, then $\funm{COMP}{P}\vDash_3\forall\neg\calA=\neg\exists\calA=\forall\leftarrow\calA=\leftarrow\calA$. These soundness results hold also for two valued completion. Everything follows from \inre{Inconsistent theory}.}
+\lema{Completeness of SLDNF}{The SLDNF procedure is not complete for all programs. Let $\funup{\phi}{\omega}{P}$ be $\tupl{I^+,I^-}$, if $A\theta\in I^+$, then SLDNF finds a proof for $\leftarrow A$ or \inre{Flounders}. If $\forall\theta:A\theta\in I^-$, then SLDNF finitely fails for $\leftarrow A$ or \inre{Flounders}.}
+\subsubsection{Intended model semantics}
+\paragraph{Stratified programs as inductive definitions}
+\defe{Definition}{A definition considers only one model.}
+\defe{Stratified program}{A \sub{} is a program in layers. Once a concept is defined in one layer, its negation can be used to define other concepts in further layers. A program can be stratified when the \inre{Dependency graph} does not contain cycles with a negative arc. A set of \inre{Strata} $P_1,\ldots,P_n$ is a \inre{Stratification} of $P$ if
+\begin{enumerate}
+ \item $P$ is the union of $P_1,\ldots,P_n$.
+ \item The \inre{Strata} are disjoint.
+ \item If a relation occurs positively in $P_i$ its definition is contained in $P_1\cup\ldots\cup P_i$ thus in the same or lower stratum.
+ \item If a relation occurs negatively in $P_i$, its definition is contained in $P_1\cup\ldots\cup P_{i-1}$ thus a lower stratum.
+ \item Undefined predicates are in $P_1$ and $P_1$ can be empty.
+\end{enumerate}}
+\defe{Dependency graph}{A \sub{} states which atoms depend on which atoms. It can be used to stratify a program. In a \sub{}, there are two types of arcs: \inre{Positive arc}s $\tupl{p,q}^+$ and \inre{Negative arc}s $\tupl{p,q}^-$. $\tupl{p,q}^+\in D_P$ if there exists a clause $\fun{p}{\ldots}\leftarrow,\fun{q}{\ldots},\ldots\in P$ and $\tupl{p,q}^-\in D_P$ if there exists a clause $\fun{p}{\ldots}\leftarrow\ldots,\funm{not}{\fun{q}{x}},\ldots\in P$.}
+\lema{Admitting stratification}{A program is stratified if and only if it admits stratification.
+\begin{proof}
+A stratification of $P$ means $D_P$ can have no cycles through negation. One can construct a stratified program by using the dependency graph: select a minimal group of predicates which depend on predicates already placed in a stratum or positively on themselves. Put the group in the lowest stratum satisfying the conditions.
+\end{proof}}
+\defe{Cumulative powers}{The \inre{Cumulative powers} of a function $T_P$ are defined as follows:
+\begin{equation}
+\groupa{
+\funUp{T_P}{0}{I}=I\\
+\funUp{T_P}{\brak{n+1}}{I}=\fun{T_P}{\funUp{T_P}{n}{I}}\cup\funUp{T_P}{n}{I}\\
+\funUp{T_P}{\omega}{I}=\displaystyle\cup_{n=0}^\infty\funUp{T_P}{n}{I}
+}
+\end{equation}}
+\defe{Perfect model of a stratified program}{Let $P_1,\ldots,P_n$ be a \inre{Stratification} of $P$, then define $M_n$ as the perfect model $M_P$:
+\begin{equation}
+\groupa{M_1=\funUp{T_{P_1}}{\omega}{\emptyset}\\
+M_2=\funUp{T_{P_2}}{\omega}{M_1}\\
+\vdots\\
+M_n=\funUp{T_{P_n}}{\omega}{M_{n-1}}
+}
+\end{equation}.}
+\defe{Order relation for stratified models}{
+Let $\tupl{I_1,\ldots,I_n}$ and $\tupl{J_1,\ldots,J_n}$ be models with $I_k,J_k$ the atoms true in stratum $k$. $\tupl{I_11,\ldots,I_n}<\tupl{J_1,\ldots,J_k}$ if:
+\begin{equation}
+\displaystyle\vee_{i=1}^{n}\brak{\brak{I_i\subsetneq J_i}\displaystyle\wedge_{j=1}^{i-1}\brak{I_j=J_j}}
+\end{equation}}
+\lema{Properties of the perfect model}{\begin{enumerate}
+ \item $M_P$ is a \inre{Minimal model}.
+ \item $M_P$ is a smaller \inre{Model} than any other other \inre{Minimal Model}.
+ \item $M_P$ is the model of \funbm{IND}{P}{P\cup\mbox{FEQ}\cup\mbox{DCL}\cup\mbox{MIM}}
+ \item $M_P$ does not depend on stratification
+ \item $M_P$ is a \inre{Herbrand model} of $P$ and of \funm{COMP}{P}.
+\end{enumerate}}
+\defe{Local stratification}{In \sub{} a rule is stretched out over (possibly an infinite amount of) strata. In order to handle for instance the entire $B_P$ set.}
+\paragraph{Well-founded programs as inductive definitions}
+\defe{Candidate proof tree}{A \sub{} $\calT$ of an atom $p$ is a tree with $p$ in the root. Eacn non leaf is an atom $q$ where its descendants are the literals in the body of some rule $q\leftarrow\calB$. Each leaf is either true or false or a negative literal and the tree is finite.}
+\defe{Well-founded model}{The well founded model is the \inre{Least fixpoint} of a program. The \sub{} corresponds best to the intuition and common sense of the programmer.}
+\defe{Partial interpretation}{The \sub{} $\pif{I}=S=\tupl{S^+,S^-}$ of another partial interpretation $I=\tupl{I^+,I^-}$ is defined as follows:
+\begin{enumerate}
+ \item $p\in S^+$ if and only if $p$ has a \inre{Condidate prooftree} with all leaves true in $I$.
+ \item $p\in S^-$ if and only if all \inre{Condidate prooftree}s\footnote{Note that this is not the same condition as the previous item} of $p$ have a leaf that is false in $I$.
+\end{enumerate} This operator in \inre{Monotonic} in the \inre{Knowledge order} since more true and false atoms will yield more decisions hence the least fixpoint exists: the \inre{Well-founded model}.}
+\defe{Gelfond-Lifschitz operator}{The \sub{} $\glf{I}=S=\tupl{S^+,S^-}$ with $I=\tupl{I^+,I^-}$ and $S$ \inre{Partial interpretations}, we define the operator as follows:
+\begin{enumerate}
+ \item $S^+$ is the set of atoms who are definitely true thus:
+ \begin{enumerate}
+  \item remove clauses with literal $\funm{not}{a}$ if $a\in B_P\setminus I^-$ thus it is possible that $\funm{not}{a}$ is false.
+  \item Remove negative literals from the remaining clauses $a\in I^-$ hence \funm{not}{a} is definitely true.
+  \item $S^+$ is the least \inre{Herbrand model} of the remaining program.
+ \end{enumerate}
+ \item $S^-$ is the set of atoms who are definitely false.
+ \begin{enumerate}
+  \item remove clauses with literal $\funm{not}{a}$ if $a\in I^+$ thus it is possible that $\funm{not}{a}$ is false.
+  \item Remove negative literals from the remaining clauses $a\in B_P\setminus I^+$ hence \funm{not}{a} is definitely true.
+  \item $S^-$ is the complement the least \inre{Herbrand model} of the remaining program.
+ \end{enumerate}
+\end{enumerate} This operator is \inre{Monotonic} in the \inre{Knowledge order} since $I^-$ increases because less clauses are removed in the computation of $S^+$ and $I^+$ increases because more clauses are removed in the computatation of $S^-$.}
+\subsection{Incomplete information}
+\subsubsection{Inductive definitions extended with open predicates}
+\defe{Disjunctive program}{A \sub{} is a program where at least one rule has multiple literals in the head.}
+\defe{Open predicate}{×}
+\defe{Abduction}{Abduction is a process where one guesses facts in order to resolve a query. It means one searches for a possible explanation for a given situation.}
+\defe{SLDNFA}{\sub{} is \inre{SLDNF} with \inre{Abduction}. The difference with \inre{SLDNF} is that when $A_i$ is selected, it is a call to the open predicate $p/n$ where one can choose between already abduced facts about $p/n$ or if all these facts fail, one can introduce a new abduced fact (using skolems). When $L_i$ is selected, it is a call to define $p/n$ (both positive and negative literals) as we did with the \inre{SLDNF} procedure. Finally when we call $\funm{not}{A_i}$, we open the predicate $p/n$ and start a subsidiary derivation: the search for a finite failure of $\leftarrow A_i$. When $\square$ is obtained we resport success to the caller. In case of finite failure, we report failure to the caller.}
+\defe{Partial knowledge}{\sub{} is a form of knowledge about some states of some predicates. In order to use this in the \inre{SLDNFA} procedure, one writes $\mbox{false}\leftarrow\calB$ with $\calB$ is either the positive or negative literal expressing the knowledge.}
+\subsubsection{Stable semantics: Answer Set Programming}
+\defe{Stable set}{Consider an \inre{Interpretation} $S$ of program $P$. Remove clauses with literal $\funm{not}{a}$ if $a\in S$ and thus $a$ is false according to $S$ and remove negative literals from the remaining clauses $a\notin S$ hence $\funm{not}{a}$ is true according to $S$. If $S$ if the \inre{Least Herbrand model} of the remaining definite program (the \inre{Reduct}), then $S$ is a \sub{}. If the \inre{Well-founded model} is total, then that model is the \sub{}.}
+\lema{Stable set as minimal Herbrand model}{A \inre{Stable set} is a \inre{Minimal Herbrand model}.
+\begin{proof}
+Let $S$ be a \inre{Stable set}. It is a model of $P$ and therefore consider $h\leftarrow\ldots,q_i,\ldots,\mbox{not }p_j,\ldots$. If $\exists j:p_j\in S$ then the body of the clause is false hence the clause is true. Else if $\funm{not}{p_j}$ is true for all $j$ and the clause is true if and only if $h\leftarrow\ldots,q_i,\ldots$ is true. This is true as it is part of the \inre{Reduct} and $S$ is a model of the reduct. Hence $S$ is a model of all clauses thus of $P$. It is a minimal model of $P$ because if we assume there exists a more minimal model $S_1\subsetneq S$, then $S_1$ is a model of the reduct because $S_1$ is a model of $h\leftarrow\ldots,q_i,\ldots,\funm{not}{p_j},\ldots$. Since $h\leftarrow\ldots,q_i,\ldots$ is part of the reduct if and only if for all $p_j\in S$. But then \funm{not}{p_j} is true as well according to $S_1$ hence $S_1$ is a model of $h\leftarrow\ldots,q_i,\ldots$. Hence of all clauses in the reduct. But $S$ is the least model of the reduct thus contradiction.
+\end{proof}}

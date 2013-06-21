@@ -1,0 +1,25 @@
+\Begin{
+%\KwIn{$O$: observations of length $T$, $V$: output vocabulary, $Q$ hidden states with $\abs{Q}=N$}
+$V\gets\alMatrix{N+2,T}$\;
+$P\gets\alMatrix{N+2,T}$\;
+\ForEach{$q_i\in Q$}{
+  $v_{i\,1}\gets a_{0\,s}\cdot \fun{b_i}{o_1}$\;
+  $p_{i\,1}\gets 0$
+}
+\For{\fromto{t}{2}{T}}{
+  \ForEach{$q_i\in Q$}{
+    $v_{i\,t}\gets \max_{q_j\in Q}v_{j\,t-1}\cdot a_{j\,i}\cdot\fun{b_i}{o_t}$\;
+    $p_{i\,t}\gets \displaystyle\argmax_{q_j\in Q}v_{j\,t-1}\cdot a_{j\,i}$\;
+  }
+}
+\ForEach{$q_j\in Q$}{
+  $v_{F\,t}\gets \max_{q_j\in Q}v_{j\,T}\cdot a_{j\,F}$\;
+  $p_{F\,t}\gets \displaystyle\argmax_{q_j\in Q}v_{j\,T}\cdot a_{j\,F}$\;
+}
+$\vec{r}\gets\alVector{T+2}$\;
+$r_{T+1}\gets F$\;
+\For{\downfromto{i}{T}{1}}{
+  $r_{t}\gets p_{r_{t+1}\,t}$\;
+}
+\Return{$\vec{r}$}
+}

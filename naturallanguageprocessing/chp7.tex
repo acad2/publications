@@ -1,0 +1,91 @@
+\section{Statical parsing}
+\begin{df}[PCFG,Stochastic context-free grammar]{Probabilistic context-free grammar}
+A \sb{} is 4-tuple $\tupl{N,\Sigma,R,n_0}$ where $N$ is a set of \flv{Non-terminal symbol}s (of \flv{Variable}s). $\Sigma$ a set of \flv{Terminal symbol}s (disjoint from $N$), $R$ a set of \flv{Production rule}s each of the form $a\rightarrow\funf{\beta}{p}$ where $a$ is a \flv{Non-terminal symbol}, $\beta$ a string of symbols from the infinite set of strings $\klee{\brak{\Sigma\cup N}}$ and $p\in\fbrk{0,1}$ expressing $\Prob{\beta|a}=\Prob{a\rightarrow\beta}$. $n_0\in N$ is the \flv{Start symbol}. Since each non-terminal eventually derives the following condition must hold:
+\begin{equation}
+\forall a:\displaystyle\sum_{\beta\in\klee{\brak{\Sigma\cup N}}}\Prob{a\rightarrow\beta}=1
+\end{equation}
+The joint probability of a \flv{Syntax tree} $T$ and a sentence $\vec{w}$ is defined as the product of the probabilities of all the $k$ rules used to expand each of the $n$ non-terminal nodes in the parse tree, where each rule $i$ is expressed as $a_i\rightarrow\beta_i$:
+\begin{equation}
+\Prob{T,\vec{w}}=\displaystyle\prod_{i=1}^{k}{\Prob{a_i\rightarrow\beta_i}}=\Prob{T}\cdot\Prob{\vec{w}|T}
+\end{equation}
+Since the parse tree includes all the words of the sentence, one can state that:
+\begin{equation}
+\Prob{\vec{w}|T}=1
+\end{equation}
+We can use a \sb{} for \flv{Syntactic disambiguation} by accepting the most probable tree:
+\begin{equation}
+\fun{\hat{T}}{\vec{w}}=\argmax_T\Prob{T|\vec{w}}=\argmax_T\displaystyle\frac{\Prob{T|\vec{w}}}{\Prob{S}}=\argmax_T\Prob{T,\vec{w}}=\argmax_T\Prob{T}
+\end{equation}
+One can learn the probabilities by counting the rules from a \flv{Treebank}:
+\begin{equation}
+\Prob{a\rightarrow\beta}=\displaystyle\frac{\Count{a\rightarrow\beta}}{\sum_{\gamma}\Count{a\rightarrow\gamma}}=\displaystyle\frac{\Count{a\rightarrow\beta}}{\Count{a}}
+\end{equation}
+One can also use the \flv{Inside-Outside algorithm}. Problems with \sb{}s arise by two assumptions: the \flv{Independence assumption} and the \flv{Lack of lexical conditioning}. Augmented versions of \sb{}s exist to resolve this problems. One can for instance split the \flv{Non-terminal symbol}s in order to make them less ambiguous. This can be done by the so-called \flv{Parent annotation}. By enlarging the amount of \flv{Non-terminal symbol}s however, the amount of training data to train a certain probability is reduced. Therefore one needs to learn optimal splitting.
+\end{df}
+\begin{df}[PCKY]{Probabilistic Cocke-Kasami-Younger algorithm}
+The\sb{} is a \flv{Bottum-up parsing} algorithm that produces the most probable tree. Instead of the \flv{Cocke-Kasami-Younger algorithm}, it uses a $n+1\times n+1\times V$ matrix. With $V$ the number of \flv{Non-terminal symbol}s. The entries contain the probability for the non-terminal contituent that spans positions $i$ through $j$ of the output. The entire algorithm is listed in \algref{probcykparse}.
+\end{df}
+\importalgo{probcykparse}{The Probabilistic Cocke-Kasami-Younger algorithm}
+\begin{df}{Inside-Outside algorithm}
+The \sb{} is a generalization of the \flv{Forward-Backward algorithm} and thus a \flv{Expectation-Maximization algorithm}. It uses the following technique:
+\begin{enumerate}
+ \item Start with a equal probabilities
+ \item Parse the sentences with this parser
+ \item Produce probability for each syntax tree
+ \item Use these probabilities to weight counts
+ \item Re-estimate the rule probabilities
+ \item Repeat until the probabilities converge
+\end{enumerate}
+One can also learn grammar (known as \flv{Grammar induction}) with this algorithm, but this is quite difficult.
+\end{df}
+\begin{tm}{Independence assumption}
+The \sb{} states that the structure of one part of the tree has nothing to do with the structure of the other part of the tree. Since the probability of a tree is only estimated by the product of the different rule applications.
+\end{tm}
+\begin{tm}{Lack of lexical conditioning}
+The \sb{} theorem states that when the number of lexical items in the model is limited, this leads to \flv{Subcategorization ambiguity}, \flv{Attachment ambiguity} and \flv{Coordinate ambiguity}. Furthermore the exact word plays an important role in the probability of a certain tree. For instance \stc{dumped into} is more likely than \stc{sacks into}. Une can use \flv{Lexical dependency statistics} to enrich the grammar.
+\end{tm}
+\begin{df}{Parent annotation}
+\sb{} is a concept in \flv{Probabilistic context-free grammar}s where each \flv{Non-terminal symbol} is annotated with the symbol of its parent. For instance a \flv{Noun phrase} who is embedded in a \flv{Sentence} is annotated as $\mbox{\texttt{NP}}\wedge\mbox{\texttt{S}}$.
+\end{df}
+\begin{df}{Lexicalized grammar}
+A \sb{} is a \flv{Formal grammar} where each \flv{Non-terminal symbol} in the tree is annotated with its lexical head, possibly augmented with the \flv{Part-of-Speech tag} of the head words. For instance:
+\begin{equation}
+\fun{\tagref{VP}}{\mbox{dumped},\tagref{VBD}}\rightarrow\fun{\tagref{VBD}}{\mbox{dumped},\tagref{VBD}}\ \fun{\tagref{NP}}{\mbox{sacks},\tagref{NNS}}\ \fun{\tagref{VP}}{\mbox{into},\tagref{IN}}
+\end{equation}
+This method offers a solution for \flv{Coordinate ambiguity}.
+\end{df}
+\begin{df}[PLCFG]{Probabilistic lexicalized context-free grammar}
+A \sb{} is a probabilistic model where the parser is modified to allow for lexicalized rules, therefore it's a \flv{Lexicalized grammar}. For instance the \flv{Collins parser} and \flv{Charniak parser} can handle such rules. A \sb{} contains two rules: \flv{Internal rule}s and \flv{Lexical rule}s. \flv{Internal rule}s handle transitions from one \flv{Non-terminal symbol} to antoher. \flv{Lexical rule}s deterministically expand a \flv{Pre-terminal} to a word. A problem with \sb{}s is that the data is often too spare to estimate the probabilities.
+\end{df}
+\begin{df}{Collins parser}
+The \sb{} is an algorithm that can parse \flv{Probabilistic lexicalized context-free grammar}s. The idea is to divide the right side of each rule into: a \flv{Head non-terminal}, \flv{Non-terminals to the left of the head} and \flv{Non-terminals to the right of the head}. Therefore each rule becomes:
+\begin{equation}
+a\rightarrow L_n, L_{n-1},\ldots,L_1,H,R_1,R_2,\ldots,R_m
+\end{equation}
+Since each \flv{Non-terminal symbol} represents the category, head and head tag. The \sb{} considers three probabilities: $P_H$ for generating heads, $P_L$ for generating dependents on the left and $P_R$ for generating dependents on the right. Therefore the probability of the following rule is estimated by:
+\begin{equation}
+\begin{array}{r}
+\Prob{\fun{\tagref{VP}}{\mbox{dumped},\tagref{VBD}}\rightarrow\fun{\tagref{VBD}}{\mbox{dumped},\tagref{VBD}}\ \fun{\tagref{NP}}{\mbox{sacks},\tagref{NNS}}\ \fun{\tagref{VP}}{\mbox{into},\tagref{IN}}}\approx\\
+\fun{P_H}{\tagref{VBD}|\tagref{VP},\mbox{dumped}}\\\cdot\fun{P_L}{\tagref{STOP}|\tagref{VP},\tagref{VBD},\mbox{dumped}}\\\cdot\fun{P_R}{\fun{\tagref{NP}}{\mbox{sacks},\tagref{NNS}}|\tagref{VP},\tagref{VBD},\mbox{dumped}}\\\cdot\fun{P_R}{\fun{\tagref{PP}}{\mbox{into},\tagref{P}}|\tagref{VP},\tagref{VBD},\mbox{dumped}}\\\cdot\fun{P_R}{\tagref{STOP}|\tagref{VP},\tagref{VBD},\mbox{dumped}}
+\end{array}
+\end{equation}
+More formally, the following method is used:
+\begin{enumerate}
+ \item Generate the head of the phrase $\fun{H}{h_w,h_t}$ with probability
+ \begin{equation}
+  \fun{P_H}{\fun{H}{h_w,h_t}|P_a,h_w,h_t}
+ \end{equation}
+ \item Generate modifiers to the left of the head with total probability:
+ \begin{equation}
+  \fun{P_L}{\tagref{STOP}|P_a,h_w,h_t}\cdot\displaystyle\prod_{i=1}^n\fun{P_L}{\fun{L_i}{l_{w_i},l_{t_i}}|P_a,h_w,h_t}
+ \end{equation}
+ \item Generate modifiers to the right of the head with total probability:
+ \begin{equation}
+  \fun{P_H}{\tagref{STOP}|P_a,h_w,h_t}\cdot\displaystyle\prod_{i=1}^m\fun{P_R}{\fun{R_i}{r_{w_i},r_{t_i}}|P_a,h_w,h_t}
+ \end{equation}
+\end{enumerate}
+Since zero probabilities are no exceptions, one needs to perform smoothing, for instance using \flv{Backoff} models. For unseen words the \tagref{UNKNOWN} word token is used. Each of these probabilities can be estimated from a much smaller data set than the the full probability. Some parsers use more complex models and use for instance distance functions.
+\end{df}
+\begin{df}{Discriminative reranking}
+\sb{} is a concept where a generative parser (like the \flv{Collins parser}) does not generate the most probable parse tree, but a set of $N$-best \flv{Syntax tree}s. By using a \flv{Discriminative classifier} one reranks the trees and picks the best one. This reranking can use more sophisticated metrics.
+\end{df}
