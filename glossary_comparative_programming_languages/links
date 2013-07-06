@@ -1,0 +1,49 @@
+Abstract datatype/ADT
+Aspect-oriented programming/AOP
+Event-driven programming/EDP
+Event-driven programming/event-based programming
+Higher-order function/functional form
+Higher-order function/functional
+Higher-order function/functor
+Inferred typing/implicit typing
+Inferred typing/type inference
+Meta-object protocol/MOP
+Software transactional memory/STM
+Weak typing/Loose typing
+Subtype polymorphism/Dynamic dispatch
+Subtype polymorphism/Method overriding
+Ad hoc polymorphism/Overloaded defintions
+Traits/Mixins
+Stackable modifications/Static decorator pattern
+Lexical Scoping/Static scoping
+Open Classes/Monkey patching
+Open Classes/Duck Punching
+Dynamic dispatching/Dynamic binding
+F-bounded polymorphism/F-bounded quantification
+F-bounded polymorphism/Recursive bounded quantification
+Invariant/Rigid
+Algebraic Data Types/ADTs
+Algebraic Data Types Pattern Matching/ADT Pattern Matching
+Algebraic Data Types Pattern Matching/ADT Matching
+Regular Expression/regexp
+Regular Expression/regex
+String replacement/Back references
+Extensible Markup Language/XML
+Extensible Markup Language Processing/XML Processing
+Extensible Stylesheet Language Transformations/XSLT
+Asynchronous JavaScript And XML/AJAX
+Continuation-passing style/CPS
+Continuation-passing style transformation/CPS Transformation
+Co-operative Threads/Coroutines
+Read-Eval-Print Loop/REPL
+Macros/Compile-time Meta-programming
+Singleton classes/Eigenclass
+Computational thread/Thread
+Mutual exclution/Readers-writers problem
+Critical sections/Atomic blocks
+Lock-free/Wait-free
+Domain specific language lifecycle/DSL lifecycle
+Deductive design/Top-down design
+Inductive design/Bottom-up design
+Internal domain specific language/Embedded domain specific language
+Compiler/Application generator

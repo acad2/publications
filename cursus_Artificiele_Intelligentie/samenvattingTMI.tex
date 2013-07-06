@@ -1,0 +1,924 @@
+\documentclass[a4paper,titlepage]{article}
+\usepackage[dutch]{babel}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{index}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[usenames,dvipsnames]{color}
+\algsetup{indent=2em}
+\makeindex
+\title{Samenvatting \begin{sffamily}G0Q37A\end{sffamily}:\\Toepassingen van de Meetkunde in de Informatica}
+\author{Willem M. A. Van Onsem}
+\date{Katholieke Universiteit Leuven\\Academiejaar 2009-2010}
+\newcommand{\remarksimp}[1]{\fcolorbox{black}{red}{\begin{minipage}{\textwidth}\begin{centering}\textit{#1}\end{centering}\end{minipage}}}
+\newcommand{\algref}[1]{\textbf{Algorithm \ref{#1}}}
+\newcommand{\termen}[1]{\index{#1}\textbf{\sffamily{#1}}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+
+\newcommand{\volgpunt}{\texttt{volgend\_punt}\brak{O}}
+\newcommand{\snijboog}[1]{\texttt{snijdt\_boog}\brak{T,#1}}
+\newcommand{\boveboog}[1]{\texttt{boven\_boog}\brak{T,#1}}
+\newcommand{\ondeboog}[1]{\texttt{onder\_boog}\brak{T,#1}}
+\newcommand{\vindpunt}[3]{\texttt{vind\_punt}\brak{O,#1,#2,#3}}
+\newcommand{\voegpunt}[3]{\texttt{voegtoe\_punt}\brak{O,#1,#2,#3}}
+\newcommand{\voegboog}[1]{\texttt{voegtoe\_boog}\brak{T,#1}}
+\newcommand{\verwpunt}[1]{\texttt{verwijder\_punt}\brak{O,#1}}
+\newcommand{\verwboog}[1]{\texttt{verwijder\_boog}\brak{T,#1}}
+\newcommand{\site}[1]{\texttt{site}\brak{#1}}
+
+\newcommand{\inw}[1]{\mbox{inw}\left(#1\right)}
+\newcommand{\nlogn}{\ensuremath{n\cdot\log\brak{n}}}
+\newcommand{\uitw}[1]{\mbox{uitw}\left(#1\right)}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\lineparr}[1]{\overrightarrow{#1}}
+\newcommand{\linep}[1]{\overline{#1}}
+\newcommand{\dpp}[1]{\mbox{DPP}\left(#1\right)}
+\newcommand{\vpp}[1]{\mbox{VPP}\left(#1\right)}
+\newcommand{\brak}[1]{\left(#1\right)}
+\newcommand{\inva}[1]{\left[#1\right]}
+\newcommand{\uinva}[1]{\left]#1\right[}
+\newcommand{\rinva}[1]{\left[#1\right[}
+\newcommand{\bigoh}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
+\newcommand{\splineDef}{\ensuremath{N_i^n\brak{u}} }
+\begin{document}
+\begin{titlepage}
+\begin{figure*}[t]
+\centering
+\includegraphics[width=3cm]{logo-kuleuven.jpg}
+\end{figure*}
+\begin{figure*}[b]
+\centering
+\begin{tiny}
+$\mathcal{K}$
+\end{tiny}
+\begin{Huge}
+\textcopyleft
+\end{Huge}
+\begin{tiny}
+$\mathcal{S}$
+\end{tiny}
+\caption{Support CopyLeft!}
+\end{figure*}
+\maketitle
+\end{titlepage}
+\remarksimp{Noot voor fysische georienteerde mensen:\\In dat geval mogen de woorden ``eindig'' en ``hypothetisch'' weggelaten worden. Deze zijn immers triviaal.}
+\tableofcontents
+\newpage
+\section{B\'ezier-curven}
+Een \termen{B\'ezier-curve} met $n+1$ \termen{controlepunten} wordt als volgt gedefinieerd:
+\begin{equation}
+\vec{x}\left(t\right)=\displaystyle\sum_{i=0}^{n}{\vec{b}_i\cdot B_i^n\left(t\right)}\mbox{ met }B_i^n\left(t\right)=\binom{n}{i}\left(1-t\right)^{n-i}t^i
+\end{equation}
+$B_i^n\left(t\right)$ wordt hier de \termen{Bernstein-veelterm} genoemd
+\subsection{Eigenschappen van Berstein-veeltermen}
+\label{subsec:bernProp}
+\subsubsection{Sommatie tot $1$}
+\begin{equation}
+\forall t:\displaystyle\sum_{i=0}^{n}{B_i^n\left(t\right)}=1
+\end{equation}
+\textbf{Bewijs:} We beschouwen $\left(\left(1-t\right)+t\right)^n$. Indien we dit met het binomium van newton oplossen bekomen we dat de $i$-de term exact gelijk is aan $B_i^n\left(t\right)$. Daar voorgaande formule gelijk is aan $1$ geldt dit bijgevolg ook voor de Bernstein-veeltermen.
+\subsubsection{Positiviteit}
+\begin{equation}
+\forall t:t\in\left[0,1\right]\Rightarrow B_i^n\left(t\right)\geq1
+\end{equation}
+\textbf{Bewijs:} Triviaal, formule bevat enkel positieve delen.
+\subsubsection{Vaste waarden}
+\begin{equation}
+n>0\Rightarrow\left\{
+\begin{array}{lcr}
+B_i^n\left(0\right)=B_i^n\left(1\right)=0&\mbox{if}&i\neq0\wedge i\neq n\\
+B_0^n\left(0\right)=1;B_0^n\left(1\right)=0&&\\
+B_n^n\left(0\right)=0;B_n^n\left(1\right)=1&&
+\end{array}
+\right.
+\end{equation}
+\textbf{Bewijs:} Triviaal, uitwerken van de veeltermen.
+\subsubsection{Symmetrie}
+\begin{equation}
+B_i^n\left(t\right)=B_{n-i}^n\left(1-t\right)
+\end{equation}
+\textbf{Bewijs:} Triviaal, uitwerken van de veeltermen.
+\subsubsection{Afgeleide van een Bernstein-veelterm}
+\label{subsec:derivBern}
+\begin{equation}
+\displaystyle\frac{\partial}{\partial t}B_i^n\left(t\right)=n\left(B_{i-1}^{n-1}\left(t\right)-B_{i}^{n-1}\left(t\right)\right)
+\end{equation}
+\textbf{Bewijs:}
+\begin{equation}
+\begin{array}{rl}
+\displaystyle\frac{\partial}{\partial t}B_i^n\left(t\right)&=\displaystyle\frac{\partial}{\partial t}\binom{n}{i}\left(1-t\right)^{n-i}t^i
+\\&=\binom{n}{i}\left(\left(t^i\displaystyle\frac{\partial}{\partial t}\left(1-t\right)^{n-i}\right)+\left(\left(1-t\right)^{n-i}\displaystyle\frac{\partial}{\partial t}t^i\right)\right)
+\\&=\displaystyle\frac{n\cdot\left(n-1\right)!}{i!\cdot\left(n-i\right)!}\left(-\left(n-i\right)t^i\left(1-t\right)^{n-i-1}+it^{i-1}\left(1-t\right)^{n-i}\right)
+\\&=n\left(\binom{n-1}{i-1}\left(1-t\right)^{n-i}t^{i-1}-\binom{n-1}{i}\left(1-t\right)^{n-1-i}t^i\right)
+\\&=n\left(B_{i-1}^{n-1}\left(t\right)-B_i^{n-1}\left(t\right)\right)
+\end{array}
+\end{equation}
+\subsubsection{Maxima}
+\begin{equation}
+\displaystyle\frac{\partial}{\partial t}B_i^n\left(t\right)=0\Leftrightarrow t=i/n,n>0,0<i<n
+\end{equation}
+\textbf{Bewijs:} Triviaal, uitwerken in afgeleide.
+\subsubsection{Recursiebetrekking}
+\begin{equation}
+B_i^n\left(t\right)=\left(1-t\right)B_i^{n-1}\left(t\right)+t\cdot B_{i-1}^{n-1}\left(t\right)
+\end{equation}
+\subsection{Eigenschappen van B\'ezier-curven}
+\subsubsection{Graad}
+De curve is de som van $n+1$ $n$-de graadscurven, dus bijgevolg een $n$-de graadscurve.
+\subsubsection{Affiene Transformatie}
+De curve is een affiene transformatie, met $B_i^n\left(t\right)$ als gewichten. Bijgevolg ligt elk punt van de curve in de convex omhullende.
+\subsection{Evaluatie van een punt op een B\'ezier-curve}
+Evaluatie wordt gedaan met behulp van het \termen{algoritme van de Casteljau}:
+\begin{equation}
+\begin{array}{rl}
+\mbox{\textbf{Define}}&\vec{b}_i^{[0]}=\vec{b}_i\\
+\mbox{\textbf{Recursive}}&\vec{b}_i^{[k]}=\left(1-t\right)\vec{b}_{i-1}^{[k-1]}+t\cdot\vec{b}_i^{[k-1]}\\
+\mbox{\textbf{Result}}&\vec{b}_n^{[n]}=\vec{x}\left(t\right)
+\end{array}
+\end{equation}
+Dit algoritme heeft een tijdscomplexiteit \bigoh{n^2}. In het geval de functie vaak ge\"evalueerd wordt, worden de co\"efficienten eerst berekend, met volgende formule:
+\begin{equation}
+\vec{a}_i=\binom{n}{i}\Delta^i\vec{b}_0
+\end{equation}
+Hierbij is $\Delta\vec{b}_i=\vec{b}_{i+1}-\vec{b}_i$ en $\Delta^j\vec{b}_i=\Delta^{j-1}\vec{b}_{i+1}-\Delta^{j-1}\vec{b}_i$.
+\subsection{Afgeleide van een B\'ezier-curve}
+\label{subsec:derivBezier}
+\begin{equation}
+\displaystyle\frac{\partial^k}{\partial t^k}\vec{x}\left(t\right)=\displaystyle\frac{n!}{\left(n-k\right)!}\displaystyle\sum_{i=0}^{n-k}{\Delta^k\vec{b}_i\cdot B_i^{n-k}\left(t\right)}
+\end{equation}
+Volgt uit de definitie van de afgeleide van een Bernstein-veelterm (zie \ref{subsec:derivBern}).
+\subsection{Graadverhoging}
+Ze kunnen de graad verhogen:
+\begin{equation}
+\displaystyle\sum_{i=0}^{n}{\vec{b}_i\cdot B_i^n\left(t\right)}=\displaystyle\sum_{i=0}^{n+1}{\vec{b}_i^*\cdot B_i^{n+1}\left(t\right)}
+\end{equation}
+We berekenen dus $n+2$ controlepunten $\vec{b}_i^*$ uit $n+1$ controlepunten $\vec{b}_i$:
+\begin{equation}
+\vec{b}_i^*=\displaystyle\frac{i\cdot \vec{b}_{i-1}+\left(n-i+1\right)\vec{b}_i}{n+1}
+\end{equation}
+\textbf{Bewijs:} Recursie op het binomium van Newton: vermenigvuldiging met $\left(\left(1-t\right)+t\right)$.
+\subsection{Opsplitsen van een B\'ezier-curve}
+Indien we een deel van een curve $\vec{x}\left(t\right)$ beschouwen met $t\in\left[0,c\right]$. Dan kunnen we dit deel reconstrueren met $n+1$ nieuwe controle punten. $\vec{d}_i$ die de beschouwde ``niewe'' curve volledig beschrijven. Ook deze curve is uiteraard van graad $n$. We willen deze controlepunten kennen.
+Uit het feit dat alle afgeleiden identiek moeten zijn op dit interval, kunnen we de punten berekenen:
+\begin{equation}
+\displaystyle\frac{\partial^k}{\partial t^k}\vec{v}\left(\displaystyle\frac{t}{c}\right)=\displaystyle\frac{\partial^k}{\partial t^k}\vec{x}\left(t\right)
+\end{equation}
+Hieruit volgens voor dat $\vec{d}_k=\vec{b}_k^{[k]}|c$.
+\subsection{Samengestelde B\'ezier-curven}
+\label{subsec:bezierSamen}
+Een \termen{samengestelde B\'ezier-curve} $\vec{s}\left(t\right)$ over een interval $\left[u_0,u_k\right]$ is een stukgewijze veeltermcurve waarbij ieder segment $\left[u_0,u_k\right]$ een b\'eziercurve vormt (met eventueel verschillende graad). Hier zijn de \termen{knooppunten} $u_0<u_1<\cdots<u_k$. We kunnen dus stellen dat:
+\begin{equation}
+\forall t\in\left[u_j,u_{j+1}\right]:\vec{s}\left(t\right)=\vec{x}_j\left(\displaystyle\frac{t-u_j}{u_{j+1}-u_j}\right)=\displaystyle\sum_{i=0}^{n_j}{\vec{b}_{i\ j}\cdot B_i^{n_j}\left(t\right)}
+\end{equation}
+Hierbij willen we dat de segmenten met een continuiteit op elkaar aansluiten. De curve is dus $C^g$ continu indien:
+\begin{equation}
+\forall r,j\in\NN,0\leq r\leq g,0\leq j<k:\displaystyle\frac{\partial^r}{\partial t^r}\vec{x}_j\left(1\right)=\displaystyle\frac{\partial^r}{\partial t^r}\vec{x}_{j+1}\left(0\right)
+\end{equation}
+Deze kunnen met \ref{subsec:derivBezier} berekend worden.
+\newpage
+\section{Splinecurven}
+Analoog aan B\'eziercurven bestaan er ook \termen{splinecurven} of meer bepaald \termen{B-splinecurven}. Een B-splinecurve van graad $n$ is als volg gedefinieerd:
+\begin{equation}
+\vec{s}\brak{u}=\displaystyle\sum_{i=-n}^{p-1}{\vec{d}_iN_i^n\brak{u}}
+\end{equation}
+met
+\begin{equation}
+N_i^n\brak{u}=\left\{
+\begin{array}{lrl}
+\frac{u-u_i}{u_{i+n}-u_i}N_i^{n-1}\brak{u}+\frac{u_{i+n+1}-u}{u_{i+n+1}-u_{i+1}}N_{i+1}^{n-1}\brak{u}&\mbox{case}&n>0\\
+1&\mbox{case}&u\in\left[u_i,u_{i+1}\right[\\
+0&\mbox{default}&
+\end{array}
+\right.
+\label{eq:splRec}
+\end{equation}
+Bij splinecurven spelen niet alleen $n+p$ \termen{controlepunten} $\vec{d}_i$ een rol, ook \termen{knooppunten} $u_i$, zullen een rol spelen. Hierbij is er sprake van in totaal $2n+p+1$ knooppunten waarbij $u_0\leq u_1\leq\ldots\leq u_{p-1}\leq u_p$. De curve is dan ook enkel gedefinieerd in het interval $\left[u_0,u_p\right[$. Meestal worden $u_{-n}=u_{-n+1}=\ldots=u_0$ en $u_p=u_{p+1}=\ldots=u_{p+n}$ genomen.
+\subsection{Eigenschappen van B-splines}
+\subsubsection{Lokaliteit}
+\label{subsec:splinLok}
+\begin{equation}
+\forall u\notin\rinva{u_i,u_{i+n+1}}:N_i^n\brak{u}=0
+\end{equation}
+\textbf{Bewijs: } recursie op $n$. Bewijs voor $n=0$ is triviaal, vervolgens iteratiestap aantonen:
+\begin{equation}
+N_i^n\brak{u}=\displaystyle\frac{u-u_i}{u_{i+n}-u_i}N_i^{n-1}\brak{u}+\displaystyle\frac{u_{i+n+1}-u}{u_{i+n+1}-u_{i+1}}N_{i+1}^{n-1}\brak{u}
+\end{equation}
+We weten dat de eerste B-spline $N_i^{n-1}\brak{u}=0$ indien $u\notin\rinva{u_i,u_{i+n}}$ analoog voor de tweede: $N_{i+1}^{n-1}\brak{u}=0$ indien $u\notin\rinva{u_{i+1},u_{i+n+1}}$. Indien $u\notin\rinva{u_i,u_{i+n+1}}$ zijn deze twee componenten $0$, uit de formule halen we dan dat de lineare som ook $0$ moet zijn.
+\subsubsection{Positiviteit}
+\begin{equation}
+\forall u:N_i^{n-1}\brak{u}\geq0
+\end{equation}
+\textbf{Bewijs: } Indien de factoren positief zijn, is de recursieve componenten dat ook, indien niet zijn de recursieve componenten gelijk aan $0$. (m.b.v. \ref{subsec:splinLok})
+\subsubsection{Sommatie tot 1}
+\begin{equation}
+\forall t\in\rinva{u_0,u_p}:\displaystyle\sum_{i=-\infty}^{\infty}{N_i^n\brak{u}}=\sum_{i=-n}^{p-1}{N_i^n\brak{u}}=1
+\end{equation}
+\textbf{Bewijs: } Opnieuw per inductie op $n$, met de eronderstelling dat er geen meervoudige knooppunten voorkomen.
+\textbf{Basisstap: } voor $n=0$ geldt:
+\begin{equation}
+\displaystyle\sum_{i=0}^{p-1}{N_i^0\brak{u}}=1
+\end{equation}
+Daar afhankelijk van het interval, telkens \'e\'en van de functies $1$ is, de andere zijn $0$.
+\textbf{Inductiestap: }
+\begin{equation}
+\begin{array}{rl}
+\displaystyle\sum_{i=-n-1}^{p-1}{N_i^{n+1}\brak{u}}&=\displaystyle\sum_{i=-n-1}^{p-1}{\displaystyle\frac{u-u_i}{u_{i+n+1}-u_i}N_i^n\brak{u}}+\displaystyle\sum_{i=-n-1}^{p-1}{\displaystyle\frac{u_{i+n+2}-u}{u_{i+n+2}-u_{i+1}}N_{i+1}^n\brak{u}}\\
+&=\displaystyle\sum_{i=-n}^{p-1}{\displaystyle\frac{u-u_i}{u_{i+n+1}-u_i}N_i^n\brak{u}}+\displaystyle\sum_{i=-n-1}^{p-2}{\displaystyle\frac{u_{i+n+2}-u}{u_{i+n+2}-u_{i+1}}N_{i+1}^n\brak{u}}\\
+&=\displaystyle\sum_{i=-n}^{p-1}{\displaystyle\frac{u-u_i}{u_{i+n+1}-u_i}N_i^n\brak{u}}+\displaystyle\sum_{j=-n}^{p-1}{\displaystyle\frac{u_{j+n+1}-u}{u_{j+n+1}-u_{j}}N_j^n\brak{u}}\\
+&=\displaystyle\sum_{i=-n}^{p-1}{\displaystyle\frac{u-u_i+u_{i+n+1}-u}{u_{i+n+1}-u_i}N_i^n\brak{u}}=\displaystyle\sum_{i=-n}^{p-1}{N_i^n\brak{u}}=1
+\end{array}
+\end{equation}
+\subsubsection{Continu\"iteit}
+\splineDef is $C^{n-1}$-continu, indien geen meervoudige knooppunten
+\subsection{Invloed van de ligging van de knooppunten}
+\label{subsec:splineInfl}
+De B-spline \splineDef wordt bepaald door knooppunten $u_i,u_{i+1},\ldots,u_{i+n+1}$ we zien dat de knooppunten die we kiezen resulteren in nulpunten voor de verschillende B-splinecurven. Dit is logisch als we de formule bekijken.
+Algemeen komen twee keuzes van knooppunten regelmatig voor:
+\begin{description}
+ \item[Equidistant] Waarbij de afstand tussen opeenvolgende knooppunten telkens gelijk is, hier zijn alle functies gelijk, mits een translatie in de $x$-richting
+ \item[Samenvallend] Hierbij vallen reeksen knooppunten samen, als we naar de recursieformule (\ref{eq:splRec}) kijken zien we dat er delingen door 0 ontstaan, dit lossen we op door ze niet te beschouwen.
+ \end{description}
+\subsection{Eigenschappen van B-splinecurven}
+\subsubsection{Affiene Transformatie}
+De curve is een affiene transformatie, met \splineDef als gewichten. Bijgevolg ligt elk punt van de curve in de convex omhullende.
+\subsubsection{Lokale invloed}
+Indien we een controlepunt $\vec{d}_i$ verplaatsen, heeft dit slechts invloed op een deel van de curve, enkel waar $u_i<u<u_{i+n+1}$ geldt, zal de curve veranderen. Dit is het gevolg van de lokaliteitseigenschap. En is anders dan bij B\'eziercurven.
+\subsubsection{Gebied van de B-splinecurven}
+\label{subsec:splineConvex}
+We kunnen het verloop van de curven makkelijk aanpassen door de knooppunten te veranderenm toch kunnen we de regio definieren waar de curve altijd binnenblijft, deze is afhankelijk van de graad $n$ van de beziercurve. En is te definieren als:
+\begin{equation}
+\displaystyle\bigcup_{i=-n}^{p-n-1}\mbox{Conv}\left(\vec{d}_i\vec{d}_{i+1}\ldots\vec{d}_{i+n}\right)
+\end{equation}
+\subsection{Invloed van knooppunten en controlepunten}
+\label{subsec:splinLok2}
+Met behulp van \ref{subsec:splinLok} kunnen we aantonen dat:
+\begin{equation}
+\forall u\in\rinva{u_j,u_{j+1}}:\vec{s}\brak{u}=\displaystyle\sum_{i=-n}^{p-1}{\vec{d}_iN_i^n\brak{u}}=\displaystyle\sum_{i=j-n}^{j}{\vec{d}_iN_i^n\brak{u}}
+\end{equation}
+Bovendien kunnen we ook afleiden dat we $n+p$ controlepunten, en $2n+p+1$ knooppunten nodig hebben. Vaak worden de knooppunten equidistant gekozen. En zijn de B-splines kubisch ($n=3$).
+\subsubsection{Colineare controlepunten}
+Uit \ref{subsec:splineConvex} volgt dat indien $n+1$ punten colinear zijn, we een rechte bekomen. Dit is echter niet per defenitie globaal.
+\subsubsection{Samenvallende controlepunten}
+Uit \ref{subsec:splineConvex} volgt dat indien $n+1$ punten samenvallen: $\vec{d}_j=\vec{d}_{j+1}=\ldots=\vec{d}_{j+n}$, $\forall u\in\uinva{u_{j+n},u_{j+n+1}}:\vec{s}\brak{u}=\vec{d}_j$. Uiteraard volstaan $n$ samenvallende punten al, om er zeker van te zijn dat de functie $\vec{d}_j$ interpoleert.
+\subsubsection{Samenvallende knooppunten}
+Indien $k$ knooppunten samenvalle spreken we over een knooppunt met \termen{meervoudigheid} $k$. Uit het feit dat we door samenvallende knooppunten deling door $0$ verkregen, en deze niet beschouwd werden (zie \ref{subsec:splineInfl}). Dit resulteert in een verlaging van de continuteit naar een continuteit $C^{n-\max k}$. Indien $k\geq n+1$ is er dus sprake van discontinuiteit.
+\paragraph{}
+Dit wordt gebruikt om bijvoorbeeld te garanderen dat de curve door de buitenste punten gaat. Indien deze een meervoudighed van $n+1$ bekomen ($u_{-n}-u_{-n+1}=\ldots=u_0$). Het volstaat om $n$ samenvallende knooppunten te beschouwen voor interpolatie
+\subsection{Het algoritme van de Boor}
+Het \termen{algoritme van de Boor} wordt gebruikt voor de evaluatie van de splinecurven. En maakt gebruik van de lokaliteitseigenschap (zie \ref{subsec:splinLok2}). Hierbij weten we dat indien $u\in\rinva{u_l,u_{l+1}}$
+\begin{equation}
+\vec{s}\brak{u}=\displaystyle\sum_{i=l-n}^{l}{\vec{d}_iN_i^n\brak{u}}
+\end{equation}
+De waarde van de functie in $u$ hangt dus enkel af van $\vec{d}_{l-n},\vec{d}_{l-n+1},\ldots,\vec{d}_l$. Het algoritme werkt als volgt:
+\begin{equation}
+\begin{array}{rl}
+\mbox{\textbf{Define}}&\vec{d}_i^{[0]}=\vec{d}_i|i=l-n,\ldots,l\\
+\mbox{\textbf{Recursive}}&\vec{d}_i^{[k]}=\left(1-\alpha_{k,i}\right)\vec{d}_{i-1}^{[k-1]}+\alpha_{k,i}\cdot\vec{d}_i^{[k-1]}|\alpha_{k,i}=\displaystyle\frac{u-u_i}{u_{i+n-k+1}-u_i}\\
+\mbox{\textbf{Result}}&\vec{d}_l^{[n]}=\vec{x}\left(t\right)
+\end{array}
+\end{equation}
+Dit kunnen we bewijzen aan de hand van de recursiebetrekking:
+\begin{equation}
+\begin{array}{rl}
+\vec{s}\brak{u}&=\displaystyle\sum_{i=l-n}^{l}{\vec{d}_iN_i^n\brak{u}}\\
+&=\displaystyle\sum_{i=l-n}^{l}{\vec{d}_i\displaystyle\frac{u-u_i}{u_{i+n}-u_i}N_i^{n-1}\brak{u}}+\displaystyle\sum_{i=l-n}^{l}{\vec{d}_i\displaystyle\frac{u_{i+n+1}-u}{u_{i+n+1}-u_{i+1}}N_{i+1}^{n-1}\brak{u}}\\
+&=\displaystyle\sum_{i=l-n+1}^{l}{\vec{d}_i\displaystyle\frac{u-u_i}{u_{i+n}-u_i}N_i^{n-1}\brak{u}}+\displaystyle\sum_{j=l-n+1}^{l}{\vec{d}_{j-1}\displaystyle\frac{u_{j+n}-u}{u_{j+n}-u_j}N_j^{n-1}\brak{u}}\\
+&=\displaystyle\sum_{i=l-n+1}^{l}{\brak{\vec{d}_{i-1}\displaystyle\frac{u_{i+n}-u}{u_{i+n}-u_i}+\vec{d}_i\displaystyle\frac{u-u_i}{u_{i+n}-u_i}}N_i^{n-1}\brak{u}}\\
+&=\displaystyle\sum_{i=l-n+1}^{l}{\vec{d}_i^{[1]}N_i^{n-1}\brak{u}}
+\end{array}
+\end{equation}
+\subsection{Verhogen van knoop- en controlepunten}
+\subsubsection{Verhogen van controlepunten}
+We willen de curve met een punt verhogen, zonder dat de curve verandert, we zoeken dus $\vec{d}_i^*$ zodat:
+\begin{equation}
+\vec{s}\brak{u}=\displaystyle\sum_{i=-n}^{p-1}{\vec{d}_iN_i^n\brak{u}}=\displaystyle\sum_{i=-n}^{p}{\vec{d}_i^*N_i^{*n}\brak{u}}
+\end{equation}
+We moeten hierbij dus $n+p+1$ nieuwe controlepunten $\vec{d}_i^*$ voorzien en $p+1$ nieuwe knooppunten $u_i^*$ (we gaan uit dat alle knooppunten erbuiten opnieuw gelijk met de buitenste gekozen worden). We kunnen zelf de waarde van het toegevoegde knooppunt kiezen en duiden de rang aan met $l+1$. Dus $u_{l+1}^*\in\inva{u_l,u_{l+1}}$. Vervolgens projecteren we de andere knooppunten weer op hun oorspronkelijke waarde. Na $l+1$, moeten deze natuurlijk eentje opgeschoven worden, m.a.w.:
+\begin{equation}
+u_i^*=\left\{
+\begin{array}{lcl}
+u_i&\mbox{if}&i\leq l\\
+\mbox{vrij te kiezen}&\mbox{if}&i=l+1\\
+u_{i-1}&\mbox{if}&i\geq l+2	
+\end{array}
+\right.
+\end{equation}
+Omdat de wijziging van de parameter een verandering van de B-splines impliceert, moeten we deze verandering op de curve neutraliseren door het punt vast te kiezen. Door het lokaliteitsprincipe weten we dat slechts een beperkt aantal B-splines zullen veranderen. Zonder bewijs bekomen we dat:
+\begin{equation}
+\vec{d}_i^*=\left\{
+\begin{array}{lcl}
+\vec{d}_i&\mbox{if}&i\leq l-n\\
+\brak{1-\alpha_{i}}\vec{d}_{i-1}+\alpha_{i}\vec{d}_i&\mbox{if}&l-n<i\leq l|\alpha_{i}=\displaystyle\frac{u_{l+1}^*-u_i}{u_{i+n}-u_i}\\
+\vec{d}_{i-1}&\mbox{if}&i\geq l+1
+\end{array}
+\right.
+\end{equation}
+Dit komt overeen met de eerste stap in het algoritme van de Boor, met $u=u_{l+1}^*$
+Dit proces wordt ook gebruikt om de curve te visualiseren, er ontstaan telkens meer punten die de curve telkens beter benaderen. Op den duur kan men eenvoudig de lijnen tussen de punten tekenen i.p.v. de curve zelf.
+\paragraph{}
+De \termen{variatie-verminderingseigenschap} voor splinecurven zegt dat aangezien we te maken hebben met een convexe transformatie, en het aantal punten die de veellijn snijden kleiner is dan die van een willekeurige rechte. Het aantal snijpunten kan bijgevolg enkel dalen.
+\paragraph{}
+Men kan een knooppunt verschillende malen toevoegen, om zo een meervoudig knooppunt te bekomen. We kunnen de punten berekenen door het algoritme van de Boor met een diepte $r$ toe te passen, en vervolgens de buitenste waarden van de driehoek te gebruiken als nieuwe punten. Indien we het punt $n$ keer toevoegen kunnen we uiteindelijk verzekeren dat de curve door het punt in kwestie gaat.
+\newpage
+\section{NURBS: rationele splinecurven}
+Soms is het intressanter om \termen{NURBS}/\termen{rationele spline} te gebruiken. Dit kan bijvoorbeeld het geval zijn, om kegelsneden te benaderen. In dit geval bekomen we dus een curve in de vorm van:
+\begin{equation}
+\forall u\in\inva{a,b}:\vec{x}\brak{u}=\left(
+\begin{array}{c}
+f_1\brak{u}\\
+f_2\brak{u}
+\end{array}
+\right)
+\end{equation}
+Hierbij zijn $f_1$ en $f_2$ rationele functies.
+\subsection{Rationele B\'ezier-curven}
+Een \termen{rationele B\'ezier-curve} wordt voorgesteld als:
+\begin{equation}
+\forall t\in\inva{0,1}:\vec{x}\brak{t}=\displaystyle\frac{\displaystyle\sum_{i=0}^{n}{w_i\vec{b}_iB_i^n\brak{t}}}{\displaystyle\sum_{i=0}^{n}{w_iB_i^n\brak{t}}}
+\end{equation}
+Met meestal $w_i>0$. We kunnen dus de basis van deze B\'ezier-curven zien als:
+\begin{equation}
+\phi_i\brak{t}=\displaystyle\frac{w_iB_i^n\brak{t}}{\displaystyle\sum_{i=0}^{n}{w_iB_i^n\brak{t}}}
+\end{equation}
+Ook deze functie voldoet aan de positiviteit en sommatie-tot-1 eigenschap. In het algemeen geven de gewichten een maat van belang aan per punt. Indien $w_i$ groot gekozen wordt, zal de curve dichter in de buurt van het punt $\vec{b}_i$ passeren.
+\subsection{Rationele Spline-curven}
+Een \termen{rationele Spline-curve} wordt voorgesteld als:
+\begin{equation}
+\forall u\in\inva{a,b}:\vec{x}\brak{u}=\displaystyle\frac{\displaystyle\sum_{i=-n}^{p-1}{w_i\vec{d}_iN_i^n\brak{u}}}{\displaystyle\sum_{i=-n}^{p-1}{w_iN_i^n\brak{u}}}
+\end{equation}
+Met meestal $w_i>0$. We kunnen dus de basis van deze Spline-curven zien als:
+\begin{equation}
+\phi_i\brak{u}=\displaystyle\frac{w_iN_i^n\brak{u}}{\displaystyle\sum_{i=-n}^{p-1}{w_iN_i^n\brak{u}}}
+\end{equation}
+Ook deze functie voldoet aan de lokaliteit, positiviteit en sommatie-tot-1 eigenschap. In het algemeen geven de gewichten een maat van belang aan per punt. Indien $w_i$ groot gekozen wordt, zal de curve dichter in de buurt van het punt $\vec{d}_i$ passeren.
+\newpage
+\section{Modellering van oppervlakken}
+\subsection{Tensorproduct-oppervlakken}
+Men kan in de meeste gevallen een oppervlakte goed benaderen aan de hand van een \termen{tensorproduct}. Dit betekent het product van twee curven, waarbij \'e\'en vurve varieert in de $x$-richting, de andere in de $y$-richting. In dat geval is:
+\begin{equation}
+\forall u\in\inva{a,b},v\in\inva{c,d}:\vec{x}\brak{u,v}=\displaystyle\sum_{i=0}^n{\displaystyle\sum_{j=0}^m\vec{p}_{i,j}\phi_i\brak{u}\psi_j\brak{v}}
+\end{equation}
+Hierbij wordt dus een \termen{controlenet} gebouwd van punten $\vec{p}_{i,j}$, dit is een $n\times m$ veld van punten die de vorm van het oppervlakte bepalen. De functies $\phi_i\brak{u}$ en $\psi_j\brak{v}$ kunnen we implementeren als bijvoorbeeld Berstein-veeltermen, B-splines,... Deze voorstelling bied het gemak dat we makkelijk effici\"ente algorimen kunnen uitbreiden van curven naar oppervlakken. Het is immers zo dat indien $v$ bijvoorbeeld constant gehouden wordt geldt:
+\begin{equation}
+\vec{x}\brak{u,v_c}=\displaystyle\sum_{i=0}^n{\mbox{Sv}_i\phi_i\brak{u}}\mbox{ met }\mbox{Sv}_i=\displaystyle\sum_{j=0}^m\vec{p}_{i,j}\psi_j\brak{v_c}
+\label{eq:oppOptim}
+\end{equation}
+We kunnen dus eerst het resultaat van de geneste som berekenen, en vervolgens telkens het resultaat gebruiken bij de berekening over een variabele $u$. Omgekeerd kan echter ook daar de volgorde van de sommen van geen belang is.
+\subsection{Interpolerende tensorproduct-oppervlakken}
+Dit kunnen we bijvoorbeeld illustreren aan de hand van de interpolerende veelterm, hier is dus $\phi_i\brak{u}=L_i^n\brak{u}$ en $\psi_j\brak{v}=L_j^m\brak{v}$. Samen wordt dit dus:
+\begin{equation}
+\vec{x}\brak{u,v}=\displaystyle\sum_{i=0}^n{\displaystyle\sum_{j=0}^m\vec{p}_{i,j}L_i^n\brak{u}L_j^m\brak{v}}
+\end{equation}
+We weten dat indien $u=u_i$ en $v=v_j$ geldt dat $L_i^n\brak{u}=L_j^m\brak{v}=1$. Bij alle andere veeltermen is minstens 1 van de twee gelijk aan $0$. We weten dus dat het resultaat van de functie $\vec{x}\brak{u=u_i,v=v_j}=\vec{p}_{i,j}$. Opnieuw echter gelden hier de nadelen van de interpolerende veeltermen.
+\subsection{tensorproduct B\'ezier-oppervlakken}
+Analoog kunnen we ook voor $\phi_i\brak{u}=B_i^n\brak{u}$ en $\psi_j\brak{v}=B_j^m\brak{v}$ definieren. Hierbij moeten we echter een kleine aanpassing doorvoeren: omdat B\'ezier-curven enkel gedefinieerd zijn in het interval $\inva{0,1}$. Moeten we de variabelen $u$ en $v$ herschalen: bijgevolg is dus de functie gelijk aan:
+\begin{equation}
+\vec{x}\brak{r\brak{u},s\brak{v}}=\displaystyle\sum_{i=0}^n{\displaystyle\sum_{j=0}^m\vec{b}_{i,j}B_i^n\brak{r}B_j^m\brak{s}}\mbox{ met } r\brak{u}=\displaystyle\frac{u-a}{b-a},s\brak{v}=\displaystyle\frac{v-c}{d-c}
+\end{equation}
+We kunnen hierbij opniew de eigenschappen van de Berstein-functies gebruiken (zie \ref{subsec:bernProp}). Dit leid tot enkele eingeschappen:
+\subsubsection{Eigenschappen van B\'ezier-oppervlakken}
+\paragraph{Interpolatie}
+Het oppervlak interpoleert de punten $\vec{b}_{0,0}$,$\vec{b}_{0,m}$,$\vec{b}_{n,0}$ en $\vec{b}_{n,m}$ niet de andere punten.
+\paragraph{Affien invariant en Convex omhullende}
+De connectie tussen het B\'ezier-oppervlakte-segment en zijn B\'ezier-net is affien invariant en ligt binnen de convex omhullende van dit B\'ezier-net.
+\paragraph{Randen}
+De randen van het oppervlakte worden beschreven louter door een bezier-curve met de randpunten.
+\paragraph{Evaluatie}
+Evaluatie gebeurd door het tweemaal toepassen van het algoritme van de Casteljau steunend op (\ref{eq:oppOptim}). Dit kost dus $m+1$ berekeningen met behulp van het algoritme van de Casteljau om de $Sv_i$'s te bepalen, en nog eentje voor het uiteindelijke resultaat: dus een complexiteit van \bigoh{m\cdot n^2}. We doen er eventueel goed aan om het net te transponeren.
+\paragraph{Graadverhoging}
+Ook hier kunnen we de graad verhogen, hierbij zijn de $u$- en $v$-richting onafhankelijk.
+\subsubsection{Afgeleiden van B\'ezier-oppervlakken}
+De afgeleiden van B\'ezier-oppervlakken zijn eenvoudig te berekenen aan de hand van \ref{subsec:derivBern} en resulteren in:
+\begin{equation}
+\begin{array}{l}
+\displaystyle\frac{\partial}{\partial u}\vec{x}\brak{r\brak{u},s\brak{v}}=\displaystyle\frac{n}{\Delta u_0}\displaystyle\sum_{i=0}^{n-1}{\displaystyle\sum_{j=0}^m\brak{\vec{b}_{i+1,j}-\vec{b}_{i,j}}B_i^{n-1}\brak{r}B_j^m\brak{s}}\\
+\displaystyle\frac{\partial}{\partial v}\vec{x}\brak{r\brak{u},s\brak{v}}=\displaystyle\frac{m}{\Delta v_0}\displaystyle\sum_{i=0}^{n}{\displaystyle\sum_{j=0}^{m-1}\brak{\vec{b}_{i,j+1}-\vec{b}_{i,j}}B_i^n\brak{r}B_j^{m-1}\brak{s}}
+\end{array}
+\end{equation}
+Indien we $\frac{\partial^2\vec{x}}{\partial u\partial v}$ Berekenen en evalueren op $\brak{u_{i},v_{j}}$ bekomen we: $\vec{b}_{i+1,j+1}-\brak{\vec{b}_{i+1,j}+\brak{\vec{b}_{i,j+1}-\vec{b}_{i,j}}}$. De tweede term van de formule is de voorspelling van $\vec{b}_{i+1,j+1}$ afgaande op het vlak van de 3 andere punten. De afgeleide is dus een maat van verschil tussen het voorspelde en de echte waarde. Deze wordt ook de \termen{draai-vector} genoemd.
+\subsubsection{Samengestelde van B\'ezier-oppervlakken}
+Analoog aan de curven kunnen we ook twee B\'ezier-oppervlakken samenstellen. In dit geval willen we opnieuw een zekere continu\"iteit garanderen. Zo moeten de randpunten aan elkaar gelijk zijn. En gelden dezelfde voorwaarden als die uit \ref{subsec:bezierSamen}. Deze eisen zijn echter niet voldoende. $C^1$ continuiteit in de $u$- en $v$-richting impliceert geen continuiteit op het oppervlakte. Deze eis kan enkel gelden voor $C^k$ continuiteit indien:
+\begin{equation}
+\displaystyle\frac{\partial^{2k}}{\partial^ku\partial^kv}\vec{x}_1\brak{u,v}=\displaystyle\frac{\partial^{2k}}{\partial^ku\partial^kv}\vec{x}_2\brak{u,v}
+\end{equation}
+\subsection{Spline-oppervlakken}
+Het tensorproduct van twee spline-curven leidt tot een \termen{B-spline-oppervlak}:
+\begin{equation}
+\forall u\in\inva{a,b},v\in\inva{c,d}:\vec{s}\brak{u,v}=\displaystyle\sum_{i=-n}^{p}{\displaystyle\sum_{j=-m}^{q}{\vec{p}_{i,j}N_i^n\brak{u}N_j^m\brak{v}}}
+\end{equation}
+Hierbij zijn eigenschappen triviaal aan deze van de B\'ezier-oppervlakken.
+\newpage
+\section{Algoritmen voor discrete meetkundige problemen}
+Meetkundige problemen zijn vaak erg complex en vragen veel rekenwerk. We maken een onderscheid tussen \termen{beslissingsproblemen} en \termen{constructieproblemen}. Meestal zijn de problemen beperkt tot 2D, maar makkelijk uitbreidbaar naar hogere dimensies.
+\subsection{Definities}Alvorens algoritmen te kunnen beschrijven moeten we enkele typen objecten definieren.
+\begin{itemize}
+ \item Een \termen{punt} $p\in\EE^2:p=\brak{x,y}$ met $x,y\in\RR$
+ \item \termen{Afstand} tussen twee punten $p_1=\brak{x_1,y_1}$ en $p_2=\brak{x_2,y_2}$ is gedefinieerd als:
+\begin{equation}
+\left|\linep{p_1p_2}\right|=\sqrt{\brak{x_1-x_2}^2+\brak{y_1-y_2}^2}
+\end{equation}
+\item Een \termen{lijnstuk} $\linep{p_1p_2}$ wordt gedefineerd als de verzameling van convexe combinaties, met $p_1$ en $p_2$ als \termen{eindpunten}: $\linep{p_1p_2}=\left\{\brak{1-t}p_1+t\cdot p_2|t\in\inva{0,1}\right\}$
+\item Een \termen{gericht lijnstuk} $\lineparr{p_1p_2}$ is een lijnstuk waarbij $p_1$ het \termen{beginpunt} en $p_2$ het \termen{eindpunt} is.
+\item Een \termen{veelhoek} $V=p_1p_2\ldots p_n$ wordt gedefineerd als:
+\begin{equation}
+V=\linep{p_np_1}\cup\displaystyle\bigcup_{i=1}^{n-1}\linep{p_ip_{i+1}}
+\end{equation}
+de punten $p_i$ worden \termen{hoekpunten} genoemd.
+\item Een \termen{eenvoudige veelhoek} $V=p_1p_2\ldots p_n$ is een veelhoek waarbij geldt:
+\begin{equation}
+\begin{array}{c}
+\forall i:\linep{p_ip_i+1}\cap\linep{p_{i+1}p_i+2}={p_{i+1}}\\
+\forall i,j:\left|i-j\right|\geq2:\linep{p_ip_i+1}\cap\linep{p_jp_{j+1}}=\varnothing
+\end{array}
+\end{equation}
+Met indices moldulo $n$.
+\item Een eenvoudige veelhoek verdeelt de ruimte in twee gebieden, het \termen{inwendige gebied}, genoteerd als $\mbox{inw}\brak{V}$ en het \termen{uitwendige gebied}, genoteerd als $\mbox{uitw}\brak{V}$. Hierbij $V\subset\mbox{inw}\brak{V}$
+\item Hoekpunten zijn in \termen{tegenwijzerzin} geordend indien $\mbox{inw}\brak{V}$ steeds links ligt van $\lineparr{p_ip_{i+1}}$. Analoog betekent \termen{wijzerzin} dat $\mbox{inw}\brak{V}$ steeds rechts ligt van $\lineparr{p_ip_{i+1}}$.
+\item Een \termen{convexe verzameling} $M$ is convex indien $\forall p_1,p_2\in M:\linep{p_1p_2}\subset M$
+\item Een \termen{Convexe veelhoek} is een veelhoek waarbij $\mbox{inw}\brak{V}$ convex is.
+\item Een \termen{Gesloten halfvlak} is een verzameling punten die allemaal aan een bepaalde kant van een rechte liggen.
+\item Een \termen{convexe omhullende} van een verzameling $M$ is de kleinste convexe verzameling die M bevat. $\mbox{Conv}\brak{M}$.
+\end{itemize}
+\newpage
+\section{Eenvoudige meetkundige problemen}
+Hierin behandelen we drie problemen: de ligging van twee lijnstukken tegenover elkaar, de ligging van een punt ten opzichte van een veelhoek, en het berekenen van aanwezigheid van snijpunten in een groep lijnstukken.
+\subsection{Ligging van twee lijnstukken}
+We vragen ons af of gegeven 2 lijnstukken $\linep{p_1p_2}$ en $\linep{p_3p_4}$, deze lijnstukken elkaar snijden of niet. Dit berekenen we in twee stappen. De eerste stap is een snelle filter die de meeste gevallen al kan beantwoorden. Hier vragen we ons af of de twee omhullende rechthoeken van de lijnstukken een gebied gemeen hebben met elkaar. Indien niet dan is er geen enkele mogelijkheid dat ze elkaar snijden. Dit testen we door te te stellen dat:
+\begin{equation}
+\left\{
+\begin{array}{c}
+\max\brak{x\brak{p_1},x\brak{p_2}}\geq\min\brak{x\brak{p_3},x\brak{p_4}}\\
+\wedge\\
+\min\brak{x\brak{p_1},x\brak{p_2}}\leq\max\brak{x\brak{p_3},x\brak{p_4}}\\
+\wedge\\
+\max\brak{y\brak{p_1},x\brak{p_2}}\geq\min\brak{y\brak{p_3},y\brak{p_4}}\\
+\wedge\\
+\min\brak{y\brak{p_1},x\brak{p_2}}\leq\max\brak{y\brak{p_3},y\brak{p_4}}
+\end{array}
+\right.
+\end{equation}
+Verder hoeven we alleen nog te testen of de twee eindpunten van lijnstuk 2 aan verschillende kanten van lijnstuk 1 liggen. En omgekeerd. Dit doen we als volgt:
+\begin{equation}
+\left\{
+\begin{array}{c}
+\brak{\lineparr{p_1p_2}\times\lineparr{p_1p_3}}\cdot\brak{\lineparr{p_1p_2}\times\lineparr{p_1p_4}}\leq0\\
+\wedge\\
+\brak{\lineparr{p_3p_4}\times\lineparr{p_3p_1}}\cdot\brak{\lineparr{p_3p_4}\times\lineparr{p_3p_2}}\leq0
+\end{array}
+\right.
+\end{equation}
+\subsection{Ligging van een punt ten opzichte van een veelhoek}
+We stellen een veelhoek $V=p_1p_2\ldots p_N$. Het algoritme gaat na of een punt $p\in\inw{V}$. Dit kunnen we doen door het tellen van het aantal snijpunten tussen de veelhoek, en een halvrechte vertrekkende vanuit het punt die naar om het even welk punt kan lopen. Indien dit aantal oneven is, verwachten we dat het punt in de veelhoek ligt, anders ligt het erbuiten. Dit levert echter problemen op indien de snijding niet op een lijnstuk, maar op een hoekpunt met de veelhoek ligt. In dat geval kan men niet besluiten of men van deel (inwendig/uitwendig) verandert. We zouden kunnen opteren om een nieuwe halfrechte te nemen. Dit houdt echter verlies van werk in. Een andere mogelijkheid is, een infinitisimale rotatie aan te brengen op de rechte. Die pas geldt vanaf het hoekpunt. Dan snijdt de halfrechte dus het hoekpunt niet meer en wordt verder ge\"evalueerd met de nieuwe halfrechte. We evalueren snijdingen het best met een event-driven \termen{doorlooplijnalgoritme}.
+\subsection{Snijding in een verzameling lijnstukken}
+Hierbij moeten we nagaan of in een verzameling van $N$ lijnstukken minstens twee lijnstukken elkaar snijden. Indien ieder lijnstuk met ieder ander zouden vergelijkingen hebben we $\frac{n\brak{n-1}}{2}$ testen nodig. Of dus een complexiteit van \bigoh{n^2}. Er bestaat echter ook een algoritme die in \bigoh{n\cdot\log\brak{n}} werkt. In dit geval zijn er enkele precondities:
+\begin{itemize}
+ \item Geen verticale lijnstukken
+ \item Kan alleen in twee dimensies gebruikt worden
+ \item Geen oneven-voudige snijpunten
+\end{itemize}
+Het eerste kan eventueel ongedaan gemaakt worden door een rotatie uit te voeren.
+Het werkt in twee stappen:
+\begin{itemize}
+ \item Sorteren op beginnende $x$-waarde
+ \item Relaties tussen lijnstukken vergelijken op een event met de vorige relaties
+\end{itemize}
+We ordenen dus eerst de lijnstukken en voegen ze toe aan een structuur indien we het event van hun $x$-waarde passeren. In deze structuur worden de lijnstukken opniew gesorteerd. Maar volgens een andere ordening. Namelijk ``ligt boven'' ($>_x$ op een gegeven x). Deze ordening kan onder slechts twee voorwaarden wijzigen:
+\begin{itemize}
+ \item een snijpunt
+ \item het toevoegen of verlaten van een lijnstuk in de gegevensstructuur
+\end{itemize}
+Verder weten we dat een lijnstuk enkel kan snijden met zijn onmiddelijke boven- of onderbuur. Stel nu dat we weten dat geldt bij twee lijnstukken $e$ en $f$: $e>_vf$ en $f>_we$ en $v<w$. Dan $\exists z$ zodat $v<z<w$. Waarbij onder $x=z$ $e$ en $f$ buren zijn. Alle tussenlijnstukken moeten dus voordien gestopt zijn. Het volstaat dus om enkel op event-punten na te gaan of buren met elkaar zullen snijden. We testen dus enkel wanneer een lijnstuk actief wordt en wanneer het passief wordt de buren van het toegevoegde of het verwijderde lijnstuk met elkaar. Daar er maximum $2n$ van deze events zijn. (Ieder lijnstuk verschijnt en verdwijnt slechts \'e\'enmaal) en het sorteren in de structuur (AVL- of Rood-Zwart-bomen) in \bigoh{\log\brak{n}} kan kunnen we besluiten dat het algoritme in \bigoh{n\cdot\log\brak{n}} werkt.
+\newpage
+\section{Berekenen van de convex omhullende van een puntenverzameling}
+\label{subsec:cov}
+We beschouwen een verzameling met een eindig aantal punten $M=\left\{p_1,p_2,\ldots,p_N\right\}$. We zoeken de convex omhullende van deze verzameling. De omhullende van een eindige verzameling is altijd een veelhoek. We kunnen deze omhullende berekenen met enkele methoden.
+Het \termen{algoritme van Graham} ofwel de \termen{Graham scan}, het \termen{algoritme van Jarvis} ofwel de \termen{inpakmethode}. Ofwel met een \termen{verdeel en heers algoritme} dat we in meer detail bespreken.
+\subsection{Graham scan}
+Het graham scan algoritme gaat als volgt. We sorteren alle punten behalve eentje (die het referentiepunt is) op rotatie van rechts naar links. Dit betekent dus dat $p_i$ eerder gesorteerd wordt dan $p_j$ indien de polaire hoek van $\lineparr{p_0p_i}$ kleiner is dan die van $\lineparr{p_0p_j}$. Het referentiepunt is een punt van de convexe en wordt gevonden door bijvoorbeeld minimale $y$-coordinaat (in \bigoh{n}) dus. Vervolgens bouwen we een stack waar referentiepunt $p_k$ op gepusht wordt. Vervolgens pushen we elk object in volgorde van sortering op de stapel. Vanaf het moment dat er drie elementen of meer een element zijn van de convex omhullende kijken we of deze een hoek naar links maken. Dit is te testen doordat $\lineparr{p_2p_1}\times\lineparr{p_1p_0}\leq0$ moet zijn. Indien dit niet zo is worden de laatste twee punten van de stapel gehaald. En gaan we verder. Op het einde bevat de stappel de convex omhullende in tegenwijzerzin. De complexiteit van deze stappen is \bigoh{n}. Maar er moet echter geordend worden als preprocessing. Dit kost \bigoh{\nlogn}
+\subsection{Methode van Jarvis}
+Dit algoritme vertrekt opnieuw van een referentiepunt $p_k$ dat in de convex-omhullende zit (bijvoorbeeld minimale $y$-coordinaat). Vervolgens voegen we het punt met de kleinste polaire hoek toe. Dus waarbij in $\vec{x}\times\lineparr{p_kp_i}$ maximaal is. Vervolgens plaatsen we $p_k$ en $p_i$ op de stapel. Vervolgens zoeken we van de overblijvende punten $p_i$ het punt waarbij $\lineparr{p_1p_0}\times\lineparr{p_0p_i}$ maximaal is. Dit plaatsen we ook op de stapel en zo gaan we verder tot we weer $p_k$ zijn (deze wordt nog als kandidaat gezien). De complexiteit van deze stappen is \bigoh{n\cdot h}, met $h$ het aantal hoekpunten van de convexe omhullende.
+\subsection{verdeel en heers algoritme}
+Algemeen is een verdeel en heers algorime een algoritme dat het probleem opsplits in enkele kleinere problemen. Deze worden dan opgelost en de oplossingen worden gecombineerd. Meestal leidt dit dus tot recursie. Indien het probleem klein genoeg is, bouwen we in het algoritme een triviaal geval in.
+\paragraph{}
+In dit geval zijn $n=2$ en $n=3$ triviale gevallen. Waarbij alle punten tot de convexe veelhoek behoren.
+\subsubsection{Onder- en bovenbrug}
+Het algoritme splits de puntenverzameling $M$ in twee delen $M_1=\left\{r_1,r_2,\ldots,r_{N_1}\right\}$ en $M_2=\left\{s_1,s_2,\ldots,s_{N_1}\right\}$ met $M_1\cup M_2=M$ en $M_1\cap M_2=\varnothing$. Er geldt dat
+\begin{equation}
+\mbox{CH}\brak{M_1}\cup\mbox{CH}\brak{M_2}\subset\mbox{CH}\brak{M_1\cup M_2}=\mbox{CH}\brak{M}
+\end{equation}
+We splitsen de verzameling in twee op basis van de mediaan van de $x$-coordinaat. Hiervoor wordt meestal eerst een pre-processing gedaan door het sorteren van punten op $x$-coordinaat. Op die manier zijn de verzamelingen (mits een evt. afwijking van $1$) even groot. We berekenen vervolgens met behulp van recursie de convex omhullenden van de twee deelverzamelingen. Vervolgens moeten we deze twee omhullenden samenvoegen. Dit doen we met behulp van enkele definities/eigenschappen:
+\begin{itemize}
+ \item Een \termen{raaklijn aan een convexe veelhoek} $V$ is een rechte die een hoekpunt van $V$ bevat en waarbij alle punten van $V$ aan \'e\'en kant liggen.
+ \item Stel dat de de convex omhullende van $M$ gelijk is aan $Q=q_1q_2\ldots q_m$. Dan zijn er precies twee zijden, $\linep{q_lq_{l+1}}$ en $\linep{q_uq_{u+1}}$ die zowel deel zijn van de $\mbox{CH}\brak{M_1}$ als van $\mbox{CH}\brak{M_2}$. Deze noemen we \termen{onderbrug} en \termen{bovenbrug}.
+\end{itemize}
+We moeten dus de convex omhullende van de twee deelverzamelingen berekenen, en de twee zijden vinden. Vervolgens halen we de punten die niet meer tot de convex omhullende behoren weg. Bij de berekeningen van de convex omhullende bekomen we:
+\begin{equation}
+\begin{array}{c}
+\mbox{CH}\brak{M_1}=V=v_1v_2\ldots v_m\\
+\mbox{CH}\brak{M_2}=W=w_1w_2\ldots w_m
+\end{array}
+\end{equation}
+Waarbij zowel $V$ als $W$ in tegenwijzerzin geordend zijn. We berekenen de onderbrug door systematische ``schattingen'' te maken. Dit doen we door een lijnstuk te beschouwen $\linep{v_iw_j}$. Deze eerste schatting nemen we als de meest linkse punten van $V$ en $W$. vervolgens schuiven we door $j$. Zodat we $W$ in tegenwijzerzin aflopen. Op het moment dat we een raaklijn bekomen aan $W$ stoppen we. Indien het lijnstuk ook een raaklijn aan $V$ is hebben we de onderbrug gevonden. Anders schuiven we analoog $i$. We moeten er rekening mee houden dat door $i$ te schuiven, mogelijk het lijnstuk geen raaklijn aan $W$ meer is. In dat geval moeten we $j$ weer verder schuiven tot dit opnieuw geldt. Indien we het gevonden hebben controleren we de richting van $V$ en $W$ ten opzichte van het lijnstuk. Vervolgens berekenen we analoog de bovenbrug door in wijzerzin te gaan. Deze operaties worden in \bigoh{n} gedaan.
+\paragraph{}
+Vervolgens zetten we de punten in een nieuwe veelhoek als volgt:
+\begin{equation}
+Q=v_{l_1}w_{l_2}w_{l_2+1}\ldots w_{u_2}v_{u_1}v_{u_1+1}\ldots v_{l_1-1}
+\end{equation}
+\paragraph{}
+Testen of een rechte een raaklijn van een convex omhullende is, is eenvoudig: We weten al een punt van de veelhoek waarmee we raken. We hoeven alleen te testen of zijn buren aan dezelfde kant van de rechte liggen. Dit is dus te testen als volgt:
+\begin{equation}
+\begin{array}{c}
+\vec{d}_1\times\vec{d}_2\geq0\leq\vec{d}_1\times\vec{d}_3\\
+\vec{d}_1=\vec{w}_j-\vec{v}_i;\vec{d}_2=\vec{v}_{i-1}-\vec{v}_i;\vec{d}_3=\vec{v}_{i+1}-\vec{v}_i
+\end{array}
+\end{equation}
+\paragraph{}
+De gegevensstructuren hiervoor zijn behoorlijk vrij te kiezen. Behalve de convexe omhullende veelhoeken die beter als dubbel gelinkte lijsten voorgesteld worden.
+\paragraph{}
+De totale complexiteit van het algoritme bestaat uit een pre-processing (sorteren; \bigoh{n\cdot\log\brak{n}}). Verder kan op elk recursieniveau het algoritme in lineare tijd uitgevoerd worden. Het is immers zo dat dit enkel bestaat uit splitsen (zeker in \bigoh{n} te doen), onder-en bovenbrug vinden (ook in \bigoh{n}, en niet intu\"itief \bigoh{n^2}), en samenvoegen (\bigoh{n}). In geval van een recursie waarbij het probleem in twee deelproblemen wordt onderverdeeld geldt:
+\begin{equation}
+\begin{array}{rl}
+T\brak{<n}&=2T\brak{\displaystyle\frac{n}{2}}+\bigoh{n}\\
+&\\
+&\leq2T\brak{\dfrac{n}{2}}+a\cdot n\\
+&\\
+&\leq2^iT\brak{\dfrac{n}{2^i}}+i\cdot a\cdot n\\
+&\\
+&=\bigoh{n\cdot\log\brak{n}}
+\end{array}
+\end{equation}
+\newpage
+\section{Nabijheidsproblemen}
+Onder nabijheidsproblemen verstaan we problemen waarbij afstanden tussen punten van discrete verzamelingen een belangrij rol spelen. Hier beschouwen we twee nabijheidsproblemen. Hierbij zijn Vornoi-diagrammen vaak een belangrijke onderdeel voor een snelle oplossing (zie \ref{subsec:cccpVornoi})
+\subsection{Voorbeelden van Nabijheidsproblemen}
+\label{subsec:example}
+\begin{itemize}
+ \item Het \termen{dichtste-buur-zoekprobleem} voor een query-punt (ook gekend onder ``\termen{postkantoorprobleem}'') (zie \ref{subsec:postprob})
+ \item Het \termen{dichtste puntenpaar} (zie \ref{subsec:dpp})
+ \item \termen{Alle dichtste buren}: Het bouwen van een graaf waar geldt dat indien er een connectie $p_1p_2$ bestaat ofwel $p_1$ de dichtste buur is van $p_2$ ofwel omgekeerd
+ \item Het \termen{verste puntenpaar} (zie \ref{subsec:vpp})
+ \item Verste punt voor ieder punt in de puntenverzameling
+ \item Triangulatie met maximale kleinste hoek
+ \item Grootste lege cirkel
+ \item Euclidische minimale doorloopboom (zie \ref{subsec:emdb})
+ \item Euclidische maximale doorloopboom
+ \item Euclidische handelsreizigersprobleem
+ \item Mediaanas van een veelhoek
+ \item Kleinste cirkel die een verzameling volledig omsluit
+\end{itemize}
+Deze algoritmen kan men intu\"itief makkelijk in \bigoh{n^2} bouwen. We gaan echter op zoek naar een sneller algoritme.
+\subsection{Het dichtste buur probleem}
+\label{subsec:postprob}
+Stel we kennen alle postkantoren in een streek. Bepaal voor een opgegeven punt het dichtste kantoor. Intu\"itief kan dit in \bigoh{n}. Met behulp van een Vornoi-diagram (zie \ref{subsec:cccpVornoi}) kan dit echter in \bigoh{\log\brak{n}}. De constuctie van dit diagram vereist echter \bigoh{n\cdot\log\brak{n}}, maar dit dient slechts \'e\'enmaal te gebeuren. Dit probleem is zeer algemeen voor clasificatieproblemen.
+\subsection{Dichtste Puntenpaar Probleem}
+\label{subsec:dpp}
+\subsubsection{Verdeel en heerststrategie}
+we kunnen opnieuwe een verdeel en heers strategie toepassen bij dit probleem. Dus verdelen we opnieuw de verzameling in twee even grote delen waar we het algoritme op toepassen. En vervolgens een combinatiestap. Hierbij kunnen we $n=2$ en $n=3$ opnieuw als triviale gevallen beschouwen. Als preprocessing zullen we opnieuw de punten sorteren op stijgende $x$-coordinaat.
+\paragraph{Combinatiestap}
+Om dit recursiealgoritme te vervolledigen hebben combinatiestap nodig die gegeven $A$, $B$, $\dpp{A}$ en $\dpp{B}$ moet resulteren in $\dpp{A\cup B}$. Eenvoudig is te zien dat $\dpp{A\cup B}=\min\brak{\dpp{A},\dpp{B},\forall a\in A,b\in B:\min\norm{a,b}}$. We moeten dus alleen nog de combinatis tussen punten uit de eerste met punten uit de tweede verzameling berekenen en vergelijken. We hopen dit te doen in \bigoh{n}.
+\paragraph{}
+We kunnen dit als volgt doen: we beschouwen $\delta_a$ en $\delta_b$ als respectievelijk de afstand van $\dpp{A}$ en $\dpp{B}$. We berekenen de voorlopig minimale afstand $\delta=\min\brak{\delta_a,\delta_b}$. Vervolgens sorteren we de punten op $y$-coordinaat in een strook $\left[s-\delta,s+\delta\right]$. Dit zou men kunnen zien als \bigoh{n\cdot\log\brak{n}}. Het is echter zo dat de y-coordinaten al gesorteerd werden in de vorige recursiestap. We moeten dus alleen de combinatiestap van mergesort herhalen die \bigoh{n} is. Vervolgens beschouwen we een rechthoek met grote $2\delta\times\delta$. Deze schuiven we van beneden naar boven. In deze rechthoek zitten maximaal 8 punten ($4$ van $A$ en $4$ van $B$). Dit is dus een constante operatie om de $16$ punten uit te rekenen. Het schuiven van de rechthoek gebeurt opnieuw event-based. (Enkel bij een nieuwe punt dat toegevoegd word). De afstand moet dan enkel berekend worden vanaf dat punt tot de andere wat resuleert in maximum $4$ evaluaties. We bekomen dus een combinatiestap van \bigoh{n}. De recursiebetrekking zorgt ervoor dat het totale algoritme \bigoh{n\cdot\log\brak{n}} is.
+\subsection{Verste Puntenpaar Probleem}
+\label{subsec:vpp}
+Hierbij zoeken we uit een eindige puntenverzameling $P$ de twee punten met een afstand maximaal. Het lijnstuk die dit beschrijft wordt de \termen{diameter} van de verzameling genoemd. Opnieuw kunnen we dit intu\"itief een algoritme van \bigoh{n^2} opstellen. Om het sneller te doen kunnen we gebruik maken van de stelling die zegt dat de eindpunten van de diameter allebei deel uitmaken van de convex omhullende veelhoek.\\
+\textbf{Bewijs: } Stel dat er een lijnstuk bestaat $\linep{p_1p_2}$ die het verste puntenpaar vormt, en waarbij $p_1\in\mbox{CV}\brak{P}$ maar $p_2\notin\mbox{CV}\brak{P}$. In dat geval weten we zeker dat $p_2\in\mbox{inw}\brak{\mbox{CV}\brak{P}}$ (def. convex omhullende). In dat betekent dit dus dat er minimaal een convexe hoekpunt moet zijn dat verder ligt dan $\norm{\linep{p_1p_2}}$. En dus is dit bijgevolg het verste puntenpaar.
+\paragraph{}
+Een andere eingeschap die nodig is, zegt dat we twee evenwijdige raaklijnen kunnen tekenen aan de punten. Dit kan zeker indien ze loodrecht staan op het lijnstuk tussen de twee. Het bewijs is analoog aan het vorige.
+\paragraph{}
+Verder roepen we nog een definitie in het leven die we nodig hebben: Een \termen{tegenvoeterspaar} is een hoekpuntenpaar van de convex omhullende waarbij die raaklijnen kunnen worden getekend die evenwijdig zijn. Dit resulteert er dus in dat enkel de tegenvoetersparen van de convex omhullende kandidaten zijn. We berekenen dus als pre-processing de convex-omhullende in \bigoh{n\cdot\log\brak{n}} (zie \ref{subsec:cov}).
+\paragraph{}In het ergste geval blijven alle punten over. Om sneller dan \bigoh{n^2} te gaan moeten we dus een methode vindien die de tegenvoetersparen berekend zonder alle punten te beschouwen. Dit kunnen we doen door de convexiteit uit te buiten. Indien de convexe veelhoek $V=p_1p_2\ldots p_m$. Met de punten in wijzerzin. We beschouwen de rechte $l=p_1p_2$. We weten dat de afstand van die recht tot een punt $i$ met $i$ stijgend telkens monotoon stijgt en daarna monotoon daalt tot $0$. (eigenschap convex). In het verste punt (punt vooraleer de eerste daling) kan men een evenwijdige rechte tekenen evenwijdig met $l$.
+\paragraph{}We bepalen de afstand door de oppervlakte van de driehoek te bepalen, deze delen we dan door de hoogte en vermenigvuldiging we met 2. Dit wordt dus voor punt $p_j$ tegenover rechte $r=p_ip_{i+1}$:
+\begin{equation}
+\norm{r\ p_j}=\displaystyle\frac{2\cdot\mbox{Opp}\brak{\Delta p_ip_{i+1}p_j}}{\norm{\linep{p_ip_{i+1}}}}=\displaystyle\frac{2}{2\cdot\norm{\linep{p_ip_{i+1}}}}\norm{
+\begin{array}{ccc}
+x_i&y_i&1\\
+x_{i+1}&y_{i+1}&1\\
+x_j&y_j&1
+\end{array}}
+\end{equation}
+Merk op dat we enkel de oppervlakte moeten berekenen, we zijn immers niet ge\"intresseerd in de daadwerkelijk oppervlakte alleen in een orde om het maximum te vinden. Dit wordt dus:
+\begin{equation}
+\mbox{FastOrder}\brak{\norm{r\ p_j}}=\brak{x_{i+1}-x_i}\cdot\brak{y_j-y_i}-\brak{y_{i+1}-y_i}\cdot\brak{x_j-x_i}
+\end{equation}
+Merk op dat het nog sneller kan bij het vergelijken omdat we $x_{i+1}-x_i$ en $y_{i+1}-y_i$ vooraf kunnen uitrekenen.
+\paragraph{}Het algoritme werkt als volgt: We beschouwen het punt $p_i$ op de veelhoek. We kunnen twee rechten defini\"eren $l_i=p_{i-1}p_i$ en $l_{i+1}=p_ip_{i+1}$, we bereken vervolgens de verste punten van de rechten, respectievelijk: $p_{l_i}$ en $p_{l_{i+1}}$. Slechts alle punten tussen $p_{l_i}$ en $p_{l_{i+1}}$ zijn tegenvoetersparen van $p_i$. Op het eerste zicht lijken er dus \bigoh{n} tegenvoetersparen te bestaan. Bij het volgend punt echter is het begin meteen gekenmerkt door het vorige einde.
+\paragraph{}Hierdoor zijn we dus in staat alle punten te vinden in slechts \'e\'en omwenteling en dus in \bigoh{n}. Het algoritme zelf is dus \bigoh{n} indien we de convexe veelhoek al hebben. Anders moeten we dit preprocessen en bekomen we dus \bigoh{n\cdot\log\brak{n}+n}=\bigoh{n\cdot\log\brak{n}}.
+\subsection{Verband tussen nabijheidsproblemen}
+In alle problemen kunnen Vornoi-diagrammen (zie \ref{subsec:cccpVornoi}) een centrale rol spelen. Dit laat toe om uitspraken te doen over tijdscomplexiteit gesteund op de \termen{transformeerbaarheid} van problemen. Dit steunt op het volgende principe: Stel we hebben twee problemen, indien de invoer van het eerste probleem kunnen omvormen tot invoer voor het tweede probleem zodat het probleem opgelost wordt is het eerste probleem transformeerbaar in het tweede probleem. Deze relatie is niet symmetrisch. Indien de transformatie van invoer en uitvoer in \bigoh{f\brak{n}} gedaan kan worden is het eerste probleem \bigoh{f\brak{n}} transformeerbaar in het tweede probleem.
+\paragraph{}Met logica leiden we af dat indien de ondergrens van het eerste probleem $f\brak{n}$ bewerkingen is, en we kunnen het eerste probleem naar het tweede probleem in \bigoh{\tau\brak{n}}. Dan heeft het tweede probleem een ondergrens van $f\brak{n}-\bigoh{\tau\brak{n}}$. Omgekeerd kunnen we stellen dat indien het tweede probleem een ondergrens van van $g\brak{n}$ bewerkingen heeft. Het eerste probleem een bovengrens heeft van $g\brak{n}+\bigoh{\tau\brak{n}}$.
+\paragraph{}
+Alle vermelde problemen in \ref{subsec:example} zijn \bigoh{n}-transformeerbaar naar de constructie van een Vornoi-diagram. Dit betekent dus dat alle algoritmen die een dergelijk probleem oplossen een bovengrens hebben van \bigoh{n\cdot\log\brak{n}} (dit zegt natuurlijk niets over de ondergrens). De meeste omzettingen zijn triviaal.
+\subsection{Euclidische Minimale Doorloopboom}
+\label{subsec:emdb}
+Het probleem is als volgt: Gegeven een eindige verzameling punten: $P=\left\{p_1,p_2,\ldots,p_n\right\}\subset\EE^2$. We zoeken een \termen{Euclidisch Opspannende Boom}, dit is een verzameling van lijnstukken $\linep{p_ip_j}$ zodat elk punten minstens \'e\'enmaal voorkomt en er geen lussen in de verbindingen voorkomen, waarbij de som van de lengte van de zijden minimaal is. We weten dat deze verzameling uit $n-1$ lijnstukken bestaat (definitie boom). Dit houdt echter niet in dat het netwerk dat ontstaat ook het kortst is (extra punten kunnen toevoegen zou tot nog lagere afstanden kunnen leiden). De intu\"itieve oplossing is het beschouwen van alle lijnstukken (dit is $E=\bigoh{n^2}$). Deze sorteren en vervolgens telkens de kleinste boog die een nieuw punt introduceert toevoegen. Dit algoritme heeft een complexiteit $\bigoh{E\cdot\log\brak{E}}=\bigoh{n^2\cdot\log\brak{n}}$. Omdat we echter de korste afstand van een punt sneller kunnen bepalen met een Vornoi-diagram kunnen we een algoritme bouwen in \bigoh{n\cdot\log\brak{n}}. Hiervoor gebruiken we Delaunay-triangulatie (zie \ref{subsec:cccpVornoi}). Dit komt omdat het \termen{algoritme van Prim} uitgaat van onafhankelijkheid van de gewichten. En er zijn \bigoh{n^2} gewichten.
+\paragraph{}
+Voor de bouw van het snellere algoritme gebruiken we volgende eigenschap: De verbindingen van Euclidische Minimale Doorloopboom zijn een deelverzameling va de verbindingen in de Delaunay-triangulatie. Dit steunt op \ref{subsec:delaunayBigoh}. We stellen dus de Delauney-triangulatie op in \bigoh{n\cdot\log\brak{n}}. Vervolgens itereren we over de sites. Waar we telkens de dichtste buur van nemen. Omdat een Delaunay-punt verbonden is met 3 anderen gebeurt deze iteratie in $\bigoh{3\cdot n}=\bigoh{n}$.
+\newpage
+\section{Vornoi-diagram van een puntenverzameling}
+\label{subsec:cccpVornoi}
+Een \termen{Vornoi-diagram} van een eindige verzameling punten (\termen{sites} genoemd) $P=\left\{p_1,p_2,\ldots,p_n\right\}$ met $p_i\in\EE^2$. We bouwen een verzameling van \termen{Vornoi-gebieden}. Waarbij het Vornoi-gebied van $p_i$ wordt bepaald als de verzameling punten in $\EE^2$ die dichter bij $p_i$ liggen dan bij ieder ander punt. Deze gebieden worden begrensd door lijnstukken en halfrechten die we de \termen{Vornoi-zijden} noemen. Alle punten behoren dus tot \'e\'en gebied, behalve de punten op de Vornoi-zijden (die behoren tot de twee gebieden), dit is analoog met de \termen{mediaanas} in een veelhoek. Het vornoi-diagram is de unie van al deze Vornoi-zijden.
+\paragraph{}
+Eenvoudige constructie van een Vornoi diagram is door het alle puntenparen te beschouwen en er middeloodlijnen op te tekenen. Daar waar twee van deze lijnen snijden met eenzelfde punt als ouder, is er een hoekpunt in het gebied. We kunnen dus stellen dat een Vornoi-gebied gevormd wordt door de doorsnede van alle halfvlakken veroorzaakt door een punt $p_i$ met het vlak naar $p_i$ toe. Bijgevolg is het vlak per definitie convex.
+\paragraph{}
+Een Vornoi-gebied is niet altijd begrensd. Toch spreekt men nog steeds van de \termen{Vornoi-veelhoek}. Indien begrensd is dat maximaal met $n-1$ zijden.
+\paragraph{}
+Veelal wordt hier vlakke grafentheorie gebruikt. Er geldt dus $\mbox{\#Knopen}-\mbox{\#Bogen}+\mbox{\#Gebieden}=2$. Indien de graad van ieder knooppunt groter is dan 3 geldt: $\mbox{\#Gebieden}\leq 2\cdot\mbox{\#Knopen}-4$; $\mbox{\#Bogen}\leq 3\cdot\mbox{\#Knopen}-6$. Hierbij het onbegrensde gebied in rekening gebracht.
+\paragraph{}
+We kunnen echter een Vornoi-diagram niet als een grafe zien, omdat er lijnstukken naar oneindig lopen. Dit kunnen we wel oplossen door extra knopen in te voeren die de halfrechten bepalen op oneindig. We kunnen echter ook een \termen{duale graaf} bouwen. Deze duale graaf is een graaf met als opnieuw de sites als knopen, en waarbij een boog tussen twee sites wordt getekend indien ze een gemeenschappelijke Vornoi-zijde hebben. Deze is wel een vlakke grafe en een \termen{triangulatie}, dit betekend dat elk gebied die beconstrueert wordt een driehoek is. Er zijn dus meerdere triangulaties mogelijk. Maar slechts \'e\'en \termen{Delaunay-triangulatie} (een duale graaf). In dit geval zijn het aantal bogen bogen ook maximaal. We kunnen bewijzen dat indien $v$ een Vornoi-punt is, en we drie sites $p_1$, $p_2$ en $p_3$ hebben die op gelijke afstand van elkaar liggen (per definitie zo). Dan behoort de driehoek $\Delta p_1p_2p_3$ tot de Delaunay-triangulatie.
+\paragraph{}
+Hieruit halen we, steunend op de eigenschappen van vlakke grafen en de triangulatie dat het Vornoi-diagram maximaal $2\cdot n-5$ Vornoi-punten, en $3\cdot n-6$ Vornoi-zijden bevat.
+\subsection{Eigenschappen van Delaunay-triangulatie en Vornoi-diagram}
+\subsubsection{Graad van een Vornoi-punt}
+We kunnen ook bewijzen dat de graad van ieder Vornoi-punt exact gelijk is aan $3$ met uitzondering van de punten op oneindig. Dus elk Vornoi-punt is bepaald door 3 sites van $P$.
+\textbf{Bewijs: }stel dat er $k$ Vornoi-zijden samenkomen, dan betekent dit dus dat dat punt even ver ligt voor $k$ punten. Dus dat het Vornoi-punt het middelpunt van een cirkel vormt waar al deze punten op liggen. Vermits een preconditie was dat in de verzameling geen 4 punten op dezelfde circelboog liggen, kan dit onmogelijk. Indien er minder dan $3$ punten zijn. Is er geen reden voor een Vornoi-punt.
+\subsubsection{Nabijheid van een Vornoi-punt}
+\label{subsec:emptyCirc}
+Er ligt geen enkel punt in de cirkel met als middelpunt een Vornoi-punt en met straal de afstand tussen het Vornoi-punt en \'e\'en van zijn ouders.
+\textbf{Bewijs: }Indien dit wel zo zou zijn, was de afstand kleiner en behoorde het punt tot het gebied van dat andere punt.
+\subsubsection{Dichtste buur}
+De Vornoi-veelhoek van een site $p$ en de Vornoi-veelhoek behorende bij de dichtste buur van $p$ hebben een gemeenschappelijke zijde.
+\textbf{Bewijs: }stel $p_i$ als punt en $p_j$ als dichtste buur. Dan beschouwen we het lijnstuk $\linep{p_ip_j}$ met $v$ als middelpunt van dat lijnstuk. We moeten dus bewijzen dat $v\in V$ met V de Vornoi-veelhoek van $p_i$. Algemeen kunnen we echter stellen dat er drie gevallen zijn:
+\begin{enumerate}
+ \item $v\in V$
+ \item $v\notin V\wedge v\in\inw{V}$
+ \item $v\notin V\wedge v\in\uitw{V}$
+\end{enumerate}
+We bewijzen dat 2 en 3 onmogelijk zijn, en bijgevolg $v$ deel uitmaakt van de rand.\\
+2: Stel dat $v$ in het strikt inwendige ligt van $V$, dan zou dit betekenen dat de afstand tot $p_i$ kleiner is dan tot ieder ander punt (dus ook $p_j$). Maar dat gaat in tegen de definitie van $v$.\\
+3: Indien $v$ in het strikt uitwendige ligt van $V$. Dan kunnen we een lijnstuk $\linep{p_iv}$ tekenen, dat snijdt met exact \'e\'en zijde van $V$. Dit hypothetische punt noemen we $u$. Uiteraard is hier $\norm{\linep{p_iu}}<\norm{\linep{p_iv}}$. $u$ is dan een deel van een rand met een andere Vornoi-veelhoek van een hypothetisch punt $p_k$. Dat zou betekenen dat $\norm{\linep{p_ip_k}}=2\norm{\linep{p_iw}}$. Met $w$ als middelpunt van het lijnstuk die dus ook op de rand van $u$ ligt (opnieuw hypothetisch). Dan geldt dus verder:$2\norm{\linep{p_iw}}\leq2\norm{\linep{p_iu}}<\norm{\linep{p_iv}}=\norm{\linep{p_ip_j}}$. Dit zou dus betekenen dat $\norm{\linep{p_ip_k}}<\norm{\linep{p_ip_j}}$. Maar dit spreekt het gegeven (dichtste buur) tegen. $v$ ligt dus op de rand.
+\subsubsection{Begrensdheid van de Vornoi-veelhoeken}
+Als en slechts als $p_i$ een hoekpunt van de convex omhullende vormt is zijn gebied onbegrensd.
+\textbf{Bewijs: }Aangezien het een als en slechts als is moeten we twee dingen bewijzen:
+\begin{enumerate}
+ \item Stel dat $p_i$ geen hoekpunt is van de convex omhullende, dan is het Vornoi-gebied begrensd: Vermits $p_i$ dan in het inwendig van de convex-omhullende zit. Bestaan er dus punten $p_1$, $p_2$ en $p_3$ van $P$ zodat $p_i\in\inw{\Delta p_1p_2p_3}$. We definieren vervolgens de midelloodlijnen met $p_i$ als respectievelijk $m_1$, $m_2$ en $m_3$. Deze kunnen niet evenwijdig zijn. (Anders vormen ze geen driehoek). Vervolgens weten we dat het Vornoi-gebied van $p_i$ een deelverzamelingen is van de doorsnede van de drie halfgebieden van deze middeloodlijnen. Daar deze reeds begrensd is (meer bepaald een driehoek). Kan de deelverzamelingen ook alleen maar begrensd zijn.
+ \item Stel dat het Vornoi-gebied begrensd is, dan is $p_i$ geen hoekpunt van de convex omhullende: Stel dat dit wel zo is. Vervolgens bestaat er dus een raaklijn $l$ aan de convex omhullende die door $p_i$ gaat, en waarbij alle andere punten aan dezelfde kant liggen (stel hier links, rechts is analoog). We definieren de loodlijn $k$ op $l$ die door $p_i$ gaat. Alle punten op $k$ rechts van $l$ liggen, liggen per definite dichter bij $p_i$ dan bij een ander punt. Het Vornoi-gebied omvat dus zeker heel $k$, daar $k$ naar oneindig loopt is het gebied dus onbegrensd.
+\end{enumerate}
+Zijden die naar oneindig lopen worden ook \termen{stralen} genoemd. Uiteraard hoort die straal dus bij twee Vornoi-veelhoeken van opeenvolgende hoekpunten van de convex-omhullende.
+\subsubsection{Verbindingen van de Delaunay-triangulatie}
+\label{subsec:delaunayBigoh}
+Een lijnstuk $\linep{p_ip_j}$ is een verbinding van de Delaunay-triangulatie als en slechts als, er een lege cirkel bestaat die de twee punten bevat.
+\subsection{Gegevensstructuur}
+Voor het bijhouden van een Vornoi-diagram kunnen we een gegevensstructuur definieren. Deze bestaat uit drie delen die bedoeld zijn voor Vornoi-zijden, Vornoi-gebieden en Vornoi-punten. Omdat we geen apparte structuur voor stralen zouden moeten bouwen zullen we een Vornoi-diagram in een rechthoek defineren. De stralen eindigen dus op een snijding met deze rechthoek. Elke Vornoi-zijde behoort tot twee Vornoi-gebieden, dit lossen we op door deze te ontdubbelen in twee gerichte lijnstukken. de lijnstukken $\lineparr{p_1p_2}$ en $\lineparr{p_2p_1}$ noemen we \termen{tweelingen}. Een gericht lijnstuk wordt gekoppeld met het Vornoi-gebied dat links van hem ligt. Bovendien heeft een gericht lijnstuk dus een beginpunt en eindpunt. Concreet bevat de gegevensstructuur volgende tabellen:
+\begin{itemize}
+ \item Lijst met Vornoi-punten deze bevat:
+ \begin{itemize}
+  \item Coordinaten van het punt
+  \item Pointer naar een willekeurige Vornoi-halfzijde die dit punt als beginpunt heeft
+ \end{itemize}
+\item Lijst met Vornoi-halfzijde deze bevat:
+ \begin{itemize}
+  \item Pointer naar beginpunt (Vornoi-punt)
+  \item Pointer naar tweeling (Vornoi-halfzijde)
+  \item Pointer naar het Vornoi-gebied
+  \item Pointer naar voorganger van de halfzijde (Vornoi-halfzijde)
+  \item Pointer naar opvolger van de halfzijde (Vornoi-halfzijde)
+ \end{itemize}
+\item Lijst met Vornoi-gebieden deze bevat:
+ \begin{itemize}
+  \item Coordinaten van de geassocieerde site
+  \item Pointer naar een willekeurige Vornoi-halfzijde die aan dit gebied grenst
+ \end{itemize}
+\end{itemize}
+\subsection{Constructie van een Vornoi-diagram}
+Hoe bouwen we nu een Vornoi-diagram gegeven een endige verzameling sites. Er zijn enkele mogelijke implementaties:
+\begin{itemize}
+ \item Het berekenen van de doorsnede van de halfvlakken (een minimale complexiteit \bigoh{n^2})
+ \item Incrementeel algoritme, waarbij gegeven het Vornoi-gebied voor $n$ sites we een site toevoegen (opnieuw \bigoh{n^2} al is dit emperisch eerder \bigoh{n})
+ \item Een verdeel-en-heers algoritme (heel complex maar in \bigoh{\nlogn})
+ \item Het \termen{doorlooplijnalgoritme van Fortune}  ook in \bigoh{\nlogn} die we verder bestuderen.
+\end{itemize}
+\subsubsection{Principe van doorlooplijnalgoritme}
+Indien we uit iedere site een cirkel met dezelfde snelheid laten groeien in de tijd (die de derde dimensie voorstelt). Dan zullen de snedes tussen de cirkels geprojecteerd op het $XY$-vlak het Vornoi-diagram volgen. Indien we nu een \termen{doorloopvlak} beschouwen die schuin staat ten opzichte van het $XY$-vlak, die net dezelfde hoek heeft als de kegels (groeiende cirkels in de derde dimensie). Dan weten we zeker de \termen{kegelsnede} resulteert in een \termen{parabool}. Een verzameling van al de bogen op een gegeven tijdstip noemen we een \termen{golffront}. Deze bogen snijden elkaar per definitie (de formule van een parabool). Een snijding tussen twee parabolen op een gegeven tijdstip noemen we een \termen{breekpunt}.
+\paragraph{} Elk boog is een van het golffront is hierbij een deel van een parabool.\\
+\textbf{Bewijs: } Dit steunt op de definitie van een parabool: een parabool wordt gedefnieerd met behulp van een punt (het \termen{brandpunt} of de \termen{focus}), en een rechte (de \termen{richtlijn} of de \termen{directrix}). Een parabool is de verzameling punten die even ver van het punt als van de rechte verwijdert liggen. We beschouwen de parabool $\mathfrak{p}$ die de doorsnede vormt tussen de kegel van site $p$ en het doorloopvlak en een punt $v\in\mathfrak{p}$. En het punt $w$ die de projectie van $v$ op het $XY$-vlak vormt. Vervolgens is $u$ het punt in de doorlooplijn (doorsnede van het $XY$-vlak en het doorloopvlak) die het dichtst bij $u$ staat. Vervolgens beschouwen we rechthoeken $\Delta pvw$ en $\Delta uvw$ we weten dat in de twee $w$ een rechte hoek is. en bovendien zijn de hoeken in van $p$ en $u$ gelijk omdat de driehoeken ook een gemeenschappelijk zijde hebben kunnen we besluiten dat $\Delta pvw\cong\Delta uvw$. Hieruit volgt dat $\norm{\linep{pw}}=\norm{\linep{wu}}=\mbox{afstand van $w$ tot doorlooplijn}$. We zien dus dat dit de defenitie van een parabool is.
+\paragraph{}We maken gebruik van een extra eigenschap: elk punt op de Vornoi-zijde stemt op een gegeven moment overeen met een breekpunt van twee golffronten.\\
+\textbf{Bewijs: }We stellen een Vornoi-zijde tussen de Vornoi-bebieden van sites $p$ en $q$. En we defiineren hier een punt $u$ die op de Vornoi-zijde ligt. Bijgevolg geldt $\norm{\linep{pu}}=\norm{\linep{uq}}$ (definitie Vornoi-zijde). We definieren $s$ als het snijpunt tussen de doorlooplijn en een loodlijn op de doorlooplijn die door $u$ gaat. We weten dat op een gegeven moment in de tijd (de doorlooplijn is immers de enige veranderlijke) $\norm{\linep{pu}}=\norm{\linep{uq}}=\norm{\linep{us}}$ geldt. Vermits geldt dat de doorlooplijn de richtlijn is van parabolen $\mathfrak{p}_p$ en $\mathfrak{p}_q$ geldt dat een punt tot die parabolen behoort indien $\norm{\linep{pu}}=\norm{\linep{uq}}=\norm{\linep{us}}$. Wat dus zeker geldt. Daar we echter een deel van de parabool beschouwen zou het kunnen zijn dat het punt al verborgen is door een andere parabool. In dat geval bestaat er een parabool $\mathfrak{p}_r$ (met brandpunt $r$) die die $\linep{us}$ in $z$. Vermits dan opnieuw geldt dat $\norm{\linep{xz}}=\norm{\linep{zs}}$. In dat geval ligt $r$ op een cirkel met middelpunt $z$ en straal $\norm{\linep{zs}}$. In dat geval ligt het punt $x$ dus in de cirkel met middelpunt $u$ en straal $\norm{\linep{pu}}$. Maar deze moet leeg zijn (zie \ref{subsec:emptyCirc}) anders hebben $p$ en $q$ geen gemeenschappelijke Vornoi-zijde.
+\paragraph{}Verder hebben we voor het algoritme nog volgende lemma's nodig die gegeven worden zonder bewijs:
+\begin{itemize}
+ \item Een niewe boog verschijnt alleen wanneer de doorlooplijn een een site passeert. Deze wordt als een halfrechte opgeslaan in de structuur.
+ \item Een boog verdwijnt alleen enkel uit het golffront indien een boog en twee aangrenzende bogen elkaar snijden in hetzelfde punt.
+\end{itemize}
+\paragraph{}Volgende eigenschap is makkelijk uit de vorige lemmas te bewijzen: Op ieder ogeblik ogenblik bevat het golffront maximum $2n-1$ bogen.
+\textbf{Bewijs: } De enige manier om meer dan $n$-bogen te bekomen is doordat een andere boog een boog in twee splitst. Bij het toevoegen van een site, kan de nieuwe boog maximum \'e\'en boog in twee nieuwe bogen splitsen. En verhoogt dus het aantal met $2$ (1 extra boog, en de eigen boog). Omdat de boog van de laatste site die we toevoegen niet meer kant gesplitst worden, is het maximaal aantal dus $2\brak{n-1}+1=2n-1$.
+\subsubsection{Het algoritme}
+Het algoritme is gebaseerd op het feit dat Vornoi-zijden en Vornoi-gebieden enkel op bepaalde momententen ontstaan steunend op de eigenschappen hierboven. Dus geldt:
+\begin{itemize}
+ \item Een breekpunt onstaat als een nieuwe boog verschijnt. Dit ge
+ \item Een breekpunt verdwijnt indien twee breekpunten samenvallen. In dat geval in dat geval vallen de twee Vornoi-zijden die beschreven worden door de breekpunten samen. Bijgevolg ???
+\end{itemize}
+\paragraph{Gegevensstructuren}
+Voor dit algoritme hebben we de volgende gegevensstructuren nodig:
+\begin{itemize}
+ \item Een \termen{doorloopstatus} $T$. Deze bevat het golffront als een collectie bogen (met hun interval in de $y$-dimensie). Gerangschikt op $y$-cordinaat. Volgende methodes zijn gedefineerd:
+ \begin{itemize}
+  \item \texttt{snijdt\_boog($T$,$c$)} retourneert de boog met het interval waar $c$ toe behoort
+  \item \texttt{voegtoe\_boog($T$,$p$)} voegt de boog van site $p$ toe en roept zelf \texttt{snijdt\_boog($T$,$c$)} op met $c$ als $y$-coordinaat voor $p$. Indien daar al een boog staat, wordt de boog opgesplitst in twee nieuwe bogen.
+  \item \texttt{verwijder\_boog($T$,$b$)} verwijdert boog $b$ uit de structuur.
+  \item \texttt{boven\_boog($T$,$b$)} retourneert de boog boven de boog $b$ in $T$.
+  \item \texttt{onder\_boog($T$,$b$)} retourneert de boog onder de boog $b$ in $T$.
+ \end{itemize}
+ \item Een \termen{Overganspuntenlijst} $O$. Deze bevat de punten waarop er een bepaalde gebeurtenis plaatsvindt gesorteerd op $x$-coordinaat. Het algoritme is immers event-based. Er zijn twee soorten punten:
+ \begin{itemize}
+  \item \termen{Toevoegpunten} punten waar de doorlooplijn een site passeert (deze worden in de preprocessing toegevoegd)
+  \item \termen{Verdwijnpunten} punten waar drie opeenvolgende bogen een gemeenschappelijk punt hebben. Dit is wanneer de drie sites van de bogen eenzelfde afstand hebben tot een bepaald punt. We zoeken dus de cirkel die de drie sites omvat. Deze punten kunnen alleen at runtime uitgrekend worden.
+ \end{itemize}
+ Volgende methodes zijn gedefineerd:
+ \begin{itemize}
+  \item \texttt{volgend\_punt($O$)} retourneert het volgende overgangspunt.
+  \item \texttt{voegtoe\_punt($O$,$s_1$,$s_2$,$s_3$)} Voegt het overgangspunt bepaald door de drie sites toe.
+  \item \texttt{verwijder\_boog($T$,$b$)} verwijdert een verdwijnpunt uit $O$.
+  \item \texttt{vind\_boog($T$,$b$)} vind het overgangspunt bepaald door de drie sites toe.
+ \end{itemize}
+De twee structuren zijn gebalanceerde bomen.
+\end{itemize}
+Over het invullen van het Vornoi-diagram wordt niets vermeld.
+De pseudocode staat beschreven in \algref{alg:vornoi}. Hierbij is $\mathcal{P}$ de lijst met sites, $T$ de doorloopstatus en $O$ de overgangspuntenlijst.
+\begin{algorithm}                      % enter the algorithm environment
+\caption{Constructie van het Vornoi-diagram}          % give the algorithm a caption
+\label{alg:vornoi}                           % and a label for \ref{} commands later in the document
+\begin{algorithmic}                    % enter the algorithmic environment
+%\REQUIRE $\mathcal{P}=\left\{p_1,p_2,\ldots p_n\right\}$
+\STATE $O\leftarrow\mathcal{P}$
+\STATE $T\leftarrow\varnothing$
+\WHILE {$O\neq\varnothing$}
+\STATE $o\leftarrow\volgpunt$
+\IF {$o\mbox{\textbf{ is }\texttt{toevoegpunt}}$}
+\STATE $s\leftarrow\site{o}$
+\STATE $g\leftarrow\snijboog{y\brak{s}}$
+\STATE $f\leftarrow\boveboog{g}$
+\STATE $h\leftarrow\ondeboog{g}$
+\STATE $\verwpunt{\vindpunt{f}{g}{h}}$
+\STATE $\voegpunt{\site{f}}{\site{g}}{s}$
+\STATE $\voegpunt{s}{\site{g}}{\site{h}}$
+\STATE $\voegboog{s}$
+\ELSE[$o\mbox{\textbf{ is }\texttt{verdwijnpunt}}$]
+\STATE\COMMENT{Vornoi-diagram aanpassen}
+\STATE $l\leftarrow$\COMMENT{Middelste boog die met $o$ overeenkomt, dit is de verdwenen boog}
+\STATE $s\leftarrow\site{l}$
+\STATE $k\leftarrow\boveboog{l}$
+\STATE $j\leftarrow\boveboog{k}$
+\STATE $\verwpunt{\vindpunt{\site{j}}{\site{k}}{s}}$
+\STATE $m\leftarrow\ondeboog{l}$
+\STATE $n\leftarrow\ondeboog{m}$
+\STATE $\verwpunt{\vindpunt{s}{\site{m}}{\site{n}}}$
+\STATE $\verwpunt{\vindpunt{\site{k}}{s}{\site{m}}}$
+\STATE $\verwboog{l}$
+\STATE $\voegpunt{\site{j}}{\site{k}}{\site{m}}$
+\STATE $\voegpunt{\site{k}}{\site{m}}{\site{n}}$
+\ENDIF
+\ENDWHILE
+%\RETURN $\left\{,\right\}$
+\end{algorithmic}
+\end{algorithm}
+\subsubsection{Tijdscomplexiteit}.
+Omdat alle operaties op de structuren in \bigoh{\log\brak{n}} gebeuren en omdat er maximum \bigoh{n} overgangspunten zijn is het algoritme \bigoh{\nlogn}
+\newpage
+\section{Museumprobleem}
+\remarksimp{Opmerking: Dit deel is openboek}
+Hoeveel bewakers zijn er nodig om een willekeurig museum die een eenvoudig $n$-hoek is te bewaken? Dit probleem werd gesteld door \termen{Paul Klee}, en werd beter bekend als het \termen{museumprobleem}. Een punt in een museum is bewaakt indien er vanuit minstens \'e\'en bewaker een lijnstuk kan getrokken worden naar het punt die de veelhoek niet verlaat. Het probleem is een maximum over minimum-probleem. Het resultaat is dat er hoogstens $\floor{n/3}$ bewakers nodig zijn.
+\subsection{Bewijs}
+Dit werd bewezen door \termen{Fisk} in 1978 met een constructief bewijs. Het bewijs wordt opgedeeld in 4 delen:
+\begin{enumerate}
+ \item De triangulatie van het museum
+ \item De kleuring van de punten die altijd in $3$ gedaan wordt
+ \item Vervolgens kiezen we een kleur en plaatsen we op elk punt met die kleur een bewaker
+ \item Door het \termen{duif-hokprincipe} kan een kleur niet meer dan $\floor{n/3}$ keer voorkomen
+\end{enumerate}
+Concreet werkt het bewijs dus als volgt: We kunnen het museum opdelen in driehoeken (dit kan bovendien op verschillende manieren). In deze driehoeken geldt dat indien een bewaker op een gegeven punt staat, hij de mogelijkheid heeft om de twee andere punten te zien, en bovendien elk punt in de driehoek kan zien. Vervolgens passen we een kleuring toe op de getrianguleerde grafe. Dit kan altijd met drie kleuren bereikt worden. Dit komt omdat in deze driehoek alle punten met elkaar verbonden zijn. Bijgevolg krijgt ieder van de punten een verschillend kleur. Een aangelegen driehoek heeft maximum $2$ punten gemeenschappelijk (anders zou het dezelfde driehoek zijn). Bijgevolg is er nog altijd een vlucht-kleur over van de $3$. Door op die manier driehoek per driehoek in te kleuren is de grafe altijd consistent gekleurd. Bovendien weten we dat aan het einde van de kleuring het verschil tussen de meest voorkomende kleur en de minst voorkomende kleur $1$ is. Bijgevolg kunnen we uit het duiven-hokprincipe zeggen dat iedere kleur $\floor{n/3}$ of $\floor{n/3}+1$ keer voorkomt. Er is dus altijd de gelegenheid om het kleur van $\floor{n/3}$ te kiezen. Daar elk kleur in iedere driehoek een keer voorkomt. Betekent dit dat er in elke driehoek een bewaker staat (bij aangrenzende soms dezelfde bewaker) die de driehoek kan bewaken.
+\newpage
+\section{Robotica}
+\remarksimp{Opmerking: Dit deel is openboek}
+In deze sectie beschouwen we twee problemen: \termen{padplanning} voor mobiele robots en het besturen van een \termen{bewegingsarm} voor robots.
+\subsection{Padplanning voor Robots}
+We beschouwen een omgeving die bestaat uit hindernissen (die een mogelijk ondoordringbaar gebied crie\"eren). Voor de eenvoud beschouwen we enkel veelvlakken. vervolgens beschouwen we een robot. Deze robot heeft ook een vrij te kiezen vorm. We zoeken een (kortste) pad om van een punt $p$ naar een punt $q$ te gaan. Dit is niet noodzakelijk mogelijk.
+\paragraph{}
+We splitsen het probleem op in verschillende deelproblemen die we \'e\'en voor \'e\'en oplossen, deze zijn:
+\begin{itemize}
+ \item kortste pad voor een \termen{puntrobot}
+ \item kortste pad voor een convexe veelhoek (geen rotatie)
+ \item vrij pad voor een ladder (rotatie mogelijk)
+\end{itemize}
+Andere geavanceerdere problemen worden niet beschouwd.
+\subsubsection{De Puntrobot}
+We gaan er vanuit dat de robot een punt is, en dus geen inhoud/oppervlakte heeft. We beschouwen hindernissen als $m$ verschillende $n_i$-veelhoeken. Met in totaal $n$ hoekpunten. We kunnen dit probleem oplossen door een \termen{zichtbaarheidsgrafe} te bouwen die de hoekpunten van de hindernissen $p_i$ bevat en het begin- en eindpunt $p$ en $q$. Er bestaat een verbinding tussen twee punten $v_i$ en $v_j$ indien $v_i$ $v_j$ kan zien. Deze constructie kan gebeuren in algoritmen in \bigoh{n^3}, \bigoh{n^2} en \bigoh{\nlogn+e}, met $e$ het aantal uiteindelijke edges. Vervolgens passen we het \termen{korste pad-algoritme} (of het \termen{algoritme van Dijkstra}) toe om het korste pad te vinden. Dijkstra's algoritme werkt in \bigoh{n^2} bijgevolg is dus het totale algritme \bigoh{n^2}.
+\paragraph{}Om de juistheid van het algoritme te tonen steunen we op een lemma dat zegt dat het kortste pad een deelpad van de zichtbaarheidsgrafe van de hoekpunten van de veelhoeken en begin- en eindpunt is.
+\subsubsection{De Schijfrobot}
+Indien de robot een schijf is, is het mogelijk dat deze net overal meer door geraakt. Bovendien zijn we niet meer ge\"intresseerd in het korste pad, maar een pad in het algemeen. Wanneer we een schijf (of een andere oppervlakte) doorheen hindernissen moeten krijgen kunnen we dit modeleren als een puntrobot waarbij de hindernissen uitgezet zijn. Indien het object in kwestie niet kon passeren betekent dit dat er dan geen doorgang meer is in de uitgezette hindernissen.
+\paragraph{}Dit doen we met behulp van de \termen{Minkowski som}. De Minkowski som is de som van twee oppervlakten $A\oplus B$ die als volgt gedefinieerd is:
+\begin{equation}
+A\oplus B=\left\{x+y|x\in A,y\in B\right\}
+\end{equation}
+Indien we als nieuwe hindernissen de oorspronkelijke hindernissen sommeren met het negatieve van de robot-oppervlakte vanaf een zeker referentiepunt (hoeft geen deel uit te maken van de robot in kwestie) dan kunnen we het probleem modelleren als een puntrobot die door de de nieuwe hindernissen wandelt. Dit pad, is het pad die het referentiepunt dan neemt. De negatieve oppervlakte $A'$ vanaf een bepaald referentiepunt $p$ van een oppervlakte $A$ is als volgt gedefineerd:
+\begin{equation}
+A'=\left\{p-x|x\in A\right\}
+\end{equation}
+Er bestaat een pad tussen $s$ en $t$ indien de twee punten in hetzelfde component van de nieuwe hindernis liggen. Door de zichtbaarheidsgrafe aan te passen, en cirkelbogen toe te voegen. Kunnen we een algoritme construeren met een tijdscomplexiteit van \bigoh{n^2\cdot\log\brak{n}}. Het algoritme wordt niet verder uitgelegd.
+\subsubsection{Translatie van een Convexe veelhoek}
+Indien de robot een convexe veelhoek is kunnen we makkelijk inzien dat de uitgebreide hindernis ook een veelhoek zal zijn. We kunnen deze veelhoek op volgende manier construeren. We beroepen ons dus weer op hindernisuitbreiding met behulp van de Milkowski som. We laten de robot hiervoor rond de hindernissen bewegen en houden het referentiepunt bij. Indien de veelhoek over een lijnstuk van een hindernis beweegt. Zal dit resulteren in de uitgebreide hindernis als een lijnstuk evenwijdig met dat van de orginele veelhoek. Door deze lijnstukken bij te houden, en waar nodig (bij hoekpunten) twee lijnstukken te verbinden met een derde, en met het verwijderen van snijpunten en te vervangen door hoekpunten. Dit kunnen we zeer effici\"ent doen door het opstellen van een \termen{ster-diagram}, dit is een gegevensstructuur die de richtingen van de lijnstukken van zowel de hindernissen bijhoudt (met duidelijk onderscheid tussen robot en hindernis). Indien we bij een hindernis een bepaald hoekpunt hebben dan weten we dat we alle lijnstukken moeten toevoegen tussen de twee overeenkomstige lijnstukken in het sterdiagram, die van de robot zijn. Vervolgens detecteren we plaatsen waar de niewe veelhoek niet meer simpel is. Deze gooien we eruit.
+\subsubsection{Complexiteit van translatie van Robots}
+De complexiteit van het algoritme enkel af van de convexiteit van de robot en de hindernissen we bekomen volgende tabel:
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\hline
+Robot&Hindernis&\#Hoekpunten nieuwe veelhoek&Complexiteit\\
+\hline
+\hline
+Convex&Convex&\bigoh{n}&\bigoh{n}\\
+Convex&Niet convex&\bigoh{n}&\bigoh{n^2\cdot\log\brak{n}}\\
+Convex&Niet convex&\bigoh{n^2}&\bigoh{n^2\cdot\log\brak{n}}\\
+\hline
+\end{tabular}
+\end{table}
+\subsubsection{Translatie en Rotatie}
+We schetsen de situatie van een ladder (lijnstuk) die door de hindernissen heen beweegt. we geven de ladder door het toelaten van rotatie $1$ extra vrijheidsgraden (+$2$ door translatie maakt $3$ vrijheidsgraden). We lossen bijgevolg het probleem op als een $3D$-probleem in dat geval veranderen de (uitgebreide) hindernissen afhankelijk van de rotatie van de ladder. De rotatie van de ladder beschouwen we als de $z$-component. We bouwen met andere woorden $3D$ hindernissen. Deze (virtuele) $3D$ ruinmte noemen we de \termen{configuratie-ruimte}. Dit kunnen we dan oplossen. Voor echte $3D$ objecten die in de drie-dimensies voortbewegen en kunnen roteren moeten we dus een $6D$ ruimte bouwen!
+\paragraph{}Er bestaan ook benaderingsalgoritmen:
+\begin{itemize}
+ \item Opsplitsen in cellen (of \termen{Cellen decompositie})
+ \item Algoritme gebaseerd op Vornoi-diagrammen  (of \termen{retractie})
+\end{itemize}
+\subsubsection{Cellen decompositie}
+Bij een cellendecomposite splitsen we de configuratie-ruimte op in cellen. In zo'n cel is de padplanning een eenvoudig probleem (om dus van ergens in de cel naar ergens anders in de cel te gaan). Voor een bepaalde orientatie van de ladder (hoek) zijn cellen met elkaar verbonden. We beschillen dus over een connectiviteitsgrafe waarbij er een verbinding bestaat indien cellen elkaar raken. We kunnen bij de bouw van de configuratie-ruimte kritische hoeken beschouwen (hoeken vanaf waar er een doorgang tussen hindernissen mogelijk is). Dit zijn de intressante hoeken en deze zijn discreet. Door vervolgens een kortste pad algoritme toe te passen vinden we een korte route van $s$ naar $t$.
+\subsubsection{Retractie-methode}
+De retractiemethode is gericht op preventie. We construeren een (pseudo) Vornoi-diagram. Dit Vornoi-diagram bevat het punt $x$ indien dit betekent dat indien het referentiepunt $l$ van de ladder zich zou bevinden op $x$, het equidistant is met tenminste twee hindernissen. Dit vormt een koersbaan rond de ladder. Met dit algoritme probeert men de ladder zo ver mogelijk van iedere hindernis te houden.
+\subsubsection{Rekencomplexiteit}
+De algemene regel is dat een bovengrens voor een bewegingsplanningsprobleem waarbij de robot $d$ vrijheidsgraden heeft gelijk is aan \bigoh{n^d\cdot\log\brak{n}}
+\subsection{Beweging vam een robotarm}
+We willen een robot arm met $n$ \termen{stangen} en dus $n+1$ \termen{scharnieren} bewegen zodat de arm naar een gegeven punt beweegt. Hierbij is het eerste scharnier vast. Dit wordt ook de \termen{schouder} genoemd. Het allerlaatste punt noemen we de \termen{hand}. We gaan uit van een ge\"idealiseerd model, dat dus geen beperkingen in de scharnieren impliceert. En bovendien zijn er geen hindernissen in de omgeving. Alvorens het probleem op te lossen bespreken we enkele eigenschappen van de robotarm.
+\subsubsection{Bereikbaarheid}
+We stellen een robot met $n$ stangen waarbij de lengte voor iedere stang $l_i$ is. We vragen ons af of de robotarm in staat is een punt $p$ te bereiken. En indien dit kan zullen we verder bespreken hoe dit mogelijk is. In de ideale wereld hierboven geschetst is dit een eenvoudig probleem die mits preprocessing in \bigoh{1} gedaan kan worden. De preprocessing zelf vereist \bigoh{n}. Indien deze ideale wereld niet bestaat is het probleem NP-hard.
+\paragraph{}
+Stel dat de robotarm uit slechts \'e\'en stang bestaat is het logisch dat hij alleen de punten kan bedienen die op de cirkel liggen met als straal de stanglengte van deze stang. Indien er twee of meerdere stangen zijn. Nemen we de Minkowski-som van de cirkels met als stralen de verschillende stanglengtes. Merk op dat de volgorde dus geen belang speelt in het bereik van de arm. Dit houdt dus in dat vanaf $n\geq2$ dit een ring is. Of onder speciale configuratie een schijf. Indien de arm uit twee stangen bestaat is dit alleen zo indien de lengte van de twee stangen exact gelijk is. Algemeen kunnen we stellen dat we een ring bekomen met als \termen{buitenstraal} de som van de verschillende stanglengtes $r_{\mbox{uitw.}}=\sum_i^nl_i$, en als \termen{binnenstraal} de lengte van de grootste stang min de som van de andere stangen: $r_{\mbox{inw.}}=2\cdot\max_i\brak{l_i}-\sum_i^nl_i$. Indien $r_{\mbox{inw.}}\leq0$ betekend dit dat we dit als cirkel kunnen beschouwen. De uitwerking van de uitwendige en inwendige straal zijn logisch door commutativiteit van de Minkowski-som. We kunnen dus stellen dat het bepalen van de bereikbaarheid slechts \bigoh{n} bewerkingen vereist (voor de som en het vinden van het maximum).
+\subsubsection{Configuratie vinden}
+Vervolgens willen we nu de configuratie van de robotarm vinden. Er zijn echter meestal oneindig veel oplossingen. Voor $1$ arm is dit triviaal. De arm roteert zich immers gewoon naar het punt indien mogelijk. Anders is het onmogelijk. Voor twee stangen is dit probleem ook makkelijk op te lossen. We construeren een cirkel vanuit de schouder met de straal van de eerste stang. Vervolgens construeren we een andere cirkel vanuit de het te bereiken punt met als straal de lengte van de tweede stang. Indien de twee cirkels minstens \'e\'en punt gemeenschappelijk hebben. Kiezen we \'e\'en van de beschikbare punten. Dit wordt dan de positie van de elleboog van de robotarm. Indien er geen zo'n punt bestaat is het te bereiken punt niet bereikbaar. We zouden analoog met een 3 en meerdere stangen kunnen definieren. In dat geval beschouwen we de Minkowski som van alle stangen, behalve de laatste. We construeren een cirkel met als straal de laatste stang rond het doel. Vervolgens kiezen we een gemeenschappelijk punt van die cirkel met de Minkowski som en dit is het punt dat bereikt moet worden door de $n-1$ stangen. Dit algoritme is dus recursief en is mits optimalisaties (uitgaan dat de langste zijde aan de schouder is, we mogen immers de armen vrij translateren) in \bigoh{n} uit te voeren.
+\paragraph{}
+Een andere methode die ons op termijn de snelste methode zal opleveren bestaat er uit om de 3-stangen te herleiden tot het tweestangen probleem. In de meeste gevallen zien we dat de cirkel ofwel met de buitenste of met de binnenste straal van de ring van de eerste twee stangen snijdt. Dit betekent dus dat indien we de eerste twee in het verlengde plaatsen, of in tegengestelde richting. Vooral het eerste geval is intressant en in de praktijk het meest haalbare. Indien de buitencirkel dus gesneden wordt beschouwen we het probleem als een 2-stangen probleem met $\brak{l'_1,l'_2}=\brak{l_1+l_2,l_3}$. Indien dit niet zo is. Indien de binnenkant gesneden wordt of het punt zich in de Minkowski-som bevindt met als de cirkel, kunnen we bewijzen dat we het probleem kunnen oplossen door $\brak{l'_1,l'_2}=\brak{l_1,l_2+l_3}$ op te lossen. Indien het punt zich in de ring bevindt. Lossen we het probleem op door de eerste stang een bepaalde rotatie toe te wijzen (die mag vrij gekozen worden). Vervolgens beschouwen we enkel nog de twee laatste staven en lossen we $\brak{l'_1,l'_2}=\brak{l_2,l_3}$ op. Dit kunnen we ook analoog voor $n$ punten oplossen.
+Dit algoritme kan mits preprocessing van de opeenvolgenden Minkowski-sommen \bigoh{n} opgelost worden in \bigoh{n}. Hierbij stellen we dus de ring van $n-1$ stangen. En de cirken van de laatste stang over het doel. Afhankelijk van het geval kiezen we het punt $t$. Voor de arm. Vervolgens beschouwen we dit punt als het nieuwe doel, en herhalen we voor de eerste $n-1$ stangen.
+\paragraph{}
+Dit laatste kunnen we versnellen door te stellen dat we slechts $2$ knikken nodig hebben. Deze twee knikken vinden allebei plaats op de eindpunten van de \termen{mediaanverbinding}. We berekenen de mediaanverbinding als $l_m$ waarvoor geldt:
+\begin{equation}
+\displaystyle\sum_{i=1}^{m-1}{l_i}\leq\displaystyle\frac{1}{2}\displaystyle\sum_{i=1}^{n}{l_i}\wedge\displaystyle\sum_{i=1}^{m}{l_i}\geq\displaystyle\frac{1}{2}\displaystyle\sum_{i=1}^{n}{l_i}
+\end{equation}
+Dit komt dus neer dat indien we de arm volledig uitstrekken deze het middeste punt bevat. Het is makkelijk te bewijzen dat dit hetzelfde bereik heeft. Vervolgens lossen we dit probleem op als het driestangenprobleem met:
+\begin{equation}
+\brak{l'_1,l'_2,l'_3}=\brak{\displaystyle\sum_{i=1}^{m-1}{l_i},l_m,\displaystyle\sum_{i=m+1}^{n}{l_i}}
+\end{equation}
+Omdat het driestangenprobleem in \bigoh{1} opgelost wordt geldt dit ook hier. Het vinden van de mediaanverbinding kost echter \bigoh{n}.
+\begin{center}
+\begin{Huge}
+\sffamily{EINDE}
+\end{Huge}
+\end{center}
+
+
+\appendix
+%\newpage
+%\section{Gebouwde algoritmen}
+%\subsection{Convex omhullende veelhoek}
+\newpage
+\printindex
+\newpage
+\section*{``And now something completly different''}
+\begin{centering}
+$\mathfrak{Catharsis}$
+\end{centering}
+\[
+\Delta x\cdot\Delta p_x\geq\displaystyle\frac{\hbar}{2}
+\]
+\begin{flushright}
+Vrijheid van \textbf{Heisenbergh}
+\end{flushright}
+\[
+-\displaystyle\frac{\hbar^2}{2m}\displaystyle\frac{\partial^2\Psi}{\partial x^2}+U\cdot\Psi=E\cdot\Psi
+\]
+\begin{flushright}
+Alles gaat in golven van \textbf{Schr\"odinger}
+\end{flushright}
+\[
+x'=\displaystyle\frac{x-v\cdot t}{\sqrt{1-\displaystyle\frac{v^2}{c^2}}}
+\]
+\begin{flushright}
+Alles is relatief van \textbf{Einstein}
+\end{flushright}
+\[
+E=m\cdot c^2
+\]
+\begin{flushright}
+Alles is energie van \textbf{Einstein}
+\end{flushright}
+$\mathfrak{W.V.O.}$\\%K.S.
+$\mathfrak{C.C.C.P.}$%W.V.O.-K.S.
+\begin{figure*}[b]
+\centering
+\includegraphics[width=3cm]{tux.png}
+\caption{Created with Linux!}
+\end{figure*}
+\end{document}

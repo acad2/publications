@@ -66,9 +66,89 @@ All ground queries are bounded with respect to $f$ hence \inre{Left terminate}. 
 \lema{Undecidability of termination}{No algorithm is possible for constructing the \inre{Level mapping}s.}
 \subsection{Termination of Normal Programs}
 \subsubsection{Strong termination}
+\lema{Level mapping for normal programs}{Every level mapping for normal programs has the following property:
+\begin{equation}
+\fun{f}{\funm{not}{A}}=\fun{f}{A}
+\end{equation}}
+\defe{Acyclic program}{A program $P$ is acyclic if there exists a \inre{Level mapping} $f$ such that for every $A\leftarrow L_1,\ldots,L_n\in\funm{ground}{P}$, $\forall i:\fun{f}{A}>\fun{f}{L_i}$.}
+\lema{Termination of ground queries}{SLDNF terminates on ground queries for acyclic programs.
+\begin{proof}
+Infinite derivation instantiates to an infinite ground derivation, this contradicts the acyclicity assumption.
+\end{proof}}
+\lema{Acyclicity of terminating programs}{SLDNF can terminate for a ground query while the program is not acyclic\footnote{Note that this is contrary to the SLD procedure for recurrency.}.
+\begin{proof}
+Assume the following program $P$: $\fun{p}{x}\leftarrow q,\funm{not}{\fun{p}{x}}$ which is not an acyclic program. When one introduces the query $\leftarrow\fun{p}{x}$, this fails finitely.
+\end{proof}}
+\lema{Termination of bounded queries}{If $P$ is acyclic with respect to \inre{Level mapping} $f$ and $L$ is bounded with respect to $f$, then SLDNF terminates for all queries $\leftarrow L$. Boundedness however does not imply success or failure.}
+\lema{Properties of acyclic programs}{
+\begin{enumerate}
+ \item An \inre{Acyclic program} is an \inre{Inductive definition} and is \inre{Locally stratified}. It is the \inre{Level mapping} who divides $\funm{ground}{P}$ in \inre{Strata}.
+ \item $T_P$ has a unique \inre{Fixpoint} $M_P$.
+ \item $M_P$ is the perfect model of $T_P$.
+ \item $M_P$ is the unique Herbrand model of $\funm{COMP}{P}$.
+ \item $M_P$ is the unique model of $\funm{IND}{P}$.
+ \item $\tupl{M_P,B_P\setminus M_P}$ is the unique \inre{Fixpoint} of $\Phi_P$.
+ \item $M_P$ is the unique \inre{Well-founded model}.
+ \item $M_P$ is the unique \inre{Stable model}.
+\end{enumerate}}
 \subsubsection{LDNF termination}
+\lema{Acceptibility of normal programs}{Consider the rule $A\leftarrow B_1,\ldots,B_{j-1},\funm{not}{B_j},B_{j+1},\ldots,B_n\in\funm{ground}{P}$. If $I\vDash B_1,\ldots,B_{j-1},\funm{not}{B_j}$, is $\fun{f}{A}>\fun{f}{B_{j+1}}$? The \inre{Herbrand base} $B_P$ is a model. This gives: if $\mbox{true}\wedge\ldots\wedge\mbox{true}\wedge\mbox{false}$ then $\fun{A}{B_{j+1}}$ or if \mbox{false}, then $\fun{f}{A}>\fun{f}{B_{j+1}}$. Hence $B_{j+1}$ can be unbounded and non terminating. A solution can be to force $\fun{f}{A}>\fun{f}{B_j}\wedge\fun{f}{A}>\fun{f}{B_{j+1}}$.}
+\lema{Requirements for the model to be used by acceptability}{
+If $\funm{not}{B_k}$ succeeds, then $B_k$ is in the \inre{Finite failure set}. Thus $B_k$ does not belong to the \inre{Greatest fixpoint} of $T_P$ and $\funm{not}{B_k}$ is true in \inre{Model}s smaller or equal to the greatest \inre{Fixpoint} $I_{\vline B_k}\subseteq\funm{gfp}{T_P}_{\vline B_k}$. Positive attoms that succeed are part of $\funm{lfp}{T_P}$, they are true in any model larger or equal to $\funm{lfp}{T_P}$. Thus $\forall i:1\leq i\leq j:I_{\vline B_i}\supseteq\funm{lfp}{T_P}{|\vline B_i}$. If an atom has both positive and negative occurrences, one could use one model for the positive and one model for the negative occurrences.
+
+}
 \subsection{Framework for Automated Termination Analysis}
 \subsubsection{Introduction}
+\lema{Limitations of automation}{
+There is no decision procedure. Hence the best is to try to find sufficient conditions for termination or non-termination. One cannot prove termination for all programs. Therefore searching for a level mapping allows one to prove termination. This however comes down to use the empty interpretation for the model of $B_k$ where negative literals are always true. It is fine however when \inre{Level mapping}s are based on the size of the data structures.}
+\lema{Level mappings for automatic termination}{\inre{Level mapping}s are unnatural because they assign a \inre{Level mapping} to app predicates. Therefore \inre{Level mapping}s achieve two unrelated things: If $\fun{p}{t}$ recursively calls $\fun{p}{t'}$ then the SLD-tree for $\fun{p}{t'}$ is strictly smaller than the SLD-tree for $\fun{p}{t}$. If $\fun{p}{t}$ calls $\fun{q}{t'}$, then the SLD-tree for $\fun{q}{t'}$ is bounded.}
+\note{Structure of a general framework}{A general framework should evidently focus on the loops of a problem: each time control reaches the same program point, there should be a decrease in the measure (element of a \inre{Well-founded set}) that captures the size of the program state. In logic program this means program points are calls to predicates, loops are calls to the same predicate. The framework should compute the calls of all atoms (or literals) which are selected for execution. By focusing on the recursion of the program: calls where the predicate already appears in the call-set. Then the framework should use a \inre{Level mapping} measuring the size of the calls. Note however that in this form of \inre{Level mapping}s, there is no interaction between \inre{Level mapping}s of different predicates.}
 \subsubsection{LD-termination}
+\defe{Collecting calls operator}{The \sub{} $T_P^C$ is a mapping of sets of (non-grounded) atoms to sets of atoms where we define $\fun{T_P^C}{S}$ as follows:
+\begin{equation}
+\fun{T_P^C}{S}=S\cup\accl{
+\begin{array}{l|l}
+&h\leftarrow b_1,\ldots,b_{i-1},b_i,\ldots\in P\wedge\\b_i\theta\sigma_1\ldots\sigma_{i-1}& a\in S\wedge\theta=\funm{mgu}{a,h}\wedge\\&\forall j:1\leq j<i:\sigma_j\mbox{ is a computed answer set of }b_j\theta\sigma_1\ldots\sigma_{j-1}
+\end{array}}
+\end{equation}}
+\lema{Properties of the collecting calls operator}{\begin{enumerate}
+ \item $T_P^C$ is \inre{Monotone}.
+ \item $T_P^C$ is \inre{Continuous}.
+ \item $T_P^C$ has a \inre{Least fixpoint}.
+\end{enumerate}}
+\defe{Calls operator}{We define the calls operator as:
+\begin{equation}
+\funm{Calls}{C,P}=\funm{lfp}{\fun{T_P^C}{C}}
+\end{equation}
+It is the set of all atoms that can be selected in an LD-derivation of a query $\leftarrow A$ for $A\in C$}
+\lema{Left termination of the calls operator}{
+A program $P$ is \inre{Left terminating} with respect to a set of \inre{Atomic class} $C$ if and only if it is \inre{Left terminating} for \funm{Calls}{C,P}.
+}
+\defe{Left recursive resultant}{By building a \inre{Partial LD-tree} for $\fun{p}{t}$ and terminate a branch when the selected atom is $\fun{p}{s}$. For each branch that represents a partial derivation extract the resultant $\fun{p}{t}\theta\leftarrow\fun{p}{s}\ldots$. $\theta$ is the substitution accumulated along the branch (and one can drop the $\ldots$ part).}
+\defe{Level mapping for automated termination}{A \sub{} is a mapping $f$ from atoms to natural numbers where
+\begin{equation}
+\fun{f}{A}=\fun{\min}{\accl{\fun{f}{A\theta}|\theta\mbox{ is a grounding substitution}}}
+\end{equation}. Therefore one can see a \sub{} as a \inre{Terminating condition} for a left recursive resultant $\fun{p}{t}\theta\leftarrow\fun{p}{s}$ if and only if $\fun{f}{\fun{p}{t}\theta}>\fun{f}{\fun{p}{s}}$.}
+\defe{Rigid level mapping}{A \inre{Level mapping} is \inre{Rigid} if $\fun{f}{\fun{p}{t}\theta}=\fun{f}{\fun{p}{t}\theta}$ for all $\theta$.}
+\defe{Acceptable program with respect to a set of calls $C$}{A program is \inre{Acceptable} with respect to a set of calls $C$ if there is a \inre{Level mapping} for $f$ for each recursive predicate such that: for each call $\fun{p}{t}\in C$ and for each \inre{Left recursive resultant} $\fun{p}{t}\theta\leftarrow\fun{p}{s}$, $\fun{f}{\fun{p}{t}}>\fun{f}{\fun{p}{s}}$. If $f$ is rigid for each call in $C$ than $f$ is a terminating condition for each left recursive resultant.}
 \subsubsection{Binary unfolding}
+\defe{Binary unfolding operator}{A \sub{} $T_P^b$ maps binary clauses to binary clauses such that:
+\begin{equation}
+\fun{T_P^b}{B}=\accl{
+\begin{array}{l|l}
+\brak{h\leftarrow b}\theta&\brak{h\leftarrow b_1,\ldots,b_m\in P}\wedge\funm{condition}{B,P,h,b_1,\ldots,b_m,\theta}\\
+\end{array}}
+\end{equation}
+There are three ways to satisfy this condition:
+\begin{eqnarray}
+\exists i:1\leq i\leq m:\accl{h_1\leftarrow\mbox{true},\ldots,h_{i-1}\leftarrow\mbox{true}}\subseteq B\wedge\theta=\funm{mgu}{\tupl{h_1,\ldots,h_{i-1}},\tupl{b_1,\ldots,b_{i-1}}}\wedge b=b_i\\
+\exists i:1\leq i\leq m:\accl{h_1\leftarrow\mbox{true},\ldots,h_{i-1}\leftarrow\mbox{true},h_i\leftarrow c}\subseteq B\wedge c\neq\mbox{true}\wedge\theta=\funm{mgu}{\tupl{h_1,\ldots,h_i},\tupl{b_1,\ldots,b_i}}\wedge b=c\\
+\exists i:1\leq i\leq m:\accl{h_1\leftarrow\mbox{true},\ldots,h_m\leftarrow\mbox{true}}\subseteq B\wedge\theta=\funm{mgu}{\tupl{h_1,\ldots,h_m},\tupl{b_1,\ldots,b_m}}\wedge b=\mbox{true}
+\end{eqnarray}}
+\defe{Binary unfolding of a program}{The \sub{} $P$ is the \inre{Least fixpoint} of the \inre{Binary unfolding operator} $T_P^b$, thus:
+\begin{equation}
+\fun{bin\_unf}{P}=\fun{lfp}{T_P^b}
+\end{equation}}
+\lema{Properties of the binary unfolding of a program}{The \inre{Binary unfolding} is goal dependent: it depends on a particular query, it is \inre{Closed under unfolding}: if $\fun{p}{x}\leftarrow\fun{p}{y}\in\funm{bin\_unf}{P}$ and $\fun{p}{y'}\leftarrow\fun{p}{z}\in\funm{bin\_unf}{P}$ and $\theta=\funm{mgu}{\fun{p}{y},\fun{p}{y'}}$ then $\brak{\fun{p}{x}\leftarrow\fun{p}{z}}\theta\in\fun{bin\_unf}{P}$. \inre{Binary unfolding} also allows to computed all calls and answers selected during an \inre{LD-derivation} of an atomic call $\leftarrow c$ or a set of atomic class $C$.}
 \subsubsection{Rounding up}
+\subsection{Summary}

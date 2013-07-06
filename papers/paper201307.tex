@@ -1,0 +1,95 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{bnaic13/bnaic}
+
+%opening
+\title{\emph{ParHyFlex}:\\A Framework for Parallel Hyper-heuristics}
+\author{Willem Van Onsem}
+
+\author{Willem Van Onsem \affila}
+\date{\affila\ \textit{Katholieke Universiteit Leuven, Celestijnenlaan 200A, Heverlee}}
+
+\newcommand{\seclab}[1]{\label{sec:#1}}
+\newcommand{\secref}[1]{\ref{sec:#1}}
+
+\pagestyle{empty}
+
+\begin{document}
+\ttl
+\thispagestyle{empty}
+
+
+\begin{abstract}
+\noindent
+Hyper-heuristics are a generic method to solve optimization problems. In this paper we present a framework called \emph{ParHyFlex} supporting the implementation of parallel hyper-heuristics.
+\paragraph{}
+In section \secref{hyper-heuristics} we give a short introduction on hyper-heuristics. In section \secref{hyflex} we discuss the \emph{HyFlex} framework. This framework formed the basis of our own work. In section \secref{parhyflex} we finally present our own work together with the components who try to speed up convergence. In section \secref{results} we presents results regarding the performance of the implemented framework and compare these results with the other frameworks.
+\end{abstract}
+
+\section{Hyper-heuristics}
+\seclab{hyper-heuristics}
+In order to solve optimization problems, several methods exist. For some problems one can implement a straightforward algorithm who can solve the problem in polynomial time. In most cases however this is not possible. In order to solve the problem, one then needs to enumerate a large number of configurations.
+
+\paragraph{}
+Two families of algorithm who try to find the solution by using such a method are \emph{branch-and-bound} and \emph{metaheuristics}. In the case one uses \emph{branch-and-bound}, one generates solutions in a structured way and therefore when all the solutions are generated who at least where lower than the bound at the moment of generation, we can be sure we have generated the exact solution. A problem with \emph{branch-and-bound} however is that if the space of potential configurations is quite large, this method becomes infeasible. Since the method searches the solutions in a structured way, one does not expect to find strong solutions if only a small amount of the configuration space is enumerated. This effect is mainly supported by the 
+
+\paragraph{}
+\emph{Metaheuristics} try to tackle the problem in another way. A \emph{metaheuristic} considers one or more solutions and iteratively tries to improve these solutions by slightly modifying these solutions. The algorithms who calculate a new solution out of one or more solutions are called \emph{heuristics} or \emph{transition functions}.
+
+\paragraph{}
+When implementing a \emph{metaheuristic}, it is important to design good transition functions. However it is not clear how these transition functions should be designed. A hyper-heuristic aims to solve this problem by considering a set of transition functions and learn which transition function perform well in specific conditions.
+
+\section{Parallel hyper-heuristics}
+
+
+Performing hyper-heuristics in parallel has the potential to speed up convergence towards the real solution. This research field however is currently quite sparse. \emph{Leon, Miranda and Segura} implemented a framework for parallel hyper-heuristics using a self-adaptive multi-objective island-based model. Multiobjectivisation means that the initial single objective is divided into several somehow similar objectives. Such decomposition allows to system 
+
+\paragraph{}
+\emph{Rattadilok, Gaw and Kwan} furthermore implemented a parallel hyper-heuristic to solve scheduling problems. %They consider a set of agents who aim to schedule their tasks satisfying the given constraints bu
+
+\section{\emph{HyFlex}}
+\seclab{hyflex}
+In 2009, \emph{Burke et al.}\cite{burke} published a framework supporting the implementation of hyper-heuristics. The framework was implemented in Java and contained four problems. One implements a problem by providing an implementation on how a solution is represented together with transition functions and an objective function. To tackle these problems, one also has to implement a hyper-heuristic. Such hyper-heuristic can apply the given transition function on a set of solutions and evaluate the results based on the objective function. The hyper-heuristic however does not know the problem it is solving and does not know the details of the different transition functions. Therefore one could develop a hyper-heuristic who can solve a large range of optimization problems.
+
+\section{\emph{ParHyFlex}}
+\seclab{parhyflex}
+We've implemented a variant of the \emph{HyFlex} framework that should make it easy to run hyper-heuristics on parallel systems. Each processor runs its own hyper-heuristic and occasionally shares solutions with the other processors. Furthermore 
+
+\subsection{Exchanging solutions}
+\seclab{exchangingsolutions}
+When metaheuristics exchanging solutions, this yields in general better results and is widely known as the \emph{Island model}\cite{islandmodel}. In the island model, one considers different sets of solutions. On each of these sets, transition functions are applied. Occasionally, solutions from one set are exchanged to another set. By using transition functions who take as input two or more solutions, one can recombine the good qualities of several solutions into a new solution. Since the exchange happens occasionally however the different sets can each develop strong solutions with different properties. The framework provides different exchange strategies and the solutions are exchanged by unreliable asynchronous communication.
+
+\subsection{Generating experience}
+\seclab{generatingexperience}
+Modern SAT solvers try to speed up the search for a correct solution by learning new clauses on the fly. Such constraints can be considered experience. An advantage of such experience is that it can be shared with other processors and therefore speed up the search.
+
+\paragraph{}
+A somehow similar concept is implemented \emph{ParHyFlex}. The system considers experience to be a set of \emph{constraints} who are probably true. This is in contrast with clause learners who only learn clauses who are certainly true. In order to generate such constraints, one needs a function who has knowledge of the problem and can generate constraints based on a set of solutions. Since the constraints are not guaranteed to be true, the system should be aware of new solutions and continuously checks if new solutions still satisfy these constraints. This is a task that is handled by the \emph{ParHyFlex} framework. In order to control the number of generated constraints, occasionally the system removes one or more of these constraints if good solutions no longer satisfy these constraints. %Such constraints are not guaranteed to be true, therefore the system continuous checks if the newly generated solutions still satisfy these constraints. If the generated constraints generally are satisfied by strong solutions, the system is likely to keep the constraint.
+
+\paragraph{}
+Even when the solutions satisfying a constraint yield better results, this does not mean that this constraint is true for the best solutions. Therefore this mechanism sometimes eliminates constraints who also .
+
+\subsection{Controlling the search space}
+\seclab{controllingsearchspace}
+SAT solvers try to exploit the same constraints by eliminating large parts of the search tree. In the field of heuristics, it is common belief that solutions who are quite similar, are probably of the same quality. Since
+\paragraph{}
+Once we have a set of such constraints. The system can exploit this. Therefore a concept called \emph{search space} is introduced. A search space is a tuple containing two sets of constraints: positive constraints and negative constraints. A constraint should be able to modify a solution minimally in such way the solution satisfies or not satisfies that constraint. By modifying a generated solution so it satisfies at least one positive constraint and does not satisfy any negative constraints, one can force the system to only search for solutions in a limited subset.
+\paragraph{}
+Constraints in the \emph{search space} can potentially interact with each other: one constraint can undo the modification of another constraint.
+\paragraph{}
+If too much machines search the same region, there is a risk that these machines get stuck in local optima who are quite similar. Escaping these optima fast is not likely since the exchanged solutions are similar as well. Therefore \emph{ParHyFlex} aims to prevent 
+
+\subsection{Exchanging experience}
+\seclab{exchangingexperience}
+% Since it is a common belief that similar solutions are more or less equally strong, we expect we can find interesting regions based on the solutions in the neighborhood. When such solutions are found, it is therefore 
+
+\section{Results}
+\seclab{results}
+
+\subsection{Environment}
+In order to test the framework, we have implemented a hyper-heuristic based on the \emph{AdapHH}\cite{adaphh} algorithm of Mustafa M\i{}s\i{}r. The algorithm was tested on two problems: \emph{MAX-3SAT} and \emph{Circle Positioning}. In the circle positioning problem, one tries to determine the location of a set of circles withing a large circle reducing the overlap of each pair of two circles.
+\paragraph{}
+The tests were performed on an \emph{Intel i5 2400} processor ($4\times 3.10\mbox{ GHz}$ , $6\mbox{ MiB}$ cache) with $3.7\mbox{ GiB}$ memory running the \emph{Ubuntu 12.04} operating system.
+
+\bibliographystyle{plain}
+\bibliography{referenties}
+\end{document}

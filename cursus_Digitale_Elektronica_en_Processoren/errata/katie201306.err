@@ -1,0 +1,163 @@
+achteraf pas gezien, niet de nummering van de cursus maar van pdf viewer (dus inhoudsopgave telt ook mee in de patinanummering)
+p. 6: De rede dat NAND en NOR poorten => de reden
+p. 20 En het veranderde ingangssignaal zich sneller door de ene dan door de andere keten propageert. => ingangssignaal propageert zich sneller ...
+p. 17: Het gevolg is hierbij dat de codestijl, die in grote mate bepaald hoe => bepaalt
+p. 17: Vervolgens duid met het type van de in- of uitgang aan. => duidt men(?)
+p. 29: Een buffer of driver is een speciaal type poort met  ?e ?en ingang waarbij de uitgang dezelfde waarde heeft als de uitgang. => uitgang vervangen door ingang?
+p. 32: een doorgebrande zekeringen => een zekering
+p. 33: Hierbij wordt meerlagen logica gehanteerd. => meer lagen
+p. 35: (zie ??)
+p. 36: (LIFO, zie ??),
+p. 36: In sectie 2.1 hebben we reeds kort beschreven dat we een bereik specificeren voor een High en Low signaal, => zin eindigt met komma
+p. 38: Dit leid echter  => leidt
+p. 38: en dus bijgevolg de algemene vertraging.?? => Waarom vraagtekens?
+p. 40: Dit is vermogen die continue verbruikt wordt. => dat continu (zonder e)
+p. 40: verder bepaald de klokfrequentie => bepaalt
+p. 40: de oppervlakt van een poort => oppervlakte
+p. 40: grote nadruk ligt op het minimaliseren van digitale schakelingen. ?? => waarom vraagtekens?
+p. 40: Een NMOS transistor geleid => geleidt
+p. 41: NMOS is een slechte pull-up.?? => waarom vraagtekens?
+p. 41: Deze stroomsterkte bepaald => bepaalt
+p. 41: waarmee deze capaciteit op- en ontlaad => ontlaadt
+p. 49: Het is een visueel hulpmiddel die => hulpmiddel dat
+p. 53: in appendix ??
+p. 57: geval van omzetting treed op => treedt op
+p. 59: die de overdracht van de volgende kolom berekend => berekent
+p. 72 figuur 3.13 kan het zijn dat de variabelen si en ci+1 moeten omgedraaid worden in de karnaugh kaarten?-----------------------
+p. 62: De rede hiervoor is => de reden
+p. 63: Hierbij moeten we in rekening houden dat => moeten we rekening houden OF moeten we in gedachten houden
+p. 66: 3.22 1111+0000=1110 ?
+p. 66: Een ALU is een component die gebaseerd op een opteller allerlei instructies kan uitvoeren. => voor 'allerlei' voegwoord nodig
+p. 67: een functie die (A, B)-waardes afbeeld op => afbeeldt
+p. 72: die het teken van het getal bepaald => bepaalt
+p. 72: een getal die bepaald => een getal dat bepaalt
+p. 72: de getal onafhankelijk van het schuiven van plaatsen => het getal
+p. 72: Het getal die we hierbij willen voorstellen => het getal dat
+p. 72:  Net als bij een vaste komma getal geven noteren we een familie van => geven of noteren
+p. 72: extra constraint op betreft de mantisse => betreffende
+p. 73: EEE 754-1985 vermeld ook hoe => vermeldt
+p. 73: Indien een operatie tot een overflow leid => leidt
+p. 73: In tabel 3.5(b) zien we ten slotte => tabel 3.6(b)
+p. 75: van deze symbolen vertoond enige logica => vertoont
+3.3
+p. 76: In een blokschema word dit  => wordt
+p. 82: Merk op dat we bij een rotatie het eigenlijk niet uitmaakt  => dat het bij
+p. 83: In dat laatste geval bepaald de hoogste bit => bepaalt
+
+hoofdstuk 4
+4.1
+p. 100 vermits de schakeling eerste van toestand => eerst
+4.2
+p. 90: vraagtekens in de caption van figuur 4.4
+p. 91: Figuur 4.4(b) toont opnieuw twee scenarios.??
+p. 91: Dit probleem treed op => treedt
+p. 92:  treed dit probleem op => treedt
+p. 92: onthoud de latch => onthoudt
+p. 92: Figuur 4.6 toont dit concept samen met een tijdsgrafiek.??
+p. 93: in een gekende toestand te brengen6.??
+p. 96: Schijfregister => schuifregister
+p. 96: : de oude waarde  ?e ?en plaats naar schuiven, => naar waar?
+p. 97: treed na de volgende cyclus => treedt
+p. 98: De teller die we hiermee ontwikkelen verenigd => verenigt
+p. 100: eerder besproken in subsectie ??
+4.3
+p. 100: die de volgende toestand berekend => berekent
+p. 100: die de uitgangen (uitvoer) berekend => berekent
+p. 102: wordt de uitgangen bij de toestanden => worden
+p. 103: die de volgende toestand en de uitgangen berekend. => berekent
+p. 103:  Bovendien kunnen we meestal ook de achterliggende logica die de volgende toestand en de uitgangen berekend. => wat kunnen we?
+p. 103: een methode die gegarandeert  => gegarandeerd
+p. 103: Men minimaal bedoelen we => met
+p. 104: hebben geminimaliseerd hebben dienen we
+p. 105: We beschouwen dit in Algorithm 1. ??
+p. 106: We reduceren dan we de logica aan de uitgang => we te veel
+p. 106: kan dit problemen opleveren.??
+p. 107: Deze ??.
+p. 107: Bij het zoeken naar een naar een
+p. 108: maken we gebruik vaan => van
+p. 108: We stelleen eerst => stellen
+p. 108: Immers dienen we ook een combinatorisch gedeelte, => wat dien je?
+p. 108: dat we twee een excitatietabel met  => twee een...
+p. 109: de de toestand heeft,
+p. 109: We dien dus een tabel op te stellen => we dienen
+p. 113: Dit eigenlijk niets anders dan => dit is
+p. 115: dien we enkel => dienen
+4.4
+p. 116: waar het ritme bepaalt wordt  => bepaald
+p. 117: E bepaald of de CPU luistert => bepaalt
+p. 117: op het moment dat er geen masker op de interrupt. => mist ww
+p. 119: we willen verschillende compatibele toestand => toestanden
+p. 120: Dit leid tot => leidt
+p. 122: Deze problemen brengt => brengen
+p. 122: Een fenomeen dat optreed => optreedt
+p. 122: Het optreden van deze een critical race of cycle hangt af van de vertragingskarakteristieken van de poorten. => zin klopt niet
+p. 122: trachtten => verleden?
+p. 123: Het aantal bits die verandert => het aantal dat
+p. 123: Kan het zijn dat methode 3 en 4.4.5 niet uitgewerkt zijn?
+
+hoofdstuk 5
+5.1
+p. 130: een signaal die actief wordt => signaal dat
+p. 131:  in grote mate laten afhangen van de invoer die de controle-ingangen. => er ontbreekt een stuk zin
+5.2
+p. 132: Het algoritme die dan vervolgens => het algoritme dat
+p. 134: reeds de data reeds op de ingangen
+p. 134: delen door 7 en je stelt dat D = 0101 => is dat niet delen door 5?
+p. 135: de verschillende condities ??
+p. 135: een set niet-conditionele toekenning. => toekenningen
+p. 136: een toestandskader die enkel => toestandskader dat
+p. 136: Dit is een toestandskader die enkel onder voorwaarden gespecificeerd door een beslissingskader worden uitgevoerd. => kan worden of wordt
+p. 136: wanneer dit in hetzelfde ASM-blok gebeurd => gebeurt
+p. 137:  kunnen dus vrij verandert worden  => veranderd
+p. 139: (status-signale) => signalen
+5.3
+p. 140: een binaire getal a  => binair
+p. 141: Figuur 5.7: Implementatie van een 4 ? 3 registerbank met 2 schrijf- en 3 leespoorten.??
+p. 142: We construeren vervolgens k + l m-bit decoders te introduceren. => zin klopt niet
+p. 142: op de adres-ingangen van de bijbehorende decoders.??
+p. 143:  Deze vertraging bepaald  => bepaalt
+p. 143: Een gelijkaardig scenario treed op  => treedt
+p. 143: Opnieuw dienen we eerst het adres aan te leggen om de adres ingang. => ontbreekt stuk zin
+p. 143: zal het geheugencomponenten beginnen  => enk/mv?
+p. 145: element - die nog niet van de stapel is gehaald  => element dat
+p. 145: in ?? hebben we reeds register ge•mplementeerd.
+p. 145: die tevens ook de grote van het stapelgeheugen bepaald => bepaalt
+p. 146: laad de waarde => laadt
+p. 146:  die de waarde van de leesteller uit de schrijfteller afleid => afleidt
+p. 146: indien we een component soms aan hoge snelheid invoer data krijgt  => we moet weg
+p. 146: ÒFirst- In-First-Out (LIFO)Ó => (FIFO)
+5.4
+p. 149: de het instructie- woord => de te veel
+p. 149: Het resultaat van van deze omzetting staat op figuur ??.
+p. 149: kunnen we afleiden dan => dat
+p. 151: een sequentie aan bits die bepaald  => bepaalt
+p. 151: De instructie I <- N bepaald => bepaalt
+p. 152: Ook hier bepaald de controller-ingang => bepaalt
+p. 152: hebben ontwikkeld hebben
+p. 152: Functionele eenheden te combineren leidt tot => 'te' te veel
+p. 152: een deel van de register belangrijk zijn => is
+p. 152: enigzinds => enigszins
+p. 153: de controle-signalen berekend => berekent
+p. 154: enigzinds => enigszins
+p. 154: die de volgende encodering berekend. => berekent
+p. 154:  een klein programma die  => dat
+p. 155: De callstack ondersteund  => ondersteunt
+p. 155: Indien we deze wijziging combineren met bekomen we  => combineren met wat?
+p. 157: in het geval men naam een speciale toestand wil gaan => naar
+p. 157: bepaald welke opdrachten het datapad zullen uitvoeren. => bepaalt
+p. 160: De rede is omdat => reden
+p. 160: wordt echter enkel de waarde van t5 berekent => berekend
+p. 160: op  ŽŽn van de register. => registers
+p. 160: de levensduurte => levensduur
+p. 162: die het minimum berekend en component die het maximum berekend => 2x berekent
+p. 164: Een eerste probleem die we moeten oplossen => dat
+p. 165: indien we effectief functionele eenheden samennemen. Zal dit er meestal => geen 2 zinnen van maken
+
+hoofdstuk 7
+7.1
+p. 173: Om een andere basis te gebruiken bestaat wordt volgend formaat gebruikt: bestaat moet weg
+p. 173: Deze literals wordent => worden
+p. 173: tabel 7.2(a) geeft een overzicht  => tabel 7.3(a)
+p. 174: Deze subtypes staan in tabel 7.2(b) => 7.3(b)
+p. 174: VHDL-code ?? toont mogelijke definities van bit en byte.
+p. 176: Beschouw het voorbeeld uit VHDL-code ??.
