@@ -1214,7 +1214,7 @@ y&+&1&9&1&7\\\hline
 \end{equation}
 Om getallen in het decimaal stelsel te kunnen optellen gebruiken we een repetitieve structuur, waarbij we 200 basisregels moeten onthouden. Zo'n basisregel $f\left(c_i,x_i,y_i\right)=\left(s_i,c_{i+1}\right)$ is een functie die de eventuele \termen{overdracht} of \termen{carry}, en de cijfers van de twee getallen in een bepaalde kolom omzet naar de overdracht van de volgende kolom en de som van deze kolom. Een voorbeeld van zo'n basisregel is $f\left(0,4,9\right)=\left(3,1\right)$. Deze regel wordt in ons voorbeeld gebruikt in de derde kolom vanaf rechts\footnote{We nummeren de kolommen vanaf rechts, analoog aan de getalvoorstelling van vergelijking (\ref{eqn:numberRepresentation})}. Binair optellen gebeurt volledig analoog, we hebben opnieuw met een repetitieve structuur te maken, alleen dienen we nu slechts 8 verschillende regels te onthouden.
 \subsubsection{Half adder}
-In deze paragraaf synthetiseren we een \termen{half adder (HA)}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekend, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in figuur \ref{fig:halfAdder}.
+In deze paragraaf synthetiseren we een \termen{half adder (HA)}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in figuur \ref{fig:halfAdder}.
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{
@@ -1228,8 +1228,8 @@ $x_i$&$y_i$&$s_i$&$c_{i+1}$\\\hline
 \end{tabular}};
 \end{tikzpicture}}
 \subfigure[Karnaugh-kaarten]{\begin{tikzpicture}
-\kkaartb{0}{0}{$s_i$}{$x_i$/$y_i$}{0/0/0/1}
-\kkaartb{2.25}{0}{$c_{i+1}$}{$x_i$/$y_i$}{0/1/1/0}
+\kkaartb{0}{0}{$c_{i+1}$}{$x_i$/$y_i$}{0/0/0/1}
+\kkaartb{2.25}{0}{$s_i$}{$x_i$/$y_i$}{0/1/1/0}
 \end{tikzpicture}}
 \subfigure[Interface]{\begin{tikzpicture}
 \node[halfadder] (HA) at (0,0) {HA};
@@ -1550,7 +1550,7 @@ Eerst zullen we een methode ontwikkelen om een overdracht $c_i$ te berekenen. Ee
 \begin{equation}
 c_i=g_{0,i-1}+p_{0,i-1}\cdot c_0
 \end{equation}
-Een oplettende lezer zal gemerkt hebben dat we hierbij $g$ en $p$ twee indices geven. De rede hiervoor is, dat de overdracht overal kan gegenereerd of gepropageerd worden. We moeten de twee indices dus als de definitie van een bereik zien. De overdacht kan uitsluitend tot de $i$-de bit gepropageerd worden, indien alle bits voor de $i$-de bit propageren, bijgevolg kunnen we stellen:
+Een oplettende lezer zal gemerkt hebben dat we hierbij $g$ en $p$ twee indices geven. De reden hiervoor is, dat de overdracht overal kan gegenereerd of gepropageerd worden. We moeten de twee indices dus als de definitie van een bereik zien. De overdacht kan uitsluitend tot de $i$-de bit gepropageerd worden, indien alle bits voor de $i$-de bit propageren, bijgevolg kunnen we stellen:
 \begin{equation}
 p_{i,j}=\displaystyle\prod_{k=i}^j{p_k}
 \end{equation}
@@ -1573,9 +1573,9 @@ Toegegeven dat de orde van de vertraging nog steeds linear is, maar de factor vo
 \end{equation}
 Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. Figuur \ref{fig:CLAGeneratorCascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de rede van de twee extra ingangen duidelijk.
 \subsection{Negatieve getallen}
-Om getallen te kunnen aftrekken, zullen we het getalbegrip uitbreiden, zodat deze ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. Hierbij moeten we in rekening houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen.
+Om getallen te kunnen aftrekken, zullen we het getalbegrip uitbreiden, zodat deze ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. Hierbij moeten we in gedachten houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen.
 \subsubsection{`Sign-Magnitude'-voorstelling}
-Het arabische getalstelsel lost dit probleem op door middel van een teken. Een getal bestaat dan uit twee delen: een teken (+ of -) en een grootte. Bij positieve getallen wordt dit teken zelfs meestal niet geplaatst. Deze voorstelling is gekend als de `\termen{sign-magnitude}' voorstelling. Aangezien een getal ofwel positief of negatief is, kunnen we bij binaire een extra bit bij het getal plaatsen. Deze bit is 0 bij een positief getal, en 1 bij een negatief getal. In dat geval wordt dus $\underline{0}1100_2=\underline{+}12_{10}$ en $\underline{1}1100_2=\underline{-}12_{10}$. Een getal met $n$ bits kan dus alle gehele waarden aannemen tussen $-2^{n-1}+1$ en $2^{n-1}-1$. Er zijn echter enkele problemen met deze voorstelling. Allereerst is er nu sprake van twee voorstellingen van $0$: $-0$ en $+0$. Dit leidt tot extra complexiteit bij bijvoorbeeld het vergelijken van twee getallen. Verder wordt optellen en aftrekken van twee getallen gecompliceerd. Er zijn veel testen nodig alvorens we de waardes van de getallen kunnen optellen of aftrekken, wat tot grote vertragingen leidt.
+Het arabische getalstelsel lost dit probleem op door middel van een teken. Een getal bestaat dan uit twee delen: een teken (+ of -) en een grootte. Bij positieve getallen wordt dit teken zelfs meestal niet geplaatst. Deze voorstelling is gekend als de `\termen{sign-magnitude}' voorstelling. Aangezien een getal ofwel positief of negatief is, kunnen we bij een binaire voorstelling een extra bit bij het getal plaatsen. Deze bit is $0$ bij een positief getal, en $1$ bij een negatief getal. In dat geval wordt dus $\underline{0}1100_2=\underline{+}12_{10}$ en $\underline{1}1100_2=\underline{-}12_{10}$. Een getal met $n$ bits kan dus alle gehele waarden aannemen tussen $-2^{n-1}+1$ en $2^{n-1}-1$. Er zijn echter enkele problemen met deze voorstelling. Allereerst is er nu sprake van twee voorstellingen van $0$: $-0$ en $+0$. Dit leidt tot extra complexiteit bij bijvoorbeeld het vergelijken van twee getallen. Verder wordt optellen en aftrekken van twee getallen gecompliceerd. Er zijn veel testen nodig alvorens we de waardes van de getallen kunnen optellen of aftrekken, wat tot grote vertragingen leidt.
 \subsubsection{Complement-voorstellingen}
 De meeste voorstellingen van negatieve getallen zijn gebaseerd op complement voorstellingen. Er bestaan twee soorten complement voorstellingen voor een getal $D$ met $m$ cijfers en radix $r$:
 \begin{itemize}
@@ -1742,7 +1742,7 @@ Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst p
 +&1010\\\hline
 \underline{0}&1111\\
 +&000\underline{0}\\\hline
-&1110
+&1111
 \end{array}
 &
 \begin{array}{rr}
@@ -1926,7 +1926,7 @@ $m$&$i_1$&$i_0$&$F$&$X$&$Y$&$c_0$&\\\hline
 \caption{Instructieset van een typische arithmetic-logic unit (ALU).}
 \label{tbl:aLUInstructionSet}
 \end{table}
-Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE implementeert een functie die $\left(A,B\right)$-waardes afbeeld op $\left(X,Y\right)$-waardes. Deze laatste waardes dienen als invoer  voor de optellers. De CIG ten slotte geeft gebaseerd op het instructiewoord een waarde voor $c_0$. Deze functies staan ook in de instructietabel.
+Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE implementeert een functie die $\left(A,B\right)$-waardes afbeeldt op $\left(X,Y\right)$-waardes. Deze laatste waardes dienen als invoer  voor de optellers. De CIG ten slotte geeft gebaseerd op het instructiewoord een waarde voor $c_0$. Deze functies staan ook in de instructietabel.
 \subsubsection{Synthese van de ALE en CIG}
 \begin{figure}[hbt]
 \centering
@@ -2233,19 +2233,19 @@ Of algemener:
 \end{equation}
 \subsection{Vlottende komma getallen}
 \label{ss:floatingPoints}
-Indien we echter niet weten tot welke grootorde het getal in kwestie zal behoren, in dat geval zouden we vaste getallen met een groot aantal bits moeten gebruiken, waarbij bovendien in de meeste gevallen slechts een kleine hoeveelheid bits nuttig zijn. In deze gevallen gebruiken we \termen{vlottende komma voorstelling} (ook wel \termen{zwevendekommagetal}, \termen{drijvendekommagetal} of \termen{floating-point number} genoemd). Vlottende komma getallen worden voorgesteld door een sequentie van bits die in drie groepen worden onderverdeeld:
+Het kan voorkomen dat we echter niet weten tot welke grootorde het getal in kwestie zal behoren. In dat geval zouden we vaste getallen met een groot aantal bits moeten gebruiken, waarbij bovendien in de meeste gevallen slechts een kleine hoeveelheid bits nuttig blijkt. In deze gevallen gebruiken we \termen{vlottende komma voorstelling} (ook wel \termen{zwevendekommagetal}, \termen{drijvendekommagetal} of \termen{floating-point number} genoemd). Vlottende komma getallen worden voorgesteld door een sequentie van bits die in drie groepen worden onderverdeeld:
 \begin{itemize}
- \item \termen{sign-bit $s$}: 1-bit die het teken van het getal bepaald. De vlottende kommavoorstelling is dus vergelijkbaar met de signed-magnitude voorstelling.
- \item \termen{exponent $E$}: een getal die bepaald met hoeveel plaatsen het getal moet worden opgeschoven. Dit deel wordt voorgesteld in `\termen{excess}'-formaat.
- \item \termen{mantisse $M$}: de getal onafhankelijk van het schuiven van plaatsen. De voorstelling van de mantisse zelf is $\fix\left<1,m-1\right>$.
+ \item \termen{sign-bit $s$}: 1-bit die het teken van het getal bepaalt. De vlottende kommavoorstelling is dus vergelijkbaar met de signed-magnitude voorstelling.
+ \item \termen{exponent $E$}: een getal die bepaalt met hoeveel plaatsen het getal moet worden opgeschoven. Dit deel wordt voorgesteld in `\termen{excess}'-formaat.
+ \item \termen{mantisse $M$}: het getal onafhankelijk van het schuiven van plaatsen. De voorstelling van de mantisse zelf is $\fix\left<1,m-1\right>$.
 \end{itemize}
-Het getal die we hierbij willen voorstellen is gelijk aan:
+Het getal dat we hierbij willen voorstellen is gelijk aan:
 \begin{equation}
 N=\left(-1\right)^s\times\mbox{mantisse}\times r^{\mbox{\tiny{exponent}}}
 \end{equation}
-met radix $r$. Net als bij een vaste komma getal geven noteren we een familie van vlottende komma getallen als \termen{$\float\left<m,e\right>$} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. Verder onderscheiden we nog twee families van vlottende komma voorstellingen:
+met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen als \termen{$\float\left<m,e\right>$} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. Verder onderscheiden we nog twee families van vlottende komma voorstellingen:
 \begin{itemize}
- \item \termen{Genormaliseerde vlottende komma voorstelling}: hierbij leggen we extra constraint op betreft de mantisse: $1\leq\mbox{mantisse}<r$. Omdat in dat geval de eerste bit dus altijd gelijk is aan 1, behoren enkel de bits na de komma tot de voorstelling. In dat geval denken we er de 1 dus bij.
+ \item \termen{Genormaliseerde vlottende komma voorstelling}: hierbij leggen we extra constraint betreffende de mantisse: $1\leq\mbox{mantisse}<r$. Omdat in dat geval de eerste bit dus altijd gelijk is aan 1, behoren enkel de bits na de komma tot de voorstelling. In dat geval denken we er de 1 dus bij.
  \item \termen{Niet-genormaliseerde vlottende komma voorstelling}: hierbij is deze bovengenoemde constraint dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, maar hebben een groot nadeel: men kan een getal op verschillende manieren voorstellen: eenzelfde getal kan op verschillende manieren voorgesteld worden.
 \end{itemize}
 \subsubsection{Underflow en overflow}
@@ -2314,10 +2314,10 @@ $M\neq 0$&$\left(-1\right)^s\times\underline{0}.M\times2^{1-B}$&$\left(-1\right)
 \caption{IEEE 754-1985 Floating Point.}
 \label{tbl:iEEEFloatingPoint}
 \end{table}
-Elk van deze formaten heeft uiteraard radix $r=2$. IEEE 754-1985 vermeld ook hoe een vlottende komma moet worden uitgelezen. Tabel \ref{tbl:iEEEFloatingNumberRepresentation} geeft hierbij weer hoe we het getal moeten interpreteren afhankelijk van de waarde van de exponent $E$ en mantisse $M$. Bovendien wordt bij de IEEE 754 een extra variabele ingevoerd: \termen{excess-bias $B$}. Tot op heden is $B=2^{e-1}-1$, en is de range van de exponent dus van $-2^{e-1}+2$ tot $2^{e-1}-1$. Eventueel zou men later kunnen afwijken en bijvoorbeeld meer positieve exponenten dan negatieve kunnen toelaten. Verder definieert het formaat nog enkele speciale variabelen:
+Elk van deze formaten heeft uiteraard radix $r=2$. IEEE 754-1985 vermeldt ook hoe een vlottende komma moet worden uitgelezen. Tabel \ref{tbl:iEEEFloatingNumberRepresentation} geeft hierbij weer hoe we het getal moeten interpreteren afhankelijk van de waarde van de exponent $E$ en mantisse $M$. Bovendien wordt bij de IEEE 754 een extra variabele ingevoerd: \termen{excess-bias $B$}. Tot op heden is $B=2^{e-1}-1$, en is de range van de exponent dus van $-2^{e-1}+2$ tot $2^{e-1}-1$. Eventueel zou men later kunnen afwijken en bijvoorbeeld meer positieve exponenten dan negatieve kunnen toelaten. Verder definieert het formaat nog enkele speciale variabelen:
 \begin{itemize}
  \item Nul (0): dit getal kan eigenlijk niet weergegeven worden met ons eerdere definitie van een genormaliseerde vlottende komma. De getalexperts bij Intel bedachten dan ook de regel dat indien $E=0$, we het getal in niet genormaliseerde getalvoorstelling zien.
- \item \termen{Negatief oneindig $-\infty$}/\termen{Positief oneindig $+\infty$}: Indien een operatie tot een overflow leid, zal het resultaat worden voorgesteld als oneindig. Oneindig gedraagt zich ongeveer hetzelfde als zijn wiskundig equivalent.
+ \item \termen{Negatief oneindig $-\infty$}/\termen{Positief oneindig $+\infty$}: Indien een operatie tot een overflow leidt, zal het resultaat worden voorgesteld als oneindig. Oneindig gedraagt zich ongeveer hetzelfde als zijn wiskundig equivalent.
  \item \termen{Not a Number (NaN)}: In tegenstelling tot gehele getallen die bij bijvoorbeeld een deling door 0 een fout\footnote{En een interrupt bij de meeste processoren.} veroorzaken, zullen ongeldige bewerkingen zoals delen door 0, en het verschil van oneindig en oneindig resulteren in Not a Number.
 \end{itemize}
 In tabel \ref{tbl:iEEEFloatingNumberRepresentation} zien we ten slotte ook dat enkele bits onderlijnd worden. Dit zijn de zogenaamde \termen{verborgen bits}. Deze bits zijn geen onderdeel van de mantisse, maar dienen we er wel denkbeeldig aan toe te voegen om het getal te kunnen interpreteren.
@@ -2454,13 +2454,13 @@ Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het B
 \caption{ASCII standaard.}
 \label{tbl:aSCIIStandard}
 \end{table}
-Een standaard om tekst voor te stellen is de American Standard Code for Information Interchange (ASCII). ASCII reserveert 7 bit per karakter. Deze 7 bit zorgen voor 128 mogelijke karakters. De karakterset bestaat uit de Romaanse letters, Arabische cijfers, diverse leestekens en enkele functiesymbolen. De toewijzing van deze symbolen vertoond enige logica om bijvoorbeeld kleine letters naar hoofdletters om te zetten, en binaire getallen in hun ASCII equivalent. Tabel \ref{tbl:aSCIIStandard} toont de ASCII-karakters met hun bijbehorende binaire code. ASCII bevat geen ondersteuning voor cyrillisch, Arabisch,... Unicode is een standaard die 8, 16 of 32 bit per karakter reserveert en die dit probleem oplost. Anno 2011 is $11\%$ van de binaire waarden toegewezen.
+Een standaard om tekst voor te stellen is de American Standard Code for Information Interchange (ASCII). ASCII reserveert 7 bit per karakter. Deze 7 bit zorgen voor 128 mogelijke karakters. De karakterset bestaat uit de Romaanse letters, Arabische cijfers, diverse leestekens en enkele functiesymbolen. De toewijzing van deze symbolen vertoont enige logica om bijvoorbeeld kleine letters naar hoofdletters om te zetten, en binaire getallen in hun ASCII equivalent. Tabel \ref{tbl:aSCIIStandard} toont de ASCII-karakters met hun bijbehorende binaire code. ASCII bevat geen ondersteuning voor cyrillisch, Arabisch,... Unicode is een standaard die 8, 16 of 32 bit per karakter reserveert om dit probleem op te lossen. Anno 2011 is $11\%$ van de binaire waarden toegewezen.
 \section{Andere basisschakelingen}
 \label{s:andereBasis}
 Naast de rekenkundige schakelingen in sectie \ref{s:rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In subsectie \ref{ss:multiplexer} bespreken we de multiplexer. Daarna bespreken we in \ref{ss:decoder} en \ref{ss:demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \ref{ss:encoder}. We eindigen met de vergelijker in \ref{ss:comparator} en de reeds aangehaalde schuifoperatie in subsectie \ref{ss:shiftoperators}.
 \subsection{Multiplexer}
 \label{ss:multiplexer}
-Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema word dit component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op figuur \ref{fig:multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. Figuren \ref{fig:multiplexerTruthTable} en \ref{fig:multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van dit component.
+Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema wordt dit component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op figuur \ref{fig:multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. Figuren \ref{fig:multiplexerTruthTable} en \ref{fig:multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van dit component.
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{
@@ -3054,7 +3054,7 @@ We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder besc
 \centering
 \subfigure[Gelijkheid]{
 \begin{tikzpicture}[circuit logic US]
-\node[or gate,inputs={normal,normal,normal,normal,normal,normal,normal},scale=0.5,rotate=-90] (O) at (-3,-1.5) {};
+\node[and gate,inputs={normal,normal,normal,normal,normal,normal,normal},scale=0.5,rotate=-90] (O) at (-3,-1.5) {};
 \node[scale=0.75] (P) at (-5,0) {$\ldots$};
 \draw (O.output) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$X=Y$};
 \foreach \x in {0,1,2,3,4,6} {
@@ -3121,7 +3121,7 @@ X\verb+>>+M\equiv X\div 2^M
  \item Bij het \termen{roteren} vangen we de bits op die er langs \'e\'en kant afvallen en plaatsen we deze op de vrijgekomen plaatsen aan de andere kant.
 \end{itemize}
 \subsubsection{Implementatie van schuifoperaties}
-In deze subsubsectie zullen we twee schakelingen realiseren. De eerste is een component die alle schuifoperaties kan realiseren op 4-bit getallen. Maar slechts over 1 plaats naar links of rechts. Het tweede component is 8-bit \termen{barrel left rotator}. Dit component roteert 8-bit getallen naar links over een variabel aantal plaatsen. Merk op dat we bij een rotatie het eigenlijk niet uitmaakt in welke richting we roteren: een $n$-bit getal $m$ plaatsen naar links roteren is net hetzelfde als het getal $n-m$ plaatsen naar rechts roteren. Dit tweede component illustreert verder hoe we schuifoperaties effici\"ent over meerdere posities kunnen uitvoeren.
+In deze subsubsectie zullen we twee schakelingen realiseren. De eerste is een component die alle schuifoperaties kan realiseren op 4-bit getallen. Maar slechts over 1 plaats naar links of rechts. Het tweede component is 8-bit \termen{barrel left rotator}. Dit component roteert 8-bit getallen naar links over een variabel aantal plaatsen. Merk op dat het bij een rotatie het eigenlijk niet uitmaakt in welke richting we roteren: een $n$-bit getal $m$ plaatsen naar links roteren is net hetzelfde als het getal $n-m$ plaatsen naar rechts roteren. Dit tweede component illustreert verder hoe we schuifoperaties effici\"ent over meerdere posities kunnen uitvoeren.
 \paragraph{Schuifoperaties over 1 bit}
 Indien we een component maken die meerdere operaties kan uitvoeren moeten we altijd eerst een instructieset defini\"eren, zoals in subsubsectie \ref{sss:aLUInstructionSet}. De instructieset dient zowel een onderscheid te maken tussen schuiven of roteren, aritmetisch of logisch\footnote{Enkel in geval van schuiven is dit relevant.} en links of rechts. Verder willen we ook een bit voorzien die aangeeft of er \"uberhaupt een schuifoperatie moet worden uitgevoerd. We zullen dus een 4-bit instructieset gebruiken. Tabel \ref{tbl:shiftInstructionSet} toont de betekenis van elke bit.
 \begin{table}[hbt]
@@ -3145,7 +3145,7 @@ x_4=x_0
 \end{array}\right.&\mbox{(rotatie)}
 \end{array}
 \end{equation}
-Dit dwingen we af met twee 2-naar-1 multiplexers. Deze multiplexers hebben als schakelelement instructiebit $s_1$. We dienen nu enkel nog het geval te behandelen waarin we schuiven. Indien we logisch schuiven, schuiven we de bits $L_{\mbox{\tiny{in}}}$ en $R_{\mbox{\tiny{in}}}$ in. Bij arithmetisch zullen we aan de rechterzijde een 0 inschuiven. Aan de linkerkant is dit ook het geval tenzij we schuiven met een 2-complement voorstelling. In dat laatste geval bepaald de hoogste bit immers ook het teken van het getal. In dat geval moeten we de waarde van de hoogste bit dus nogmaals inschuiven. We kunnen bovenstaande beschrijvingen formaliseren tot volgende formules:
+Dit dwingen we af met twee 2-naar-1 multiplexers. Deze multiplexers hebben als schakelelement instructiebit $s_1$. We dienen nu enkel nog het geval te behandelen waarin we schuiven. Indien we logisch schuiven, schuiven we de bits $L_{\mbox{\tiny{in}}}$ en $R_{\mbox{\tiny{in}}}$ in. Bij arithmetisch zullen we aan de rechterzijde een 0 inschuiven. Aan de linkerkant is dit ook het geval tenzij we schuiven met een 2-complement voorstelling. In dat laatste geval bepaalt de hoogste bit immers ook het teken van het getal. In dat geval moeten we de waarde van de hoogste bit dus nogmaals inschuiven. We kunnen bovenstaande beschrijvingen formaliseren tot volgende formules:
 \begin{equation}
 \begin{array}{ll}
 \left\{\begin{array}{l}

@@ -2,6 +2,7 @@
 \usepackage[frenchb]{babel}
 \title{Fables de la Fontaine}
 \date{Paris\\Garnier Fr\`eres, Libraires-\'Editeurs\\6, Rue des Saints-P\`eres -- Palais Royal, 215\\M DCCC LXVIII}
+\newenvironment{fable}[1]{\section{#1}\begin{verse}}{\end{verse}}
 \begin{document}
 \frontmatter
 \begin{titlepage}
@@ -19,7 +20,35 @@ Je devrois m'\'etendre sur ce sujet: mais comme le dessein que j'ai de vous dive
 Votre tr\`es-humble, tr\`es-ob\'eissant et tr\`es-fid\`ele serviteur,
 De La Fontaine.
 \chapter*{Pr\'eface}
+'Indulgence que l'on a eue pour quelque-unes de mes fables me donne leu d'esp\'erer la m\^eme gr\`ace pour ce recueil. Ce n'est pas qu'un des ma\^itres de notre \'eloquence n'ait d\'esapprouv\'e le dessein de les mettre en vers: il a cru que leur principal ornement est de n'en avoir aucun, que d'ailleurs la contrainte de la po\'esie, jointe \`a la s\'ev\'erit\'e de notre langue, m'embarrasseroient en beaucoup d'endroits, et banniroient de la plupart de ces r\'ecits la br\`evet\'e, qu'on peut fort bien appeler l'\^ame du conte, puisque sans elle il faut n\'ecessairement qu'il languisse. Cette opinion ne sauroit partir que d'un homme d'excellent go\^ut; je demanderois seulement qu'il en rel\^ach\^at quelque peu, et qu'il cr\^ut que les Gr\^aces lac\'ed\'emoniennes ne sont pas tellement ennemies des Muses fran\c coises, que l'on ne puisse souvent les faire marcher de compagnie.
+\paragraph{}
 \mainmatter
+\begin{fable}{La Cigale et la Fourmi}
+La cigale, ayant chant\'e\\
+Tout l'\'et\'e,\\
+Se trouva fort d\'epourvu\\
+Quand la bise fut venue:\\
+Pas un seul petit morceau\\
+De mouche ou de vermisseau.\\
+Elle alla crier famine\\
+Chez la fourmi sa voisine,\\
+La priant de lui pr\^eter\\
+
+Quelque grain pour subsister\\
+Jusqu'\`a la saison nouvelle:\\
+Je vous pa\^irai, lui dit-elle,\\
+Avant l'o\^ut, foi d'animal,\\
+Int\'er\^et et principal.\\
+La fourmi n'est pas pr\^eteuse;\\
+C'est l\`a son moindre d\'efaut:\\
+Que faisiez-vous au temps chaud?\\
+Dit-elle \`a cette emprunteuse. --\\
+Nuit et jour \`a tout venant\\
+Je chantois, ne vous d\'eplaise. --\\
+Vous chantiez! J'en suis fort aise.\\
+H\'e bien! dansez maintenant.
+\end{fable}
+
 \backmatter
 \chapter*{Table des Fables}
 \end{document}
