@@ -1,10 +1,10 @@
 \documentclass[a4paper,10pt]{article}
-\usepackage{bnaic13/bnaic,hyperref,amsthm,todonotes}
+\usepackage{bnaic13/bnaic,hyperref,amsthm,amsfonts,todonotes}
 
 %opening
 \title{\emph{ParHyFlex}:\\A Framework for Parallel Hyper-heuristics}
-\author{Willem Van Onsem \affila}
-\date{\affila\ \textit{KU Leuven}}%
+\author{Willem Van Onsem}% \affila
+\date{\textit{Department of Computer Science, KU Leuven}}%\affila\ 
 
 \newcommand{\seclab}[1]{\label{sec:#1}}
 \newcommand{\secref}[1]{\ref{sec:#1}}
@@ -20,9 +20,17 @@
 
 \newcommand{\BoolSet}{\accl{\mbox{true},\mbox{false}}}
 
+% \makeatletter
+% \newcommand{\emph}[1]{
+% \@ifundefined{r@#1}{\label{#1}\emph{#1}}{#1}
+% }
+% \makeatother
+
 \newcommand{\calS}{\ensuremath{\mathcal{S}}}
 \newcommand{\calE}{\ensuremath{\mathcal{E}}}
 \newcommand{\calA}{\ensuremath{\mathcal{A}}}
+
+\newcommand{\RR}{\ensuremath{\mathbb{R}}}
 
 \newcommand{\guard}[1]{\ensuremath{\left\{\begin{array}{ll}#1\end{array}\right.}}
 
@@ -43,39 +51,45 @@ Hyper-heuristics are a generic method to solve optimization problems. In this pa
 
 \section{Introduction}
 \seclab{hyper-heuristics}
-In order to solve optimization problems, several methods exist. For some problems one can implement a straightforward or tailor-based algorithm solving the problem in polynomial time. In most cases however this is not possible. In order to solve such problems, one needs to enumerate a large number of configurations.
+Formally, an \emph{optimization problem} is defined as follows:
+\begin{definition}[Optimization problem]
+We define an \emph{optimization problem} as a tuple $\tupl{\calS,h,f}$ with $\calS$ a set of \emph{configurations}, $h:\calS\rightarrow\BoolSet$ a \emph{hard constraint} and $f:\calS\rightarrow\RR$ an \emph{evaluation function}. In such a problem one searches for a configuration satisfying the hard constraint $h$ with a minimal value regarding the evaluation function $f$. Other configurations satisfying the hard constraint are called \emph{solutions}.
+\end{definition}
 
-\paragraph{}
-Two families of such algorithms are \emph{branch-and-bound} and \emph{metaheuristics}. In the case one uses a \emph{branch-and-bound approach}, solutions are generated in a structured way. Since all potential solutions are generated with a fitness-value of at least the bound at the moment of generation, once all potential solutions are generated, we can be sure we have generated the exact solution.
 
-\paragraph{}
-A problem with \emph{branch-and-bound} however is that if the space of potential configurations is quite large, this method becomes infeasible. Since the method searches the solutions in a structured way, one does not expect to find strong solutions if only a small amount of the configuration space is enumerated. This effect is mainly supported by the common belief that similar solutions often have a similar fitness-value.
+% In order to solve optimization problems, several methods exist. For some problems one can implement a straightforward or tailor-based algorithm solving the problem in polynomial time. In most cases however this is not possible. In order to solve such problems, one needs to enumerate a large number of configurations.
+% 
+% \paragraph{}
+% Two families of such algorithms are \emph{branch-and-bound} and \emph{metaheuristics}. In the case one uses a \emph{branch-and-bound approach}, solutions are generated in a structured way. Since all potential solutions are generated with a fitness-value of at least the bound at the moment of generation, once all potential solutions are generated, we can be sure we have generated the exact solution.
+% 
+% \paragraph{}
+% A problem with \emph{branch-and-bound} however is that if the space of potential configurations is quite large, this method becomes infeasible. Since the method searches the solutions in a structured way, one does not expect to find strong solutions if only a small amount of the configuration space is enumerated. This effect is mainly supported by the common belief that similar solutions often have a similar fitness-value.
+% 
+% \paragraph{}
+% \emph{Metaheuristics} try to tackle the problem in another way. A \emph{metaheuristic} considers one or more solutions and iteratively tries to improve these solutions by slightly modifying these solutions. The algorithms who calculate a new solution out of one or more solutions are called \emph{heuristics} or \emph{transition functions}.
+% 
+% \paragraph{}
+% When implementing a \emph{meta-heuristic}, it is important to design good \emph{transition functions}. However it is not clear how these \emph{transition functions} should be designed. A \emph{hyper-heuristic} aims to solve this problem by considering a (large) set of transition functions and learn which transition function perform well in specific conditions.
+% 
+% \paragraph{}
+% Todays \emph{hyper-heuristics} fail to compete with tailor-based approaches. One can improve performance by performing the algorithm in parallel. In this paper we present a framework who supports the implementation of \emph{parallel hyper-heuristics}.%TODO
+% 
+% \paragraph{}
+% This paper is organized as follows: in section \secref{parhyp} we discuss some implementations of parallel hyper-heuristic systems. A framework called \emph{HyFlex} is discussed in section \secref{hyflex}. This framework formed the basis of our own work. In section \secref{parhyflex} we present our own work and discuss the components who try to speed up convergence. In section \secref{results} we present results regarding the performance of the implemented framework and compare these results with the other frameworks.%In section \secref{hyper-heuristics} we give a short introduction on hyper-heuristics. 
 
-\paragraph{}
-\emph{Metaheuristics} try to tackle the problem in another way. A \emph{metaheuristic} considers one or more solutions and iteratively tries to improve these solutions by slightly modifying these solutions. The algorithms who calculate a new solution out of one or more solutions are called \emph{heuristics} or \emph{transition functions}.
-
-\paragraph{}
-When implementing a \emph{meta-heuristic}, it is important to design good \emph{transition functions}. However it is not clear how these \emph{transition functions} should be designed. A \emph{hyper-heuristic} aims to solve this problem by considering a (large) set of transition functions and learn which transition function perform well in specific conditions.
-
-\paragraph{}
-Todays \emph{hyper-heuristics} fail to compete with tailor-based approaches. One can improve performance by performing the algorithm in parallel. In this paper we present a framework who supports the implementation of \emph{parallel hyper-heuristics}.%TODO
-
-\paragraph{}
-This paper is organized as follows: in section \secref{parhyp} we discuss some implementations of parallel hyper-heuristic systems. A framework called \emph{HyFlex} is discussed in section \secref{hyflex}. This framework formed the basis of our own work. In section \secref{parhyflex} we present our own work and discuss the components who try to speed up convergence. In section \secref{results} we present results regarding the performance of the implemented framework and compare these results with the other frameworks.%In section \secref{hyper-heuristics} we give a short introduction on hyper-heuristics. 
-
-\section{Parallel hyper-heuristics}
+\section{Related work}
 \seclab{parhyp}
 
-Performing \emph{hyper-heuristics} in parallel has the potential to speed up convergence towards good solutions or make the result more robust. This research field however is currently quite sparse. \emph{Leon, Miranda and Segura}\cite{} implemented a \emph{parallel hyper-heuristic} using a \emph{multi-objective self-adaptive Island-based model}.
+Performing \emph{hyper-heuristics} in parallel has the potential to speed up convergence towards good solutions or make the result more robust. This research domain however is currently quite sparse. \emph{Leon, Miranda and Segura}\cite{} implemented a \emph{parallel hyper-heuristic} using a \emph{multi-objective self-adaptive Island-based model}.
 
 \paragraph{}
-\emph{Multiobjectivisation} is a process where the initial single objective is divided into several somehow similar objectives. Such decomposition allows the system to escape from a local optimum of one objective by using another objective. A problem with multiobjectivisation however is that the different objectives can interfere and cancel each other out. In order to prevent this one can calculate a weighted sum of the different objectives. This however introduces new parameters. Determining optimal parameter settings is quite hard.
+\emph{Multiobjectivisation} is a process where the initial evaluation function is divided into several somehow similar functions. Such decomposition allows the system to escape from a local optimum by one evaluation function by using another one. A problem with multiobjectivisation however is that the different objectives can interfere and cancel each other out. In order to prevent this one can calculate a weighted sum of the different objectives. This however introduces new parameters. Determining optimal parameter settings is quite hard.
 
 \paragraph{}
-The system focuses on genetic algorithms where each processor maintains a set of solutions called \emph{deme}. In each iteration one or more solutions are selected. By using a special type of \emph{transition functions} who take two or more solutions, the features of two solutions are recombined into a new solution. Since the system uses an \emph{Island-based} approach, some solutions are exchanged between the different processors. The topology of processors who exchange solutions is modified dynamically to boost performance.
+The system focuses on genetic algorithms where each process maintains a set of solutions called a \emph{deme}. In each iteration one or more solutions are selected. By using a special type of \emph{recombination operator} who take two or more solutions, the features of two solutions are recombined into a new solution. In an \emph{Island-based} approach, some solutions are exchanged between the different processors. The topology of processors who exchange solutions is modified dynamically to boost performance.
 
 \paragraph{}
-The system works with the \emph{master-slave} paradigm. A set of processors called \emph{workers} execute a \emph{genetic algorithm}. The parameters and \emph{transition functions} of the \emph{workers} are assigned by a special processor called the \emph{master island}. When a stop criterion is reached, a worker sends the results to the \emph{master island} and obtains a new \emph{execution strategy}. The processor takes the final population of the previous run as the new initial population.%The \emph{master island} decides which \emph{low-level configuration} will be applied at each \emph{worker}%One processor is called the \emph{master island} while the other processors
+The system works in the \emph{master-slave} paradigm. A set of processors called \emph{workers} execute a \emph{genetic algorithm}. The parameters and \emph{transition functions} of the \emph{workers} are assigned by a special processor called the \emph{master island}. When a stop criterion is reached, a worker sends the results to the \emph{master island} and obtains a new \emph{execution strategy}. The processor takes the final population of the previous run as the new initial population.%The \emph{master island} decides which \emph{low-level configuration} will be applied at each \emph{worker}%One processor is called the \emph{master island} while the other processors
 
 \paragraph{}
 The framework is tested with the \emph{Antenna Positioning Problem (APP)}\cite{} and the \emph{Frequency Assignment Problem (FAP)}\cite{}. The researchers report a \emph{speed-up} but the results but the results are still not comparable with tailor-based sequential approaches.
@@ -85,16 +99,20 @@ The framework is tested with the \emph{Antenna Positioning Problem (APP)}\cite{}
 
 \todo{ander systeem bespreken?}
 
-\section{\emph{HyFlex}}
-\seclab{hyflex}
-In 2009 \emph{Burke et al.}\cite{} published a framework supporting the implementation of \emph{hyper-heuristics}. The framework was implemented in \emph{Java} and contained four problems. One implements a problem by providing an implementation on how a solution is represented together with \emph{transition functions} and an \emph{objective function}. To tackle the implemented problems, one also has to build a \emph{hyper-heuristic} as well. Such \emph{hyper-heuristic} can apply the given \emph{transition functions} on a set of solutions and evaluate the results based on the \emph{objective function}. The \emph{hyper-heuristic} however has no knowledge about the problem it is solving neither does it know the details of the different \emph{transition functions}. Therefore a \emph{hyper-heuristic} is implemented to solve a large range of optimization problems.
-
 \section{\emph{ParHyFlex}}
 \seclab{parhyflex}
+
+\subsection{\emph{HyFlex}}
+In 2009 \emph{Burke et al.}\cite{} published a framework supporting the implementation of \emph{hyper-heuristics}. The framework was implemented in \emph{Java} and contained four problems. One implements a problem by providing an implementation on how a solution is represented together with \emph{transition functions} and an \emph{objective function}. To tackle the implemented problems, one also has to build a \emph{hyper-heuristic} as well. Such \emph{hyper-heuristic} can apply the given \emph{transition functions} on a set of solutions and evaluate the results based on the \emph{objective function}. The \emph{hyper-heuristic} however has no knowledge about the problem it is solving neither does it know the details of the different \emph{transition functions}. Therefore a \emph{hyper-heuristic} is implemented to solve a large range of optimization problems.
+
+\subsection{\emph{Overview}}
+
 \emph{ParHyFlex}\footnote{The source code is available at \url{http://goo.gl/AyvHA}.} is a variant of the \emph{HyFlex} framework that should make it easy to run \emph{hyper-heuristics} on parallel systems. Based on the framework, one can potentially implement a \emph{hyper-heuristic} without the knowledge the algorithm will run in parallel. The framework is implemented in \emph{Java}, communication is handled using the popular \emph{Message Passing Interface (MPI)} protocol.
 
 \paragraph{}
 The implementation uses a \emph{peer-to-peer} approach where each processor runs its own (potentially different) \emph{hyper-heuristic} and occasionally shares solutions with the other processors. Since similar solutions will probably have a similar fitness-value, it can be profitable to prevent the processors from exploring solutions in the same \emph{neighborhood}. Finally, the framework provides a communication mechanism so the different \emph{hyper-heuristics} can cooperate with each other.
+
+\subsection{Implementing a problem}
 
 \subsection{Exchanging solutions}
 \seclab{exchangingsolutions}
