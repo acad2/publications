@@ -1,0 +1,33 @@
+\begin{tikzpicture}[circuit logic US]
+\def\dy{0.5};
+\def\dx{0.125};
+\def\dxp{0.75};
+\def\xpo{0.25};
+\def\wi{\xpo+\dxp*9.5};
+\foreach \i/\ii/\j in {a/4/1,b/3/2,c/2/3,d/1/4} {
+  \coordinate (x\i) at (0,\dy*\ii);
+  \coordinate (xn\i) at (0,\dy*\ii-0.5*\dy);
+  \node[anchor=east] (xt\i) at (x\i) {$x_\j$};
+  \pdot{x\i};
+  \draw (x\i) -- ++(\wi,0);
+  \node[not gate,anchor=input,scale=\dy] (Nx\i) at (xn\i -| \dx,0) {};
+  \draw (x\i) |- (Nx\i.input);
+  \draw (Nx\i.output) -- (xn\i -| \wi,0);
+}
+\foreach \x/\ya/\yb/\yc/\yd in {1/1/2/3/4,2/1/2/3/4.5,3/1/2/3.5/4,4/1/2/3.5/4.5,5/1.5/2.5/3/4,6/1.5/2.5/3/4.5,7/1.5/2/3/4,8/1.5/2/3.5/4.5,9/1.5/2/3/4.5} {
+  \node[or gate,scale=\dy,inputs={normal,normal,normal,normal},rotate=-90] (A\x) at (\xpo+\dxp*\x,-0.25) {};
+  \draw (A\x.input 4) -- (A\x.input 4 |- 0,5*\dy-\dy*\ya);
+  \pdot{A\x.input 4 |- 0,5*\dy-\dy*\ya};
+  \draw (A\x.input 3) -- (A\x.input 3 |- 0,5*\dy-\dy*\yb);
+  \pdot{A\x.input 3 |- 0,5*\dy-\dy*\yb};
+  \draw (A\x.input 2) -- (A\x.input 2 |- 0,5*\dy-\dy*\yc);
+  \pdot{A\x.input 2 |- 0,5*\dy-\dy*\yc};
+  \draw (A\x.input 1) -- (A\x.input 1 |- 0,5*\dy-\dy*\yd);
+  \pdot{A\x.input 1 |- 0,5*\dy-\dy*\yd};
+}
+\node[and gate,scale=\dy,inputs={normal,normal,normal,normal,normal,normal,normal,normal,normal},rotate=-90] (O) at (\xpo+\dxp*5,-1.25) {};
+\foreach \x/\y/\z in {1/1/9,2/2/8,3/3/7,4/4/6,5/5/5,6/4/4,7/3/3,8/2/2,9/1/1} {
+  \draw (O.input \x) -- (O.input \x |- 0,-0.85+0.065*\y) -| (A\z.output);
+}
+\draw (O.output) |- ++(\dy,-0.5*\dy) node[anchor=west]{$A$};
+\end{tikzpicture}

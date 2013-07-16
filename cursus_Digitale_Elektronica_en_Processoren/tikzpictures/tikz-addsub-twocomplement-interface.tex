@@ -1,0 +1,9 @@
+\begin{tikzpicture}[scale=0.75]
+\def\sca{0.75};
+\node[addsubtractor,scale=\sca] (AS) at (0,0) {adder-subtractor};
+\draw[->] (AS.c) -- ++(-0.5,0) node[scale=0.75,anchor=east]{$c_{\mbox{\tiny{out}}}$};
+\draw[<-] (AS.s) -- ++(0.5,0) node[scale=0.75,anchor=west]{$s$};
+\draw[<-] (AS.X) -- ++(0,0.5) node[scale=0.75,anchor=south]{$X$};
+\draw[<-] (AS.Y) -- ++(0,0.5) node[scale=0.75,anchor=south]{$Y$};
+\draw[->] (AS.F) -- ++(0,-0.5) node[scale=0.75,anchor=north]{$F$};
+\end{tikzpicture}

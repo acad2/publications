@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+\node[fulladder] (FA0) at (0,0) {FA$_0$};
+\node[fulladder] (FA1) at (-2,0) {FA$_1$};
+\node[fulladder] (FA2) at (-4,0) {FA$_2$};
+\node[fulladder] (FAi) at (-7,0) {FA$_i$};
+\node[fulladder] (FAn) at (-10,0) {FA$_n$};
+\node (FAidr) at (-5.5,0) {$\ldots$};
+\node (FAidl) at (-8.5,0) {$\ldots$};
+\draw (FA0.ci) -- ++(0.5,0) node[anchor=west,scale=0.7]{$c_0=0$};
+\draw (FA0.co) -- (FA1.ci);
+\draw (FA1.co) -- (FA2.ci);
+\draw (FA2.co) -- ++(-0.25,0);
+\draw (FAi.ci) -- ++(0.25,0);
+\draw (FAi.co) -- ++(-0.25,0);
+\draw (FAn.ci) -- ++(0.25,0);
+\draw (FAn.co) -- ++(-0.5,0) node[anchor=east,scale=0.7]{$c_n$};
+\foreach \i/\l in {0/FA0,1/FA1,2/FA2,i/FAi,n-1/FAn} {
+  \draw (\l.x) -- ++(0,0.5) node[anchor=south,scale=0.7]{$y_{\i}$};
+  \draw (\l.y) -- ++(0,0.5) node[anchor=south,scale=0.7]{$x_{\i}$};
+  \draw (\l.s) -- ++(0,-0.5) node[anchor=north,scale=0.7]{$s_{\i}$};
+}
+\end{tikzpicture}

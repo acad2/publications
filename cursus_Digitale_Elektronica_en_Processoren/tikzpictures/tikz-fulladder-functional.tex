@@ -1,0 +1,24 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (xi) at (-1.33333,1.75);
+\coordinate (yi) at (0.08333,1.75);
+\coordinate (ci) at (1.5,0.25);
+\coordinate (co) at (-2.75,0.25);
+\coordinate (si) at (-0.625,-1.25);
+\draw (co |- xi) rectangle (ci |- si);
+\draw[dashed] (xi) -- ++(0,0.5) node[anchor=south]{$x_i$};
+\draw[dashed] (yi) -- ++(0,0.5) node[anchor=south]{$y_i$};
+\draw[dashed] (co) -- ++(-0.5,0) node[anchor=east]{$c_{i+1}$};
+\draw[dashed] (ci) -- ++(0.5,0) node[anchor=west]{$c_i$};
+\draw[dashed] (si) -- ++(0,-0.5) node[anchor=north]{$s_i$};
+\node[halfadder] (HA1) at (-1.5,0.625) {HA};
+\node[halfadder] (HA2) at (0.5,0.625) {HA};
+\draw (xi) -- ++(0,-0.125) -| (HA1.y);
+\draw (yi) -- ++(0,-0.25) -| (HA1.x);
+\draw (HA1.s) |- ++(0.875,-0.25) |- (HA2.y |- 0,1.375) -- (HA2.y);
+\draw (ci) -- ++(-0.125,0) |- (HA2.x |- 0,1.375) -- (HA2.x);
+\draw (HA2.s) -- ++(0,-1.125) -| (si);
+\node[or gate,rotate=180] (O) at (-1.5,-0.75) {};
+\draw (HA1.co) -- ++(-0.125,0) |- (O.input 2 |- 0,-0.25) -| (O.input 2 -| -1,0) -- (O.input 2);
+\draw (HA2.co) -- ++(-0.125,0) |- (O.input 1);
+\draw (O.output) -| (co -| -2.625,0) -- (co);
+\end{tikzpicture}

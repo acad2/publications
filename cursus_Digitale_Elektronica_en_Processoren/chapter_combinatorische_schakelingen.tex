@@ -7,79 +7,6 @@ Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de 
 \minitoc[n]
 \section{Minimaliseren van logische functies}
 \label{s:minimalisatie}
-% \subsection{Leidend voorbeeld: Worteltrekking en 7 segment display}
-% We zullen in deze sectie de minimalisatie-technieken uitleggen aan de hand van een worteltrekking en 7 Segment Display. Een 7 Segment display wordt vaak in kleine elektronica gebruikt zoals bijvoorbeeld horloges om getallen weer te geven. Op figuur \ref{fig:sevenSegmentDisplay}
-% \begin{figure}[hbt]
-% \centering
-% \begin{tikzpicture}
-% \filldraw[fill=gray,draw=black] (-0.6,-1.1) rectangle (0.6,1.1);
-% \fill[black!80] (0.325,0.95) -- (0.375,0.9) -- (0.325,0.85) -- (-0.325,0.85) -- (-0.375,0.9) -- (-0.325,0.95) -- cycle;
-% \draw (0,0.85) node[scale=0.75,anchor=north]{$c$};
-% \fill[black!80] (0.325,-0.95) -- (0.375,-0.9) -- (0.325,-0.85) -- (-0.325,-0.85) -- (-0.375,-0.9) -- (-0.325,-0.95) -- cycle;
-% \draw (0,-0.85) node[scale=0.75,anchor=south]{$f$};
-% \fill[black!80] (0.325,0.05) -- (0.375,0) -- (0.325,-0.05) -- (-0.325,-0.05) -- (-0.375,0) -- (-0.325,0.05) -- cycle;
-% \draw (0,0.05) node[scale=0.75,anchor=south]{$i$};
-% \fill[black!80] (0.4,0.875) -- (0.45,0.825) -- (0.45,0.075) -- (0.4,0.025) -- (0.35,0.075) -- (0.35,0.825) -- cycle;
-% \draw (0.35,0.5) node[scale=0.75,anchor=east]{$d$};
-% \fill[black!80] (-0.4,0.875) -- (-0.45,0.825) -- (-0.45,0.075) -- (-0.4,0.025) -- (-0.35,0.075) -- (-0.35,0.825) -- cycle;
-% \draw (0.35,-0.5) node[scale=0.75,anchor=east]{$e$};
-% \fill[black!80] (0.4,-0.875) -- (0.45,-0.825) -- (0.45,-0.075) -- (0.4,-0.025) -- (0.35,-0.075) -- (0.35,-0.825) -- cycle;
-% \draw (-0.35,-0.5) node[scale=0.75,anchor=west]{$g$};
-% \fill[black!80] (-0.4,-0.875) -- (-0.45,-0.825) -- (-0.45,-0.075) -- (-0.4,-0.025) -- (-0.35,-0.075) -- (-0.35,-0.825) -- cycle;
-% \draw (-0.35,0.5) node[scale=0.75,anchor=west]{$h$};
-% \draw (-5,1.4) rectangle (-2,2.6);
-% \draw (-5,2) node[anchor=west,text width=2.5 cm] {Combinatorische Schakeling 1};
-% \draw (-5,-1.1) rectangle (-2,1.1);
-% \draw (-5,0) node[anchor=west,text width=2.5 cm] {Combinatorische Schakeling 2};
-% \foreach \x/\t in {1/a,-1/b} {
-%   \draw (-2,0.2*\x+2) -- (-0.6,0.2*\x+2) node[scale=0.75,anchor=south east,yshift=-0.1 cm]{$\t$};
-% }
-% \foreach \x/\t in {3/c,2/d,1/e,0/f,-1/g,-2/h,-3/i} {
-%   \draw (-2,0.3*\x) -- (-0.6,0.3*\x) node[scale=0.75,anchor=south east,yshift=-0.1 cm]{$\t$};
-% }
-% \foreach \x/\t in {1.5/w,0.5/x,-0.5/y,-1.5/z} {
-%   \draw (-8,0.5*\x) -- (-5,0.5*\x) node[scale=0.75,anchor=south east,yshift=-0.1 cm]{$\t$};
-%   \fill (-6.5-0.24*\x,0.5*\x) circle (0.4 mm);
-%   \draw (-6.5-0.24*\x,0.5*\x) -- (-6.5-0.24*\x,0.24*\x+2) -- (-5,0.24*\x+2) node[scale=0.75,anchor=south east,yshift=-0.1 cm]{$\t$};
-% }
-% \draw (5,0) node[scale=0.75]{\begin{tabular}{cccc|cc|ccccccc}
-% $w$&$x$&$y$&$z$&$a$&$b$&$c$&$d$&$e$&$f$&$g$&$h$&$i$\\\hline
-% 0&0&0&0		&0&0	&1&1&1&1&1&1&0\\
-% 0&0&0&1		&0&1	&0&1&1&0&0&0&0\\
-% 0&0&1&0		&0&1	&1&1&0&1&1&0&1\\
-% 0&0&1&1		&0&1	&1&1&1&1&0&0&1\\
-% 0&1&0&0		&1&0	&0&1&1&0&0&1&1\\
-% 0&1&0&1		&1&0	&1&0&1&1&0&1&1\\
-% 0&1&1&0		&1&0	&1&0&1&1&1&1&1\\
-% 0&1&1&1		&1&0	&1&1&1&0&0&0&0\\
-% 1&0&0&0		&1&0	&1&1&1&1&1&1&1\\
-% 1&0&0&1		&1&1	&1&1&1&1&0&1&1\\
-% 1&0&1&0		&1&1	&-&-&-&-&-&-&-\\
-% 1&0&1&1		&1&1	&-&-&-&-&-&-&-\\
-% 1&1&0&0		&1&1	&-&-&-&-&-&-&-\\
-% 1&1&0&1		&1&1	&-&-&-&-&-&-&-\\
-% 1&1&1&0		&1&1	&-&-&-&-&-&-&-\\
-% 1&1&1&1		&1&1	&-&-&-&-&-&-&-
-% \end{tabular}};
-% \begin{scope}[xshift=-5.1 cm, yshift=-2.05 cm,scale=0.5]
-% \foreach\x/\a/\b/\c/\d/\e/\f/\g in {0/8/8/8/8/8/8/3,1.2/3/8/8/3/3/3/3,2.4/8/8/3/8/8/3/8,3.6/8/8/8/8/3/3/8,4.8/3/8/8/3/3/8/8,6/8/3/8/8/3/8/8,7.2/8/3/8/8/8/8/8,8.4/8/8/8/3/3/3/3,9.6/8/8/8/8/8/8/8,10.8/8/8/8/8/3/8/8} {
-% \begin{scope}[xshift=\x cm]
-% \filldraw[fill=gray,draw=black] (-0.6,-1.1) rectangle (0.6,1.1);
-% \fill[black!\a0] (0.325,0.95) -- (0.375,0.9) -- (0.325,0.85) -- (-0.325,0.85) -- (-0.375,0.9) -- (-0.325,0.95) -- cycle;%a
-% \fill[black!\b0] (0.4,0.875) -- (0.45,0.825) -- (0.45,0.075) -- (0.4,0.025) -- (0.35,0.075) -- (0.35,0.825) -- cycle;%b
-% \fill[black!\c0] (0.4,-0.875) -- (0.45,-0.825) -- (0.45,-0.075) -- (0.4,-0.025) -- (0.35,-0.075) -- (0.35,-0.825) -- cycle;%c
-% \fill[black!\d0] (0.325,-0.95) -- (0.375,-0.9) -- (0.325,-0.85) -- (-0.325,-0.85) -- (-0.375,-0.9) -- (-0.325,-0.95) -- cycle;%d
-% \fill[black!\e0] (-0.4,-0.875) -- (-0.45,-0.825) -- (-0.45,-0.075) -- (-0.4,-0.025) -- (-0.35,-0.075) -- (-0.35,-0.825) -- cycle;%e
-% \fill[black!\f0] (-0.4,0.875) -- (-0.45,0.825) -- (-0.45,0.075) -- (-0.4,0.025) -- (-0.35,0.075) -- (-0.35,0.825) -- cycle;%f
-% \fill[black!\g0] (0.325,0.05) -- (0.375,0) -- (0.325,-0.05) -- (-0.325,-0.05) -- (-0.375,0) -- (-0.325,0.05) -- cycle;%g
-% \end{scope}
-% }
-% \end{scope}
-% \end{tikzpicture}
-% \caption{Leidend voorbeeld: Worteltrekking en 7 segment display.}
-% \label{fig:sevenSegmentDisplay}
-% \end{figure}
-% tekenen we de 7 segment display samen met de waarheidstabel. We zijn enkel ge\"interesseerd in het weergeven van de nummers 0 tot 9. Indien een ander nummer aan de ingang verschijnt mag om het even wat op de display verschijnen. We introduceren hier dan ook al het begrip \termen{don't care}. Een don't care betekent dat het niet uitmaakt over er een 0 of 1 op de uitgang verschijnt, en worden genoteerd met een horizontale streep (-). Het is de bedoeling dat we de schakeling ontwikkelen die de 4 lijnen ($w$, $x$, $y$ en $z$) omzet naar 9 lijnen ($a$, $b$, $c$, $d$, $e$, $f$, $g$, $h$ en $i$). We zullen echter niet voor iedere techniek elke functie volledig ontwikkelen.
 \subsection{Waarom minimaliseren}
 We willen schakelingen ontwerpen voor de worteltrekking en 7 segment display in een minimale implementatie. Streven naar een minimalisatie is een algemeen probleem en is vergelijkbaar met optimalisatie in de informatica. Minimalisatie levert niet enkel snellere doorvoer op. Hieronder sommen we de meest courante voordelen op, samen met hun metriek:
 \begin{itemize}
@@ -127,447 +54,38 @@ Bijgevolg berekenen we de vertraging als volgt:
 \paragraph{N-kubus}In feite zijn Karnaugh-kaarten niets anders dan waarheidstabellen waarbij we het aantal dimensies verhogen. Een zogenoemde \termen{$N$-kubus}. We stellen immers een bepaalde ingangstoestand voor als een knooppunt op een kubus. Figuur \ref{fig:nCube} toont een N-kubus voor de dimensies 1 tot 4.
 \begin{figure}[htb]
 \centering
-\subfigure[1D]{\begin{tikzpicture}
-\draw[thick] (0,0) node[scale=0.75,anchor=north]{0} -- (1,0) node[scale=0.75,anchor=north]{1};
-\fill (0,0) circle(0.05 cm);
-\fill (1,0) circle(0.05 cm);
-\end{tikzpicture}}
-\subfigure[2D]{\begin{tikzpicture}
-\draw[thick] (0,0) node[scale=0.75,anchor=south]{00} -- (1,0) node[scale=0.75,anchor=south]{01} -- (1,-1) node[scale=0.75,anchor=north]{11} -- (0,-1) node[scale=0.75,anchor=north]{10} -- cycle;
-\fill (0,0) circle(0.05 cm);
-\fill (1,0) circle(0.05 cm);
-\fill (1,-1) circle(0.05 cm);
-\fill (0,-1) circle(0.05 cm);
-\end{tikzpicture}}
-\subfigure[3D]{\begin{tikzpicture}
-\draw[thick] (0,0) node[scale=0.75,anchor=south]{000} -- (1,0) node[scale=0.75,anchor=south]{001} -- (1,-1) node[scale=0.75,anchor=north]{011} -- (0,-1) node[scale=0.75,anchor=north]{010} -- cycle;
-\draw[thick] (0,0,-1) node[scale=0.75,anchor=south]{100} -- (1,0,-1) node[scale=0.75,anchor=south]{101} -- (1,-1,-1) node[scale=0.75,anchor=north]{111} -- (0,-1,-1) node[scale=0.75,anchor=north]{110} -- cycle;
-\draw[thick] (0,0,0) -- (0,0,-1);
-\draw[thick] (0,-1,0) -- (0,-1,-1);
-\draw[thick] (1,0,0) -- (1,0,-1);
-\draw[thick] (1,-1,0) -- (1,-1,-1);
-\fill (0,0) circle(0.05 cm);
-\fill (1,0) circle(0.05 cm);
-\fill (1,-1) circle(0.05 cm);
-\fill (0,-1) circle(0.05 cm);
-\fill (0,0,-1) circle(0.05 cm);
-\fill (1,0,-1) circle(0.05 cm);
-\fill (1,-1,-1) circle(0.05 cm);
-\fill (0,-1,-1) circle(0.05 cm);
-\end{tikzpicture}}
-\subfigure[4D]{\begin{tikzpicture}
-\draw[thick] (0,0) node[scale=0.75,anchor=south]{0000} -- (1,0) node[scale=0.75,anchor=south]{0001} -- (1,-1) node[scale=0.75,anchor=north]{0011} -- (0,-1) node[scale=0.75,anchor=north]{0010} -- cycle;
-\draw[thick] (0,0,-1) node[scale=0.75,anchor=south]{0100} -- (1,0,-1) node[scale=0.75,anchor=south]{0101} -- (1,-1,-1) node[scale=0.75,anchor=north]{0111} -- (0,-1,-1) node[scale=0.75,anchor=north]{0110} -- cycle;
-\draw[thick] (0,0,0) -- (0,0,-1);
-\draw[thick] (0,-1,0) -- (0,-1,-1);
-\draw[thick] (1,0,0) -- (1,0,-1);
-\draw[thick] (1,-1,0) -- (1,-1,-1);
-\fill (0,0) circle(0.05 cm);
-\fill (1,0) circle(0.05 cm);
-\fill (1,-1) circle(0.05 cm);
-\fill (0,-1) circle(0.05 cm);
-\fill (0,0,-1) circle(0.05 cm);
-\fill (1,0,-1) circle(0.05 cm);
-\fill (1,-1,-1) circle(0.05 cm);
-\fill (0,-1,-1) circle(0.05 cm);
-\begin{scope}[xshift=2 cm, yshift=1 cm]
-\draw[thick] (0,0) node[scale=0.75,anchor=south]{1000} -- (1,0) node[scale=0.75,anchor=south]{1001} -- (1,-1) node[scale=0.75,anchor=north]{1011} -- (0,-1) node[scale=0.75,anchor=north]{1010} -- cycle;
-\draw[thick] (0,0,-1) node[scale=0.75,anchor=south]{1100} -- (1,0,-1) node[scale=0.75,anchor=south]{1101} -- (1,-1,-1) node[scale=0.75,anchor=north]{1111} -- (0,-1,-1) node[scale=0.75,anchor=north]{1110} -- cycle;
-\draw[thick] (0,0,0) -- (0,0,-1);
-\draw[thick] (0,-1,0) -- (0,-1,-1);
-\draw[thick] (1,0,0) -- (1,0,-1);
-\draw[thick] (1,-1,0) -- (1,-1,-1);
-\fill (0,0) circle(0.05 cm);
-\fill (1,0) circle(0.05 cm);
-\fill (1,-1) circle(0.05 cm);
-\fill (0,-1) circle(0.05 cm);
-\fill (0,0,-1) circle(0.05 cm);
-\fill (1,0,-1) circle(0.05 cm);
-\fill (1,-1,-1) circle(0.05 cm);
-\fill (0,-1,-1) circle(0.05 cm);
-\end{scope}
-\foreach\x in {0,1} {
- \foreach\y in {0,-1} {
-  \foreach\z in {0,-1} {
-   \draw[thick] (\x,\y,\z) -- (\x+2,\y+1,\z);
-  }
- }
-}
-\end{tikzpicture}}
+\subfigure[1D]{\importtikz{kubus1d}}
+\subfigure[2D]{\importtikz{kubus2d}}
+\subfigure[3D]{\importtikz{kubus3d}}
+\subfigure[4D]{\importtikz{kubus4d}}
 \caption{N-kubus voor dimensies 1 tot 4.}
-\label{fig:nCube}
+\figlab{nCube}
 \end{figure}
 Hierbij is elke knoop van de kubus een bitvector van waarden aan de ingang. We kunnen dan vervolgens op deze knooppunten de waarde die we aan de uitgang verwachten plaatsen. De $N$-kubus toont ook de buren van deze toestanden. Dit zijn toestanden waarbij exact \'e\'en bit aan de ingang verandert is. Buren zijn cruciaal, indien de uitgang niet verandert tussen twee buren, kunnen we zeggen dat de veranderde ingangsbit irrelevant is voor de uitgang.
 \paragraph{Karnaugh-Kaarten}Karnaugh-kaarten zijn in feite niets anders dan 2D projecties van de $N$-kubus. Uiteraard is deze omvorming tot 2 dimensies helemaal niet moeilijk: het is gewoon de $N$-kubus zelf. Vanaf dimensies hoger dan 2 wordt het moeilijker. Figuur \ref{fig:nCubeKarnaugh}
-\begin{figure}[htb]
-\centering
-\begin{tikzpicture}
-\begin{scope}[yshift=-0.25 cm]
-\draw[thick] (0,0) node[scale=0.75,anchor=south]{000} -- (1,0) node[scale=0.75,anchor=south]{001} -- (1,-1) node[scale=0.75,anchor=north]{011} -- (0,-1) node[scale=0.75,anchor=north]{010} -- cycle;
-\draw[thick] (0,0,-1) node[scale=0.75,anchor=south]{100} -- (1,0,-1) node[scale=0.75,anchor=south]{101} -- (1,-1,-1) node[scale=0.75,anchor=north]{111} -- (0,-1,-1) node[scale=0.75,anchor=north]{110} -- cycle;
-\draw[thick] (0,0,0) -- (0,0,-1);
-\draw[thick] (0,-1,0) -- (0,-1,-1);
-\draw[thick] (1,0,0) -- (1,0,-1);
-\draw[thick] (1,-1,0) -- (1,-1,-1);
-\fill (0,0) circle(0.05 cm);
-\fill (1,0) circle(0.05 cm);
-\fill (1,-1) circle(0.05 cm);
-\fill (0,-1) circle(0.05 cm);
-\fill (0,0,-1) circle(0.05 cm);
-\fill (1,0,-1) circle(0.05 cm);
-\fill (1,-1,-1) circle(0.05 cm);
-\fill (0,-1,-1) circle(0.05 cm);
-\end{scope}
-\draw (2,-0.5) node{\Large $\Rightarrow$};
-\begin{scope}[xshift=2.5 cm]
-\foreach\y in {0,1} {
-  \foreach\z in {0,1} {
-    \coordinate (N0\y\z) at (\z,-\y);
-    \fill (N0\y\z) circle(0.05 cm) node[scale=0.75,anchor=south west]{0\y\z};
-  }
-}
-\foreach\y in {0,1} {
-  \foreach\z in {0,1} {
-    \coordinate (N1\y\z) at (3-\z,-\y);
-    \fill (N1\y\z) circle(0.05 cm) node[scale=0.75,anchor=south west]{1\y\z};
-  }
-}
-\draw[thick] (N000) -- (N001) -- (N101) -- (N100) -- (N110) -- (N111) -- (N011) -- (N010) -- cycle;
-\draw[thick] (N001) -- (N011);
-\draw[thick] (N101) -- (N111);
-\draw[thick] (N000) .. controls (-0.75,0.75) and (3.75,0.75) .. (N100);
-\draw[thick] (N010) .. controls (-0.75,-1.75) and (3.75,-1.75) .. (N110);
-\end{scope}
-\draw (6.5,-0.5) node{\Large $\Rightarrow$};
-\begin{scope}[xshift=7.25 cm, yshift=-0.25 cm]
-\foreach\y in {0,1} {
-  \foreach\z in {0,1} {
-    \coordinate (N0\y\z) at (\z,-\y);
-    \fill[gray] (N0\y\z) circle(0.05 cm) node[scale=0.75,black,anchor=south west]{0\y\z};
-  }
-}
-\foreach\y in {0,1} {
-  \foreach\z in {0,1} {
-    \coordinate (N1\y\z) at (3-\z,-\y);
-    \fill[gray] (N1\y\z) circle(0.05 cm) node[scale=0.75,black,anchor=south west]{1\y\z};
-  }
-}
-\draw[gray] (N000) -- (N001) -- (N101) -- (N100) -- (N110) -- (N111) -- (N011) -- (N010) -- cycle;
-\draw[gray] (N001) -- (N011);
-\draw[gray] (N101) -- (N111);
-\draw[gray] (N000) .. controls (-0.75,0.75) and (3.75,0.75) .. (N100);
-\draw[gray] (N010) .. controls (-0.75,-1.75) and (3.75,-1.75) .. (N110);
-\foreach\x in {0,1,2,3} {
-  \foreach\y in {0,1} {
-    \draw[thick] (\x-0.25,-\y+0.75) -- ++(1,0);
-    \draw[thick] (\x-0.25,-\y+0.75) -- ++(0,-1);
-  }
-}
-\draw[thick] (-0.25,-1.25) -| ++(4,2);
-\draw [thick] (1.75,-1.5) to node[midway,below]{$x$} (3.75,-1.5);
-\draw [thick] (0.75,1) to node[midway,above]{$z$} (2.75,1);
-\draw [thick] (4,-0.25) to node[midway,sloped,above]{$y$} (4,-1.25);
-\end{scope}
-\end{tikzpicture}
-\caption{Van $N$-kubus naar Karnaugh-kaart.}
-\label{fig:nCubeKarnaugh}
-\end{figure}
+\importtikzfigure{nCubeKarnaugh}{Van $N$-kubus naar Karnaugh-kaart.}
 toont de overgang van een 3-kubus naar de respectievelijke Karnaugh-kaart. Bij een $N$-kubus heeft elke toestand $N$ buren. Nochtans zien we op de figuur dat de linkse en rechtse toestanden slechts 2 buren hebben in plaats van 3. We moeten dan ook een Karnaugh-kaart modulo rekenen. De linkse buur van het meest linkse veld is het rechtse veld. Verder omvat elke cel in de Karnaugh-kaart een bepaalde configuratie aan de ingang. Aan de rand van de Karnaugh-kaart staan de variabelen, en een lijn. De cellen die deze lijn omvatten zijn de cellen waar deze specifieke variabele 1 is. Logischerwijs zijn de cellen die niet omvat worden, de cellen waar deze variabele 0 is. Figuur \ref{fig:karnaughKaarten}
 \begin{figure}[hbt]
 \centering
-\subfigure[1D]{\begin{tikzpicture}[scale=0.75]
-\def\sc{0.75};
-\draw[thick] (0,0.5) -- ++(0,-0.5) -- ++(0.5,0) -- ++(0,0.5);
-\draw[thick] (0,0.5) rectangle ++(0.5,0.5);
-\draw[thick] (0,1) -- (-0.25,1.25);
-\draw (-0.125,1.125) node[anchor=north east,scale=0.75]{$x$};
-\draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{$x$} (-0.125,0.5);
-\draw (0.25,0.25) node[scale=\sc]{1};
-\draw (0.25,0.75) node[scale=\sc]{0};
-\end{tikzpicture}}
-\subfigure[2D]{\begin{tikzpicture}[scale=0.75]
-\def\sc{0.75};
-\draw[thick] (0,0) -- ++(1,0) -- ++(0,1) -- ++(-1,0) -- cycle;
-\draw[thick] (0,0.5) -- ++(1,0);
-\draw[thick] (0.5,0) -- ++(0,1);
-\draw[thick] (0,1) -- (-0.25,1.25);
-\draw (-0.125,1.125) node[anchor=north east,scale=0.75]{$x$};
-\draw (-0.125,1.125) node[anchor=south west,scale=0.75]{$y$};
-\draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{$x$} (-0.125,0.5);
-\draw[thick] (0.5,1.125) to node[sloped,above]{$y$} (1,1.125);
-\draw (0.25,0.25) node[scale=\sc]{2};
-\draw (0.25,0.75) node[scale=\sc]{0};
-\draw (0.75,0.25) node[scale=\sc]{3};
-\draw (0.75,0.75) node[scale=\sc]{1};
-\end{tikzpicture}}
-\subfigure[3D]{\begin{tikzpicture}[scale=0.75]
-\def\sc{0.75};
-\draw[thick] (0,0) -- ++(1,0) -- ++(0,2) -- ++(-1,0) -- cycle;
-\draw[thick] (0,0.5) -- ++(1,0);
-\draw[thick] (0,1) -- ++(1,0);
-\draw[thick] (0,1.5) -- ++(1,0);
-\draw[thick] (0.5,0) -- ++(0,2);
-\draw[thick] (0,2) -- (-0.25,2.25);
-\draw (-0.125,2.125) node[anchor=north east,scale=0.75]{$xy$};
-\draw (-0.125,2.125) node[anchor=south west,scale=0.75]{$z$};
-\draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{$x$} (-0.125,1);
-\draw[thick] (1.125,0.5) to node[sloped,above,rotate=180]{$y$} (1.125,1.5);
-\draw[thick] (0.5,2.125) to node[sloped,above]{$z$} (1,2.125);
-\draw (0.25,1.25) node[scale=\sc]{2};
-\draw (0.25,1.75) node[scale=\sc]{0};
-\draw (0.75,1.25) node[scale=\sc]{3};
-\draw (0.75,1.75) node[scale=\sc]{1};
-\draw (0.25,0.25) node[scale=\sc]{4};
-\draw (0.25,0.75) node[scale=\sc]{6};
-\draw (0.75,0.25) node[scale=\sc]{5};
-\draw (0.75,0.75) node[scale=\sc]{7};
-\end{tikzpicture}}
-\subfigure[4D]{\begin{tikzpicture}[scale=0.75]
-\def\sc{0.75};
-\draw[thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-\draw[thick] (0,0.5) -- ++(2,0);
-\draw[thick] (0,1) -- ++(2,0);
-\draw[thick] (0,1.5) -- ++(2,0);
-\draw[thick] (0.5,0) -- ++(0,2);
-\draw[thick] (1,0) -- ++(0,2);
-\draw[thick] (1.5,0) -- ++(0,2);
-\draw[thick] (0,2) -- (-0.25,2.25);
-\draw (-0.125,2.125) node[anchor=north east,scale=0.75]{$wx$};
-\draw (-0.125,2.125) node[anchor=south west,scale=0.75]{$yz$};
-\draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{$w$} (-0.125,1);
-\draw[thick] (2.125,0.5) to node[sloped,above,rotate=180]{$x$} (2.125,1.5);
-\draw[thick] (0.5,2.125) to node[sloped,above]{$y$} (1.5,2.125);
-\draw[thick] (1,-0.125) to node[sloped,below]{$z$} (2,-0.125);
-\draw (0.25,1.75) node[scale=\sc]{0};
-\draw (1.75,1.75) node[scale=\sc]{1};
-\draw (0.75,1.75) node[scale=\sc]{2};
-\draw (1.25,1.75) node[scale=\sc]{3};
-\draw (0.25,1.25) node[scale=\sc]{4};
-\draw (1.75,1.25) node[scale=\sc]{5};
-\draw (0.75,1.25) node[scale=\sc]{6};
-\draw (1.25,1.25) node[scale=\sc]{7};
-\draw (0.25,0.25) node[scale=\sc]{8};
-\draw (1.75,0.25) node[scale=\sc]{9};
-\draw (0.75,0.25) node[scale=\sc]{10};
-\draw (1.25,0.25) node[scale=\sc]{11};
-\draw (0.25,0.75) node[scale=\sc]{12};
-\draw (1.75,0.75) node[scale=\sc]{13};
-\draw (0.75,0.75) node[scale=\sc]{14};
-\draw (1.25,0.75) node[scale=\sc]{15};
-\end{tikzpicture}}
-\subfigure[5D gespiegeld]{\begin{tikzpicture}[scale=0.75]
-\def\sc{0.75};
-\draw[thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-\draw[thick] (0,0.5) -- ++(2,0);
-\draw[thick] (0,1) -- ++(2,0);
-\draw[thick] (0,1.5) -- ++(2,0);
-\draw[thick] (0.5,0) -- ++(0,2);
-\draw[thick] (1,0) -- ++(0,2);
-\draw[thick] (1.5,0) -- ++(0,2);
-\draw[thick] (0,2) -- (-0.25,2.25);
-\draw (-0.125,2.125) node[anchor=north east,scale=0.75]{$wx$};
-\draw (-0.125,2.125) node[anchor=south west,scale=0.75]{$yz$};
-\draw[thick] (3,2) -- (2.75,2.25);
-\draw (2.875,2.125) node[anchor=north east,scale=0.75]{$wx$};
-\draw (2.875,2.125) node[anchor=south west,scale=0.75]{$yz$};
-
-\draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{$w$} (-0.125,1);
-\draw[thick] (5.125,0.5) to node[sloped,above,rotate=180]{$x$} (5.125,1.5);
-\draw[thick] (0.5,2.125) to node[sloped,above]{$y$} (1.5,2.125);
-\draw[thick] (3.5,2.125) to node[sloped,above]{$y$} (4.5,2.125);
-\draw[thick] (1,-0.125) to node[sloped,below]{$z$} (2,-0.125);
-\draw[thick] (3,-0.125) to node[sloped,below]{$z$} (4,-0.125);
-\draw[thick] (3,2.75) to node[sloped,above]{$v$} (5,2.75);
-
-\draw[thick] (3,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-\draw[thick] (3,0.5) -- ++(2,0);
-\draw[thick] (3,1) -- ++(2,0);
-\draw[thick] (3,1.5) -- ++(2,0);
-\draw[thick] (3.5,0) -- ++(0,2);
-\draw[thick] (4,0) -- ++(0,2);
-\draw[thick] (4.5,0) -- ++(0,2);
-
-\draw (0.25,1.75) node[scale=\sc]{0};
-\draw (1.75,1.75) node[scale=\sc]{1};
-\draw (0.75,1.75) node[scale=\sc]{2};
-\draw (1.25,1.75) node[scale=\sc]{3};
-\draw (0.25,1.25) node[scale=\sc]{4};
-\draw (1.75,1.25) node[scale=\sc]{5};
-\draw (0.75,1.25) node[scale=\sc]{6};
-\draw (1.25,1.25) node[scale=\sc]{7};
-\draw (0.25,0.25) node[scale=\sc]{8};
-\draw (1.75,0.25) node[scale=\sc]{9};
-\draw (0.75,0.25) node[scale=\sc]{10};
-\draw (1.25,0.25) node[scale=\sc]{11};
-\draw (0.25,0.75) node[scale=\sc]{12};
-\draw (1.75,0.75) node[scale=\sc]{13};
-\draw (0.75,0.75) node[scale=\sc]{14};
-\draw (1.25,0.75) node[scale=\sc]{15};
-
-\draw (4.75,1.75) node[scale=\sc]{16};
-\draw (3.25,1.75) node[scale=\sc]{17};
-\draw (4.25,1.75) node[scale=\sc]{18};
-\draw (3.75,1.75) node[scale=\sc]{19};
-\draw (4.75,1.25) node[scale=\sc]{20};
-\draw (3.25,1.25) node[scale=\sc]{21};
-\draw (4.25,1.25) node[scale=\sc]{22};
-\draw (3.75,1.25) node[scale=\sc]{23};
-\draw (4.75,0.25) node[scale=\sc]{24};
-\draw (3.25,0.25) node[scale=\sc]{25};
-\draw (4.25,0.25) node[scale=\sc]{26};
-\draw (3.75,0.25) node[scale=\sc]{27};
-\draw (4.75,0.75) node[scale=\sc]{28};
-\draw (3.25,0.75) node[scale=\sc]{29};
-\draw (4.25,0.75) node[scale=\sc]{30};
-\draw (3.75,0.75) node[scale=\sc]{31};
-\label{fig:karnaughKaarten5DMirror}
-\end{tikzpicture}}
-\subfigure[5D gekopieerd]{\begin{tikzpicture}[scale=0.75]
-\def\sc{0.75};
-\draw[thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-\draw[thick] (0,0.5) -- ++(2,0);
-\draw[thick] (0,1) -- ++(2,0);
-\draw[thick] (0,1.5) -- ++(2,0);
-\draw[thick] (0.5,0) -- ++(0,2);
-\draw[thick] (1,0) -- ++(0,2);
-\draw[thick] (1.5,0) -- ++(0,2);
-\draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{$w$} (-0.125,1);
-\draw[thick] (4.625,0.5) to node[sloped,above,rotate=180]{$x$} (4.625,1.5);
-\draw[thick] (0.5,2.125) to node[sloped,above]{$y$} (1.5,2.125);
-\draw[thick] (3,2.125) to node[sloped,above]{$y$} (4,2.125);
-\draw[thick] (1,-0.125) to node[sloped,below]{$z$} (2,-0.125);
-\draw[thick] (3.5,-0.125) to node[sloped,below]{$z$} (4.5,-0.125);
-\draw[thick] (2.5,2.75) to node[sloped,above]{$v$} (4.5,2.75);
-
-\draw[thick] (2.5,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-\draw[thick] (2.5,0.5) -- ++(2,0);
-\draw[thick] (2.5,1) -- ++(2,0);
-\draw[thick] (2.5,1.5) -- ++(2,0);
-\draw[thick] (3,0) -- ++(0,2);
-\draw[thick] (3.5,0) -- ++(0,2);
-\draw[thick] (4,0) -- ++(0,2);
-
-\draw (0.25,1.75) node[scale=\sc]{0};
-\draw (1.75,1.75) node[scale=\sc]{1};
-\draw (0.75,1.75) node[scale=\sc]{2};
-\draw (1.25,1.75) node[scale=\sc]{3};
-\draw (0.25,1.25) node[scale=\sc]{4};
-\draw (1.75,1.25) node[scale=\sc]{5};
-\draw (0.75,1.25) node[scale=\sc]{6};
-\draw (1.25,1.25) node[scale=\sc]{7};
-\draw (0.25,0.25) node[scale=\sc]{8};
-\draw (1.75,0.25) node[scale=\sc]{9};
-\draw (0.75,0.25) node[scale=\sc]{10};
-\draw (1.25,0.25) node[scale=\sc]{11};
-\draw (0.25,0.75) node[scale=\sc]{12};
-\draw (1.75,0.75) node[scale=\sc]{13};
-\draw (0.75,0.75) node[scale=\sc]{14};
-\draw (1.25,0.75) node[scale=\sc]{15};
-
-\draw (2.75,1.75) node[scale=\sc]{16};
-\draw (4.25,1.75) node[scale=\sc]{17};
-\draw (3.25,1.75) node[scale=\sc]{18};
-\draw (3.75,1.75) node[scale=\sc]{19};
-\draw (2.75,1.25) node[scale=\sc]{20};
-\draw (4.25,1.25) node[scale=\sc]{21};
-\draw (3.25,1.25) node[scale=\sc]{22};
-\draw (3.75,1.25) node[scale=\sc]{23};
-\draw (2.75,0.25) node[scale=\sc]{24};
-\draw (4.25,0.25) node[scale=\sc]{25};
-\draw (3.25,0.25) node[scale=\sc]{26};
-\draw (3.75,0.25) node[scale=\sc]{27};
-\draw (2.75,0.75) node[scale=\sc]{28};
-\draw (4.25,0.75) node[scale=\sc]{29};
-\draw (3.25,0.75) node[scale=\sc]{30};
-\draw (3.75,0.75) node[scale=\sc]{31};
-\label{fig:karnaughKaarten5DCopy}
-\end{tikzpicture}}
+\subfigure[1D]{\importtikz{karnaugh1d}}
+\subfigure[2D]{\importtikz{karnaugh2d}}
+\subfigure[3D]{\importtikz{karnaugh3d}}
+\subfigure[4D]{\importtikz{karnaugh4d}}
+\subfigure[5D gespiegeld]{\importtikz{karnaughKaarten5DMirror}}
+\subfigure[5D gekopieerd]{\importtikz{karnaughKaarten5DCopy}}
 \caption{Karnaugh-kaarten voor verschillende dimensies met binaire waarden.}
-\label{fig:karnaughKaarten}
+\figlab{karnaughKaarten}
 \end{figure}
 toont Karnaugh-kaarten voor een verschillend aantal variabelen. In de cellen staat de decimale waarde van de ingang die deze cel vertegenwoordigt. Hierbij gebruiken we de variabelen in de volgende volgorde: $\left(v,w,x,y,z\right)$. We kunnen in principe blijven uitbreiden. Vanaf 6 dimensies wordt het echter moeilijk om nog patronen te herkennen. Karnaugh-kaarten hebben bijgevolg maar een beperkt vermogen. Vanaf 5 dimensies groepeert men meestal cellen in groepen van $4\times 4$. Men gebruikt hierbij 2 varianten: ofwel spiegelt men \'e\'en van de twee tabellen zoals op figuur \ref{fig:karnaughKaarten5DMirror}, ofwel zijn de tabellen exacte kopies (op enkele variabelen na) zoals op figuur \ref{fig:karnaughKaarten5DCopy}. Het spiegelen van variabelen is intu\"itiever omdat dit consistent is met lagere dimensies.
 \subsubsection{Optimaliseren met behulp van Karnaugh-kaarten}
 \paragraph{Terminologie} Alvorens we aan het optimalisatiewerk kunnen beginnen, hebben we nood aan enige terminologie. Een \termen{implicant} is een productterm waarvoor de functie 1 is. Deze definitie heeft nauwe banden met de 1-minterm, het verschil is echter dat bij een implicant niet alle variabelen aanwezig moeten zijn. Zo zien we op figuur \ref{fig:karnaughKaartenImplicanten} verschillende implicanten met een verschillend aantal variabelen. Een \termen{priemimplicant} is een implicant die geen onderdeel is van een andere implicant met strikt minder variabelen. De priemimplicanten van figuur \ref{fig:karnaughKaartenImplicanten} worden weergegeven op figuur \ref{fig:karnaughKaartenPriemimplicanten}. Een verdere uitbreiding is de \termen{essenti\"ele priemimplicant}, dit is een priemimplicant die minstens \'e\'en 1-minterm omvat die niet in een andere priemimplicant verweven zit. Tenslotte defini\"eren we de \termen{dekking} of \termen{cover} als een verzameling van implicanten die in alle mogelijkheden voorziet waar de functie 1 is.
 \begin{figure}[hbt]
 \centering
-% \subfigure[Implicanten]{\begin{tikzpicture}[scale=1.5]
-% \draw[thick] (-1,-1) rectangle ++(2,2);
-% \draw[thick] (-0.5,-1) -- ++(0,2);
-% \draw[thick] (0,-1) -- ++(0,2);
-% \draw[thick] (0.5,-1) -- ++(0,2);
-% \draw[thick] (-1,-0.5) -- ++(2,0);
-% \draw[thick] (-1,0) -- ++(2,0);
-% \draw[thick] (-1,0.5) -- ++(2,0);
-% \draw[thick] (-1,1) -- ++(-0.25,0.25) node[anchor=south east]{$b$};
-% \draw[thick] (-1.125,0) to node[midway,below,sloped]{$w$} (-1.125,-1);
-% \draw[thick] (1.125,0.5) to node[midway,above,sloped]{$x$} (1.125,-0.5);
-% \draw[thick] (-0.5,1.125) to node[midway,above,sloped]{$y$} (0.5,1.125);
-% \draw[thick] (0,-1.125) to node[midway,below,sloped]{$z$} (1,-1.125);
-% \draw (-0.75,0.75) node{0};
-% \draw (-0.25,0.75) node{1};
-% \draw (0.25,0.75) node{1};
-% \draw (0.75,0.75) node{1};
-% \draw (-0.75,0.25) node{0};
-% \draw (-0.25,0.25) node{0};
-% \draw (0.25,0.25) node{0};
-% \draw (0.75,0.25) node{0};
-% \draw (-0.75,-0.25) node{1};
-% \draw (-0.25,-0.25) node{1};
-% \draw (0.25,-0.25) node{1};
-% \draw (0.75,-0.25) node{1};
-% \draw (-0.75,-0.75) node{0};
-% \draw (-0.25,-0.75) node{1};
-% \draw (0.25,-0.75) node{1};
-% \draw (0.75,-0.75) node{1};
-% \foreach \x/\y/\w/\h/\r/\s in {1/0/1/1/0.375/dashed, 2/0/1/1/0.375/dashed, 3/0/1/1/0.375/dashed, 0/2/1/1/0.375/dashed, 1/2/1/1/0.375/dashed, 2/2/1/1/0.375/dashed, 3/2/1/1/0.375/dashed, 1/3/1/1/0.375/dashed, 2/3/1/1/0.375/dashed, 3/3/1/1/0.375/dashed, 1/0/2/1/0.4/thin, 2/0/2/1/0.4/thin, 0/2/2/1/0.4/thin, 1/2/2/1/0.4/thin, 2/2/2/1/0.4/thin, 1/3/2/1/0.4/thin, 2/3/2/1/0.4/thin,1/2/1/2/0.4/thin, 2/2/1/2/0.4/thin, 3/2/1/2/0.4/thin,0/2/4/1/0.425/thick,1/2/2/2/0.425/thick,2/2/2/2/0.425/thick} {
-%   \draw[rounded corners,semitransparent,\s] (0.5*\x-0.5-\r,0.5+\r-0.5*\y) rectangle ++(0.5*\w-1+2*\r,-0.5*\h+1-2*\r);
-% }
-%\end{tikzpicture}
-%\label{fig:karnaughKaartenImplicanten}}
-% \subfigure[Priemimplicanten]{\begin{tikzpicture}[scale=1.2]
-% \draw[thick] (-1,-1) rectangle ++(2,2);
-% \draw[thick] (-0.5,-1) -- ++(0,2);
-% \draw[thick] (0,-1) -- ++(0,2);
-% \draw[thick] (0.5,-1) -- ++(0,2);
-% \draw[thick] (-1,-0.5) -- ++(2,0);
-% \draw[thick] (-1,0) -- ++(2,0);
-% \draw[thick] (-1,0.5) -- ++(2,0);
-% \draw[thick] (-1,1) -- ++(-0.25,0.25) node[anchor=south east]{$b$};
-% \draw[thick] (-1.125,0) to node[midway,below,sloped]{$w$} (-1.125,-1);
-% \draw[thick] (1.125,0.5) to node[midway,above,sloped]{$x$} (1.125,-0.5);
-% \draw[thick] (-0.5,1.125) to node[midway,above,sloped]{$y$} (0.5,1.125);
-% \draw[thick] (0,-1.125) to node[midway,below,sloped]{$z$} (1,-1.125);
-% \end{tikzpicture}
-% \label{fig:karnaughKaartenPriemimplicanten}}
-\subfigure[Implicanten]{\begin{tikzpicture}
-\def\ta{0.12}
-\def\tb{0.09}
-\def\tc{0.06}
-\def\td{0.03}
-\kkaartdmarks[1.6]{0}{0}{/0/1/0/1/\ta,/1/2/1/2/\ta,/2/1/2/1/\ta,/3/0/3/0/\ta,/3/1/3/1/\ta,/3/3/3/3/\ta,/3/0/3/1/\tc,/2/1/3/1/\td}{/1/1/1/\tb}{/3/3/1/\tb};
-\kkaartd[1.6]{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{0/0/1/0/0/0/0/1/1/1/1/0/0/0/1/0};
-\end{tikzpicture}
-\label{fig:karnaughKaartenImplicanten}}
-\subfigure[Priemimplicanten]{\begin{tikzpicture}
-\def\ta{0.12}
-\def\tb{0.09}
-\def\tc{0.06}
-\def\td{0.03}
-\kkaartdmarks[1.6]{0}{0}{/1/2/1/2/\ta,/2/1/3/1/\tb,/3/0/3/1/\tc}{/1/1/1/\ta}{/3/3/1/\ta};
-\kkaartd[1.6]{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{0/0/1/0/0/0/0/1/1/1/1/0/0/0/1/0};
-\end{tikzpicture}
-\label{fig:karnaughKaartenPriemimplicanten}}
-\subfigure[Essenti\"ele priemimplicanten]{\begin{tikzpicture}
-\def\ta{0.12}
-\def\tb{0.09}
-\def\tc{0.06}
-\def\td{0.03}
-\kkaartdmarks[1.6]{0}{0}{/1/2/1/2/\ta,/2/1/3/1/\tb}{/1/1/1/\ta}{/3/3/1/\ta};
-\kkaartd[1.6]{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{0/0/1/0/0/0/0/1/1/1/1/0/0/0/1/0};
-\end{tikzpicture}
-\label{fig:karnaughKaartenEssentielePriemimplicanten}}
+\subfigure[Implicanten]{\importtikz{karnaughKaartenImplicanten}}
+\subfigure[Priemimplicanten]{\importtikz{karnaughKaartenPriemimplicanten}}
+\subfigure[Essenti\"ele priemimplicanten]{\importtikz{karnaughKaartenEssentielePriemimplicanten}}
 \caption{Terminologie van een Karnaugh-kaart.}
-\label{fig:karnaughKaartTerminologie}
+\figlab{karnaughKaartTerminologie}
 \end{figure}
 \paragraph{Stappenplan}
 We minimaliseren een functie met behulp van een Karnaugh-kaart in 4 stappen, deze stappen zullen we in de volgende paragrafen besproken:
@@ -582,152 +100,16 @@ Daarna zullen we nog drie speciale gevallen bestuderen.
 We bestuderen deze methode aan de hand van een voorbeeld. We zullen een schakeling synthetiseren die de functies $f$ en $g$ berekend. Functie $f$ geeft 1 terug bij de getallen 0, 1, 3, 7, 5, 8, 10, 11, 14 en 15, en 0 in de andere gevallen, $g$ is waar  als de afgeronde vierkantswortel van het getal even is.
 \paragraph{Stap 1: maak de Karnaugh-kaart}
 In de eerste stap bouwen we een Karnaugh-kaart op, op basis van de gegeven functie. We tekenen een Karnaugh-kaart met het juiste aantal ingangsvariabelen (zie figuur \ref{fig:karnaughKaarten}) en vullen vervolgens de uitgangswaarden voor \'e\'en bepaalde uitgang in op de respectievelijke plaatsen. Er dient dus per binaire uitgang zo'n kaart gemaakt te worden. Op figuur \ref{fig:karnaughKaartenVoorbeeldGetekend}
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-% \foreach \x in {-1,0,1} {
-%   \foreach \y in {1} {
-%     \draw[thick] (-1+3*\x,-1+3*\y) rectangle ++(2,2);
-%     \draw[thick] (3*\x-0.5,3*\y-1) -- ++(0,2);
-%     \draw[thick] (3*\x,3*\y-1) -- ++(0,2);
-%     \draw[thick] (3*\x+0.5,3*\y-1) -- ++(0,2);
-%     \draw[thick] (3*\x-1,3*\y-0.5) -- ++(2,0);
-%     \draw[thick] (3*\x-1,3*\y) -- ++(2,0);
-%     \draw[thick] (3*\x-1,3*\y+0.5) -- ++(2,0);
-%   }
-%   \draw[thick] (3*\x-0.5,4.125) to node[midway,above,sloped]{$y$} (3*\x+0.5,4.125);
-%   \draw[thick] (3*\x,1.875) to node[midway,below,sloped]{$z$} (3*\x+1,1.875);
-% }
-% \draw[thick] (-4.125,3) to node[midway,below,sloped]{$w$} (-4.125,2);
-% \draw[thick] (4.125,3.5) to node[midway,above,sloped]{$x$} (4.125,2.5);
-% \foreach \t/\x/\y/\va/\vb/\vc/\vd/\ve/\vf/\vg/\vh/\vi/\vj/\vk/\vl/\vm/\vn/\vo/\vp in {a/-1/-1/0/0/0/0/1/1/1/1/1/1/1/1/1/1/1/1, b/0/-1/0/1/1/1/0/0/0/0/1/1/1/1/0/1/1/1, c/1/-1/1/1/1/0/0/1/1/1/-/-/-/-/1/-/-/1} {
-%   \draw[thick] (3*\x-1,-3*\y+1) -- ++(-0.25,0.25) node[anchor=south east]{$\t$};
-%   \draw (3*\x-0.75,-3*\y+0.75) node{\va};
-%   \draw (3*\x-0.25,-3*\y+0.75) node{\vb};
-%   \draw (3*\x+0.25,-3*\y+0.75) node{\vc};
-%   \draw (3*\x+0.75,-3*\y+0.75) node{\vd};
-%   \draw (3*\x-0.75,-3*\y+0.25) node{\ve};
-%   \draw (3*\x-0.25,-3*\y+0.25) node{\vf};
-%   \draw (3*\x+0.25,-3*\y+0.25) node{\vg};
-%   \draw (3*\x+0.75,-3*\y+0.25) node{\vh};
-%   \draw (3*\x-0.75,-3*\y-0.25) node{\vi};
-%   \draw (3*\x-0.25,-3*\y-0.25) node{\vj};
-%   \draw (3*\x+0.25,-3*\y-0.25) node{\vk};
-%   \draw (3*\x+0.75,-3*\y-0.25) node{\vl};
-%   \draw (3*\x-0.75,-3*\y-0.75) node{\vm};
-%   \draw (3*\x-0.25,-3*\y-0.75) node{\vn};
-%   \draw (3*\x+0.25,-3*\y-0.75) node{\vo};
-%   \draw (3*\x+0.75,-3*\y-0.75) node{\vp};
-% }
-\kkaartd{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\kkaartd{4.5}{0}{$g$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/0/1/1/1/1/0/0/0/0/0/0/1/1/1};
-\end{tikzpicture}
-\caption{Ingevulde Karnaugh-kaarten voor de uitgangen van het leidend voorbeeld.}
-\label{fig:karnaughKaartenVoorbeeldGetekend}
-\end{figure}
+\importtikzfigure{karnaughKaartenVoorbeeldGetekend}{Ingevulde Karnaugh-kaarten voor de uitgangen van het leidend voorbeeld.}
 %tonen we de Karnaugh-kaarten voor de eerste 3 uitgangen van het leidend voorbeeld ($a$, $b$ en $c$). De overige uitgangen worden als oefening aan de lezer overgelaten. De oplossing is te vinden op figuur \ref{fig:apxKKaartenFill} op pagina \pageref{fig:apxKKaartenFill}.
 staan de Karnaugh-kaarten voor de functies $f$ en $g$. De variabelen $x_1$, $x_2$, $x_3$ en $x_4$ zijn de binaire voorstelling van het invoergetal.
-\paragraph{Stap 2: bepaal alle priemimplicant} In de volgende stap bepalen we alle priemimplicanten van de Karnaugh-kaart. Visueel is een implicant niets anders dan een rechthoek waarbij zowel de lengte en breedte een lengte hebben van machten van twee. Deze rechthoeken vallen uiteraard ook onder de modulo-regel. op een Karnaugh-kaart. Deze priemimplicanten kunnen we dan ook vinden door vanuit een cel waar de uitgangswaarde 1 is, telkens ofwel de lengte of breedte te verdubbelen, uiteraard mogen er wel geen nullen onder de rechthoek vallen. Indien er verschillende uitbreidingen mogelijk zijn, dienen al de uitbreidingen gevolgd te worden. Figuur \label{fig:karnaughKaartenVoorbeeldPriemimplicanten} toont de priemimplicanten voor de twee uitgangen van het leidend voorbeeld.
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-% \foreach \x in {-1,0} {
-%   \foreach \y in {1} {
-%     \draw[thick] (-1+3*\x,-1+3*\y) rectangle ++(2,2);
-%     \draw[thick] (3*\x-0.5,3*\y-1) -- ++(0,2);
-%     \draw[thick] (3*\x,3*\y-1) -- ++(0,2);
-%     \draw[thick] (3*\x+0.5,3*\y-1) -- ++(0,2);
-%     \draw[thick] (3*\x-1,3*\y-0.5) -- ++(2,0);
-%     \draw[thick] (3*\x-1,3*\y) -- ++(2,0);
-%     \draw[thick] (3*\x-1,3*\y+0.5) -- ++(2,0);
-%   }
-%   \draw[thick] (3*\x-0.5,4.125) to node[midway,above,sloped]{$y$} (3*\x+0.5,4.125);
-%   \draw[thick] (3*\x,1.875) to node[midway,below,sloped]{$z$} (3*\x+1,1.875);
-% }
-% \draw[thick] (-4.125,3) to node[midway,below,sloped]{$w$} (-4.125,2);
-% \draw[thick] (1.125,3.5) to node[midway,above,sloped]{$x$} (1.125,2.5);
-% \foreach \t/\x/\y/\va/\vb/\vc/\vd/\ve/\vf/\vg/\vh/\vi/\vj/\vk/\vl/\vm/\vn/\vo/\vp in {a/-1/-1/0/0/0/0/1/1/1/1/1/1/1/1/1/1/1/1, b/0/-1/0/1/1/1/0/0/0/0/1/1/1/1/0/1/1/1} {
-%   \draw[thick] (3*\x-1,-3*\y+1) -- ++(-0.25,0.25) node[anchor=south east]{$\t$};
-%   \draw (3*\x-0.75,-3*\y+0.75) node{\va};
-%   \draw (3*\x-0.25,-3*\y+0.75) node{\vb};
-%   \draw (3*\x+0.25,-3*\y+0.75) node{\vc};
-%   \draw (3*\x+0.75,-3*\y+0.75) node{\vd};
-%   \draw (3*\x-0.75,-3*\y+0.25) node{\ve};
-%   \draw (3*\x-0.25,-3*\y+0.25) node{\vf};
-%   \draw (3*\x+0.25,-3*\y+0.25) node{\vg};
-%   \draw (3*\x+0.75,-3*\y+0.25) node{\vh};
-%   \draw (3*\x-0.75,-3*\y-0.25) node{\vi};
-%   \draw (3*\x-0.25,-3*\y-0.25) node{\vj};
-%   \draw (3*\x+0.25,-3*\y-0.25) node{\vk};
-%   \draw (3*\x+0.75,-3*\y-0.25) node{\vl};
-%   \draw (3*\x-0.75,-3*\y-0.75) node{\vm};
-%   \draw (3*\x-0.25,-3*\y-0.75) node{\vn};
-%   \draw (3*\x+0.25,-3*\y-0.75) node{\vo};
-%   \draw (3*\x+0.75,-3*\y-0.75) node{\vp};
-% }
-% \foreach \i/\x/\y/\w/\h/\r in {0/0/1/4/2/0.15,0/0/2/4/2/0.20,1/0/2/4/1/0.11,1/1/2/2/2/0.16,1/2/2/2/2/0.21} {
-%   \draw[rounded corners] (-3+3*\i-0.75+0.5*\x-\r,3.75+\r-0.5*\y) rectangle ++(2*\r+0.5*\w-0.5,-2*\r-0.5*\h+0.5);
-% }
-% \foreach \i/\x/\w/\r in {1/1/2/0.11,1/2/2/0.14} {
-%   \draw[rounded corners] (-3+3*\i-0.75+0.5*\x-\r,4) -- ++(0,-0.25-\r) -- ++(2*\r+0.5*\w-0.5,0) -- ++(0,0.25+\r);
-%   \draw[rounded corners] (-3+3*\i-0.75+0.5*\x-\r,2) -- ++(0,0.25+\r) -- ++(2*\r+0.5*\w-0.5,0) -- ++(0,-0.25-\r);
-%   %\draw[rounded corners] (-3+3*\i-0.75+0.5*\x-\r,3.75+\r-0.5*\y) rectangle ++(2*\r+0.5*\w-0.5,-2*\r-0.5*\h+0.5);
-% }
-\def\ta{0.12}
-\def\tb{0.09}
-\def\tc{0.06}
-\kkaartdmarks{0}{0}{/0/2/3/2/\ta,/0/2/1/3/\tc,/2/1/3/2/\tc,/3/0/3/1/\ta}{/0/0/1/\tc}{/0/0/1/\ta};
-\kkaartd{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\kkaartdmarks{4.5}{0}{/0/0/1/0/\ta,/0/2/0/2/\tb,/1/0/1/1/\tc,/1/1/2/1/\ta,/2/1/2/2/\tc,/2/2/2/3/\ta,/1/3/2/3/\tc}{}{/1/1/1/\tb};
-\kkaartd{4.5}{0}{$g$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/0/1/1/1/1/0/0/0/0/0/0/1/1/1};
-\end{tikzpicture}
-\caption{Karnaugh-kaarten met priemimplicanten van het leidend voorbeeld.}
-\label{fig:karnaughKaartenVoorbeeldPriemimplicanten}
-\end{figure}
+\paragraph{Stap 2: bepaal alle priemimplicant} In de volgende stap bepalen we alle priemimplicanten van de Karnaugh-kaart. Visueel is een implicant niets anders dan een rechthoek waarbij zowel de lengte en breedte een lengte hebben van machten van twee. Deze rechthoeken vallen uiteraard ook onder de modulo-regel. op een Karnaugh-kaart. Deze priemimplicanten kunnen we dan ook vinden door vanuit een cel waar de uitgangswaarde 1 is, telkens ofwel de lengte of breedte te verdubbelen, uiteraard mogen er wel geen nullen onder de rechthoek vallen. Indien er verschillende uitbreidingen mogelijk zijn, dienen al de uitbreidingen gevolgd te worden. Figuur \ref{fig:karnaughKaartenVoorbeeldPriemimplicanten} toont de priemimplicanten voor de twee uitgangen van het leidend voorbeeld.
+\importtikzfigure{karnaughKaartenVoorbeeldPriemimplicanten}{Karnaugh-kaarten met priemimplicanten van het leidend voorbeeld.}
 \paragraph{Stap 3: Bepaal alle essenti\"ele priemimplicanten} Nadat we de priemimplicanten bepaald hebben, zullen we uit deze verzameling de essenti\"ele priemimplicanten halen. Deze stap is dan ook heel eenvoudig: als een priemimplicant \'e\'en of meer cellen omvat die geen enkele andere priemimplicant omvat is het een essenti\"ele priemimplicant. Deze implicaten zullen sowieso al tot de resulterende functie behoren. Op figuur \ref{fig:karnaughKaartenVoorbeeldEssentielePriemimplicanten} staan de essenti\"ele priemimplicanten voor $f$ en $g$. We zien duidelijk dat in beide gevallen de priemimplicanten onvoldoende zijn om de volledige functie te beschrijven daar er nog enen niet niet gedekt worden.
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-\def\ta{0.12}
-\def\tb{0.09}
-\def\tc{0.06}
-\kkaartdmarks{0}{0}{/0/2/1/3/\tc,/2/1/3/2/\tc}{}{};
-\kkaartd{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\kkaartdmarks{4.5}{0}{/0/0/1/0/\ta,/0/2/0/2/\tb}{}{};
-\kkaartd{4.5}{0}{$g$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/0/1/1/1/1/0/0/0/0/0/0/1/1/1};
-\end{tikzpicture}
-\caption{Karnaugh-kaarten met essenti\"ele priemimplicanten van het leidend voorbeeld.}
-\label{fig:karnaughKaartenVoorbeeldEssentielePriemimplicanten}
-\end{figure}
+\importtikzfigure{karnaughKaartenVoorbeeldEssentielePriemimplicanten}{Karnaugh-kaarten met essenti\"ele priemimplicanten van het leidend voorbeeld.}
 \paragraph{Stap 4: Zoek de minimale dekking}
 De essenti\"ele priemimplicanten zijn de goedkoopste manier om de cellen die ze dekken te implementeren, we zien echter dat dit in de meeste gevallen onvoldoende is om de volledige functie te beschrijven. We dienen nog extra priemimplicanten toe te voegen om tot volledige dekking te komen. In het ideale geval doen we dit door alle mogelijke toevoegingen van priemimplicanten na te gaan. Dit is echter een erg arbeidsintensief proces. Men lost dit probleem dan ook meestal op met een ``\termen{gulzige strategie}'' ofwel ``\termen{greedy algorithm}''. Hierbij beschouwen we initieel de set van essenti\"ele priemgetallen, per iteratie voegen we de priemimplicant toe die het meeste aantal cellen dekt die tot dan toe ongedekt bleven. We stoppen op het moment dat de set van implicanten de volledige functie dekt. We illustreren dit proces op figuur \ref{fig:karnaughKaartenVoorbeeldGreedySearch} waarbij we elke iteratiestap tonen.
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-\def\ta{0.12}
-\def\tb{0.09}
-\def\tc{0.06}
-\kkaartdmarks{0}{0}{/0/2/1/3/\tc,/2/1/3/2/\tc}{}{};
-\kkaartd{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\draw (3,1) node{$\Rightarrow$};
-\kkaartdmarks{4}{0}{/0/2/1/3/\tc,/2/1/3/2/\tc}{/0/0/1/\tc}{};
-\kkaartd{4}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-
-\kkaartdmarks{0}{-3}{/0/0/1/0/\ta,/0/2/0/2/\tb}{}{};
-\kkaartd{0}{-3}{$g$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/0/1/1/1/1/0/0/0/0/0/0/1/1/1};
-\draw (3,-2) node{$\Rightarrow$};
-\kkaartdmarks{4}{-3}{/0/0/1/0/\ta,/0/2/0/2/\tb,/1/1/2/1/\ta}{}{};
-\kkaartd{4}{-3}{$g$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/0/1/1/1/1/0/0/0/0/0/0/1/1/1};
-\draw (7,-2) node{$\Rightarrow$};
-\kkaartdmarks{8}{-3}{/0/0/1/0/\ta,/0/2/0/2/\tb,/1/1/2/1/\ta,/1/3/2/3/\ta}{}{};
-\kkaartd{8}{-3}{$g$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/0/1/1/1/1/0/0/0/0/0/0/1/1/1};
-\draw (11,-2) node{$\Rightarrow$};
-\kkaartdmarks{12}{-3}{/0/0/1/0/\ta,/0/2/0/2/\tb,/1/1/2/1/\ta,/1/3/2/3/\ta,/2/1/2/2/\tc}{}{};
-\kkaartd{12}{-3}{$g$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/0/1/1/1/1/0/0/0/0/0/0/1/1/1};
-\end{tikzpicture}
-\caption{Werking van het greedy algoritme bij het leidend voorbeeld.}
-\label{fig:karnaughKaartenVoorbeeldGreedySearch}
-\end{figure}
+\importtikzfigure{karnaughKaartenVoorbeeldGreedySearch}{Werking van het greedy algoritme bij het leidend voorbeeld.}
 \paragraph{Synthese}
 Elk van de priemimplicanten die we geselecteerd hebben stelt het product voor van enkele variabelen. We implementeren de functie door de som te nemen van deze priemimplicanten. Voor het voorbeeld wordt dit dus:
 \begin{equation}
@@ -741,36 +123,11 @@ g=x_1'x_3'x_4'+x_1'x_2'x_3x_4+x_2x_3x_4'+x_2x_3'x_4+x_1x_2x_3
 \end{equation}
 \paragraph{Uitbreiding: Dambordpatroon}
 Een patroon die men vaak tegenkomt in Karnaugh-kaarten is het \termen{dambordpatroon}. Dit dambordpatroon hoeft niet noodzakelijk uit vierkanten te bestaan, rechthoek zijn ook mogelijk. Indien we dit patroon met de klassieke Karnaugh-methode implementeren bekomen we een groot aantal priemimplicanten wat leidt tot kostelijke implementaties, we kunnen in dat geval gebruik maken van XOR-operaties die we achter elkaar schakelen. Een aaneenschakeling van XOR-operaties heeft een grotere vertraging maar heeft een grote invloed op de kostprijs. Figuur \ref{fig:dambordpatronen} toont enkele dambordpatronen en hun implementatie met XOR-logica.
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-\kkaartd{0}{0}{$f_1$}{$x_1$/$x_2$/$x_3$/$x_4$}{0/1/1/0/1/0/0/1/1/0/0/1/0/1/1/0}
-\draw (1,-0.5) node[anchor=north]{\small{$f_1=\left(x_1 \oplus x_2\right) \oplus \left(x_3 \oplus x_4\right)$}};
-\kkaartd{5}{0}{$f_2$}{$x_1$/$x_2$/$x_3$/$x_4$}{0/1/1/0/0/1/1/0/1/0/0/1/1/0/0/1}
-\draw (6,-0.5) node[anchor=north]{\small{$f_2=\left(x_3 \oplus x_4\right) \oplus x_1$}};
-\kkaartd{10}{0}{$f_3$}{$x_1$/$x_2$/$x_3$/$x_4$}{0/1/0/1/0/1/0/1/1/0/1/0/1/0/1/0}
-\draw (11,-0.5) node[anchor=north]{\small{$f_3=x_1 \oplus x_4$}};
-\end{tikzpicture}
-\caption{Voorbeelden van dambordpatronen in Karnaugh-kaarten.}
-\label{fig:dambordpatronen}
-\end{figure}
+\importtikzfigure{dambordpatronen}{Voorbeelden van dambordpatronen in Karnaugh-kaarten.}
 \paragraph{Uitbreiding: Don't cares}
 \label{par:dontcare}
 In sommige gevallen dienen we slechts een beperkte set van invoer-configuraties te beschouwen. Stel bijvoorbeeld dat we een digitale display implementeren die getallen van 0 tot en met 9 voorstelt. In dat geval hebben we 4 ingangen nodig. Maar we zullen bijvoorbeeld nooit de ingang $1011_2=11_{10}$ tegenkomen. Er is echter wel een plaats gereserveerd op de Karnaugh-kaart voor deze configuratie. In dat geval maken we gebruik van de zogenaamde \termen{don't care}. Dit wordt genoteerd met een horizontale streep\footnote{Engels: dash.}, een ``X'' of ``d''. Een don't care is geen speciale vorm van uitvoer. We kunnen enkel nullen of enen teruggeven. Een don't care wordt enkel gebruikt om aan te geven dat we vrij mogen kiezen of de uitvoer een 0 of 1 wordt. Uiteraard proberen we een keuze te maken die de implementatie goedkoper maakt. We kunnen tot betere implementaties komen door een don't care als een 1 te zien indien dit de priemimplicanten kan vergroten. Op die manier bereiken deze priemgetallen immers een groter gebied waardoor ze minder variabelen bevatten. Op figuur \ref{fig:sevenDigitDisplay} geven we de Karnaugh-kaart van led $A$ en $B$ bij een \termen{seven-segment display}, samen met de priemimplicanten die we bekomen na het toewijzen van de don't cares. In appendix ?? staan de Karnaugh-kaarten van de andere leds. Deze kaarten zijn een goede oefening om het volledige proces te leren.
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-\def\ta{0.12}
-\def\tb{0.09}
-\def\tc{0.06}
-\kkaartdmarks{0}{0}{/2/0/3/3/\tc,/1/2/2/3/\tb,/0/1/3/2/\ta}{/0/1/1/\tb}{};
-\kkaartd{0}{0}{$A$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/0/1/1/0/1/1/1/1/1/-/-/-/-/-/-}
-\kkaartdmarks{4}{0}{/2/0/3/3/\tc,/0/0/3/0/\ta,/0/2/3/2/\ta}{/0/3/1/\tb}{};
-\kkaartd{4}{0}{$B$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/1/1/1/0/0/1/1/1/-/-/-/-/-/-}
-\end{tikzpicture}
-\caption{Karnaugh-kaart met don't cares van led $A$ en $B$ van een seven-segment display.}
-\label{fig:sevenDigitDisplay}
-\end{figure}
+\importtikzfigure{sevenDigitDisplay}{Karnaugh-kaart met don't cares van led $A$ en $B$ van een seven-segment display.}
 \paragraph{Uitbreiding: Meerdere uitgangen}
 Tot dusver hebben we steeds aangenomen dat we de functie voor \'e\'en signaaluitgang optimaliseren, uit de voorbeelden die we beschouwd hebben blijkt echter dat een component verschillende uitgangen moet uitrekenen (de seven-segment display). Daar we de functies implementeren met AND-OR logica is het mogelijk dat de AND-poorten van \'e\'en uitgang ook nuttig kunnen zijn voor de uitgang van een andere uitgang. Dit leidt misschien niet tot de goedkoopste schakeling per uitgang maar globaal kunnen we eventueel kosten besparen. We zullen hieronder een procedure bespreken die gebruik maakt van de priemimplicanten, er is echter geen garantie dat deze de globale goedkoopste schakeling realiseert. Soms is het zelfs goedkoper om met niet-priemimplicanten te werken. Met trail-and-error kunnen we dus soms tot nog goedkopere implementaties komen. Volgende procedure bekomt echter meestal een goed resultaat:
 \begin{enumerate}
@@ -780,165 +137,7 @@ Tot dusver hebben we steeds aangenomen dat we de functie voor \'e\'en signaaluit
 \end{enumerate}
 \paragraph{Duale vorm}
 Tot dusver hebben we telkens met behulp van Karnaugh-kaarten een AND-OR implementatie gerealiseerd. Zoals we al vaak zijn tegengekomen hebben quasi alle logische methodes een duale vorm. Ook de Karnaugh-kaarten kunnen we gebruiken om een minimale OR-AND implementatie te realiseren. In tegenstelling tot de AND-OR vorm draait alles hier rond nullen en niet rond enen. De priemimplicaten zijn hierbij gerelateerd aan 0-maxtermen: functies die overal 1 teruggeven behalve op een bepaald patroon. Verder werkt deze methode volledig analoog: we bepalen eerst de essenti\"ele priemimplicanten en voegen vervolgens andere priemimplicanten toe. We synthetiseren vervolgens de schakeling door een AND tussen alle gekozen priemimplicanten te plaatsen. Op figuur \ref{fig:karnaughKaartenVoorbeeldDualeVorm} voeren we deze methode uit op de $f$-functie van het leidend voorbeeld.
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-\def\ta{0.09}
-\def\tb{0.06}
-\draw (1,-0.5) node[anchor=north]{\small{Ingevulde Karnaugh-kaart}};
-\draw (3,1) node[anchor=north]{$\Rightarrow$};
-\kkaartd{0}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\draw (5,-0.5) node[anchor=north]{\small{Priemimplicanten}};
-\draw (7,1) node[anchor=north]{$\Rightarrow$};
-\kkaartdmarks{4}{0}{/0/1/1/1/\ta,/1/0/1/1/\tb,/1/0/2/0/\ta,/2/3/3/3/\ta}{}{/2/2/1/\tb};
-\kkaartd{4}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\draw (9,-0.5) node[anchor=north]{\small{Essenti\"ele Priemimplicanten}};
-\draw (11,1) node[anchor=north]{$\Rightarrow$};
-\kkaartdmarks{8}{0}{/0/1/1/1/\ta,/2/3/3/3/\ta}{}{};
-\kkaartd{8}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\kkaartdmarks{12}{0}{/0/1/1/1/\ta,/2/3/3/3/\ta,/1/0/2/0/\ta}{}{};
-\draw (13,-0.5) node[anchor=north]{\small{Resultaat}};
-\draw (7,-1) node[anchor=north]{\small{$f=\left(x_1+x_3'+x_4\right)\left(x_2'+x_3+x_4\right)\left(x_1'+x_3+x_4'\right)$}};
-\kkaartd{12}{0}{$f$}{$x_1$/$x_2$/$x_3$/$x_4$}{1/1/0/1/0/1/0/1/1/0/1/1/0/0/1/1};
-\end{tikzpicture}
-\caption{Duale methode met Karnaugh-kaarten.}
-\label{fig:karnaughKaartenVoorbeeldDualeVorm}
-\end{figure}
-% %Hoe gaat optimaliseren met Karnaugh-kaarten nu concreet in zijn werk? Om een bepaalde functie te optimaliseren genereren we een Karnaugh-kaart met als dimensie het aantal variabelen in de functie. Vervolgens vullen we de kaart in met de resultaten van de functie. We vullen dus 1 in in de cellen waarbij de functie voor die toestand een 1 genereert, dit doen we ook met 0 en don't cares. Vervolgens gaan we op zoek naar aaneengesloten\footnote{Aaneengesloten betekent niet dat ze op de Karnaugh-kaarten naast elkaar liggen. De modulo positionering telt ook mee.} gebieden met eenzelfde functiewaarde. De grootte van deze gebieden moet $2^i\times 2^j$ zijn. We selecteren dus rechthoeken waarbij zowel de lengte als breedte een macht van twee is. Deze rechthoeken vertegenwoordigen optimalisaties van bestaande logica. We proberen dus eerst grote rechthoeken te alloceren. Het doel is, elk gebied met hierop een 1 of eventueel een don't care, te selecteren. Hierbij mogen geen cellen met 0 geselecteerd worden. Bovendien moge cellen meerdere keren geselecteerd worden. Figuur \ref{fig:karnaughKaartExample} toont de Karnaugh-kaart van $e$ van de 7 segment display. Hierbij worden vervolgens de rechthoeken geselecteerd.
-% \begin{figure}[hbt]
-% \centering
-% \begin{tikzpicture}
-% \draw[thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-% \draw[thick] (0,0.5) -- ++(2,0);
-% \draw[thick] (0,1) -- ++(2,0);
-% \draw[thick] (0,1.5) -- ++(2,0);
-% \draw[thick] (0.5,0) -- ++(0,2);
-% \draw[thick] (1,0) -- ++(0,2);
-% \draw[thick] (1.5,0) -- ++(0,2);
-% \draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{$x$} (-0.125,1);
-% \draw[thick] (2.125,0.5) to node[sloped,above,rotate=180]{$y$} (2.125,1.5);
-% \draw[thick] (0.5,2.125) to node[sloped,above]{$z$} (1.5,2.125);
-% \draw[thick] (1,-0.125) to node[sloped,below]{$w$} (2,-0.125);
-% \draw (0.25,1.75) node{1};
-% \draw (1.75,1.75) node{0};
-% \draw (0.75,1.75) node{1};
-% \draw (1.25,1.75) node{0};
-% \draw (0.25,1.25) node{0};
-% \draw (1.75,1.25) node{0};
-% \draw (0.75,1.25) node{1};
-% \draw (1.25,1.25) node{0};
-% \draw (0.25,0.25) node{1};
-% \draw (1.75,0.25) node{0};
-% \draw (0.75,0.25) node{-};
-% \draw (1.25,0.25) node{-};
-% \draw (0.25,0.75) node{-};
-% \draw (1.75,0.75) node{-};
-% \draw (0.75,0.75) node{-};
-% \draw (1.25,0.75) node{-};
-% \draw (2.875,1) node{\Large $\Rightarrow$};
-% \begin{scope}[xshift=3.5 cm]
-% \draw[gray,thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-% \draw[gray,thick] (0,0.5) -- ++(2,0);
-% \draw[gray,thick] (0,1) -- ++(2,0);
-% \draw[gray,thick] (0,1.5) -- ++(2,0);
-% \draw[gray,thick] (0.5,0) -- ++(0,2);
-% \draw[gray,thick] (1,0) -- ++(0,2);
-% \draw[gray,thick] (1.5,0) -- ++(0,2);
-% \draw[gray,thick] (-0.125,0) to node[sloped,below,rotate=180]{$x$} (-0.125,1);
-% \draw[gray,thick] (2.125,0.5) to node[sloped,above,rotate=180]{$y$} (2.125,1.5);
-% \draw[gray,thick] (0.5,2.125) to node[sloped,above]{$z$} (1.5,2.125);
-% \draw[gray,thick] (1,-0.125) to node[sloped,below]{$w$} (2,-0.125);
-% \draw (0.25,1.75) node{1};
-% \draw (1.75,1.75) node{0};
-% \draw (0.75,1.75) node{1};
-% \draw (1.25,1.75) node{0};
-% \draw (0.25,1.25) node{0};
-% \draw (1.75,1.25) node{0};
-% \draw (0.75,1.25) node{1};
-% \draw (1.25,1.25) node{0};
-% \draw (0.25,0.25) node{1};
-% \draw (1.75,0.25) node{0};
-% \draw (0.75,0.25) node{-};
-% \draw (1.25,0.25) node{-};
-% \draw (0.25,0.75) node{-};
-% \draw (1.75,0.75) node{-};
-% \draw (0.75,0.75) node{-};
-% \draw (1.25,0.75) node{-};
-% \draw[dashed,thick,rounded corners] (0.55,0.05) rectangle ++(0.4,1.9);
-% \draw (1,-0.75) node{$z\cdot w'$};
-% \draw (2.875,1) node{\Large $+$};
-% \end{scope}
-% \begin{scope}[xshift=7 cm]
-% \draw[gray,thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-% \draw[gray,thick] (0,0.5) -- ++(2,0);
-% \draw[gray,thick] (0,1) -- ++(2,0);
-% \draw[gray,thick] (0,1.5) -- ++(2,0);
-% \draw[gray,thick] (0.5,0) -- ++(0,2);
-% \draw[gray,thick] (1,0) -- ++(0,2);
-% \draw[gray,thick] (1.5,0) -- ++(0,2);
-% \draw[gray,thick] (-0.125,0) to node[sloped,below,rotate=180]{$x$} (-0.125,1);
-% \draw[gray,thick] (2.125,0.5) to node[sloped,above,rotate=180]{$y$} (2.125,1.5);
-% \draw[gray,thick] (0.5,2.125) to node[sloped,above]{$z$} (1.5,2.125);
-% \draw[gray,thick] (1,-0.125) to node[sloped,below]{$w$} (2,-0.125);
-% \draw (0.25,1.75) node{1};
-% \draw (1.75,1.75) node{0};
-% \draw (0.75,1.75) node{1};
-% \draw (1.25,1.75) node{0};
-% \draw (0.25,1.25) node{0};
-% \draw (1.75,1.25) node{0};
-% \draw (0.75,1.25) node{1};
-% \draw (1.25,1.25) node{0};
-% \draw (0.25,0.25) node{1};
-% \draw (1.75,0.25) node{0};
-% \draw (0.75,0.25) node{-};
-% \draw (1.25,0.25) node{-};
-% \draw (0.25,0.75) node{-};
-% \draw (1.75,0.75) node{-};
-% \draw (0.75,0.75) node{-};
-% \draw (1.25,0.75) node{-};
-% \draw[dashed,thick,rounded corners] (0.05,-0.05) -- ++(0,0.5) -- ++(0.9,0) -- ++(0,-0.5);
-% \draw[dashed,thick,rounded corners] (0.05,2.05) -- ++(0,-0.5) -- ++(0.9,0) -- ++(0,0.5);
-% \draw (1,-0.75) node{$y'\cdot w'$};
-% \draw (2.875,1) node{\Large $\Rightarrow$};
-% \end{scope}
-% \begin{scope}[xshift=10.5 cm]
-% \draw[gray,thick] (0,0) -- ++(2,0) -- ++(0,2) -- ++(-2,0) -- cycle;
-% \draw[gray,thick] (0,0.5) -- ++(2,0);
-% \draw[gray,thick] (0,1) -- ++(2,0);
-% \draw[gray,thick] (0,1.5) -- ++(2,0);
-% \draw[gray,thick] (0.5,0) -- ++(0,2);
-% \draw[gray,thick] (1,0) -- ++(0,2);
-% \draw[gray,thick] (1.5,0) -- ++(0,2);
-% \draw[gray,thick] (-0.125,0) to node[sloped,below,rotate=180]{$x$} (-0.125,1);
-% \draw[gray,thick] (2.125,0.5) to node[sloped,above,rotate=180]{$y$} (2.125,1.5);
-% \draw[gray,thick] (0.5,2.125) to node[sloped,above]{$z$} (1.5,2.125);
-% \draw[gray,thick] (1,-0.125) to node[sloped,below]{$w$} (2,-0.125);
-% \draw (0.25,1.75) node{1};
-% \draw (1.75,1.75) node{0};
-% \draw (0.75,1.75) node{1};
-% \draw (1.25,1.75) node{0};
-% \draw (0.25,1.25) node{0};
-% \draw (1.75,1.25) node{0};
-% \draw (0.75,1.25) node{1};
-% \draw (1.25,1.25) node{0};
-% \draw (0.25,0.25) node{1};
-% \draw (1.75,0.25) node{0};
-% \draw (0.75,0.25) node{-};
-% \draw (1.25,0.25) node{-};
-% \draw (0.25,0.75) node{-};
-% \draw (1.75,0.75) node{-};
-% \draw (0.75,0.75) node{-};
-% \draw (1.25,0.75) node{-};
-% \draw[dashed,thick,rounded corners] (0.55,0.05) rectangle ++(0.4,1.9);
-% \draw[dashed,thick,rounded corners] (0.05,-0.05) -- ++(0,0.5) -- ++(0.9,0) -- ++(0,-0.5);
-% \draw[dashed,thick,rounded corners] (0.05,2.05) -- ++(0,-0.5) -- ++(0.9,0) -- ++(0,0.5);
-% \draw (1,-0.75) node{$e=z\cdot w'+y'\cdot w'$};
-% \end{scope}
-% \end{tikzpicture}
-% \caption{Karnaugh-kaart voor $e$ van de 7 segment display.}
-% \label{fig:karnaughKaartExample}
-% \end{figure}
-%Elke rechthoek vertegenwoordigt een geoptimaliseerde minterm. Hierbij worden factoren genegeerd waarbij zowel de 0 en 1 waarde tot de rechthoek behoren. Dit betekent bijgevolg dat hun waarde niet relevant is. Zo bevat de eerste rechthoek op figuur \ref{fig:karnaughKaarExample}.
+\importtikzfigure{karnaughKaartenVoorbeeldDualeVorm}{Duale methode met Karnaugh-kaarten.}
 \subsection{Quine-McCluskey}
 Een alternatieve methode voor Karnaugh-kaarten is het \termen{Quine-McCluskey algoritme}. Dit algoritme wordt gebruikt in CAD-pakketten voor booleaanse optimalisatie en werkt op basis van tabellen. Het algoritme zoekt ook naar priemimplicanten en essenti\"ele priemimplicanten om een functie te optimaliseren en is dus het tabel-equivalent van de methode met de Karnaugh-kaarten. Het algoritme werkt in exponenti\"ele tijd, namelijk \bigoh{3^n} met $n$ het aantal variabelen. In de meeste gevallen is het aantal variabelen te groot om deze functie te optimaliseren, in dat geval wordt er gewerkt met de Espresso heuristic logic minimizer.
 \subsection{Realisatie in meer dan 2 lagen}
@@ -964,153 +163,13 @@ Samen met de methodes uit subsectie \ref{ss:canoniekestandaardrealisatie} hebben
 \paragraph{}Om de verschillende implementaties te illustreren zullen we tot slot een schakeling implementeren in de verschillende vormen van logica. De Karnaugh-kaart en de implementaties staan op figuur \ref{fig:differentImplementationsSSD}. Een samenvatting van deze implementaties in termen van kosten en vertraging staan in tabel \ref{tbl:differentImplementationsSSD}.
 \begin{figure}[hbt]
 \centering
-\subfigure[Karnaugh-kaart]{
-\begin{tikzpicture}
-\kkaartd{0}{0}{$A$}{$x_1$/$x_2$/$x_3$/$x_4$}{0/0/0/0/1/1/1/1/0/0/1/0/0/0/1/1};
-\end{tikzpicture}}
-\subfigure[Canonieke SOP (AND-OR)]{
-\begin{tikzpicture}[circuit logic US]
-\def\dy{0.5};
-\def\dx{0.125};
-\def\dxp{0.75};
-\def\xpo{0.25};
-\def\wi{\xpo+\dxp*7.5};
-\foreach \i/\ii/\j in {a/4/1,b/3/2,c/2/3,d/1/4} {
-  \coordinate (x\i) at (0,\dy*\ii);
-  \coordinate (xn\i) at (0,\dy*\ii-0.5*\dy);
-  \node[anchor=east] (xt\i) at (x\i) {$x_\j$};
-  \pdot{x\i};
-  \draw (x\i) -- ++(\wi,0);
-  \node[not gate,anchor=input,scale=\dy] (Nx\i) at (xn\i -| \dx,0) {};
-  \draw (x\i) |- (Nx\i.input);
-  \draw (Nx\i.output) -- (xn\i -| \wi,0);
-}
-\foreach \x/\ya/\yb/\yc/\yd in {1/1.5/2/3.5/4.5,2/1.5/2/3.5/4,3/1.5/2/3/4.5,4/1.5/2/3/4,5/1/2/3/4.5,6/1/2/3/4,7/1/2.5/3/4.5} {
-  \node[and gate,scale=\dy,inputs={normal,normal,normal,normal},rotate=-90] (A\x) at (\xpo+\dxp*\x,-0.25) {};
-  \draw (A\x.input 4) -- (A\x.input 4 |- 0,5*\dy-\dy*\ya);
-  \pdot{A\x.input 4 |- 0,5*\dy-\dy*\ya};
-  \draw (A\x.input 3) -- (A\x.input 3 |- 0,5*\dy-\dy*\yb);
-  \pdot{A\x.input 3 |- 0,5*\dy-\dy*\yb};
-  \draw (A\x.input 2) -- (A\x.input 2 |- 0,5*\dy-\dy*\yc);
-  \pdot{A\x.input 2 |- 0,5*\dy-\dy*\yc};
-  \draw (A\x.input 1) -- (A\x.input 1 |- 0,5*\dy-\dy*\yd);
-  \pdot{A\x.input 1 |- 0,5*\dy-\dy*\yd};
-}
-\node[or gate,scale=\dy,inputs={normal,normal,normal,normal,normal,normal,normal},rotate=-90] (O) at (\xpo+\dxp*4,-1.25) {};
-\foreach \x/\y/\z in {1/1/7,2/2/6,3/3/5,4/4/4,5/3/3,6/2/2,7/1/1} {
-  \draw (O.input \x) -- (O.input \x |- 0,-0.85+0.065*\y) -| (A\z.output);
-}
-\draw (O.output) |- ++(\dy,-0.5*\dy) node[anchor=west]{$A$};
-\end{tikzpicture}}
-\subfigure[Minimale SOP]{
-\begin{tikzpicture}[circuit logic US]
-\def\dy{0.5};
-\def\dx{0.125};
-\def\dxp{0.75};
-\def\xpo{0.25};
-\def\wi{\xpo+\dxp*3.5};
-\foreach \i/\ii/\j in {a/4/1,b/3/2,c/2/3,d/1/4} {
-  \coordinate (x\i) at (0,\dy*\ii);
-  \coordinate (xn\i) at (0,\dy*\ii-0.5*\dy);
-  \node[anchor=east] (xt\i) at (x\i) {$x_\j$};
-  \pdot{x\i};
-  \draw (x\i) -- ++(\wi,0);
-}
-\foreach \i in {a,d} {
-  \node[not gate,anchor=input,scale=\dy] (Nx\i) at (xn\i -| \dx,0) {};
-  \draw (x\i) |- (Nx\i.input);
-  \draw (Nx\i.output) -- (xn\i -| \wi,0);
-}
-\foreach \x/\ya/\yb in {1/1.5/2,2/2/3} {
-  \node[and gate,scale=\dy,inputs={normal,normal},rotate=-90] (A\x) at (\xpo+\dxp*\x,-0.25) {};
-  \draw (A\x.input 2) -- (A\x.input 2 |- 0,5*\dy-\dy*\ya);
-  \pdot{A\x.input 2 |- 0,5*\dy-\dy*\ya};
-  \draw (A\x.input 1) -- (A\x.input 1 |- 0,5*\dy-\dy*\yb);
-  \pdot{A\x.input 1 |- 0,5*\dy-\dy*\yb};
-}
-\foreach \x/\ya/\yb/\yc/\yd in {3/1/3/4.5} {
-  \node[and gate,scale=\dy,inputs={normal,normal,normal},rotate=-90] (A\x) at (\xpo+\dxp*\x,-0.25) {};
-  \draw (A\x.input 3) -- (A\x.input 3 |- 0,5*\dy-\dy*\ya);
-  \pdot{A\x.input 3 |- 0,5*\dy-\dy*\ya};
-  \draw (A\x.input 2) -- (A\x.input 2 |- 0,5*\dy-\dy*\yb);
-  \pdot{A\x.input 2 |- 0,5*\dy-\dy*\yb};
-  \draw (A\x.input 1) -- (A\x.input 1 |- 0,5*\dy-\dy*\yc);
-  \pdot{A\x.input 1 |- 0,5*\dy-\dy*\yc};
-}
-\node[or gate,scale=\dy,inputs={normal,normal,normal},rotate=-90] (O) at (\xpo+\dxp*2,-1.25) {};
-\foreach \x/\y/\z in {1/1/3,2/2/2,3/1/1} {
-  \draw (O.input \x) -- (O.input \x |- 0,-0.85+0.065*\y) -| (A\z.output);
-}
-\draw (O.output) |- ++(\dy,-0.5*\dy) node[anchor=west]{$A$};
-\end{tikzpicture}}
-\subfigure[Canonieke POS (OR-AND)]{
-\begin{tikzpicture}[circuit logic US]
-\def\dy{0.5};
-\def\dx{0.125};
-\def\dxp{0.75};
-\def\xpo{0.25};
-\def\wi{\xpo+\dxp*9.5};
-\foreach \i/\ii/\j in {a/4/1,b/3/2,c/2/3,d/1/4} {
-  \coordinate (x\i) at (0,\dy*\ii);
-  \coordinate (xn\i) at (0,\dy*\ii-0.5*\dy);
-  \node[anchor=east] (xt\i) at (x\i) {$x_\j$};
-  \pdot{x\i};
-  \draw (x\i) -- ++(\wi,0);
-  \node[not gate,anchor=input,scale=\dy] (Nx\i) at (xn\i -| \dx,0) {};
-  \draw (x\i) |- (Nx\i.input);
-  \draw (Nx\i.output) -- (xn\i -| \wi,0);
-}
-\foreach \x/\ya/\yb/\yc/\yd in {1/1/2/3/4,2/1/2/3/4.5,3/1/2/3.5/4,4/1/2/3.5/4.5,5/1.5/2.5/3/4,6/1.5/2.5/3/4.5,7/1.5/2/3/4,8/1.5/2/3.5/4.5,9/1.5/2/3/4.5} {
-  \node[or gate,scale=\dy,inputs={normal,normal,normal,normal},rotate=-90] (A\x) at (\xpo+\dxp*\x,-0.25) {};
-  \draw (A\x.input 4) -- (A\x.input 4 |- 0,5*\dy-\dy*\ya);
-  \pdot{A\x.input 4 |- 0,5*\dy-\dy*\ya};
-  \draw (A\x.input 3) -- (A\x.input 3 |- 0,5*\dy-\dy*\yb);
-  \pdot{A\x.input 3 |- 0,5*\dy-\dy*\yb};
-  \draw (A\x.input 2) -- (A\x.input 2 |- 0,5*\dy-\dy*\yc);
-  \pdot{A\x.input 2 |- 0,5*\dy-\dy*\yc};
-  \draw (A\x.input 1) -- (A\x.input 1 |- 0,5*\dy-\dy*\yd);
-  \pdot{A\x.input 1 |- 0,5*\dy-\dy*\yd};
-}
-\node[and gate,scale=\dy,inputs={normal,normal,normal,normal,normal,normal,normal,normal,normal},rotate=-90] (O) at (\xpo+\dxp*5,-1.25) {};
-\foreach \x/\y/\z in {1/1/9,2/2/8,3/3/7,4/4/6,5/5/5,6/4/4,7/3/3,8/2/2,9/1/1} {
-  \draw (O.input \x) -- (O.input \x |- 0,-0.85+0.065*\y) -| (A\z.output);
-}
-\draw (O.output) |- ++(\dy,-0.5*\dy) node[anchor=west]{$A$};
-\end{tikzpicture}}
-\subfigure[Minimale POS]{
-\begin{tikzpicture}[circuit logic US]
-\def\dy{0.5};
-\def\dx{0.125};
-\def\dxp{0.75};
-\def\xpo{0.25};
-\def\wi{\xpo+\dxp*3.5};
-\foreach \i/\ii/\j in {a/4/1,b/3/2,c/2/3,d/1/4} {
-  \coordinate (x\i) at (0,\dy*\ii);
-  \coordinate (xn\i) at (0,\dy*\ii-0.5*\dy);
-  \node[anchor=east] (xt\i) at (x\i) {$x_\j$};
-  \pdot{x\i};
-  \draw (x\i) -- ++(\wi,0);
-}
-\foreach \i in {a,b,c,d} {
-  \node[not gate,anchor=input,scale=\dy] (Nx\i) at (xn\i -| \dx,0) {};
-  \draw (x\i) |- (Nx\i.input);
-  \draw (Nx\i.output) -- (xn\i -| \wi,0);
-}
-\foreach \x/\ya/\yb in {1/1/2,2/1.5/3.5,3/2.5/4.5} {
-  \node[or gate,scale=\dy,inputs={normal,normal},rotate=-90] (A\x) at (\xpo+\dxp*\x,-0.25) {};
-  \draw (A\x.input 2) -- (A\x.input 2 |- 0,5*\dy-\dy*\ya);
-  \pdot{A\x.input 2 |- 0,5*\dy-\dy*\ya};
-  \draw (A\x.input 1) -- (A\x.input 1 |- 0,5*\dy-\dy*\yb);
-  \pdot{A\x.input 1 |- 0,5*\dy-\dy*\yb};
-}
-\node[and gate,scale=\dy,inputs={normal,normal,normal},rotate=-90] (O) at (\xpo+\dxp*2,-1.25) {};
-\foreach \x/\y/\z in {1/1/3,2/2/2,3/1/1} {
-  \draw (O.input \x) -- (O.input \x |- 0,-0.85+0.065*\y) -| (A\z.output);
-}
-\draw (O.output) |- ++(\dy,-0.5*\dy) node[anchor=west]{$A$};
-\end{tikzpicture}}
+\subfigure[Karnaugh-kaart]{\importtikz{karnaughKaartSopPos}}
+\subfigure[Canonieke SOP (AND-OR)]{\importtikz{canonicSop}}
+\subfigure[Minimale SOP]{\importtikz{minimalSop}}
+\subfigure[Canonieke POS (OR-AND)]{\importtikz{canonicPos}}
+\subfigure[Minimale POS]{\importtikz{minimalPos}}
 \caption{Verschillende implementaties van dezelfde logische functie.}
-\label{fig:differentImplementationsSSD}
+\figlab{differentImplementationsSSD}
 \end{figure}
 \begin{table}[hbt]
 \centering
@@ -1217,47 +276,12 @@ Om getallen in het decimaal stelsel te kunnen optellen gebruiken we een repetiti
 In deze paragraaf synthetiseren we een \termen{half adder (HA)}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in figuur \ref{fig:halfAdder}.
 \begin{figure}[hbt]
 \centering
-\subfigure[Waarheidstabel]{
-\begin{tikzpicture}
-\draw (0,0) node{\begin{tabular}{cc|cc}
-$x_i$&$y_i$&$s_i$&$c_{i+1}$\\\hline
-0&0&0&0\\
-0&1&1&0\\
-1&0&1&0\\
-1&1&0&1
-\end{tabular}};
-\end{tikzpicture}}
-\subfigure[Karnaugh-kaarten]{\begin{tikzpicture}
-\kkaartb{0}{0}{$c_{i+1}$}{$x_i$/$y_i$}{0/0/0/1}
-\kkaartb{2.25}{0}{$s_i$}{$x_i$/$y_i$}{0/1/1/0}
-\end{tikzpicture}}
-\subfigure[Interface]{\begin{tikzpicture}
-\node[halfadder] (HA) at (0,0) {HA};
-\draw[->] (HA.co) -- ++(-0.25,0) node[anchor=east]{$c_{i+1}$};
-\draw[<-] (HA.x) -- ++(0,0.25) node[anchor=south]{$x_i$};
-\draw[<-] (HA.y) -- ++(0,0.25) node[anchor=south]{$y_i$};
-\draw[->] (HA.s) -- ++(0,-0.25) node[anchor=north]{$s_i$};
-\end{tikzpicture}}
-\subfigure[Mogelijke implementatie]{\begin{tikzpicture}[circuit logic US]
-\draw (-1.5,-1) rectangle (1.5,1);
-\draw[dashed] (-0.5,1) -- ++(0,0.5) node[anchor=south]{$x_i$};
-\draw[dashed] (0.5,1) -- ++(0,0.5) node[anchor=south]{$y_i$};
-\draw[dashed] (-1.5,0) -- ++(-0.5,0) node[anchor=east]{$c_{i+1}$};
-\draw[dashed] (0,-1) -- ++(0,-0.5) node[anchor=north]{$s_i$};
-\node[and gate,rotate=-90] (A) at (-0.5,0) {};
-\node[xor gate,rotate=-90] (X) at (0.5,0) {};
-\draw (X.output) -- (X.output |- 0,-0.75) -| (0,-1);
-\draw (A.output) |- (-1.25,-0.75) |- (-1.5,0);
-\draw (-0.5,1) |- (A.input 2 |- 0,0.75) -- (A.input 2);
-\draw (0.5,1) |- (X.input 1 |- 0,0.625) -- (X.input 1);
-\draw (0.5,0.625) -| (A.input 1);
-\draw (-0.5,0.75) -| (X.input 2);
-\pdot{0.5,0.625}
-\pdot{-0.5,0.75}
-\end{tikzpicture}
-\label{fig:halfAdderImplementation}}
+\subfigure[Waarheidstabel]{\importtikz{halfadder-truthtable}}
+\subfigure[Karnaugh-kaarten]{\importtikz{halfadder-karnaugh}}
+\subfigure[Interface]{\importtikz{halfadder-interface}}
+\subfigure[Mogelijke implementatie]{\importtikz{halfadder-implementation}}
 \caption{Half adder (HA).}
-\label{fig:halfAdder}
+\figlab{halfAdder}
 \end{figure}
 Deze combinatorische functies kunnen we verwezenlijken met een AND en XOR poort.
 \subsubsection{Full adder}
@@ -1279,113 +303,17 @@ $x_i$&$y_i$&$c_i$&$s_i$&$c_{i+1}$\\\hline
 1&1&1&1&1
 \end{tabular}};
 \end{tikzpicture}}
-\subfigure[Karnaugh-kaarten]{\begin{tikzpicture}
-\kkaartc{0}{0}{$s_i$}{$x_i$/$y_i$/$c_i$}{0/1/1/0/1/0/0/1}
-\kkaartc{2.25}{0}{$c_{i+1}$}{$x_i$/$y_i$/$c_i$}{0/0/0/1/0/1/1/1}
-\end{tikzpicture}}
-\subfigure[Interface]{\begin{tikzpicture}
-\node[fulladder] (FA) at (0,0) {FA};
-\draw[<-] (FA.ci) -- ++(0.25,0) node[anchor=west]{$c_i$};
-\draw[->] (FA.co) -- ++(-0.25,0) node[anchor=east]{$c_{i+1}$};
-\draw[<-] (FA.x) -- ++(0,0.25) node[anchor=south]{$x_i$};
-\draw[<-] (FA.y) -- ++(0,0.25) node[anchor=south]{$y_i$};
-\draw[->] (FA.s) -- ++(0,-0.25) node[anchor=north]{$s_i$};
-\end{tikzpicture}}
-\subfigure[Mogelijke implementatie]{\begin{tikzpicture}[circuit logic US]
-\draw (-2.5,-1.5) rectangle (1.25,1.75);
-\draw[dashed] (-1.25,1.75) -- ++(0,0.5) node[anchor=south]{$x_i$};
-\draw[dashed] (0,1.75) -- ++(0,0.5) node[anchor=south]{$y_i$};
-\draw[dashed] (-2.5,0.125) -- ++(-0.5,0) node[anchor=east]{$c_{i+1}$};
-\draw[dashed] (1.25,0.125) -- ++(0.5,0) node[anchor=west]{$c_i$};
-\draw[dashed] (-0.625,-1.5) -- ++(0,-0.5) node[anchor=north]{$s_i$};
-\node[nand gate,rotate=-90] (A1) at (-2,0.66) {};
-\node[nand gate,rotate=-90] (A2) at (-1.25,0.66) {};
-\node[nand gate,rotate=-90] (A3) at (-0.5,0.66) {};
-\node[nand gate,inputs={normal,normal,normal},rotate=-90] (O) at (-1.25,-0.66) {};
-\draw (A1.output) -- (A1.output |- 0,0) -| (O.input 3);
-\draw (A2.output) -- (O.input 2);
-\draw (A3.output) -- (A3.output |- 0,0) -| (O.input 1);
-\draw (O.output) |- (-2.25,-1.25) |- (-2.5,0.125);
-\node[xor gate,rotate=-90] (X1) at (0.5,0.66) {};
-\node[xor gate,rotate=-90] (X2) at (0.75,-0.66) {};
-\draw (X2.output) -- (X2.output |- 0,-1.25) -| (-0.625,-1.5);
-\draw (1.25,0.125) -| (X2.input 1);
-\draw (A1.input 2) |- (X1.input 1 |- 0,1.35) -- (X1.input 1);
-\draw (A1.input 1) |- (X1.input 2 |- 0,1.225) -- (X1.input 2);
-\draw (A2.input 2) -- (A2.input 2 |- 0,1.35);
-\draw (A2.input 1) |- (1,1.5) -- (1,0.125);
-\draw (A3.input 2) -- (A3.input 2 |- 0,1.225);
-\draw (A3.input 1) -- (A3.input 1 |- 0,1.5);
-\draw (X1.output) -- (X1.output |- 0,0) -| (X2.input 2);
-\draw (-1.25,1.35) -- (-1.25,1.75);
-\draw (0,1.225) -- (0,1.75);
-\pdot{-1.25,1.35}
-\pdot{0,1.225}
-\pdot{A2.input 2 |- 0,1.35}
-\pdot{A3.input 2 |- 0,1.225}
-\pdot{A3.input 1 |- 0,1.5}
-\pdot{1,0.125}
-\end{tikzpicture}}
-\subfigure[Functionele ontbinding]{
-\begin{tikzpicture}[circuit logic US]
-\coordinate (xi) at (-1.33333,1.75);
-\coordinate (yi) at (0.08333,1.75);
-\coordinate (ci) at (1.5,0.25);
-\coordinate (co) at (-2.75,0.25);
-\coordinate (si) at (-0.625,-1.25);
-\draw (co |- xi) rectangle (ci |- si);
-\draw[dashed] (xi) -- ++(0,0.5) node[anchor=south]{$x_i$};
-\draw[dashed] (yi) -- ++(0,0.5) node[anchor=south]{$y_i$};
-\draw[dashed] (co) -- ++(-0.5,0) node[anchor=east]{$c_{i+1}$};
-\draw[dashed] (ci) -- ++(0.5,0) node[anchor=west]{$c_i$};
-\draw[dashed] (si) -- ++(0,-0.5) node[anchor=north]{$s_i$};
-\node[halfadder] (HA1) at (-1.5,0.625) {HA};
-\node[halfadder] (HA2) at (0.5,0.625) {HA};
-\draw (xi) -- ++(0,-0.125) -| (HA1.y);
-\draw (yi) -- ++(0,-0.25) -| (HA1.x);
-\draw (HA1.s) |- ++(0.875,-0.25) |- (HA2.y |- 0,1.375) -- (HA2.y);
-\draw (ci) -- ++(-0.125,0) |- (HA2.x |- 0,1.375) -- (HA2.x);
-\draw (HA2.s) -- ++(0,-1.125) -| (si);
-\node[or gate,rotate=180] (O) at (-1.5,-0.75) {};
-\draw (HA1.co) -- ++(-0.125,0) |- (O.input 2 |- 0,-0.25) -| (O.input 2 -| -1,0) -- (O.input 2);
-\draw (HA2.co) -- ++(-0.125,0) |- (O.input 1);
-\draw (O.output) -| (co -| -2.625,0) -- (co);
-\end{tikzpicture}
-\label{fig:fullAdderFunctionalImplementation}
-}
+\subfigure[Karnaugh-kaarten]{\importtikz{fulladder-karnaugh}}
+\subfigure[Interface]{\importtikz{fulladder-interface}}
+\subfigure[Mogelijke implementatie]{\importtikz{fulladder-implementation}}
+\subfigure[Functionele ontbinding]{\importtikz{fulladder-functional}}
 \caption{Full adder (FA).}
-\label{fig:fullAdder}
+\figlab{fullAdder}
 \end{figure}
-We kunnen ook een implementatie synthetiseren met behulp van functionele ontbinding. Bij een full adder voeren we immers twee optellingen uit, de volgorde speelt hierbij geen rol. Indien minstens \'e\'en van de twee optellingen overdracht genereert, is er sprake van overdracht bij de full adder. We kunnen een full adder dus ook implementeren zoals op figuur \ref{fig:fullAdderFunctionalImplementation}. Indien we de half adders dan implementeren zoals we dit op figuur \ref{fig:halfAdderImplementation}, zien we dat we \'e\'en poort uitsparen. Dit betalen we echter met grotere vertragingen, iets wat bij optellingen met grote getallen niet gewenst is.
+We kunnen ook een implementatie synthetiseren met behulp van functionele ontbinding. Bij een full adder voeren we immers twee optellingen uit, de volgorde speelt hierbij geen rol. Indien minstens \'e\'en van de twee optellingen overdracht genereert, is er sprake van overdracht bij de full adder. We kunnen een full adder dus ook implementeren zoals op figuur \ref{fig:fulladder-functional}. Indien we de half adders dan implementeren zoals we dit op figuur \ref{fig:halfadder-mplementation}, zien we dat we \'e\'en poort uitsparen. Dit betalen we echter met grotere vertragingen, iets wat bij optellingen met grote getallen niet gewenst is.
 \subsubsection{Ripple-carry opteller}
 Met behulp van een half adder en $n$ full adders kunnen we vervolgens een opteller realiseren die twee $n+1$ bit getallen optelt. Dit doen we met behulp van een \termen{Ripple-carry opteller}. Figuur \ref{fig:rippleCarryAdder}
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}
-\node[fulladder] (FA0) at (0,0) {FA$_0$};
-\node[fulladder] (FA1) at (-2,0) {FA$_1$};
-\node[fulladder] (FA2) at (-4,0) {FA$_2$};
-\node[fulladder] (FAi) at (-7,0) {FA$_i$};
-\node[fulladder] (FAn) at (-10,0) {FA$_n$};
-\node (FAidr) at (-5.5,0) {$\ldots$};
-\node (FAidl) at (-8.5,0) {$\ldots$};
-\draw (FA0.ci) -- ++(0.5,0) node[anchor=west,scale=0.7]{$c_0=0$};
-\draw (FA0.co) -- (FA1.ci);
-\draw (FA1.co) -- (FA2.ci);
-\draw (FA2.co) -- ++(-0.25,0);
-\draw (FAi.ci) -- ++(0.25,0);
-\draw (FAi.co) -- ++(-0.25,0);
-\draw (FAn.ci) -- ++(0.25,0);
-\draw (FAn.co) -- ++(-0.5,0) node[anchor=east,scale=0.7]{$c_n$};
-\foreach \i/\l in {0/FA0,1/FA1,2/FA2,i/FAi,n-1/FAn} {
-  \draw (\l.x) -- ++(0,0.5) node[anchor=south,scale=0.7]{$y_{\i}$};
-  \draw (\l.y) -- ++(0,0.5) node[anchor=south,scale=0.7]{$x_{\i}$};
-  \draw (\l.s) -- ++(0,-0.5) node[anchor=north,scale=0.7]{$s_{\i}$};
-}
-\end{tikzpicture}
-\caption{Schematische voorstelling van een $n$-bit Ripple-carry opteller.}
-\label{fig:rippleCarryAdder}
-\end{figure}
+\importtikzfigure{rippleCarryAdder}{Schematische voorstelling van een $n$-bit Ripple-carry opteller.}
 toont hoe dit in z'n werk gaat: we tellen de laatste twee bits op met een half adder, de overige bits tellen we op met full adders. De carry uitgangen van een adder gaat naar de de ingang van de volgende adder. De allerlaatste carry uitgang $c_n$, kan men gebruiken als een \termen{overflow} uitgang. Indien we immers twee $n$-bit getallen met elkaar optellen, kunnen sommige resultaten $n+1$-bit getallen vereisen om nog voorgesteld te kunnen worden. In een ander geval wordt deze uitgang gebruikt om de waarde van de $n+1$-ste bit te bepalen. In dat geval heeft de uitgang meer bits dan de operanden. Uiteraard kunnen we de half adder vervangen door een full adder met als carry ingang 0.
 \paragraph{}
 Omdat we meestal getallen met een groot aantal bit optellen\footnote{Op de meeste processoren is dat 32 of 64 bit.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen 1 XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
@@ -1403,148 +331,22 @@ Een \termen{Carry-lookahead opteller (CLA)} is een component ter vervanging van 
 De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementatie, de waarheidstabellen, interface en een mogelijke implementatie staan op figuur \ref{fig:carryLookaheadAdder}.
 \begin{figure}[hbt]
 \centering
-\subfigure[Waarheidstabel]{
-\begin{tikzpicture}
-\draw (0,0) node{\begin{tabular}{ccc|ccc}
-$x_i$&$y_i$&$c_i$&$s_i$&$g_i$&$p_i$\\\hline
-0&0&0&0&0&0\\
-0&0&1&1&0&0\\
-0&1&0&1&0&1\\
-0&1&1&0&0&1\\
-1&0&0&1&0&1\\
-1&0&1&0&0&1\\
-1&1&0&0&1&0\\
-1&1&1&1&1&0
-\end{tabular}};
-\end{tikzpicture}}
-\subfigure[Karnaugh-kaarten]{\begin{tikzpicture}
-\kkaartc{1.125}{3}{$s_i$}{$x_i$/$y_i$/$c_i$}{0/1/1/0/1/0/0/1}
-\kkaartc{0}{0}{$g_i$}{$x_i$/$y_i$/$c_i$}{0/0/0/0/0/0/1/1}
-\kkaartc{2.25}{0}{$p_i$}{$x_i$/$y_i$/$c_i$}{0/0/1/1/1/1/0/0}
-\end{tikzpicture}}
-\subfigure[Interface]{\begin{tikzpicture}
-\node[cla] (CLA) at (0,0) {};
-\draw[<-] (CLA.x) -- ++(0,0.25) node[anchor=south]{$x_i$};
-\draw[<-] (CLA.y) -- ++(0,0.25) node[anchor=south]{$y_i$};
-\draw[->] (CLA.g) -- ++(0,-0.25) node[anchor=north]{$g_i$};
-\draw[->] (CLA.p) -- ++(0,-0.25) node[anchor=north]{$p_i$};
-\draw[->] (CLA.s) -- ++(-0.25,0) node[anchor=east]{$s_i$};
-\draw[<-] (CLA.c) -- ++(0.25,0) node[anchor=west]{$c_i$};
-\end{tikzpicture}}
-\subfigure[Mogelijke implementatie]{\begin{tikzpicture}[circuit logic US]
-\coordinate (x) at (-0.75,1);
-\coordinate (y) at (0.75,1);
-\coordinate (xb) at (x |- 0,0.875);
-\coordinate (yb) at (y |- 0,0.75);
-\coordinate (g) at (x |- 0,-1);
-\coordinate (p) at (y |- g);
-\coordinate (s) at (-1.25,0);
-\coordinate (sb) at (s -| -1.125,0);
-\coordinate (c) at (1.25,0);
-\coordinate (cb) at (c -| 1.125,0);
-\draw (s |- x) rectangle (c |- g);
-\node[and gate,rotate=-90] (A) at (g |- 0,0.15) {};
-\node[xor gate,rotate=-90] (X0) at (p |- 0,0.15) {};
-\node[xor gate,rotate=180] (X1) at (0,-0.55) {};
-\draw (x) -- (xb);
-\draw (y) -- (yb);
-\draw (s) -- (sb);
-\draw (c) -- (cb);
-\draw (xb) -| (X0.input 2);
-\draw (yb) -| (X0.input 1);
-\draw (xb) -| (A.input 2);
-\draw (yb) -| (A.input 1);
-\draw (X0.output) -- (p);
-\draw (X1.output) -| (sb);
-\draw (X1.input 1) -| (cb);
-\draw (X1.input 2) -- (X1.input 2 -| X0.output);
-\draw (A.output) -- (g);
-\draw[dashed] (x) -- ++(0,0.5) node[anchor=south]{$x_i$};
-\draw[dashed] (y) -- ++(0,0.5) node[anchor=south]{$y_i$};
-\draw[dashed] (s) -- ++(-0.5,0) node[anchor=east]{$s_i$};
-\draw[dashed] (c) -- ++(0.5,0) node[anchor=west]{$c_i$};
-\draw[dashed] (g) -- ++(0,-0.5) node[anchor=north]{$g_i$};
-\draw[dashed] (p) -- ++(0,-0.5) node[anchor=north]{$p_i$};
-\pdot{xb}
-\pdot{yb}
-\pdot{X0.output |- X1.input 2}
-\end{tikzpicture}}
+\subfigure[Waarheidstabel]{\importtikz{cla-truthtable}}
+\subfigure[Karnaugh-kaarten]{\importtikz{cla-karnaugh}}
+\subfigure[Interface]{\importtikz{cla-interface}}
+\subfigure[Mogelijke implementatie]{\importtikz{cla-implementation}}
 \caption{Carry-Lookahead Opteller (CLA).}
-\label{fig:carryLookaheadAdder}
+\figlab{carryLookaheadAdder}
 \end{figure}
 Een belangrijke opmerking bij dit component is dat we de overdracht $c_{i+1}$ vervolgens kunnen berekenen als $c_{i+1}=g_i+c_ip_i$. De overdacht hangt dus niet rechtstreeks af van $x_i$ of $y_i$, deze eigenschap is belangrijk voor de synthese van een ander component: de CLA-generator.
 \subsubsection{CLA-generator}
-Om een opteller te realiseren moeten we, net zoals bij de Ripple-carry opteller, alleen nog de glue voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \termen{CLA-generator}. Een $n$-bit CLA-generator is een component met ingangen $\left(c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}\right)$. De component heeft tot doel om de overdracht (carry) te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\left(c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}\right)$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:CLAGeneratorSchematic} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
+Om een opteller te realiseren moeten we, net zoals bij de Ripple-carry opteller, alleen nog de glue voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \termen{CLA-generator}. Een $n$-bit CLA-generator is een component met ingangen $\left(c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}\right)$. De component heeft tot doel om de overdracht (carry) te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\left(c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}\right)$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
 \begin{figure}[hbt]
 \centering
-\subfigure[Structuur van de CLA-generator.]{
-\begin{tikzpicture}
-\draw (-12.75 cm,0 cm) rectangle (0.75 cm,-1.5 cm);
-\draw (0.75,-0.75) -- ++(1,0) node[anchor=west,scale=0.7]{$c_0$};
-\foreach\x/\i/\j in {0/0/1,1/1/2,2/2/3,4/n-1/n} {
-  \node[cla] (CLA\x) at (-3*\x,1) {\tiny{CLA${_{\i}}$}};
-  \draw (CLA\x.x) -- (CLA\x.x |- 0,1.85) node[anchor=south,scale=0.7]{$x_{\i}$};
-  \draw (CLA\x.y) -- (CLA\x.y |- 0,1.85) node[anchor=south,scale=0.7]{$y_{\i}$};
-  \draw[->] (CLA\x.s) -| (-3*\x-1.25,1.85) node[anchor=south,scale=0.7]{$s_{\i}$};
-  \draw (CLA\x.g) -- (CLA\x.g |- 0,0);
-  \draw (CLA\x.p) -- (CLA\x.p |- 0,0);
-  \draw (CLA\x.p |- 0,0) node[anchor=north,port labels]{p$_{\mbox{\tiny{\i}}}$};
-  \draw (CLA\x.g |- 0,0) node[anchor=north,port labels]{g$_{\mbox{\tiny{\i}}}$};
-  \draw (-3*\x,-1.5) node[anchor=south,port labels]{c$_{\mbox{\tiny{\j}}}$};
-  \draw[->] (-3*\x,-1.5) -- ++(0,-0.5) node[anchor=north,scale=0.7]{$c_{\j}$};
-}
-\draw (0.75,-0.75) node[anchor=east,port labels]{c$_{\mbox{\tiny{0}}}$};
-\draw (1.25,-0.75) |- (CLA0.c);
-\pdot{1.25,-0.75}
-\foreach\x/\y in {1/0,2/1} {
-  \pdot{-3*\y,-1.75}
-  \draw (-3*\y,-1.75) -| (CLA\x.c -| -3*\x+1.25,0) -- (CLA\x.c);
-}
-\draw (-12.75,-0.5) node[anchor=west,port labels]{g$_{\mbox{\tiny{0,n-1}}}$};
-\draw (-12.75,-1) node[anchor=west,port labels]{p$_{\mbox{\tiny{0,n-1}}}$};
-\pdot{-6,-1.75}
-\draw (-6,-1.75) -| (-9+1.25,1) -- (-9+0.5,1) node[anchor=east]{$\ldots$};
-\draw (CLA4.c) -| (-9-1.25,-1.75) -- (-9-0.5,-1.75) node[anchor=west]{$\ldots$};
-\draw (-6.2,-0.75) node{\large{CLA-generator}};
-\draw[->] (-12.75,-0.5) -- ++(-0.5,0) node[anchor=east,scale=0.7]{$g_{0,n-1}$};
-\draw[->] (-12.75,-1) -- ++(-0.5,0) node[anchor=east,scale=0.7]{$p_{0,n-1}$};
-\end{tikzpicture}
-\label{fig:CLAGeneratorSchematic}}
-\subfigure[Cascade van CLA-generators met $n=9$, $k=3$.]{
-\begin{tikzpicture}
-\foreach\x in {0,1,...,8} {
-  \node[cla,scale=0.75] (CLA\x) at (-1.5*\x,0) {\small{CLA$_{\x}$}};
-  \draw (CLA\x.x) -- ++(0,0.5) node[anchor=south,scale=0.7]{$x_{\x}$};
-  \draw (CLA\x.y) -- ++(0,0.5) node[anchor=south,scale=0.7]{$y_{\x}$};
-  \draw[->] (CLA\x.s) -| ++(-0.075,0.875) node[anchor=south,scale=0.7]{$s_{\x}$};
-}
-\foreach\x in {0,1,2} {
-  \node[clag3,scale=0.75] (CLAG1\x) at (-4.5*\x-1.5,-1.5) {\small{CLA-Generator$_{1,\x}$}};
-}
-\node[clag3,scale=0.75,minimum width=17.5cm] (CLAG20) at (-6,-3) {\small{CLA-Generator$_{2,0}$}};
-\foreach\x/\a/\y in {1/a/0,2/b/0,3/c/0,4/a/1,5/b/1,6/c/1,7/a/2,8/b/2} {
-  \draw (CLA\x.c) -- ++(0.15,0) |- (CLAG1\y.c\a |- 0,-2) -- (CLAG1\y.c\a);
-}
-\foreach\x/\a/\y in {1/a/0,2/b/1} {
-  \draw (CLAG1\x.c) -- ++(0.075,0) |- (CLAG20.c\a |- 0,-3.5) -- (CLAG20.c\a);
-  \draw (CLAG1\y.pab) -| ++(-0.075,-0.6) -| (CLAG20.p\a);
-  \draw (CLAG1\y.gab) -| ++(-0.15,-0.9375) -| (CLAG20.g\a);
-}
-\foreach\a/\y in {c/2} {
-  \draw (CLAG1\y.pab) -| ++(-0.075,-0.6) -| (CLAG20.p\a);
-  \draw (CLAG1\y.gab) -| ++(-0.15,-0.9375) -| (CLAG20.g\a);
-}
-\draw (CLA0.c) -- ++(0.3,0) |- (CLAG20.c);
-\draw (CLAG10.c) -- ++(0.6,0) node[anchor=west,scale=0.7]{$c_0$};
-\pdot{CLAG10.c -| 0.8625,0}
-\foreach\x/\a/\y in {0/a/0,1/b/0,2/c/0,3/a/1,4/b/1,5/c/1,6/a/2,7/b/2,8/c/2} {
-  \draw (CLA\x.g) -- (CLAG1\y.g\a);
-  \draw (CLA\x.p) -- (CLAG1\y.p\a);
-}
-\end{tikzpicture}
-\label{fig:CLAGeneratorCascade}}
+\subfigure[Structuur van de CLA-generator.]{\importtikz{clag-structure}}
+\subfigure[Cascade van CLA-generators met $n=9$, $k=3$.]{\importtikz{clag-cascade}}
 \caption{CLA-generator.}
-\label{fig:CLAGenerator}
+\figlab{CLAGenerator}
 \end{figure}
 Eerst zullen we een methode ontwikkelen om een overdracht $c_i$ te berekenen. Een overdracht kan maar op twee manieren tot stand komen: ofwel wordt deze gegenereerd, ofwel wordt deze gepropageerd. Dit formaliseren we als:
 \begin{equation}
@@ -1571,7 +373,7 @@ Toegegeven dat de orde van de vertraging nog steeds linear is, maar de factor vo
 \begin{equation}
 \mbox{vertraging}=3.2+\left(2\left\lceil\log_kn\right\rceil-1\right)\times\left(4+0.8k\right)
 \end{equation}
-Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. Figuur \ref{fig:CLAGeneratorCascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de rede van de twee extra ingangen duidelijk.
+Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. Figuur \ref{fig:clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de rede van de twee extra ingangen duidelijk.
 \subsection{Negatieve getallen}
 Om getallen te kunnen aftrekken, zullen we het getalbegrip uitbreiden, zodat deze ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. Hierbij moeten we in gedachten houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen.
 \subsubsection{`Sign-Magnitude'-voorstelling}
@@ -1631,67 +433,14 @@ $1111$&$+15$&$-7$&$-0$&$-1$
 Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, zullen we voor ieder van deze voorstellingen een schema uitwerken hoe we getallen kunnen optellen en aftrekken. Deze schema's worden weergegeven in figuur \ref{fig:addSubNegSchematic}.
 \begin{figure}[hbt]
 \centering
-\subfigure[Sign-magnitude]{
-\begin{tikzpicture}
-\node[asmterminal] (E) at (0,0) {Einde};
-\node[asmcommand] (C1) at (-3,1) {$m_r=m_2-m_1$\\$s_r=s_2$};
-\node[asmcommand] (C2) at (-1,1) {$m_r=m_1-m_2$\\$s_r=s_1$};
-\node[asmcommand] (C3) at (1,1) {$m_r=0$\\$s_r=0$};
-\node[asmcommand] (C4) at (3,1) {$m_r=m_1+m_2$\\$s_r=s_1$};
-\node[asmcondit] (I1) at (-2,2) {$m_1>m_2$};
-\node[asmcondit] (I2) at (-0.5,3) {$m_1=m_2$};
-\node[asmcondit] (I3) at (1.25,4) {$s_1=s_2$};
-\node[asmcommand] (C5) at (0.25,5) {$s_2=s_2'$};
-\node[asmterminal] (S1) at (0.25,6) {Begin\\aftrekking};
-\node[asmterminal] (S2) at (2.25,6) {Begin\\optelling};
-\draw (C1) |- (C4 |- 0,0.5) -- (C4);
-\draw (C2) -- (C2 |- 0,0.5);
-\draw (C3) -- (C3 |- 0,0.5);
-\draw[->] (0,0.5) -- (E);
-\draw[->] (I1.west) node[scale=0.6,anchor=south east]{nee} -| (C1.north);
-\draw[->] (I1.east) node[scale=0.6,anchor=south west]{ja} -| (C2.north);
-\draw[->] (I2.west) node[scale=0.6,anchor=south east]{nee} -| (I1.north);
-\draw[->] (I2.east) node[scale=0.6,anchor=south west]{ja} -| (C3.north);
-\draw[->] (I3.west) node[scale=0.6,anchor=south east]{nee} -| (I2.north);
-\draw[->] (I3.east) node[scale=0.6,anchor=south west]{ja} -| (C4.north);
-\draw[->] (C5.south) |- (I3.north |- 0,4.65) -- (I3.north);
-\draw[->] (S1.south) -- (C5.north);
-\draw (S2.south) |- (I3.north |- 0,4.65);
-\end{tikzpicture}
-\label{fig:addSubNegSchematicSignedMagnitude}}
-\subfigure[1-complement]{
-\begin{tikzpicture}
-\node[asmterminal] (E) at (0,0) {Einde};
-\node[asmcommand] (C1) at (0,1) {Carry aanpassen};
-\node[asmcommand] (C2) at (0,2) {$B_r=B_1+B_2$};
-\node[asmcommand] (C3) at (-1,3) {$B_2=B_2'$};
-\node[asmterminal] (S1) at (-1,4) {Begin\\aftrekking};
-\node[asmterminal] (S2) at (1,4) {Begin\\optelling};
-\draw[->] (C1.south) -- (E.north);
-\draw[->] (C2.south) -- (C1.north);
-\draw[->] (C3.south) |- (0,2.5) -- (C2.north);
-\draw (S2.south) |- (0,2.5);
-\draw[->] (S1.south) -- (C3.north);
-\end{tikzpicture}
-\label{fig:addSubNegSchematicOneComplement}}
-\subfigure[2-complement]{
-\begin{tikzpicture}
-\node[asmterminal] (E) at (0,0) {Einde};
-\node[asmcommand] (C1) at (-1,1) {$B_r=B_1+B_2'+1$};
-\node[asmcommand] (C2) at (1,1) {$B_r=B_1+B_2$};
-\node[asmterminal] (S1) at (-1,2) {Begin\\aftrekking};
-\node[asmterminal] (S2) at (1,2) {Begin\\optelling};
-\draw[->] (C1.south) |- (0,0.5) -- (E.north);
-\draw (C2.south) |- (0,0.5);
-\draw[->] (S1.south) -- (C1.north);
-\draw[->] (S2.south) -- (C2.north);
-\end{tikzpicture}
-\label{fig:addSubNegSchematicTwoComplement}}
+\subfigure[Sign-magnitude]{\importtikz{signedmagnitude}}
+\subfigure[1-complement]{\importtikz{onecomplement}}
+\subfigure[2-complement]{\importtikz{twocomplement}}
 \caption{Optelling en aftrekking van gehele getallen.}
-\label{fig:addSubNegSchematic}
+\figlab{addSubNegSchematic}
 \end{figure}
 \subsubsection{Signed-magnitude voorstelling}
-Bij een signed-magnitude voorstelling moeten eerst heel wat testen uitgevoerd worden alvorens we getallen kunnen optellen of aftrekken. In eerste instantie moeten we bij het aftrekken van twee getallen het teken van de tweede operand veranderen, om daarna de bewerking als een optelling verder te verwerken. Bij deze optelling moeten we eerst testen of beide getallen hetzelfde teken hebben. Indien dit niet het geval is, bepaald het getal met de grootste magnitude $m$ het teken van het getal, en moeten de magnitudes van elkaar afgetrokken worden, in het andere geval is er sprake van een gewone optelling. Al deze testen zorgen voor complexe hardware die bovendien ook nog traag werkt, dit maakt signed-magnitude tot een weinig populaire voorstelling. Figuur \ref{fig:addSubNegSchematicSignedMagnitude} geeft de werkwijze schematisch weer.
+Bij een signed-magnitude voorstelling moeten eerst heel wat testen uitgevoerd worden alvorens we getallen kunnen optellen of aftrekken. In eerste instantie moeten we bij het aftrekken van twee getallen het teken van de tweede operand veranderen, om daarna de bewerking als een optelling verder te verwerken. Bij deze optelling moeten we eerst testen of beide getallen hetzelfde teken hebben. Indien dit niet het geval is, bepaald het getal met de grootste magnitude $m$ het teken van het getal, en moeten de magnitudes van elkaar afgetrokken worden, in het andere geval is er sprake van een gewone optelling. Al deze testen zorgen voor complexe hardware die bovendien ook nog traag werkt, dit maakt signed-magnitude tot een weinig populaire voorstelling. Figuur \ref{fig:signedmagnitude} geeft de werkwijze schematisch weer.
 \subsubsection{1-complement voorstelling}
 Optellen en aftrekken met de 1-complement voorstelling is heel wat eenvoudiger. Bij een aftrekking bereken we ook eerst de negatie van de tweede operand, wat een NOT operatie is. En vervolgens kunnen we de twee getallen eenvoudig optellen met onze eerder ge\"implementeerde opteller. Deze optelling volstaat soms echter niet, met het volgende voorbeelden kunnen we illustreren wat er kan fout lopen:
 \begin{equation}
@@ -1787,64 +536,17 @@ Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst p
 \end{array}
 \label{eqn:oneComplementCorrectExample}
 \end{equation}
-Het grote nadeel bij deze implementatie is dat we de optelling-aftrekking dus in twee tijden moeten uitvoeren: eerst tellen we ze op en bepalen we de hoogste carry $c_n$, vervolgens tellen we deze carry nog eens bij het resultaat op. Dit veroorzaakt dus een verdubbeling van de vertraging. Figuur \ref{fig:addSubNegSchematicOneComplement} geeft het hele proces schematisch weer.
+Het grote nadeel bij deze implementatie is dat we de optelling-aftrekking dus in twee tijden moeten uitvoeren: eerst tellen we ze op en bepalen we de hoogste carry $c_n$, vervolgens tellen we deze carry nog eens bij het resultaat op. Dit veroorzaakt dus een verdubbeling van de vertraging. Figuur \ref{fig:onecomplement} geeft het hele proces schematisch weer.
 \subsubsection{2-complement voorstelling}
-De 2-complement voorstelling is de beste voor de implementatie van een opteller-aftrekker. Immers kunnen we een optelling eenvoudigweg uitvoeren zoals we die reeds hebben beschreven in subsectie \ref{ss:add}. Bij een optelling dienen we dus eenvoudigweg de twee operatoren optellen: $B_r=B_1+B_2$. Bij een aftrekking moeten we dan eenvoudigweg de negatie van de tweede operand berekenen. De berekening wordt in dat geval $B_r=B_1+B_2'+1$. Deze optelling lijkt misschien tot hetzelfde probleem te leiden als bij de 1-complement voorstelling. Maar we kunnen eenvoudigweg de carry van de laagste bit $c_0$ op 1 zetten. We kunnen vervolgens $B_2'$ berekenen met behulp van XOR poorten. Een XOR poort is dan ook een geprogrammeerde NOT poort. Indien \'e\'en van de ingangen van de XOR poorten 1 is, zal de andere de negatie zijn van de andere ingang. Indien de ingang 0 is, laat de XOR poort de andere ingang door. We kunnen dus een opteller-aftrekker realiseren zoals op figuur \ref{fig:adderSubTwoComplementImplement}.
+De 2-complement voorstelling is de beste voor de implementatie van een opteller-aftrekker. Immers kunnen we een optelling eenvoudigweg uitvoeren zoals we die reeds hebben beschreven in subsectie \ref{ss:add}. Bij een optelling dienen we dus eenvoudigweg de twee operatoren optellen: $B_r=B_1+B_2$. Bij een aftrekking moeten we dan eenvoudigweg de negatie van de tweede operand berekenen. De berekening wordt in dat geval $B_r=B_1+B_2'+1$. Deze optelling lijkt misschien tot hetzelfde probleem te leiden als bij de 1-complement voorstelling. Maar we kunnen eenvoudigweg de carry van de laagste bit $c_0$ op 1 zetten. We kunnen vervolgens $B_2'$ berekenen met behulp van XOR poorten. Een XOR poort is dan ook een geprogrammeerde NOT poort. Indien \'e\'en van de ingangen van de XOR poorten 1 is, zal de andere de negatie zijn van de andere ingang. Indien de ingang 0 is, laat de XOR poort de andere ingang door. We kunnen dus een opteller-aftrekker realiseren zoals op figuur \ref{fig:addsub-twocomplement-implementation}.
 \begin{figure}[hbt]
 \centering
-\subfigure[Interface]{
-\begin{tikzpicture}[scale=0.75]
-\def\sca{0.75};
-\node[addsubtractor,scale=\sca] (AS) at (0,0) {adder-subtractor};
-\draw[->] (AS.c) -- ++(-0.5,0) node[scale=0.75,anchor=east]{$c_{\mbox{\tiny{out}}}$};
-\draw[<-] (AS.s) -- ++(0.5,0) node[scale=0.75,anchor=west]{$s$};
-\draw[<-] (AS.X) -- ++(0,0.5) node[scale=0.75,anchor=south]{$X$};
-\draw[<-] (AS.Y) -- ++(0,0.5) node[scale=0.75,anchor=south]{$Y$};
-\draw[->] (AS.F) -- ++(0,-0.5) node[scale=0.75,anchor=north]{$F$};
-\end{tikzpicture}
-\label{fig:adderSubTwoComplementInterface}}
-\subfigure[Mogelijke implementatie]{\begin{tikzpicture}[circuit logic US,scale=0.8]
-\def\sca{0.8};
-\foreach\x/\i in {0/0,1/1,2/2,4/n-3,5/n-2,6/n-1} {
-  \fill[black!15] (-2*\x-0.85,-0.65) rectangle ++(1.7,2.85);
-  \node[fulladder,scale=\sca] (FA\x) at (-2*\x,0){FA$_{\i}$};
-  \node[xor gate,scale=\sca,rotate=-90] (X\x) at (FA\x.x |- 0,1.25) {};
-  \draw[->] (FA\x.s) -- ++(0,-0.75) node[scale=0.75*\sca,anchor=north]{$f_{\i}$};
-  \draw (FA\x.x) -- (X\x.output);
-  \draw (X\x.input 2) -- (X\x.input 2 |- 0,2);
-  \draw (FA\x.y) -- (FA\x.y |- 0,2.5) node[scale=0.75*\sca,anchor=south]{$x_{\i}$};
-  \draw (X\x.input 1) -- (X\x.input 1 |- 0,2.5) node[scale=0.75*\sca,anchor=south]{$y_{\i}$};
-}
-\foreach\x/\i in {0,1,2,4,5} {
-  \pdot{X\x.input 2 |- 0,2};
-}
-\draw (-6,0) node {$\ldots$};
-\draw (-5.5,1.25) node {$\ldots$};
-\draw (X4.input 2 |- 0,2) -- (-6.5,2);
-\draw (X2.input 2 |- 0,2) -- (-5.5,2);
-\draw (FA4.ci) -- (-6.5,0);
-\draw (FA2.co) -- (-5.5,0);
-\draw[->] (FA6.co) -- ++(-0.75,0) node[scale=0.75*\sca,anchor=east]{$c_n$};
-\node[xor gate,scale=\sca,rotate=-90] (XO) at (-13,-1.375) {};
-\draw (-11,0) |- (XO.input 1 |- 0,-0.75) -- (XO.input 1);
-\pdot{-11,0};
-\pdot{XO.input 2 |- 0,0};
-\draw[->] (XO.output) -- ++(0,-0.25) node[scale=0.75*\sca,anchor=north]{overflow};
-\draw (XO.input 2) -- (XO.input 2 |- 0,0);
-\draw (X0.input 2 |- 0,2) -- ++(1.35,0) node[scale=0.75*\sca,anchor=west]{$s$};
-\draw (1,2) |- (FA0.ci);
-\pdot{1,2}
-%\draw (X6.input 2 |- 0,2) -- (-13.5,2) node[scale=0.75*\sca,anchor=east]{$s$};
-\foreach\x/\y in {0/1,1/2,4/5,5/6} {
-  \draw (X\x.input 2 |- 0,2) -- (X\y.input 2 |- 0,2);
-  \draw (FA\x.co) -- (FA\y.ci);
-}
-\end{tikzpicture}
-\label{fig:adderSubTwoComplementImplement}}
+\subfigure[Interface]{\importtikz{addsub-twocomplement-interface}}
+\subfigure[Mogelijke implementatie]{\importtikz{addsub-twocomplement-implementation}}
 \caption{Opteller-aftrekker voor 2-complement getallen.}
-\label{fig:adderSubTwoComplement}
+\figlab{adderSubTwoComplement}
 \end{figure}
-Indien $s=0$ tellen we de twee getallen met elkaar op, anders trekken we de twee getallen van elkaar af. Door een XOR poort op de laatste twee carry-uitgangen $c_{n-1}$ en $c_n$ te plaatsen, kunnen we een controle op overflow inbouwen. Deze component wordt meestal samengevat tot een interface zoals op figuur \ref{fig:adderSubTwoComplementInterface}\footnote{Bemerk op de figuur dat variabele met hoofdletters een rij van in- of uitgangen voorstellen.}. Een schematische werkwijze van optellen en aftrekken met 2-complement voorstelling staat op figuur \ref{fig:addSubNegSchematicTwoComplement}. De 2-complement voorstelling is dan ook populair omdat deze weinig bewerkingen en testen vraagt om sommen en verschillen te berekenen. Bovendien is er weinig extra hardware nodig om een opteller om te bouwen.
+Indien $s=0$ tellen we de twee getallen met elkaar op, anders trekken we de twee getallen van elkaar af. Door een XOR poort op de laatste twee carry-uitgangen $c_{n-1}$ en $c_n$ te plaatsen, kunnen we een controle op overflow inbouwen. Deze component wordt meestal samengevat tot een interface zoals op figuur \ref{fig:addsub-twocomplement-interface}\footnote{Bemerk op de figuur dat variabele met hoofdletters een rij van in- of uitgangen voorstellen.}. Een schematische werkwijze van optellen en aftrekken met 2-complement voorstelling staat op figuur \ref{fig:twocomplement}. De 2-complement voorstelling is dan ook populair omdat deze weinig bewerkingen en testen vraagt om sommen en verschillen te berekenen. Bovendien is er weinig extra hardware nodig om een opteller om te bouwen.
 \subsection{Arithmetic-Logic Unit (ALU)}
 \begin{figure}[hbt]
 \centering
@@ -1903,7 +605,7 @@ Indien $s=0$ tellen we de twee getallen met elkaar op, anders trekken we de twee
 \draw (-5,1.5) node{$\ldots$};
 \end{tikzpicture}
 \caption{Schematisch implementatie van een arithmetic-logic unit (ALU).}
-\label{fig:aLUImplementatie}
+\figlab{aLUImplementatie}
 \end{figure}
 Hoewel veel processoren in staat zijn om sommen en verschillen te berekenen zal men meestal geen directe opteller of opteller-aftrekker vinden. Meestal gebruikt men hiervoor een \termen{Arithmetic-Logic Unit (ALU)}. Een ALU is een component die, gebaseerd op een opteller, allerlei instructies\footnote{Welke instructies is niet echt gespecificeerd. Er bestaan dan ook boeken over het ontwerpen van een goede ALU.} kan uitvoeren. In ons geval beschouwen we 4 rekenkundige (optellen, aftrekken, \termen{increment} en \termen{decrement}) en 4 logische bewerkingen (AND, OR, NOT en identiteit). We bouwen een ALU op ongeveer dezelfde manier zoals we een opteller-aftrekker bouwden uit een opteller. In plaats van XOR poorten gebruiken we een nieuw component: een \termen{Arithmetic-Logic Extender (ALE)}. Een ander component -- de CIG -- berekent welke ingang aan de carry $c_0$ moet worden gegeven. In het algemeen heeft een ALU dus een structuur zoals op figuur \ref{fig:aLUImplementatie} waarbij de ALE en CIG vrij ge\"implementeerd kunnen worden.
 \subsubsection{Instructieset}
@@ -1936,7 +638,7 @@ Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE i
 \kkaarte{6}{0}{$y_j$}{$m$/$i_1$/$i_0$/$a_j$/$b_j$}{0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/1/1/1/1/0/1/0/1/1/0/1/0/0/0/0/0}
 \kkaartc{12}{0}{$c_0$}{$m$/$i_1$/$i_0$}{0/0/0/0/0/0/1/1}
 \end{tikzpicture}
-\label{fig:aLECIGImplKarnaugh}}
+\figlab{aLECIGImplKarnaugh}}
 \subfigure[Implementatie ALE]{
 \begin{tikzpicture}[circuit logic US]
 \def\dx{0.85};
@@ -1969,7 +671,7 @@ Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE i
   \pdot{A\a.input \i |- 0,0.25*\x+0.75};
 }
 \end{tikzpicture}
-\label{fig:aLEImpl}}
+\figlab{aLEImpl}}
 \subfigure[Implementatie CIG]{
 \begin{tikzpicture}[circuit logic US]
 \def\dx{0.85};
@@ -1985,7 +687,7 @@ Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE i
 }
 \draw (-1.25,0) -- ++(-0.5,0) node[scale=0.75,anchor=east]{$c_0$};
 \end{tikzpicture}
-\label{fig:cIGImpl}}
+\figlab{cIGImpl}}
 \caption{Synthese van de ALE en CIG}
 \end{figure}
 Eenmaal we de instructieset hebben, dienen we enkel nog de ALE en CIG te implementeren. Een ALE is een component met als ingangen het instructiewoord en van elke operand een bit. In ons geval wordt dit dus $\left(m,i_1,i_0,a_j,b_j\right)$. Als uitgangen hebben we de ingangen van \'e\'en van de optellers $\left(x_j,y_j\right)$. We zijn dus in staat om een waarheidstabel en Karnaugh-kaart op te stellen van de ALE. Zoals op figuur \ref{fig:aLECIGImplKarnaugh}. Vervolgens is het enkel een kwestie van implementatie. Op basis van de Karnaugh-kaaren hebben we op figuur \ref{fig:aLEImpl} een AND-OR implementatie gesynthetiseerd.
@@ -2114,7 +816,7 @@ De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op tab
 \draw (Ayb0.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_2$};
 \end{tikzpicture}}
 \caption{Parallelle vermenigvuldigers.}
-\label{fig:parallelMultipliers}
+\figlab{parallelMultipliers}
 \end{figure}
 In deze subsectie bouwen we een vermenigvuldiger gebaseerd op de manier hoe men met behulp van cijferen twee getallen vermenigvuldigt. We zullen hierbij enkel natuurlijke getallen beschouwen, later breiden we dit uit naar gehele getallen. Vergelijking (\ref{eqn:multiplyNormal}) toont de vermenigvuldiging van twee decimale getallen:
 \begin{equation}
@@ -2293,7 +995,7 @@ Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fen
 \end{scope}
 \end{tikzpicture}
 \caption{Underflow van een vlottende komma voorstelling.}
-\label{fig:floatingPointUnderflow}
+\figlab{floatingPointUnderflow}
 \end{figure}
 \subsubsection{IEEE-formaat voor vlottende komma getallen}
 Nu we de vlottende komma voorstelling theoretisch beschreven hebben, zullen we het formaat gedefinieerd door IEEE bespreken. De floating point wordt beschreven in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. Hierbij worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Hierbij maakt met een onderscheid tussen vlottende komma getallen met \termen{enkele precisie} (32-bit en beter bekend onder de term \termen{\texttt{float}} of \termen{\texttt{Single}}) en \termen{dubbele precisie} (64-bit en beter bekend als \termen{\texttt{double}}). Tabel \ref{tbl:iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
@@ -2398,12 +1100,12 @@ Decimaal&BCD\\\hline
 \draw[->] (A1.sd) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_3$};
 \pdot{-3.125,-1.5};
 \end{tikzpicture}
-\label{fig:bCDAdderSchematic}}
+\figlab{bCDAdderSchematic}}
 \subfigure[Karnaugh-kaart]{
 \begin{tikzpicture}
 \kkaarte{0}{0}{$c_o$}{$c$/$z_3$/$z_2$/$z_1$/$z_0$}{0/0/0/0/0/0/0/0/0/0/1/1/1/1/1/1/1/1/1/-/-/-/-/-/-/-/-/-/-/-/-/-}
 \end{tikzpicture}
-\label{fig:bCDAdderKarnaugh}}
+\figlab{bCDAdderKarnaugh}}
 \subfigure[Implementatie vergelijker]{
 \begin{tikzpicture}[circuit logic US]
 \draw (-1,-1) rectangle (1,1);
@@ -2421,9 +1123,9 @@ Decimaal&BCD\\\hline
 \pdot{a1.input 2 -| 0.875,0}
 \draw[->] (o0.output) -- (o0.output |- 0,-1.25) node[scale=0.75,anchor=north]{$c_o$};
 \end{tikzpicture}
-\label{fig:bCDAdderComparator}}
+\figlab{bCDAdderComparator}}
 \caption{Mogelijke implementatie van een BCD opteller.}
-\label{fig:bCDAdder}
+\figlab{bCDAdder}
 \end{figure}
 Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het BCD formaat. Hierbij streven we niet zozeer naar een minimale implementatie, maar tonen we dat een optelling in ieder geval complexer is dan bij zijn binair equivalent. Bij een optelling dienen we immers elke decimaal afzonderlijk op te tellen. Net zoals een half- en full adder bit per bit optelden, dienen we nu per decimaal een 4-bit opteller te realiseren. Indien het resultaat van deze optelling echter groter is dan 9, dienen we dit resultaat verder aan te passen, zodat het resultaat 10 minder is, en we de overdacht (carry) doorgeven. Voor dit eerste hebben we nogmaals een 4-bit opteller nodig. Verder hebben we een component nodig die controleert of het eerste resultaat groter is dan 9. Dit component heeft niet alleen een carry als uitgang, maar moet ook invoer genereren voor de tweede opteller. Indien het eerste resultaat immers groter is dan 9, tellen we er nog eens 6 bij op. Dit betekent dat bij een tussenresultaat van 10, de tweede opteller tot 16 komt wat dus gebaseerd op de laatste 4 bits in 0 resulteert. Figuur \ref{fig:bCDAdderSchematic} toont schematisch hoe we twee decimale cijfers kunnen optellen. Indien we deze structuur voor ieder cijfer herhalen, realiseren we een BCD opteller. De vergelijker synthetiseren we met behulp van Karnaugh-kaarten zoals op figuur \ref{fig:bCDAdderKarnaugh}. Merk op dat het resultaat van de eerst opteller hoogstens 18 is, en we dus voor de andere waarden don't cares kunnen gebruiken. Een mogelijke synthese van deze vergelijker staat op figuur \ref{fig:bCDAdderComparator}. Tot slot merken we op dat we bij het bepalen van het negatieve getal van een BCD niet het 2-complement moeten berekenen, maar het 10-complement. Ook deze stap vereist extra hardware.
 \subsubsection{American Standard Code for Information Interchange (ASCII)}
@@ -2476,7 +1178,7 @@ Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die
   \draw[<-] (I.data2) -- ++(0,0.25) node[scale=0.75,anchor=south]{$d_2$};
   \draw[<-] (I.data3) -- ++(0,0.25) node[scale=0.75,anchor=south]{$d_3$};
   \end{tikzpicture}
-  \label{fig:multiplexerInterface}
+  \figlab{multiplexerInterface}
 }
 \subfigure[Waarheidstabel] {
 \begin{tikzpicture}
@@ -2488,7 +1190,7 @@ $s_0$&$s_1$&$f$\\\hline
 1&1&$d_3$
 \end{tabular}};
 \end{tikzpicture}
-\label{fig:multiplexerTruthTable}}
+\figlab{multiplexerTruthTable}}
 \subfigure[Mogelijke Implementatie]{
 %\begin{tikzpicture}[circuit logic US,scale=1,xscale=0.8]
 %\draw[dashed] (-3.5,2.25) -- (3.5,2.25) -- (2.25,-0.25) -- (-2.25,-0.25) -- cycle;
@@ -2565,7 +1267,7 @@ $s_0$&$s_1$&$f$\\\hline
 \pdot{A3.input 3 |- 0,1.06}
 \end{scope}
 \end{tikzpicture}
-\label{fig:multiplexerSchema}}
+\figlab{multiplexerSchema}}
 \subfigure[Cascade]{
 \begin{tikzpicture}[circuit logic US]
 \node[mux4to1] (A) at (6,0) {};
@@ -2586,9 +1288,9 @@ $s_0$&$s_1$&$f$\\\hline
 \draw (B3.selin1) -- (B3.selin1 -| 1.5,0) node[scale=0.65,anchor=east]{$s_1$};
 \draw (B3.selin0) -- (B3.selin0 -| 1.5,0) node[scale=0.65,anchor=east]{$s_0$};
 \end{tikzpicture}
-\label{fig:multiplexerCascade}}
+\figlab{multiplexerCascade}}
 \caption{Multiplexer.}
-\label{fig:multiplexer}
+\figlab{multiplexer}
 \end{figure}
 \subsubsection{Cascade}
 We kunnen uiteraard multiplexers met een verschillende parameter $n$ bouwen. Het probleem is echter dat deze waarden erg kunnen vari\"eren, wat weinig interessant is voor massaproductie. Daarom zal men veelal met een \termen{cascade} werken. Figuur \ref{fig:multiplexerCascade} toont een 16-naar-1 MUX gebouwd met behulp van 5 4-naar-1 multiplexers. We kunnen dit uiteraard veralgemenen: Indien we een $2^{n\times m}$-naar-1 multiplexer willen bouwen, kunnen we dit met $n$ niveaus van $2^m$-naar-1 multiplexers. Het aantal multiplexers die we in dat geval nodig hebben is:
@@ -2611,7 +1313,7 @@ Een andere schakeling die sterk gerelateerd is aan een multiplexer is een \terme
   \draw[<-] (I.a0) -- ++(0,0.25) node[scale=0.75,anchor=south]{$a_0$};
   \draw[<-] (I.a1) -- ++(0,0.25) node[scale=0.75,anchor=south]{$a_1$};
 \end{tikzpicture}
-\label{fig:decoderInterface}
+\figlab{decoderInterface}
 }
 \subfigure[Waarheidstabel] {
 \begin{tikzpicture}
@@ -2624,7 +1326,7 @@ $e$&$a_0$&$a_1$&$s_0$&$s_1$&$s_2$&$s_3$\\\hline
 1&1&1&0&0&0&1\\
 \end{tabular}};
 \end{tikzpicture}
-\label{fig:decoderTruthTable}}
+\figlab{decoderTruthTable}}
 \subfigure[Mogelijke implementatie]{
 \begin{tikzpicture}[circuit logic US,scale=3]
 \draw[dashed] (-0.8,-0.3) rectangle (0.8,0.3);
@@ -2675,7 +1377,7 @@ $e$&$a_0$&$a_1$&$s_0$&$s_1$&$s_2$&$s_3$\\\hline
 \pdot{Aib |- 0,0.45}
 \end{scope}
 \end{tikzpicture}
-\label{fig:decoderSchema}}
+\figlab{decoderSchema}}
 \subfigure[Cascade]{
 \begin{tikzpicture}[circuit logic US]
 \node[decoder2to4] (A) at (0,0) {Decoder};
@@ -2692,9 +1394,9 @@ $e$&$a_0$&$a_1$&$s_0$&$s_1$&$s_2$&$s_3$\\\hline
   \draw (B\x.s\y) -- ++(0,-0.25) node[anchor=north,scale=0.75]{$s_{\z}$};
 }
 \end{tikzpicture}
-\label{fig:decoderCascade}}
+\figlab{decoderCascade}}
 \caption{Decoder.}
-\label{fig:decoder}
+\figlab{decoder}
 \end{figure}
 Op figuur \ref{fig:decoderTruthTable} staat de waarheidstabel voor dit component. Figuur \ref{fig:decoderSchema} toont een mogelijke implementatie. Decoders worden hoofdzakelijk gebruikt voor het decoderen van adressen.
 \subsubsection{Cascade}
@@ -2751,7 +1453,7 @@ Decoders worden ook gebruikt voor de synthese van bijvoorbeeld multiplexers. Fig
 \draw (A0.output) -- (A0.output |- 0,-0.03) -| (O.input 1);
 \draw (Fdl) -- (O.output);
 \end{tikzpicture}
-\label{fig:decoderMultiplexerAnd}}
+\figlab{decoderMultiplexerAnd}}
 \subfigure[Bus]{
 \begin{tikzpicture}[circuit logic US,scale=4]
 \coordinate (Fdl) at (0,-0.3);
@@ -2795,9 +1497,9 @@ Decoders worden ook gebruikt voor de synthese van bijvoorbeeld multiplexers. Fig
 \draw[dashed] (Sib) -- (-0.9,0 |- Sib) node[scale=0.75,anchor=east]{$s_1$};
 \draw[dashed] (Sia) -- (-0.9,0 |- Sia) node[scale=0.75,anchor=east]{$s_0$};
 \end{tikzpicture}
-\label{fig:decoderMultiplexerTriState}}
+\figlab{decoderMultiplexerTriState}}
 \caption{Multiplexer en bus gesynthetiseerd met decoders.}
-\label{fig:decoderMultiplexer}
+\figlab{decoderMultiplexer}
 \end{figure}
 \subsection{Demultiplexer}
 \label{ss:demultiplexer}
@@ -2824,7 +1526,7 @@ Het inverse van een $2^n$-naar-1 multiplexer is een 1-naar-$2^n$ \termen{demulti
 \draw (DC.enable) -- ++(-0.25,0) node[scale=0.75,anchor=east]{$d$};
 \end{tikzpicture}
 \caption{Demultiplexer}
-\label{fig:demultiplexer}
+\figlab{demultiplexer}
 \end{figure}
 \paragraph{}
 Demultiplexers worden maar zeer zelden gebruikt, kun doel is immers om data op een bepaalde lijn te plaatsen, terwijl men op de andere lijnen een 0 aanlegt. In de praktijk is het aanleggen van de data op alle lijnen meestal geen probleem. In dat geval kunnen we dus de demultiplexer eenvoudigweg vervangen door een draad die de data-ingang met alle uitgangen verbindt.
@@ -2901,7 +1603,7 @@ Wat overeenkomt met \'e\'en extra AND- en NOT-poort. De interface voor beide sch
 \draw[->] (PE.f1) -- ++(0,-0.25) node[anchor=north,scale=0.75]{$f_1$};
 \draw[->] (PE.any) -- ++(-0.25,0) node[anchor=east,scale=0.75]{$a$};
 \end{tikzpicture}
-\label{fig:encoderInterface}
+\figlab{encoderInterface}
 }
 \subfigure[Cascade]{
 \begin{tikzpicture}
@@ -2946,7 +1648,7 @@ Wat overeenkomt met \'e\'en extra AND- en NOT-poort. De interface voor beide sch
 \pdot{-7.3,-4};
 \pdot{Eb3.f0 |- 0,-4};
 \end{tikzpicture}
-\label{fig:encoderCascade}
+\figlab{encoderCascade}
 }
 \caption{Encoder en Prioriteitsencoder.}
 \end{figure}
@@ -2977,14 +1679,14 @@ Op basis van de eerste twee relaties, kunnen we uitspraken doen over de laatste 
 \draw[->] (C.g) -- ++(-0.25,0) node[anchor=east,scale=0.75]{$g$};
 \draw[->] (C.l) -- ++(-0.25,0) node[anchor=east,scale=0.75]{$l$};
 \end{tikzpicture}
-\label{fig:comparatorInterface}
+\figlab{comparatorInterface}
 }
 \subfigure[Karnaugh-kaarten]{
 \begin{tikzpicture}
 \kkaartd{0}{0}{$g$}{$x_1$/$y_1$/$x_0$/$y_0$}{0/0/1/0/0/0/0/0/1/1/1/1/0/0/1/0};
 \kkaartd{3}{0}{$l$}{$x_1$/$y_1$/$x_0$/$y_0$}{0/1/0/0/1/1/1/1/0/0/0/0/0/1/0/0};
 \end{tikzpicture}
-\label{fig:comparatorKarnaugh}
+\figlab{comparatorKarnaugh}
 }
 \subfigure[Lineare cascade]{
 \begin{tikzpicture}[scale=0.75]
@@ -3003,7 +1705,7 @@ Op basis van de eerste twee relaties, kunnen we uitspraken doen over de laatste 
 \draw[->] (C7.g) -- ++(-0.25,0) node[anchor=east,scale=0.75]{$g$};
 \draw[->] (C7.l) -- ++(-0.25,0) node[anchor=east,scale=0.75]{$l$};
 \end{tikzpicture}
-\label{fig:comparatorCascadeLinear}
+\figlab{comparatorCascadeLinear}
 }
 \subfigure[Hi\"erarchische cascade]{
 \begin{tikzpicture}[scale=0.75]
@@ -3034,7 +1736,7 @@ Op basis van de eerste twee relaties, kunnen we uitspraken doen over de laatste 
 \draw[->] (Cc7.g) -- ++(-0.25,0) node[anchor=east,scale=0.75]{$g$};
 \draw[->] (Cc7.l) -- ++(-0.25,0) node[anchor=east,scale=0.75]{$l$};
 \end{tikzpicture}
-\label{fig:comparatorCascadeHierarchical}
+\figlab{comparatorCascadeHierarchical}
 }
 \caption{Vergelijker}
 \end{figure}
@@ -3068,7 +1770,7 @@ We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder besc
   \draw (XN\x.output) -- ++(0,-0.1*\z) -| (O.input \y);
 }
 \end{tikzpicture}
-\label{fig:comparatorEquality}}
+\figlab{comparatorEquality}}
 \subfigure[Testen met constanten]{
 \begin{tikzpicture}[circuit logic US]
 \node[nor gate,inputs={normal,normal,normal,normal,normal}] (O1) at (0,0) {};
@@ -3094,7 +1796,7 @@ We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder besc
   \draw (O5.input \x) -- ++(-0.25,0) node[scale=0.75,anchor=east]{\t};
 }
 \end{tikzpicture}
-\label{fig:comparatorConstants}}
+\figlab{comparatorConstants}}
 \caption{Speciale gevallen van vergelijkers}
 \end{figure}
 \paragraph{Vergelijken met constanten}
@@ -3212,7 +1914,7 @@ Deze logica kunnen we vervolgens implementeren met OR-AND-poorten. Het resultaat
 \draw (ALb.input 2) -- (ALb.input 2 |- 0,\xxi) node[anchor=west,scale=0.75,rotate=90]{2-comp};
 \end{tikzpicture}
 \caption{Implementatie van een schuifoperator over 1 bit.}
-\label{fig:shiftImplementation}
+\figlab{shiftImplementation}
 \end{figure}
 \paragraph{8-bit barrel left rotator}
 In de vorige paragraaf hebben we een schuifoperator gebouwd die 1-bit kan schuiven. Door verschillende van deze schuifoperatoren na elkaar te plaatsen kunnen we schuiven over meerdere plaatsen. Toch is dit niet erg praktisch: om $m$ plaatsen te schuiven zouden we $m$ van deze schuifoperatoren na elkaar moeten plaatsen, wat grote vertragingen zou impliceren. In deze paragraaf zullen we een rotator bouwen die de vertraging beperkt tot $\log_2 m$, met $m$ het maximaal aantal plaatsen dat kan opgeschoven worden. Het concept is echter ook toepasbaar op algemene schuifoperaties. Alleen is de implementatie te complex voor pedagogische doeleinden. Figuur \ref{fig:hBitBarrelLeftRotatorImplementation} geeft het concept mooi weer.
@@ -3244,6 +1946,6 @@ In de vorige paragraaf hebben we een schuifoperator gebouwd die 1-bit kan schuiv
 }
 \end{tikzpicture}
 \caption{Implementatie van een 8-bit barrel left rotator.}
-\label{fig:hBitBarrelLeftRotatorImplementation}
+\figlab{hBitBarrelLeftRotatorImplementation}
 \end{figure}
 Deze barrel left rotator is gebaseerd op het additief principe. Het additief principe stelt dat indien we een getal willen schuiven of roteren over $m$ bits, we dit ook kunnen verwezenlijken door eerst te schuiven/roteren over $m_1$ bits en vervolgens over $m_2$ bits met $m=m_1+m_2$. Indien we onze rotator bouwen volgens een structuur waarbij elke niveau $i$ een rotatie uitvoert over $2^i$ plaatsen kunnen we elke rotatie-operatie uitvoeren. Op figuur \ref{fig:hBitBarrelLeftRotatorImplementation} zien we dat het niveau $s_2$, vier plaatsen naar links roteert. Het volgende niveau twee en het laatste \'e\'en. Elk van deze niveaus heeft dezelfde vertraging. Indien we dus een $n$-bit barrel left rotator willen bouwen die maximaal $m$ plaatsen kan opschuiven moeten we dus $\left\lceil\log_2m\right\rceil$ niveaus synthetiseren. Een niveau $i$ roteert $2^i$ plaatsen voor $\forall i=0,1,\ldots,\left\lceil\log_2m\right\rceil-1$. Dit concept is eenvoudig te veralgemenen naar een volledige schuifoperator. Merk op dat het aantal niveaus dus theoretisch niet afhangt van het aantal bit in het getal. Op de meeste processoren neemt men echter $m=n$. Een andere mooie eigenschap is dat de volgorde van de niveaus niet relevant is.

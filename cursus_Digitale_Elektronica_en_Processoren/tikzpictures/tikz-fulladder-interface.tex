@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+\node[fulladder] (FA) at (0,0) {FA};
+\draw[<-] (FA.ci) -- ++(0.25,0) node[anchor=west]{$c_i$};
+\draw[->] (FA.co) -- ++(-0.25,0) node[anchor=east]{$c_{i+1}$};
+\draw[<-] (FA.x) -- ++(0,0.25) node[anchor=south]{$x_i$};
+\draw[<-] (FA.y) -- ++(0,0.25) node[anchor=south]{$y_i$};
+\draw[->] (FA.s) -- ++(0,-0.25) node[anchor=north]{$s_i$};
+\end{tikzpicture}

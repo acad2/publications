@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\draw[thick] (0,0) node[scale=0.75,anchor=south]{000} -- (1,0) node[scale=0.75,anchor=south]{001} -- (1,-1) node[scale=0.75,anchor=north]{011} -- (0,-1) node[scale=0.75,anchor=north]{010} -- cycle;
+\draw[thick] (0,0,-1) node[scale=0.75,anchor=south]{100} -- (1,0,-1) node[scale=0.75,anchor=south]{101} -- (1,-1,-1) node[scale=0.75,anchor=north]{111} -- (0,-1,-1) node[scale=0.75,anchor=north]{110} -- cycle;
+\draw[thick] (0,0,0) -- (0,0,-1);
+\draw[thick] (0,-1,0) -- (0,-1,-1);
+\draw[thick] (1,0,0) -- (1,0,-1);
+\draw[thick] (1,-1,0) -- (1,-1,-1);
+\fill (0,0) circle(0.05 cm);
+\fill (1,0) circle(0.05 cm);
+\fill (1,-1) circle(0.05 cm);
+\fill (0,-1) circle(0.05 cm);
+\fill (0,0,-1) circle(0.05 cm);
+\fill (1,0,-1) circle(0.05 cm);
+\fill (1,-1,-1) circle(0.05 cm);
+\fill (0,-1,-1) circle(0.05 cm);
+\end{tikzpicture}

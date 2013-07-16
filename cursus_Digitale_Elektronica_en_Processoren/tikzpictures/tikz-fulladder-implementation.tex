@@ -1,0 +1,35 @@
+\begin{tikzpicture}[circuit logic US]
+\draw (-2.5,-1.5) rectangle (1.25,1.75);
+\draw[dashed] (-1.25,1.75) -- ++(0,0.5) node[anchor=south]{$x_i$};
+\draw[dashed] (0,1.75) -- ++(0,0.5) node[anchor=south]{$y_i$};
+\draw[dashed] (-2.5,0.125) -- ++(-0.5,0) node[anchor=east]{$c_{i+1}$};
+\draw[dashed] (1.25,0.125) -- ++(0.5,0) node[anchor=west]{$c_i$};
+\draw[dashed] (-0.625,-1.5) -- ++(0,-0.5) node[anchor=north]{$s_i$};
+\node[nand gate,rotate=-90] (A1) at (-2,0.66) {};
+\node[nand gate,rotate=-90] (A2) at (-1.25,0.66) {};
+\node[nand gate,rotate=-90] (A3) at (-0.5,0.66) {};
+\node[nand gate,inputs={normal,normal,normal},rotate=-90] (O) at (-1.25,-0.66) {};
+\draw (A1.output) -- (A1.output |- 0,0) -| (O.input 3);
+\draw (A2.output) -- (O.input 2);
+\draw (A3.output) -- (A3.output |- 0,0) -| (O.input 1);
+\draw (O.output) |- (-2.25,-1.25) |- (-2.5,0.125);
+\node[xor gate,rotate=-90] (X1) at (0.5,0.66) {};
+\node[xor gate,rotate=-90] (X2) at (0.75,-0.66) {};
+\draw (X2.output) -- (X2.output |- 0,-1.25) -| (-0.625,-1.5);
+\draw (1.25,0.125) -| (X2.input 1);
+\draw (A1.input 2) |- (X1.input 1 |- 0,1.35) -- (X1.input 1);
+\draw (A1.input 1) |- (X1.input 2 |- 0,1.225) -- (X1.input 2);
+\draw (A2.input 2) -- (A2.input 2 |- 0,1.35);
+\draw (A2.input 1) |- (1,1.5) -- (1,0.125);
+\draw (A3.input 2) -- (A3.input 2 |- 0,1.225);
+\draw (A3.input 1) -- (A3.input 1 |- 0,1.5);
+\draw (X1.output) -- (X1.output |- 0,0) -| (X2.input 2);
+\draw (-1.25,1.35) -- (-1.25,1.75);
+\draw (0,1.225) -- (0,1.75);
+\pdot{-1.25,1.35}
+\pdot{0,1.225}
+\pdot{A2.input 2 |- 0,1.35}
+\pdot{A3.input 2 |- 0,1.225}
+\pdot{A3.input 1 |- 0,1.5}
+\pdot{1,0.125}
+\end{tikzpicture}

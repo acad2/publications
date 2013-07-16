@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+\draw (-12.75 cm,0 cm) rectangle (0.75 cm,-1.5 cm);
+\draw (0.75,-0.75) -- ++(1,0) node[anchor=west,scale=0.7]{$c_0$};
+\foreach\x/\i/\j in {0/0/1,1/1/2,2/2/3,4/n-1/n} {
+  \node[cla] (CLA\x) at (-3*\x,1) {\tiny{CLA${_{\i}}$}};
+  \draw (CLA\x.x) -- (CLA\x.x |- 0,1.85) node[anchor=south,scale=0.7]{$x_{\i}$};
+  \draw (CLA\x.y) -- (CLA\x.y |- 0,1.85) node[anchor=south,scale=0.7]{$y_{\i}$};
+  \draw[->] (CLA\x.s) -| (-3*\x-1.25,1.85) node[anchor=south,scale=0.7]{$s_{\i}$};
+  \draw (CLA\x.g) -- (CLA\x.g |- 0,0);
+  \draw (CLA\x.p) -- (CLA\x.p |- 0,0);
+  \draw (CLA\x.p |- 0,0) node[anchor=north,port labels]{p$_{\mbox{\tiny{\i}}}$};
+  \draw (CLA\x.g |- 0,0) node[anchor=north,port labels]{g$_{\mbox{\tiny{\i}}}$};
+  \draw (-3*\x,-1.5) node[anchor=south,port labels]{c$_{\mbox{\tiny{\j}}}$};
+  \draw[->] (-3*\x,-1.5) -- ++(0,-0.5) node[anchor=north,scale=0.7]{$c_{\j}$};
+}
+\draw (0.75,-0.75) node[anchor=east,port labels]{c$_{\mbox{\tiny{0}}}$};
+\draw (1.25,-0.75) |- (CLA0.c);
+\pdot{1.25,-0.75}
+\foreach\x/\y in {1/0,2/1} {
+  \pdot{-3*\y,-1.75}
+  \draw (-3*\y,-1.75) -| (CLA\x.c -| -3*\x+1.25,0) -- (CLA\x.c);
+}
+\draw (-12.75,-0.5) node[anchor=west,port labels]{g$_{\mbox{\tiny{0,n-1}}}$};
+\draw (-12.75,-1) node[anchor=west,port labels]{p$_{\mbox{\tiny{0,n-1}}}$};
+\pdot{-6,-1.75}
+\draw (-6,-1.75) -| (-9+1.25,1) -- (-9+0.5,1) node[anchor=east]{$\ldots$};
+\draw (CLA4.c) -| (-9-1.25,-1.75) -- (-9-0.5,-1.75) node[anchor=west]{$\ldots$};
+\draw (-6.2,-0.75) node{\large{CLA-generator}};
+\draw[->] (-12.75,-0.5) -- ++(-0.5,0) node[anchor=east,scale=0.7]{$g_{0,n-1}$};
+\draw[->] (-12.75,-1) -- ++(-0.5,0) node[anchor=east,scale=0.7]{$p_{0,n-1}$};
+\end{tikzpicture}

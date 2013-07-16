@@ -1,0 +1,17 @@
+\begin{tikzpicture}[circuit logic US]
+\draw (-1.5,-1) rectangle (1.5,1);
+\draw[dashed] (-0.5,1) -- ++(0,0.5) node[anchor=south]{$x_i$};
+\draw[dashed] (0.5,1) -- ++(0,0.5) node[anchor=south]{$y_i$};
+\draw[dashed] (-1.5,0) -- ++(-0.5,0) node[anchor=east]{$c_{i+1}$};
+\draw[dashed] (0,-1) -- ++(0,-0.5) node[anchor=north]{$s_i$};
+\node[and gate,rotate=-90] (A) at (-0.5,0) {};
+\node[xor gate,rotate=-90] (X) at (0.5,0) {};
+\draw (X.output) -- (X.output |- 0,-0.75) -| (0,-1);
+\draw (A.output) |- (-1.25,-0.75) |- (-1.5,0);
+\draw (-0.5,1) |- (A.input 2 |- 0,0.75) -- (A.input 2);
+\draw (0.5,1) |- (X.input 1 |- 0,0.625) -- (X.input 1);
+\draw (0.5,0.625) -| (A.input 1);
+\draw (-0.5,0.75) -| (X.input 2);
+\pdot{0.5,0.625}
+\pdot{-0.5,0.75}
+\end{tikzpicture}

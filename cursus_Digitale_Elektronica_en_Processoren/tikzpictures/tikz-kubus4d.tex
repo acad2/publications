@@ -1,0 +1,39 @@
+\begin{tikzpicture}
+\draw[thick] (0,0) node[scale=0.75,anchor=south]{0000} -- (1,0) node[scale=0.75,anchor=south]{0001} -- (1,-1) node[scale=0.75,anchor=north]{0011} -- (0,-1) node[scale=0.75,anchor=north]{0010} -- cycle;
+\draw[thick] (0,0,-1) node[scale=0.75,anchor=south]{0100} -- (1,0,-1) node[scale=0.75,anchor=south]{0101} -- (1,-1,-1) node[scale=0.75,anchor=north]{0111} -- (0,-1,-1) node[scale=0.75,anchor=north]{0110} -- cycle;
+\draw[thick] (0,0,0) -- (0,0,-1);
+\draw[thick] (0,-1,0) -- (0,-1,-1);
+\draw[thick] (1,0,0) -- (1,0,-1);
+\draw[thick] (1,-1,0) -- (1,-1,-1);
+\fill (0,0) circle(0.05 cm);
+\fill (1,0) circle(0.05 cm);
+\fill (1,-1) circle(0.05 cm);
+\fill (0,-1) circle(0.05 cm);
+\fill (0,0,-1) circle(0.05 cm);
+\fill (1,0,-1) circle(0.05 cm);
+\fill (1,-1,-1) circle(0.05 cm);
+\fill (0,-1,-1) circle(0.05 cm);
+\begin{scope}[xshift=2 cm, yshift=1 cm]
+\draw[thick] (0,0) node[scale=0.75,anchor=south]{1000} -- (1,0) node[scale=0.75,anchor=south]{1001} -- (1,-1) node[scale=0.75,anchor=north]{1011} -- (0,-1) node[scale=0.75,anchor=north]{1010} -- cycle;
+\draw[thick] (0,0,-1) node[scale=0.75,anchor=south]{1100} -- (1,0,-1) node[scale=0.75,anchor=south]{1101} -- (1,-1,-1) node[scale=0.75,anchor=north]{1111} -- (0,-1,-1) node[scale=0.75,anchor=north]{1110} -- cycle;
+\draw[thick] (0,0,0) -- (0,0,-1);
+\draw[thick] (0,-1,0) -- (0,-1,-1);
+\draw[thick] (1,0,0) -- (1,0,-1);
+\draw[thick] (1,-1,0) -- (1,-1,-1);
+\fill (0,0) circle(0.05 cm);
+\fill (1,0) circle(0.05 cm);
+\fill (1,-1) circle(0.05 cm);
+\fill (0,-1) circle(0.05 cm);
+\fill (0,0,-1) circle(0.05 cm);
+\fill (1,0,-1) circle(0.05 cm);
+\fill (1,-1,-1) circle(0.05 cm);
+\fill (0,-1,-1) circle(0.05 cm);
+\end{scope}
+\foreach\x in {0,1} {
+ \foreach\y in {0,-1} {
+  \foreach\z in {0,-1} {
+   \draw[thick] (\x,\y,\z) -- (\x+2,\y+1,\z);
+  }
+ }
+}
+\end{tikzpicture}

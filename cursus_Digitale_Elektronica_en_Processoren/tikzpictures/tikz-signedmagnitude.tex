@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+\node[asmterminal] (E) at (0,0) {Einde};
+\node[asmcommand] (C1) at (-3,1) {$m_r=m_2-m_1$\\$s_r=s_2$};
+\node[asmcommand] (C2) at (-1,1) {$m_r=m_1-m_2$\\$s_r=s_1$};
+\node[asmcommand] (C3) at (1,1) {$m_r=0$\\$s_r=0$};
+\node[asmcommand] (C4) at (3,1) {$m_r=m_1+m_2$\\$s_r=s_1$};
+\node[asmcondit] (I1) at (-2,2) {$m_1>m_2$};
+\node[asmcondit] (I2) at (-0.5,3) {$m_1=m_2$};
+\node[asmcondit] (I3) at (1.25,4) {$s_1=s_2$};
+\node[asmcommand] (C5) at (0.25,5) {$s_2=s_2'$};
+\node[asmterminal] (S1) at (0.25,6) {Begin\\aftrekking};
+\node[asmterminal] (S2) at (2.25,6) {Begin\\optelling};
+\draw (C1) |- (C4 |- 0,0.5) -- (C4);
+\draw (C2) -- (C2 |- 0,0.5);
+\draw (C3) -- (C3 |- 0,0.5);
+\draw[->] (0,0.5) -- (E);
+\draw[->] (I1.west) node[scale=0.6,anchor=south east]{nee} -| (C1.north);
+\draw[->] (I1.east) node[scale=0.6,anchor=south west]{ja} -| (C2.north);
+\draw[->] (I2.west) node[scale=0.6,anchor=south east]{nee} -| (I1.north);
+\draw[->] (I2.east) node[scale=0.6,anchor=south west]{ja} -| (C3.north);
+\draw[->] (I3.west) node[scale=0.6,anchor=south east]{nee} -| (I2.north);
+\draw[->] (I3.east) node[scale=0.6,anchor=south west]{ja} -| (C4.north);
+\draw[->] (C5.south) |- (I3.north |- 0,4.65) -- (I3.north);
+\draw[->] (S1.south) -- (C5.north);
+\draw (S2.south) |- (I3.north |- 0,4.65);
+\end{tikzpicture}

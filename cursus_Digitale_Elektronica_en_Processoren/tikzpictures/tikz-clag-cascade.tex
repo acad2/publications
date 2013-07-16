@@ -1,0 +1,31 @@
+\begin{tikzpicture}
+\foreach\x in {0,1,...,8} {
+  \node[cla,scale=0.75] (CLA\x) at (-1.5*\x,0) {\small{CLA$_{\x}$}};
+  \draw (CLA\x.x) -- ++(0,0.5) node[anchor=south,scale=0.7]{$x_{\x}$};
+  \draw (CLA\x.y) -- ++(0,0.5) node[anchor=south,scale=0.7]{$y_{\x}$};
+  \draw[->] (CLA\x.s) -| ++(-0.075,0.875) node[anchor=south,scale=0.7]{$s_{\x}$};
+}
+\foreach\x in {0,1,2} {
+  \node[clag3,scale=0.75] (CLAG1\x) at (-4.5*\x-1.5,-1.5) {\small{CLA-Generator$_{1,\x}$}};
+}
+\node[clag3,scale=0.75,minimum width=17.5cm] (CLAG20) at (-6,-3) {\small{CLA-Generator$_{2,0}$}};
+\foreach\x/\a/\y in {1/a/0,2/b/0,3/c/0,4/a/1,5/b/1,6/c/1,7/a/2,8/b/2} {
+  \draw (CLA\x.c) -- ++(0.15,0) |- (CLAG1\y.c\a |- 0,-2) -- (CLAG1\y.c\a);
+}
+\foreach\x/\a/\y in {1/a/0,2/b/1} {
+  \draw (CLAG1\x.c) -- ++(0.075,0) |- (CLAG20.c\a |- 0,-3.5) -- (CLAG20.c\a);
+  \draw (CLAG1\y.pab) -| ++(-0.075,-0.6) -| (CLAG20.p\a);
+  \draw (CLAG1\y.gab) -| ++(-0.15,-0.9375) -| (CLAG20.g\a);
+}
+\foreach\a/\y in {c/2} {
+  \draw (CLAG1\y.pab) -| ++(-0.075,-0.6) -| (CLAG20.p\a);
+  \draw (CLAG1\y.gab) -| ++(-0.15,-0.9375) -| (CLAG20.g\a);
+}
+\draw (CLA0.c) -- ++(0.3,0) |- (CLAG20.c);
+\draw (CLAG10.c) -- ++(0.6,0) node[anchor=west,scale=0.7]{$c_0$};
+\pdot{CLAG10.c -| 0.8625,0}
+\foreach\x/\a/\y in {0/a/0,1/b/0,2/c/0,3/a/1,4/b/1,5/c/1,6/a/2,7/b/2,8/c/2} {
+  \draw (CLA\x.g) -- (CLAG1\y.g\a);
+  \draw (CLA\x.p) -- (CLAG1\y.p\a);
+}
+\end{tikzpicture}

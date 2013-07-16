@@ -1,0 +1,7 @@
+\begin{tikzpicture}
+\node[halfadder] (HA) at (0,0) {HA};
+\draw[->] (HA.co) -- ++(-0.25,0) node[anchor=east]{$c_{i+1}$};
+\draw[<-] (HA.x) -- ++(0,0.25) node[anchor=south]{$x_i$};
+\draw[<-] (HA.y) -- ++(0,0.25) node[anchor=south]{$y_i$};
+\draw[->] (HA.s) -- ++(0,-0.25) node[anchor=north]{$s_i$};
+\end{tikzpicture}

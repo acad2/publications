@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\node[cla] (CLA) at (0,0) {};
+\draw[<-] (CLA.x) -- ++(0,0.25) node[anchor=south]{$x_i$};
+\draw[<-] (CLA.y) -- ++(0,0.25) node[anchor=south]{$y_i$};
+\draw[->] (CLA.g) -- ++(0,-0.25) node[anchor=north]{$g_i$};
+\draw[->] (CLA.p) -- ++(0,-0.25) node[anchor=north]{$p_i$};
+\draw[->] (CLA.s) -- ++(-0.25,0) node[anchor=east]{$s_i$};
+\draw[<-] (CLA.c) -- ++(0.25,0) node[anchor=west]{$c_i$};
+\end{tikzpicture}

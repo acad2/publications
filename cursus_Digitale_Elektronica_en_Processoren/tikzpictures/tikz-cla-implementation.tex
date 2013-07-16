@@ -1,0 +1,38 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (x) at (-0.75,1);
+\coordinate (y) at (0.75,1);
+\coordinate (xb) at (x |- 0,0.875);
+\coordinate (yb) at (y |- 0,0.75);
+\coordinate (g) at (x |- 0,-1);
+\coordinate (p) at (y |- g);
+\coordinate (s) at (-1.25,0);
+\coordinate (sb) at (s -| -1.125,0);
+\coordinate (c) at (1.25,0);
+\coordinate (cb) at (c -| 1.125,0);
+\draw (s |- x) rectangle (c |- g);
+\node[and gate,rotate=-90] (A) at (g |- 0,0.15) {};
+\node[xor gate,rotate=-90] (X0) at (p |- 0,0.15) {};
+\node[xor gate,rotate=180] (X1) at (0,-0.55) {};
+\draw (x) -- (xb);
+\draw (y) -- (yb);
+\draw (s) -- (sb);
+\draw (c) -- (cb);
+\draw (xb) -| (X0.input 2);
+\draw (yb) -| (X0.input 1);
+\draw (xb) -| (A.input 2);
+\draw (yb) -| (A.input 1);
+\draw (X0.output) -- (p);
+\draw (X1.output) -| (sb);
+\draw (X1.input 1) -| (cb);
+\draw (X1.input 2) -- (X1.input 2 -| X0.output);
+\draw (A.output) -- (g);
+\draw[dashed] (x) -- ++(0,0.5) node[anchor=south]{$x_i$};
+\draw[dashed] (y) -- ++(0,0.5) node[anchor=south]{$y_i$};
+\draw[dashed] (s) -- ++(-0.5,0) node[anchor=east]{$s_i$};
+\draw[dashed] (c) -- ++(0.5,0) node[anchor=west]{$c_i$};
+\draw[dashed] (g) -- ++(0,-0.5) node[anchor=north]{$g_i$};
+\draw[dashed] (p) -- ++(0,-0.5) node[anchor=north]{$p_i$};
+\pdot{xb}
+\pdot{yb}
+\pdot{X0.output |- X1.input 2}
+\end{tikzpicture}
