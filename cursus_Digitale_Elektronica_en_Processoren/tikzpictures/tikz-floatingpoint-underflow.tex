@@ -1,0 +1,40 @@
+\begin{tikzpicture}[decoration={brace}]
+\begin{scope}
+\fill[black!35] (-2.5,-0.1) rectangle (-0.5,0.1);
+\fill[black!35] (-0.05,-0.1) rectangle (0.05,0.1);
+\fill[black!35] (0.5,-0.1) rectangle (2.5,0.1);
+\draw[thick,->] (-2.85,0) -- (2.85,0);
+\draw[thick] (-2.5,-0.1) -- ++(0,0.25);
+\draw[thick] (-0.5,-0.1) -- ++(0,0.25);
+\draw[thick] (0.5,-0.1) -- ++(0,0.25);
+\draw[thick] (2.5,-0.1) -- ++(0,0.25);
+\fill (0,0) circle (0.05 cm);
+\draw [decorate] (-0.05,-0.15) -- ++(-0.45,0);
+\draw [decorate] (0.5,-0.15) -- ++(-0.45,0);
+\draw (-2.5,0.1) node[scale=0.55,anchor=south]{$\approx-2^{128}$};
+\draw (-0.5,0.1) node[scale=0.55,anchor=south]{$-2^{-149}$};
+\draw (0.5,0.1) node[scale=0.55,anchor=south]{$2^{-149}$};
+\draw (2.5,0.1) node[scale=0.55,anchor=south]{$\approx2^{128}$};
+\draw (0,-0.25) node[scale=0.55,anchor=north]{underflow};
+\draw (0,-0.5) node[scale=0.75,anchor=north]{Genormaliseerde vlottende komma};
+\end{scope}
+\begin{scope}[xshift=6cm]
+\fill[black!35] (-2.5,-0.1) rectangle (-0.35,0.1);
+\fill[black!35] (-0.05,-0.1) rectangle (0.05,0.1);
+\fill[black!35] (0.35,-0.1) rectangle (2.5,0.1);
+\draw[thick,->] (-2.85,0) -- (2.85,0);
+\draw[thick] (-2.5,-0.1) -- ++(0,0.25);
+\draw[thick] (-0.35,-0.1) -- ++(0,0.25);
+\draw[thick] (0.35,-0.1) -- ++(0,0.25);
+\draw[thick] (2.5,-0.1) -- ++(0,0.25);
+\fill (0,0) circle (0.05 cm);
+\draw [decorate] (0.35,-0.15) -- ++(-0.3,0);
+\draw [decorate] (-0.05,-0.15) -- ++(-0.3,0);
+\draw (-2.5,0.1) node[scale=0.55,anchor=south]{$\approx-2^{128}$};
+\draw (-0.35,0.1) node[scale=0.55,anchor=south]{$-2^{-126}$};
+\draw (0.35,0.1) node[scale=0.55,anchor=south]{$2^{-126}$};
+\draw (2.5,0.1) node[scale=0.55,anchor=south]{$\approx2^{128}$};
+\draw (0,-0.25) node[scale=0.55,anchor=north]{underflow};
+\draw (0,-0.5) node[scale=0.75,anchor=north]{Niet-genormaliseerde vlottende komma};
+\end{scope}
+\end{tikzpicture}

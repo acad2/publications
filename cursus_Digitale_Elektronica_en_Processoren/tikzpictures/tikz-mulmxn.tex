@@ -1,0 +1,51 @@
+\begin{tikzpicture}[circuit logic US]
+\def\dh{2};
+%\node[nadder,anchor=sd] (NA4) at (0,0) {$n$-opteller$_{m-1}$};
+\node[nadder,anchor=sd] (NA3) at (0,\dh) {$n$-opteller$_{m-1}$};
+\node[white,nadder,anchor=sd] (NA2) at (NA3.yc |- 0,2*\dh) {$n$-opteller$_{m-3}$};
+\node (NA2x) at (NA2) {$\ldots$};
+\node[nadder,anchor=sd] (NA1) at (NA2.yc |- 0,3*\dh) {$n$-opteller$_2$};
+\node[nadder,anchor=sd] (NA0) at (NA1.yc |- 0,4*\dh) {$n$-opteller$_1$};
+\draw (NA3.sa) -- (NA3.sa |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{m-1}$};
+\draw (NA3.sb) -- (NA3.sb |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_m$};
+\draw (NA3.sd) -- (NA3.sd |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{m+n-2}$};
+\draw (NA3.c) -| ++ (-0.25,-0.5) -| (NA3.xd |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{m+n-1}$};
+\foreach \xa/\xb in {0/1,1/2,2/3} {
+  \draw (NA\xa.sb) -- (NA\xb.ya);
+  \draw (NA\xa.sc) -- (NA\xb.yb);
+  \draw (NA\xa.sd) -- (NA\xb.yc);
+  \draw (NA\xa.c) -| ++ (-0.25,-0.5) -| (NA\xb.yd);
+}
+\foreach \xa/\i in {0/1,1/2} {
+  %\draw (NA\xa.yd) -- ++(0,0.25) node[anchor=south,scale=0.75]{$0$};
+  \draw (NA\xa.sa) |- ++(0.25,-0.5*\dh+0.125) |- ++(-0.25,-\dh+0.5) |- (NA\xa.sa |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{\i}$};
+}
+\foreach \xa/\t in {0/1,1/2,3/m-2} {
+  \node[and gate,rotate=-90,scale=0.5] (Aa\xa) at (NA\xa.xa |- 0,4*\dh+1.125-\dh*\xa) {};
+  \node[and gate,rotate=-90,scale=0.5] (Ab\xa) at (NA\xa.xb |- 0,4*\dh+1.125-\dh*\xa) {};
+  \node[scale=0.75] (Ac\xa) at (NA\xa.xc |- 0,4*\dh+1.125-\dh*\xa) {$\ldots$};
+  \node[and gate,rotate=-90,scale=0.5] (Ad\xa) at (NA\xa.xd |- 0,4*\dh+1.125-\dh*\xa) {};
+  \draw (Aa\xa.input 2) |- (0,4*\dh+1.375-\dh*\xa -| NA3.west) node[scale=0.75,anchor=east]{$b_{\t}$};
+  \draw (Ab\xa.input 2) -- (Ab\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa);
+  \pdot{Ab\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa};
+  \draw (Ad\xa.input 2) -- (Ad\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa);
+  \pdot{Ad\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa};
+  \draw (NA\xa.xa) -- (Aa\xa.output);
+  \draw (NA\xa.xb) -- (Ab\xa.output);
+  \draw (NA\xa.xd) -- (Ad\xa.output);
+  \draw (Aa\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_0$};
+  \draw (Ab\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_1$};
+  \draw (Ad\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_{n-1}$};
+}
+\node[and gate,rotate=-90,scale=0.5] (Aya0) at (NA0.ya |- 0,4*\dh+1.375) {};
+\node[and gate,rotate=-90,scale=0.5] (Ayb0) at (NA0.yb |- 0,4*\dh+1.375) {};
+\node[scale=0.75] (Ayc0) at (NA0.yc |- 0,4*\dh+1.375) {$\ldots$};
+\draw (Aya0.input 2) |- (0,4*\dh+1.75 -| NA3.west) node[scale=0.75,anchor=east]{$b_{0}$};
+\draw (Ayb0.input 2) -- (Ayb0.input 2 |- 0,4*\dh+1.75);
+\pdot{Ayb0.input 2 |- 0,4*\dh+1.75};
+\draw (NA0.ya) -- (Aya0.output);
+\draw (NA0.yb) -- (Ayb0.output);
+\draw (NA0.yd) -- (NA0.yd |- Ayb0.output) node[anchor=south,scale=0.75]{$0$};
+\draw (Aya0.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_1$};
+\draw (Ayb0.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_2$};
+\end{tikzpicture}

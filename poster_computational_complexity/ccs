@@ -1,17 +1,1 @@
-dtime/Time/0.1/0.03/DTIME/{$L$ is in \cca{DTIME}{T\left(n\right)} iff there is a TM that runs in time \bigoh{T\left(n\right)} and decides $L$.},
-p/Time/0.25/0.13/P/{$\cc{P}=\displaystyle\cup_{c\geq 1}\cca{DTIME}{n^c}$.},
-ntime/Nond/0.15/0.07/NTIME/{$L$ is in \cca{NTIME}{T\left(n\right)} iff there is a NDTM that runs in time \bigoh{T\left(n\right)} and decides $L$.},
-np/Nond/0.15/0.3/NP/{$\cc{NP}=\displaystyle\cup_{c\in\NN}\cca{NTIME}{n^c}$.},
-exp/Time/0.1/0.13/EXP/{$\cc{EXP}=\displaystyle\cup_{c\geq 1}\cca{DTIME}{2^{n^c}}.$},
-nexp/Nond/0.45/0.3/NEXP/{$\cc{NEXP}=\displaystyle\cup_{c\geq 1}\cca{NTIME}{2^{n^c}}.$},
-po/Orac/0.5/0.75/P$^O$/{For every \slang{O}, \cc{P$^O$} is a set containing every language that can be decided by a polynomial-time deterministic TM with oracle access to $O$.},
-npo/Orac/0.5/0.25/NP$^O$/{For every \slang{O}, \cc{NP$^O$} is a set containing every language that can be decided by a polynomial-time NDTM with oracle access to $O$.},
-space/Size/0.75/0.03/SPACE/{We say $L$ is in \cca{SPACE}{S\left(n\right)} if there is a TM $M$ deciding $L$ such at most \bigoh{S\left(n\right)} locations on $M$'s work tapes (excluding the input tape) are ever visited by $M$'s head during it's computation on every input of length $n$.},
-nspace/Size/0.125/0.03/NSPACE/{We say $L$ is in \cca{NSPACE}{S\left(n\right)} if there is a NDTM $M$ deciding $L$ such at most \bigoh{S\left(n\right)} locations on $M$'s work tapes (excluding the input tape) are ever visited by $M$'s head during it's computation on every input of length $n$ regardless it's nondeterministic choices.},
-pspace/Size/0.75/0.23/PSPACE/{$\cc{PSPACE}=\displaystyle\cup_{c>0}\cca{SPACE}{n^c}.$},
-npspace/Size/0.125/0.23/NPSPACE/{$\cc{NPSPACE}=\displaystyle\cup_{c>0}\cca{NSPACE}{n^c}.$},
-l/Size/0.75/0.13/L/{$\cc{L}=\cca{SPACE}{\log n}$.},
-nl/Size/0.125/0.13/NL/{$\cc{NL}=\cca{NSPACE}{\log n}$.},
-tisp/Time/1/0.55/TISP/{\cca{TISP}{T\left(n\right),S\left(n\right)} is the set of languages that can be decided by a TM $M$ that on every input $x$ takes at most \bigoh{T\left(\left|x\right|\right)} steps and uses at most \bigoh{S\left(\left|x\right|\right)} cells of it's read-write tapes.},
-size/Circ/0.25/0.05/SIZE/{A $T\left(n\right)$-size circuit family is a sequence $\left\{C_n\right\}_{n\in\NN}$ of Boolean circuits, where $C_n$ has $n$ inputs and  single output, and its size $\left|C_n\right|\leq T\left(n\right)$ for every $n$. We say a language $L$ is in \cca{SIZE}{T\left(n\right)} if there exists a $T\left(n\right)$-size circuit family $\left\{C_n\right\}_{n\in\NN}$ such that for every $x$, $x\in L\Leftrightarrow C_n\left(x\right)=1$.},
-ppoly/Circ/0.75/0.05/{P$_{\mbox{\small{/Poly}}}$}/{$\cc{P$_{\mbox{\small{/Poly}}}$}=\displaystyle\cup_c\cca{SIZE}{n^c}$}
+dtime/Time/0.1/0.03/DTIME/{$L$ is in \cca{DTIME}{T\left(n\right)} iff there is a TM that runs in time \bigoh{T\left(n\right)} and decides $L$.}

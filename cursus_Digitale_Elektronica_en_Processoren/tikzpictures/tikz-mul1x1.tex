@@ -1,0 +1,11 @@
+\begin{tikzpicture}[circuit logic US]
+\node[anchor=east,scale=0.75] (C) at (0,0) {$\begin{array}{lc}
+&a_0\\
+\times&b_0\\\hline
+&a_0b_0
+\end{array}$};
+\node[and gate,rotate=-90] (A) at (0.5,0) {};
+\draw (A.input 1) -- ++(0,0.25) node[scale=0.75,anchor=south]{$a_0$};
+\draw (A.input 2) -- ++(0,0.25) node[scale=0.75,anchor=south]{$b_0$};
+\draw (A.output) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$a_0\times b_0$};
+\end{tikzpicture}

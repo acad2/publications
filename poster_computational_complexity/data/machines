@@ -1,4 +1,4 @@
 TM/TM/{A $k$-tape \textit{Turing machine} $M$ with $k\geq2$ is a 3-tuple $\left\langle \Gamma,Q,\delta\right\rangle$. Hereby $\Gamma$ is a finite set of the symbols that $M$'s tapes can contain. $Q$ is a finite sete of possible states $M$'s register can be in. $Q$ contains two special states $q_{\mbox{\small{start}}}$ and $q_{\mbox{\small{halt}}}$. Finally $\delta:Q\times\Gamma^k\rightarrow Q\times\Gamma^{k-1}\times\left\{L,S,R\right\}^k$ is the transition function of $M$. If the machine is in state $q\in Q$ and $\left(\sigma_1,\ldots,\sigma_k\right)$ are the symbols currently being read on the $k$ tapes and $\delta\left(q,\left(\sigma_1,\ldots,\sigma_k\right)\right)=\left(q',\left(\sigma_2',\ldots,\sigma_k'\right),\left(z_1,ldots,z_k\right)\right)$ with $z_i\in\left\{L,S,R\right\}$ then at the next symbols the $\sigma$ symbols on the last $k-1$ tapes will be replaced by the $\sigma'$ symbols, the machine will be in state $q'$, and the $k$ heads will move Left, Right or Stay in place as given by $z$.},
 ObTM/Oblivious TM/,
 NDTM/NDTM/,
-BC/Boolean Circuit/
+BC/Boolean Circuit/	

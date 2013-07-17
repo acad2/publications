@@ -1,0 +1,54 @@
+\begin{tikzpicture}[circuit logic US]
+\foreach \x/\i in {0/0,1/1,3/n-2,4/n-1} {
+  \fill[black!15] (-2.5*\x-1.15,-0.7) rectangle ++(2.3,2.9);
+  \node[fulladder] (FA\x) at (-2.5*\x,0) {FA$_{\i}$};
+  \node[ale] (ALE\x) at (-2.5*\x,1.5) {ALE$_{\i}$};
+  \draw (FA\x.x) -- (ALE\x.y);
+  \draw (FA\x.y) -- (ALE\x.x);
+  \draw (ALE\x.a) -- ++(0,1.5) node[scale=0.75,anchor=south]{$a_{\i}$};
+  \draw (ALE\x.b) -- ++(0,1.5) node[scale=0.75,anchor=south]{$b_{\i}$};
+  \draw (ALE\x.m) -- (ALE\x.m |- 0,3.1);
+  \draw (ALE\x.ia) -- (ALE\x.ia |- 0,2.85);
+  \draw (ALE\x.ib) -- (ALE\x.ib |- 0,2.6);
+  \draw[->] (FA\x.s) -- ++(0,-0.75) node[scale=0.75,anchor=north]{$f_{\i}$};
+}
+\foreach \x/\y in {0/1,3/4} {
+  \draw (FA\x.co) -- (FA\y.ci);
+  \draw (ALE\x.ib |- 0,2.6) -- (ALE\y.ib |- 0,2.6);
+  \draw (ALE\x.ia |- 0,2.85) -- (ALE\y.ia |- 0,2.85);
+  \draw (ALE\x.m |- 0,3.1) -- (ALE\y.m |- 0,3.1);
+}
+\foreach \x in {0,1,3} {
+  \pdot{ALE\x.ib |- 0,2.6}
+  \pdot{ALE\x.ia |- 0,2.85}
+  \pdot{ALE\x.m |- 0,3.1}
+}
+\draw (ALE3.ib |- 0,2.6) -- ++(1.25,0);
+\draw (ALE3.ia |- 0,2.85) -- ++(1.25,0);
+\draw (ALE3.m |- 0,3.1) -- ++(1.25,0);
+\draw (FA3.ci) -- ++(1,0);
+\draw (ALE1.ib |- 0,2.6) -- ++(-2.25,0);
+\draw (ALE1.ia |- 0,2.85) -- ++(-2.25,0);
+\draw (ALE1.m |- 0,3.1) -- ++(-2.25,0);
+\draw (FA1.co) -- ++(-1,0);
+\draw (ALE0.ib |- 0,2.6) -- (2.25,2.6) node[scale=0.75,anchor=west]{$i_1$};
+\draw (ALE0.ia |- 0,2.85) -- (2.25,2.85) node[scale=0.75,anchor=west]{$i_0$};
+\draw (ALE0.m |- 0,3.1) -- (2.25,3.1) node[scale=0.75,anchor=west]{$m$};
+\node[xor gate,scale=0.75,rotate=-90] (XO) at (-11,-1.25) {};
+\node[cig] (CIG) at (1.75,0) {CIG};
+\pdot{CIG.ib |- 0,2.6}
+\pdot{CIG.ia |- 0,2.85}
+\pdot{CIG.m |- 0,3.1}
+\draw (CIG.c) -- (FA0.ci);
+\draw (CIG.ib) -- (CIG.ib |- 0,2.6);
+\draw (CIG.ia) -- (CIG.ia |- 0,2.85);
+\draw (CIG.m) -- (CIG.m |- 0,3.1);
+\draw (FA4.co) -| (XO.input 2);
+\draw (-8.75,0) |- (XO.input 1 |- 0,-0.75) -- (XO.input 1);
+\draw[->] (XO.output) -- ++(0,-0.5) node[scale=0.75,anchor=north]{overflow};
+\pdot{-8.75,0}
+\pdot{FA4.co -| XO.input 2}
+\draw[->] (FA4.co -| XO.input 2) -- ++(-0.5,0) node[scale=0.75,anchor=east]{$c_n$};
+\draw (-5,0) node{$\ldots$};
+\draw (-5,1.5) node{$\ldots$};
+\end{tikzpicture}

@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+\node[dadder,scale=0.75] (A0) at (0,0) {$4$-bit opteller};
+\node[dadder,anchor=ya,scale=0.75] (A1) at (A0.sa |- 0,-2) {$4$-bit opteller};
+\draw (A0.sa) -- (A1.ya);
+\draw (A0.sb) -- (A1.yb);
+\draw (A0.sc) -- (A1.yc);
+\draw (A0.sd) -- (A1.yd);
+\draw (A0.ci) -- ++(0.25,0) node[scale=0.75,anchor=west]{$c_i$};
+\draw (A1.xd) -- ++(0,0.125) node[scale=0.75,anchor=south]{$0$};
+\draw (A1.xa) -- ++(0,0.125) node[scale=0.75,anchor=south]{$0$};
+\draw (A1.xb) -- ++(0,0.5) -| (A1.xc);
+\draw[->] (A1.xc |- 0,-1.5) -- ++(-1.5,0) node[scale=0.75,anchor=east]{$c_o$};
+\draw (-3.5,-0.375) rectangle ++(0.75,-0.75);
+\draw (-3.125,-0.75) node[scale=0.75]{$>9$};
+\draw (A0.co) node[scale=0.75,anchor=north east]{$c$} -| (-3.125,-0.375);
+\pdot{A1.xc |- 0,-1.5};
+\draw (-3.125,-1.125) -- (-3.125,-1.5);
+\foreach \a/\i/\s in {sa/4/0,sb/3/1,sc/2/2,sd/1/3} {
+  \draw (A0.\a |- 0,-0.375-0.15*\i) node[scale=0.75,anchor=west]{$z_\s$} -- (-2.75,-0.375-0.15*\i);
+  \pdot{A0.\a |- 0,-0.375-0.15*\i}
+}
+\draw (A0.xa) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_0$};
+\draw (A0.xb) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_1$};
+\draw (A0.xc) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_2$};
+\draw (A0.xd) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_3$};
+\draw (A0.ya) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_0$};
+\draw (A0.yb) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_1$};
+\draw (A0.yc) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_2$};
+\draw (A0.yd) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_3$};
+\draw[->] (A1.sa) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_0$};
+\draw[->] (A1.sb) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_1$};
+\draw[->] (A1.sc) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_2$};
+\draw[->] (A1.sd) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_3$};
+\pdot{-3.125,-1.5};
+\end{tikzpicture}
+\figlab{bCDAdderSchematic}

@@ -185,7 +185,7 @@ Modus&Implementatie&Kosten&Relatief&Vertraging&Relatief\\\hline
 &NOR-NOR&13&28\%&4.2&49\%
 \end{tabular}
 \caption{Samenvatting van de verschillende implementaties.}
-\label{tbl:differentImplementationsSSD}
+\tbllab{differentImplementationsSSD}
 \end{table}
 \section{Rekenkundige basisschakelingen}
 \label{s:rekenkundig}
@@ -221,7 +221,7 @@ Oct&Bin&Oct&Bin\\\hline
 \end{tabular}
 }
 \caption{Radix-conversie van hexadecimaal en octaal naar binair.}
-\label{tbl:radixConversionHexOctBin}
+\tbllab{radixConversionHexOctBin}
 \end{table}
 toont de omzetting van hexadecimale en octale cijfers naar binaire cijfers. Bij wijzen van voorbeeld zetten we $\mbox{B4F}_{16}$ om naar het binaire stelsel\footnote{De verticale strepen ($|$) dienen uitsluitend om educatieve doeleinden, en zijn niet verplicht.}:
 \begin{equation}
@@ -257,7 +257,7 @@ $4$&$12$&$12\mod36=12$&$\left(12-12\right)/36=0$&$12=\mbox{C}_{36}$\\
 $5$&$0$&$-$&$-$&$-$
 \end{tabular}
 \caption{Voorbeeld van algemene radix-omzetting.}
-\label{tbl:radixConversionExample}
+\tbllab{radixConversionExample}
 \end{table}
 We kunnen dus concluderen dat: $\mbox{8C989}_{16}=\mbox{CCCP}_{36}$.
 \subsection{Optellen}
@@ -289,20 +289,7 @@ Deze combinatorische functies kunnen we verwezenlijken met een AND en XOR poort.
 Met een Half adder kunnen we echter geen optellingen uitrekenen. Hiervoor dienen we een component te ontwikkelen die meer functionaliteit biedt: de \termen{full adder (FA)}. Een full adder bevat slechts \'e\'en ingang extra: de overdracht van de vorige opteller $c_i$. Een full adder telt op door een XOR operatie toe te passen op de drie ingangen: $x_i$, $y_i$ en $c_i$, verder is er sprake van overdracht indien twee of meer ingangen 1 zijn. Dit kunnen we eenvoudig implementeren met tweelagen-logica. De waarheidstabellen en Karnaugh-kaarten staan samen met een mogelijke implementatie op figuur \ref{fig:fullAdder}.
 \begin{figure}[hbt]
 \centering
-\subfigure[Waarheidstabel]{
-\begin{tikzpicture}
-\draw (0,0) node{\begin{tabular}{ccc|cc}
-$x_i$&$y_i$&$c_i$&$s_i$&$c_{i+1}$\\\hline
-0&0&0&0&0\\
-0&0&1&1&0\\
-0&1&0&1&0\\
-0&1&1&0&1\\
-1&0&0&1&0\\
-1&0&1&0&1\\
-1&1&0&0&1\\
-1&1&1&1&1
-\end{tabular}};
-\end{tikzpicture}}
+\subfigure[Waarheidstabel]{\importtikz{fulladder-truthtable}}
 \subfigure[Karnaugh-kaarten]{\importtikz{fulladder-karnaugh}}
 \subfigure[Interface]{\importtikz{fulladder-interface}}
 \subfigure[Mogelijke implementatie]{\importtikz{fulladder-implementation}}
@@ -427,7 +414,7 @@ $1110$&$+14$&$-6$&$-1$&$-2$\\
 $1111$&$+15$&$-7$&$-0$&$-1$
 \end{tabular}
 \caption{Betekenis van de binaire getallen.}
-\label{tbl:binaryMeaningSigned}
+\tbllab{binaryMeaningSigned}
 \end{table}
 \subsection{Optellen en aftrekken}
 Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, zullen we voor ieder van deze voorstellingen een schema uitwerken hoe we getallen kunnen optellen en aftrekken. Deze schema's worden weergegeven in figuur \ref{fig:addSubNegSchematic}.
@@ -548,73 +535,14 @@ De 2-complement voorstelling is de beste voor de implementatie van een opteller-
 \end{figure}
 Indien $s=0$ tellen we de twee getallen met elkaar op, anders trekken we de twee getallen van elkaar af. Door een XOR poort op de laatste twee carry-uitgangen $c_{n-1}$ en $c_n$ te plaatsen, kunnen we een controle op overflow inbouwen. Deze component wordt meestal samengevat tot een interface zoals op figuur \ref{fig:addsub-twocomplement-interface}\footnote{Bemerk op de figuur dat variabele met hoofdletters een rij van in- of uitgangen voorstellen.}. Een schematische werkwijze van optellen en aftrekken met 2-complement voorstelling staat op figuur \ref{fig:twocomplement}. De 2-complement voorstelling is dan ook populair omdat deze weinig bewerkingen en testen vraagt om sommen en verschillen te berekenen. Bovendien is er weinig extra hardware nodig om een opteller om te bouwen.
 \subsection{Arithmetic-Logic Unit (ALU)}
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}[circuit logic US]
-\foreach \x/\i in {0/0,1/1,3/n-2,4/n-1} {
-  \fill[black!15] (-2.5*\x-1.15,-0.7) rectangle ++(2.3,2.9);
-  \node[fulladder] (FA\x) at (-2.5*\x,0) {FA$_{\i}$};
-  \node[ale] (ALE\x) at (-2.5*\x,1.5) {ALE$_{\i}$};
-  \draw (FA\x.x) -- (ALE\x.y);
-  \draw (FA\x.y) -- (ALE\x.x);
-  \draw (ALE\x.a) -- ++(0,1.5) node[scale=0.75,anchor=south]{$a_{\i}$};
-  \draw (ALE\x.b) -- ++(0,1.5) node[scale=0.75,anchor=south]{$b_{\i}$};
-  \draw (ALE\x.m) -- (ALE\x.m |- 0,3.1);
-  \draw (ALE\x.ia) -- (ALE\x.ia |- 0,2.85);
-  \draw (ALE\x.ib) -- (ALE\x.ib |- 0,2.6);
-  \draw[->] (FA\x.s) -- ++(0,-0.75) node[scale=0.75,anchor=north]{$f_{\i}$};
-}
-\foreach \x/\y in {0/1,3/4} {
-  \draw (FA\x.co) -- (FA\y.ci);
-  \draw (ALE\x.ib |- 0,2.6) -- (ALE\y.ib |- 0,2.6);
-  \draw (ALE\x.ia |- 0,2.85) -- (ALE\y.ia |- 0,2.85);
-  \draw (ALE\x.m |- 0,3.1) -- (ALE\y.m |- 0,3.1);
-}
-\foreach \x in {0,1,3} {
-  \pdot{ALE\x.ib |- 0,2.6}
-  \pdot{ALE\x.ia |- 0,2.85}
-  \pdot{ALE\x.m |- 0,3.1}
-}
-\draw (ALE3.ib |- 0,2.6) -- ++(1.25,0);
-\draw (ALE3.ia |- 0,2.85) -- ++(1.25,0);
-\draw (ALE3.m |- 0,3.1) -- ++(1.25,0);
-\draw (FA3.ci) -- ++(1,0);
-\draw (ALE1.ib |- 0,2.6) -- ++(-2.25,0);
-\draw (ALE1.ia |- 0,2.85) -- ++(-2.25,0);
-\draw (ALE1.m |- 0,3.1) -- ++(-2.25,0);
-\draw (FA1.co) -- ++(-1,0);
-\draw (ALE0.ib |- 0,2.6) -- (2.25,2.6) node[scale=0.75,anchor=west]{$i_1$};
-\draw (ALE0.ia |- 0,2.85) -- (2.25,2.85) node[scale=0.75,anchor=west]{$i_0$};
-\draw (ALE0.m |- 0,3.1) -- (2.25,3.1) node[scale=0.75,anchor=west]{$m$};
-\node[xor gate,scale=0.75,rotate=-90] (XO) at (-11,-1.25) {};
-\node[cig] (CIG) at (1.75,0) {CIG};
-\pdot{CIG.ib |- 0,2.6}
-\pdot{CIG.ia |- 0,2.85}
-\pdot{CIG.m |- 0,3.1}
-\draw (CIG.c) -- (FA0.ci);
-\draw (CIG.ib) -- (CIG.ib |- 0,2.6);
-\draw (CIG.ia) -- (CIG.ia |- 0,2.85);
-\draw (CIG.m) -- (CIG.m |- 0,3.1);
-\draw (FA4.co) -| (XO.input 2);
-\draw (-8.75,0) |- (XO.input 1 |- 0,-0.75) -- (XO.input 1);
-\draw[->] (XO.output) -- ++(0,-0.5) node[scale=0.75,anchor=north]{overflow};
-\pdot{-8.75,0}
-\pdot{FA4.co -| XO.input 2}
-\draw[->] (FA4.co -| XO.input 2) -- ++(-0.5,0) node[scale=0.75,anchor=east]{$c_n$};
-\draw (-5,0) node{$\ldots$};
-\draw (-5,1.5) node{$\ldots$};
-\end{tikzpicture}
-\caption{Schematisch implementatie van een arithmetic-logic unit (ALU).}
-\figlab{aLUImplementatie}
-\end{figure}
-Hoewel veel processoren in staat zijn om sommen en verschillen te berekenen zal men meestal geen directe opteller of opteller-aftrekker vinden. Meestal gebruikt men hiervoor een \termen{Arithmetic-Logic Unit (ALU)}. Een ALU is een component die, gebaseerd op een opteller, allerlei instructies\footnote{Welke instructies is niet echt gespecificeerd. Er bestaan dan ook boeken over het ontwerpen van een goede ALU.} kan uitvoeren. In ons geval beschouwen we 4 rekenkundige (optellen, aftrekken, \termen{increment} en \termen{decrement}) en 4 logische bewerkingen (AND, OR, NOT en identiteit). We bouwen een ALU op ongeveer dezelfde manier zoals we een opteller-aftrekker bouwden uit een opteller. In plaats van XOR poorten gebruiken we een nieuw component: een \termen{Arithmetic-Logic Extender (ALE)}. Een ander component -- de CIG -- berekent welke ingang aan de carry $c_0$ moet worden gegeven. In het algemeen heeft een ALU dus een structuur zoals op figuur \ref{fig:aLUImplementatie} waarbij de ALE en CIG vrij ge\"implementeerd kunnen worden.
+\importtikzfigure{alu-structure}{Schematisch implementatie van een arithmetic-logic unit (ALU).}
+Hoewel veel processoren in staat zijn om sommen en verschillen te berekenen zal men meestal geen directe opteller of opteller-aftrekker vinden. Meestal gebruikt men hiervoor een \termen{Arithmetic-Logic Unit (ALU)}. Een ALU is een component die, gebaseerd op een opteller, allerlei instructies\footnote{Welke instructies is niet echt gespecificeerd. Er bestaan dan ook boeken over het ontwerpen van een goede ALU.} kan uitvoeren. In ons geval beschouwen we 4 rekenkundige (optellen, aftrekken, \termen{increment} en \termen{decrement}) en 4 logische bewerkingen (AND, OR, NOT en identiteit). We bouwen een ALU op ongeveer dezelfde manier zoals we een opteller-aftrekker bouwden uit een opteller. In plaats van XOR poorten gebruiken we een nieuw component: een \termen{Arithmetic-Logic Extender (ALE)}. Een ander component -- de CIG -- berekent welke ingang aan de carry $c_0$ moet worden gegeven. In het algemeen heeft een ALU dus een structuur zoals op figuur \ref{fig:alu-structure} waarbij de ALE en CIG vrij ge\"implementeerd kunnen worden.
 \subsubsection{Instructieset}
 \label{sss:aLUInstructionSet}
 Alvorens we in staat zijn een ALU te maken moeten we een instructieset defini\"eren. Onze instructieset heeft drie\footnote{Omdat we 8 opdrachten gedefinieerd hebben, hebben we een $\log_28=3$ bit instructiewoord nodig.} ingangssignalen die bepalen welke opdracht er moet worden uitgevoerd. Bovendien zijn de 8 opdrachten in te delen in 2 groepen van 4: aritmetisch en logisch. Daarom noemen we de eerste bit van het instructiewoord $m$ voor mode\footnote{0=logisch, 1=aritmetisch.}. Verder wijzen we dan elke opdracht toe aan een bepaald instructiewoord zoals in tabel \ref{tbl:aLUInstructionSet}.
 \begin{table}[hbt]
 \centering
 \begin{tabular}{ccc|c|ccc|l}
-%\multicolumn{3}{c|}{Instructie}&\multicolumn{2}{c}{Opdracht}\\
 $m$&$i_1$&$i_0$&$F$&$X$&$Y$&$c_0$&\\\hline
 0&0&0&$A'$&$A'$&0&0&NOT\\
 0&0&1&$A\mbox{ AND }B$&$A\mbox{ AND }B$&0&0&AND\\
@@ -626,195 +554,26 @@ $m$&$i_1$&$i_0$&$F$&$X$&$Y$&$c_0$&\\\hline
 1&1&1&$A+1$&$A$&$0$&1&Increment\\
 \end{tabular}
 \caption{Instructieset van een typische arithmetic-logic unit (ALU).}
-\label{tbl:aLUInstructionSet}
+\tbllab{aLUInstructionSet}
 \end{table}
 Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE implementeert een functie die $\left(A,B\right)$-waardes afbeeldt op $\left(X,Y\right)$-waardes. Deze laatste waardes dienen als invoer  voor de optellers. De CIG ten slotte geeft gebaseerd op het instructiewoord een waarde voor $c_0$. Deze functies staan ook in de instructietabel.
 \subsubsection{Synthese van de ALE en CIG}
 \begin{figure}[hbt]
 \centering
-\subfigure[Karnaugh-kaarten]{
-\begin{tikzpicture}
-\kkaarte{0}{0}{$x_j$}{$m$/$i_1$/$i_0$/$a_j$/$b_j$}{1/1/0/0/0/0/0/1/0/0/1/1/0/1/1/1/0/0/1/1/0/0/1/1/0/0/1/1/0/0/1/1}
-\kkaarte{6}{0}{$y_j$}{$m$/$i_1$/$i_0$/$a_j$/$b_j$}{0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/1/1/1/1/0/1/0/1/1/0/1/0/0/0/0/0}
-\kkaartc{12}{0}{$c_0$}{$m$/$i_1$/$i_0$}{0/0/0/0/0/0/1/1}
-\end{tikzpicture}
-\figlab{aLECIGImplKarnaugh}}
-\subfigure[Implementatie ALE]{
-\begin{tikzpicture}[circuit logic US]
-\def\dx{0.85};
-\def\dy{1.25};
-\def\sc{1};
-\draw[dashed] (-0.5,-1.875) rectangle (5.75,2);
-\node[and gate,scale=0.85*\sc,inputs={inverted,inverted,inverted,inverted},rotate=-90] (A0) at (\dx*0,0) {};
-\node[and gate,scale=0.85*\sc,inputs={normal,normal,normal,inverted},rotate=-90] (A1) at (\dx*1,0) {};
-\node[and gate,scale=\sc,inputs={normal,normal,normal},rotate=-90] (A2) at (\dx*2,0) {};
-\node[and gate,scale=\sc,inputs={normal,normal},rotate=-90] (A3) at (\dx*3,0) {};
-\node[and gate,scale=\sc,inputs={normal,normal},rotate=-90] (A4) at (\dx*4,0) {};
-\node[or gate,scale=0.65*\sc,inputs={normal,normal,normal,normal,normal},rotate=-90] (O0) at (\dx*2,\dy*-1) {};
-\draw (O0.input 5) -- ++(0,0.3) -| (A0.output);
-\draw (O0.input 4) -- ++(0,0.435) -| (A1.output);
-\draw (O0.input 3) -- (A2.output);
-\draw (O0.input 2) -- ++(0,0.435) -| (A3.output);
-\draw (O0.input 1) -- ++(0,0.3) -| (A4.output);
-\draw (O0.output) -- (O0.output |- 0,-2) node[scale=0.758,anchor=north] {$x_j$};
-\node[and gate,scale=\sc,inputs={inverted,inverted,normal},rotate=-90] (A5) at (\dx*5,0) {};
-\node[and gate,scale=\sc,inputs={normal,inverted,normal},rotate=-90] (A6) at (\dx*6,0) {};
-\node[or gate,scale=\sc,inputs={normal,normal},rotate=-90] (O1) at (\dx*5.5,\dy*-1) {};
-\draw (O1.input 2) -- ++(0,0.435) -| (A5.output);
-\draw (O1.input 1) -- ++(0,0.435) -| (A6.output);
-\draw (O1.output) -- (O1.output |- 0,-2) node[scale=0.758,anchor=north] {$y_j$};
-\foreach\a/\i/\x/\t in {0/4/4/$m$,0/3/3/$i_1$,0/2/2/$i_0$,1/1/0/$b_j$,0/1/1/$a_j$} {
-  \draw (A\a.input \i) -- (A\a.input \i |- 0,0.25*\x+0.75) -- (6,0.25*\x+0.75) node[scale=0.75,anchor=west]{\t};
-}
-\foreach\a/\i/\x in {1/4/4,1/3/3,1/2/2,2/3/2,2/2/1,2/1/0,3/2/3,3/1/1,4/2/4,4/1/1,5/3/4,5/2/2,5/1/0,6/3/4,6/2/3,6/1/0} {
-  \draw (A\a.input \i) -- (A\a.input \i |- 0,0.25*\x+0.75);
-  \pdot{A\a.input \i |- 0,0.25*\x+0.75};
-}
-\end{tikzpicture}
-\figlab{aLEImpl}}
-\subfigure[Implementatie CIG]{
-\begin{tikzpicture}[circuit logic US]
-\def\dx{0.85};
-\def\dy{1.25};
-\def\sc{1};
-\draw[dashed] (-1.25,-0.5) rectangle (1.25,0.5);
-\node[and gate,scale=\sc,rotate=180] (A) at (-0.5,-0.125) {};
-\draw (A.output) -| (-1.125,0) -- (-1.25,0);
-\draw (A.input 2) -| ++(0.125,0.375) -| (-0.5,0.5);
-\draw (A.input 1) -| (0.5,0.5);
-\foreach\x/\t in {0/$m$,1/$i_0$,2/$i_1$} {
-  \draw (0.5*\x-0.5,0.5) -- ++(0,0.5) node[scale=0.75,anchor=south]{\t};
-}
-\draw (-1.25,0) -- ++(-0.5,0) node[scale=0.75,anchor=east]{$c_0$};
-\end{tikzpicture}
-\figlab{cIGImpl}}
+\subfigure[Karnaugh-kaarten]{\importtikz{ale-cig-karnaugh}}
+\subfigure[Implementatie ALE]{\importtikz{ale-implementation}}
+\subfigure[Implementatie CIG]{\importtikz{cig-implementation}}
 \caption{Synthese van de ALE en CIG}
 \end{figure}
-Eenmaal we de instructieset hebben, dienen we enkel nog de ALE en CIG te implementeren. Een ALE is een component met als ingangen het instructiewoord en van elke operand een bit. In ons geval wordt dit dus $\left(m,i_1,i_0,a_j,b_j\right)$. Als uitgangen hebben we de ingangen van \'e\'en van de optellers $\left(x_j,y_j\right)$. We zijn dus in staat om een waarheidstabel en Karnaugh-kaart op te stellen van de ALE. Zoals op figuur \ref{fig:aLECIGImplKarnaugh}. Vervolgens is het enkel een kwestie van implementatie. Op basis van de Karnaugh-kaaren hebben we op figuur \ref{fig:aLEImpl} een AND-OR implementatie gesynthetiseerd.
+Eenmaal we de instructieset hebben, dienen we enkel nog de ALE en CIG te implementeren. Een ALE is een component met als ingangen het instructiewoord en van elke operand een bit. In ons geval wordt dit dus $\left(m,i_1,i_0,a_j,b_j\right)$. Als uitgangen hebben we de ingangen van \'e\'en van de optellers $\left(x_j,y_j\right)$. We zijn dus in staat om een waarheidstabel en Karnaugh-kaart op te stellen van de ALE. Zoals op figuur \ref{fig:ale-cig-karnaugh}. Vervolgens is het enkel een kwestie van implementatie. Op basis van de Karnaugh-kaaren hebben we op figuur \ref{fig:ale-implementation} een AND-OR implementatie gesynthetiseerd.
 \paragraph{}
-De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op tabel \ref{tbl:aLUInstructionSet} is dit $\left(m,i_1,i_0\right)$. Een CIG heeft slechts \'e\'en uitgang: carry $c_0$. Op basis van deze instructieset staat op figuur \ref{fig:aLECIGImplKarnaugh} de bijbehorende Karnaugh-kaart. Deze blijkt een eenvoudige AND-operatie te zijn zoals op figuur \ref{fig:cIGImpl}.
+De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op tabel \ref{tbl:aLUInstructionSet} is dit $\left(m,i_1,i_0\right)$. Een CIG heeft slechts \'e\'en uitgang: carry $c_0$. Op basis van deze instructieset staat op figuur \ref{fig:ale-cig-karnaugh} de bijbehorende Karnaugh-kaart. Deze blijkt een eenvoudige AND-operatie te zijn zoals op figuur \ref{fig:cig-implementation}.
 \subsection{Vermenigvuldigen}
 \begin{figure}[htb]
 \centering
-\subfigure[$1\times 1$-bit]{\begin{tikzpicture}[circuit logic US]
-\node[anchor=east,scale=0.75] (C) at (0,0) {$\begin{array}{lc}
-&a_0\\
-\times&b_0\\\hline
-&a_0b_0
-\end{array}$};
-\node[and gate,rotate=-90] (A) at (0.5,0) {};
-\draw (A.input 1) -- ++(0,0.25) node[scale=0.75,anchor=south]{$a_0$};
-\draw (A.input 2) -- ++(0,0.25) node[scale=0.75,anchor=south]{$b_0$};
-\draw (A.output) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$a_0\times b_0$};
-\end{tikzpicture}}
-\subfigure[$3\times 2$-bit]{\begin{tikzpicture}[circuit logic US]
-\node[anchor=east,scale=0.75] (C) at (0,1.25) {$\begin{array}{lccccc}
-&&&a_2&a_1&a_0\\
-\times&&&&b_1&b_0\\\hline
-&&&a_2b_0&a_1b_0&a_0b_0\\
-+&&a_2b_1&a_1b_1&a_0b_1&\\\hline
-&c_4&c_3&c_2&c_1&c_0
-\end{array}$};
-\begin{scope}[xshift=2 cm]
-\node[halfadder,scale=0.75] (HA2) at (0,0) {HA$_2$};
-\node[fulladder,scale=0.75] (FA1) at (1.5,0) {FA$_1$};
-\node[halfadder,scale=0.75] (HA0) at (3,0) {HA$_0$};
-\foreach\x in {0,1} {
-  \coordinate (a\x) at (-1.5,3-1.5*\x);
-  \draw (a\x) node[anchor=east,scale=0.75] {$b_\x$};
-}
-\foreach\x in {0,1,2,3,4} {
-  \coordinate (c\x) at (4.5-1.5*\x,-0.75);
-  \draw (c\x) node[anchor=north,scale=0.75] {$c_\x$};
-}
-\node[and gate,scale=0.75,rotate=-90] (A00) at (c0 |- 0,2.375) {};
-\foreach \ad/\a in {HA0/1,FA1/2,HA2/3} {
-  \node[and gate,scale=0.75,rotate=-90] (A1\a) at (\ad.y |- 0,1) {};
-  \draw (\ad.y) -- (A1\a.output);
-}
-\foreach \a in {2,3} {
-  \draw (A1\a.input 1) -- (a1 -| A1\a.input 1);
-  \pdot{a1 -| A1\a.input 1};
-}
-\foreach \ad/\a in {HA0/1,FA1/2} {
-  \node[and gate,scale=0.75,rotate=-90] (A0\a) at (\ad.x |- 0,2.375) {};
-  \draw (\ad.x) -- (A0\a.output);
-  \draw (A0\a.input 1) -- (A0\a.input 1 |- a0);
-  \pdot{A0\a.input 1 |- a0};
-  \coordinate (ai\a) at (A0\a.input 2 |- 0,2.825);
-  \pdot{ai\a};
-}
-\coordinate (ai0) at (A00.input 2 |- 0,2.825);
-\pdot{ai0};
-\foreach\x/\y in {0/1,1/2,2/3} {
-  \draw (ai\x) -| ++(-0.75,-1) -| (A1\y.input 2);
-}
-\foreach\x in {0,1,2} {
-  \coordinate (b\x) at (A0\x.input 2 |- 0,3.25);
-  \draw (A0\x.input 2) -- (b\x) node[anchor=south,scale=0.75] {$a_\x$};
-}
-\draw (a0) -| (A00.input 1);
-\draw (a1) -| (A11.input 1);
-\draw (A00.output) -- (c0);
-\draw (c1) -- (HA0.s);
-\draw (c2) -- (FA1.s);
-\draw (c3) -- (HA2.s);
-\draw (c4) |- (HA2.co);
-\draw (HA0.co) -- (FA1.ci);
-\draw (FA1.co) -| ++(-0.2,0.6) -| (HA2.x);
-\end{scope}
-\end{tikzpicture}}
-\subfigure[$n\times m$-bit]{\begin{tikzpicture}[circuit logic US]
-\def\dh{2};
-%\node[nadder,anchor=sd] (NA4) at (0,0) {$n$-opteller$_{m-1}$};
-\node[nadder,anchor=sd] (NA3) at (0,\dh) {$n$-opteller$_{m-1}$};
-\node[white,nadder,anchor=sd] (NA2) at (NA3.yc |- 0,2*\dh) {$n$-opteller$_{m-3}$};
-\node (NA2x) at (NA2) {$\ldots$};
-\node[nadder,anchor=sd] (NA1) at (NA2.yc |- 0,3*\dh) {$n$-opteller$_2$};
-\node[nadder,anchor=sd] (NA0) at (NA1.yc |- 0,4*\dh) {$n$-opteller$_1$};
-\draw (NA3.sa) -- (NA3.sa |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{m-1}$};
-\draw (NA3.sb) -- (NA3.sb |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_m$};
-\draw (NA3.sd) -- (NA3.sd |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{m+n-2}$};
-\draw (NA3.c) -| ++ (-0.25,-0.5) -| (NA3.xd |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{m+n-1}$};
-\foreach \xa/\xb in {0/1,1/2,2/3} {
-  \draw (NA\xa.sb) -- (NA\xb.ya);
-  \draw (NA\xa.sc) -- (NA\xb.yb);
-  \draw (NA\xa.sd) -- (NA\xb.yc);
-  \draw (NA\xa.c) -| ++ (-0.25,-0.5) -| (NA\xb.yd);
-}
-\foreach \xa/\i in {0/1,1/2} {
-  %\draw (NA\xa.yd) -- ++(0,0.25) node[anchor=south,scale=0.75]{$0$};
-  \draw (NA\xa.sa) |- ++(0.25,-0.5*\dh+0.125) |- ++(-0.25,-\dh+0.5) |- (NA\xa.sa |- 0,\dh-0.5) node[anchor=north,scale=0.75]{$s_{\i}$};
-}
-\foreach \xa/\t in {0/1,1/2,3/m-2} {
-  \node[and gate,rotate=-90,scale=0.5] (Aa\xa) at (NA\xa.xa |- 0,4*\dh+1.125-\dh*\xa) {};
-  \node[and gate,rotate=-90,scale=0.5] (Ab\xa) at (NA\xa.xb |- 0,4*\dh+1.125-\dh*\xa) {};
-  \node[scale=0.75] (Ac\xa) at (NA\xa.xc |- 0,4*\dh+1.125-\dh*\xa) {$\ldots$};
-  \node[and gate,rotate=-90,scale=0.5] (Ad\xa) at (NA\xa.xd |- 0,4*\dh+1.125-\dh*\xa) {};
-  \draw (Aa\xa.input 2) |- (0,4*\dh+1.375-\dh*\xa -| NA3.west) node[scale=0.75,anchor=east]{$b_{\t}$};
-  \draw (Ab\xa.input 2) -- (Ab\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa);
-  \pdot{Ab\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa};
-  \draw (Ad\xa.input 2) -- (Ad\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa);
-  \pdot{Ad\xa.input 2 |- 0,4*\dh+1.375-\dh*\xa};
-  \draw (NA\xa.xa) -- (Aa\xa.output);
-  \draw (NA\xa.xb) -- (Ab\xa.output);
-  \draw (NA\xa.xd) -- (Ad\xa.output);
-  \draw (Aa\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_0$};
-  \draw (Ab\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_1$};
-  \draw (Ad\xa.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_{n-1}$};
-}
-\node[and gate,rotate=-90,scale=0.5] (Aya0) at (NA0.ya |- 0,4*\dh+1.375) {};
-\node[and gate,rotate=-90,scale=0.5] (Ayb0) at (NA0.yb |- 0,4*\dh+1.375) {};
-\node[scale=0.75] (Ayc0) at (NA0.yc |- 0,4*\dh+1.375) {$\ldots$};
-\draw (Aya0.input 2) |- (0,4*\dh+1.75 -| NA3.west) node[scale=0.75,anchor=east]{$b_{0}$};
-\draw (Ayb0.input 2) -- (Ayb0.input 2 |- 0,4*\dh+1.75);
-\pdot{Ayb0.input 2 |- 0,4*\dh+1.75};
-\draw (NA0.ya) -- (Aya0.output);
-\draw (NA0.yb) -- (Ayb0.output);
-\draw (NA0.yd) -- (NA0.yd |- Ayb0.output) node[anchor=south,scale=0.75]{$0$};
-\draw (Aya0.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_1$};
-\draw (Ayb0.input 1) -- ++(0,0.25) node[anchor=south,scale=0.75]{$a_2$};
-\end{tikzpicture}}
+\subfigure[$1\times 1$-bit]{\importtikz{mul1x1}}
+\subfigure[$3\times 2$-bit]{\importtikz{mul3x2}}
+\subfigure[$n\times m$-bit]{\importtikz{mulmxn}}
 \caption{Parallelle vermenigvuldigers.}
 \figlab{parallelMultipliers}
 \end{figure}
@@ -951,52 +710,8 @@ met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlot
  \item \termen{Niet-genormaliseerde vlottende komma voorstelling}: hierbij is deze bovengenoemde constraint dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, maar hebben een groot nadeel: men kan een getal op verschillende manieren voorstellen: eenzelfde getal kan op verschillende manieren voorgesteld worden.
 \end{itemize}
 \subsubsection{Underflow en overflow}
-Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\termen{underflow}''. Underflow treed op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. Figuur \ref{fig:floatingPointUnderflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
-\begin{figure}[hbt]
-\centering
-\begin{tikzpicture}[decoration={brace}]
-\begin{scope}
-\fill[black!35] (-2.5,-0.1) rectangle (-0.5,0.1);
-\fill[black!35] (-0.05,-0.1) rectangle (0.05,0.1);
-\fill[black!35] (0.5,-0.1) rectangle (2.5,0.1);
-\draw[thick,->] (-2.85,0) -- (2.85,0);
-\draw[thick] (-2.5,-0.1) -- ++(0,0.25);
-\draw[thick] (-0.5,-0.1) -- ++(0,0.25);
-\draw[thick] (0.5,-0.1) -- ++(0,0.25);
-\draw[thick] (2.5,-0.1) -- ++(0,0.25);
-\fill (0,0) circle (0.05 cm);
-\draw [decorate] (-0.05,-0.15) -- ++(-0.45,0);
-\draw [decorate] (0.5,-0.15) -- ++(-0.45,0);
-\draw (-2.5,0.1) node[scale=0.55,anchor=south]{$\approx-2^{128}$};
-\draw (-0.5,0.1) node[scale=0.55,anchor=south]{$-2^{-149}$};
-\draw (0.5,0.1) node[scale=0.55,anchor=south]{$2^{-149}$};
-\draw (2.5,0.1) node[scale=0.55,anchor=south]{$\approx2^{128}$};
-\draw (0,-0.25) node[scale=0.55,anchor=north]{underflow};
-\draw (0,-0.5) node[scale=0.75,anchor=north]{Genormaliseerde vlottende komma};
-\end{scope}
-\begin{scope}[xshift=6cm]
-\fill[black!35] (-2.5,-0.1) rectangle (-0.35,0.1);
-\fill[black!35] (-0.05,-0.1) rectangle (0.05,0.1);
-\fill[black!35] (0.35,-0.1) rectangle (2.5,0.1);
-\draw[thick,->] (-2.85,0) -- (2.85,0);
-\draw[thick] (-2.5,-0.1) -- ++(0,0.25);
-\draw[thick] (-0.35,-0.1) -- ++(0,0.25);
-\draw[thick] (0.35,-0.1) -- ++(0,0.25);
-\draw[thick] (2.5,-0.1) -- ++(0,0.25);
-\fill (0,0) circle (0.05 cm);
-\draw [decorate] (0.35,-0.15) -- ++(-0.3,0);
-\draw [decorate] (-0.05,-0.15) -- ++(-0.3,0);
-\draw (-2.5,0.1) node[scale=0.55,anchor=south]{$\approx-2^{128}$};
-\draw (-0.35,0.1) node[scale=0.55,anchor=south]{$-2^{-126}$};
-\draw (0.35,0.1) node[scale=0.55,anchor=south]{$2^{-126}$};
-\draw (2.5,0.1) node[scale=0.55,anchor=south]{$\approx2^{128}$};
-\draw (0,-0.25) node[scale=0.55,anchor=north]{underflow};
-\draw (0,-0.5) node[scale=0.75,anchor=north]{Niet-genormaliseerde vlottende komma};
-\end{scope}
-\end{tikzpicture}
-\caption{Underflow van een vlottende komma voorstelling.}
-\figlab{floatingPointUnderflow}
-\end{figure}
+Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\termen{underflow}''. Underflow treed op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. Figuur \ref{fig:floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
+\importtikzfigure{floatingpoint-underflow}{Underflow van een vlottende komma voorstelling.}
 \subsubsection{IEEE-formaat voor vlottende komma getallen}
 Nu we de vlottende komma voorstelling theoretisch beschreven hebben, zullen we het formaat gedefinieerd door IEEE bespreken. De floating point wordt beschreven in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. Hierbij worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Hierbij maakt met een onderscheid tussen vlottende komma getallen met \termen{enkele precisie} (32-bit en beter bekend onder de term \termen{\texttt{float}} of \termen{\texttt{Single}}) en \termen{dubbele precisie} (64-bit en beter bekend als \termen{\texttt{double}}). Tabel \ref{tbl:iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
 \begin{table}[hbt]
@@ -1006,15 +721,15 @@ Precisie&grootte&$e$&$m$&$B$\\\hline
 \texttt{float}&32-bit&8&23&127\\
 \texttt{double}&64-bit&11&52&1023\\
 \end{tabular}
-\label{tbl:iEEEFloatingPointFormat}}
+\tbllab{iEEEFloatingPointFormat}}
 \subtable[Getalvoorstelling]{\begin{tabular}{l|ccc}
 &$E=0$&$0<E<2^e-1$&$E=2^e-1$\\\hline
 $M=0$&$0$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&$\left(-1\right)^s\times\infty$\\
 $M\neq 0$&$\left(-1\right)^s\times\underline{0}.M\times2^{1-B}$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&NaN\\
 \end{tabular}
-\label{tbl:iEEEFloatingNumberRepresentation}}
+\tbllab{iEEEFloatingNumberRepresentation}}
 \caption{IEEE 754-1985 Floating Point.}
-\label{tbl:iEEEFloatingPoint}
+\tbllab{iEEEFloatingPoint}
 \end{table}
 Elk van deze formaten heeft uiteraard radix $r=2$. IEEE 754-1985 vermeldt ook hoe een vlottende komma moet worden uitgelezen. Tabel \ref{tbl:iEEEFloatingNumberRepresentation} geeft hierbij weer hoe we het getal moeten interpreteren afhankelijk van de waarde van de exponent $E$ en mantisse $M$. Bovendien wordt bij de IEEE 754 een extra variabele ingevoerd: \termen{excess-bias $B$}. Tot op heden is $B=2^{e-1}-1$, en is de range van de exponent dus van $-2^{e-1}+2$ tot $2^{e-1}-1$. Eventueel zou men later kunnen afwijken en bijvoorbeeld meer positieve exponenten dan negatieve kunnen toelaten. Verder definieert het formaat nog enkele speciale variabelen:
 \begin{itemize}
@@ -1060,47 +775,12 @@ Decimaal&BCD\\\hline
 9&1001
 \end{tabular}
 \caption{Decimale cijfers en hun BCD equivalent.}
-\label{tbl:bCDConversion}
+\tbllab{bCDConversion}
 \end{table}
 \paragraph{Bewerkingen met BCD}
 \begin{figure}[hbt]
 \centering
-\subfigure[Schematische voorstelling]{\begin{tikzpicture}
-\node[dadder,scale=0.75] (A0) at (0,0) {$4$-bit opteller};
-\node[dadder,anchor=ya,scale=0.75] (A1) at (A0.sa |- 0,-2) {$4$-bit opteller};
-\draw (A0.sa) -- (A1.ya);
-\draw (A0.sb) -- (A1.yb);
-\draw (A0.sc) -- (A1.yc);
-\draw (A0.sd) -- (A1.yd);
-\draw (A0.ci) -- ++(0.25,0) node[scale=0.75,anchor=west]{$c_i$};
-\draw (A1.xd) -- ++(0,0.125) node[scale=0.75,anchor=south]{$0$};
-\draw (A1.xa) -- ++(0,0.125) node[scale=0.75,anchor=south]{$0$};
-\draw (A1.xb) -- ++(0,0.5) -| (A1.xc);
-\draw[->] (A1.xc |- 0,-1.5) -- ++(-1.5,0) node[scale=0.75,anchor=east]{$c_o$};
-\draw (-3.5,-0.375) rectangle ++(0.75,-0.75);
-\draw (-3.125,-0.75) node[scale=0.75]{$>9$};
-\draw (A0.co) node[scale=0.75,anchor=north east]{$c$} -| (-3.125,-0.375);
-\pdot{A1.xc |- 0,-1.5};
-\draw (-3.125,-1.125) -- (-3.125,-1.5);
-\foreach \a/\i/\s in {sa/4/0,sb/3/1,sc/2/2,sd/1/3} {
-  \draw (A0.\a |- 0,-0.375-0.15*\i) node[scale=0.75,anchor=west]{$z_\s$} -- (-2.75,-0.375-0.15*\i);
-  \pdot{A0.\a |- 0,-0.375-0.15*\i}
-}
-\draw (A0.xa) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_0$};
-\draw (A0.xb) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_1$};
-\draw (A0.xc) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_2$};
-\draw (A0.xd) -- ++(0,0.25) node[scale=0.75,anchor=south]{$x_3$};
-\draw (A0.ya) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_0$};
-\draw (A0.yb) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_1$};
-\draw (A0.yc) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_2$};
-\draw (A0.yd) -- ++(0,0.25) node[scale=0.75,anchor=south]{$y_3$};
-\draw[->] (A1.sa) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_0$};
-\draw[->] (A1.sb) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_1$};
-\draw[->] (A1.sc) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_2$};
-\draw[->] (A1.sd) -- ++(0,-0.25) node[scale=0.75,anchor=north]{$s_3$};
-\pdot{-3.125,-1.5};
-\end{tikzpicture}
-\figlab{bCDAdderSchematic}}
+\subfigure[Schematische voorstelling]{\importtikz{bcd-schematic}}
 \subfigure[Karnaugh-kaart]{
 \begin{tikzpicture}
 \kkaarte{0}{0}{$c_o$}{$c$/$z_3$/$z_2$/$z_1$/$z_0$}{0/0/0/0/0/0/0/0/0/0/1/1/1/1/1/1/1/1/1/-/-/-/-/-/-/-/-/-/-/-/-/-}
@@ -1154,7 +834,7 @@ Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het B
 1111	&\verb+SI+	&\verb+US+	&\verb+/+	&\verb+?+	&\verb+O+	&\verb+_+	&\verb+o+	&\verb+DEL+
 \end{tabular}
 \caption{ASCII standaard.}
-\label{tbl:aSCIIStandard}
+\tbllab{aSCIIStandard}
 \end{table}
 Een standaard om tekst voor te stellen is de American Standard Code for Information Interchange (ASCII). ASCII reserveert 7 bit per karakter. Deze 7 bit zorgen voor 128 mogelijke karakters. De karakterset bestaat uit de Romaanse letters, Arabische cijfers, diverse leestekens en enkele functiesymbolen. De toewijzing van deze symbolen vertoont enige logica om bijvoorbeeld kleine letters naar hoofdletters om te zetten, en binaire getallen in hun ASCII equivalent. Tabel \ref{tbl:aSCIIStandard} toont de ASCII-karakters met hun bijbehorende binaire code. ASCII bevat geen ondersteuning voor cyrillisch, Arabisch,... Unicode is een standaard die 8, 16 of 32 bit per karakter reserveert om dit probleem op te lossen. Anno 2011 is $11\%$ van de binaire waarden toegewezen.
 \section{Andere basisschakelingen}
@@ -1544,7 +1224,7 @@ $d_3$&$d_2$&$d_1$&$d_0$&$a$&$f_1$&$f_0$\\\hline
 0&1&0&0&1&1&0\\
 1&0&0&0&1&1&1\\
 \end{tabular}
-\label{tbl:truthTableEncoderNormal}
+\tbllab{truthTableEncoderNormal}
 }
 \subtable[Prioriteitsencoder]{
 \begin{tabular}{cccc|ccc}
@@ -1555,7 +1235,7 @@ $d_3$&$d_2$&$d_1$&$d_0$&$a$&$f_1$&$f_0$\\\hline
 0&1&-&-&1&1&0\\
 1&-&-&-&1&1&1\\
 \end{tabular}
-\label{tbl:truthTablePriorityEncoder}
+\tbllab{truthTablePriorityEncoder}
 }
 \caption{Waarheidtabellen van een encoder en prioriteitsencoder.}
 \end{table}
@@ -1836,7 +1516,7 @@ $s_1$&schuiven&roteren\\
 $s_0$&aritmetisch&logisch
 \end{tabular}
 \caption{Instructieset voor de schuifoperaties over 1 bit.}
-\label{tbl:shiftInstructionSet}
+\tbllab{shiftInstructionSet}
 \end{table}
 Op basis van deze instructieset kunnen we nu een component bouwen. Voor de berekening van de uitgangsbits gebruiken we multiplexers. Immers kan elke uitgang $y_i$ maar drie mogelijke uitgangen hebben: $x_{i-1}$, $x_i$ en $x_{i+1}$. Bij de uitgangen aan de rand dienen we alleen een andere interpretatie voor sommige $x_j$ te vinden. Welke van deze drie ingangen we kiezen hangt verder alleen af van twee bits uit het instructiewoord: $s_3$ en $s_2$. In het geval dat $s_3=0$ geldt $y_i=x_i$. Bijgevolg zetten we $x_i$ zowel op de $d_0$ en $d_1$ ingang van de multiplexer voor $y_i$. Indien $s_3=1$ en $s_2=0$ schuiven we naar links. We zetten dus $x_{i+1}$ en $x_{i-1}$ respectievelijk op de $d_2$ en $d_3$ ingangen. Vervolgens dienen we nog de randgevallen op te lossen. Deze randgevallen beslaan enkel $x_{i+1}$ voor $y_3$ en  $x_{i-1}$ voor $y_0$. Deze waarden zullen we respectievelijk noteren als $x_4$ en $x_{-1}$ en vallen dus buiten de grenzen van de ingangen. In geval van rotatie geldt:
 \begin{equation}
