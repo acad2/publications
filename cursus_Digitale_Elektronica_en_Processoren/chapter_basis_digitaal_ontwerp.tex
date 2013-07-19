@@ -12,46 +12,7 @@ Uiteraard willen we met deze binaire waarden bepaalde operaties uitvoeren. Om be
 Als basisschakelingen definieert men meestal de \termen{NOT}, \termen{AND} en \termen{OR} operaties. Deze operaties zijn eenvoudig en makkelijk te begrijpen/onthouden. Hoewel booleaanse algebra in heel wat andere cursussen reeds aan bod komt, zullen we er ook in deze cursus enkele secties aan besteden. We zullen de booleaanse algebra behandelen aan de hand van een model met lichtschakelaars.
 \subsection{Logische schakelingen in huis}
 We beschouwen een schakeling zoals op figuur \ref{fig:switchLight}.
-\begin{figure}[htb]
-\centering
-\begin{tikzpicture}
-\draw[thick] (-0.3,0.05) -- (0.3,0.05);
-\draw (-0.15,-0.05) -- (0.15,-0.05);
-\draw (0,0.05) -- (0,0.5) -- (1,0.5);
-\fill (1,0.5) circle (0.05);
-\fill (1.5,0.5) circle (0.05);
-\draw (1.5,0.5) -- (2.5,0.5) -- (2.5,0.25);
-\draw[thick] (2.5,0) circle (0.25);
-\draw[thick] (2.677,0.177) -- (2.323,-0.177);
-\draw[thick] (2.677,-0.177) -- (2.323,0.177);
-\draw (0,-0.05) -- (0,-0.5) -- (2.5,-0.5) -- (2.5,-0.25);
-\draw (0.9,0.7) -- (1.6,0.7);
-\draw (1.2,0.7) -- (1.2,0.9);
-\draw (1.3,0.7) -- (1.3,0.9);
-\draw (1.1,1) -- (1.25,0.85) -- (1.4,1);
-\draw (1.25,1.05) node[anchor=south]{$x$};
-\begin{scope}[xshift=4 cm]
-\draw[thick] (-0.3,0.05) -- (0.3,0.05);
-\draw (-0.15,-0.05) -- (0.15,-0.05);
-\draw (0,0.05) -- (0,0.5) -- (1,0.5);
-\fill (1,0.5) circle (0.05);
-\fill (1.5,0.5) circle (0.05);
-\draw (1.5,0.5) -- (2.5,0.5) -- (2.5,0.25);
-\fill[black!20] (2.5,0) circle (0.25);
-\draw[thick] (2.5,0) circle (0.25);
-\draw[thick] (2.677,0.177) -- (2.323,-0.177);
-\draw[thick] (2.677,-0.177) -- (2.323,0.177);
-\draw (0,-0.05) -- (0,-0.5) -- (2.5,-0.5) -- (2.5,-0.25);
-\draw (0.9,0.55) -- (1.6,0.55);
-\draw (1.2,0.55) -- (1.2,0.75);
-\draw (1.3,0.55) -- (1.3,0.75);
-\draw (1.1,0.85) -- (1.25,0.7) -- (1.4,0.85);
-\draw (1.25,0.85) node[anchor=south]{$x$};
-\end{scope}
-\end{tikzpicture}
-\caption{Basis van het lamp-model.}
-\label{fig:switchLight}
-\end{figure}
+\importtikzfigure{switchLight}{Basis van het lamp-model.}
 Zoals we zien zal indien we de schakelaar $x$ indrukken, het lichtje branden. Indien we vervolgens de schakelaar loslaten zien we bijgevolg dat het lampje opnieuw dooft. We formaliseren dit door te schrijven:
 \begin{equation}
 L=x
@@ -1334,40 +1295,8 @@ Het feit dat VHDL redelijk uitgebreid is, brengt bovendien allerhande nadelen me
 \subsection{Beperkingen}
 Naast de voor- en nadelen heeft VHDL ook enkele beperkingen. Zo is VHDL slechts tot op zeker niveau automatisch synthetiseerbaar. Hierbij ondersteund elke fabrikant van VHDL een verschillende subset. Het tweede grote nadeel is dat slechts de syntax en de semantiek van VHDL gestandaardiseerd is. Niet hoe de code geschreven moet worden. Dit houdt in dat eenzelfde gedrag op tientallen verschillende manieren beschreven kan worden. Dit zorgt er ook voor dat elk programma die VHDL leest de code op een andere manier kan implementeren. Het gevolg is dat de codestijl, die in grote mate bepaalt hoe de code ge\"implementeerd zal worden, variabel is. In het ene programma kan een bepaalde code tot de meest optimale implementatie leiden, terwijl een ander programma met dezelfde code slechts een standaardimplementatie kiest. Men moet dus eerst heel wat ervaring opdoen met een programma alvorens men weet hoe men de code moet schrijven zodat deze een effici\"ente implementatie kiest.
 \subsection{Concepten (entiteiten en architectuur)}
-Na de voor en nadelen besproken te hebben, is het tijd voor een voorbeeld waarmee we de verschillende concepten zullen duidelijk maken. We ontwerpen een schakeling zoals op figuur \ref{fig:vhdlCircuitExample}. Hierbij willen we een schakeling ``test'' ontwerpen. Deze schakeling krijgt drie 8-bit ingangen (\texttt{In1}, \texttt{In2} en \texttt{In3}). Als uitgangen zijn er twee bits (\texttt{Out1} en \texttt{Out2}). \texttt{Out1} geeft 1 terug indien \texttt{In1} en \texttt{In2} aan elkaar gelijk zijn. Analoog geeft \texttt{Out2} 1 terug indien \texttt{In2} en \texttt{In3} gelijk zijn. Om deze vergelijker te bouwen werken we bijgevolg met een hi\"erarchisch schema. Waarbij we \texttt{Comp} op een andere plaats implementeren.
-\begin{figure}[htb]
-\centering
-\begin{tikzpicture}[circuit logic US]
-\draw (-1.5,-2.25) rectangle (1.5,2.25);
-\draw (-0.75,-1.75) rectangle ++(1.5,1.5);
-\draw (-0.75,1.75) rectangle ++(1.5,-1.5);
-\draw[->,very thick] (-2.75,1.25) node[anchor=south west]{In1} -- (-0.75,1.25) node[anchor=west]{A};
-\draw[very thick] (-2.75,0) node[anchor=south west]{In2} -- (-1.125,0);
-\draw[<->,very thick] (-0.75,0.75) node[anchor=west]{B} -- ++(-0.375,0) -- ++(0,-1.5) -- ++(0.375,0) node[anchor=west]{A};
-\draw[->,very thick] (-2.75,-1.25) node[anchor=south west]{In3} -- (-0.75,-1.25) node[anchor=west]{B};
-\draw[->] (0.75,1) node[anchor=east]{EQ} -- (2.75,1) node[anchor=south east]{Out1};
-\draw[->] (0.75,-1) node[anchor=east]{EQ} -- (2.75,-1) node[anchor=south east]{Out2};
-\draw (0,1.7) node[anchor=south]{Comp};
-\draw (0,-0.3) node[anchor=south]{Comp};
-\draw (-1.5,2.25) node[anchor=south west]{Test};
-\begin{scope}[xshift=7.5 cm]
-\draw (-3,3.2) node[anchor=south west]{Comp};
-\draw (-3,-3.2) rectangle (3,3.2);
-\node[and gate,inputs={normal,normal,normal,normal,normal,normal,normal,normal}] (A) at (1.5,0) {};
-\draw[->] (A.output) -- ++(1.5,0) node[anchor=south east]{EQ};
-\draw[->,very thick] (-4,-1) node[anchor=south west]{B} -- (-3,-1);
-\draw[->,very thick] (-4,1) node[anchor=south west]{A} -- (-3,1);
-\foreach\x/\y/\t in {1/4/0,2/3/1,3/2/2,4/1/3,5/1/4,6/2/5,7/3/6,8/4/7} {
-  \node[xnor gate] (Xn) at (-1.5,3.6-0.8*\x) {};
-  \draw (Xn.output) -- ++(0.55+.2*\y,0) |- (A.input \x);
-  \draw (Xn.input 1 -| -2.25,0) node[scale=0.5,anchor=east]{A[\t]} -- (Xn.input 1);
-  \draw (Xn.input 2 -| -2.25,0) node[scale=0.5,anchor=east]{B[\t]} -- (Xn.input 2);
-}
-\end{scope}
-\end{tikzpicture}
-\caption{Voorbeeldcircuit voor VHDL code.}
-\label{fig:vhdlCircuitExample}
-\end{figure}
+Na de voor en nadelen besproken te hebben, is het tijd voor een voorbeeld waarmee we de verschillende concepten zullen duidelijk maken. We ontwerpen een schakeling zoals op figuur \ref{fig:vhld-example}. Hierbij willen we een schakeling ``test'' ontwerpen. Deze schakeling krijgt drie 8-bit ingangen (\texttt{In1}, \texttt{In2} en \texttt{In3}). Als uitgangen zijn er twee bits (\texttt{Out1} en \texttt{Out2}). \texttt{Out1} geeft 1 terug indien \texttt{In1} en \texttt{In2} aan elkaar gelijk zijn. Analoog geeft \texttt{Out2} 1 terug indien \texttt{In2} en \texttt{In3} gelijk zijn. Om deze vergelijker te bouwen werken we bijgevolg met een hi\"erarchisch schema. Waarbij we \texttt{Comp} op een andere plaats implementeren.
+\importtikzfigure{vhdl-example}{Voorbeeldcircuit voor VHDL code.}
 \paragraph{}We zullen eerst \texttt{Comp} implementeren in VHDL. De code hiervoor staat in \vhdlref{vhdl:comp}. Als we de code goed bekijken onderscheiden we twee belangrijke delen \vhdltermen{entity} en \vhdltermen{architecture}.
 \paragraph{Entity}
 Het \texttt{entity} gedeelte beschrijft de zogenaamde ``\termen{blackbox}'' ofwel de interface. Hierdoor is VHDL in staat een blokje te tonen met de juiste in en uitgangen. Zoals we zien bevat de beschrijving het \vhdltermen{port} commando. Het \texttt{port} commando specificeert dan de in- en uitgangen. Dit doet men door eerst de namen van de in- of uitgangen te vermelden. Vervolgens plaatst men het token \vhdltermen{in} of \vhdltermen{out} om te specificeren of het om een in- of uitgang gaat. Merk dus op dat elke geleider naar het component een expliciete richting heeft. Vervolgens duidt men het type van de in- of uitgang aan. Logischerwijs bevat dit het token \vhdltermen{bit}. Een bit is niets anders dan \'e\'en lijn. Meestal echter willen we verschillende lijnen samennemen. In dat geval duiden we dit aan met een \vhdltermen{bit\_vector}, een bitvector is dus niets anders dan een lijst van geleiders naar het blok. Het is handig verschillende geleiders samen te nemen, dit maakt de code overzichtelijker, anderzijds indien bijvoorbeeld de lengte van A gewijzigd moet worden kost dit slechts een minimale ingreep.
