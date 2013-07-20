@@ -626,6 +626,67 @@
   }
 }
 
+\pgfdeclareshape{mux8to1} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{data13}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.8\pgfutil@tempdima}
+  \anchor{data12}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.6\pgfutil@tempdima}
+  \anchor{data11}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.4\pgfutil@tempdima}
+  \anchor{data10}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.2\pgfutil@tempdima}
+  \anchor{data03}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.2\pgfutil@tempdima}
+  \anchor{data02}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.4\pgfutil@tempdima}
+  \anchor{data01}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.6\pgfutil@tempdima}
+  \anchor{data00}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.8\pgfutil@tempdima}
+  \anchor{selin0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.8333\pgfutil@tempdima}
+  \anchor{selout0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.8333\pgfutil@tempdima}
+  \anchor{selin1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.8333\pgfutil@tempdima}
+  \anchor{selout1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.8333\pgfutil@tempdima}
+  \anchor{selin2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.8333\pgfutil@tempdima}
+  \anchor{selout2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.8333\pgfutil@tempdima}
+  \anchor{output0}{\centerpoint\advance\pgf@y by-\halfheight\pgfutil@tempdima=\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \pgfutil@tempdima=\halfwidth
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by 0.6666\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -0.6666\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+  }
+}
+
 \pgfdeclareshape{decoder2to4} {
 
   \savedanchor\centerpoint{
