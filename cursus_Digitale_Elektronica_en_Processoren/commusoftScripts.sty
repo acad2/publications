@@ -44,8 +44,11 @@
   \draw (#1.east) node[anchor=south west,scale=0.75]{[False]};
   \draw (#1.west) node[anchor=south east,scale=0.75]{[True]};
 }
+
+\newcommand{\setIndexLabelsMuxH}[2][west]{\draw (#2.data0) node[rotate=-90,anchor=#1,scale=0.75]{000};\draw (#2.data1) node[rotate=-90,anchor=#1,scale=0.75]{001};\draw (#2.data2) node[rotate=-90,anchor=#1,scale=0.75]{010};\draw (#2.data3) node[rotate=-90,anchor=#1,scale=0.75]{011};\draw (#2.data4) node[rotate=-90,anchor=#1,scale=0.75]{100};\draw (#2.data5) node[rotate=-90,anchor=#1,scale=0.75]{101};\draw (#2.data6) node[rotate=-90,anchor=#1,scale=0.75]{110};\draw (#2.data7) node[rotate=-90,anchor=#1,scale=0.75]{111};}
 \newcommand{\setIndexLabelsMuxD}[2][north]{\draw (#2.data0) node[anchor=#1,scale=0.75]{00};\draw (#2.data1) node[anchor=#1,scale=0.75]{01};\draw (#2.data2) node[anchor=#1,scale=0.75]{10};\draw (#2.data3) node[anchor=#1,scale=0.75]{11};}
 \newcommand{\setIndexLabelsMuxB}[2][north]{\draw (#2.data0) node[anchor=#1,scale=0.75]{0};\draw (#2.data1) node[anchor=#1,scale=0.75]{1};}
+
 
 \newcommand{\accol}[1]{\ensuremath{\left\{#1\right\}}}
 \newcommand{\brak}[1]{\ensuremath{\left(#1\right)}}
@@ -403,6 +406,7 @@
     \ifthenelse{\cc>1}{\sprarr{R\x.CLR}}{}
     \ifthenelse{\mx=2}{\node[mux2to1] (M\x) at (R\x |- 0,1) {};\sprarr{M\x.selin0}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxB{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);}{}
     \ifthenelse{\mx>2\and\mx<5}{\node[mux4to1] (M\x) at (R\x |- 0,1) {};\sprarr{M\x.selin0}\sprarr{M\x.selin1}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxD{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);\coordinate (RR\x-2) at (M\x.data2);\coordinate (RR\x-3) at (M\x.data3);}{}
+    \ifthenelse{\mx>4\and\mx<9}{\node[mux8to1] (M\x) at (R\x |- 0,1.35) {};\sprarr{M\x.selin0}\sprarr{M\x.selin1}\sprarr{M\x.selin2}\draw[thick] (M\x.output) -- (R\x.D);\setIndexLabelsMuxH{M\x}\coordinate (RR\x-0) at (M\x.data0);\coordinate (RR\x-1) at (M\x.data1);\coordinate (RR\x-2) at (M\x.data2);\coordinate (RR\x-3) at (M\x.data3);\coordinate (RR\x-4) at (M\x.data4);\coordinate (RR\x-5) at (M\x.data5);\coordinate (RR\x-6) at (M\x.data6);\coordinate (RR\x-7) at (M\x.data7);}{}
     \addtocounter{tmpC}{1}
   }
   \def\xfuo{\tox-0.5*\cx-\dx*\arabic{tmpF}};
@@ -494,7 +498,7 @@
 }
 
 \newcommand{\genlab}[2]{\label{#1:#2}}
-\newcommand{\genref}[3]{#2~\label{#1:#3}}
+\newcommand{\genref}[3]{#2~\ref{#1:#3}}
 \newcommand{\figlab}[1]{\genlab{fig}{#1}}
 \newcommand{\figref}[1]{\genref{fig}{Figuur}{#1}}
 \newcommand{\tbllab}[1]{\genlab{tbl}{#1}}

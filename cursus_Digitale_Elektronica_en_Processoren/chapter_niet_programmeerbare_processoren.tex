@@ -1816,7 +1816,7 @@ Vervolgens beginnen we met toevoegen. De eerste boog die aan de voorwaarden vold
 \centering
 %\begin{sprocessor}[0.75/1.25/1.3/1.4/0.25/0.8]{t1/$t_1$/1/1,t2/$t_2$/1/1,t3/$t_3$/1/1,t4/$t_4$/1/1,t5/$t_5$/1/1,t6/$t_6$/1/1,t7/$t_7$/1/1,t8/$t_8$/1/1, t9/$t_9$/1/1,t10/$t_{10}$/1/1,t11/$t_{11}$/1/1}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
 %\begin{sprocessor}[2.75/4.6/1.3/1.4/0.25/0.8]{t1/{$t_1,t_3,t_5,t_{11}$}/1/1,t2/{$t_2,t_4,t_7,t_9,t{10}$}/1/1,t6/{$t_6,t_8$}/1/1}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
-\begin{sprocessor}[1.25/4.6/1.3/1.4/0.25/0.8]{t1/{$t_1$}/1/3,t2/{$t_2$}/1/4,t6/{$t_6$}/1/2}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
+\begin{sprocessor}[1.25/4.6/1.3/1.4/0.25/0.8]{t1/{$t_1$}/1/4,t2/{$t_2$}/1/5,t6/{$t_6$}/1/2}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
 \sprbtf{t1}{abs1}{0};
 \sprbtf{t2}{abs2}{-0.2};
 \sprbtf{t1}{max1}{-0.3};
@@ -1853,22 +1853,51 @@ Wanneer we een multiplexer introduceren, zal de controller extra logica moeten v
 \centering
 \begin{tabular}{c|ccc|cccc|cc}
 Toestand&$a$&$b$&$c$&$d$&$e$&$f$&$g$&$h$&$i$\\\hline
-0&1&1&1&1&1&-&-&0&-\\
-1& & & & & & & & & \\
-2& & & & & & & & & \\
-3& & & & & & & & & \\
-4& & & & & & & & & \\
-5& & & & & & & & & \\
-6& & & & & & & & & \\
-7&   &    &  
+0&1&1&1&1&-&-&1&0&-\\
+1&1&0&1&1&1&1&0&0&-\\
+2&1&1&0&0&-&-&-&1&1\\
+3&0&-&-&1&0&1&0&1&0\\
+4&0&-&-&1&1&0&0&0&-\\
+5&0&-&-&1&0&0&0&0&-\\
+6&1&0&0&0&-&-&-&0&-\\
+7&0&-&-&0&-&-&-&0&-
 \end{tabular}
 \caption{Stuursignalen voor de verschillende toestanden na samenvoegen van registers.}
 \tbllab{datapad-minimal-variables-controller}
 \end{table}
 \paragraph{}
 Het samenvoegen van registers gaat dus gepaard met de introductie van multiplexers en extra combinatorische logica in de controller. Dit is een van de redenen waarom het moeilijk is om te voorspellen of een optimalisatie effectief tot goedkopere implementaties zal leiden.
-\subsubsection{Bewerkingen samenvoegen}
-In het leidend voorbeeld zien we verschillende functionele eenheden. Sommige van deze functionele eenheden voeren echter dezelfde bewerking in een andere toestand uit. Het is mogelijk goedkoper deze bewerkingen met dezelfde functionele eenheid uit te voeren. Anderzijds zijn sommige functionele eenheden zeer gelijkaardig. In subsectie \sscref{??} hebben we de implementatie van een schakeling besproken die getallen kan optellen en aftrekken. Functionele eenheden die gelijkaardige bewerkingen uitvoeren kunnen meestal worden samengevoegd in schakelingen die beide bewerkingen kunnen uitvoeren, en waarbij de resulterende schakeling goedkoper is dan de som van de twee aparte functionele eenheden. Een probleem bij dit laatste aspect is dat het samenvoegen van twee functionele eenheden in een nieuwe functionele eenheid geen sinecure is, en meestal enige ervaring vereist. We zullen in doorheen deze subsectie verschillende functionele eenheden combineren om de lezer een notie te geven over de principes hierachter. Eenmaal we de kostprijs berekend hebben van het samenvoegen van verschillende functionele eenheden, dienen we een keuze te maken welke bewerkingen we effectief zullen samenvoegen. Hiervoor zullen we dezelfde werkwijze met de compatibiliteitsgrafe.
+\subsubsection{Bewerkingen samenvoegen (``functional-unit sharing'')}
+In het leidend voorbeeld zien we verschillende functionele eenheden. Sommige van deze functionele eenheden voeren echter dezelfde bewerking in een andere toestand uit. Het is mogelijk goedkoper deze bewerkingen met dezelfde functionele eenheid uit te voeren. Anderzijds zijn sommige functionele eenheden zeer gelijkaardig. In subsectie \sscref{??} hebben we de implementatie van een schakeling besproken die getallen kan optellen en aftrekken. Functionele eenheden die gelijkaardige bewerkingen uitvoeren kunnen meestal worden samengevoegd in schakelingen die beide bewerkingen kunnen uitvoeren, en waarbij de resulterende schakeling goedkoper is dan de som van de twee aparte functionele eenheden. Het samenvoegen van functionele eenheden wordt \termen{functional-unit sharing} genoemd omdat een functionele eenheid tussen verschillende toestanden wordt gedeeld.
+\paragraph{Gelijkaardige bewerkingen samenvoegen}
+Een probleem in dit proces is dat het samenvoegen van twee functionele eenheden in een nieuwe functionele eenheid geen sinecure is, en meestal enige ervaring vereist. We zullen in doorheen deze subsectie verschillende functionele eenheden combineren om de lezer een notie te geven over de principes hierachter. Meestal zoekt men naar logica die beide functionele eenheden gemeenschappelijk hebben. Daarna moeten extra ingangen bepalen welke bewerking wordt uitgevoerd door de overige logica aan te sturen.
+\paragraph{Compatibiliteitsgrafe}
+Eenmaal we de kostprijs berekend hebben van het samenvoegen van verschillende functionele eenheden, dienen we een keuze te maken welke bewerkingen we effectief zullen samenvoegen. Hiervoor zullen we dezelfde werkwijze met de compatibiliteitsgrafe hanteren. In de compatibiliteitsgrafe hebben de componenten de volgende betekenis:
+\begin{enumerate}
+ \item Knopen: de knopen stellen bewerkingen voor, dus de originele functionele eenheden.
+ \item Incompatibiliteitsranden: twee bewerkingen zijn niet verenigbaar, wanneer ze een toestand gemeenschappelijk hebben waarin ze beiden actief zijn.
+ \item Prioriteitsranden: twee of meer\footnote{Soms kan men drie of meer bewerkingen samenvoegen in \'e\'en nieuwe functionele eenheid.} bewerkingen die men kan samenvoegen delen een prioriteitsrand. Het gewicht is de winst in kostprijs (transistors of logische blokken) bij het samenvoegen.
+\end{enumerate}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[auto,node distance=2cm]
+\node[compatibilitynode] (f1) {abs1};
+\node[compatibilitynode,below of=f1] (f2) {abs2};
+\node[compatibilitynode,right of=f1] (f3) {min};
+\node[compatibilitynode,below of=f3] (f4) {max1};
+\node[compatibilitynode,right of=f4] (f5) {max2};
+\node[compatibilitynode,right of=f4] (t9) {+};
+\node[compatibilitynode,above of=f9] (f8) {-};
+\node[compatibilitynode,right of=f8] (f6) {shr 3};
+\node[compatibilitynode,right of=f9] (f7) {shr 1};
+\foreach \a/\b/\o in {f1/f2/,f3/f4/,f6/f7/} {
+  \path [thick,dashed] (\a) edge [\o] (\b);
+}
+\end{tikzpicture}
+\caption{Oorspronkelijke compatibiliteitsgrafe bij het samenvoegen van bewerkingen.}
+\end{figure}
+\paragraph{Multiplexers}
+Wanneer twee functionele eenheden worden samengevoegd, delen ze een deel van de ingangen. Het is mogelijk dat de ingangen van beide functionele eenheden verbonden zijn met andere registers. In dat geval moeten extra multiplexers bepalen welk register de invoer levert voor de functionele eenheid. Multiplexers brengen echter een extra kost met zich mee. Zelfs wanneer de samengestelde functionele eenheid goedkoper is, zal de resulterende schakeling daarom niet noodzakelijk goedkoper zijn. De extra kosten die met het invoeren of aanpassen van multiplexers gepaard gaan, moeten dus ook in rekening worden gebracht.
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}
