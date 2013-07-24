@@ -1878,6 +1878,7 @@ Eenmaal we de kostprijs berekend hebben van het samenvoegen van verschillende fu
  \item Incompatibiliteitsranden: twee bewerkingen zijn niet verenigbaar, wanneer ze een toestand gemeenschappelijk hebben waarin ze beiden actief zijn.
  \item Prioriteitsranden: twee of meer\footnote{Soms kan men drie of meer bewerkingen samenvoegen in \'e\'en nieuwe functionele eenheid.} bewerkingen die men kan samenvoegen delen een prioriteitsrand. Het gewicht is de winst in kostprijs (transistors of logische blokken) bij het samenvoegen.
 \end{enumerate}
+\figref{compatibilitygraph-functionals-original} toont de initi\"ele compatibiliteitsgraaf met de incompatibiliteitsranden.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[auto,node distance=2cm]
@@ -1886,7 +1887,7 @@ Eenmaal we de kostprijs berekend hebben van het samenvoegen van verschillende fu
 \node[compatibilitynode,right of=f1] (f3) {min};
 \node[compatibilitynode,below of=f3] (f4) {max1};
 \node[compatibilitynode,right of=f4] (f5) {max2};
-\node[compatibilitynode,right of=f4] (t9) {+};
+\node[compatibilitynode,right of=f5] (f9) {+};
 \node[compatibilitynode,above of=f9] (f8) {-};
 \node[compatibilitynode,right of=f8] (f6) {shr 3};
 \node[compatibilitynode,right of=f9] (f7) {shr 1};
@@ -1895,9 +1896,56 @@ Eenmaal we de kostprijs berekend hebben van het samenvoegen van verschillende fu
 }
 \end{tikzpicture}
 \caption{Oorspronkelijke compatibiliteitsgrafe bij het samenvoegen van bewerkingen.}
+\figlab{compatibilitygraph-functionals-original}
 \end{figure}
 \paragraph{Multiplexers}
-Wanneer twee functionele eenheden worden samengevoegd, delen ze een deel van de ingangen. Het is mogelijk dat de ingangen van beide functionele eenheden verbonden zijn met andere registers. In dat geval moeten extra multiplexers bepalen welk register de invoer levert voor de functionele eenheid. Multiplexers brengen echter een extra kost met zich mee. Zelfs wanneer de samengestelde functionele eenheid goedkoper is, zal de resulterende schakeling daarom niet noodzakelijk goedkoper zijn. De extra kosten die met het invoeren of aanpassen van multiplexers gepaard gaan, moeten dus ook in rekening worden gebracht.
+Wanneer twee functionele eenheden worden samengevoegd, delen ze een deel van de ingangen. Het is mogelijk dat de ingangen van beide functionele eenheden verbonden zijn met andere registers. In dat geval moeten extra multiplexers bepalen welk register de invoer levert voor de functionele eenheid. Multiplexers brengen echter een extra kost met zich mee. Zelfs wanneer de samengestelde functionele eenheid goedkoper is, zal de resulterende schakeling daarom niet noodzakelijk goedkoper zijn. De extra kosten die met het invoeren of aanpassen van multiplexers gepaard gaan, moeten dus ook in rekening worden gebracht. \figref{minimal-functionals-multiplexer} illustreert dit concept. Aanvankelijk zijn er twee functionele eenheden $\mbox{FU1}$ en $\mbox{FU2}$. Elk met eigen in- en uitgangen. Wanneer we de functionele eenheden in een nieuwe functionele eenheid $\mbox{FU1\&2}$ onderbrengen, introduceren we twee multiplexers. Ook de controller zal extra stuursignalen moeten implementeren: het bedienen van de multiplexers vereist extra logica. Soms zal de samengestelde functionele eenheid ook extra stuursignalen vereisen. Dit is het geval wanneer de twee functionele eenheden niet dezelfde bewerking uitvoeren, en de controller dus moet bepalen welke opdracht zal worden uitgevoerd. Indien sommige registers dezelfde zijn (bijvoorbeeld $A$ en $C$ op de figuur), kunnen we multiplexers weglaten.
+\importtikzfigure{minimal-functionals-multiplexer}{Minimaliseren van bewerkingen introduceert multiplexers.}
+\paragraph{Minimum en Maximum bewerking}
+In het leidend voorbeeld berekenen we het minimum en maximum. Deze schakelingen hebben we niet gedefinieerd in \chpref{combinatoric}. De schakeling is echter vrij eenvoudig: we berekenen eerst het verschil tussen de twee getallen. Indien het verschil positief is, zullen we met behulp van multiplexers het tweede getal teruggeven, in het andere geval geven we de waarde terug op de eerste invoer. In het geval van het maximum draaien we de multiplexer om. Een schematische voorstelling staat op \figref{minimal-functionals-minimum}
+\begin{figure}[hbt]
+\centering
+\subfigure[Minimum]{\importtikz{minimal-functionals-minimum}}
+\subfigure[Carry-logica]{\importtikz{minimal-functionals-carry}}
+\subfigure[Minimax]{\importtikz{minimal-functionals-minimax}}
+\caption{Implementatie van een minimum-component.}
+\end{figure}
+geeft dit proces schematisch weer. Vermits we bij het verschil enkel ge\"interesseerd zijn in het teken, hoeven we de overige bits niet uit te rekenen. Bijgevolg moeten we ook enkele de carry-logica implementeren. \figref{minimal-functionals-carry} toont een mogelijke implementatie van deze carry-logic. De schakeling is bijgevolg een gereduceerde versie van \figref{fulladder-implementation}. Wanneer we de kostprijs van de carry-logic uitrekenen komen we uit op 20 transistors per bit\footnote{Op een constante kostprijs na, die we hier niet beschouwen. Als het aantal bits vrij groot is, maakt de constante kostprijs meestal niet veel uit.}. Een multiplexer kost 12 transistors per bit. Bijgevolg kost een minimum- of maximum-component 32 transistors per bit.
+\paragraph{}
+De compatibiliteitsgrafe op \figref{compatibilitygraph-functionals-original} toont dat het samenvoegen van de $\mbox{min}$ en $\mbox{max1}$ bewerking niet mogelijk is. Beide bewerkingen worden immers in dezelfde toestand gebruikt. We kunnen echter wel $\mbox{max1}$ en $\mbox{max2}$ samenvoegen. Door het samenvoegen sparen we 32 transistors per bit uit. We dienen echter rekening te houden met de mogelijke introductie van multiplexers. In dit geval hebben we geluk: $\mbox{max1}$ neemt als invoer variabelen $t_3$ en $t_4$ voorgesteld door registers $t_1$ en $t_2$. $\mbox{max2}$ neemt als invoer variabelen $t_5$ en $t_{10}$ die ook worden opgeslagen in registers $t_1$ en $t_2$. In dit geval dienen we dus geen extra multiplexers te introduceren, de totale winst is dan ook 32 transistors per bit zoals aangeduid op \figref{compatibilitygraph-functionals-final}.
+\paragraph{}
+We kunnen er ook voor opteren om $\mbox{min}$ en $\mbox{max2}$ samen te voegen. \figref{minimal-functionals-minimax} toont een functionele eenheid die zowel het minimum als maximum kan uitrekenen. De schakeling verschilt slechts op \'e\'en punt van \figref{minimal-functionals-minimum}: er staat een XNOR\footnote{Een XOR-poort is ook correct indien het stuursignaal wordt ge\"inverteerd. Alleen kost een XOR-poort meer.}-poort tussen het tekenen van het verschil een de multiplexer. Met behulp van het stuursignaal kan men dus beslissen om het signaal uit het verschil om te draaien of te behouden. Door het signaal om te draaien, kan men dus de andere data-ingang bij de multiplexer selecteren. Omdat de XNOR-poort maar eenmalig in de schakeling moet worden verwerkt, stijgt de kostprijs per bit niet. Ook hier hebben we geluk met de registers: beide functionele eenheden halen hun invoer uit dezelfde registers. De totale winst is dus opnieuw 32 transistors per bit.
+\paragraph{Abs\&max}
+Een volgende combinatie die we uitproberen is het berekenen van een absolute waarde en het maximum. Omdat we in de vorige paragraaf besproken hebben dat het minimum en maximum zeer gelijkaardig zijn, gelden alle uitspraken ook voor een component $\mbox{abs\&min}$.
+\begin{figure}[hbt]
+\centering
+\subfigure[Abs]{\importtikz{minimal-functionals-abs}}
+\subfigure[Abs per bit]{\importtikz{minimal-functionals-absbit}}
+\subfigure[Abs\&max per bit]{\importtikz{minimal-functionals-absmax}}
+\caption{Implementatie van abs en abs\&max.}
+\end{figure}
+\begin{figure}[hbt]
+\centering
+\begin{tikzpicture}[auto,node distance=2cm]
+\node[compatibilitynode] (f1) {abs1};
+\node[compatibilitynode,below of=f1] (f2) {abs2};
+\node[compatibilitynode,right of=f1] (f3) {min};
+\node[compatibilitynode,below of=f3] (f4) {max1};
+\node[compatibilitynode,right of=f4] (f5) {max2};
+\node[compatibilitynode,right of=f5] (f9) {+};
+\node[compatibilitynode,above of=f9] (f8) {-};
+\node[compatibilitynode,right of=f8] (f6) {shr 3};
+\node[compatibilitynode,right of=f9] (f7) {shr 1};
+\foreach \a/\b/\o in {f1/f2/,f3/f4/,f6/f7/} {
+  \path [thick,dashed] (\a) edge [\o] (\b);
+}
+\foreach \a/\b/\t/\o in {f4/f5/{32/2}/,f3/f5/{32/2}/} {
+  \path [thick] (\a) edge [\o] node[sloped,midway] {\t} (\b);
+}
+\end{tikzpicture}
+\caption{De uiteindelijke compatibiliteitsgrafe bij het samenvoegen van bewerkingen.}
+\figlab{compatibilitygraph-functionals-final}
+\end{figure}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}

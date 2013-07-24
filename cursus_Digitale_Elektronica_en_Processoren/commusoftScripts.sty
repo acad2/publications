@@ -362,6 +362,12 @@
  (P -| TP) .. (TP);}
 \newcommand{\scpush}[1]{\coordinate (TP) at ($(T)+(0,0.25)$);\coordinate (TPP) at ($(TP)+(0,0.25)$);\node[anchor=south west,draw=black,rectangle] (P) at (-1,0 |- TPP) {#1};\draw[->] (P.east) .. controls (P -| TP) and (P -| TP) .. (TP);}
 
+\newcommand{\resetsprocessor}{
+\setcounter{tmpC}{0}
+\setcounter{tmpD}{1}
+\setcounter{tmpE}{0}
+\setcounter{tmpF}{0}
+\setcounter{tmpG}{0}}
 
 %ENVIRONMENT sprocessor
 %used to draw an implementation of the datapad of a special purpose processor
@@ -379,11 +385,7 @@
 %				- d mux options: the number of input of the linked multiplexer
 \newenvironment{sprocessor}[4][1/3/1.2/1.5/0.25/0.8]{\begin{tikzpicture}
 \foreach \ax/\bx/\cx/\dx/\lns/\ay in {#1} {
-  \setcounter{tmpC}{0}
-  \setcounter{tmpD}{1}
-  \setcounter{tmpE}{0}
-  \setcounter{tmpF}{0}
-  \setcounter{tmpG}{0}
+  \resetsprocessor{}
   \foreach \x/\y/\cc/\mx in {#2} {
     \addtocounter{tmpE}{1}
   }
@@ -509,6 +511,10 @@
 \newcommand{\sscref}[1]{\genref{ssc}{Subsectie}{#1}}
 \newcommand{\ssslab}[1]{\genlab{sss}{#1}}
 \newcommand{\sssref}[1]{\genref{sss}{Subsubsectie}{#1}}
+\newcommand{\chplab}[1]{\genlab{chp}{#1}}
+\newcommand{\chpref}[1]{\genref{chp}{Hoofdstuk}{#1}}
+\newcommand{\alglab}[1]{\genlab{alg}{#1}}
+%\newcommand{\algref}[1]{\genref{alg}{Algoritme}{#1}}
 
 \newcommand{\importtikz}[1]{
 \input{tikzpictures/tikz-#1.tex}
@@ -522,4 +528,12 @@
 \caption{#2}
 \figlab{#1}
 \end{figure}
+}
+\newcommand{\importtabulartable}[2]{
+\begin{table}[htb]
+\centering
+\input{tables/tbl-#1.tex}
+\caption{#2}
+\tbllab{#1}
+\end{table}
 }

@@ -1,0 +1,47 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (BOT) at (0,-2);
+\coordinate (TOP) at (0,1);
+\coordinate (MIA) at (0,-0.5);
+\coordinate (MIB) at (0,-1.5);
+\begin{scope}
+\node[draw,rectangle,thick,scale=0.85] (FU1) at (-1,-1) {\begin{varwidth}{1.41cm}\begin{center}FU1\end{center}\end{varwidth}};
+\coordinate (F1A) at ($0.5*(FU1.north)+0.5*(FU1.north west)$);
+\draw[thick] (F1A) -- (F1A |- TOP) node[anchor=south]{$A$};
+\coordinate (F1B) at ($0.5*(FU1.north)+0.5*(FU1.north east)$);
+\draw[thick] (F1B) -- (F1B |- TOP) node[anchor=south]{$B$};
+\coordinate (F1C) at (FU1.south);
+\draw[thick] (F1C) -- (F1C |- BOT) node[anchor=north]{$F$};
+\node[draw,rectangle,thick,scale=0.85] (FU2) at (1,-1) {\begin{varwidth}{1.41cm}\begin{center}FU2\end{center}\end{varwidth}};
+\coordinate (F2A) at ($0.5*(FU2.north)+0.5*(FU2.north west)$);
+\draw[thick] (F2A) -- (F2A |- TOP) node[anchor=south]{$C$};
+\coordinate (F2B) at ($0.5*(FU2.north)+0.5*(FU2.north east)$);
+\draw[thick] (F2B) -- (F2B |- TOP) node[anchor=south]{$D$};
+\coordinate (F2C) at (FU2.south);
+\draw[thick] (F2C) -- (F2C |- BOT) node[anchor=north]{$G$};
+\end{scope}
+\begin{scope}[xshift=6 cm]
+\resetsprocessor{}
+\node[mux2to1] (M1) at (-1,0) {};
+\coordinate (F1A) at (M1.data1);
+\draw[thick] (F1A) -- (F1A |- TOP) node[anchor=south]{$A$};
+\coordinate (F1B) at (M1.data0);
+\draw[thick] (F1B) -- (F1B |- TOP) node[anchor=south]{$C$};
+\sprarr{M1.selin0}
+\node[mux2to1] (M2) at (1,0) {};
+\coordinate (F2A) at (M2.data1);
+\draw[thick] (F2A) -- (F2A |- TOP) node[anchor=south]{$B$};
+\coordinate (F2B) at (M2.data0);
+\draw[thick] (F2B) -- (F2B |- TOP) node[anchor=south]{$D$};
+\sprarr{M2.selin0}
+\node[draw,rectangle,thick,scale=0.85] (FU12) at (0,-1) {\begin{varwidth}{1.41cm}\begin{center}FU1\&2\end{center}\end{varwidth}};
+\sprarr{FU12.west}
+\coordinate (F12A) at ($0.5*(FU12.north)+0.5*(FU12.north west)$);
+\coordinate (F12B) at ($0.5*(FU12.north)+0.5*(FU12.north east)$);
+\coordinate (F12D) at (FU12.south |- MIB);
+\draw[thick] (M1.output) -- (M1.output |- MIA) -| (F12A);
+\draw[thick] (M2.output) -- (M2.output |- MIA) -| (F12B);
+\draw[thick] (FU12.south) -- (F12D) -| (M1.output |- BOT) node[anchor=north]{$F$};
+\draw[thick] (F12D) -| (M2.output |- BOT) node[anchor=north]{$G$};
+\pdot{F12D}
+\end{scope}
+\end{tikzpicture}
