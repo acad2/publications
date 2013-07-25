@@ -1,3 +1,21 @@
 \begin{tikzpicture}[circuit logic US]
-
+\coordinate (BOT) at (0,-1);
+\coordinate (RIG) at (1.5,0);
+\coordinate (LEF) at (-1.5,0);
+\coordinate (IA) at (0,3.75);
+\coordinate (IMA) at (0,3.25);
+\coordinate (MID) at (0,0.5);
+\node[mux2to1] (M) at (0,0) {};
+\setIndexLabelsMuxB{M};
+\draw (M.output) -- (M.output |- BOT) node[anchor=north] {$\abs a_i$};
+\node[halfadder,scale=0.75] (HA) at ($(M.data1 |- M.east)+(0,1)$) {HA};
+\draw (HA.ci) -- (HA.ci -| RIG) node[anchor=west] {$c_i$};
+\draw (HA.co) -- (HA.co -| LEF) node[anchor=east] {$c_{i+1}$};
+\draw (M.selin0) -- (M.selin0 -| LEF) node[anchor=east] {$a_{n-1}$};
+\draw (HA.s) -- (M.data1);
+\node[not gate,rotate=-90] (N) at ($(HA)+(0,1.5)$) {};
+\draw (N.output) -- (HA.north);
+\draw (IA) node[anchor=south]{$a_i$} -- (IMA) -| (N.input);
+\draw (IMA) -- ++(0.75,0) |- (MID -| M.data0) -- (M.data0);
+\pdot{IMA};
 \end{tikzpicture}

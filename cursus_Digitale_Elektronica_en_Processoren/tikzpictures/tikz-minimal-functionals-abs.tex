@@ -1,21 +1,19 @@
 \begin{tikzpicture}[circuit logic US]
 \coordinate (TOP) at (0,2.25);
 \coordinate (BOT) at (0,-0.75);
-\coordinate (MIB) at (0,1.5);
 \coordinate (MIA) at (0,1.75);
 \node[mux2to1] (M) at (0,0) {};
+\coordinate (MIB) at (MIA -| M.data1);
+\coordinate (MIC) at ($(MIB)-(0.75,0)$);
 \setIndexLabelsMuxB{M};
 \draw[thick] (M.output) -- (M.output |- BOT) node[anchor=north]{$\abs{a}$};
-\coordinate (IB) at (M.data0 |- TOP);
-\coordinate (IA) at (M.data1 |- TOP);
-\draw[thick] (M.data0) -- (IB) node[anchor=south]{$B$};
-\draw[thick] (M.data1) -- (IA) node[anchor=south]{$A$};
-\node[draw,rectangle,thick,scale=0.85] (SUB) at (-1,1) {\begin{varwidth}{1.41cm}\begin{center}$-$\end{center}\end{varwidth}};
-\coordinate (SUBA) at ($0.5*(SUB.north)+0.5*(SUB.north west)$);
-\coordinate (SUBB) at ($0.5*(SUB.north)+0.5*(SUB.north east)$);
-\draw[thick] (IA |- MIA) -| (SUBA);
-\pdot{IA |- MIA};
-\draw[thick] (IB |- MIB) -| (SUBB);
-\pdot{IB |- MIB};
-\draw (M.selin0) -| (SUB.south) node[anchor=north east]{teken};
+\coordinate (IA) at (MIA |- TOP);
+\draw[thick] (MIA) -- (IA) node[anchor=south]{$A$};
+\node[draw,rectangle,thick,scale=0.85] (SUB) at (-1,1 -| M.data1) {\begin{varwidth}{1.41cm}\begin{center}$-$\end{center}\end{varwidth}};
+\draw[thick] (MIA) -| (SUB.north);
+\draw[thick] (MIA) -| (M.data0);
+\draw[thick] (SUB.south) -- (M.data1);
+\draw (MIB) to node[anchor=south east]{teken $a_{n-1}$} (MIC) |- (M.selin0);
+\pdot{MIA};
+\pdot{MIB};
 \end{tikzpicture}
