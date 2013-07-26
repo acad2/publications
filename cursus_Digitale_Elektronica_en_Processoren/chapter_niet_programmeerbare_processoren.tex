@@ -1929,17 +1929,23 @@ De meest significante bit bepaald in complementvoorstelling het teken van het ge
 \paragraph{}
 Nu we een samengesteld component hebben ge\"implementeerd, kunnen we de mogelijke winst berekenen. Er zijn verschillende manieren hoe we een dergelijk component kunnen gebruiken. Hieronder beschouwen we alle mogelijkheden:
 \begin{equation}
-\acclarray{\accl{\mbox{abs1},\mbox{min}},\accl{\mbox{abs1},\mbox{min},\mbox{max2}},\accl{\mbox{abs2},\mbox{min}},\accl{\mbox{abs2},\mbox{min},\mbox{max2}}\\\accl{\mbox{abs1},\mbox{max1}},\accl{\mbox{abs1},\mbox{max1},\mbox{max2}},\accl{\mbox{abs2},\mbox{max1}},\accl{\mbox{abs2},\mbox{max1},\mbox{max2}}\\\accl{\mbox{abs1},\mbox{max2}},\accl{\mbox{abs2},\mbox{max2}}}
+\acclarray{
+\accl{\mbox{abs1},\mbox{min}},\accl{\mbox{abs1},\mbox{max1}},\accl{\mbox{abs1},\mbox{max2}}\\
+\accl{\mbox{abs2},\mbox{min}},\accl{\mbox{abs2},\mbox{max1}},\accl{\mbox{abs2},\mbox{max2}}\\
+\accl{\mbox{abs1},\mbox{max1},\mbox{max2}},\accl{\mbox{abs2},\mbox{max1},\mbox{max2}}}
+\eqnlab{minimal-functionals-combinations}
 \end{equation}
 We zullen niet alle combinaties bespreken. De mogelijke winsten staan op \figref{compatibilitygraph-functionals-final}. Enkel de scenario's die interessant zijn worden besproken. Als eerste voorbeeld nemen we $\mbox{abs1}$ en $\mbox{min}$. De twee functionele eenheden apart kosten $64$ transistors per bit. Wanneer we de twee functionele eenheden samenvoegen, dan verwachten we slechts $62$ transistors per bit te betalen. Een probleem vormt echter de registers: $\mbox{abs1}$ haalt de gegevens uit register $t_1$, terwijl $\mbox{max1}$ deze uit de registers $t_1$ en $t_2$ haalt. Vermits het samengestelde component voor de absolute waarde de tweede ingang neemt, betekent dit dat we een multiplexer moeten plaatsen die kiest tussen register $t_1$ en $t_2$. Dit concept is ge\"illustreerd in \figref{minimal-functionals-absmax-mux}.
 \importtikzfigure{minimal-functionals-absmax-mux}{Het combineren van $\mbox{abs1}$ en $\mbox{min}$ introduceert een multiplexer.}
-We kunnen echter een eigenschap van het maximum uitbuiten: deze operator is commutatief. Het maakt dus niet uit of dit component het maximum van $t_1$ en $t_2$ berekent, of van $t_2$ en $t_1$. Door de bedrading van het maximum om te draaien, vervalt de noodzaak om een multiplexer in te voeren. De totale winst bij het combineren is dus $2$ transistors per bit.
+We kunnen echter een eigenschap van het maximum uitbuiten: deze operator is commutatief. Het maakt dus niet uit of dit component het maximum van $t_1$ en $t_2$ berekent, of van $t_2$ en $t_1$. Door de bedrading van het maximum om te draaien, vervalt de noodzaak om een multiplexer in te voeren. De totale winst bij het combineren is dus $2$ transistors per bit. Ditzelfde principe kan men toepassen bij het samenvoegen van alle combinaties in \eqnref{minimal-functionals-combinations} met twee bewerkingen. Ook deze winsten staan vermeld op \figref{compatibilitygraph-functionals-final}.
 \paragraph{}
+We kunnen ook drie functionele eenheden in een nieuwe functionele eenheid combineren. Vermits we twee functionele eenheden hebben die de absolute waarde uitrekenen en twee die het maximum uitrekenen kunnen we verschillende combinaties uitproberen. Dit kan zolang niet beide absolute waardes door dezelfde component worden uitgerekend. De twee bewerkingen zijn immers incompatibel. Als voorbeeld nemen we $\mbox{abs1}$, $\mbox{max1}$ en $\mbox{max2}$. Vermits $\mbox{max1}$ en $\mbox{max2}$ commutatieve operaties zijn maakt de volgorde van de data-ingangen niet uit. Omdat de bewerkingen die we combineren allemaal op dezelfde registers werken, zullen we dus geen extra multiplexers moeten introduceren. De oorspronkelijke kostprijs per bit was 32 transistors voor $\mbox{abs1}$, 32 transistors voor $\mbox{max1}$ en 32 voor $\mbox{max2}$. Wat dus samen $96$ transistors per bit betekent. De totale winst is dus $34$ transistors per bit.
+\paragraph{Add\&Sub}
 
 \paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we alle mogelijke combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst per bit in transistors en logische blokken.
 \begin{figure}[hbt]
 \centering
-\begin{tikzpicture}[auto,node distance=2cm]
+\begin{tikzpicture}[auto,node distance=3cm]
 \node[compatibilitynode] (f1) {abs1};
 \node[compatibilitynode,below of=f1] (f2) {abs2};
 \node[compatibilitynode,right of=f1] (f3) {min};
@@ -1952,8 +1958,16 @@ We kunnen echter een eigenschap van het maximum uitbuiten: deze operator is comm
 \foreach \a/\b/\o in {f1/f2/,f3/f4/,f8/f9/} {
   \path [thick,dashed] (\a) edge [\o] (\b);
 }
-\foreach \a/\b/\t/\o in {f4/f5/{32/2}/,f3/f5/{32/2}/,f1/f3/{2/0}/,f2/f3/{}/,f1/f4/{}/,f2/f4/{}/} {
+\foreach \a/\b/\t/\o in {f4/f5/{32/2}/,f3/f5/{32/2}/,f1/f3/{2/0}/,f2/f3/{2/0}/,f1/f4/{2/0}/,f2/f4/{2/0}/,f1/f5/{2/0}/,f2/f5/{2/0}/bend right,f6/f7/{14/1}/} {
   \path [thick] (\a) edge [\o] node[sloped,midway] {\t} (\b);
+}
+\foreach \n/\c/\t/\o in {A/{3,-4.5}/{34/2}/,B/{6,1.5}/{34/2}/{anchor=south}} {
+  \coordinate (group-\n) at (\c);
+  \pdot{\c};
+  \draw (\c) node[anchor=north,\o] {\t};
+}
+\foreach \n/\p/\o in {A/f2/bend left,A/f4/,A/f5/bend right,B/f1/,B/f4/,B/f5/} {
+  \path [thick] (group-\n) edge [\o] (\p);
 }
 \end{tikzpicture}
 \caption{De uiteindelijke compatibiliteitsgrafe bij het samenvoegen van bewerkingen.}
