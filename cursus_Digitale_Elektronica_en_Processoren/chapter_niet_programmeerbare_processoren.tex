@@ -1916,7 +1916,7 @@ De compatibiliteitsgrafe op \figref{compatibilitygraph-functionals-original} too
 \paragraph{}
 We kunnen er ook voor opteren om $\mbox{min}$ en $\mbox{max2}$ samen te voegen. \figref{minimal-functionals-minimax} toont een functionele eenheid die zowel het minimum als maximum kan uitrekenen. De schakeling verschilt slechts op \'e\'en punt van \figref{minimal-functionals-minimum}: er staat een XNOR\footnote{Een XOR-poort is ook correct indien het stuursignaal wordt ge\"inverteerd. Alleen kost een XOR-poort meer.}-poort tussen het tekenen van het verschil een de multiplexer. Met behulp van het stuursignaal kan men dus beslissen om het signaal uit het verschil om te draaien of te behouden. Door het signaal om te draaien, kan men dus de andere data-ingang bij de multiplexer selecteren. Omdat de XNOR-poort maar eenmalig in de schakeling moet worden verwerkt, stijgt de kostprijs per bit niet. Ook hier hebben we geluk met de registers: beide functionele eenheden halen hun invoer uit dezelfde registers. De totale winst is dus opnieuw 32 transistors per bit.
 \paragraph{Abs\&max}
-Een volgende combinatie die we uitproberen is het berekenen van een absolute waarde en het maximum. Omdat we in de vorige paragraaf besproken hebben dat het minimum en maximum zeer gelijkaardig zijn, gelden alle uitspraken ook voor een component $\mbox{abs\&min}$.
+Een volgende combinatie die we uitproberen is het berekenen van een absolute waarde en het maximum. Omdat we in de vorige paragraaf besproken hebben dat het minimum en maximum zeer gelijkaardig zijn, gelden alle uitspraken ook voor een component $\mbox{abs\&min}$. Allereerst dienen we een component te introduceren die de absolute waarde kan uitrekenen. Een mogelijke implementatie staat op \figref{minimal-functionals-abs}.
 \begin{figure}[hbt]
 \centering
 \subfigure[Abs]{\importtikz{minimal-functionals-abs}}
@@ -1924,6 +1924,8 @@ Een volgende combinatie die we uitproberen is het berekenen van een absolute waa
 \subfigure[Abs\&max per bit]{\importtikz{minimal-functionals-absmax}}
 \caption{Implementatie van abs en abs\&max.}
 \end{figure}
+De meest significante bit bepaald in complementvoorstelling het teken van het getal. Het teken stuurt vervolgens de selectie-ingang van een multiplexer aan. Indien het getal negatief is, wordt het tegengestelde van het oorspronkelijke getal doorgelaten. In het andere geval wordt het getal zelf doorgelaten. We moeten per bit het tegengestelde uitrekenen en voor elke bit dienen we ook een multiplexer te voorzien. Deze implementatie per bit wordt voorgesteld op \figref{minimal-functionals-absbit}. Op basis van deze schakeling zetten we de kostprijs van een $\mbox{abs}$ bewerking op 32 transistors per bit. We kunnen beide componenten samenvoegen, door per bit een schakeling te implementeren zoals op \figref{minimal-functionals-absmax}.
+\importtabulartable{minimal-functionals-absmaxmux}{Multiplexer selectie-ingangen bij abs\&max.}
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[auto,node distance=2cm]

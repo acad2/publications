@@ -1,21 +1,40 @@
 \begin{tikzpicture}[circuit logic US]
 \coordinate (BOT) at (0,-1);
 \coordinate (RIG) at (1.5,0);
-\coordinate (LEF) at (-1.5,0);
-\coordinate (IA) at (0,3.75);
+\coordinate (LEF) at (-2,0);
+\coordinate (IA) at (0,4);
 \coordinate (IMA) at (0,3.25);
 \coordinate (MID) at (0,0.5);
-\node[mux4to1] (M) at (0,0) {};
+\coordinate (MAL) at (0,0);
+\coordinate (MML) at (0,0.5);
+\coordinate (FAL) at (0,1.5);
+\coordinate (MFL) at (0,2.25);
+\coordinate (GAL) at (0,3);
+\coordinate (MGL) at (0,3.5);
+\coordinate (MIL) at (0,3.75);
+\coordinate (AAC) at (-1.5,0);
+\coordinate (RIC) at (1.25,0);
+\coordinate (LIC) at (-0.75,0);
+\node[mux4to1] (M) at (MAL) {};
 \setIndexLabelsMuxD{M};
 \draw (M.output) -- (M.output |- BOT) node[anchor=north] {$f_i$};
-\node[fulladder,scale=0.75] (HA) at ($(M.data1 |- M.east)+(0,1)$) {FA};
+\node[fulladder,scale=0.75] (HA) at ($(M.data1 |- FAL)$) {FA};
 \draw (HA.ci) -- (HA.ci -| RIG) node[anchor=west] {$c_i$};
 \draw (HA.co) -- (HA.co -| LEF) node[anchor=east] {$c_{i+1}$};
 \draw (M.selin0) -- (M.selin0 -| LEF) node[anchor=east] {$m_0$};
 \draw (M.selin1) -- (M.selin1 -| LEF) node[anchor=east] {$m_1$};
-\draw (HA.s) -- (M.data1);
-\node[not gate,rotate=-90] (N) at ($(HA.x |- HA.east)+(0,1.5)$) {};
-\node[and gate,rotate=-90] (A) at ($(HA.y |- HA.east)+(0,1.5)$) {};
+\draw (HA.s) node[anchor=north west]{$s_i$} -- (M.data1);
+\node[not gate,rotate=-90] (N) at ($(HA.x |- GAL)$) {};
+\node[and gate,rotate=-90] (A) at ($(AAC |- GAL)$) {};
+\draw (A.output) -- (A.output |- MFL) -| (HA.y);
 \draw (N.output) -- (HA.x);
 \draw (IA -| N.input) node[anchor=south]{$b_i$} -- (N.input);
+\draw (IA -| A.input 1) node[anchor=south]{$a_i$} -- (A.input 1);
+\draw (MGL -| LEF) node[anchor=east]{Max/Abs*} -| (A.input 2);
+\draw (M.data2) |- (M.data3 |- MML);
+\draw (M.data3) |- (M.data3 |- MML) -| (LIC |- MIL) -- (N.input |- MIL);
+\draw (M.data0) |- (RIC |- MML) |- (A.input 1 |- MGL);
+\pdot{M.data3 |- MML}
+\pdot{A.input 1 |- MGL}
+\pdot{N.input |- MIL}
 \end{tikzpicture}
