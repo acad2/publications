@@ -1924,8 +1924,19 @@ Een volgende combinatie die we uitproberen is het berekenen van een absolute waa
 \subfigure[Abs\&max per bit]{\importtikz{minimal-functionals-absmax}}
 \caption{Implementatie van abs en abs\&max.}
 \end{figure}
-De meest significante bit bepaald in complementvoorstelling het teken van het getal. Het teken stuurt vervolgens de selectie-ingang van een multiplexer aan. Indien het getal negatief is, wordt het tegengestelde van het oorspronkelijke getal doorgelaten. In het andere geval wordt het getal zelf doorgelaten. We moeten per bit het tegengestelde uitrekenen en voor elke bit dienen we ook een multiplexer te voorzien. Deze implementatie per bit wordt voorgesteld op \figref{minimal-functionals-absbit}. Op basis van deze schakeling zetten we de kostprijs van een $\mbox{abs}$ bewerking op 32 transistors per bit. We kunnen beide componenten samenvoegen, door per bit een schakeling te implementeren zoals op \figref{minimal-functionals-absmax}.
+De meest significante bit bepaald in complementvoorstelling het teken van het getal. Het teken stuurt vervolgens de selectie-ingang van een multiplexer aan. Indien het getal negatief is, wordt het tegengestelde van het oorspronkelijke getal doorgelaten. In het andere geval wordt het getal zelf doorgelaten. We moeten per bit het tegengestelde uitrekenen en voor elke bit dienen we ook een multiplexer te voorzien. Deze implementatie per bit wordt voorgesteld op \figref{minimal-functionals-absbit}. Op basis van deze schakeling zetten we de kostprijs van een $\mbox{abs}$ bewerking op 32 transistors per bit. We kunnen beide componenten samenvoegen, door per bit een schakeling te implementeren zoals op \figref{minimal-functionals-absmax}. De component berekent ofwel het maximum van de twee data-ingangen, of de absolute waarde van de tweede data-ingang. De schakeling werkt als volgt: de full adders berekenen samen met de NOT-poort het verschil tussen $D$ (voorgesteld door de $d_i$-bits) en $B$ (voorgesteld door de $b_i$-bits), het resultaat is een getal $S$ (voorgesteld door de $s_i$-bits). Indien we de absolute waarde berekenen (dit betekent dat het signaal $\mbox{Max/Abs*}$ laag staat), is $D$ gelijk aan $0$, bijgevolg is $S=-B$. In het geval we het maximum berekenen is $S=A-B$. Indien we de absolute waarde berekenen, zullen we op basis van het teken van $B$ de multiplexer aansturen, en beslissen of we ofwel $B$ doorlaten (in het geval $B$ positief is), ofwel $S=-B$. Dit hangt louter af van de hoogste bit van $B$ zoals voorgesteld in \tblref{minimal-functionals-absmaxmux}. In het geval we het maximum berekenen zal het tekenen van $S$ de multiplexer aansturen. Indien de teken-bit $s_{n-1}$ laag is ($S$ is positief), laten we $A$ door. $S$ is immers positief wanneer $A\geq B$. In het andere geval laten we $B$ door. Op basis van de tekens van $B$, $S$ en de operatie die we willen uitvoeren (absolute waarde of maximum), moeten we dus de stuursignalen $m_0$ en $m_1$ voor de multiplexer bepalen. Deze stuursignalen zijn voor de multiplexers van alle bits gelijk. Omdat we de logica dus maar eenmalig moeten implementeren zullen we de kostprijs hiervan verwaarlozen. De kost per bit omvat echter de multiplexer (18 transistors per bit), de full adder (36 transistors per bit), de AND-poort (6 transistors per bit) en de NOT-poort (2 transistors per bit). In totaal maakt dit dus 62 transistors per bit.
 \importtabulartable{minimal-functionals-absmaxmux}{Multiplexer selectie-ingangen bij abs\&max.}
+\paragraph{}
+Nu we een samengesteld component hebben ge\"implementeerd, kunnen we de mogelijke winst berekenen. Er zijn verschillende manieren hoe we een dergelijk component kunnen gebruiken. Hieronder beschouwen we alle mogelijkheden:
+\begin{equation}
+\acclarray{\accl{\mbox{abs1},\mbox{min}},\accl{\mbox{abs1},\mbox{min},\mbox{max2}},\accl{\mbox{abs2},\mbox{min}},\accl{\mbox{abs2},\mbox{min},\mbox{max2}}\\\accl{\mbox{abs1},\mbox{max1}},\accl{\mbox{abs1},\mbox{max1},\mbox{max2}},\accl{\mbox{abs2},\mbox{max1}},\accl{\mbox{abs2},\mbox{max1},\mbox{max2}}\\\accl{\mbox{abs1},\mbox{max2}},\accl{\mbox{abs2},\mbox{max2}}}
+\end{equation}
+We zullen niet alle combinaties bespreken. De mogelijke winsten staan op \figref{compatibilitygraph-functionals-final}. Enkel de scenario's die interessant zijn worden besproken. Als eerste voorbeeld nemen we $\mbox{abs1}$ en $\mbox{min}$. De twee functionele eenheden apart kosten $64$ transistors per bit. Wanneer we de twee functionele eenheden samenvoegen, dan verwachten we slechts $62$ transistors per bit te betalen. Een probleem vormt echter de registers: $\mbox{abs1}$ haalt de gegevens uit register $t_1$, terwijl $\mbox{max1}$ deze uit de registers $t_1$ en $t_2$ haalt. Vermits het samengestelde component voor de absolute waarde de tweede ingang neemt, betekent dit dat we een multiplexer moeten plaatsen die kiest tussen register $t_1$ en $t_2$. Dit concept is ge\"illustreerd in \figref{minimal-functionals-absmax-mux}.
+\importtikzfigure{minimal-functionals-absmax-mux}{Het combineren van $\mbox{abs1}$ en $\mbox{min}$ introduceert een multiplexer.}
+We kunnen echter een eigenschap van het maximum uitbuiten: deze operator is commutatief. Het maakt dus niet uit of dit component het maximum van $t_1$ en $t_2$ berekent, of van $t_2$ en $t_1$. Door de bedrading van het maximum om te draaien, vervalt de noodzaak om een multiplexer in te voeren. De totale winst bij het combineren is dus $2$ transistors per bit.
+\paragraph{}
+
+\paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we alle mogelijke combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst per bit in transistors en logische blokken.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[auto,node distance=2cm]
@@ -1934,14 +1945,14 @@ De meest significante bit bepaald in complementvoorstelling het teken van het ge
 \node[compatibilitynode,right of=f1] (f3) {min};
 \node[compatibilitynode,below of=f3] (f4) {max1};
 \node[compatibilitynode,right of=f4] (f5) {max2};
-\node[compatibilitynode,right of=f5] (f9) {+};
-\node[compatibilitynode,above of=f9] (f8) {-};
-\node[compatibilitynode,right of=f8] (f6) {shr 3};
-\node[compatibilitynode,right of=f9] (f7) {shr 1};
-\foreach \a/\b/\o in {f1/f2/,f3/f4/,f6/f7/} {
+\node[compatibilitynode,right of=f5] (f6) {+};
+\node[compatibilitynode,above of=f6] (f7) {-};
+\node[compatibilitynode,right of=f7] (f8) {shr 3};
+\node[compatibilitynode,right of=f6] (f9) {shr 1};
+\foreach \a/\b/\o in {f1/f2/,f3/f4/,f8/f9/} {
   \path [thick,dashed] (\a) edge [\o] (\b);
 }
-\foreach \a/\b/\t/\o in {f4/f5/{32/2}/,f3/f5/{32/2}/} {
+\foreach \a/\b/\t/\o in {f4/f5/{32/2}/,f3/f5/{32/2}/,f1/f3/{2/0}/,f2/f3/{}/,f1/f4/{}/,f2/f4/{}/} {
   \path [thick] (\a) edge [\o] node[sloped,midway] {\t} (\b);
 }
 \end{tikzpicture}

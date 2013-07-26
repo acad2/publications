@@ -26,7 +26,7 @@
 \draw (HA.s) node[anchor=north west]{$s_i$} -- (M.data1);
 \node[not gate,rotate=-90] (N) at ($(HA.x |- GAL)$) {};
 \node[and gate,rotate=-90] (A) at ($(AAC |- GAL)$) {};
-\draw (A.output) -- (A.output |- MFL) -| (HA.y);
+\draw (A.output) node[anchor=north east]{$d_i$} -- (A.output |- MFL) -| (HA.y);
 \draw (N.output) -- (HA.x);
 \draw (IA -| N.input) node[anchor=south]{$b_i$} -- (N.input);
 \draw (IA -| A.input 1) node[anchor=south]{$a_i$} -- (A.input 1);
