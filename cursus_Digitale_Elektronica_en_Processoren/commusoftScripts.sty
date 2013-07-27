@@ -496,18 +496,25 @@
 
 \newcommand{\genlab}[2]{\label{#1:#2}}
 \newcommand{\genref}[3]{#2~\ref{#1:#3}}
+\newcommand{\genrefpag}[3]{\genref{#1}{#2}{#3} op pagina~\pageref{#1:#3}}
 \newcommand{\figlab}[1]{\genlab{fig}{#1}}
 \newcommand{\figref}[1]{\genref{fig}{Figuur}{#1}}
+\newcommand{\figrefpag}[1]{\genrefpag{fig}{Figuur}{#1}}
 \newcommand{\tbllab}[1]{\genlab{tbl}{#1}}
 \newcommand{\tblref}[1]{\genref{tbl}{Tabel}{#1}}
+\newcommand{\tblrefpag}[1]{\genrefpag{tbl}{Tabel}{#1}}
 \newcommand{\seclab}[1]{\genlab{sec}{#1}}
 \newcommand{\secref}[1]{\genref{sec}{Sectie}{#1}}
+\newcommand{\secrefpag}[1]{\genrefpag{sec}{Sectie}{#1}}
 \newcommand{\ssclab}[1]{\genlab{ssc}{#1}}
 \newcommand{\sscref}[1]{\genref{ssc}{Subsectie}{#1}}
+\newcommand{\sscrefpag}[1]{\genrefpag{ssc}{Subsectie}{#1}}
 \newcommand{\ssslab}[1]{\genlab{sss}{#1}}
 \newcommand{\sssref}[1]{\genref{sss}{Subsubsectie}{#1}}
+\newcommand{\sssrefpag}[1]{\genrefpag{sss}{Subsubsectie}{#1}}
 \newcommand{\chplab}[1]{\genlab{chp}{#1}}
 \newcommand{\chpref}[1]{\genref{chp}{Hoofdstuk}{#1}}
+\newcommand{\chprefpag}[1]{\genrefpag{chp}{Hoofdstuk}{#1}}
 \newcommand{\eqnlab}[1]{\genlab{eqn}{#1}}
 \newcommand{\eqnref}[1]{Vergelijking~(\ref{eqn:#1})}
 \newcommand{\alglab}[1]{\genlab{alg}{#1}}
@@ -533,4 +540,49 @@
 \caption{#2}
 \tbllab{#1}
 \end{table}
+}
+\newcommand{\funode}[4][]{\node[draw,rectangle,thick,scale=0.85,#1] (#2) at (#3) {\begin{varwidth}{3cm}\begin{center}#4\end{center}\end{varwidth}};}
+\newcommand{\funodelabelinput}[2]{
+  \setcounter{tmpE}{1}
+  \setcounter{tmpG}{0}
+  \foreach \t in {#2} {
+	\addtocounter{tmpE}{1}
+	\addtocounter{tmpG}{1}
+  }
+  \setcounter{tmpF}{1}
+  \foreach \t in {#2} {
+	\coordinate (#1-I\arabic{tmpF}) at ($\arabic{tmpF}/\arabic{tmpE}*(#1.north east)+\arabic{tmpG}/\arabic{tmpE}*(#1.north west)$);
+	\addtocounter{tmpF}{1}
+	\addtocounter{tmpG}{-1}
+  }
+}
+\newcommand{\funodelabeloutput}[2]{
+  \setcounter{tmpE}{1}
+  \setcounter{tmpG}{0}
+  \foreach \t in {#2} {
+	\addtocounter{tmpE}{1}
+	\addtocounter{tmpG}{1}
+  }
+  \setcounter{tmpF}{1}
+  \foreach \t in {#2} {
+	\coordinate (#1-O\arabic{tmpF}) at ($\arabic{tmpF}/\arabic{tmpE}*(#1.south east)+\arabic{tmpF}/\arabic{tmpE}*(#1.south west)$);
+	\addtocounter{tmpF}{1}
+	\addtocounter{tmpG}{-1}
+  }
+}
+\newcommand{\funodeinput}[3][TOP]{
+  \funodelabelinput{#2}{#3}
+  \setcounter{tmpF}{1}
+  \foreach \t in {#3} {
+	\draw[thick] (#2-I\arabic{tmpF}) -- (#2-I\arabic{tmpF} |- #1) node[anchor=south]{\t};
+	\addtocounter{tmpF}{1}
+  }
+}
+\newcommand{\funodeoutput}[3][BOT]{
+  \funodelabeloutput{#2}{#3}
+  \setcounter{tmpF}{1}
+  \foreach \t in {#3} {
+	\draw[thick] (#2-O\arabic{tmpF}) -- (#2-O\arabic{tmpF} |- #1) node[anchor=north]{\t};
+	\addtocounter{tmpF}{1}
+  }
 }

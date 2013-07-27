@@ -1,0 +1,44 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (BOT) at (0,-2);
+\coordinate (TOP) at (0,1);
+\coordinate (MIA) at (0,-0.5);
+\coordinate (MIB) at (0,-1.5);
+\begin{scope}
+\funode{FU1}{-1,-1}{$\mbox{abs1}$}
+\funodeinput{FU1}{$t_1$}
+\funodeoutput{FU1}{$t_1$}
+\funode{FU2}{1,-1}{$\mbox{max1}$}
+\funodeinput{FU2}{$t_1$,$t_2$}
+\funodeoutput{FU2}{$t_6$}
+\end{scope}
+\draw (3,-0.5) node {$\Rightarrow$};
+\begin{scope}[xshift=6 cm]
+\resetsprocessor{}
+\node[mux2to1] (M2) at (1,0) {};
+\coordinate (F2A) at (M2.data1);
+\draw[thick] (F2A) -- (F2A |- TOP) node[anchor=south]{$t_1$};
+\coordinate (F2B) at (M2.data0);
+\draw[thick] (F2B) -- (F2B |- TOP) node[anchor=south]{$t_2$};
+\sprarr{M2.selin0}
+\funode{FU12}{0,-1}{$\mbox{abs1\&max1}$}
+\funodelabelinput{FU12}{$t_1$,$t_12$}
+\sprarr{FU12.west}
+\coordinate (F12D) at (FU12.south |- MIB);
+\draw[thick] (M2.output) -- (M2.output |- MIA) -| (FU12-I2);
+\draw[thick] (FU12-I1) -- (FU12-I1 |- TOP) node[anchor=south]{$t_1$};
+\draw[thick] (FU12.south) -- (F12D) -| (M1.output |- BOT) node[anchor=north]{$t_1$};
+\draw[thick] (F12D) -| (M2.output |- BOT) node[anchor=north]{$t_6$};
+\pdot{F12D}
+\end{scope}
+\draw (9,-0.5) node {$\equiv$};
+\begin{scope}[xshift=12 cm]
+\resetsprocessor{}
+\funode{FU21}{0,-1}{$\mbox{abs1\&max1}$}
+\funodeinput{FU21}{$t_2$,$t_1$}
+\sprarr{FU21.west}
+\coordinate (F21D) at (FU21.south |- MIB);
+\draw[thick] (FU21.south) -- (F21D) -| (FU21.west |- BOT) node[anchor=north]{$t_1$};
+\draw[thick] (F21D) -| (FU21.east |- BOT) node[anchor=north]{$t_6$};
+\pdot{F21D}
+\end{scope}
+\end{tikzpicture}
