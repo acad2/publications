@@ -1,0 +1,15 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (TOP) at (0,3);
+\coordinate (BOT) at (0,-1);
+\coordinate (LEF) at (-1,0);
+\coordinate (RIG) at (1,0);
+\coordinate (GAL) at (0,1.5);
+\node[fulladder] (FA) at (0,0) {FA};
+\node[not gate,rotate=-90] (N) at (FA.x |- GAL) {};
+\draw (FA.s) -- (FA.s |- BOT) node[anchor=north] {$f_i$};
+\draw (FA.x) -- (N.output);
+\draw (N.input) -- (N.input |- TOP) node[anchor=south] {$b_i$};
+\draw (FA.y) -- (FA.y |- TOP) node[anchor=south] {$a_i$};
+\draw (FA.ci) -- (FA.ci -| RIG) node[anchor=west] {$c_{i-1}$};
+\draw (FA.co) -- (FA.co -| LEF) node[anchor=east] {$c_i$};
+\end{tikzpicture}

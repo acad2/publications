@@ -1,0 +1,17 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (TOP) at (0,3);
+\coordinate (BOT) at (0,-1);
+\coordinate (LEF) at (-1,0);
+\coordinate (RIG) at (1,0);
+\coordinate (GAL) at (0,1.5);
+\coordinate (IML) at (0,2.25);
+\node[fulladder] (FA) at (0,0) {FA};
+\node[xor gate,rotate=-90] (X) at (FA.x |- GAL) {};
+\draw (FA.s) -- (FA.s |- BOT) node[anchor=north] {$f_i$};
+\draw (FA.x) -- (X.output);
+\draw (X.input 1) -- (X.input 1 |- TOP) node[anchor=south] {$b_i$};
+\draw (X.input 2) |- (LEF |- IML) node[anchor=east,scale=0.85] {$\mbox{S/A*}$};
+\draw (FA.y) -- (FA.y |- TOP) node[anchor=south] {$a_i$};
+\draw (FA.ci) -- (FA.ci -| RIG) node[anchor=west] {$c_{i-1}$};
+\draw (FA.co) -- (FA.co -| LEF) node[anchor=east] {$c_i$};
+\end{tikzpicture}

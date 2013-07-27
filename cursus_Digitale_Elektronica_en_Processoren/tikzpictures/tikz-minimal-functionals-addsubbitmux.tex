@@ -1,0 +1,23 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (TOP) at (0,3);
+\coordinate (BOT) at (0,-1);
+\coordinate (LEF) at (-1,0);
+\coordinate (RIG) at (1,0);
+\coordinate (GAL) at (0,1.5);
+\coordinate (GML) at (0,0.75);
+\coordinate (IML) at (0,2.25);
+\node[fulladder] (FA) at (0,0) {FA};
+\node[xor gate,rotate=-90] (X) at (FA.east |- GAL) {};
+\node[mux2to1] (M) at (FA.y |- IML) {};
+\setIndexLabelsMuxB{M}
+\draw (FA.s) -- (FA.s |- BOT) node[anchor=north] {$f_i$};
+\draw (FA.x) -- (FA.x |- GML) -| (X.output);
+\draw (X.input 1) -- (X.input 1 |- TOP) node[anchor=south] {$b_i$};
+\draw (M.selin0) |- (LEF |- IML) node[anchor=east,scale=0.85] {$\mbox{S/A*}$};
+\draw (X.input 2) |- (M.selout0);
+\draw (M.data0) -- (M.data0 |- TOP) node[anchor=south] {$a_i$};
+\draw (M.data1) -- (M.data1 |- TOP) node[anchor=south] {$d_i$};
+\draw (FA.y) -- (M.output);
+\draw (FA.ci) -- (FA.ci -| RIG) node[anchor=west] {$c_{i-1}$};
+\draw (FA.co) -- (FA.co -| LEF) node[anchor=east] {$c_i$};
+\end{tikzpicture}
