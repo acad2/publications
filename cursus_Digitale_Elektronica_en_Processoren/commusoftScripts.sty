@@ -496,9 +496,12 @@
 
 \newcommand{\genlab}[2]{\label{#1:#2}}
 \newcommand{\genref}[3]{#2~\ref{#1:#3}}
+\newcommand{\genrefs}[3]{
+\setcounter{tmpD}{0}\setcounter{tmpE}{0}\foreach \x in {#3} {\addtocounter{tmpD}{1}}#2\foreach \x in {#3} {\ifthenelse{\value{tmpD}>1}{\ifthenelse{\value{tmpE}>1}{, \ref{#1:\x}}{ \ref{#1:\x}}}{ en \ref{#1:\x}}\addtocounter{tmpD}{-1}\addtocounter{tmpE}{1}}}
 \newcommand{\genrefpag}[3]{\genref{#1}{#2}{#3} op pagina~\pageref{#1:#3}}
 \newcommand{\figlab}[1]{\genlab{fig}{#1}}
 \newcommand{\figref}[1]{\genref{fig}{Figuur}{#1}}
+\newcommand{\figrefs}[1]{\genrefs{fig}{Figuren}{#1}}
 \newcommand{\figrefpag}[1]{\genrefpag{fig}{Figuur}{#1}}
 \newcommand{\tbllab}[1]{\genlab{tbl}{#1}}
 \newcommand{\tblref}[1]{\genref{tbl}{Tabel}{#1}}
