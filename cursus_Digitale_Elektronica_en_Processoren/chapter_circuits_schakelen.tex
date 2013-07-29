@@ -3,8 +3,39 @@
 \begin{chapterintro}
 Tot slot bieden we een laatste gedeelte over het bouwen van digitale schakelingen in de praktijk. Dit gedeelte is optioneel. Het is geen leerstof, staat niet in de presentaties en vorm zeker geen onderdeel tijdens het examen. Het is dan ook eerder tot stand gekomen voor ``enthousiastelingen'' die de opgedane kennis in de praktijk willen omzetten. In dit hoofdstuk beschrijven we welke ge\"integreerde circuits men zich dient aan te schaffen om de schakelingen te implementeren. In de rest van het deel worden enkele projecten besproken die men kan realiseren.
 \end{chapterintro}
+\section{Anatomie van een Ge\"integreerd circuit}
+We beginnen het hoofdstuk met de terminologie die men hanteert bij ge\"integreerde circuits.
+\subsection{DIP packing}
+Vermits het de bedoeling is dat men de circuits zelf implementeert, zullen we ook enkel werken met ge\"integreerde circuits die men zelf kan ineenzetten. Meestal kiest men daarvoor voor ``DIP packing''. DIP packing beschouwt rechthoekige chips met verbindingen in de lengte. \figref{dip8-packing} geeft dit concept grafisch weer.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{dip8-packing}{Structuur}
+\importtikzsubfigure{dip8-front}{Vooraanzicht}
+\importtikzsubfigure{dip8-side}{Zijaanzicht}
+\caption{DIP packing}
+\end{figure}
+Een verbinding noemt men een ``pin'' of ``pootje''. Omdat chips correct geori\"enteerd moeten worden maakt men gebruik van twee systemen. De ``notch'' is een cirkelvormige inkeping aan \'e\'en kant van de chip. Daarnaast zet men op de meeste chips ook een ``index marker''. Een index marker is een cirkel in de buurt van pin 1. Wanneer we de notch aan de linkerkant plaatsen (zoals op de figuur), worden de pootjes onderaan van links naar rechts genummerd. De nummering van de bovenste pootjes verloopt van rechts naar links. Elke digitale chip beschikt telkens over minstens twee pootjes: de power pin (ofwel \mbox{Vcc}) en de ground pin. Bij de meeste chips stelt pin 1 de ground pin door. Meestal stelt de laatste pin (pin 8 op \figref{dip8-packing}) de power pin voor. Soms gebruikt men ook de eerste pin van de bovenste rij (pin 5 op \figref{dip8-packing}). De powerpin moet worden verbonden met de positieve pool van de voeding, de ground pin met de negatieve pool. In een schematische voorstelling van een ge\"integreerd circuit geeft men vaak de nummers van de verschillende pinnen weer. Een diagram die de functie van de verschillende pinnen beschrijft noemt men een ``pinout''. \figref{dip8-front} en \figref{dip8-side} tonen het voor- en zijaanzicht van een DIP ge\"integreerd circuit. Doorgaans zijn de pootjes dikker rond het midden van de chip dan het einde. De structuur van DIP vereist bijna dat het aantal pootjes altijd even is. Indien dit niet het geval is zal men meestal een veelvoud van de componenten in een chip implementeren. Zo bestaan er bijvoorbeeld chips die $4$ NAND-poorten aanbieden.
+\subsection{Populaire ge\"integreerde circuits}
+Nu we de structuur van een ge\"integreerd circuit hebben voorgesteld, zullen we een bondige samenvatting geven over de belangrijkste ge\"integreerde circuits.
 \section{Bouw van een elektronische schakeling}
-
+\section{Analoge componenten}
+Naast ge\"integreerde circuits 
+\section{Implementatie van een kloksignaal}
+In de cursus hebben we telkens abstractie gemaakt van de implementatie van een kloksignaal: een signaal die met een bepaalde frequentie afwisselend $0$ en $1$ aanlegt. Hoe kunnen we een dergelijk signaal implementeren? Een eerste antwoord zou kunnen zijn dat men een sequenti\"ele schakeling bouwt die dit signaal zal aanleggen. Het probleem is dat een dergelijke schakeling zelf een kloksignaal nodig heeft. We zullen dus een ander component nodig hebben. Twee populaire keuzes zijn het gebruik van een $555$-timer en een kristal-oscillator. We zullen beide technieken kort bespreken.
+\subsection{555-timer}
+De $555$-timer\footnote{Soms uitgesproken als ``triple five'' of ``triple five timer''.} is een ge\"integreerd circuit die gebruikt wordt om allerhande periodieke functies te implementeren. Het component kost los rond de $\$ 2.50$. Een 555-timer kan kloksignalen produceren tot ongeveer $300\mbox{ kHz}$.
+\paragraph{}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{pinout-555}{555-timer}
+\importtikzsubfigure{pinout-555}{555-interface}
+\importtikzsubfigure{pinout-556}{556-timer}
+\caption{De pinout van de 555-timer en 556-timer.}
+\end{figure}
+\subsection{Kristal-oscillator}
+Een nadeel van de $555$-timer is dat de periodieke functie meestal niet nauwkeurig wordt aangelegd. Componenten op basis van transistoren en weerstanden zijn bijvoorbeeld onderhevig aan de temperatuur. Indien men dus een kloksignaal met een zekere frequentie aanlegt kan men fluctuaties op die frequentie verwachten. Zolang de frequentie laag is, levert dit weinig problemen op: de componenten rekenen immers zo snel dat de data lang op de ingangen van de registers staat alvorens ze worden ingeladen. Wanneer men echter een processor implementeert, wil men een hoge kloksnelheid die zo weinig mogelijk tijd de data onbenut laat. Ook bij hoge frequenties blijft er echter sprake van ruis. In dat geval kan de ruis het verschil maken tussen de correcte data die aan de ingang van een register staat, of oude of tijdelijke data.
+\paragraph{}
+In dergelijke gevallen zal men opteren voor een kristal-oscillator. Een kristal-oscillator werk op basis van pi\"ezo-elektromagnetisme. De fysica achter dit proces valt buiten het bereik van deze cursus. Men kan echter stellen dat het een component is die op basis van een kwartskristal met een zeer vaste frequentie van weerstand varieert. De afwijkingen worden dan ook uitgedrukt in ``parts per billion (ppb)''.
 \section{Oproep aan de lezers}
 De auteur roept enthousiaste lezers op om projecten te delen zodat deze in deze cursus kunnen worden gepubliceerd als een hoofdstuk in dit deel. Men kan echter niet elk project als nuttig beschouwen. Ingediende projecten moeten aan enkele voorwaarden voldoen:
 \begin{enumerate}

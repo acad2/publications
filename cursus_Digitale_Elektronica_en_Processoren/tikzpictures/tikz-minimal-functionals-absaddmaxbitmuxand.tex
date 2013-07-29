@@ -1,8 +1,10 @@
 \begin{tikzpicture}[circuit logic US]
+\resetsprocessor{}
 \coordinate (BOT) at (0,-1);
 \coordinate (RIG) at (1.5,0);
 \coordinate (LEF) at (-2,0);
-\coordinate (IA) at (0,4.25);
+\coordinate (IA) at (0,4.5);
+\coordinate (IAL) at (0,5);
 \coordinate (IMA) at (0,3.25);
 \coordinate (MID) at (0,0.5);
 \coordinate (MAL) at (0,0);
@@ -32,8 +34,7 @@
 \node[and gate,rotate=-90] (A) at ($(HA.west |- GAL)$) {};
 \draw (X.output) -- (X.output |- MFL) -| (HA.x);
 \draw (A.output) -- (A.output |- MFL) -| (HA.y);
-\draw (IA -| X.input 1) node[anchor=south]{$b_i$} -- (X.input 1);
-\draw (IA -| A.input 1) node[anchor=south]{$a_i$} -- (A.input 1);
+\draw (IAL -| X.input 1) node[anchor=south]{$b_i$} -- (X.input 1);
 \draw (A.input 1 |- SIL) -| (MML -| RIC) -| (M.data0);
 \draw (X.input 1 |- MIL) -| (MUL -| RJC) -| (M.data1);
 \draw (M.data2) |- (HA.s |- MML);
@@ -43,4 +44,10 @@
 \pdot{A.input 1 |- SIL}
 \pdot{X.input 1 |- MIL}
 %\pdot{X.input 1 -| HA.y}
+\node[mux2to1] (M2) at (IA -| A.input 1) {};
+\setIndexLabelsMuxB{M2};
+\draw (IAL -| M2.data0) node[anchor=south]{$a_i$} -- (M2.data0);
+\draw (IAL -| M2.data1) node[anchor=south]{$d_i$} -- (M2.data1);
+\draw (M2.output) -- (A.input 1);
+\sprarr{M2.selin0}
 \end{tikzpicture}

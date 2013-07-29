@@ -544,3 +544,35 @@
 	\addtocounter{tmpF}{1}
   }
 }
+\newcommand{\pinlayout}[3][0.92/6.3/7.62/0.89/1.3/2.29]{
+  \foreach \m/\h/\hx/\ba/\bb/\e in {#1} {
+	\def\offxa{-\m-0.5*#2*\e-0.5*\ba+0.5*\e};
+	\def\offxb{\m+0.5*#2*\e+0.5*\ba-0.5*\e};
+	\def\offy{0.5*\h};
+	\def\offz{0.5*\hx};
+	\draw[thick] (\offxa,-\offy) rectangle (\offxb,\offy);
+	\draw[thick] (\offxa,-\m) arc (-90:90:\m cm);
+	\draw[thick] (\offxa+\m+0.5*\ba,-0.5*\offy) circle (0.5*\ba cm);
+	\setcounter{tmpC}{1}
+	\setcounter{tmpD}{#2}
+	\foreach \ta/\tb in {#3} {
+	  \def\xa{\offxa+0.5*\ba+\m+\arabic{tmpC}*\e-\e-0.5*\bb};
+	  \def\xm{\xa+0.5*\bb};
+	  \def\xb{\xa+\bb};
+	  \ifthenelse{\value{tmpC} < 2}{
+	    \def\xa{\offxa+0.5*\ba+\m+\arabic{tmpC}*\e-\e+0.5*\bb-\ba}
+	    \def\xm{\xa+0.5*\ba};
+	    \def\xb{\xa+\ba};
+	  }{\ifthenelse{\value{tmpD} < 2}{
+	    \def\xm{\xa+0.5*\ba};
+	    \def\xb{\xa+\ba};
+	  }};
+	  \draw[thick] (\xa,-\offy) -- (\xa,-\offz) -- (\xb,-\offz) -- (\xb,-\offy);
+	  \draw (\xm,-\offz) node[rotate=-90,anchor=west] {\ta};
+	  \draw[thick] (\xa,\offy) -- (\xa,\offz) -- (\xb,\offz) -- (\xb,\offy);
+	  \draw (\xm,\offz) node[rotate=-90,anchor=east] {\tb};
+	  \addtocounter{tmpC}{1}
+	  \addtocounter{tmpD}{-1}
+	}
+  }
+}
