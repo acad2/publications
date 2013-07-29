@@ -1484,6 +1484,7 @@ We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder besc
 \paragraph{Vergelijken met constanten}
 We willen een getal niet altijd vergelijken met andere getal, maar soms met een constante. In dat geval zouden we natuurlijk ook van de vergelijker kunnen gebruikmaken, en de $Y$ zelf samenstellen. Aangezien $Y$ echter op voorhand gekend is spreekt het voor zichzelf dat we de implementatie echter grondig kunnen verbeteren. Bovendien kunnen we ook testen ontwerpen die we niet kunnen uitvoeren met een vergelijker\footnote{Bijvoorbeeld deelbaarheid door 2.}. Dergelijke componenten bouwen getuigd verder ook van enig inzicht. Alle speciale gevallen beschouwen is moeilijk. Op figuur \ref{fig:comparatorConstants} geven we enkele voorbeelden.
 \subsection{Schuifoperator}
+\ssclab{shiftoperators}
 \label{ss:shiftoperators}
 Een laatste set van operaties die vaak gebruikt wordt zijn \termen{schuifoperaties}. Vele processoren implementeren schuifoperaties en bijvoorbeeld de ARM processor laat toe om tijdens elke operatie de operand over enkele plaatsen te schuiven. Een eerste probleem met schuifoperaties is dat er verschillende vormen van schuifoperaties bestaan. In het algemeen houdt een schuifoperatie in dat de waarde van de bit die eerst op plaats $i$ stond, nu op een plaats $i+m$ staat. Of formeler: $Y$ is het resultaat van een schuifoperatie van $X$ over $m$ plaatsen naar links als
 \begin{equation}
