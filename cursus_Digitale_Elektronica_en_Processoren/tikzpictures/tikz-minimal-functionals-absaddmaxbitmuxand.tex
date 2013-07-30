@@ -1,5 +1,4 @@
 \begin{tikzpicture}[circuit logic US]
-\resetsprocessor{}
 \coordinate (BOT) at (0,-1);
 \coordinate (RIG) at (1.5,0);
 \coordinate (LEF) at (-2,0);
@@ -15,6 +14,7 @@
 \coordinate (GAL) at (0,3);
 \coordinate (MGL) at (0,3.5);
 \coordinate (MIL) at (0,4);
+\coordinate (MJL) at (0,4.25);
 \coordinate (SIL) at (0,3.75);
 \coordinate (AAC) at (-1.5,0);
 \coordinate (RIC) at (1.25,0);
@@ -30,24 +30,22 @@
 \draw (M.selin0) -- (M.selin0 -| LEF) node[anchor=east] {$m_0$};
 \draw (M.selin1) -- (M.selin1 -| LEF) node[anchor=east] {$m_1$};
 \draw (HA.s) node[anchor=north west]{$s_i$} -- (HA.s |- MML) -| (M.data3);
-\node[xor gate,rotate=-90] (X) at ($(HA.east |- GAL)$) {};
-\node[and gate,rotate=-90] (A) at ($(HA.west |- GAL)$) {};
+\node[xor gate,rotate=-90] (X) at (HA.east |- GAL) {};
 \draw (X.output) -- (X.output |- MFL) -| (HA.x);
-\draw (A.output) -- (A.output |- MFL) -| (HA.y);
 \draw (IAL -| X.input 1) node[anchor=south]{$b_i$} -- (X.input 1);
-\draw (A.input 1 |- SIL) -| (MML -| RIC) -| (M.data0);
 \draw (X.input 1 |- MIL) -| (MUL -| RJC) -| (M.data1);
 \draw (M.data2) |- (HA.s |- MML);
-\draw (X.input 2) |- (MIL -| LEF) node[anchor=east,scale=0.85]{Add'};
-\draw (A.input 2) |- (SIL -| LEF) node[anchor=east,scale=0.85]{Abs'};
 \pdot{HA.s |- MML}
-\pdot{A.input 1 |- SIL}
 \pdot{X.input 1 |- MIL}
-%\pdot{X.input 1 -| HA.y}
-\node[mux2to1] (M2) at (IA -| A.input 1) {};
-\setIndexLabelsMuxB{M2};
-\draw (IAL -| M2.data0) node[anchor=south]{$a_i$} -- (M2.data0);
-\draw (IAL -| M2.data1) node[anchor=south]{$d_i$} -- (M2.data1);
-\draw (M2.output) -- (A.input 1);
-\sprarr{M2.selin0}
+\node[mux4to1] (M2) at (SIL -| HA.west) {};
+\draw (M2.selin1) -- (M2.selin1 -| LEF) node[anchor=east,scale=0.85]{Add'};
+\draw (M2.selin0) -- (M2.selin0 -| LEF) node[anchor=east,scale=0.85]{Abs};
+\draw (M2.selout1) -| (X.input 2);
+\draw (M2.data2 |- MJL) -| (MML -| RIC) -| (M.data0);
+\setIndexLabelsMuxD{M2};
+\draw (IAL -| M2.data2) node[anchor=south]{$a_i$} -- (M2.data2);
+\draw (IAL -| M2.data0) node[anchor=south]{$d_i$} -- (M2.data0);
+\draw (IAL -| M2.data3) node[anchor=south]{$0$} -- (M2.data3);
+\draw (M2.output) -- (M2.output |- MFL) -| (HA.y);
+\pdot{M2.data2 |- MJL}
 \end{tikzpicture}

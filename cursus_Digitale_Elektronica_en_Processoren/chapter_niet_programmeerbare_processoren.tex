@@ -1976,8 +1976,11 @@ Een eigenschap die we zeker kunnen uitbuiten is dat alle beschouwde bewerkingen 
 \caption{Methodes bij het introduceren van een multiplexer bij een samengestelde functionele eenheid.}
 \end{figure}
 Een aspect die we echter kunnen uitbuiten is de AND-poort die vlak onder deze multiplexer staat. Het resultaat van de AND-poort bestaat immers uit drie gevallen: $a_i$, $d_i$ of $0$. We kunnen dus de AND-poort en de $2$-naar-$1$ multiplexer samenvoegen in een $3$-naar-$1$ multiplexer. \figref{minimal-functionals-absaddmaxbitmuxand} toont de implementatie door de AND-poort en de multiplexer samen te drukken. De kostprijs blijft in dit geval constant (al is dat niet altijd zo). Al kan er nog een reden zijn om dit te doen: de tijdsduur van het kritische pad. Wanneer het signaal door een $3$-naar-$1$ multiplexer gaat, is dit sneller dan door een $2$-naar-$1$ multiplexer gevolgd door een AND-poort. Vermits het kritische pad de te realiseren kloksnelheid bepaald, is dit een niet onbelangrijke factor.
+\paragraph{}
+Concreet realiseren we de volgende winsten: wanneer we een combinatie maken met \'e\'en maximum-bewerking is de originele kostprijs $100$ transistors per bit. Het samengestelde component kost $72$ transistors per bit: $18$ transistors voor de multiplexer, $36$ voor de full adder, $12$ voor de XOR-poort en $6$ voor de AND-poort. Verder dienen we ook een multiplexer van $12$ transistors per bit te implementeren. De winst is dus $16$ transistors per bit. Wanneer we een samenstelling maken met de twee maximum-bewerkingen, besparen we alle transistoren betrokken in de tweede maximum bewerking: $32$ transistors per bit. De totale winst is dus $48$ transistors per bit.
+\paragraph{Abs\&Add\&Max\&Sub}In het component die de absolute waarde, de optelling en het maximum samenvoegt in \'e\'en functionele eenheid valt op dat in sommige omstandigheden de full adder het verschil van de twee operanden uitrekent. Dit effect is afkomstig van het maximum: we berekenen immers het verschil om te bepalen welk register we zullen doorlaten. Door minimale veranderingen kunnen we een component implementeren die in het geval we een verschil willen uitrekenen, de onderste multiplexer het resultaat van het verschil doorlaat. Hiervoor zullen we teruggrijpen naar \figref{minimal-functionals-absaddmaxbitmuxand}. We beschouwen ook een extra stuursignaal: $\mbox{Sub}$.
 \paragraph{Combinaties met schuif-operaties over een vast aantal bits}In de processor komen ook twee schuif-bewerkingen voor: $\mbox{shr 1}$ en $\mbox{shr 3}$. Kunnen we deze operaties niet combineren met andere functionele eenheden? Vermits een schuif-bewerking over een vast aantal bits\footnote{Merk op dat dit niet geldt voor een schuif-operatie over een variabel aantal bits, hiervoor wordt een schuifoperator gebruikt (zie \sscrefpag{shiftoperators}).} wordt ge\"implementeerd met behulp van bekabeling, worden er geen transistoren gebruikt. Het combineren met enig ander component zal bijgevolg nooit winst opleveren (het combineren zal immers altijd nieuwe logica introduceren, tenzij de originele bewerkingen niet optimaal werden ge\"implementeerd).
-\paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we alle mogelijke combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst per bit in transistors en logische blokken.
+\paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we alle mogelijke combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst in transistors per bit.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[auto,node distance=3cm]
@@ -1993,15 +1996,15 @@ Een aspect die we echter kunnen uitbuiten is de AND-poort die vlak onder deze mu
 \foreach \a/\b/\o in {f1/f2/,f3/f4/,f8/f9/} {
   \path [thick,dashed] (\a) edge [\o] (\b);
 }
-\foreach \a/\b/\t/\o in {f4/f5/{32/2}/,f3/f5/{32/2}/,f1/f3/{2/0}/,f2/f3/{2/0}/,f1/f4/{2/0}/,f2/f4/{2/0}/,f1/f5/{2/0}/,f2/f5/{2/0}/bend right,f6/f7/{14/1}/} {
+\foreach \a/\b/\t/\o in {f4/f5/32/,f3/f5/32/,f1/f3/2/,f2/f3/2/,f1/f4/2/,f2/f4/2/,f1/f5/2/,f2/f5/2/bend right,f6/f7/14/} {
   \path [thick] (\a) edge [\o] node[sloped,midway] {\t} (\b);
 }
-\foreach \n/\c/\t/\o in {A/{3,-4.5}/{34/2}/,B/{6,1.5}/{34/2}/{anchor=south},C/{6,-4.5}/{22/1}/,D/{4.5,-6}/{/}/} {
+\foreach \n/\c/\t/\o in {A/{3,-4.5}/34/,B/{6,1.5}/34/{anchor=south},C/{6,-4.5}/22/,D/{4.5,-6}/48/,E/{4.5,3}/48/,F/{2,-6}/12/,G/{7,-6}/12/,H/{2,3}/12/,I/{7,3}/12/} {
   \coordinate (group-\n) at (\c);
   \pdot{\c};
   \draw (\c) node[anchor=north,\o] {\t};
 }
-\foreach \n/\p/\o in {A/f2/bend left,A/f4/,A/f5/bend right,B/f1/,B/f4/,B/f5/,C/f4/bend left,C/f5/,C/f6/bend right,D/f2/bend left,D/f4/,D/f5/,D/f6/bend right} {
+\foreach \n/\p/\o in {A/f2/bend left,A/f4/,A/f5/bend right,B/f1/,B/f4/,B/f5/,C/f4/bend left,C/f5/,C/f6/bend right,D/f2/,D/f4/,D/f5/,D/f6/,E/f1/,E/f4/,E/f5/,E/f6/,F/f2/,F/f4/,F/f6/,G/f2/,G/f5/,G/f6/,H/f1/,H/f4/,H/f6/,I/f1/,I/f5/,I/f6/} {
   \path [thick] (group-\n) edge [\o] (\p);
 }
 \end{tikzpicture}
