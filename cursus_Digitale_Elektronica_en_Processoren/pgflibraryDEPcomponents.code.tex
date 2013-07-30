@@ -4153,10 +4153,20 @@
   \anchor{supply}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.333\pgfutil@tempdima}
   \anchor{reset}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.333\pgfutil@tempdima}
   \anchor{ground}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.333\pgfutil@tempdima}
-  \anchor{control}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.333\pgfutil@tempdima}
-  \anchor{discharge}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by0.25\pgfutil@tempdima\advance\pgf@x by-\halfwidth}
+  \anchor{control}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.333\pgfutil@tempdima}
+  \anchor{discharge}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by0.5\pgfutil@tempdima\advance\pgf@x by-\halfwidth}
   \anchor{threshold}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by0.0\pgfutil@tempdima\advance\pgf@x by-\halfwidth}
-  \anchor{trigger}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by-0.25\pgfutil@tempdima\advance\pgf@x by-\halfwidth}
+  \anchor{trigger}{\centerpoint\pgfutil@tempdima=\halfheight\advance\pgf@y by-0.5\pgfutil@tempdima\advance\pgf@x by-\halfwidth}
+  \anchor{gnd}{\pgf@anchor@triplefive@ground}
+  \anchor{vcc}{\pgf@anchor@triplefive@supply}
+  \anchor{pin1}{\pgf@anchor@triplefive@ground}
+  \anchor{pin2}{\pgf@anchor@triplefive@trigger}
+  \anchor{pin3}{\pgf@anchor@triplefive@output}
+  \anchor{pin4}{\pgf@anchor@triplefive@reset}
+  \anchor{pin5}{\pgf@anchor@triplefive@control}
+  \anchor{pin6}{\pgf@anchor@triplefive@threshold}
+  \anchor{pin7}{\pgf@anchor@triplefive@discharge}
+  \anchor{pin8}{\pgf@anchor@triplefive@supply}
   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
@@ -4182,30 +4192,22 @@
      \begingroup
      \tikzset{port labels}
      \tikz@textfont
-     \pgf@anchor@clagc@c
-     \pgftext[right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-0.375ex}{c$_0$}}
-     \pgf@anchor@clagc@pa
-     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{p$_0$}}
-     \pgf@anchor@clagc@ga
-     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{g$_0$}}
-     \pgf@anchor@clagc@ca
-     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{c$_1$}}
-     \pgf@anchor@clagc@pb
-     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{p$_1$}}
-     \pgf@anchor@clagc@gb
-     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{g$_1$}}
-     \pgf@anchor@clagc@cb
-     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{c$_2$}}
-     \pgf@anchor@clagc@pc
-     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{p$_2$}}
-     \pgf@anchor@clagc@gc
-     \pgftext[top,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep]{\raisebox{-0.75ex}{g$_2$}}
-     \pgf@anchor@clagc@cc
-     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{c$_3$}}
-     \pgf@anchor@clagc@gab
-     \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{0.0ex}{g$_{0,2}$}}
-     \pgf@anchor@clagc@pab
-     \pgftext[left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{0.0ex}{p$_{0,2}$}}
+     \pgf@anchor@triplefive@ground
+     \pgftext[top,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{-1.25ex}{1}}
+     \pgf@anchor@triplefive@control
+     \pgftext[top,left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep,x=\pgfshapeinnerxsep]{\raisebox{-1.25ex}{5}}
+     \pgf@anchor@triplefive@supply
+     \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{8}}
+     \pgf@anchor@triplefive@reset
+     \pgftext[bottom,left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=\pgfshapeinnerxsep]{\raisebox{0.0ex}{4}}
+     \pgf@anchor@triplefive@output
+     \pgftext[bottom,left,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=\pgfshapeinnerxsep]{\raisebox{0.0ex}{3}}
+     \pgf@anchor@triplefive@discharge
+     \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{7}}
+     \pgf@anchor@triplefive@threshold
+     \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{6}}
+     \pgf@anchor@triplefive@trigger
+     \pgftext[top,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=-\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{-1.25ex}{1}}
      \endgroup
   }
 }

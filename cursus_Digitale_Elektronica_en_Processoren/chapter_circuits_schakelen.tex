@@ -24,16 +24,20 @@ Naast ge\"integreerde circuits
 In de cursus hebben we telkens abstractie gemaakt van de implementatie van een kloksignaal: een signaal die met een bepaalde frequentie afwisselend $0$ en $1$ aanlegt. Hoe kunnen we een dergelijk signaal implementeren? Een eerste antwoord zou kunnen zijn dat men een sequenti\"ele schakeling bouwt die dit signaal zal aanleggen. Het probleem is dat een dergelijke schakeling zelf een kloksignaal nodig heeft. We zullen dus een ander component nodig hebben. Twee populaire keuzes zijn het gebruik van een $555$-timer en een kristal-oscillator. We zullen beide technieken kort bespreken.
 \subsection{555-timer}
 De $555$-timer\footnote{Soms uitgesproken als ``triple five'' of ``triple five timer''.} is een ge\"integreerd circuit die gebruikt wordt om allerhande periodieke functies te implementeren. Het component kost los rond de $\$ 2.50$. Een 555-timer kan kloksignalen produceren tot ongeveer $300\mbox{ kHz}$.
-\paragraph{}
+\subsubsection{Pinout en interface}
 Een $555$-timer is een component met $8$ verbindingen. \figref{pinout-555} geeft de pinout van de chip met DIP packing weer.
 \begin{figure}[hbt]
 \centering
-\importtikzsubfigure{pinout-555}{555-timer}
-\importtikzsubfigure{pinout-555}{555-interface}
-\importtikzsubfigure{pinout-556}{556-timer}
+\importtikzsubfigure{pinout-555}{555-timer pinout}
+\importtikzsubfigure{interface-555}{555-interface}
+\importtikzsubfigure{pinout-556}{556-timer pinout}
 \caption{De pinout van de 555-timer en 556-timer.}
 \end{figure}
+In een blokdiagram tekent men een $555$-timer meestal met vaste posities voor de verschillende in- en uitgangen. \figref{interface-555} toont deze posities samen met de nummers van de pinout.
+\subsubsection{Werking}
 De \mbox{GND} en \mbox{Vcc} ingangen hebben we al besproken. Daarnaast bevat de $555$-timer ook een Output-uitgang. Deze uitgang legt het resultaat aan van de inwendige flipflop
+\subsubsection{556-timer}
+Tot slot introduceren we ook nog een andere ge\"integreerde schakeling: de $556$-timer. Dit component is eigenlijk niets anders dan twee $555$-timers in \'e\'en chip. Het voordeel van dergelijke chips is dat bepaalde in- en uitgangen gedeeld kunnen worden. In het geval van de $556$-timer is dat het geval voor de power pin en ground pin.
 \subsection{Kristal-oscillator}
 Een nadeel van de $555$-timer is dat de periodieke functie meestal niet nauwkeurig wordt aangelegd. Componenten op basis van transistoren en weerstanden zijn bijvoorbeeld onderhevig aan de temperatuur. Indien men dus een kloksignaal met een zekere frequentie aanlegt kan men fluctuaties op die frequentie verwachten. Zolang de frequentie laag is, levert dit weinig problemen op: de componenten rekenen immers zo snel dat de data lang op de ingangen van de registers staat alvorens ze worden ingeladen. Wanneer men echter een processor implementeert, wil men een hoge kloksnelheid die zo weinig mogelijk tijd de data onbenut laat. Ook bij hoge frequenties blijft er echter sprake van ruis. In dat geval kan de ruis het verschil maken tussen de correcte data die aan de ingang van een register staat, of oude of tijdelijke data.
 \paragraph{}
