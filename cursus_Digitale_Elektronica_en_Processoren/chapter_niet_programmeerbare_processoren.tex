@@ -2009,7 +2009,7 @@ De kostprijs per bit van dit samengesteld component is $62$ transistoren: $36$ v
 \end{equation}
 Indien we \mbox{abs1} betrekken in de combinatie, ontstaat er echter een probleem met de ingangen. De aftrekker berekent immers het verschil tussen de waarde in registers $t_1$ en $t_2$. Omdat een verschil operator niet commutatief is, mogen we dus de volgorde van de ingangen niet kiezen. \mbox{abs1} berekent echter de absolute waarde van $t_1$. Hierdoor moet $t_1$ op de tweede ingang worden aangelegd. Het gevolg is dus dat we een multiplexer moeten introduceren zoals op \figref{minimal-functionals-absminsubbitmux}. Dit drijft de kostprijs op naar $74$ transistors per bit. De originele kostprijs van de afzonderlijke functionele eenheden is $102$ transistoren: $32$ voor de absolute waarde, $32$ voor de minimum en $38$ voor het verschil. De winst is dus $40$ transistoren per bit voor een combinatie met \mbox{abs1} en $28$ transistoren per bit voor een combinatie met \mbox{abs2}.
 \paragraph{Combinaties met schuif-operaties over een vast aantal bits}In de processor komen ook twee schuif-bewerkingen voor: $\mbox{shr 1}$ en $\mbox{shr 3}$. Kunnen we deze operaties niet combineren met andere functionele eenheden? Vermits een schuif-bewerking over een vast aantal bits\footnote{Merk op dat dit niet geldt voor een schuif-operatie over een variabel aantal bits, hiervoor wordt een schuifoperator gebruikt (zie \sscrefpag{shiftoperators}).} wordt ge\"implementeerd met behulp van bekabeling, worden er geen transistoren gebruikt. Het combineren met enig ander component zal bijgevolg nooit winst opleveren (het combineren zal immers altijd nieuwe logica introduceren, tenzij de originele bewerkingen niet optimaal werden ge\"implementeerd).
-\paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we alle mogelijke combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst in transistors per bit.
+\paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we een groot aantal combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst in transistors per bit.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[auto,node distance=3cm]
@@ -2025,21 +2025,23 @@ Indien we \mbox{abs1} betrekken in de combinatie, ontstaat er echter een problee
 \foreach \a/\b/\o in {f1/f2/,f3/f4/,f8/f9/} {
   \path [thick,dashed] (\a) edge [\o] (\b);
 }
-\foreach \a/\b/\t/\o in {f4/f5/32/,f3/f5/32/,f1/f3/2/,f2/f3/2/,f1/f4/2/,f2/f4/2/,f1/f5/2/,f2/f5/2/bend right,f6/f7/14/} {
-  \path [thick] (\a) edge [\o] node[sloped,midway] {\t} (\b);
+\foreach \a/\b/\t/\o in {f1/f3/2/,f3/f7/14/,f7/f6/14/,f4/f5/32/} {
+  \path [thick] (\a) edge [\o] node[sloped,above,midway] {\t} (\b);
 }
-\foreach \n/\c/\t/\o in {A/{3,-4.5}/34/,B/{6,1.5}/34/{anchor=south},C/{6,-4.5}/22/,D/{4.5,-6}/48/,E/{4.5,3}/48/,F/{2,-6}/12/,G/{7,-6}/12/,H/{2,3}/12/,I/{7,3}/12/} {
+\foreach \n/\c/\t/\o in {A/{4.5,-1.5}/92/,B/{4.5,1.5}/28/,C/{3,-4.5}/34/,D/{6,-4.5}/22/,E/{4.5,-6}/54/} {
   \coordinate (group-\n) at (\c);
   \pdot{\c};
   \draw (\c) node[anchor=north,\o] {\t};
 }
-\foreach \n/\p/\o in {A/f2/bend left,A/f4/,A/f5/bend right,B/f1/,B/f4/,B/f5/,C/f4/bend left,C/f5/,C/f6/bend right,D/f2/,D/f4/,D/f5/,D/f6/,E/f1/,E/f4/,E/f5/,E/f6/,F/f2/,F/f4/,F/f6/,G/f2/,G/f5/,G/f6/,H/f1/,H/f4/,H/f6/,I/f1/,I/f5/,I/f6/} {
+\foreach \n/\p/\o in {A/f2/bend right,A/f4/bend right,A/f5/bend left,A/f6/bend left,A/f7/,B/f1/bend right,B/f3/,B/f7/bend left,C/f2/bend left,C/f4/,C/f5/bend right,D/f4/bend left,D/f5/,D/f6/bend right,E/f2/bend left,E/f4/,E/f5/,E/f6/bend right} {
   \path [thick] (group-\n) edge [\o] (\p);
 }
 \end{tikzpicture}
 \caption{De uiteindelijke compatibiliteitsgrafe bij het samenvoegen van bewerkingen.}
 \figlab{compatibilitygraph-functionals-final}
 \end{figure}
+\paragraph{Optimaliseren van een meervoudige compatibiliteitsgraaf}
+Bij de compatibiliteitsgraaf hebben we de max-cut methode gebruikt om tot een goed resultaat te komen. Dit algoritme is echter minder geschikt voor compatibiliteitsgrafes met prioriteitsranden met drie of meer knopen. Het algoritme werkt minder goed vanaf het moment dat de winst op een prioriteitsrand voor drie of meer knopen verschilt van de som van de winsten van prioriteitsranden tussen twee van de knopen. Daarom zullen we gebruik maken van een gretig\footnote{Engels: greedy.} algoritme. We zoeken de prioriteitrand met de meeste winst. Alle betrokken knopen worden vervolgens in een aparte partitie ondergebracht. De knopen samen met prioriteitsranden die betrokken zijn in minstens \'e\'en van de knopen worden vervolgens uit de grafe verwijdert waarna we het proces herhalen.
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}
