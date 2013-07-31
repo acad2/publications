@@ -1,10 +1,12 @@
 \ProvidesPackage{brackets}
-\RequirePackage{amsfonts,amsmath}
+\RequirePackage{amsfonts,amsmath,booktabs}
+
 \newcommand{\brak}[1]{\ensuremath{\left( #1 \right)}}
 \newcommand{\tupl}[1]{\ensuremath{\left\langle #1 \right\rangle}}
 \newcommand{\fbrk}[1]{\ensuremath{\left[ #1 \right]}}
 \newcommand{\accl}[1]{\ensuremath{\left\{ #1 \right\}}}
-\newcommand{\acclarray}[1]{\ensuremath{\left\{\begin{array}{c} #1 \end{array}\right\}}}
+\newcommand{\acclguard}[1]{\ensuremath{\left\{\begin{array}{ll} #1 \end{array}\right.}}
+\newcommand{\acclarray}[1]{\accl{\begin{array}{c} #1 \end{array}}}
 \newcommand{\accol}[1]{\ensuremath{\left\{#1\right\}}}
 \newcommand{\tuple}[1]{\ensuremath{\left\langle #1\right\rangle}}
 \newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
@@ -67,3 +69,10 @@
 \newcommand{\calX}{\ensuremath{\mathcal{X}}}
 \newcommand{\calY}{\ensuremath{\mathcal{Y}}}
 \newcommand{\calZ}{\ensuremath{\mathcal{Z}}}
+
+\newcommand{\defaulttable}[3]{
+\begin{tabular}{#1}
+\toprule
+#2\\\midrule
+#3\\\bottomrule
+\end{tabular}}

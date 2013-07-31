@@ -20,7 +20,9 @@ Nu we de structuur van een ge\"integreerd circuit hebben voorgesteld, zullen we 
 \section{Analoge componenten}
 Naast ge\"integreerde circuits zal men in de praktijk in een digitale schakeling ook analoge componenten aantreffen: weerstanden, condensatoren, transistoren en in mindere mate spoelen. In deze sectie geven we een kort overzicht.
 \subsection{Weerstanden}
-Een weerstand is een component die de spanning en stroomsterkte tussen componenten kan verlagen.
+%Een weerstand is een component die de spanning en stroomsterkte tussen componenten kan verlagen.
+\subsubsection{Kleurcode}
+Op de meeste weerstanden wordt de weerstand niet in cijfers weergegeven, maar volgens een kleurencode.
 \section{Bouw van een elektronische schakeling}
 \subsection{Matrixbord}
 \subsection{Europrintplaat}
@@ -60,6 +62,7 @@ De frequentie van het kloksignaal is bijgevolg gelijk aan:
 \begin{equation}
 f=\displaystyle\frac{1}{2\Delta t}=\displaystyle\frac{1}{2\cdot\fun{\ln}{2}\cdot R_1\cdot C_1}=\displaystyle\frac{1}{\fun{\ln}{4}\cdot R_1\cdot C_1}\approx\displaystyle\frac{0.72134752}{R_1\cdot C_1}
 \end{equation}
+Meer informatie over de implementatie, de werking en concrete oscillator-schakelingen is te vinden in \cite{ne555}.
 \subsubsection{556-timer}
 Tot slot introduceren we ook nog een andere populaire ge\"integreerde schakeling: de $556$-timer. Dit component is eigenlijk niets anders dan twee $555$-timers in \'e\'en chip. Het voordeel van dergelijke chips is dat bepaalde in- en uitgangen gedeeld kunnen worden. In het geval van de $556$-timer is dat het geval voor de power pin en ground pin.
 \subsection{Kristal-oscillator}
