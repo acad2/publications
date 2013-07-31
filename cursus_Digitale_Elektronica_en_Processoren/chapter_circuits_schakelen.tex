@@ -23,10 +23,27 @@ Naast ge\"integreerde circuits zal men in de praktijk in een digitale schakeling
 %Een weerstand is een component die de spanning en stroomsterkte tussen componenten kan verlagen.
 \subsubsection{Kleurcode}
 Op de meeste weerstanden wordt de weerstand niet in cijfers weergegeven, maar volgens een kleurencode.
+\subsection{Transistoren}
+\subsection{Condensatoren}
+\subsection{Spoelen}
+\subsection{Diodes}
 \section{Bouw van een elektronische schakeling}
 \subsection{Matrixbord}
 \subsection{Europrintplaat}
 \subsection{Printed Circuit Board (PCB)}
+Wanneer men een schakeling heeft ontwikkeld die men wil realiseren in een klein formaat gebruikt men meestal een ``Printed Circuit Board (PCB)'' of ``printplaat''. Een printplaat is een op maat gemaakte plaat waarbij de verbindingen gerealiseerd worden door een koperen laag aan de ene kant van deze plaat. De componenten worden op deze plaat bevestigt door openingen in de plaat. De componenten worden aan de andere kant bevestigd waarbij de verbindingen door de openingen op het koper worden bevestigd.
+\paragraph{}
+Men kan printplaten op twee manieren bekomen: ze bestellen bij een bedrijf die hierin gespecialiseerd is of ze zelf maken. Bij beide dient men eerst de printplaat te ontwerpen.
+\subsubsection{Ontwerp}
+Het ontwerp van een printplaat is een proces waarin men bepaald hoe de koper-laag er zal uitzien samen met de locaties van de openingen.
+\subsubsection{Productieproces}
+In deze subsubsectie zullen we het productieproces om zelf printplaten te maken bondig beschrijven. Meer informatie over dit proces is te vinden in \cite{fabricatingprintedcircuitboards}.
+\paragraph{}
+Het proces bestaat grofweg uit vier fases: ``blootstelling'', ``etsen'', ``tin betegeling'' en ``boren''\cite[p. 69]{fabricatingprintedcircuitboards}. In de volgende paragrafen zullen we de fases bespreken.
+\paragraph{Blootstelling}
+\paragraph{Etsen}
+\paragraph{Tin betegeling}
+\paragraph{Boren}
 \subsection{Plaatsen van componenten}
 \subsection{Tips bij het solderen}
 \section{Implementatie van een kloksignaal}
@@ -64,7 +81,7 @@ f=\displaystyle\frac{1}{2\Delta t}=\displaystyle\frac{1}{2\cdot\fun{\ln}{2}\cdot
 \end{equation}
 Meer informatie over de implementatie, de werking en concrete oscillator-schakelingen is te vinden in \cite{ne555}.
 \subsubsection{556-timer}
-Tot slot introduceren we ook nog een andere populaire ge\"integreerde schakeling: de $556$-timer. Dit component is eigenlijk niets anders dan twee $555$-timers in \'e\'en chip. Het voordeel van dergelijke chips is dat bepaalde in- en uitgangen gedeeld kunnen worden. In het geval van de $556$-timer is dat het geval voor de power pin en ground pin.
+Tot slot introduceren we ook nog een andere populaire ge\"integreerde schakeling: de $556$-timer. Deze ge\"integreerde schakeling is eigenlijk niets anders dan twee $555$-timers in \'e\'en chip. Het voordeel van dergelijke chips is dat bepaalde in- en uitgangen gedeeld kunnen worden. In het geval van de $556$-timer is dat het geval voor de power pin en ground pin.
 \subsection{Kristal-oscillator}
 Een nadeel van de $555$-timer is dat de periodieke functie meestal niet nauwkeurig wordt aangelegd. Componenten op basis van transistoren en weerstanden zijn bijvoorbeeld onderhevig aan de temperatuur. Indien men dus een kloksignaal met een zekere frequentie aanlegt kan men fluctuaties op die frequentie verwachten. Zolang de frequentie laag is, levert dit weinig problemen op: de componenten rekenen immers zo snel dat de data lang op de ingangen van de registers staat alvorens ze worden ingeladen. Wanneer men echter een processor implementeert, wil men een hoge kloksnelheid die zo weinig mogelijk tijd de data onbenut laat. Ook bij hoge frequenties blijft er echter sprake van ruis. In dat geval kan de ruis het verschil maken tussen de correcte data die aan de ingang van een register staat, of oude of tijdelijke data.
 \paragraph{}
