@@ -1,0 +1,16 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (TOP) at (0,2);
+\coordinate (BOT) at (0,-2);
+\node[triplefive] (F) at (0,0) {555};
+\coordinate (FG) at (F.pin1 |- BOT);
+\coordinate (FC) at (F.pin5 |- BOT);
+\draw (F.pin1) -- (FG) -- (FC) -- (F.pin5);
+\draw (F.pin4) -- ++(0,0.5);
+\draw (F.pin8) -- ++(0,0.5);
+\draw (F.pin3) -- ++(0.5,0);
+\draw (F.pin2) -- ++(-0.5,0);
+\draw (F.pin6) -- ++(-0.5,0);
+\draw (F.pin7) -- ++(-0.5,0);
+\pdot{FG}
+\pdot{FC}
+\end{tikzpicture}
