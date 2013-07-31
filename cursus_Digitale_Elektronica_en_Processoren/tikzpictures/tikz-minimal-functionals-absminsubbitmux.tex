@@ -3,6 +3,7 @@
 \coordinate (RIG) at (1.5,0);
 \coordinate (LEF) at (-2,0);
 \coordinate (IA) at (0,5);
+\coordinate (MNL) at (0,4.5);
 \coordinate (IMA) at (0,3.25);
 \coordinate (MID) at (0,0.5);
 \coordinate (MAL) at (0,0);
@@ -12,7 +13,7 @@
 \coordinate (MFL) at (0,2.25);
 \coordinate (GAL) at (0,3);
 \coordinate (MGL) at (0,3.5);
-\coordinate (MIL) at (0,4);
+\coordinate (MIL) at (0,4.25);
 \coordinate (SIL) at (0,3.75);
 \coordinate (AAC) at (-1.5,0);
 \coordinate (RIC) at (1.25,0);
@@ -32,13 +33,20 @@
 \draw (N.output) -- (N.output |- MFL) -| (HA.x);
 \node[and gate,rotate=-90] (A) at ($(HA.west |- GAL)$) {};
 \draw (A.output) -- (A.output |- MFL) -| (HA.y);
-\draw (IA -| N.input) node[anchor=south]{$b_i$} -- (N.input);
+\node[mux2to1] (MN) at (N.input |- SIL) {};
+\setIndexLabelsMuxB{MN};
+\draw (IA -| MN.data1) node[anchor=south]{$b_i$} -- (MN.data1);
 \draw (IA -| A.input 1) node[anchor=south]{$a_i$} -- (A.input 1);
 \draw (A.input 1 |- MIL) -| (MML -| RIC) -| (M.data0);
-\draw (N.input |- SIL) -| (MUL -| RJC) -| (M.data1);
-\draw (A.input 2) |- (LEF |- SIL) node[anchor=east]{Add'};
+\draw (MN.data1 |- MNL) -| (MUL -| RJC) -| (M.data1);
+\draw (A.input 2) |- (LEF |- SIL) node[anchor=east]{Abs'};
 \draw (M.data2) |- (HA.s |- MML);
+\draw (MN.output) -- (N.input);
+\draw (MN.selin0) -- (A.input 2 |- SIL);
+\draw (MN.data0 |- MIL) -- (MN.data0);
 \pdot{HA.s |- MML}
 \pdot{A.input 1 |- MIL}
-\pdot{N.input |- SIL}
+\pdot{MN.data0 |- MIL}
+\pdot{MN.data1 |- MNL}
+\pdot{A.input 2 |- SIL}
 \end{tikzpicture}
