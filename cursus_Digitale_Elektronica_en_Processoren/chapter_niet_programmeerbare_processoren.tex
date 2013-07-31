@@ -2000,6 +2000,14 @@ Bij het berekenen van de absolute waarde maken we een keuze tussen het ingevoerd
 \importtikzsubfigure{minimal-functionals-absminsubbitmux}{Met multiplexer.}
 \caption{De implementatie van $\mbox{abs\&min\&sub}$ per bit.}
 \end{figure}
+\tblref{minimal-functionals-absminsubbitmux} ten slotte, toont de logica bij de selectie-ingangen van de multiplexer. We beschouwen een verschil-bewerking wanneer zowel \mbox{Abs} en \mbox{Min} allebei op $0$ staan.
+\importtabulartable{minimal-functionals-absminsubbitmux}{Multiplexer selectie-ingangen bij $\mbox{abs\&min\&sub}$.}
+\paragraph{}
+De kostprijs per bit van dit samengesteld component is $62$ transistoren: $36$ van de full adder, $6$ van de AND-poort, $2$ voor de NOT-poort en $18$ voor de multiplexer. Er zijn twee verschillende combinaties van functionele eenheden die we kunnen samenstellen met deze samengestelde functionele eenheid:
+\begin{equation}
+\accl{\accl{\mbox{abs1},\mbox{min},-},\accl{\mbox{abs2},\mbox{min},-}}
+\end{equation}
+Indien we \mbox{abs1} betrekken in de combinatie, ontstaat er echter een probleem met de ingangen. De aftrekker berekent immers het verschil tussen de waarde in registers $t_1$ en $t_2$. Omdat een verschil operator niet commutatief is, mogen we dus de volgorde van de ingangen niet kiezen. \mbox{abs1} berekent echter de absolute waarde van $t_1$. Hierdoor moet $t_1$ op de tweede ingang worden aangelegd. Het gevolg is dus dat we een multiplexer moeten introduceren zoals op \figref{minimal-functionals-absminsubbitmux}. Dit drijft de kostprijs op naar $74$ transistors per bit. De originele kostprijs van de afzonderlijke functionele eenheden is $102$ transistoren: $32$ voor de absolute waarde, $32$ voor de minimum en $38$ voor het verschil. De winst is dus $40$ transistoren per bit voor een combinatie met \mbox{abs1} en $28$ transistoren per bit voor een combinatie met \mbox{abs2}.
 \paragraph{Combinaties met schuif-operaties over een vast aantal bits}In de processor komen ook twee schuif-bewerkingen voor: $\mbox{shr 1}$ en $\mbox{shr 3}$. Kunnen we deze operaties niet combineren met andere functionele eenheden? Vermits een schuif-bewerking over een vast aantal bits\footnote{Merk op dat dit niet geldt voor een schuif-operatie over een variabel aantal bits, hiervoor wordt een schuifoperator gebruikt (zie \sscrefpag{shiftoperators}).} wordt ge\"implementeerd met behulp van bekabeling, worden er geen transistoren gebruikt. Het combineren met enig ander component zal bijgevolg nooit winst opleveren (het combineren zal immers altijd nieuwe logica introduceren, tenzij de originele bewerkingen niet optimaal werden ge\"implementeerd).
 \paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we alle mogelijke combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst in transistors per bit.
 \begin{figure}[hbt]
