@@ -31,6 +31,11 @@
 \figlab{#1}
 }
 
+\newcommand{\importabular}[1]{
+\input{tables/tbl-#1.tex}
+\tbllab{#1}
+}
+
 \newcommand{\importtikzfigure}[2]{
 \begin{figure}[htb]
 \centering
@@ -39,9 +44,11 @@
 \figlab{#1}
 \end{figure}
 }
+
 \newcommand{\importtikzsubfigure}[2]{
 \subfigure[#2]{\importtikz{#1}}
 }
+
 \newcommand{\importtabulartable}[2]{
 \begin{table}[htb]
 \centering
@@ -49,6 +56,10 @@
 \caption{#2}
 \tbllab{#1}
 \end{table}
+}
+
+\newcommand{\importtabularsubtable}[2]{
+\subtable[#2]{\importabular{#1}}
 }
 
 \newcommand{\importalgorithmicalgorithm}[2]{
