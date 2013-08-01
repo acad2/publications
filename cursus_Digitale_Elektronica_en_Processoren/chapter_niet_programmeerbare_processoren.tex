@@ -2042,7 +2042,37 @@ Indien we \mbox{abs1} betrekken in de combinatie, ontstaat er echter een problee
 \end{figure}
 \paragraph{Optimaliseren van een meervoudige compatibiliteitsgraaf}
 Bij de compatibiliteitsgraaf hebben we de max-cut methode gebruikt om tot een goed resultaat te komen. Dit algoritme is echter minder geschikt voor compatibiliteitsgrafes met prioriteitsranden met drie of meer knopen. Het algoritme werkt minder goed vanaf het moment dat de winst op een prioriteitsrand voor drie of meer knopen verschilt van de som van de winsten van prioriteitsranden tussen twee van de knopen. Daarom zullen we gebruik maken van een gretig\footnote{Engels: greedy.} algoritme. We zoeken de prioriteitrand met de meeste winst. Alle betrokken knopen worden vervolgens in een aparte partitie ondergebracht. De knopen samen met prioriteitsranden die betrokken zijn in minstens \'e\'en van de knopen worden vervolgens uit de grafe verwijdert waarna we het proces herhalen.
+\paragraph{}
 \importalgorithmicalgorithm{compatibilitygraph-multiple}{Het bepalen van sterke samengestelde functionele eenheden.}
+\algoref{compatibilitygraph-multiple} formaliseert het principe. In het algoritme beschouwen we $V$ de verzameling van oorspronkelijke bewerkingen. In het geval van het leidend voorbeeld is $V$ dus:
+\begin{equation}
+V_0=\accl{\mbox{abs1},\mbox{abs2},\mbox{min},\mbox{max1},\mbox{max2},-,+,\mbox{shr1},\mbox{shr3}}
+\end{equation}
+$E$ is de verzameling van prioriteitsranden. We stellen een element $e\in E$ voor als een verzameling knopen $e\subseteq V$. Bijgevolg is $E\subseteq\powset{V}$. $l:E\rightarrow\NNN$ ten slotte is een functie die de prioriteitsranden afbeeldt op een geheel getal die de winst\footnote{De winst drukt men niet noodzakelijk uit in transistoren per bit: in het geval van een ontwerp op een FPGA zal men bijvoorbeeld het aantal logische blokken nemen.} voorstelt. In het leidend voorbeeld zijn $E$ en de functie $l$ dus:
+\begin{equation}
+E_0:l=\acclarray{\accl{\mbox{abs1},\mbox{min}}:2,\accl{\mbox{abs1},\mbox{min},-}:28,\accl{\mbox{abs2},\mbox{max1},\mbox{max2},-,+}:92
+\\\accl{\mbox{abs2},\mbox{max1},\mbox{max2}}:34,\accl{\mbox{abs2},\mbox{max1},\mbox{max2},+}:54,\accl{\mbox{min},-}:14
+\\\accl{\mbox{max1},\mbox{max2}}:32,\accl{\mbox{max1},\mbox{max2},+}:22,\accl{-,+}:14}
+\end{equation}
+Met $X:f$ de set $X'$ waarbij elk element $x\in X$ verreikt is met de waarde $\fun{f}{x}$. Het element met de hoogste waarde in $E_0$ is $\accl{\mbox{abs2},\mbox{max1},\mbox{max2},-,+}$ met $92$ transistoren winst per bit. We nemen bijgevolg deze prioriteitsrand en voegen deze toe aan de partitie-verzameling:
+\begin{equation}
+\calP_1=\accl{\accl{\mbox{abs2},\mbox{max1},\mbox{max2},-,+}}
+\end{equation}
+We verwijderen vervolgens de knopen uit $V$ en de interfererende prioriteitsranden uit $E$:
+\begin{eqnarray}
+V_1&=&\accl{\mbox{abs1},\mbox{min},\mbox{shr1},\mbox{shr3}}\\
+E_1:l&=&\accl{\accl{\mbox{abs1},\mbox{min}}:2}
+\end{eqnarray}
+Er blijft nog \'e\'en prioriteitsrand over die we bijgevolg selecteren. We voegen deze toe aan de partitie en verwijderen de relevante knopen en bogen:
+\begin{eqnarray}
+\calP_2&=&\accl{\accl{\mbox{abs2},\mbox{max1},\mbox{max2},-,+},\accl{\mbox{abs1},\mbox{min}}}\\
+V_2&=&\accl{\mbox{shr1},\mbox{shr3}}\\
+E_2:l&=&\emptyset
+\end{eqnarray}
+We merken dat de verzameling met prioriteitsranden $E_2$ leeg is. We voegen de resterende knopen bijgevolg als enkelvoudige partities toe:
+\begin{equation}
+\calP_3=\accl{\accl{\mbox{abs2},\mbox{max1},\mbox{max2},-,+},\accl{\mbox{abs1},\mbox{min}},\accl{\mbox{shr1}},\accl{\mbox{shr3}}}
+\end{equation}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
 \subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}
