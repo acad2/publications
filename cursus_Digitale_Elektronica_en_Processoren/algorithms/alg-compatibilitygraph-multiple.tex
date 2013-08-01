@@ -1,0 +1,15 @@
+\begin{algorithmic}[1]
+\Procedure{CalculatePartition}{$V,E$}\Comment{Berekenen van een sterke partitie}
+\State $\mathcal{P}\gets\emptyset$\Comment{Initi\"ele partitionering gebaseerd op uitvoer.}
+\While{$V\neq\emptyset\wedge E\neq\emptyset$}\Comment{Er zijn nog knopen en bogen over over}
+\State $e^{\star}\gets\argmax_{e\in E}\ \fun{l}{e}$\Comment{Bereken de prioriteitsrand met de grootste winst.}
+\State $V\gets V\setminus e^{\star}$\Comment{Verwijder de knopen die betrokken zijn met $e^{\star}$.}
+\State $E\gets E\setminus\accl{e|e\in E\wedge e\cap V\neq e}$\Comment{Verwijder de prioriteitsranden met knopen buiten $V$.}
+\State $\calP\gets\calP\cup e^{\star}$\Comment{Voeg de knopen toe als partities.}
+\EndWhile
+\For{$v\in V$}\Comment{Er zijn nog knopen over, maar geen bogen}
+\State $\calP\gets\calP\cup\accl{v}$\Comment{Voeg de knoop toe als enkelvoudige partitie.}
+\EndFor
+\State \textbf{return} $\mathcal{P}$\Comment{De uiteindelijke partitie.}
+\EndProcedure
+\end{algorithmic}
