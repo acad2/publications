@@ -1,3 +1,5 @@
+data  i [o]
+
 enrich :: [x] -> (x -> y) -> [(x,y)]
 enrich [] _ = []
 enrich (x:xs) f = ((x,f x) : enrich xs f)

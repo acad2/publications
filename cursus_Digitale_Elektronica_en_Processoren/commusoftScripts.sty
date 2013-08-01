@@ -496,6 +496,8 @@
 } -- cycle
 }
 
+\newcommand{\argmax}{\mbox{argmax}}
+
 \newcommand{\genrefs}[3]{
 \setcounter{tmpD}{0}\setcounter{tmpE}{0}\foreach \x in {#3} {\addtocounter{tmpD}{1}}#2\foreach \x in {#3} {\ifthenelse{\value{tmpD}>1}{\ifthenelse{\value{tmpE}>1}{, \ref{#1:\x}}{ \ref{#1:\x}}}{ en \ref{#1:\x}}\addtocounter{tmpD}{-1}\addtocounter{tmpE}{1}}}
 \newcommand{\figrefs}[1]{\genrefs{fig}{Figuren}{#1}}
@@ -580,4 +582,22 @@
   }
 }
 
-\newcommand{\argmax}{\mbox{argmax}}
+\newenvironment{compatibilitygraph}[6][auto,node distance=3cm]{\begin{tikzpicture}[#1]
+\foreach \n/\t/\p/\o in {#2} {
+\node[compatibilitynode,\o] (\n) at (\p) {\t};
+}
+\foreach \a/\b/\o in {#3} {
+  \path [compatiblityincompatible] (\a) edge [\o] (\b);
+}
+\foreach \a/\b/\t/\o in {#4} {
+  \path [compatibilitypriority] (\a) edge [\o] node[sloped,above,midway] {\t} (\b);
+}
+\foreach \n/\c/\t/\o in {#5} {
+  \coordinate (group-\n) at (\c);
+  \pdot{\c};
+  \draw (\c) node[anchor=north,\o] {\t};
+}
+\foreach \n/\p/\o in {#6} {
+  \path [compatibilitypriority] (group-\n) edge [\o] (\p);
+}}
+{\end{tikzpicture}}

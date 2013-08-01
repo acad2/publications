@@ -2010,31 +2010,17 @@ Indien we \mbox{abs1} betrekken in de combinatie, ontstaat er echter een problee
 \paragraph{Uiteindelijk compatibiliteitsgrafe} Nu we een groot aantal combinaties hebben uitgeprobeerd bekomen we de compatibiliteitsgrafe of \figref{compatibilitygraph-functionals-final}. Op de prioriteitsranden staat de winst in transistors per bit.
 \begin{figure}[hbt]
 \centering
-\begin{tikzpicture}[auto,node distance=3cm]
-\node[compatibilitynode] (f1) {abs1};
-\node[compatibilitynode,below of=f1] (f2) {abs2};
-\node[compatibilitynode,right of=f1] (f3) {min};
-\node[compatibilitynode,below of=f3] (f4) {max1};
-\node[compatibilitynode,right of=f4] (f5) {max2};
-\node[compatibilitynode,right of=f5] (f6) {+};
-\node[compatibilitynode,above of=f6] (f7) {-};
-\node[compatibilitynode,right of=f7] (f8) {shr 3};
-\node[compatibilitynode,right of=f6] (f9) {shr 1};
-\foreach \a/\b/\o in {f1/f2/,f3/f4/,f8/f9/} {
-  \path [thick,dashed] (\a) edge [\o] (\b);
-}
-\foreach \a/\b/\t/\o in {f1/f3/2/,f3/f7/14/,f7/f6/14/,f4/f5/32/} {
-  \path [thick] (\a) edge [\o] node[sloped,above,midway] {\t} (\b);
-}
-\foreach \n/\c/\t/\o in {A/{4.5,-1.5}/92/,B/{4.5,1}/28/,C/{3,-4}/34/,D/{6,-4}/22/,E/{4.5,-5}/54/} {
-  \coordinate (group-\n) at (\c);
-  \pdot{\c};
-  \draw (\c) node[anchor=north,\o] {\t};
-}
-\foreach \n/\p/\o in {A/f2/bend right,A/f4/bend right,A/f5/bend left,A/f6/bend left,A/f7/,B/f1/bend right,B/f3/,B/f7/bend left,C/f2/bend left,C/f4/,C/f5/bend right,D/f4/bend left,D/f5/,D/f6/bend right,E/f2/bend left,E/f4/,E/f5/,E/f6/bend right} {
-  \path [thick] (group-\n) edge [\o] (\p);
-}
-\end{tikzpicture}
+\begin{compatibilitygraph}{f1/abs1/,f2/abs2/{below of=f1},f3/min/{right of=f1},f4/max1/below of=f3,f5/max2/right of=f4,f6/+/right of=f5,f7/-/above of=f6,f8/shr 3/right of=f7,f9/shr 1/right of=f6}{f1/f2/,f3/f4/,f8/f9/}{f1/f3/2/,f3/f7/14/,f7/f6/14/,f4/f5/32/}{A/{4.5,-1.5}/92/,B/{4.5,1}/28/,C/{3,-4}/34/,D/{6,-4}/22/,E/{4.5,-5}/54/}{A/f2/bend right,A/f4/bend right,A/f5/bend left,A/f6/bend left,A/f7/,B/f1/bend right,B/f3/,B/f7/bend left,C/f2/bend left,C/f4/,C/f5/bend right,D/f4/bend left,D/f5/,D/f6/bend right,E/f2/bend left,E/f4/,E/f5/,E/f6/bend right}
+%\node[compatibilitynode] (f1) {abs1};
+%\node[compatibilitynode,below of=f1] (f2) {abs2};
+%\node[compatibilitynode,] (f3) {min};
+%\node[compatibilitynode,below of=f3] (f4) {max1};
+%\node[compatibilitynode,right of=f4] (f5) {max2};
+%\node[compatibilitynode,right of=f5] (f6) {+};
+%\node[compatibilitynode,above of=f6] (f7) {-};
+%\node[compatibilitynode,right of=f7] (f8) {shr 3};
+%\node[compatibilitynode,right of=f6] (f9) {shr 1};
+\end{compatibilitygraph}
 \caption{De uiteindelijke compatibiliteitsgrafe bij het samenvoegen van bewerkingen.}
 \figlab{compatibilitygraph-functionals-final}
 \end{figure}
