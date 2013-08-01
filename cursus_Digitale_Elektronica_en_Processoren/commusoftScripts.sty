@@ -397,6 +397,7 @@
     \coordinate (B\x) at (\frx,-0.5*\ax-\lns-\lns*\arabic{tmpC});
     \coordinate (RR\x-0) at (R\x.D);
     \draw[thick] (B\x) -- (B\x -| \tox,0);
+    \draw[thick] (\tox-\cx-\dx*\arabic{tmpF}+\dx,0 |- B\x) -- (B\x);
     \draw[thick] (R\x.Q) -- (R\x.Q |- B\x);
     \pdot{R\x.Q |- B\x};
     \ifthenelse{\isodd{\cc}}{\sprarr{R\x.LDB}}{}
@@ -427,7 +428,7 @@
     \coordinate (TB\x) at (T\x |- BF);
     \coordinate (TT\x) at ($(TB\x)+(0,\ay)$);
     \draw[thick] ($(T\x)+(-0.5*\cx,0.5*\ay)$) rectangle ++(\cx,-\ay);
-    \draw (T\x) node[scale=0.85] {\begin{varwidth}{1.41cm}\begin{center}\y\end{center}\end{varwidth}};
+    \draw (T\x) node[scale=0.85] {\begin{varwidth}{3.0 cm}\begin{center}\y\end{center}\end{varwidth}};
     \draw[->] (TB\x) -- ++(0,-0.375) node[anchor=north]{\underline{\Alph{tmpC}}};
     \addtocounter{tmpC}{1}
   }
@@ -440,6 +441,7 @@
 \newcommand{\sprbtc}[2]{\coordinate (TMP) at (B#1 -| #2);\pdot{TMP};\draw[thick] (TMP) -- (TMP |- #2);}
 \newcommand{\spcort}[3]{\coordinate (#1) at ($(TT#2)+(#3,0)$);}
 \newcommand{\spfutr}[3]{\draw[thick] (FUR#1) -| (RR#2-#3);}
+\newcommand{\spfutrbridge}[5]{\draw[thick] (FUR#1 -| RR#2-#3) -| (RR#4-#5);\pdot{FUR#1 -| RR#2-#3}}
 \newcommand{\succst}[1]{\ensuremath{\mbox{succ}\left[#1\right]}}
 \newcommand{\usestt}[1]{\ensuremath{\mbox{use}\left[#1\right]}}
 \newcommand{\defstt}[1]{\ensuremath{\mbox{def}\left[#1\right]}}

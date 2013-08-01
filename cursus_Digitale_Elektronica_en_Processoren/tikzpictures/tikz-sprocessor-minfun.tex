@@ -1,0 +1,15 @@
+\begin{sprocessor}[1/3/2.8/3.4/0.25/0.8]{t1/{$t_1$}/1/3,t2/{$t_2$}/1/3,t6/{$t_6$}/1/2}{abs1/$\mbox{abs\&min}$,abs2/$\mbox{abs\&max\&+\&-}$,shr3/$\shrcmd3$,shr1/$\shrcmd1$}{}
+\sprbtf{t1}{abs1}{-0.3};
+\sprbtf{t2}{abs1}{0.3};
+\sprbtf{t1}{abs2}{-0.5};
+\sprbtf{t2}{abs2}{0.5};
+\sprbtf{t6}{abs2}{0};
+\sprbtf{t1}{shr3}{0};
+\sprbtf{t6}{shr1}{0};
+\spfutr{abs1}{t6}{1};
+\spfutrbridge{abs1}{t6}{1}{t1}{1};
+\spfutr{abs2}{t2}{1};
+\spfutrbridge{abs2}{t2}{1}{t1}{0};
+\spfutr{shr3}{t2}{0};
+\spfutr{shr1}{t6}{0};
+\end{sprocessor}%1.25/4.6/1.3/1.4/0.25/0.8

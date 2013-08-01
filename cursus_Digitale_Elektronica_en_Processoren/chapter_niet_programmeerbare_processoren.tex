@@ -1814,8 +1814,6 @@ Vervolgens beginnen we met toevoegen. De eerste boog die aan de voorwaarden vold
 \paragraph{Minimalisering}
 \begin{figure}[hbt]
 \centering
-%\begin{sprocessor}[0.75/1.25/1.3/1.4/0.25/0.8]{t1/$t_1$/1/1,t2/$t_2$/1/1,t3/$t_3$/1/1,t4/$t_4$/1/1,t5/$t_5$/1/1,t6/$t_6$/1/1,t7/$t_7$/1/1,t8/$t_8$/1/1, t9/$t_9$/1/1,t10/$t_{10}$/1/1,t11/$t_{11}$/1/1}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
-%\begin{sprocessor}[2.75/4.6/1.3/1.4/0.25/0.8]{t1/{$t_1,t_3,t_5,t_{11}$}/1/1,t2/{$t_2,t_4,t_7,t_9,t{10}$}/1/1,t6/{$t_6,t_8$}/1/1}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
 \begin{sprocessor}[1.25/4.6/1.3/1.4/0.25/0.8]{t1/{$t_1$}/1/4,t2/{$t_2$}/1/5,t6/{$t_6$}/1/2}{abs1/$\abs$,abs2/$\abs$,max1/$\max$,min/$\min$,shr3/$\shrcmd3$,shr1/$\shrcmd1$,sub/$-$,add/$+$,max2/$\max$}{}
 \sprbtf{t1}{abs1}{0};
 \sprbtf{t2}{abs2}{-0.2};
@@ -2073,7 +2071,10 @@ We merken dat de verzameling met prioriteitsranden $E_2$ leeg is. We voegen de r
 \begin{equation}
 \calP_3=\accl{\accl{\mbox{abs2},\mbox{max1},\mbox{max2},-,+},\accl{\mbox{abs1},\mbox{min}},\accl{\mbox{shr1}},\accl{\mbox{shr3}}}
 \end{equation}
+Nu we deze partitionering hebben gerealiseerd, kunnen we een nieuwe processor implementeren. \figref{sprocessor-minfun} toont de realisatie na het minimaliseren van de functionele eenheden.
+\importtikzfigure{sprocessor-minfun}{Implementatie van het datapad na optimalisatie van de bewerkingen.}
 \subsubsection{Verbindingen samenvoegen (``bus sharing'')}
+Niet alleen transistoren bepalen de kostprijs in een processor. Ook de bedrading vormt een niet te onderschatten kost. Doorgaans bevatten registers echter een groot aantal bits: $16$, $32$ of $64$ bits vormen geen uitzondering. Wanneer we dus een groot aantal verbindingen moeten leggen tussen de registers en de functionele eenheden 
 \subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}
 \label{ss:syntheseFSMDOptimal}
