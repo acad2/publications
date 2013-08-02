@@ -1439,14 +1439,14 @@ Figuur \ref{fig:asmSqrt} toont een ASM-schema die deze vierkantswortel kan uitre
 \end{pgfonlayer}
 \end{tikzpicture}
 \caption{ASM-schema van het vierkantswortel-benaderingsalgoritme.}
-\label{fig:asmSqrt}
+\figlab{asmSqrt}
 \end{figure}
 Indien we dit ASM-schema op de eerder genoemde wijze zouden implementeren zouden we volgende componenten nodig hebben:
 \begin{itemize}
  \item 11 registers (van een arbitrair aantal bits).
  \item 2 absolute waarde functionele eenheden.
  \item 2 maximum functionele eenheden.
- \item 1 minumum functionele eenheid.
+ \item 1 minimum functionele eenheid.
  \item 1 opteller functionele eenheden.
  \item 1 aftrekker functionele eenheid.
  \item 1 shift 3 posities naar rechts functionele eenheid.
@@ -2050,19 +2050,23 @@ Niet alleen transistoren bepalen de kostprijs in een processor. Ook de bedrading
 \figref{minimal-bus-merge} illustreert dit principe: ??. In dit opzicht is het soms zelfs mogelijk om van deze operatie een neutrale operatie te maken.
 \paragraph{Compatibiliteitsgrafe}Net als de twee vorige optimalisaties zullen we opnieuw gebruik maken van een compatibiliteitsgrafe. In deze compatibiliteitsgrafe zijn de knopen logischerwijs de verbindingen. Een eerste probleem is dat er twee soorten verbindingen zijn: \termen{operanden} (van registers naar functionele eenheden) en \termen{resultaten} (van functionele eenheden naar registers). Omdat de twee soorten verbindingen geen effect op elkaar hebben, worden ze apart geoptimaliseerd. We zullen dus twee compatibiliteitsgrafes aanmaken. Twee verbindingen zijn incompatibel wanneer ze in dezelfde toestand actief\footnote{Een verbinding wordt uiteraard altijd gebruikt en zal altijd een signaal overbrengen. Met actief bedoelen we dat het resultaat ook effectief zal gebruikt worden. Bij bijvoorbeeld de resultaten betekent dit dat de data in de registers zal worden geladen.} gebruikt worden en gegevens van een verschillende aansturing dragen. Met aansturing bedoelen we een register bij een operand en een functionele eenheid bij een resultaat. Tot slot dienen we ook de prioriteitsranden te introduceren. Er is een voorkeur om twee verbindingen te gebruiken wanneer ze de aansturing delen (en dus tri-state buffers besparen) of eenzelfde gebruiker\footnote{Een gebruiker is een functionele eenheid in het geval van een operand en een register in het geval van een resultaat.} hebben (en dus multiplexers besparen).
 \paragraph{}
-Om een compatibiliteitsgrafe op te stellen, zullen we twee nieuwe tabellen introduceren: een \termen{operand-tabel} en een \termen{resultaten-tabel}. Deze tabellen bevatten in de verticale dimensie de verbindingen van het specifieke type (operanden of resultaten) en in de horizontale dimensie de verschillende toestanden die het algoritme doorloopt. Een cel wordt gemarkeerd wanneer in de gegeven toestand de verbinding actief gebruikt wordt.
+Om een compatibiliteitsgrafe op te stellen, zullen we twee nieuwe tabellen introduceren: een \termen{operand-tabel} en een \termen{resultaten-tabel}. Deze tabellen bevatten in de verticale dimensie de verbindingen van het specifieke type (operanden of resultaten) en in de horizontale dimensie de verschillende toestanden die het algoritme doorloopt. Een cel wordt gemarkeerd wanneer in de gegeven toestand de verbinding actief gebruikt wordt. We zullen dit doen op basis van het algoritme op \figrefpag{asmSqrt} en de verbindingen op \figref{sprocessor-minfun}.
+\paragraph{}
 \begin{table}[hbt]
 \centering
 \importtabularsubtable{minimal-bus-operand}{Operand-tabel.}
 \importtabularsubtable{minimal-bus-result}{Resultaten-tabel.}
 \caption{Operand- en resultaten-tabel van het leidend voorbeeld.}
 \end{table}
+In toestand $S_0$ wordt de data ingelezen in de registers $t_1$ en $t_2$. Bijgevolg gebruiken we $2$ verbindingen: $r_1:\mbox{In1}\rightarrow t_1$ en $r_4:\mbox{In2}\rightarrow t_2$. We markeren dan ook deze cellen in \tblref{minimal-bus-result}. In toestand $S_2$ wordt de absolute waarde van beide registers berekend en wordt het resultaat opnieuw in de registers opgeslagen. Hiervoor wordt de data van registers $t_1$ en $t_2$ respectievelijk naar \mbox{FU1} en \mbox{FU2} geleid. Bijgevolg zijn de verbindingen $o_2:t_1\rightarrow\mbox{FU1}.1$ en $o_6:t_2\rightarrow\mbox{FU2}.2$ actief. Omdat het resultaat ook terug in de registers moet worden geladen, zijn ook resultaten-verbindingen actief: $r_2:\mbox{FU1}\rightarrow t_1$ en $r_5:\mbox{FU2}\rightarrow t_2$. Analoog berekenen we de actieve verbindingen van de andere verbindingen en bekomen de waarden in \tblrefs{compatibilitygraph-connections-a,compatibilitygraph-connections-b}.
+\paragraph{}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{compatibilitygraph-connections-a}{Operanden (registers naar functionele eenheden).}
 \importtikzsubfigure{compatibilitygraph-connections-b}{Resultaten (functionele eenheden naar registers).}
 \caption{De compatibiliteitsgrafes bij het samenvoegen van verbindingen.}
 \end{figure}
+Op basis van de opgestelde tabellen kunnen we de compatibiliteitsgrafes opstellen.
 \subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}
 \label{ss:syntheseFSMDOptimal}

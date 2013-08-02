@@ -501,6 +501,7 @@
 \newcommand{\genrefs}[3]{
 \setcounter{tmpD}{0}\setcounter{tmpE}{0}\foreach \x in {#3} {\addtocounter{tmpD}{1}}#2\foreach \x in {#3} {\ifthenelse{\value{tmpD}>1}{\ifthenelse{\value{tmpE}>1}{, \ref{#1:\x}}{ \ref{#1:\x}}}{ en \ref{#1:\x}}\addtocounter{tmpD}{-1}\addtocounter{tmpE}{1}}}
 \newcommand{\figrefs}[1]{\genrefs{fig}{Figuren}{#1}}
+\newcommand{\tblrefs}[1]{\genrefs{tbl}{Tabellen}{#1}}
 %\newcommand{\algref}[1]{\genref{alg}{Algoritme}{#1}}
 
 \newcommand{\funode}[4][]{\node[draw,rectangle,thick,scale=0.85,#1] (#2) at (#3) {\begin{varwidth}{3cm}\begin{center}#4\end{center}\end{varwidth}};}
