@@ -2066,7 +2066,16 @@ In toestand $S_0$ wordt de data ingelezen in de registers $t_1$ en $t_2$. Bijgev
 \importtikzsubfigure{compatibilitygraph-connections-b}{Resultaten (functionele eenheden naar registers).}
 \caption{De compatibiliteitsgrafes bij het samenvoegen van verbindingen.}
 \end{figure}
-Op basis van de opgestelde tabellen kunnen we de compatibiliteitsgrafes opstellen.
+Op basis van de opgestelde tabellen kunnen we de compatibiliteitsgrafes opstellen. Twee verbindingen zijn immers incompatibel wanneer er een kolom bestaat waar beide verbindingen tegelijk actief zijn en de aansturing verschilt. Zo kunnen we uit \tblref{minimal-bus-operand} dat $o_1$ compatibel is met alle andere verbindingen: de verbinding is actief in toestand $S_7$, een toestand waarin geen enkele andere verbinding actief is. $o_2$ is echter wel incompatibel met andere verbindingen. $o_2$ is immers actief in toestanden $S_1$ en $S_2$. In die toestanden zijn volgende verbindingen actief: $o_3$, $o_4$, $o_6$. Van deze verbindingen wordt $o_4$ ook aangestuurd door register $t_1$. De verbindingen $o_3$ en $o_6$ worden echter aangestuurd door register $t_2$. Bijgevolg is $o_2$ incompatibel met $o_3$ en $o_6$.  Analoog berekenen we alle incompatibiliteitsranden van de operanden en de resultaten:
+\begin{eqnarray}
+I_o&=&\accl{\tupl{o_2,o_3},\tupl{o_2,o_6},\tupl{o_3,o_4},\tupl{o_4,o_6},\tupl{o_5,o_6},\tupl{o_7,o_8}}\\
+I_r&=&\accl{\tupl{r_1,r_4},\tupl{r_2,r_5},\tupl{r_3,r_7},\tupl{r_6,r_8}}
+\end{eqnarray}
+Vervolgens berekenen we de prioriteitsranden. $o_1$ wordt aangestuurd door register $t_1$. Andere operanden die door dit register worden aangestuurd zijn $o_2$, $o_4$ en $o_7$. We hoeven bij eenzelfde aansturing niet te controleren op het bestaan van een incompatibiliteitsrand. Eenzelfde aansturing is immers een voldoende voorwaarde om te stellen dat deze niet zal bestaan. $o_1$ wordt verder gebruikt door \mbox{Out}. Vermits dit de enige verbinding is die hiervan gebruik maakt, levert het delen van de gebruiker geen extra prioriteitsranden op. We tekenen bijgevolg prioriteitsranden tussen $o_1$ en $o_2$, $o_4$ en $o_7$. Vervolgens beschouwen we verbinding $o_2$ op basis van de aansturing vinden we prioriteitsranden met $o_1$, $o_4$ en $o_7$.
+\begin{eqnarray}
+P_o&=&\accl{\tupl{o_1,o_2},\tupl{o_1,o_4},\tupl{o_1,o_7},\tupl{o_2,o_4},\tupl{o_2,o_7},\tupl{o_3,o_6},\tupl{o_4,o_7},\tupl{o_5,o_8}}\\
+P_r&=&\accl{\tupl{r_1,r_2},\tupl{r_1,r_3},\tupl{r_2,r_3},\tupl{r_2,r_7},\tupl{r_3,r_5},\tupl{r_4,r_5},\tupl{r_4,r_6},\tupl{r_5,r_6},\tupl{r_7,r_8}}
+\end{eqnarray}
 \subsubsection{Registers samenvoegen in registerbank}
 \subsection{Andere optimalisaties}
 \label{ss:syntheseFSMDOptimal}
