@@ -2129,9 +2129,16 @@ Het aantal lees- en schrijfpoorten per partitionering in registerbanken staan in
 \subsection{Andere optimalisaties}
 \label{ss:syntheseFSMDOptimal}
 \subsubsection{Minimaal instructiewoord}
-De verzameling van stuursignalen noemt men doorgaans het \termen{instructiewoord}. Het is immers een verzameling van bits die voor het datapad de operatie die moet worden uitgevoerd verder specificeert. \figref{instructionword-example}
-\importtikzfigure{instructionword-example}{}
-\subsubsection{``Chaining''}
+De verzameling van stuursignalen noemt men doorgaans het \termen{instructiewoord}. Het is immers een verzameling van bits die voor het datapad de operatie die moet worden uitgevoerd verder specificeert. Een typisch datapad bestaat uit \'e\'en of meer registerbanken, een paar tellers, een paar afzonderlijke registers, \'e\'en of meer aritmetische logische eenheden (ALU), een schuifoperator en een vergelijker. Al deze componenten introduceren stuursignalen. \figref{instructionword-example} toont een voorbeeld van hoe zo'n instructiewoord er kan uitzien. Per bit bevat de figuur een korte beschrijving van de betekenis van de bit.
+\importtikzfigure{instructionword-example}{Een voorbeeld van een instructiewoord.}
+\paragraph{}
+In de meeste gevallen kan men echter het instructiewoord verkleinen met behulp van verschillende assumpties. Een eerste assumptie is bijvoorbeeld dat niet alle functionele eenheden (ALU, schuifregister,...) tegelijk actief zullen zijn. In plaats van voor elke functionele eenheid een reeks bits in het instructiewoord te voorzien, kunnen we enkele bits reserveren die bepalen of een sequentie aan stuursignalen bedoelt zijn voor de ene functionele eenheid of de andere.
+\paragraph{}
+Een andere reductie omvat het gebruik van tri-state buffers. Tri-state buffers verhinderen dat uitvoer van registers of functionele eenheden om tegelijk op dezelfde verbindingen worden gezet. Bijgevolg zijn de stuursignalen van de tri-state buffers exclusief: slechts \'e\'en van de stuursignalen van de tri-state buffers is tegelijk actief. In plaats van voor iedere tri-state buffer een bit in het instructiewoord te voorzien, kunnen we in bits een getal uitdrukken die bepaalt welke tri-state buffer nu de data op de verbinding moet zetten. Voor $n$ tri-state buffers wordt het instructiewoord dus gereduceerd van $n$ bits naar $\ceil{\log_2n}$ bits.
+\paragraph{}
+Bij wijze van voorbeeld zullen we nog enkele voorbeelden geven gebaseerd op het instructiewoord van \figref{instructionword-example}.
+\subsubsection{``Chaining'': meerdere bewerkingen per klokcyclus}
+
 \subsubsection{``Pipelinging'' en ``multicycling'': meerdere klokcycli per bewerking}
 \section{Tijdsgedrag}
 \label{s:timeFSMD}
