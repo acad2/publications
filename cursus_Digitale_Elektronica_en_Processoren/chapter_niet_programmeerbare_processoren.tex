@@ -2071,12 +2071,23 @@ Op basis van de opgestelde tabellen kunnen we de compatibiliteitsgrafes opstelle
 I_o&=&\accl{\tupl{o_2,o_3},\tupl{o_2,o_6},\tupl{o_3,o_4},\tupl{o_4,o_6},\tupl{o_5,o_6},\tupl{o_7,o_8}}\\
 I_r&=&\accl{\tupl{r_1,r_4},\tupl{r_2,r_5},\tupl{r_3,r_7},\tupl{r_6,r_8}}
 \end{eqnarray}
-Vervolgens berekenen we de prioriteitsranden. $o_1$ wordt aangestuurd door register $t_1$. Andere operanden die door dit register worden aangestuurd zijn $o_2$, $o_4$ en $o_7$. We hoeven bij eenzelfde aansturing niet te controleren op het bestaan van een incompatibiliteitsrand. Eenzelfde aansturing is immers een voldoende voorwaarde om te stellen dat deze niet zal bestaan. $o_1$ wordt verder gebruikt door \mbox{Out}. Vermits dit de enige verbinding is die hiervan gebruik maakt, levert het delen van de gebruiker geen extra prioriteitsranden op. We tekenen bijgevolg prioriteitsranden tussen $o_1$ en $o_2$, $o_4$ en $o_7$. Vervolgens beschouwen we verbinding $o_2$ op basis van de aansturing vinden we prioriteitsranden met $o_1$, $o_4$ en $o_7$.
+Vervolgens berekenen we de prioriteitsranden. $o_1$ wordt aangestuurd door register $t_1$. Andere operanden die door dit register worden aangestuurd zijn $o_2$, $o_4$ en $o_7$. We hoeven bij eenzelfde aansturing niet te controleren op het bestaan van een incompatibiliteitsrand. Eenzelfde aansturing is immers een voldoende voorwaarde om te stellen dat deze niet zal bestaan. $o_1$ wordt verder gebruikt door \mbox{Out}. Vermits dit de enige verbinding is die hiervan gebruik maakt, levert het delen van de gebruiker geen extra prioriteitsranden op. We tekenen bijgevolg prioriteitsranden tussen $o_1$ en $o_2$, $o_4$ en $o_7$. Vervolgens beschouwen we verbinding $o_4$ op basis van de aansturing vinden we prioriteitsranden met $o_1$, $o_2$ en $o_7$. Daarnaast is er een andere verbinding die dezelfde gebruiker deelt: $o_5$. Omdat beide verbindingen niet tegelijk actief zijn, is er geen sprake van een incompatibiliteitsrand. Daarom tekenen we ook een prioriteitsrand tussen $o_4$ en $o_5$. Indien we dit proces verder zetten bekomen we de volgende prioriteitsranden:
 \begin{eqnarray}
-P_o&=&\accl{\tupl{o_1,o_2},\tupl{o_1,o_4},\tupl{o_1,o_7},\tupl{o_2,o_4},\tupl{o_2,o_7},\tupl{o_3,o_6},\tupl{o_4,o_7},\tupl{o_5,o_8}}\\
+P_o&=&\accl{\tupl{o_1,o_2},\tupl{o_1,o_4},\tupl{o_1,o_7},\tupl{o_2,o_4},\tupl{o_2,o_7},\tupl{o_3,o_6},\tupl{o_4,o_5},\tupl{o_4,o_7},\tupl{o_5,o_8}}\\
 P_r&=&\accl{\tupl{r_1,r_2},\tupl{r_1,r_3},\tupl{r_2,r_3},\tupl{r_2,r_7},\tupl{r_3,r_5},\tupl{r_4,r_5},\tupl{r_4,r_6},\tupl{r_5,r_6},\tupl{r_7,r_8}}
 \end{eqnarray}
-\subsubsection{Registers samenvoegen in registerbank}
+De compatibiliteitsgrafen van de twee types verbindingen worden voorgesteld in \figrefs{compatibilitygraph-connections-a,compatibilitygraph-connections-b}. Nadat we de max-cut methode op de grafen toepassen bekomen we de volgende partities:
+\begin{eqnarray}
+\calP_o&=&\accl{\accl{o_1,o_2,o_4,o_5,o_7},\accl{o_3,o_6,o_8}}\\
+\calP_r&=&\accl{\accl{r_1,r_2,r_7,r_8},\accl{r_3,r_4,r_5,r_6}}
+\end{eqnarray}
+\subsubsection{Registers samenvoegen in registerbank (``register port sharing'')}
+Registers voorzien niet enkel logica om gegevens op te slaan. Er is ook logica vereist om nieuwe data op te slaan of om de data uit te lezen. We kunnen echter opmerken dat niet steeds alle registers hun data in elke toestand beschikbaar moeten stellen of nieuwe gegevens moeten opslaan. Door registers te groeperen in een registerbank kunnen we besparen op de implementatie van deze functies. Verder kunnen we het aantal multiplexers en tri-state buffers mogelijk reduceren omdat het aantal ingangen en uitgangen van een registerbank beperkter zijn. Dit proces, ook wel \termen{register port sharing} genoemd, zullen we in deze subsectie bespreken.
+\paragraph{}
+Alvorens we het aantal registers kunnen reduceren dienen we eerst te onderzoeken hoeveel lees- en schrijfpoorten\footnote{Met poort wordt geen logische (AND, OR, NOT,...) poort bedoelt, maar een toegangspunt waar men data kan uitlezen of wegschrijven.} we dienen te introduceren voor de registerbank(en). Hiervoor stellen we eerst een \termen{registertoegangstabel} ofwel ``\termen{Register Access Table}'' op. Op basis van deze tabel kunnen we dan opnieuw minimaliseren met bijvoorbeeld de max-cut methode of in eenvoudige gevallen zelfs exhaustief zoeken.
+\paragraph{Registertoegangstabel}Een registertoegangstabel is een tabel met in de verticale dimensie de verschillende registers en de horizontale dimensie de verschillende toestanden. Een cel wordt gemarkeerd als leeg, \termen{lees (R)}, \termen{schrijf (W)} of \termen{lees/schrijf (RW)}.
+\importtabulartable{minreg-readwrite}{Registertoegangstabel van het leidend voorbeeld.}
+\importtabulartable{minreg-config}{Registerbank-configuraties voor het leidend voorbeeld.}
 \subsection{Andere optimalisaties}
 \label{ss:syntheseFSMDOptimal}
 \subsubsection{Minimaal instructiewoord}
