@@ -2057,6 +2057,7 @@ Om een compatibiliteitsgrafe op te stellen, zullen we twee nieuwe tabellen intro
 \importtabularsubtable{minimal-bus-operand}{Operand-tabel.}
 \importtabularsubtable{minimal-bus-result}{Resultaten-tabel.}
 \caption{Operand- en resultaten-tabel van het leidend voorbeeld.}
+\tbllab{minimal-bus-all}
 \end{table}
 In toestand $S_0$ wordt de data ingelezen in de registers $t_1$ en $t_2$. Bijgevolg gebruiken we $2$ verbindingen: $r_1:\mbox{In1}\rightarrow t_1$ en $r_4:\mbox{In2}\rightarrow t_2$. We markeren dan ook deze cellen in \tblref{minimal-bus-result}. In toestand $S_2$ wordt de absolute waarde van beide registers berekend en wordt het resultaat opnieuw in de registers opgeslagen. Hiervoor wordt de data van registers $t_1$ en $t_2$ respectievelijk naar \mbox{FU1} en \mbox{FU2} geleid. Bijgevolg zijn de verbindingen $o_2:t_1\rightarrow\mbox{FU1}.1$ en $o_6:t_2\rightarrow\mbox{FU2}.2$ actief. Omdat het resultaat ook terug in de registers moet worden geladen, zijn ook resultaten-verbindingen actief: $r_2:\mbox{FU1}\rightarrow t_1$ en $r_5:\mbox{FU2}\rightarrow t_2$. Analoog berekenen we de actieve verbindingen van de andere verbindingen en bekomen de waarden in \tblrefs{compatibilitygraph-connections-a,compatibilitygraph-connections-b}.
 \paragraph{}
@@ -2085,12 +2086,51 @@ De compatibiliteitsgrafen van de twee types verbindingen worden voorgesteld in \
 Registers voorzien niet enkel logica om gegevens op te slaan. Er is ook logica vereist om nieuwe data op te slaan of om de data uit te lezen. We kunnen echter opmerken dat niet steeds alle registers hun data in elke toestand beschikbaar moeten stellen of nieuwe gegevens moeten opslaan. Door registers te groeperen in een registerbank kunnen we besparen op de implementatie van deze functies. Verder kunnen we het aantal multiplexers en tri-state buffers mogelijk reduceren omdat het aantal ingangen en uitgangen van een registerbank beperkter zijn. Dit proces, ook wel \termen{register port sharing} genoemd, zullen we in deze subsectie bespreken.
 \paragraph{}
 Alvorens we het aantal registers kunnen reduceren dienen we eerst te onderzoeken hoeveel lees- en schrijfpoorten\footnote{Met poort wordt geen logische (AND, OR, NOT,...) poort bedoelt, maar een toegangspunt waar men data kan uitlezen of wegschrijven.} we dienen te introduceren voor de registerbank(en). Hiervoor stellen we eerst een \termen{registertoegangstabel} ofwel ``\termen{Register Access Table}'' op. Op basis van deze tabel kunnen we dan opnieuw minimaliseren met bijvoorbeeld de max-cut methode of in eenvoudige gevallen zelfs exhaustief zoeken.
-\paragraph{Registertoegangstabel}Een registertoegangstabel is een tabel met in de verticale dimensie de verschillende registers en de horizontale dimensie de verschillende toestanden. Een cel wordt gemarkeerd als leeg, \termen{lees (R)}, \termen{schrijf (W)} of \termen{lees/schrijf (RW)}.
+\paragraph{Registertoegangstabel}Een registertoegangstabel is een tabel met in de verticale dimensie de verschillende registers en de horizontale dimensie de verschillende toestanden. Een cel wordt gemarkeerd als leeg, \termen{lees (R)}, \termen{schrijf (W)} of \termen{lees/schrijf (RW)}. De cel specificeert of we in de gegeven toestand uit het gegeven register gegevens uitlezen en/of wegschrijven. We kunnen een registertoegangstabel opstellen met behulp van het ASM-schema op \figref{asmSqrt} of bijvoorbeeld de operand- en resultaten-tabellen op \tblref{minimal-bus-all}. Wanneer een operand-verbinding aangestuurd door een register $t_i$ actief is in toestand $S_j$, dan zetten we een R in de overeenkomstige cel van de registertoegangstabel. Wanneer er een resultaten-verbinding actief is in deze toestand, plaatsen we een W in de cel.
+\paragraph{}
+Zo zien we in \tblref{minimal-bus-operand} dat in toestand $S_0$ dat geen enkele verbinding actief is. Bijgevolg plaatsen we in de kolom van toestand $S_0$ geen R. In toestand $S_1$ zijn de operand-verbindingen $o_2$ en $o_6$ actief. De overeenkomstige register die aansturen zijn $t_1$ en $t_2$. We plaatsen dus in de rijen $t_1$ en $t_2$ in kolom $S_1$ een R. Analoog berekenen we de leestoegang van de andere cellen:
+\begin{equation}
+R=\acclarray{
+\tupl{t_1,S_1},\tupl{t_1,S_2},\tupl{t_1,S_3},\tupl{t_1,S_4}\\
+\tupl{t_1,S_6},\tupl{t_1,S_7},\tupl{t_2,S_1},\tupl{t_2,S_2},\tupl{t_2,S_4}\\
+\tupl{t_2,S_5},\tupl{t_2,S_6},\tupl{t_6,S_3},\tupl{t_6,S_5}
+}
+\end{equation}
+We berekenen op een gelijkaardige manier de schrijftoegang van de verschillende registers. Met behulp van \tblref{minimal-bus-results} kunnen we vaststellen dat in toestand $S_0$ de resultaten-verbindingen $r_1$ en $r_4$ actief zijn. Vermits $r_1$ en $r_4$ data laten inlezen in register $t_1$ en $t_2$, schrijven we W in de cellen $\tupl{t_1,S_0}$ en $\tupl{t_2,S_0}$. In toestand $S_1$ zien we opnieuw activiteit op de  verbindingen naar $t_1$ en $t_2$ bijgevolg schrijven we opnieuw W in de volgende kolom. Wanneer we dit proces verder toepassen, bekomen we de volgende lijst van schrijftoegangen:
+\begin{equation}
+W=\acclarray{
+\tupl{t_1,S_0},\tupl{t_1,S_1},\tupl{t_1,S_2},\tupl{t_1,S_6}\\
+\tupl{t_2,S_0},\tupl{t_2,S_1},\tupl{t_2,S_3}\\
+\tupl{t_2,S_4},\tupl{t_2,S_5},\tupl{t_6,S_2},\tupl{t_6,S_3}
+}
+\end{equation}
+De uiteindelijke registertoegangstabel staat in \tblref{minreg-readwrite}.
+
 \importtabulartable{minreg-readwrite}{Registertoegangstabel van het leidend voorbeeld.}
+\paragraph{}
+Een registerbank bevat een set van registers. Een belangrijke vraag is hoeveel lees en schrijfpoorten we moeten voorzien in een registerbank vermits dit in grote mate de kostprijs zal bepalen. De aantallen worden bepaald door de registers die de registerbank vertegenwoordigt. In elke toestand wordt er immers data ingelezen en weggeschreven in deze registers. Het aantal leespoorten is dan ook gelijk aan het maximale aantal leesoperaties van de betrokken registers in een bepaalde toestand. Analoog stelt men het aan schrijfpoorten gelijk aan het maximale aantal schrijfoperaties van deze registers in een toestand.
+\paragraph{}
+We zullen dit concept illustreren met twee voorbeelden. Stel een registerbank opstellen die de registers $t_1$ en $t_6$ groepeert. Vermits in toestand $S_2$ naar beide registers wordt geschreven, moeten we twee schrijfpoorten voorzien. Vermits de registerbank slechts twee registers vertegenwoordigt kan dit aantal onmogelijk groter worden.  Verder kunnen we ook vaststellen dat in toestand $S_3$ uit de twee registers data wordt uitgelezen. Bijgevolg is het aantal leespoorten ook gelijk aan twee.
+\paragraph{}
+Indien we een registerbank met de drie registers $t_1$, $t_2$ en $t_6$ beschouwen is de situatie echter anders. Er bestaat immers geen enkele toestand waar uit alle registers tegelijk data wordt uitgelezen. Evenmin bestaat er een toestand waarin data in alle betrokken registers wordt weggeschreven. In elke toestand zijn er maximum twee leesbewerkingen en twee schrijfbewerkingen. We dienen dus $2$ leespoorten en $2$ schrijfpoorten te voorzien, terwijl we drie registers beschouwen.
+\paragraph{}
+Alvorens de registers samen te voegen in een registerbank, zullen we eerst onderzoeken of het wel interessant is om alle registers in eenzelfde registerbank onder te brengen. Misschien is het interessanter om bijvoorbeeld twee of drie registerbanken te voorzien. Het feit dat we slechts drie register beschouwen, laat ons toe alle mogelijkheden te onderzoeken. Er zijn in totaal $5$ partities:
+\begin{equation}
+\calP_{\mbox{\small registerbank}}=\acclarray{
+\accl{\accl{t_1},\accl{t_2},\accl{t_6}}\\
+\accl{\accl{t_1},\accl{t_2,t_6}}\\
+\accl{\accl{t_1,t_2},\accl{t_6}}\\
+\accl{\accl{t_1,t_6},\accl{t_2}}\\
+\accl{\accl{t_1,t_2,t_6}}
+}
+\end{equation}
+Het aantal lees- en schrijfpoorten per partitionering in registerbanken staan in \tblref{minreg-config}. We kunnen vaststellen dat het groperen van alle registers in \'e\'en registerbank de meeste voordelige implementatie is.
 \importtabulartable{minreg-config}{Registerbank-configuraties voor het leidend voorbeeld.}
 \subsection{Andere optimalisaties}
 \label{ss:syntheseFSMDOptimal}
 \subsubsection{Minimaal instructiewoord}
+De verzameling van stuursignalen noemt men doorgaans het \termen{instructiewoord}. Het is immers een verzameling van bits die voor het datapad de operatie die moet worden uitgevoerd verder specificeert. \figref{instructionword-example}
+\importtikzfigure{instructionword-example}{}
 \subsubsection{``Chaining''}
 \subsubsection{``Pipelinging'' en ``multicycling'': meerdere klokcycli per bewerking}
 \section{Tijdsgedrag}
