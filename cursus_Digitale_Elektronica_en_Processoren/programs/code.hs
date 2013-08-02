@@ -1,14 +1,23 @@
-data  i [o]
+data CompatibilityGraph nodes priority = CompatibilityGraph [nodes] [([nodes],priority)]
+data ConnectionTable connection from to state = ConnectionTable [ConnectionRow connection from to state]
+type ConnectionRow connection from to state = (connection,from,to,[state])
 
 enrich :: [x] -> (x -> y) -> [(x,y)]
 enrich [] _ = []
 enrich (x:xs) f = ((x,f x) : enrich xs f)
 
-calculatePartition :: (Ord l, Eq v) => [v] -> [([v],l)] -> [[v]]
-calculatePartition x [] = map (\a -> [a]) x
-calculatePartition x y = (vs:calculatePartition vr er) where (vs,ls) = argmax y
-                                                             vr = setminus x vs
-                                                             er = significantEdges y vr
+calculateGreedyPartition :: (Eq node, Ord priority) => (CompatibilityGraph node priority) -> [[node]]
+calculateGreedyPartition (CompatibilityGraph x []) = map (\a -> [a]) x
+calculateGreedyPartition (CompatibilityGraph x y) = (vs:calculateGreedyPartition (CompatibilityGraph vr er)) where (vs,ls) = argmax y
+                                                                                                                   vr = setminus x vs
+                                                                                                                   er = significantEdges y vr
+
+calculateIncompatibleConnections :: (Eq from, Eq state) => (ConnectionTable connection from to state) -> [(connection,connection)]
+calculateIncompatibleConnections (ConnectionTable (r:rs)) = calculateIncompatibleConnectionRow r rs
+
+calculateIncompatibleConnectionRow :: (Eq from, Eq state) => (ConnectionRow connection from to state) -> [(ConnectionRow connection from to state)] -> [(connection,connection)]
+calculateIncompatibleConnectionRow _ [] = []
+calculateIncompatibleConnectionRow (aa,ab,ac,ad) other = [(aa,ba)|(ba,bb,bc,bd) <- other]++(calculateIncompatibleConnectionRow y ys) where (y:ys) = other
 
 setminus :: (Eq a) => [a] -> [a] -> [a]
 setminus a b = [x|x <- a, notElem x b]

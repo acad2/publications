@@ -583,7 +583,7 @@
   }
 }
 
-\newenvironment{compatibilitygraph}[6][auto,node distance=3cm]{\begin{tikzpicture}[#1]
+\newenvironment{compatibilitygraph}[7][auto,node distance=3cm]{\begin{tikzpicture}[#1]
 \foreach \n/\t/\p/\o in {#2} {
 \node[compatibilitynode,\o] (\n) at (\p) {\t};
 }
@@ -600,5 +600,14 @@
 }
 \foreach \n/\p/\o in {#6} {
   \path [compatibilitypriority] (group-\n) edge [\o] (\p);
-}}
+}
+\begin{pgfonlayer}{bg}
+\foreach \tim/\off/\vars in {#7} {
+  \node[fit=(\off),inner sep=3*\tim pt] (fitnode) {};
+  \foreach \var in \vars {
+    \node[fit=(\var),inner sep=3*\tim pt] (thick\var) {};
+    \node[fit=(fitnode) (thick\var),inner sep=0pt] (fitnode) {};
+  }
+  \node [compatibilitygroup,fit=(fitnode)] {};
+}\end{pgfonlayer}}
 {\end{tikzpicture}}
