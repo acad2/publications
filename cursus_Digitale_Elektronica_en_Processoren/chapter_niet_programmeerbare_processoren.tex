@@ -2137,6 +2137,12 @@ In de meeste gevallen kan men echter het instructiewoord verkleinen met behulp v
 Een andere reductie omvat het gebruik van tri-state buffers. Tri-state buffers verhinderen dat uitvoer van registers of functionele eenheden om tegelijk op dezelfde verbindingen worden gezet. Bijgevolg zijn de stuursignalen van de tri-state buffers exclusief: slechts \'e\'en van de stuursignalen van de tri-state buffers is tegelijk actief. In plaats van voor iedere tri-state buffer een bit in het instructiewoord te voorzien, kunnen we in bits een getal uitdrukken die bepaalt welke tri-state buffer nu de data op de verbinding moet zetten. Voor $n$ tri-state buffers wordt het instructiewoord dus gereduceerd van $n$ bits naar $\ceil{\log_2n}$ bits.
 \paragraph{}
 Bij wijze van voorbeeld zullen we nog enkele voorbeelden geven gebaseerd op het instructiewoord van \figref{instructionword-example}.
+\begin{enumerate}
+ \item De eerste operandbus bevat ofwel gegevens afkomstig van de de registerbank (leespoort 1) ofwel het register.We kunnen dus ofwel \mbox{RFOE1} ofwel \mbox{ROE} elimineren. We besparen 1 bit.
+ \item De tweede operandbus bevat ofwel gegevens afkomstig van de de registerbank (leespoort 2) ofwel de teller.We kunnen dus ofwel \mbox{RFOE2} ofwel \mbox{COE} elimineren. We besparen 1 bit.
+ \item In een registerbank is het signaal ``read-enabled (RE)'' altijd gelijk aan het stuursignaal op het tri-state buffer (RFOE). We kunnen dus voor beide leespoorten ofwel \mbox{RE$i$} ofwel \mbox{RFOE$i$}. We besparen twee bits (we beschouwen immers twee leespoorten).
+ \item De resultaatbus bevat het resultaat van ofwel de ALU ofwel de barrel shifter. 
+\end{enumerate}
 \subsubsection{``Chaining'': meerdere bewerkingen per klokcyclus}
 
 \subsubsection{``Pipelinging'' en ``multicycling'': meerdere klokcycli per bewerking}
