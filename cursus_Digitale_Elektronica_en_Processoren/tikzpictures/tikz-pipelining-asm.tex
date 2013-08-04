@@ -1,19 +1,21 @@
 \begin{tikzpicture}
+\coordinate (TOP) at (0,3);
+\coordinate (BOT) at (0,-3);
 \begin{scope}
-\node[asmcommand] (CAA) at (0,-1) {$t\leftarrow\fun{f}{x,z}$};
-\node[asmcommand] (CAB) at (0,-3) {$t\leftarrow\fun{f}{x,z}$};
-\draw[<-] (CAA) -- ++(0,0.5);
+\node[asmcommand] (CAA) at (0,1) {$t\leftarrow\fun{f}{x,z}$};
+\node[asmcommand] (CAB) at (0,-1) {$t\leftarrow\fun{f}{x,z}$};
+\draw[<-] (CAA) -- (CAA |- TOP);
 \draw[->] (CAA) -- (CAB);
-\draw[->] (CAB) -- ++(0,-0.5);
+\draw[->] (CAB) -- (CAB |- BOT);
 \end{scope}
-\draw (1.25,-1) node {$\Rightarrow$};
-\begin{scope}[xshift=1.5 cm]
-\node[asmcommand] (CBA) at (0,0) {$\begin{array}{l}y\leftarrow\fun{f_1}{x}\\\\z_2\leftarrow z_1\end{array}$};
-\node[asmcommand] (CBB) at (0,-2) {$\begin{array}{l}y\leftarrow\fun{f_1}{x}\\z_2\leftarrow z_1\\t\leftarrow\fun{f_2}{y,z_2}\end{array}$};
-\node[asmcommand] (CBC) at (0,-4) {$t\leftarrow\fun{f_2}{y,z_2}$};
-\draw[<-] (CBA) -- ++(0,0.5);
+\draw (1.25,0) node {$\Rightarrow$};
+\begin{scope}[xshift=2.5 cm]
+\node[asmcommand] (CBA) at (0,2) {$\begin{array}{l}y\leftarrow\fun{f_1}{x}\\\\z_2\leftarrow z_1\end{array}$};
+\node[asmcommand] (CBB) at (0,0) {$\begin{array}{l}y\leftarrow\fun{f_1}{x}\\z_2\leftarrow z_1\\t\leftarrow\fun{f_2}{y,z_2}\end{array}$};
+\node[asmcommand] (CBC) at (0,-2) {$t\leftarrow\fun{f_2}{y,z_2}$};
+\draw[<-] (CBA) -- (CBA |- TOP);
 \draw[->] (CBA) -- (CBB);
 \draw[->] (CBB) -- (CBC);
-\draw[->] (CBC) -- ++(0,-0.5);
+\draw[->] (CBC) -- (CBC |- BOT);
 \end{scope}
 \end{tikzpicture}

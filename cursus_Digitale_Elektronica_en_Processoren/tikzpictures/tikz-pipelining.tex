@@ -1,13 +1,13 @@
 \begin{tikzpicture}
 \begin{scope}[scale=0.75]
-\foreach \i/\t/\x/\y in {0/x/0/-4,1/z/0/0,2/t/6/-2} {
+\foreach \i/\t/\x/\y in {0/x/3/-4,1/z/3/0,2/t/6/-2} {
   \node[regi,scale=0.75] (RB\i) at (\x,\y) {$\t$};
 }
-\node[fununit,scale=0.75] (FB) at (3,-2) {$f$};
+\node[fununit,scale=0.75] (FB) at (4.5,-2) {$f$};
 \foreach \r/\f/\y/\aa/\ab in {RB1/FB/-0.75/Q/inputbb} {
   \draw[thick] (\r.\aa) -- (\r.\aa |- 0,\y)  -| (\f.\ab);
 }
-\foreach \r/\f/\ya/\x/\yb/\aa/\ab in {RB0/FB/-5/1.5/-1/Q/inputba,FB/RB2/-3/4.5/-1/output/D} {
+\foreach \r/\f/\ya/\x/\yb/\aa/\ab in {RB0/FB/-5/3.75/-1/Q/inputba,FB/RB2/-3/5.25/-1/output/D} {
   \draw[thick] (\r.\aa) -- (\r.\aa |- 0,\ya)  -| (\x,\yb) -| (\f.\ab);
 }
 \draw (7,-2) node {$\Rightarrow$};

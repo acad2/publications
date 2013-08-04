@@ -1,17 +1,17 @@
 \begin{tikzpicture}
+\coordinate (TOP) at (0,2);
+\coordinate (BOT) at (0,-2);
 \begin{scope}
-\node[asmcommand] (CAA) at (0,-1) {};
-\draw[<-] (CAA) -- ++(0,0.5);
-\draw[->] (CAA) -- ++(0,-0.5);
+\node[asmcommand] (CAA) at (0,0) {$t\leftarrow\fun{f}{x,z}$};
+\draw[<-] (CAA) -- (CAA |- TOP);
+\draw[->] (CAA) -- (CAA |- BOT);
 \end{scope}
-\draw (1.25,-1) node {$\Rightarrow$};
+\draw (1.25,0) node {$\Rightarrow$};
 \begin{scope}[xshift=2.5 cm]
-\node[asmcommand] (CBA) at (3,0) {};
-\node[asmcommand] (CBB) at (3,-2) {};
-\node[asmcommand] (CBC) at (3,-4) {};
-\draw[<-] (CBA) -- ++(0,0.5);
+\node[asmcommand] (CBA) at (0,1) {$y\leftarrow\fun{f_1}{x}$};
+\node[asmcommand] (CBB) at (0,-1) {$t\leftarrow\fun{f_2}{y,z}$};
+\draw[<-] (CBA) -- (CBA |- TOP);
 \draw[->] (CBA) -- (CBB);
-\draw[->] (CBB) -- (CBC);
-\draw[->] (CBC) -- ++(0,-0.5);
+\draw[->] (CBB) -- (CBB |- BOT);
 \end{scope}
 \end{tikzpicture}

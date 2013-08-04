@@ -13,10 +13,10 @@
 \draw (7,-1) node {$\Rightarrow$};
 \end{scope}
 \begin{scope}[scale=0.75,xshift=8 cm]
-\foreach \i/\t in {0/x,2/z,3/t} {
-  \node[regi,scale=0.75] (RB\i) at (2*\i,0) {$\t$};
+\foreach \i/\x/\t in {0/0/x,2/2.5/z,3/4.5/t} {
+  \node[regi,scale=0.75] (RB\i) at (\x,0) {$\t$};
 }
-\foreach \i/\x/\o/\a in {2/3/RB3/D,1/0/FB2/inputba} {
+\foreach \i/\x/\o/\a in {2/2/RB3/D,1/0/FB2/inputba} {
   \node[fununit,scale=0.75] (FB\i) at (\x,-2) {$f_{\i}$};
   \draw[thick] (FB\i.output) -- ++(0,-0.5) -| ($(\o.\a)+(-1,0.5)$) -| (\o.\a);
 }
