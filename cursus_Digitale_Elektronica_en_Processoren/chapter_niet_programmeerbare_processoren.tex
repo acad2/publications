@@ -2198,7 +2198,11 @@ Pipelining komt echter ook met enkele problemen. Om de snelheid effectief met \b
 \paragraph{}
 We kunnen ook niet zomaar elk proces uitvoeren volgens de pipelining uitvoeringsstrategie. Pipelining vereist dat de opeenvolgende stappen eerder onafhankelijk van elkaar kunnen werken. Stel bijvoorbeeld dat de tweede operatie echter een operand nodig heeft die in de vorige instructie wordt berekend, treed er een probleem op. Bij deze vorm van terugkoppeling verliezen we de performantie-winst. De pipeline wordt gestopt tot het resultaat van de eerste operatie beschikbaar is om vervolgens de tweede operatie uit te voeren.
 \subsection{Besluit}
-Als algemene conclusie kunnen we stellen dat het zeer moeilijk is om de optimale implementatie te vinden. Daarom zullen we ons meestal tevreden stellen met 
+Als algemene conclusie kunnen we stellen dat het zeer moeilijk is om de optimale implementatie te vinden. Dit aspect wordt bovendien bemoeilijkt omdat de optimalisaties op verschillende niveaus elkaar be\"invloeden: de minimalisatie van het aantal registers kan ertoe leiden dat we de functionele eenheden op een andere manier zullen optimaliseren. Daarom zullen we ons meestal tevreden stellen met heuristieken: benaderen methodes zoals bijvoorbeeld het max-cut algoritme. Sommige methodes zijn echter meer geschikt voor optimalisatie bij het ene niveau tegenover het andere. Bovendien is de beste keuze afhankelijk van de gekozen technologie: als we een schakeling implementeren op een FPGA zullen we logische blokken optimaliseren in plaats van transistoren.
+\paragraph{}
+Het algoritme herschrijven biedt ook veel mogelijkheden. Soms kunnen we hierdoor pipelining mogelijk maken of een functionele eenheid alsnog hergebruiken. Wanneer we echter het algoritme aanpassen, moeten we ook opnieuw het datapad minimaliseren.
+\paragraph{}
+Minimaliseren van het datapad is bijgevolg een complex proces waarbij het nagenoeg onmogelijk is om een globaal optimale implementatie te bekomen.
 \section{Tijdsgedrag}
 \label{s:timeFSMD}
 \subsection{Kritisch pad}
