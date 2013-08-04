@@ -1,0 +1,36 @@
+\begin{tikzpicture}[scale=0.75]
+\def\wi{1};
+\def\he{1};
+\def\wih{0.75};
+\def\heh{0.75};
+\def\dx{1.25};
+\def\dy{1.75};
+\def\dg{4.5};
+\foreach \z in {15,40,65} {
+  \begin{scope}[yshift=0.07*\z cm-1.05 cm]
+    \fill[black!\z!white] (-0.75*\wi,-0.75*\he) rectangle ++(9*\dx+0.75*\wi,1.5*\he);
+  \end{scope}
+}
+\foreach \x in {0,1,2,3,4,5} {
+  \begin{scope}[xshift=\dx*\x cm]
+  \draw[dotted] (0.5*\dx,-1.1*\he) -- (0.5*\dx,2*\dy+\he);
+  \end{scope}
+}
+\foreach \x/\t in {0/1,1/2,4/3,5/4} {
+  \begin{scope}[xshift=\dx*\x cm]
+  \node[draw,rectangle,fill=white,draw=black,minimum width=\wih cm,minimum height=\heh cm] (WN\x) at (0,2*\dy) {};
+  \node[scale=0.75] (W\x) at (0,2*\dy) {Ins\t};
+  \node[draw,rectangle,fill=white,draw=black,minimum width=\wih cm,minimum height=\heh cm] (DN\x) at (\dx,\dy) {};
+  \node[scale=0.75] (D\x) at (\dx,\dy) {Ins\t};
+  \node[draw,rectangle,fill=white,draw=black,minimum width=\wih cm,minimum height=\heh cm] (IN\x) at (2*\dx,0) {};
+  \node[scale=0.75] (I\x) at (2*\dx,0) {Ins\t};
+  \draw[thick,->] (WN\x) -- (DN\x);
+  \draw[thick,->] (DN\x) -- (IN\x);
+  \end{scope}
+}
+\draw[thick,->] (IN1) .. controls (IN4) and (WN1) .. (WN4);
+\node (W4) at (6*\dx,2*\dy) {$\ldots$};
+\node (D4) at (7*\dx,\dy) {$\ldots$};
+\node (I4) at (8*\dx,0) {$\ldots$};
+\draw[thick,->] (-0.5,-\he) -- (9*\dx,-\he) node[anchor=south east]{$t$};
+\end{tikzpicture}

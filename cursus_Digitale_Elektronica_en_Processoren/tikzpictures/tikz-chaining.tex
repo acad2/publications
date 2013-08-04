@@ -1,0 +1,28 @@
+\begin{tikzpicture}
+\begin{scope}[scale=0.75]
+\foreach \i/\t in {0/x,1/y,2/z,3/t} {
+  \node[regi,scale=0.75] (RA\i) at (2*\i,0) {$\t$};
+}
+\foreach \i/\x/\o/\a in {1/0/RA1/D,2/3/RA3/D} {
+  \node[fununit,scale=0.75] (FA\i) at (\x,-2) {$f_{\i}$};
+  \draw[thick] (FA\i.output) -- ++(0,-0.5) -| ($(\o.\a)+(-1,0.5)$) -| (\o.\a);
+}
+\foreach \r/\f/\a in {RA0/FA1/inputaa,RA1/FA2/inputba,RA2/FA2/inputbb} {
+  \draw[thick] (\r.Q) -- (\r.Q |- 0,-1) -| (\f.\a);
+}
+\draw (8,-1) node {$\Rightarrow$};
+\end{scope}
+\begin{scope}[scale=0.75,xshift=10 cm]
+\foreach \i/\t in {0/x,2/z,3/t} {
+  \node[regi,scale=0.75] (RB\i) at (2*\i,0) {$\t$};
+}
+\foreach \i/\x/\o/\a in {2/3/RB3/D,1/0/FB2/inputba} {
+  \node[fununit,scale=0.75] (FB\i) at (\x,-2) {$f_{\i}$};
+  \draw[thick] (FB\i.output) -- ++(0,-0.5) -| ($(\o.\a)+(-1,0.5)$) -| (\o.\a);
+}
+\foreach \r/\f/\a in {RB0/FB1/inputaa,RB2/FB2/inputbb} {
+  \draw[thick] (\r.Q) -- (\r.Q |- 0,-1) -| (\f.\a);
+}
+\draw[dashed] (-0.75,-0.75) rectangle (3.75,-4) node[anchor=south east,scale=0.75]{$f$};
+\end{scope}
+\end{tikzpicture}

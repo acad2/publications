@@ -4211,3 +4211,62 @@
      \endgroup
   }
 }
+
+\pgfdeclareshape{fununit}{
+  \savedanchor\northeast{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=0.5\pgf@x
+    \pgf@y=0.5\pgf@y
+  }
+  \savedanchor\southwest{%
+    \pgfmathsetlength\pgf@x{\pgfshapeminwidth}%
+    \pgfmathsetlength\pgf@y{\pgfshapeminheight}%
+    \pgf@x=-0.5\pgf@x
+    \pgf@y=-0.5\pgf@y
+  }
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+  \inheritanchorborder[from=rectangle]
+  \anchor{center}{\pgfpointorigin}
+  \anchor{north}{\northeast \pgf@x=0pt}
+  \anchor{east}{\northeast \pgf@y=0pt}
+  \anchor{south}{\southwest \pgf@x=0pt}
+  \anchor{west}{\southwest \pgf@y=0pt}
+  \anchor{north east}{\northeast}
+  \anchor{north west}{\northeast \pgf@x=-\pgf@x}
+  \anchor{south west}{\southwest}
+  \anchor{south east}{\southwest \pgf@x=-\pgf@x}
+  \anchor{text}{
+    \pgfpointorigin
+    \advance\pgf@x by -.5\wd\pgfnodeparttextbox%
+    \advance\pgf@y by -.5\ht\pgfnodeparttextbox%
+    \advance\pgf@y by +.5\dp\pgfnodeparttextbox%
+  }
+  \anchor{output}{\southwest \pgf@x=0pt}
+  \anchor{inputaa}{\northeast \pgf@x=0pt}
+  \anchor{inputba}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by -1.333\pgfutil@tempdima}
+  \anchor{inputbb}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by -0.667\pgfutil@tempdima}
+  \anchor{inputca}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by -1.25\pgfutil@tempdima}
+  \anchor{inputcb}{\northeast \pgf@x=0pt}
+  \anchor{inputcc}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.75\pgfutil@tempdima}
+  \anchor{inputda}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by -1.6\pgfutil@tempdima}
+  \anchor{inputdb}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by -1.2\pgfutil@tempdima}
+  \anchor{inputdc}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.8\pgfutil@tempdima}
+  \anchor{inputdd}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.4\pgfutil@tempdima}
+  \anchor{inputea}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by -1.667\pgfutil@tempdima}
+  \anchor{inputeb}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by -1.333\pgfutil@tempdima}
+  \anchor{inputec}{\northeast \pgf@x=0pt}
+  \anchor{inputed}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.667\pgfutil@tempdima}
+  \anchor{inputee}{\northeast \pgfutil@tempdima=\halfwidth\advance\pgf@x by 0.333\pgfutil@tempdima}
+  
+  \backgroundpath{
+    \pgfpathrectanglecorners{\southwest}{\northeast}
+  }
+}
