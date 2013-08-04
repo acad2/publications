@@ -1,18 +1,35 @@
 \begin{tikzpicture}[scale=0.5]
 \def\wi{1};
 \def\he{1};
+\def\wih{0.5};
+\def\heh{0.5};
 \def\dx{1.25};
 \def\dy{1.75};
 \def\dg{4.5};
-\foreach \x in {0,1,2,3} {
-  \begin{scope}[xshift=\dx*\x cm]
-  \filldraw[fill=white,draw=black] (-0.5*\wi,2*\dy-0.5*\he) rectangle ++(\wi,\he);
-  \node[washing,scale=0.5] (W\x) at (0,2*\dy) {};
-  \filldraw[fill=white,draw=black] (-0.5*\wi+\dx,\dy-0.5*\he) rectangle ++(\wi,\he);
-  \node[drying,scale=0.5] (D\x) at (\dx,\dy) {};
-  \filldraw[fill=white,draw=black] (-0.5*\wi+2*\dx,-0.5*\he) rectangle ++(\wi,\he);
-  \node[ironing,scale=0.5] (I\x) at (2*\dx,0) {};
+\foreach \z in {15,40,65} {
+  \begin{scope}[yshift=0.07*\z cm-1.05 cm]
+    \fill[black!\z!white] (-0.75*\wi,-0.75*\he) rectangle ++(7*\dx+0.75*\wi,1.5*\he);
   \end{scope}
 }
+\foreach \x in {0,1,2,3,4,5} {
+  \begin{scope}[xshift=\dx*\x cm]
+  \draw[dotted] (0.5*\dx,-1.1*\he) -- (0.5*\dx,2*\dy+\he);
+  \end{scope}
+}
+\foreach \x in {0,1,2,3} {
+  \begin{scope}[xshift=\dx*\x cm]
+  \node[draw,rectangle,fill=white,draw=black,minimum width=\wih cm,minimum height=\heh cm] (WN\x) at (0,2*\dy) {};
+  \node[washing,scale=0.5] (W\x) at (0,2*\dy) {};
+  \node[draw,rectangle,fill=white,draw=black,minimum width=\wih cm,minimum height=\heh cm] (DN\x) at (\dx,\dy) {};
+  \node[drying,scale=0.5] (D\x) at (\dx,\dy) {};
+  \node[draw,rectangle,fill=white,draw=black,minimum width=\wih cm,minimum height=\heh cm] (IN\x) at (2*\dx,0) {};
+  \node[ironing,scale=0.5] (I\x) at (2*\dx,0) {};
+  \draw[thick,->] (WN\x) -- (DN\x);
+  \draw[thick,->] (DN\x) -- (IN\x);
+  \end{scope}
+}
+\node (W4) at (4*\dx,2*\dy) {$\ldots$};
+\node (D4) at (5*\dx,\dy) {$\ldots$};
+\node (I4) at (6*\dx,0) {$\ldots$};
 \draw[thick,->] (-0.5,-\he) -- (7*\dx,-\he) node[anchor=south east]{$t$};
 \end{tikzpicture}

@@ -2176,9 +2176,29 @@ Het uitsmeren van instructies over verschillende toestanden maakt ook een ander 
 \paragraph{}
 Men kan de doorvoer echter opdrijven door meer infrastructuur te voorzien. Indien we elke machine in het $n$-voud aankopen en over $n$ arbeiders beschikken, kunnen we de doorvoer opdrijven met ongeveer $\bigoh{n}$. De gemiddelde tijd die het wassen van alle kledij in beslag neemt wordt dus gereduceerd tot $\bigoh{3\cdot k\cdot\Delta t/n}$. Het probleem is echter dat de kosten ook stijgen met een factor $\bigoh{n}$. Bovendien wordt de versnelling niet altijd gerealiseerd. Meestal is er een vorm van boekhouding nodig die bepaald wie welke taak precies zal uitvoeren\footnote{De maximaal te realiseren versnelling wordt geformaliseerd met de ``Wet van Amadahl''.}. Dit proces staat beschreven in \figref{execution-parallel}.
 \paragraph{}
-Tot slot is er pipelining. In het geval van pipelining beschikken we opnieuw over \'e\'en wasmachine, droogkast en strijkijzer. In plaats van echter alles na elkaar uit te voeren, werken de machines continu. Op het moment dat de wasmachine immers klaar is, verhuist de gewassen kledij naar de droogkast, maar stopt men nieuwe kledij in de wasmachine. Het gevolg is dat wanneer er $s$ stappen in het proces zijn, we de doorvoer kunnen opdrijven met $\bigoh{s}$ ten opzichte van het sequentieel proces, zonder de kosten voor de infrastructuur op te drijven. Dit proces staat beschreven in \figref{execution-pipelining}.
+Tot slot is er pipelining. In het geval van pipelining beschikken we opnieuw over \'e\'en wasmachine, droogkast en strijkijzer. In plaats van echter alles na elkaar uit te voeren, werken de machines continu. Op het moment dat de wasmachine immers klaar is, verhuist de gewassen kledij naar de droogkast, maar stopt men nieuwe kledij in de wasmachine. Het gevolg is dat wanneer er $s$ stappen in het proces zijn, we de doorvoer kunnen opdrijven met $\bigoh{s}$ ten opzichte van het sequentieel proces, zonder de kosten voor de infrastructuur op te drijven. Dit proces staat beschreven in \figref{execution-pipelining}. Men kan pipelining ook vergelijken met het principe van de lopende band: we voorzien telkens \'e\'en machine voor elke bewerking en het resultaat schuift van machine naar machine.
 \paragraph{}
-Pipelining komt echter ook met enkele problemen. Om de snelheid effectief met \bigoh{s} op te drijven, dienen de deelstappen precies evenveel tijd te vragen. In de praktijk is het niet eenvoudig een proces zo op te delen. Wanneer dit niet te realiseren valt geldt de ``Wet van de zwakste schakel'': het traagste deelproces bepaald hoelang het duurt alvorens data zal worden uitgelezen. Verder is pipelining ook enkel interessant wanneer we een kort na elkaar een groot aantal maal de operatie moeten uitvoeren.
+We kunnen pipelining op vier niveaus toepassen:
+\begin{enumerate}
+ \item Functionele eenheden: in dit niveau splitsen we de bewerkingen op in deelbewerkingen en bewaren we de tussenresultaten in registers.
+ \item Datapad: indien we werken met een trage registerbank (bijvoorbeeld RAM-geheugen) gebruiken we meestal ook pipelining.
+ \item Controller.
+ \item Het ASM-schema: we kunnen het ASM-schema herschrijven. Bijvoorbeeld door de verschil-instructie op te splitsen in een negatie-instructie en een optelling-instructie. Dit hoeft niet te betekenen dat we meer toestanden introduceren: sommige omstandigheden laten toe dat we een onderdeel van de instructie gewoon doorschuiven naar de volgende toestand. Op basis van het aangepaste schema zullen we mogelijk meer hardware introduceren, maar door het minimaliseren van het datapad kunnen we dit mogelijk terug ontdubbelen.
+\end{enumerate}
+In moderne processoren implementeert men pipelining op nagenoeg alle niveaus in de zogenaamde \termen{generische instructiecyclus}. De generische instructiecyclus is een beschrijving in welke onderdelen een gegeven instructie wordt uitgevoerd:
+\begin{enumerate}
+ \item Lees een instructie.
+ \item Bereken de adressen (indien de instructie operanden uit bepaalde geheugenadressen haalt).
+ \item Lees de operand(en) uit.
+ \item Voer de bewerking uit.
+ \item Schrijf het resultaat weg.
+\end{enumerate}
+\paragraph{}
+Pipelining komt echter ook met enkele problemen. Om de snelheid effectief met \bigoh{s} op te drijven, dienen de deelstappen precies evenveel tijd te vragen. In de praktijk is het niet eenvoudig een proces zo op te delen. Wanneer dit niet te realiseren valt geldt de ``Wet van de zwakste schakel'': het traagste deelproces bepaald hoelang het duurt alvorens data zal worden uitgelezen. Verder is pipelining ook enkel interessant wanneer we een kort na elkaar een groot aantal maal de operatie moeten uitvoeren. Indien we slechts \'e\'enmaal de operatie uitvoeren blijft de rekentijd ongeveer dezelfde. We kunnen dus stellen dat de doorvoer (``\termen{throughput}'') wordt verhoogt, maar de vertraging (``\termen{latency time}'') ongeveer dezelfde blijft. Net als bij multicycling dienen we ook opnieuw extra registers te voorzien om de tussenresultaten in op te slaan. Deze register verhogen de kostprijs en zullen bovendien een deel van de tijdswinst tenietdoen omdat het wegschrijven van tussenresultaten in de registers ook tijd vergt.
+\paragraph{}
+We kunnen ook niet zomaar elk proces uitvoeren volgens de pipelining uitvoeringsstrategie. Pipelining vereist dat de opeenvolgende stappen eerder onafhankelijk van elkaar kunnen werken. Stel bijvoorbeeld dat de tweede operatie echter een operand nodig heeft die in de vorige instructie wordt berekend, treed er een probleem op. Bij deze vorm van terugkoppeling verliezen we de performantie-winst. De pipeline wordt gestopt tot het resultaat van de eerste operatie beschikbaar is om vervolgens de tweede operatie uit te voeren.
+\subsection{Besluit}
+Als algemene conclusie kunnen we stellen dat het zeer moeilijk is om de optimale implementatie te vinden. Daarom zullen we ons meestal tevreden stellen met 
 \section{Tijdsgedrag}
 \label{s:timeFSMD}
 \subsection{Kritisch pad}
