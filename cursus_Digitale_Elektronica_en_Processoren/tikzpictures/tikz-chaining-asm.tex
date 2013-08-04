@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+\begin{scope}
+\node[asmcommand] (CAA) at (0,-1) {};
+\node[asmcommand] (CAB) at (0,-3) {};
+\draw[<-] (CAA) -- ++(0,0.5);
+\draw[->] (CAA) -- (CAB);
+\draw[->] (CAB) -- ++(0,-0.5);
+\end{scope}
+\draw (1.25,-1) node {$\Rightarrow$};
+\begin{scope}[xshift=3 cm]
+\node[asmcommand] (CBA) at (0,0) {};
+\draw[<-] (CBA) -- ++(0,0.5);
+\draw[->] (CBA) -- ++(0,-0.5);
+\end{scope}
+\end{tikzpicture}

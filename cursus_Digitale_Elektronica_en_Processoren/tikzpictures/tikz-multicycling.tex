@@ -8,9 +8,9 @@
 \foreach \r/\f/\a in {RB0/FB/inputba,RB2/FB/inputbb} {
   \draw[thick] (\r.Q) -- (\r.Q |- 0,-1) -| (\f.\a);
 }
-\draw (8,-1) node {$\Rightarrow$};
+\draw (7,-1) node {$\Rightarrow$};
 \end{scope}
-\begin{scope}[scale=0.75,xshift=10 cm]
+\begin{scope}[scale=0.75,xshift=8 cm]
 \foreach \i/\t in {0/x,1/y,2/z,3/t} {
   \node[regi,scale=0.75] (RA\i) at (2*\i,0) {$\t$};
 }

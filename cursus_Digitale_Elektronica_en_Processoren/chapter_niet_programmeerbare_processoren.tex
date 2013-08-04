@@ -1866,7 +1866,7 @@ Toestand&$a$&$b$&$c$&$d$&$e$&$f$&$g$&$h$&$i$\\\hline
 \paragraph{}
 Het samenvoegen van registers gaat dus gepaard met de introductie van multiplexers en extra combinatorische logica in de controller. Dit is een van de redenen waarom het moeilijk is om te voorspellen of een optimalisatie effectief tot goedkopere implementaties zal leiden.
 \subsubsection{Bewerkingen samenvoegen (``functional-unit sharing'')}
-In het leidend voorbeeld zien we verschillende functionele eenheden. Sommige van deze functionele eenheden voeren echter dezelfde bewerking in een andere toestand uit. Het is mogelijk goedkoper deze bewerkingen met dezelfde functionele eenheid uit te voeren. Anderzijds zijn sommige functionele eenheden zeer gelijkaardig. In subsectie \sscref{??} hebben we de implementatie van een schakeling besproken die getallen kan optellen en aftrekken. Functionele eenheden die gelijkaardige bewerkingen uitvoeren kunnen meestal worden samengevoegd in schakelingen die beide bewerkingen kunnen uitvoeren, en waarbij de resulterende schakeling goedkoper is dan de som van de twee aparte functionele eenheden. Het samenvoegen van functionele eenheden wordt \termen{functional-unit sharing} genoemd omdat een functionele eenheid tussen verschillende toestanden wordt gedeeld.
+In het leidend voorbeeld zien we verschillende functionele eenheden. Sommige van deze functionele eenheden voeren echter dezelfde bewerking in een andere toestand uit. Het is mogelijk goedkoper deze bewerkingen met dezelfde functionele eenheid uit te voeren. Anderzijds zijn sommige functionele eenheden zeer gelijkaardig. In \sscref{??} hebben we de implementatie van een schakeling besproken die getallen kan optellen en aftrekken. Functionele eenheden die gelijkaardige bewerkingen uitvoeren kunnen meestal worden samengevoegd in schakelingen die beide bewerkingen kunnen uitvoeren, en waarbij de resulterende schakeling goedkoper is dan de som van de twee aparte functionele eenheden. Het samenvoegen van functionele eenheden wordt \termen{functional-unit sharing} genoemd omdat een functionele eenheid tussen verschillende toestanden wordt gedeeld.
 \paragraph{Gelijkaardige bewerkingen samenvoegen}
 Een probleem in dit proces is dat het samenvoegen van twee functionele eenheden in een nieuwe functionele eenheid geen sinecure is, en meestal enige ervaring vereist. We zullen in doorheen deze subsectie verschillende functionele eenheden combineren om de lezer een notie te geven over de principes hierachter. Meestal zoekt men naar logica die beide functionele eenheden gemeenschappelijk hebben. Daarna moeten extra ingangen bepalen welke bewerking wordt uitgevoerd door de overige logica aan te sturen.
 \paragraph{Compatibiliteitsgrafe}
@@ -2148,11 +2148,21 @@ Bij wijze van voorbeeld zullen we nog enkele voorbeelden geven gebaseerd op het 
 Op basis van deze maatregelen hebben $9$ bits op het instructiewoord bespaard.
 \subsubsection{``Chaining'': meerdere bewerkingen per klokcyclus}
 Naast de eerder beschreven optimalisaties, kunnen we ook het ASM-schema zelf aanpassen. De argumentatie om dit te doen is een analyse van het tijdsgedrag. Elke klokcyclus wordt de data van de registers uitgelezen en voeren de functionele eenheden hierop bewerkingen uit. Niet alle functionele bewerkingen vereisten echter dezelfde hoeveelheid tijd om het resultaat te berekenen. We kunnen bijvoorbeeld denken aan de schuifoperaties met een vast aantal bits. Vermits hierbij geen logica moet worden ge\"implementeerd, wordt zo'n operatie in theorie onmiddellijk uitgevoerd. We kunnen echter analyseren wat er vervolgens met de gegevens van de functionele eenheid zal worden gedaan. Indien het mogelijk is om de volgende operatie in dezelfde klokcyclus uit te voeren kan dit tot besparingen leiden. Het groeperen van operaties die na elkaar moeten worden uitgevoerd noemen we \termen{chaining}. \figref{chaining} illustreert dit principe.
-\importtikzfigure{chaining}{De chaining-transformatie.}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{chaining-asm}{ASM-schema.}
+\importtikzsubfigure{chaining}{Datapad.}
+\caption{De chaining-transformatie.}
+\end{figure}
 \subsubsection{``Multicycling'' en ``Pipelining'': meerdere klokcycli per bewerking}
 \paragraph{Multicycling}
 Ook in omgekeerde richting kunnen we mogelijk winst boeken. Door een instructie ``uit te smeren'' over verschillende toestanden kunnen we mogelijk de schakeling goedkoper maken, of de kloksnelheid verhogen. Dit concept noemen we \termen{multicycling}. In het leidend voorbeeld dienen we bijvoorbeeld het verschil te berekenen tussen twee getallen. Het verschil wordt doorgaans gerealiseerd met een functionele eenheid die dit in twee ``stappen'' zal uitrekenen: eerst nemen we de negatie van het tweede getal, waarna we vervolgens met behulp van een keten van full adders het eerste getal en de negatie van het tweede getal optellen. Omdat de twee stappen een sequentieel karakter vertonen\footnote{Men kan de twee stappen niet tegelijk uitvoeren of ze laten overlappen}, zouden we ervoor kunnen opteren om twee toestanden te voorzien. We voorzien dus geen aftrekker, maar voorzien twee functionele eenheden: een opteller en een componenten die de negatie van het getal kan berekenen.
-\importtikzfigure{multicycling}{De multicycling-transformatie.}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{multicycling-asm}{ASM-schema.}
+\importtikzsubfigure{multicycling}{Datapad.}
+\caption{De multicycling-transformatie.}
+\end{figure}
 \paragraph{}
 De voordelen van multicycling zijn tweeledig. Allereerst kunnen we mogelijk hardware besparen in de functionele eenheden. Een opteller is immers goedkoper dan een aftrekker. Wanneer elders in het algoritme bijvoorbeeld nog een negatie moet worden berekend, kunnen we mogelijk de ge\"introduceerde functionele eenheid delen waardoor dit geen extra kosten met zich meebrengt. Verder valt op te merken dat wanneer we operaties kunnen herleiden naar kleinere basis-instructies, de kans groter is dat complexe operaties een deel van die basis-instructies zullen delen. Een eerste winst is dus mogelijk de kostprijs van de functionele eenheden.
 \paragraph{}
@@ -2179,7 +2189,12 @@ Het uitsmeren van instructies over verschillende toestanden maakt ook een ander 
 Men kan de doorvoer echter opdrijven door meer infrastructuur te voorzien. Indien we elke machine in het $n$-voud aankopen en over $n$ arbeiders beschikken, kunnen we de doorvoer opdrijven met ongeveer $\bigoh{n}$. De gemiddelde tijd die het wassen van alle kledij in beslag neemt wordt dus gereduceerd tot $\bigoh{3\cdot k\cdot\Delta t/n}$. Het probleem is echter dat de kosten ook stijgen met een factor $\bigoh{n}$. Bovendien wordt de versnelling niet altijd gerealiseerd. Meestal is er een vorm van boekhouding nodig die bepaald wie welke taak precies zal uitvoeren\footnote{De maximaal te realiseren versnelling wordt geformaliseerd met de ``Wet van Amadahl''.}. Dit proces staat beschreven in \figref{execution-parallel}.
 \paragraph{}
 Tot slot is er pipelining. In het geval van pipelining beschikken we opnieuw over \'e\'en wasmachine, droogkast en strijkijzer. In plaats van echter alles na elkaar uit te voeren, werken de machines continu. Op het moment dat de wasmachine immers klaar is, verhuist de gewassen kledij naar de droogkast, maar stopt men nieuwe kledij in de wasmachine. Het gevolg is dat wanneer er $s$ stappen in het proces zijn, we de doorvoer kunnen opdrijven met $\bigoh{s}$ ten opzichte van het sequentieel proces, zonder de kosten voor de infrastructuur op te drijven. Dit proces staat beschreven in \figref{execution-pipelining}. Men kan pipelining ook vergelijken met het principe van de lopende band: we voorzien telkens \'e\'en machine voor elke bewerking en het resultaat schuift van machine naar machine.
-\importtikzfigure{pipelining}{De pipelining-transformatie.}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{pipelining-asm}{ASM-schema.}
+\importtikzsubfigure{pipelining}{Datapad.}
+\caption{De pipelining-transformatie.}
+\end{figure}
 \paragraph{}
 We kunnen pipelining op vier niveaus toepassen:
 \begin{enumerate}
