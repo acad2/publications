@@ -24,35 +24,37 @@
   \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
   \anchor{base}{\centerpoint\pgf@y=0pt}
   \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
-  \anchor{s}{\centerpoint\advance\pgf@y by-\halfheight}
-  \anchor{x}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
-  \anchor{y}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
-  \anchor{co}{\centerpoint\advance\pgf@x by-\halfwidth}
-  \anchor{ci}{\centerpoint\advance\pgf@x by\halfwidth}
   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
 
   \backgroundpath{
-	\pgfutil@tempdima=\radius%
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+	\pgfutil@tempdima=\halfwidth
+	\pgfutil@tempdimb=\halfheight
+	\centerpoint
+    \advance\pgf@x by -0.91\pgfutil@tempdima
+    \advance\pgf@y by 0.35\pgfutil@tempdimb
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
+    \advance\pgf@x by 0.91\pgfutil@tempdima
+    \advance\pgf@y by 0.35\pgfutil@tempdimb
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint
     \advance\pgf@x by \halfwidth
     \advance\pgf@y by \halfheight
     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint
-    \advance\pgf@x by \halfwidth
+    \advance\pgf@x by 0.70\pgfutil@tempdima
     \advance\pgf@y by -\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint
-    \advance\pgf@x by -\halfwidth
+    \advance\pgf@x by -0.70\pgfutil@tempdima
     \advance\pgf@y by -\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint
     \advance\pgf@x by -\halfwidth
     \advance\pgf@y by \halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgfpathclose
   }
 }
 
@@ -82,11 +84,6 @@
   \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
   \anchor{base}{\centerpoint\pgf@y=0pt}
   \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
-  \anchor{s}{\centerpoint\advance\pgf@y by-\halfheight}
-  \anchor{x}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
-  \anchor{y}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
-  \anchor{co}{\centerpoint\advance\pgf@x by-\halfwidth}
-  \anchor{ci}{\centerpoint\advance\pgf@x by\halfwidth}
   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
@@ -140,23 +137,23 @@
   \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
   \anchor{base}{\centerpoint\pgf@y=0pt}
   \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
-  \anchor{s}{\centerpoint\advance\pgf@y by-\halfheight}
-  \anchor{x}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
-  \anchor{y}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
-  \anchor{co}{\centerpoint\advance\pgf@x by-\halfwidth}
-  \anchor{ci}{\centerpoint\advance\pgf@x by\halfwidth}
   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{midwest}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.85\pgfutil@tempdima}
 
   \backgroundpath{
-	\pgfutil@tempdima=\radius%
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    \centerpoint
-    \advance\pgf@x by \halfwidth
+	\pgfutil@tempdima=\halfwidth
+	\pgfutil@tempdimb=\halfheight
+	\centerpoint
+    \advance\pgf@x by -0.70\pgfutil@tempdima
     \advance\pgf@y by \halfheight
     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint
+    \advance\pgf@x by 0.70\pgfutil@tempdima
+    \advance\pgf@y by \halfheight
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint
     \advance\pgf@x by \halfwidth
     \advance\pgf@y by -\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
@@ -165,9 +162,9 @@
     \advance\pgf@y by -\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint
-    \advance\pgf@x by -\halfwidth
-    \advance\pgf@y by \halfheight
+    \pgfpathcurveto{\pgf@anchor@ironing@midwest}{\pgf@anchor@ironing@midwest}{\centerpoint}
+    \centerpoint
+    \advance\pgf@x by 0.85\pgfutil@tempdima
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgfpathclose
   }
 }

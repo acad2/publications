@@ -1,7 +1,19 @@
-\begin{tikzpicture}
-\foreach \x in {0,1,2} {
-  \node[washing] (W\x) at (3*\x,0) {};
-  \node[drying] (D\x) at (3*\x+2,0) {};
-  \node[ironing] (I\x) at (3*\x+1,0) {};
+\begin{tikzpicture}[scale=0.5]
+\def\wi{1};
+\def\he{1};
+\def\dx{1.25};
+\def\dg{4.5};
+\foreach \x in {0,1} {
+  \begin{scope}[xshift=\dg*\x cm]
+    \filldraw[fill=gray,draw=black] (-0.75*\wi,-0.75*\he) rectangle ++(2*\dx+1.5*\wi,1.5*\he);
+    \filldraw[fill=white,draw=black] (-0.5*\wi,-0.5*\he) rectangle ++(\wi,\he);
+	\node[washing,scale=0.5] (W\x) at (0,0) {};
+	\filldraw[fill=white,draw=black] (\dx-0.5*\wi,-0.5*\he) rectangle ++(\wi,\he);
+	\node[drying,scale=0.5] (D\x) at (\dx,0) {};
+	\filldraw[fill=white,draw=black] (2*\dx-0.5*\wi,-0.5*\he) rectangle ++(\wi,\he);
+	\node[ironing,scale=0.5] (I\x) at (2*\dx,0) {};
+	\draw[thick,->] (2*\dx+0.75*\wi,0) -- (\dg-0.75*\wi,0);
+  \end{scope}
 }
+\draw[thick,->] (-0.5,-\he) -- (2*\dg,-\he) node[anchor=south east]{$t$};
 \end{tikzpicture}

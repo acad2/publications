@@ -1,0 +1,18 @@
+\begin{tikzpicture}[scale=0.5]
+\def\wi{1};
+\def\he{1};
+\def\dx{1.25};
+\def\dy{1.75};
+\def\dg{4.5};
+\foreach \x in {0,1,2,3} {
+  \begin{scope}[xshift=\dx*\x cm]
+  \filldraw[fill=white,draw=black] (-0.5*\wi,2*\dy-0.5*\he) rectangle ++(\wi,\he);
+  \node[washing,scale=0.5] (W\x) at (0,2*\dy) {};
+  \filldraw[fill=white,draw=black] (-0.5*\wi+\dx,\dy-0.5*\he) rectangle ++(\wi,\he);
+  \node[drying,scale=0.5] (D\x) at (\dx,\dy) {};
+  \filldraw[fill=white,draw=black] (-0.5*\wi+2*\dx,-0.5*\he) rectangle ++(\wi,\he);
+  \node[ironing,scale=0.5] (I\x) at (2*\dx,0) {};
+  \end{scope}
+}
+\draw[thick,->] (-0.5,-\he) -- (7*\dx,-\he) node[anchor=south east]{$t$};
+\end{tikzpicture}

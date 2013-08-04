@@ -2162,11 +2162,23 @@ Een tweede kost heeft betrekking op de kostprijs. De kostprijs van de functionel
 \paragraph{}
 Multicycling is echter wel een populaire techniek voor operaties die buitenproportioneel veel tijd vragen. Dit is meestal het geval bij bijvoorbeeld RAM-geheugen. Men merkt op dat sinds de jaren~'80 de processorsnelheid significant werd opgedreven terwijl de RAM-geheugens deze evolutie niet hebben gevolgd. Indien we dus een toestand zouden voorzien om een cel uit het RAM-geheugen uit te lezen, zou de processorsnelheid hoogstens gelijk zijn aan deze van het RAM-geheugen. Een processor en geheugen werken dan ook eerder onafhankelijk van elkaar. Op geregelde tijdstippen geeft de processor een opdracht aan het RAM-geheugen om een cel uit te lezen en vervolgens enkele toestanden later te controleren of de gegevens reeds in de registers of cache zitten. De \verb+80x86+ instructieset kent zelfs ``prefetching''-instructies: instructies waarmee men de opdracht kan geven om data in de cache in te laden zodat op het moment dat de data effectief nodig is, deze meteen kan worden uitgelezen.
 \paragraph{Pipelining}
-Het uitsmeren van instructies over verschillende toestanden maakt ook een ander effect mogelijk: \termen{pipelining}. Pipelining is een principe 
+Het uitsmeren van instructies over verschillende toestanden maakt ook een ander effect mogelijk: \termen{pipelining}. Pipelining is een uitvoeringsstrategie naast \termen{sequenti\"ele uitvoering} en \termen{parallelle uitvoering}.
 \begin{figure}[hbt]
+\centering
 \importtikzsubfigure{execution-sequential}{Sequentieel.}
+\importtikzsubfigure{execution-parallel}{Parallel.}
+\importtikzsubfigure{execution-pipelining}{Pipelining.}
 \caption{De verschillende uitvoeringsstrategie\"en: sequentieel, parallel en pipelining.}
+\figlab{execution-models}.
 \end{figure}
+\paragraph{}
+\figref{execution-models} toont de verschilende uitvoeringsstrategie\"en naast elkaar. Als voorbeeld gebruiken we het wassen van kledij. In het geval van sequenti\"ele uitvoer beschikken we over \'e\'en wasmachine, \'e\'en droogkast en \'e\'en strijkijzer. Kledij wordt eerst in de wasmachine gestopt, vervolgens gedroogd en daarna gestreken. Wanneer we een grote hoeveelheid kledij moeten wassen, herhalen we dit mechanisme. Indien elke opdracht $\Delta t$ in beslag neemt, betekent dit dus dat we $\bigoh{3\cdot k\cdot\Delta t}$ tijd nodig hebben om alles te verwerken met $k$ de hoeveelheid kledij. Dit proces staat beschreven in \figref{execution-sequential}.
+\paragraph{}
+Men kan de doorvoer echter opdrijven door meer infrastructuur te voorzien. Indien we elke machine in het $n$-voud aankopen en over $n$ arbeiders beschikken, kunnen we de doorvoer opdrijven met ongeveer $\bigoh{n}$. De gemiddelde tijd die het wassen van alle kledij in beslag neemt wordt dus gereduceerd tot $\bigoh{3\cdot k\cdot\Delta t/n}$. Het probleem is echter dat de kosten ook stijgen met een factor $\bigoh{n}$. Bovendien wordt de versnelling niet altijd gerealiseerd. Meestal is er een vorm van boekhouding nodig die bepaald wie welke taak precies zal uitvoeren\footnote{De maximaal te realiseren versnelling wordt geformaliseerd met de ``Wet van Amadahl''.}. Dit proces staat beschreven in \figref{execution-parallel}.
+\paragraph{}
+Tot slot is er pipelining. In het geval van pipelining beschikken we opnieuw over \'e\'en wasmachine, droogkast en strijkijzer. In plaats van echter alles na elkaar uit te voeren, werken de machines continu. Op het moment dat de wasmachine immers klaar is, verhuist de gewassen kledij naar de droogkast, maar stopt men nieuwe kledij in de wasmachine. Het gevolg is dat wanneer er $s$ stappen in het proces zijn, we de doorvoer kunnen opdrijven met $\bigoh{s}$ ten opzichte van het sequentieel proces, zonder de kosten voor de infrastructuur op te drijven. Dit proces staat beschreven in \figref{execution-pipelining}.
+\paragraph{}
+Pipelining komt echter ook met enkele problemen. Om de snelheid effectief met \bigoh{s} op te drijven, dienen de deelstappen precies evenveel tijd te vragen. In de praktijk is het niet eenvoudig een proces zo op te delen. Wanneer dit niet te realiseren valt geldt de ``Wet van de zwakste schakel'': het traagste deelproces bepaald hoelang het duurt alvorens data zal worden uitgelezen. Verder is pipelining ook enkel interessant wanneer we een kort na elkaar een groot aantal maal de operatie moeten uitvoeren.
 \section{Tijdsgedrag}
 \label{s:timeFSMD}
 \subsection{Kritisch pad}
