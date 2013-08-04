@@ -1,3 +1,37 @@
 \begin{tikzpicture}
-
+\begin{scope}
+\resetsprocessor{};
+\foreach \i/\x in {1/0,2/2} {
+  \node[regi] (RA\i) at (\x,0) {R\i};
+  \coordinate (ROWA\i) at (0,-1-0.125*\x);
+  \draw[thick] (-0.5,0 |- ROWA\i) -- (2.5,0 |- ROWA\i);
+  \draw[thick] (RA\i.Q) -- (RA\i.Q |- ROWA\i);
+  \pdot{RA\i.Q |- ROWA\i};
+}
+\node[fununit] (F12A) at (1,-2.75) {FU};
+\node[mux2to1] (M12A) at (F12A.north |- 0,-1.75) {};
+\sprarr{M12A.selin0};
+\draw[thick] (M12A.output) -- (F12A.inputaa);
+\draw[thick] (M12A.data1) -- (M12A.data1 |- ROWA1);
+\draw[thick] (M12A.data0) -- (M12A.data0 |- ROWA2);
+\pdot{M12A.data1 |- ROWA1};
+\pdot{M12A.data0 |- ROWA2};
+\draw (3,-1.25) node {$\Rightarrow$};
+\end{scope}
+\begin{scope}[xshift=4 cm]
+\resetsprocessor{};
+\coordinate (ROWB) at (0,-1.65);
+\draw[thick] (-0.5,0 |- ROWB) -- (2.5,0 |- ROWB);
+\foreach \i/\x in {1/0,2/2} {
+  \node[regi] (RB\i) at (\x,0) {R\i};
+  \node[tris,rotate=-90] (TB\i) at (\x,-1.15) {};
+  \sprarr{TB\i.c};
+  \draw[thick] (RB\i.Q) -- (TB\i.x);
+  \draw[thick] (TB\i.z) -- (TB\i.z |- ROWB);
+  \pdot{RB\i.Q |- ROWB};
+}
+\node[fununit] (F12B) at (1,-2.75) {FU};
+\draw[thick] (F12B.inputaa |- ROWB) -- (F12B.inputaa);
+\pdot{F12B.inputaa |- ROWB};
+\end{scope}
 \end{tikzpicture}

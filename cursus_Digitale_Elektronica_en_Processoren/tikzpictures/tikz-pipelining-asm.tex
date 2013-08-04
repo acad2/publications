@@ -10,7 +10,7 @@
 \end{scope}
 \draw (1.25,0) node {$\Rightarrow$};
 \begin{scope}[xshift=2.5 cm]
-\node[asmcommand] (CBA) at (0,2) {$\begin{array}{l}y\leftarrow\fun{f_1}{x}\\\\z_2\leftarrow z_1\end{array}$};
+\node[asmcommand] (CBA) at (0,2) {$\begin{array}{l}y\leftarrow\fun{f_1}{x}\\z_2\leftarrow z_1\end{array}$};
 \node[asmcommand] (CBB) at (0,0) {$\begin{array}{l}y\leftarrow\fun{f_1}{x}\\z_2\leftarrow z_1\\t\leftarrow\fun{f_2}{y,z_2}\end{array}$};
 \node[asmcommand] (CBC) at (0,-2) {$t\leftarrow\fun{f_2}{y,z_2}$};
 \draw[<-] (CBA) -- (CBA |- TOP);

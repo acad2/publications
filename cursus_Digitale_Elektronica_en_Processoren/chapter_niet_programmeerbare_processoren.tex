@@ -2148,21 +2148,27 @@ Bij wijze van voorbeeld zullen we nog enkele voorbeelden geven gebaseerd op het 
 Op basis van deze maatregelen hebben $9$ bits op het instructiewoord bespaard.
 \subsubsection{``Chaining'': meerdere bewerkingen per klokcyclus}
 Naast de eerder beschreven optimalisaties, kunnen we ook het ASM-schema zelf aanpassen. De argumentatie om dit te doen is een analyse van het tijdsgedrag. Elke klokcyclus wordt de data van de registers uitgelezen en voeren de functionele eenheden hierop bewerkingen uit. Niet alle functionele bewerkingen vereisten echter dezelfde hoeveelheid tijd om het resultaat te berekenen. We kunnen bijvoorbeeld denken aan de schuifoperaties met een vast aantal bits. Vermits hierbij geen logica moet worden ge\"implementeerd, wordt zo'n operatie in theorie onmiddellijk uitgevoerd. We kunnen echter analyseren wat er vervolgens met de gegevens van de functionele eenheid zal worden gedaan. Indien het mogelijk is om de volgende operatie in dezelfde klokcyclus uit te voeren kan dit tot besparingen leiden. Het groeperen van operaties die na elkaar moeten worden uitgevoerd noemen we \termen{chaining}. \figref{chaining} illustreert dit principe.
+\paragraph{}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{chaining-asm}{ASM-schema.}
 \importtikzsubfigure{chaining}{Datapad.}
 \caption{De chaining-transformatie.}
+\figlab{chaining-general}
 \end{figure}
+Wanneer we het ASM-schema en het datapad aanpassen zoals op \figref{chaining-general}, voeren we een chaining transformatie uit. In het ASM-schema worden twee operaties $f_1$ en $f_2$ uitgevoerd. We kunnen de twee operaties samenvoegen in een operatie $f$ met $\fun{f}{x,y}=\fun{f_2}{\fun{f_1}{x},y}$. Alvorens we een chaining-transformatie kunnen uitvoeren, moeten we echter \'e\'en voorwaarde controleren: alle operanden moeten beschikbaar zijn alvorens we de gegroepeerde functie uitvoeren. Indien $z$ bijvoorbeeld nog niet beschikbaar is in de eerste toestand, kunnen we $f$ nog niet berekenen.
 \subsubsection{``Multicycling'' en ``Pipelining'': meerdere klokcycli per bewerking}
 \paragraph{Multicycling}
 Ook in omgekeerde richting kunnen we mogelijk winst boeken. Door een instructie ``uit te smeren'' over verschillende toestanden kunnen we mogelijk de schakeling goedkoper maken, of de kloksnelheid verhogen. Dit concept noemen we \termen{multicycling}. In het leidend voorbeeld dienen we bijvoorbeeld het verschil te berekenen tussen twee getallen. Het verschil wordt doorgaans gerealiseerd met een functionele eenheid die dit in twee ``stappen'' zal uitrekenen: eerst nemen we de negatie van het tweede getal, waarna we vervolgens met behulp van een keten van full adders het eerste getal en de negatie van het tweede getal optellen. Omdat de twee stappen een sequentieel karakter vertonen\footnote{Men kan de twee stappen niet tegelijk uitvoeren of ze laten overlappen}, zouden we ervoor kunnen opteren om twee toestanden te voorzien. We voorzien dus geen aftrekker, maar voorzien twee functionele eenheden: een opteller en een componenten die de negatie van het getal kan berekenen.
+\paragraph{}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{multicycling-asm}{ASM-schema.}
 \importtikzsubfigure{multicycling}{Datapad.}
 \caption{De multicycling-transformatie.}
+\figlab{multicycling-general}
 \end{figure}
+\figref{multicycling-general} beschrijft de transformatie die gepaard gaat met de introductie van multicycling. In het ASM-schema wordt een complexe functie $f$ uitgerekend die we kunnen opsplitsen in twee functies $f_1$ en $f_2$ zodat $\fun{f}{x,y}=\fun{f_1}{\fun{f_2}{x},y}$. In het ASM-schema wordt de functie uitgesmeerd over twee toestanden. Dit hoeft niet te betekenen dat we de tweede toestand moeten introduceren: we kunnen bijvoorbeeld ook de $f_2$-bewerking naar de volgende (al bestaande) toestand schuiven. In het datapad wordt in het algemeen een register ge\"introduceerd. Dit hoeft echter niet de betekenen dat we ook effectief een nieuw register zullen nodig hebben. Door de minimalisatie van de variabelen, kunnen we eventueel het ge\"introduceerde register elimineren. Als voorwaarde om deze transformatie uit te voeren stellen we \'e\'en voorwaarde: de bewerking moet zijn uitgevoerd alvorens andere bewerkingen het resultaat zullen gebruiken als operand.
 \paragraph{}
 De voordelen van multicycling zijn tweeledig. Allereerst kunnen we mogelijk hardware besparen in de functionele eenheden. Een opteller is immers goedkoper dan een aftrekker. Wanneer elders in het algoritme bijvoorbeeld nog een negatie moet worden berekend, kunnen we mogelijk de ge\"introduceerde functionele eenheid delen waardoor dit geen extra kosten met zich meebrengt. Verder valt op te merken dat wanneer we operaties kunnen herleiden naar kleinere basis-instructies, de kans groter is dat complexe operaties een deel van die basis-instructies zullen delen. Een eerste winst is dus mogelijk de kostprijs van de functionele eenheden.
 \paragraph{}
@@ -2189,12 +2195,15 @@ Het uitsmeren van instructies over verschillende toestanden maakt ook een ander 
 Men kan de doorvoer echter opdrijven door meer infrastructuur te voorzien. Indien we elke machine in het $n$-voud aankopen en over $n$ arbeiders beschikken, kunnen we de doorvoer opdrijven met ongeveer $\bigoh{n}$. De gemiddelde tijd die het wassen van alle kledij in beslag neemt wordt dus gereduceerd tot $\bigoh{3\cdot k\cdot\Delta t/n}$. Het probleem is echter dat de kosten ook stijgen met een factor $\bigoh{n}$. Bovendien wordt de versnelling niet altijd gerealiseerd. Meestal is er een vorm van boekhouding nodig die bepaald wie welke taak precies zal uitvoeren\footnote{De maximaal te realiseren versnelling wordt geformaliseerd met de ``Wet van Amadahl''.}. Dit proces staat beschreven in \figref{execution-parallel}.
 \paragraph{}
 Tot slot is er pipelining. In het geval van pipelining beschikken we opnieuw over \'e\'en wasmachine, droogkast en strijkijzer. In plaats van echter alles na elkaar uit te voeren, werken de machines continu. Op het moment dat de wasmachine immers klaar is, verhuist de gewassen kledij naar de droogkast, maar stopt men nieuwe kledij in de wasmachine. Het gevolg is dat wanneer er $s$ stappen in het proces zijn, we de doorvoer kunnen opdrijven met $\bigoh{s}$ ten opzichte van het sequentieel proces, zonder de kosten voor de infrastructuur op te drijven. Dit proces staat beschreven in \figref{execution-pipelining}. Men kan pipelining ook vergelijken met het principe van de lopende band: we voorzien telkens \'e\'en machine voor elke bewerking en het resultaat schuift van machine naar machine.
+\paragraph{}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{pipelining-asm}{ASM-schema.}
 \importtikzsubfigure{pipelining}{Datapad.}
 \caption{De pipelining-transformatie.}
+\figlab{pipelining-general}
 \end{figure}
+\figref{pipelining-general} beschrijft het transformatieproces bij pipelining. Wanneer twee identieke operaties dicht op elkaar volgen, kunnen we beide bewerkingen uitsmeren in de tijd en tegelijk parallelle uitvoer introduceren. De transformatie van het datapad is erg gelijkaardig aan dat van multicycling. Merk echter op dat we ook een nieuw register introduceren voor $z$. De reden is dat terwijl we de $f_2$ voor de eerste keer uitvoeren, we ook de operanden van de tweede instructie moeten uitvoeren. We kunnen een pipelining-transformatie uitvoeren op voorwaarde dat alle resultaten zijn uitgerekend alvorens ze door andere bewerkingen worden uitgevoerd en de instructies betrokken in het pipelining proces onafhankelijk van elkaar kunnen worden uitgevoerd.
 \paragraph{}
 We kunnen pipelining op vier niveaus toepassen:
 \begin{enumerate}
