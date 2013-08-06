@@ -612,29 +612,36 @@
 }\end{pgfonlayer}}
 {\end{tikzpicture}}
 
-\newenvironment{specialprocessor}[5][1/1.5/1/0.25/1.5/2/1/1.5]
+\newenvironment{specialprocessor}[5][1/1.5/1/0.25/1.5/2/1/2.5/1.5]
 {\begin{tikzpicture}
 \setcounter{tmpG}{0}
-\foreach \dr/\ddr/\drt/\dl/\drm/\dfx/\dfy/\ddf in {#1} {
+\setcounter{tmpE}{0}
+\foreach \dr/\ddr/\drt/\dl/\drm/\dfx/\dfy/\ddf/\dtf in {#1} {
   \foreach \i/\t in {#4} {
 	\addtocounter{tmpG}{1}
   }
   \foreach \i/\t in {#5} {
 	\addtocounter{tmpE}{1}
   }
+  \coordinate (TR-ROW) at (0,0.5*\drt);
+  \def\fuoffset{\dl-#2*\dl-\drm-\dfy-\dtf};
+  \coordinate (TF-ROW) at (0,\fuoffset+0.5*\dtf);
   \foreach \i in {1,...,#2} {
-	\coordinate (TB-\i) at (0,-\dl*\i+\dl);
-	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-0.5*\dr,0 |- TB-\i) -- (0.5*\dr,0 |- TB-\i);
+	\coordinate (RB-\i) at (0,\dl-\dl*\i);
+	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-0.5*\dr,0 |- RB-\i) -- (0.5*\dr,0 |- RB-\i);
+  }
+  \foreach \i in {1,...,#3} {
+	\coordinate (FB-\i) at (0,\fuoffset+\dl-\dl*\i);
+	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-0.5*\dr,0 |- FB-\i) -- (0.5*\dr,0 |- FB-\i);
   }
   \setcounter{tmpF}{1}
-  \coordinate (TR-ROW) at (0,0.5*\drt);
   \foreach \i/\t in {#4} {
     \node[regi,scale=\dr] (R-\i) at (\arabic{tmpF}*\ddr-\arabic{tmpG}*\ddr,\drt+0.5*\dr) {\t};
 	\addtocounter{tmpF}{1}
   }
   \setcounter{tmpF}{1}
   \foreach \i/\t in {#5} {
-    \node[fununit,minimum width=\dfx cm,minimum height=\dfy cm] (F-\i) at (-\arabic{tmpG}*\ddr+\arabic{tmpF}*\ddf-\arabic{tmpE}*\ddf,-#1*\dl+\dl-\drm-0.5*\dfy) {\t};
+    \node[fununit,minimum width=\dfx cm,minimum height=\dfy cm] (F-\i) at (\arabic{tmpF}*\ddf-\arabic{tmpE}*\ddf,\fuoffset+0.5*\dft+0.5*) {\t};
 	\addtocounter{tmpF}{1}
   }
 }
@@ -643,6 +650,12 @@
 \newcommand{\sptrisrf}[3][]{
 \node[tris,rotate=-90,#1] (TR-#2) at (R-#2.Q |- TR-ROW) {};
 \draw[thick] (R-#2.Q) -- (TR-#2.x);
-\draw[thick] (TR-#2.z) -- (TR-#2.z |- TB-#3);
-\pdot{TR-#2.z |- TB-#3}
+\draw[thick] (TR-#2.z) -- (TR-#2.z |- RB-#3);
+\pdot{TR-#2.z |- RB-#3}
+}
+\newcommand{\sptrisfr}[3][]{
+\node[tris,rotate=-90,#1] (TF-#2) at (F-#2.output |- TF-ROW) {};
+\draw[thick] (F-#2.output) -- (TF-#2.x);
+\draw[thick] (TF-#2.z) -- (TF-#2.z |- FB-#3);
+\pdot{TF-#2.z |- FB-#3}
 }
