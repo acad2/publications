@@ -612,36 +612,37 @@
 }\end{pgfonlayer}}
 {\end{tikzpicture}}
 
-\newenvironment{specialprocessor}[5][1/1.5/1/0.25/1.5/2/1/2.5/1.5]
+\newenvironment{specialprocessor}[5][1/1/1.5/1/0.25/1.5/1.5/1/2/1/1/1.5/1]
 {\begin{tikzpicture}
 \setcounter{tmpG}{0}
 \setcounter{tmpE}{0}
-\foreach \dr/\ddr/\drt/\dl/\drm/\dfx/\dfy/\ddf/\dtf in {#1} {
-  \foreach \i/\t in {#4} {
+\foreach \dr/\dbr/\ddr/\dtr/\dl/\dmr/\dfx/\dfy/\ddf/\dbf/\dtf/\dmf/\dbw in {#1} {
+  \foreach \x in {#4} {
 	\addtocounter{tmpG}{1}
   }
-  \foreach \i/\t in {#5} {
+  \foreach \x in {#5} {
 	\addtocounter{tmpE}{1}
   }
-  \coordinate (TR-ROW) at (0,0.5*\drt);
-  \def\fuoffset{\dl-#2*\dl-\drm-\dfy-\dtf};
+  \coordinate (TR-ROW) at (0,0.5*\dtr);
+  \def\fuoffset{\dl-#2*\dl-\dmr-\dfy-\dbf-\dtf};
   \coordinate (TF-ROW) at (0,\fuoffset+0.5*\dtf);
   \foreach \i in {1,...,#2} {
 	\coordinate (RB-\i) at (0,\dl-\dl*\i);
-	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-0.5*\dr,0 |- RB-\i) -- (0.5*\dr,0 |- RB-\i);
+	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-\dr,0 |- RB-\i) -- (0,0 |- RB-\i);
   }
   \foreach \i in {1,...,#3} {
 	\coordinate (FB-\i) at (0,\fuoffset+\dl-\dl*\i);
-	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-0.5*\dr,0 |- FB-\i) -- (0.5*\dr,0 |- FB-\i);
+ 	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-\dr,0 |- FB-\i) -- (\dl*\i,0 |- FB-\i) -- (\dl*\i,\dtr+\dr+\dbr+\dmf+\dl*\i);
   }
   \setcounter{tmpF}{1}
-  \foreach \i/\t in {#4} {
-    \node[regi,scale=\dr] (R-\i) at (\arabic{tmpF}*\ddr-\arabic{tmpG}*\ddr,\drt+0.5*\dr) {\t};
+  \foreach \i/\t/\b in {#4} {
+    \node[regi,scale=\dr] (R-\i) at (\arabic{tmpF}*\ddr-\arabic{tmpG}*\ddr-0.5*\dr,\dtr+0.5*\dr+\dbr) {\t};
+    \draw (R-\i.Q) -- ();
 	\addtocounter{tmpF}{1}
   }
   \setcounter{tmpF}{1}
   \foreach \i/\t in {#5} {
-    \node[fununit,minimum width=\dfx cm,minimum height=\dfy cm] (F-\i) at (\arabic{tmpF}*\ddf-\arabic{tmpE}*\ddf,\fuoffset+0.5*\dft+0.5*) {\t};
+    \node[fununit,minimum width=\dfx cm,minimum height=\dfy cm] (F-\i) at (\arabic{tmpF}*\ddf-0.5*\dfx-\arabic{tmpE}*\ddf,\fuoffset+\dtf+\dbf+0.5*\dfy) {\t};
 	\addtocounter{tmpF}{1}
   }
 }
