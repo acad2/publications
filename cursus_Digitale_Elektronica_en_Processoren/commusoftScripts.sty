@@ -612,7 +612,7 @@
 }\end{pgfonlayer}}
 {\end{tikzpicture}}
 
-\newenvironment{specialprocessor}[5][2/0.5/1.5/1/0.25/1.5/1.5/1/2/0.5/1/1.5/0.75/2]
+\newenvironment{specialprocessor}[5][1/0.5/2.5/1/0.25/1.5/1.5/1/2/0.5/1/1.5/0.75/0.5]
 {\begin{tikzpicture}
 \setcounter{tmpG}{0}
 \setcounter{tmpE}{0}
@@ -696,6 +696,17 @@
 \draw[thick] (R-#2.Q) -- (TR-#2.x);
 \draw[thick] (TR-#2.z) -- (TR-#2.z |- RB-#3);
 \pdot{TR-#2.z |- RB-#3}
+}
+\newcommand{\spfrmux}[3][]{
+\coordinate (TMP) at (FUC-#2);
+\foreach \i/\m in {#1} {
+  \draw[thick] (TMP) -| (RR-\i-\m);
+  \coordinate (TMP) at (TMP -| RR-\i-\m);
+  \pdot{TMP};
+}
+\foreach \i/\m in {#3} {
+  \draw[thick] (TMP) -| (RR-\i-\m);
+}
 }
 \newcommand{\sptrisfr}[3][]{
 \node[tris,rotate=-90,#1] (TF-#2) at (F-#2.output |- TF-ROW) {};
