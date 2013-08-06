@@ -2082,6 +2082,8 @@ De compatibiliteitsgrafen van de twee types verbindingen worden voorgesteld in \
 \calP_o&=&\accl{\accl{o_1,o_2,o_4,o_5,o_7},\accl{o_3,o_6,o_8}}\\
 \calP_r&=&\accl{\accl{r_1,r_2,r_7,r_8},\accl{r_3,r_4,r_5,r_6}}
 \end{eqnarray}
+\paragraph{Uiteindelijke implementatie}
+\importtikzfigure{sprocessor-mincon}{De implementatie van het datapad na het minimaliseren van de verbindingen.}
 \subsubsection{Registers samenvoegen in registerbank (``register port sharing'')}
 Registers voorzien niet enkel logica om gegevens op te slaan. Er is ook logica vereist om nieuwe data op te slaan of om de data uit te lezen. We kunnen echter opmerken dat niet steeds alle registers hun data in elke toestand beschikbaar moeten stellen of nieuwe gegevens moeten opslaan. Door registers te groeperen in een registerbank kunnen we besparen op de implementatie van deze functies. Verder kunnen we het aantal multiplexers en tri-state buffers mogelijk reduceren omdat het aantal ingangen en uitgangen van een registerbank beperkter zijn. Dit proces, ook wel \termen{register port sharing} genoemd, zullen we in deze subsectie bespreken.
 \paragraph{}

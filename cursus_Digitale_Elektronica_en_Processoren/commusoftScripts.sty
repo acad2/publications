@@ -612,8 +612,37 @@
 }\end{pgfonlayer}}
 {\end{tikzpicture}}
 
-\newenvironment{specialprocessor}[4]
+\newenvironment{specialprocessor}[5][1/1.5/1/0.25/1.5/2/1/1.5]
 {\begin{tikzpicture}
-
+\setcounter{tmpG}{0}
+\foreach \dr/\ddr/\drt/\dl/\drm/\dfx/\dfy/\ddf in {#1} {
+  \foreach \i/\t in {#4} {
+	\addtocounter{tmpG}{1}
+  }
+  \foreach \i/\t in {#5} {
+	\addtocounter{tmpE}{1}
+  }
+  \foreach \i in {1,...,#2} {
+	\coordinate (TB-\i) at (0,-\dl*\i+\dl);
+	\draw[thick] (\ddr-\ddr*\arabic{tmpG}-0.5*\dr,0 |- TB-\i) -- (0.5*\dr,0 |- TB-\i);
+  }
+  \setcounter{tmpF}{1}
+  \coordinate (TR-ROW) at (0,0.5*\drt);
+  \foreach \i/\t in {#4} {
+    \node[regi,scale=\dr] (R-\i) at (\arabic{tmpF}*\ddr-\arabic{tmpG}*\ddr,\drt+0.5*\dr) {\t};
+	\addtocounter{tmpF}{1}
+  }
+  \setcounter{tmpF}{1}
+  \foreach \i/\t in {#5} {
+    \node[fununit,minimum width=\dfx cm,minimum height=\dfy cm] (F-\i) at (-\arabic{tmpG}*\ddr+\arabic{tmpF}*\ddf-\arabic{tmpE}*\ddf,-#1*\dl+\dl-\drm-0.5*\dfy) {\t};
+	\addtocounter{tmpF}{1}
+  }
+}
 }
 {\end{tikzpicture}}
+\newcommand{\sptrisrf}[3][]{
+\node[tris,rotate=-90,#1] (TR-#2) at (R-#2.Q |- TR-ROW) {};
+\draw[thick] (R-#2.Q) -- (TR-#2.x);
+\draw[thick] (TR-#2.z) -- (TR-#2.z |- TB-#3);
+\pdot{TR-#2.z |- TB-#3}
+}
