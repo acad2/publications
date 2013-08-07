@@ -13,7 +13,7 @@ Merk op dat de definitie hierbij geen concrete uitspraak doet over hoe een progr
 \paragraph{}
 \importtikzfigure{processor-programming}{De structuur van een programmeerbare processor.}
 \figref{processor-programming} toont hoe een programmeerbare processor er in grote lijnen uitziet. Merk op dat het enige verschil tussen deze figuur en \figrefpag{processorInformationStreams} de introductie van een programmageheugen is.
-\section{Programma als een Reeks Instructies}
+\section{Instructies en Velden}
 Nu we de structuur van een programmeerbare processor hebben voorgesteld, zullen we in deze sectie de verschillende aspecten en terminologie van een programma bespreken.
 \subsection{Programma}
 Een algemeen aanvaarde definitie voor een \termen{programma} is een sequentie van instructies. De instructies zijn op zo'n manier bepaald en geordend dat ze samen een complexe (en nuttige) taak uitvoeren. In dit opzicht bevat een sequentie van instructies dus dezelfde informatie als de eindige toestandsmachine van de controller bij een niet-programmeerbare processor.
@@ -98,7 +98,39 @@ Mul x
 Store c
 \end{verbatim}
 Elke instructie vereist telkens $3$ geheugentoegangen: $2$ om de instructie uit te lezen en $1$ geheugentoegang om het adres uit te lezen of de resultaten weg te schrijven. Omdat het algoritme in $7$ instructies kan worden ge\"implementeerd, zijn er in totaal $21$ geheugentoegangen vereist.
-\subsubsection{Instructies met 0 adresvelden}
+\subsubsection{Instructies zonder adresvelden}
+Sommige instructiesets bevatten geen adressen als operanden. In een dergelijk systeem moeten we echter wel een systeem implementeren die zelf de adressen voorstelt.
+\paragraph{}
+Een populaire methode werkt met een stapelgeheugen. In zo'n systeem beschouwen we een stapel die groeit bij een een Load-instructie. Wanneer een instructie een berekening uitvoert worden de operanden uit de bovenste elementen van de stapel gehaald. Deze elementen worden van de stapel gehaald en het resultaat wordt vervolgens op de stapel gezet. Ook in een dergelijk systeem is er soms nood aan het opslaan van tussenresultaten om deze later te hergebruiken. Ook hiervoor gebruiken we de store operatie. De operatie neemt als argument een adres van de stapel: het aantal elementen onder de top. Ook dit kan men als een adres zien. Men maakt echter meestal de assumptie dat deze waarde niet buitengewoon groot is en de waarde dus in de instructie kan worden meegenomen. Bijgevolg bevat de instructie dus geen adres. Omdat het bovenste gedeelte van de stapel meestal met een registerbank wordt ge\"implementeerd, vereisen de bewerkingen bijgevolg geen geheugentoegangen.
+\paragraph{}
+We kunnen het algoritme implementeren met volgende instructies:
+\begin{verbatim}
+Load a
+Load b
+Add
+Load a
+Load b
+Sub
+Mul
+Store c
+\end{verbatim}
+Om de impact te berekenen moeten we opnieuw een onderscheid maken tussen twee soorten instructies: Load- en Store instructies vereisen twee geheugentoegangen ($1$ geheugentoegang om de instructie op te halen en $1$ instructie om het resultaat op te halen of weg te schrijven) de overige instructies vereisen slechts \'e\'en geheugentoegang. In totaal vereist dit programma dus $13$ toegangen tot het geheugen.
+\subsubsection{Instructies met registerbank-adressen: dubbele adressering}
+Tot slot dienen we nog te vermelden dat een adresveld niet noodzakelijk altijd een geheugenadres moet omvatten. Men kan bijvoorbeeld een bit in dit veld voorzien die bepaald of het adres een geheugenadres specificeert of het adres van een registerbank. Daarnaast kan de interpretatie van een dergelijk adres ook afhangen van de instructie. Moderne processoren interpreteren bijvoorbeeld vaak de adressen bij bewerkingen als registerbank-adressen en de tweede operand bij een Load- of Store-instructie als een geheugenadres. Vermits een algoritme vooral met tussenresultaten zal rekenen verwachten we een tijdswinst omdat we niet telkens de operanden uit het geheugen moeten uitlezen.
+\paragraph{}
+Een dergelijke instructieset kan ook instructies met variabele lengte beschouwen. Sommige instructies omvatten immers geen geheugenadressen, andere wel. In dat geval kan de eerste instructie bijvoorbeeld aanleiding geven om het volgende woord in een instructieregister in te lezen, of de instructie meteen uit te voeren.
+\paragraph{}
+Registeradressen worden meestal voorgesteld met een prefix \verb+R+. In het geval van een dergelijke instructieset ziet het programma er als volgt uit:
+\begin{verbatim}
+Load R1 a
+Load R2 b
+Add R3 R1 R2
+Sub R4 R1 R2
+Mul R5 R3 R4
+Store c R5
+\end{verbatim}
+Bewerking instructies worden voorgesteld in \'e\'en woord en vereisten geen extra geheugentoegang. Bijgevolg vereisen ze \'e\'en geheugentoegang. Load- en Store-bewerkingen vereisen $3$ geheugentoegangen: $2$ bij het inlezen van de instructie en $1$ bij het inlezen of wegschrijven van de data. In totaal vereist het programma dan ook $12$ keer toegang tot het geheugen.
+\subsection{Adresseermodi}
 \section{Processorontwerp}
 \subsection{Complex Instruction Set Computer (CISC)}
 \subsection{Reduced Instruction Set Computer (RISC)}
