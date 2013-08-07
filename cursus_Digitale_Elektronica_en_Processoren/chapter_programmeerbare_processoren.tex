@@ -3,6 +3,7 @@
 \begin{chapterintro}
 In dit hoofdstuk bespreken we programmeerbare processoren. Deze processoren verschillen van de niet-programmeren processoren omdat een gebruiker een programma -- een reeks van instructies -- kan uitvoeren op de processor en bijgevolg in grote mate het algoritme die de processor uitvoert zelf kan bepalen. Centrale processoreenheden (CPU's) zijn hiervan slechts een subset van de programmeerbare processoren. We bespreken eerst de hoe een instructie eruitziet en hoe we een schakeling kunnen ontwerpen om deze instructies uit toe voeren. Cruciaal hierbij zijn de verschillende adresseermodi. Vervolgens beschouwen we de twee grote instructie-families: RISC en CISC. We zullen voor beide een instructieset ontwerpen en de verschillende aspecten die hierbij komen kijken bespreken.
 \end{chapterintro}
+\minitoc[n]
 \section{De Programmeerbare Processor}
 We zullen in deze sectie het verschil bespreken tussen een niet-programmeerbare processor (zie \chpref{nonprogramming}) en een programmeerbare processor. Algemeen is deze grens eerder vaag. Ook bij een niet programmeerbare processor zullen de controller en het datapad meestal be\"invloed worden door signalen van buiten de schakeling. Sommige technici kunnen door deze invoer te manipuleren de processor een algoritme laten uitvoeren waarvoor de schakeling niet ontworpen was.
 \paragraph{}
@@ -36,6 +37,68 @@ De mnemonische notatie en de actie-notatie zijn manieren om instructies voor te 
  \item Constante: bewerkingen zoals een optelling tellen soms een constante op bij een register. In dat geval moet de constante in de instructie worden ingebed.
 \end{itemize}
 Men dient op te merken dat een veld niet noodzakelijk een vaste lengte heeft of slechts \'e\'enmaal voorkomt. Stel bijvoorbeeld dat de adresseermode bepaald dat de gegevens uit een registerbank moeten uitgelezen worden, verwachten we dat het adres korter zal zijn dan wanneer we het adres uit een RAM-geheugen halen. Verder zal men bij sommige operaties twee of meer operanden moeten selecteren. In dat geval is het dus mogelijk dat het adresveld meerdere keren voorkomt. Sommige processoren kunnen voorzien ook een instructieformaat waarbij men twee of meer bewerkingen kan specificeren die dan parallel worden uitgevoerd. In dat geval komt de opcode dus twee of meer keer voor.
+\subsection{Generische Instructiecyclus}
+Een processor voert een instructie doorgaans uit in vijf stappen. Deze stappen noemt men de generische instructiecyclus. De stappen zijn:
+\begin{enumerate}
+ \item Lees de instructie in: het programmageheugen wordt uitgelezen en de instructie wordt in het \termen{instructieregister (IR)} opgeslagen. De programmateller wordt verhoogt.
+ \item Bereken de adressen: Op basis van de adresseermodi en de adressen in de instructie worden de echte adressen bepaald. Een adres uit een registerbank zal er dus anders uitzien dan een adres uit het RAM-geheugen.
+ \item Lees de operanden: de adressen van de operanden worden uitgelezen en weggeschreven in tijdelijke registers.
+ \item Voer de bewerking uit: op basis van de data in de operand-registers en de opcode kan men de relevante bewerking op de relevante data uitvoeren. Het resultaat wordt in een tijdelijk register geplaatst.
+ \item Schrijf het resultaat weg: het resultaat wordt weggeschreven in een registerbank of RAM-geheugen (indien dit relevant is voor de bewerking).
+\end{enumerate}
+Deze cyclus wordt eindeloos herhaalt en leent zich meestal erg goed tot pipelining: enkel wanneer de volgende instructie een operand moet inlezen die bepaald wordt door een instructie die kort ervoor is uitgevoerd moet de pipeline worden onderbroken. Men kan een sprongbevel uitvoeren door in de instructie de programmateller aan te passen.
+\subsection{Uitvoeringssnelheid}
+De uitvoeringssnelheid van een instructie hangt in grote mate af van twee factoren:
+\begin{itemize}
+ \item De snelheid van het datapad
+ \item Het aantal toegangen tot extern geheugen.
+\end{itemize}
+We kunnen de snelheid van het datapad doorgaans opdrijven door meer hardware te voorzien die bijvoorbeeld bewerkingen in parallel uitvoeren. Het aantal toegangen tot extern geheugen kunnen we dan weer verlagen door kleine en simpele instructies te voorzien waardoor met elk een beperkt aantal operaties op het geheugen.
+\paragraph{}
+De grootte van een instructie is echter een trade-off. Wanneer we grote instructies voorzien met een groot aantal bits laten we de programmeur toe om een complexe taak in zo'n instructie te specificeren. Bijgevolg verwachten we dat een programma uit een klein aantal van dergelijke instructies zal bestaan. Omdat de instructies echter complex zijn, verwachten we een traag datapad en veel geheugentoegangen. Wanneer de processor enkel simpele instructies aanbied kan het datapad deze snel uitvoeren, maar een programma zal een groot aantal instructies bevatten. De complexiteit van een instructieset wordt dan ook soms uitgedrukt in het aantal adresvelden.
+\subsection{Adresvelden}
+In deze subsectie zullen we enkele instructiesets bespreken volgens het aantal adresvelden. Bij de verschillende instructiesets zullen we aantal geheugentoegangen berekenen die nodig zijn om de volgende $\brak{a+b}\times\brak{a-b}$ uit te rekenen. Deze operatie wordt doorgaans niet als \'e\'en instructie aangeboden (tenzij bij processoren die taken uitvoeren waarbij deze bewerking zeer regelmatig zou voorkomen). We zullen dan ook uitgaan van een algemene instructieset die de optelling (\termen{Add-instructie}), aftrekking (\termen{Sub-instructie}) en vermenigvuldiging (\termen{Mul-instructie}) voorziet.
+\paragraph{}
+Alvorens we de instructiesets met elkaar kunnen vergelijken, zullen we eerst enkele aannames moeten maken over hoe gegevens en instructies kunnen worden ingelezen. We zullen uitgaan van een woordlengte\footnote{De woordlengte is het aantal bits die in een geheugen onder \'e\'en adres worden opgeslagen.} $w$. We maken de assumptie dat een instructie zonder geheugenadressen in \'e\'en woord\footnote{Een woord is een sequentie van $w$ bits met $w$ de woordlengte.} kan worden opgeslagen. Het geheugen omvat $2^w$ adressen, bijgevolg telt het geheugen $w\cdot 2^w$ bits en is elk adres voor te stellen met een woord. Een instructie met $k$ geheugenadressen kan dus worden opgeslagen in $k+1$ woorden. We vergelijken de instructiesets op basis van geheugentoegangen. Dit zijn dus het aantal toegangen om de instructie uit te lezen samen met het uitlezen en wegschrijven van gegevens die in de instructie worden gespecificeerd.
+\subsubsection{Instructies met 3 adresvelden}
+Een instructieset met drie adresvelden bepaald meestal \'e\'en adres voor het resultaat en twee adressen voor de operanden. Bijvoorbeeld de \verb+Add a b c+ instructie berekend de optelling van de gegeven die op de geheugenplaatsen $b$ en $c$ staan en plaatst het resultaat dus in adres $a$. Om $\brak{a+b}\times\brak{a-b}$ dus uit te rekenen zullen we volgend programma uitvoeren:
+\begin{verbatim}
+Add c a b
+Sub x a b
+Mul c c x
+\end{verbatim}
+Per instructie voorzien we dus $4+3$ geheugentoegangen. $4$ instructietoegangen per instructie $2$ leesoperaties voor de operanden en $1$ schrijfoperatie. Omdat we $3$ instructies uitvoeren vereist het programma dus $21$ geheugentoegangen. We kunnen echter opmerken dat in de laatste instructies we tweemaal hetzelfde adres vermelden. Dit soort instructies vormen dan ook de argumentatie om soms instructies met twee adresvelden te gebruiken.
+\subsubsection{Instructies met 2 adresvelden}
+Instructiesets met twee adresvelden zijn vrij populair. \verb+80x86+ is een voorbeeld van zo'n instructieset. In zo'n instructieset vertegenwoordigen het eerste en tweede adresveld de adressen van de operanden en het eerste veld ook het adres van het resultaat. Het eerste adres wordt bijgevolg overschreven.
+\paragraph{}
+Een probleem bij dit mechanisme is dat we soms na de bewerking de operanden willen kunnen hergebruiken om andere operaties uit te voeren. Zo willen we na het berekenen van $a+b$ nog over $a$ en $b$ kunnen beschikken om $a-b$ uit te rekenen. We kunnen de waarde kopi\"eren om dit probleem te vermijden. We kunnen de waarde van $x$ kopi\"eren naar adres $y$ met behulp van twee instructies: \verb+Sub y y+ en \verb+Add y x+. De meeste processoren voorzien echter een kopieer instructie: de \termen{Mov-instructie}. Het voordeel van deze instructie is dat naast het ophalen van de instructie slechts twee geheugentoegangen vereist zijn.
+\paragraph{}
+We kunnen het algoritme dan ook als volgt implementeren:
+\begin{verbatim}
+Mov c a
+Add c b
+Mov x a
+Sub x b
+Mul c x
+\end{verbatim}
+De Mov-instructie vereist in totaal $5$ geheugentoegangen, de overige instructies vereisen $6$ geheugentoegangen. In totaal vereist het uitvoeren van het algoritme dus $28$ geheugentoegangen. We dienen echter wel op te merken dat de instructies sneller zullen worden uitgevoerd.
+\subsubsection{Instructies met 1 adresvelden}
+We kunnen de instructieset verder reduceren tot \'e\'en adresveld per instructie. Dit doen we met behulp van een \termen{accumulator (ACC)}. Een accumulator is een speciaal register die dienst doet als zowel de eerste operand en het register waar het resultaat in wordt geplaatst. Men kan deze instructieset dus vergelijken met de eerste instructieset, maar waarbij de eerste operator altijd een vast adres voorstelt. Het voordeel van een accumulator is de implementatie door middel van een register: de accumulator inlezen of resultaten wegschrijven vereist bijgevolg geen geheugentoegang.
+\paragraph{}
+Ook wanneer we een accumulator gebruiken zullen we soms tussenresultaten tijdelijk in een andere variabele willen opslaan om de waarde later in te lezen. We kunnen hier geen gebruik maken van de Mov-instructie omdat het resultaat altijd vast staat: de accumulator. Daarom worden twee nieuwe instructies ge\"introduceerd: de \termen{Load-instructie} leest het adres uit en plaatst de waarde in de accumulator, de \termen{Store-instructie} schrijft de waarde van de accumulator weg in het opgegeven adres. De Store-instructie is bijgevolg een instructie waar de accumulator geen dienst doet als de ontvanger van het resultaat.
+\paragraph{}
+We kunnen het algoritme realiseren met volgende code:
+\begin{verbatim}
+Load a
+Add b
+Store x
+Load a
+Sub b
+Mul x
+Store c
+\end{verbatim}
+Elke instructie vereist telkens $3$ geheugentoegangen: $2$ om de instructie uit te lezen en $1$ geheugentoegang om het adres uit te lezen of de resultaten weg te schrijven. Omdat het algoritme in $7$ instructies kan worden ge\"implementeerd, zijn er in totaal $21$ geheugentoegangen vereist.
+\subsubsection{Instructies met 0 adresvelden}
 \section{Processorontwerp}
 \subsection{Complex Instruction Set Computer (CISC)}
 \subsection{Reduced Instruction Set Computer (RISC)}
