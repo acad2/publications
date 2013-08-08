@@ -151,6 +151,8 @@ Meestal lezen we operanden uit met behulp van een adres. Dit adres verwijst ofwe
 \subsubsection{Indirecte adressering}
 Soms kennen we de plaats waar de data in het geheugen staat niet expliciet. Stel bijvoorbeeld dat we werken met een heap\footnote{Een heap is een geheugenruimte waar men dynamisch record kan toevoegen en terug verwijderen.}, hangt de plaats waar de data staat meestal af van de manier hoe het programma eerder werd doorlopen. Het adres wordt dan ook ergens anders bewaard in het geheugen of een registerbank.
 \paragraph{}
+Indirecte adressering is een belangrijke vorm in programma's. Naast werken met een onbekend adres laat het ook toe het adres mee te geven wanneer we bijvoorbeeld een subroutine uitvoeren die een ``pointer'' vereist.
+\paragraph{}
 \termen{Indirecte adressering} maakt het mogelijk om in \'e\'en instructie de operand in te lezen waarvan het adres ergens in het geheugen staat. In dat geval dienen we dus het adres te specificeren waar het adres staat.
 \begin{figure}[hbt]
 \centering
@@ -161,8 +163,42 @@ Soms kennen we de plaats waar de data in het geheugen staat niet expliciet. Stel
 \paragraph{}
 Tweemaal het geheugen uitlezen in \'e\'en instructie is echter een dure operatie. Daarom zal men de adressen doorgaans in een registerbank opslaan. In dat geval spreken we dan ook van \termen{register-indirecte adressering}.
 \subsubsection{Relatieve adressering}
+Hedendaagse besturingssystemen ondersteunen doorgaans multiprogramming: het tegelijk uitvoeren van verschillende programma's. Bijgevolg worden verschillende programma's tegelijk in het register geladen. De compiler van een programma weet doorgaans op voorhand niet waar het programma in het geheugen zal worden ingeladen. Wanneer een programma echter een sprongbevel uitvoert, moet het adres van het sprongbevel wijzen naar het correcte adres.
+\paragraph{}
+Het aangehaalde voorbeeld is \'e\'en van de redenen om \termen{relatieve adressering} toe te passen. Bij relatieve adressering houdt de processor een \termen{basisadres} bij in een impliciet register. Dit basisadres wordt bij het gegeven adres opgeteld om het werkelijke adres te bepalen. Het adresveld wordt in dat geval de \termen{offset} genoemd.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{address-relative}{Relatieve adressering}
+\importtikzsubfigure{address-relative-register}{Register-relatieve adressering}
+\caption{Relatieve adressering}
+\figlab{address-relative-general}
+\end{figure}
+\paragraph{}
+Naast het verzekeren van correcte spronginstructies kan relatieve adressering ook tot kortere instructiewoorden leiden. We kunnen bijvoorbeeld een registerbank voorzien die verschillende basisadressen voorziet. De basisadressen kunnen bijvoorbeeld wijzen naar datastructuren die vaak gebruikt worden. Naast een veld die het register in de registerbank specificeert, dient men een veld te voorzien die de offset vanaf het basisadres voorstelt. Een dergelijke vorm van adressering noemen we \termen{register-relatieve adressering}.
 \subsubsection{Ge\"indexeerde adressering}
+We kunnen ook de twee velden omdraaien door het basisadres in de instructie onder te brengen en de offset in een impliciet register of een registerbank op te slaan. Deze vormen van adressering noemen we \termen{ge\"indexeerde adressering}. Ge\"indexeerde adressering is vooral interessant voor gegevensstructuren met eigen indexsystemen. We denken hierbij bijvoorbeeld aan arrays, matrices, stapels, wachtrijen,... In het register staat immers de index van de datastructuur zelf. Bij een array is dit bijvoorbeeld $i$ indien we het $i$-de element willen uitlezen.
+\paragraph{}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{address-indexed}{Ge\"indexeerde adressering}
+\importtikzsubfigure{address-indexed-register}{Register-ge\"indexeerde adressering}
+\caption{Ge\"indexeerde adressering}
+\figlab{address-indexed-general}
+\end{figure}
+De structuur van ge\"indexeerde adressen op \figref{address-indexed-general} lijkt sterk op de structuur van relatieve adressen op \figref{address-relative-general}. Het verschil is echter dat een basisadres een volwaardig adres is en dus makkelijk $32$ bits telt. De offset daarentegen telt doorgaans slechts $3$ tot $8$ bits. Bij ge\"indexeerde adressering zijn de instructies dus groter.
+\paragraph{}
+Ook bij deze vorm van adressering kunnen we gebruik maken van een register bank. In dat geval wordt het adres van de registerbank bepaald door een veld in de instructie. Uit dit adres wordt dan de offset opgeslagen in registerbank berekend. Deze vorm van adressering noemen we naar analogie \termen{register-ge\"indexeerde adressering}.
 \subsubsection{Ge\"indexeerde adressering met autoincrement/autodecrement}
+Meestal leest men een bepaald element uit een array, matrix,... uit binnen een lus in het programma. De meeste programma's zullen dan ook de volledige array of een significant deel overlopen. Dit gebeurd doorgaans in een logische volgorde van links naar rechts of omgekeerd. Men kan het mechanisme achter ge\"indexeerde adressering uitbreiden met \termen{autoincrement} en/of \termen{autodecrement}. Wanneer we deze adresseringmode toepassen wordt het impliciete register die de offset bijhoudt na het uitvoeren van de opdracht automatisch opgehoogd of verlaagd. Hierdoor kan men bij een volgende instructie meteen het volgende of vorige element in de array uitlezen zonder eerst zelf manueel het register op te hogen. Dit kan voordelig zijn omdat het uitrekenen van de nieuwe waarde voor het offset-register parallel kan gebeuren met het uitvoeren van de instructie zelf.
+\paragraph{}
+\importtikzfigure{address-index-increment}{Ge\"indexeerde adressering met autoincrement/autodecrement.}
+\figref{address-index-increment} illustreert het principe. Op basis van de een de instructie kiest men welke waarde door de multiplexer stroomt, deze waarde wordt bij de originele offset opgeteld en vervolgens in het register ingeladen. Door dezelfde instructie vervolgens daarna uit te voeren, zullen we een ander geheugenadres uitlezen bij het bepalen van de operand.
+\paragraph{}
+Soms bestaat een array niet uit bytes maar uit bijvoorbeeld long integers (8 bytes). Bij sommige processoren kan men dan ook de staplengte bepalen door deze in een veld in de instructie te specificeren, of weg te schrijven in een speciaal hiervoor bestemd register.
 \section{Processorontwerp}
+Nu we de belangrijkste aspecten van een instructieset hebben besproken, zullen we het ontwerp van de processor zelf in detail bespreken. We zullen eerst de algemene ontwerpcyclus waarna we het ontwerp bespreken voor de twee grote families van instructiesets: CISC en RISC.
+\paragraph{}
+\subsection{Ontwerpcyclus}
+\importtikzfigure{processor-design-cycle}{De processorontwerp-cyclus.}
 \subsection{Complex Instruction Set Computer (CISC)}
 \subsection{Reduced Instruction Set Computer (RISC)}

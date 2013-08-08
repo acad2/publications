@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+\begin{scope}[xshift=-0.5cm]
+\node (IA) at (0,0) {opcode};
+\node[anchor=west] (IC) at (IA.east) {basis};
+\draw[thick] (IA.north west) rectangle (IC.south east);
+\end{scope}
+\begin{scope}[xshift=3cm,yshift=-3cm]
+\node[draw,rectangle,thick,fill=gray,minimum width=2 cm,minimum height=4 cm] (MEM) at (0,0) {};
+\node[draw,rectangle,thick,fill=white,minimum width=2 cm] (OPE) at (0,-1.25) {Operand};
+\draw (MEM.north) node[anchor=south] {Geheugen};
+\end{scope}
+\begin{scope}[xshift=-1cm,yshift=-2cm]
+\node[draw,rectangle,thick,fill=white,minimum width=2 cm] (ADR) at (0,0.65) {Offset};
+\draw (ADR.north) node[anchor=south] {Register};
+\end{scope}
+\coordinate (MID) at ($0.5*(ADR)+0.5*(MEM)$);
+\node[draw,circle] (ADD) at (IC |- OPE) {$+$};
+\draw[thick,->] (ADR) |- (ADD);
+\draw[thick,->] (ADD) -- (OPE);
+\draw[thick,->] (IC) -- ++(0,-0.5) -| (ADD);
+\end{tikzpicture}
