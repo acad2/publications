@@ -197,7 +197,14 @@ Meestal leest men een bepaald element uit een array, matrix,... uit binnen een l
 Soms bestaat een array niet uit bytes maar uit bijvoorbeeld long integers (8 bytes). Bij sommige processoren kan men dan ook de staplengte bepalen door deze in een veld in de instructie te specificeren, of weg te schrijven in een speciaal hiervoor bestemd register.
 \section{Processorontwerp}
 Nu we de belangrijkste aspecten van een instructieset hebben besproken, zullen we het ontwerp van de processor zelf in detail bespreken. We zullen eerst de algemene ontwerpcyclus waarna we het ontwerp bespreken voor de twee grote families van instructiesets: CISC en RISC.
-\paragraph{}
+\subsection{RISC en CISC}
+In de vorige sectie werden instructiesets vergeleken volgens het aantal adresvelden per instructie. Het aantal adresvelden vormt dan ook de belangrijkste basis om instructiesets in te delen in \'e\'en van de twee families: de \termen{Complex Instruction Set Computer (CISC)} of \termen{Reduced Instruction Set Computer (RISC)}.
+\subsubsection{CISC}
+In het geval van CISC beschouwt men een grote instructieset met complexe en trage instructies. De instructieset omvat meestal een groot aantal verschillende operaties waarbij men ook een groot aantal adresseermodi voorziet. Dit leidt meestal tot een complex datapad met veel functionele eenheden registers en complexe verbindingen die de datastroom controleren. Het gevolg is dat dergelijke processoren aan een lage klokfrequentie werken. De programma's zijn echter vrij kort en men hoopt meestal snelheidswinst te boeken door de operaties die worden uitgevoerd bij een operatie in parallel op het datapad uit te voeren. Typische CISC instructiesets zijn \verb+System/360+, \verb+PDP-11+, \verb+VAX+, \verb+Motorola 68k+ en \verb+80x86+.
+\subsubsection{RISC}
+Een RISC processor omvat een kleine instructieset die uit een klein aantal eenvoudige instructies bestaat. Een instructie omvat hoogstens \'e\'en adresveld en meestal zijn slechts enkele adresmodi beschikbaar. Een eenvoudige instructieset leidt echter tot een eenvoudig datapad waardoor men een hoge kloksnelheid kan aanbieden. De programma's zijn vrij lang maar men hoopt meestal om hierdoor neven-operaties die soms ongewild worden uitgevoerd op een CISC processor te vermijden. Typische RISC instructiesets zijn \verb+DEC Alpha+, \verb+ARM+, \verb+SPARC+, en \verb+MIPS+.
+\subsubsection{Evolutie}
+Men merkt dat er een evolutie is van CISC processoren naar RISC processoren. Deze evolutie werd vooral gepromoot door onderzoek bij IBM die aantoonde dat meestal een beperkte subset van de aangeboden instructies effectief door programma's werd gebruikt. Dit effect werd ook versterkt door de komst van compilers die er meestal niet in slagen alle aspecten van een CISC instructieset automatisch uit te buiten. Andere aspecten die voor het gebruik van RISC processoren pleiten zijn de grootte van de chip, de energieconsumptie en de kostprijs.
 \subsection{Ontwerpcyclus}
 \importtikzfigure{processor-design-cycle}{De processorontwerp-cyclus.}
 \figref{processor-design-cycle} beschrijft de vijf fases bij het ontwerpen van een processor:
