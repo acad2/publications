@@ -130,7 +130,39 @@ Mul R5 R3 R4
 Store c R5
 \end{verbatim}
 Bewerking instructies worden voorgesteld in \'e\'en woord en vereisten geen extra geheugentoegang. Bijgevolg vereisen ze \'e\'en geheugentoegang. Load- en Store-bewerkingen vereisen $3$ geheugentoegangen: $2$ bij het inlezen van de instructie en $1$ bij het inlezen of wegschrijven van de data. In totaal vereist het programma dan ook $12$ keer toegang tot het geheugen.
+\subsubsection{Besluit}
+Er zijn verschillende instructiesets mogelijk met een verschillend aantal adresvelden. Instructies met een groot aantal adresvelden laten compacte programma's toe maar vereisen soms onnodig toegang tot het geheugen. Deze extra belasting komt in twee vormen: het inlezen van de adresvelden van de instructie en het uitlezen of wegschrijven van data in de vermelde geheugenadressen.
+\paragraph{}
+Een instructieset met minder adresvelden zal minder vaak onnodig toegang tot het geheugen aanvragen. Anderzijds wordt het programma langer waardoor de processor meer instructies uit het geheugen met uitlezen.
 \subsection{Adresseermodi}
+In de loop der jaren zijn er verschillende manieren ontwikkeld om een geheugenadres te bepalen op basis van een adresveld. Deze methodes noemen we adresseermodi. Adresseermodi hebben als primair doel het aantal bits te reduceren die het adresveld in beslag neemt. Anderzijds laten verschillende adresseermodi soms toe om meer te realiseren per instructie en dus tot compactere programma's te schrijven.
+\paragraph{}
+Ook in hogere programmeertalen maakt men impliciet gebruik van adresseermodi. We kunnen bijvoorbeeld denken aan arrays. Wanneer men in \verb+Java+ het tiende element van een array \verb+a+ wil uitlezen schrijf men \verb+a[10]+. Impliciet stelt men echter het adres die tien plaatsen verder dan het begin van het record voor \verb+a+ ligt. Adresseermodi kunnen programma's dus ook leesbaarder maken.
+\subsubsection{Impliciete adressering}
+\termen{Impliciete adressering} is een adresseermode waarbij een adresveld niet vermeld wordt in de instructie maar door de processor zelf kan worden berekend.
+\paragraph{}
+Dit is bijvoorbeeld het geval bij processoren met een stapelgeheugen. In een dergelijke instructieset worden de adressen afgeleid uit de toestand van de stapel: de bovenste elementen bevatten de data van de operanden. De processor rekent deze aspecten dus zelf uit.
+\paragraph{}
+Ook bij processoren die werken met een accumulator is dit het geval: men vermeld immers de bestemming van de data niet. Dergelijke processoren bieden meestal een instructie aan om de gegevens uit de accumulator te verwijderen: de \termen{CLRA-instructie}.
+\subsubsection{Onmiddellijke adressering}
+Behalve in het adresveld de plaats in het geheugen te specificeren waar de data moet worden opgehaald, kunnen we ook de data zelf opslaan in een adresveld. Deze vorm van adressering noemen we \termen{onmiddellijke adressering}. Dit is bijvoorbeeld het geval wanneer we werken met constanten.
+\subsubsection{Directe adressering}
+Meestal lezen we operanden uit met behulp van een adres. Dit adres verwijst ofwel naar een geheugenadres ofwel naar een index van een registerbank. In beide gevallen spreken we over \termen{directe adressering}. Het is meestal voordelig om een registerbank te gebruiken. Dit omwille van twee redenen: een registerbank bevat minder adressen en de toegang is sneller. Omdat een registerbank typisch $8$ tot $256$ register bijgevolg is de lengte van een registeradres tussen de $3$ en $8$ bits. Terwijl een geheugenadres typisch tussen de $32$ en $64$ bits lang is. We besparen dus ook tijd bij het inladen van de instructie.
+\subsubsection{Indirecte adressering}
+Soms kennen we de plaats waar de data in het geheugen staat niet expliciet. Stel bijvoorbeeld dat we werken met een heap\footnote{Een heap is een geheugenruimte waar men dynamisch record kan toevoegen en terug verwijderen.}, hangt de plaats waar de data staat meestal af van de manier hoe het programma eerder werd doorlopen. Het adres wordt dan ook ergens anders bewaard in het geheugen of een registerbank.
+\paragraph{}
+\termen{Indirecte adressering} maakt het mogelijk om in \'e\'en instructie de operand in te lezen waarvan het adres ergens in het geheugen staat. In dat geval dienen we dus het adres te specificeren waar het adres staat.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{address-indirect}{Indirecte adressering}
+\importtikzsubfigure{address-indirect-register}{Register-indirecte adressering}
+\caption{Indirecte adressering}
+\end{figure}
+\paragraph{}
+Tweemaal het geheugen uitlezen in \'e\'en instructie is echter een dure operatie. Daarom zal men de adressen doorgaans in een registerbank opslaan. In dat geval spreken we dan ook van \termen{register-indirecte adressering}.
+\subsubsection{Relatieve adressering}
+\subsubsection{Ge\"indexeerde adressering}
+\subsubsection{Ge\"indexeerde adressering met autoincrement/autodecrement}
 \section{Processorontwerp}
 \subsection{Complex Instruction Set Computer (CISC)}
 \subsection{Reduced Instruction Set Computer (RISC)}
