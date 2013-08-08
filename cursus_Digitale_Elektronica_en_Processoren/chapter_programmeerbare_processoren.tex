@@ -200,5 +200,12 @@ Nu we de belangrijkste aspecten van een instructieset hebben besproken, zullen w
 \paragraph{}
 \subsection{Ontwerpcyclus}
 \importtikzfigure{processor-design-cycle}{De processorontwerp-cyclus.}
+\figref{processor-design-cycle} beschrijft de vijf fases bij het ontwerpen van een processor:
+\begin{enumerate}
+ \item Ontwerp van de instructiecyclus: in deze fase stelt men een set van mogelijke instructies, meestal gaan de instructies gepaard met een informele beschrijving van het effect van de instructie.
+ \item Instructieset-stroomschema: in deze fases worden per instructie alle betrokken operaties beschreven. De meeste instructies zullen immers verschillende effecten teweegbrengen. Bij de \verb+80x86+-instructieset zal bijvoorbeeld naast de bewerking ook de programmateller worden opgehoogd en zullen bepaalde registers op basis van het resultaat worden aangepast.
+ \item Allocatie van het datapad: op basis van de vereiste bewerkingen kunnen we bepalen welke componenten we in het datapad zullen moeten voorzien. Dit omvat een beschrijving van de vereiste registers en functionele eenheden. Indien dit tot een duur datapad leidt kan men beslissen om de instructieset opnieuw te herbekijken. En begint men dus terug met fase 1.
+ \item Op basis van de beschikbare datapad componenten kan men een ASM-schema opstellen. Doorgaans wordt een instructie niet in \'e\'en klokcyclus uitgevoerd. De verschillenden vereiste operaties worden dus uitgevoerd in verschillende toestanden in het ASM-schema. Dit schema beschrijft dan ook de verschillende registertransfers per cyclus.
+\end{enumerate}
 \subsection{Complex Instruction Set Computer (CISC)}
 \subsection{Reduced Instruction Set Computer (RISC)}
