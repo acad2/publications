@@ -1,0 +1,17 @@
+\small{\defaulttable{c|cccc|ll}
+{\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel\\
+$o_0$&$m_3$&$m_2$&$m_1$&$m_0$&&}
+{
+$0$	&$0$	&$0$	&$0$	&$0$	&Onmiddellijk adres				&\texttt{RF[Dest]$\leftarrow$Constante}\\
+$0$	&$0$	&$0$	&$0$	&$1$	&Direct adres					&\texttt{RF[Dest]$\leftarrow$Mem[Adres]}\\
+$0$	&$0$	&$0$	&$1$	&$0$	&Indirect adres					&\texttt{RF[Dest]$\leftarrow$Mem[Mem[Adres]]}\\
+$0$	&$0$	&$1$	&$0$	&$0$	&Register-ge\"indexeerd adres	&\texttt{RF[Dest]$\leftarrow$Mem[Adres+RF[Src1]]}\\
+$0$	&$1$	&$0$	&$1$	&$0$	&Register-indirect adres		&\texttt{RF[Dest]$\leftarrow$Mem[RF[Src1]]}\\
+$0$	&$1$	&$0$	&$1$	&$1$	&Register-relatief adres		&\texttt{RF[Dest]$\leftarrow$Mem[RF[Src1]+Src2]}\\
+$0$	&$1$	&$1$	&$0$	&$1$	&Kopieer register				&\texttt{RF[Dest]$\leftarrow$RF[Src1]}\\\hline
+$1$	&$0$	&$0$	&$0$	&$1$	&Direct adres					&\texttt{Mem[Adres]$\leftarrow$RF[Src1]}\\
+$1$	&$0$	&$0$	&$1$	&$0$	&Indirect adres					&\texttt{Mem[Mem[Adres]]$\leftarrow$RF[Src1]}\\
+$1$	&$1$	&$0$	&$1$	&$0$	&Register-indirect adres		&\texttt{Mem[RF[Dest]]$\leftarrow$RF[Src1]}\\
+$1$	&$1$	&$0$	&$1$	&$1$	&Register-relatief adres		&\texttt{Mem[RF[Dest]+Src2]$\leftarrow$RF[Src1]}\\
+$1$	&$1$	&$1$	&$0$	&$0$	&Register-ge\"indexeerd adres	&\texttt{Mem[Adres+RF[Dest]]$\leftarrow$RF[Src1]}
+}}

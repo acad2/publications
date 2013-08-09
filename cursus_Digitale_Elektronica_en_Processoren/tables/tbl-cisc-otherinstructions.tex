@@ -1,0 +1,15 @@
+\small{\defaulttable{ccccc|ll}
+{\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel\\
+$o_4$&$o_3$&$o_2$&$o_1$&$o_0$&&}
+{
+$0$	&$0$	&$-$	&$-$	&$-$	&No-operation			&\\\hline
+$0$	&$1$	&$0$	&$-$	&$-$	&Reset register			&\texttt{RF[Dest]$\leftarrow$0}\\
+$0$	&$1$	&$1$	&$-$	&$-$	&Reset status			&\texttt{Status$\leftarrow$0}\\\hline
+$1$	&$0$	&$0$	&$0$	&$0$	&Groter dan				&\texttt{Status$\leftarrow$RF[Src1] > RF[Src2]}\\
+$1$	&$0$	&$0$	&$0$	&$1$	&Groter dan of gelijk	&\texttt{Status$\leftarrow$RF[Src1] >= RF[Src2]}\\
+$1$	&$0$	&$0$	&$1$	&$0$	&Kleiner dan			&\texttt{Status$\leftarrow$RF[Src1] < RF[Src2]}\\
+$1$	&$0$	&$0$	&$1$	&$1$	&Kleiner dan of gelijk	&\texttt{Status$\leftarrow$RF[Src1] <= RF[Src2]}\\
+$1$	&$0$	&$1$	&$0$	&$0$	&Gelijk					&\texttt{Status$\leftarrow$RF[Src1] == RF[Src2]}\\
+$1$	&$0$	&$1$	&$0$	&$1$	&Niet gelijk			&\texttt{Status$\leftarrow$RF[Src1] != RF[Src2]}\\\hline
+$1$	&$1$	&$-$	&$-$	&$-$	&Zet status				&\texttt{Status$\leftarrow$1}
+}}

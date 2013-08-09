@@ -230,8 +230,11 @@ Uit de specificaties van het geheugen kunnen we afleiden dat een adresveld bij v
 We voorzien in een instructie dan ook twee bits om het type voor te stellen. De instructies vereisen hoogstens drie registers. In elke registers zullen we daarom drie velden van telkens $3$ bits voorzien om het doelregister -- \mbox{Bestemming} -- en de twee operandregisters \mbox{Operand 1} en \mbox{Operand 2} voor te stellen. Vermits een instructie $16$ bits telt en we in totaal reeds $11$ bits hebben toegewezen, blijven er $5$ bits over voor de opcode. We hebben bijgevolg een instructieformaat gedefinieerd zoals weergegeven op \figref{cisc-bitstructure-general}.
 \importtikzfigure{cisc-bitstructure-general}{De bitstructuur van de CISC instructieset.}
 \paragraph{}
-Het type in de opcode bepalen samen welke instructie zal worden uitgevoerd. We dienen echter nog bewerkingen toe te kennen aan de verschillende waardes. Deze instructies staan in \tblref{cisc-instructions}.
-\importtabulartable{cisc-instructions}{De instructieset van de CISC-processor.}
+Het type in de opcode bepalen samen welke instructie zal worden uitgevoerd. We dienen echter nog bewerkingen toe te kennen aan de verschillende waardes. Hiervoor voorzien we \tblrefs{cisc-registerinstructions,cisc-moveinstructions,cisc-jumpinstructions,cisc-otherinstructions} die de instructies per type beschrijven.
+\importtabulartable{cisc-registerinstructions}{De registerinstructies van de CISC-processor (type $00$).}
+\importtabulartable{cisc-moveinstructions}{De verplaatsinstructies van de CISC-processor (type $01$).}
+\importtabulartable{cisc-jumpinstructions}{De spronginstructies van de CISC-processor (type $10$).}
+\importtabulartable{cisc-otherinstructions}{De overige instructies van de CISC-processor (type $11$).}
 \subsubsection{Instructieset-stroomschema}
 \subsubsection{Allocatie datapadcomponenten}
 \subsubsection{ASM-schema}
