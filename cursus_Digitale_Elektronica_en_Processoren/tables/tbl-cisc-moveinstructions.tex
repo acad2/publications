@@ -11,7 +11,7 @@ $0$	&$1$	&$0$	&$1$	&$1$	&Register-relatief adres		&\texttt{RF[Dest]$\leftarrow$M
 $0$	&$1$	&$1$	&$0$	&$1$	&Kopieer register				&\texttt{RF[Dest]$\leftarrow$RF[Src1]}\\\hline
 $1$	&$0$	&$0$	&$0$	&$1$	&Direct adres					&\texttt{Mem[Adres]$\leftarrow$RF[Src1]}\\
 $1$	&$0$	&$0$	&$1$	&$0$	&Indirect adres					&\texttt{Mem[Mem[Adres]]$\leftarrow$RF[Src1]}\\
+$1$	&$0$	&$1$	&$0$	&$0$	&Register-ge\"indexeerd adres	&\texttt{Mem[Adres+RF[Dest]]$\leftarrow$RF[Src1]}\\
 $1$	&$1$	&$0$	&$1$	&$0$	&Register-indirect adres		&\texttt{Mem[RF[Dest]]$\leftarrow$RF[Src1]}\\
-$1$	&$1$	&$0$	&$1$	&$1$	&Register-relatief adres		&\texttt{Mem[RF[Dest]+Src2]$\leftarrow$RF[Src1]}\\
-$1$	&$1$	&$1$	&$0$	&$0$	&Register-ge\"indexeerd adres	&\texttt{Mem[Adres+RF[Dest]]$\leftarrow$RF[Src1]}
+$1$	&$1$	&$0$	&$1$	&$1$	&Register-relatief adres		&\texttt{Mem[RF[Dest]+Src2]$\leftarrow$RF[Src1]}
 }}
