@@ -714,3 +714,32 @@
 \draw[thick] (TF-#2.z) -- (TF-#2.z |- FB-#3);
 \pdot{TF-#2.z |- FB-#3}
 }
+
+\newenvironment{bitstructure}[2][16]
+{\begin{tikzpicture}
+\draw[thick] (0,0) -- (#1,0);
+\setcounter{tmpC}{0}
+\foreach \x in {0,1,...,#1} {
+  \draw (\x,0) -- ++(0,0.25);
+  \ifthenelse{\value{tmpC}<#1}{\draw (0.5+\x,0) node[anchor=south]{$\x$};}{}
+  \addtocounter{tmpC}{1}
+}
+\foreach \x in {0,4,...,#1} {
+  \draw[thick] (\x,0) -- ++(0,0.25);
+}
+\foreach \x in {0,8,...,#1} {
+  \draw[thick] (\x,0) -- ++(0,0.5);
+}
+\foreach \x in {0,16,...,#1} {
+  \draw[very thick] (\x,0) -- ++(0,0.5);
+}
+\setcounter{tmpC}{1}
+\setcounter{tmpD}{0}
+\foreach \i/\t/\d in {#2} {
+  \node[minimum width=\d cm,minimum height=1 cm] (S-\i) at (\arabic{tmpC}-1+0.5*\d,-\arabic{tmpD}-0.5) {\t};
+  \draw[thick] (\arabic{tmpC}-1,-\arabic{tmpD}) rectangle ++(\d,-1);
+  \addtocounter{tmpC}{\d}
+  \ifthenelse{\value{tmpC}>#1}{\setcounter{tmpC}{1}\addtocounter{tmpD}{1}}{}
+}
+}
+{\end{tikzpicture}}

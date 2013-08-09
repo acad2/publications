@@ -216,4 +216,31 @@ Men merkt dat er een evolutie is van CISC processoren naar RISC processoren. Dez
  \item Ontwerp van de controller en het datapad: op basis van het ASM-schema kunnen we vervolgens een datapad en controller synthetiseren. De methodologie van deze synthese staat beschreven in \chpref{nonprogramming}.
 \end{enumerate}
 \subsection{Complex Instruction Set Computer (CISC)}
+In deze subsectie zullen we het proces doorlopen bij het ontwerpen van een CISC processor.
+\subsubsection{Ontwerp Instructieset}
+In de eerste stap zullen we een CISC instructieset bepalen. We bepalen eerst de specificaties van het geheugen waarmee de processor werkt. Bij wijze van voorbeeld zullen we een $2^{16}\times 16$-bit geheugen beschouwen. De woordlengte is dus $16$ bit en elk adres kan voorgesteld worden met behulp van $16$ bits. We beschouwen ook een registerbank met $8$ registers. Elk registeradres kan dus voorgesteld worden met $3$ bits.
+\paragraph{}
+Uit de specificaties van het geheugen kunnen we afleiden dat een adresveld bij voorkeur ook $16$ bit groot is. De rest van de instructie zullen we ook voorstellen met behulp van $16$ bit. We beschouwen vier verschillende types van instructies:
+\begin{enumerate}
+ \item \termen{Registerinstructies}: instructies die bewerkingen uitvoeren met $1$ of $2$ operanden en $1$ doelregister.
+ \item \termen{Verplaatsinstructies}: instructies die de gegevens van een register of geheugenadres kopi\"eren naar een register of geheugenadres.
+ \item \termen{Spronginstructies}: instructies die de programmateller aanpassen. Deze instructies bepalen bijgevolg het verloop van het programma.
+ \item Overige instructies: dit zijn instructies zoals \termen{No Operation (NOP)}\footnote{De ``No Operation'' is een instructie die geen effect heeft. Deze instructie wordt gebruikt bij pipelining om ruimte op te vullen in de pipeline zodat instructies kunnen wachten tot andere instructies zijn uitgevoerd.}.
+\end{enumerate}
+We voorzien in een instructie dan ook twee bits om het type voor te stellen. De instructies vereisen hoogstens drie registers. In elke registers zullen we daarom drie velden van telkens $3$ bits voorzien om het doelregister -- \mbox{Bestemming} -- en de twee operandregisters \mbox{Operand 1} en \mbox{Operand 2} voor te stellen. Vermits een instructie $16$ bits telt en we in totaal reeds $11$ bits hebben toegewezen, blijven er $5$ bits over voor de opcode. We hebben bijgevolg een instructieformaat gedefinieerd zoals weergegeven op \figref{cisc-bitstructure-general}.
+\importtikzfigure{cisc-bitstructure-general}{De bitstructuur van de CISC instructieset.}
+\paragraph{}
+Het type in de opcode bepalen samen welke instructie zal worden uitgevoerd. We dienen echter nog bewerkingen toe te kennen aan de verschillende waardes. Deze instructies staan in \tblref{cisc-instructions}.
+\importtabulartable{cisc-instructions}{De instructieset van de CISC-processor.}
+\subsubsection{Instructieset-stroomschema}
+\subsubsection{Allocatie datapadcomponenten}
+\subsubsection{ASM-schema}
+\subsubsection{Ontwerp Controller}
+\subsubsection{Ontwerp Datapad}
 \subsection{Reduced Instruction Set Computer (RISC)}
+\subsubsection{Ontwerp Instructieset}
+\subsubsection{Instructieset-stroomschema}
+\subsubsection{Allocatie datapadcomponenten}
+\subsubsection{ASM-schema}
+\subsubsection{Ontwerp Controller}
+\subsubsection{Ontwerp Datapad}
