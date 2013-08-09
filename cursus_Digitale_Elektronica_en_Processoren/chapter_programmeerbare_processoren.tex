@@ -263,7 +263,10 @@ Een programma geschreven in de assembleertaal naar een equivalent programma in m
 \paragraph{}
 Wanneer we gegevens uit het geheugen lezen of wegschrijven dienen we een adres op te geven. De programmeur moet daarom bijhouden op welke plaats welke data precies staat. De meeste assembleerprogramma's nemen deze taak echter gedeeltelijk over met \termen{symbolische adressen}. Een programmeur gebruikt hierbij een symbolische naam en het programma kent zelf een adres toe. Dit leidt niet alleen tot gebruiksgemak maar voorkomt ook dat programmeurs per ongeluk een fout adres opgeven.
 \paragraph{}
-Ook wanneer we sprongbevelen uitvoeren dienen we een adres op te geven. 
+Ook wanneer we sprongbevelen uitvoeren dienen we een adres op te geven. Het probleem met expliciete adressen is dat wanneer we een instructie invoegen alle adressen erna opschuiven. Om dit probleem te verhelpen werken assembleerprogramma's met een \termen{label}. Een label is een symbolische markering bij een bepaalde instructie. Wanneer men vervolgens een sprong-instructie invoegt zet de programmeur de symbolische markering op de plaats waar het adres moet staan. Het assembleerprogramma houdt vervolgens zelf bij met welk adres dit label overeenkomt en vervangt de symbolische markering bij sprongbevel door een expliciet adres.
+\paragraph{Voorbeeld}
+Bij wijze van voorbeeld zullen we een programma beschrijven in zowel een hoog-niveau programmeertaal, de assembleertaal en de machinetaal. Het programma berekent tegelijk het minimum, maximum en de som van 1024 getallen in een array \verb+A+. Wanneer we dit in bijvoorbeeld \verb+Pascal+ implementeren schrijven we volgende code:
+\importlisting[Pascal]{pascal-minmaxsum}
 \subsubsection{Instructieset-stroomschema}
 \subsubsection{Allocatie datapadcomponenten}
 \subsubsection{ASM-schema}
