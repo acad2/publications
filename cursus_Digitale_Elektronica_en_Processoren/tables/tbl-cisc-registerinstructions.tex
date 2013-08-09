@@ -1,23 +1,23 @@
-\small{\defaulttable{ccccc|ll}{
-\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel\\
+\small{\defaulttable{ccccc|ll|l}{
+\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel&\bf Assembleertaal\\
 $o_4$&$o_3$&$o_2$&$o_1$&$o_0$&&}
 {
-$0$	&$0$	&$n_2$	&$n_1$	&$n_0$	&Schuif rechts		&\texttt{RF[Dest]$\leftarrow$RF[Src1]>{}>N}\\
-$0$	&$1$	&$n_2$	&$n_1$	&$n_0$	&Schuif links		&\texttt{RF[Dest]$\leftarrow$RF[Src1]<{}<N}\\\hline
-$1$	&$0$	&$0$	&$0$	&$0$	&Optelling			&\texttt{RF[Dest]$\leftarrow$RF[Src1]+RF[Src2]}\\
-$1$	&$0$	&$0$	&$0$	&$1$	&Aftrekking			&\texttt{RF[Dest]$\leftarrow$RF[Src1]-RF[Src2]}\\\hline
-$1$	&$0$	&$0$	&$1$	&$0$	&Increment			&\texttt{RF[Dest]$\leftarrow$RF[Src1]+1}\\
-$1$	&$0$	&$0$	&$1$	&$1$	&Decrement			&\texttt{RF[Dest]$\leftarrow$RF[Src1]-1}\\\hline
-$1$	&$0$	&$1$	&$0$	&$0$	&Vermenigvuldiging	&\texttt{RF[Dest]$\leftarrow$RF[Src1]*RF[Src2]}\\
-$1$	&$0$	&$1$	&$0$	&$1$	&Deling				&\texttt{RF[Dest]$\leftarrow$RF[Src1]/RF[Src2]}\\\hline
-$1$	&$0$	&$1$	&$1$	&$0$	&Vierkantswortel	&\texttt{RF[Dest]$\leftarrow$SQRT(RF[Src1])}\\
-$1$	&$0$	&$1$	&$1$	&$1$	&Negatie			&\texttt{RF[Dest]$\leftarrow$-RF[Src1]}\\\hline
-$1$	&$1$	&$0$	&$0$	&$0$	&AND				&\texttt{RF[Dest]$\leftarrow$RF[Src1] AND RF[Src2]}\\
-$1$	&$1$	&$0$	&$0$	&$1$	&NAND				&\texttt{RF[Dest]$\leftarrow$RF[Src1] NAND RF[Src2]}\\
-$1$	&$1$	&$0$	&$1$	&$0$	&OR					&\texttt{RF[Dest]$\leftarrow$RF[Src1] OR RF[Src2]}\\
-$1$	&$1$	&$0$	&$1$	&$1$	&NOR				&\texttt{RF[Dest]$\leftarrow$RF[Src1] NOR RF[Src2]}\\
-$1$	&$1$	&$1$	&$0$	&$0$	&XOR				&\texttt{RF[Dest]$\leftarrow$RF[Src1] XOR RF[Src2]}\\
-$1$	&$1$	&$1$	&$0$	&$1$	&XNOR				&\texttt{RF[Dest]$\leftarrow$RF[Src1] XNOR RF[Src2]}\\
-$1$	&$1$	&$1$	&$1$	&$0$	&MASK				&\texttt{RF[Dest]$\leftarrow$RF[Src1] AND 1}\\
-$1$	&$1$	&$1$	&$1$	&$1$	&INV				&\texttt{RF[Dest]$\leftarrow$INV(RF[Src1])}
+$0$	&$0$	&$n_2$	&$n_1$	&$n_0$	&Schuif rechts		&\texttt{RF[d]$\leftarrow$RF[s1]>{}>N}			&\texttt{ASR Rd Rs1 \#N}\\
+$0$	&$1$	&$n_2$	&$n_1$	&$n_0$	&Schuif links		&\texttt{RF[d]$\leftarrow$RF[s1]<{}<N}			&\texttt{ASL Rd Rs1 \#N}\\\hline
+$1$	&$0$	&$0$	&$0$	&$0$	&Optelling			&\texttt{RF[d]$\leftarrow$RF[s1]+RF[s2]}		&\texttt{ADD Rd Rs1 Rs2}\\
+$1$	&$0$	&$0$	&$0$	&$1$	&Aftrekking			&\texttt{RF[d]$\leftarrow$RF[s1]-RF[s2]}		&\texttt{SUB Rd Rs1 Rs2}\\\hline
+$1$	&$0$	&$0$	&$1$	&$0$	&Increment			&\texttt{RF[d]$\leftarrow$RF[s1]+1}				&\texttt{INC Rd Rs1}\\
+$1$	&$0$	&$0$	&$1$	&$1$	&Decrement			&\texttt{RF[d]$\leftarrow$RF[s1]-1}				&\texttt{DEC Rd Rs1}\\\hline
+$1$	&$0$	&$1$	&$0$	&$0$	&Vermenigvuldiging	&\texttt{RF[d]$\leftarrow$RF[s1]*RF[s2]}		&\texttt{MUL Rd Rs1 Rs2}\\
+$1$	&$0$	&$1$	&$0$	&$1$	&Deling				&\texttt{RF[d]$\leftarrow$RF[s1]/RF[s2]}		&\texttt{DIV Rd Rs1 Rs2}\\\hline
+$1$	&$0$	&$1$	&$1$	&$0$	&Vierkantswortel	&\texttt{RF[d]$\leftarrow$SQRT(RF[s1])}			&\texttt{ROOT Rd Rs1}\\
+$1$	&$0$	&$1$	&$1$	&$1$	&Negatie			&\texttt{RF[d]$\leftarrow$-RF[s1]}				&\texttt{NEG Rd Rs1}\\\hline
+$1$	&$1$	&$0$	&$0$	&$0$	&AND				&\texttt{RF[d]$\leftarrow$RF[s1] AND RF[s2]}	&\texttt{AND Rd Rs1 Rs2}\\
+$1$	&$1$	&$0$	&$0$	&$1$	&NAND				&\texttt{RF[d]$\leftarrow$RF[s1] NAND RF[s2]}	&\texttt{NAND Rd Rs1 Rs2}\\
+$1$	&$1$	&$0$	&$1$	&$0$	&OR					&\texttt{RF[d]$\leftarrow$RF[s1] OR RF[s2]}		&\texttt{OR Rd Rs1 Rs2}\\
+$1$	&$1$	&$0$	&$1$	&$1$	&NOR				&\texttt{RF[d]$\leftarrow$RF[s1] NOR RF[s2]}	&\texttt{NOR Rd Rs1 Rs2}\\
+$1$	&$1$	&$1$	&$0$	&$0$	&XOR				&\texttt{RF[d]$\leftarrow$RF[s1] XOR RF[s2]}	&\texttt{XOR Rd Rs1 Rs2}\\
+$1$	&$1$	&$1$	&$0$	&$1$	&XNOR				&\texttt{RF[d]$\leftarrow$RF[s1] XNOR RF[s2]}	&\texttt{XNOR Rd Rs1 Rs2}\\
+$1$	&$1$	&$1$	&$1$	&$0$	&MASK				&\texttt{RF[d]$\leftarrow$RF[s1] AND 1}			&\texttt{MASK Rd Rs1}\\
+$1$	&$1$	&$1$	&$1$	&$1$	&INV				&\texttt{RF[d]$\leftarrow$INV(RF[s1])}			&\texttt{INV Rd Rs1}
 }}

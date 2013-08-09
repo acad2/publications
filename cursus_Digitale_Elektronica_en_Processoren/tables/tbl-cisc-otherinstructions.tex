@@ -1,15 +1,15 @@
-\small{\defaulttable{ccccc|ll}
-{\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel\\
+\small{\defaulttable{ccccc|ll|l}
+{\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel&\bf Assembleertaal\\
 $o_4$&$o_3$&$o_2$&$o_1$&$o_0$&&}
 {
-$0$	&$0$	&$-$	&$-$	&$-$	&No-operation			&\\\hline
-$0$	&$1$	&$0$	&$-$	&$-$	&Reset register			&\texttt{RF[Dest]$\leftarrow$0}\\
-$0$	&$1$	&$1$	&$-$	&$-$	&Reset status			&\texttt{Status$\leftarrow$0}\\\hline
-$1$	&$0$	&$0$	&$0$	&$0$	&Groter dan				&\texttt{Status$\leftarrow$RF[Src1] > RF[Src2]}\\
-$1$	&$0$	&$0$	&$0$	&$1$	&Groter dan of gelijk	&\texttt{Status$\leftarrow$RF[Src1] >= RF[Src2]}\\
-$1$	&$0$	&$0$	&$1$	&$0$	&Kleiner dan			&\texttt{Status$\leftarrow$RF[Src1] < RF[Src2]}\\
-$1$	&$0$	&$0$	&$1$	&$1$	&Kleiner dan of gelijk	&\texttt{Status$\leftarrow$RF[Src1] <= RF[Src2]}\\
-$1$	&$0$	&$1$	&$0$	&$0$	&Gelijk					&\texttt{Status$\leftarrow$RF[Src1] == RF[Src2]}\\
-$1$	&$0$	&$1$	&$0$	&$1$	&Niet gelijk			&\texttt{Status$\leftarrow$RF[Src1] != RF[Src2]}\\\hline
-$1$	&$1$	&$-$	&$-$	&$-$	&Zet status				&\texttt{Status$\leftarrow$1}
+$0$	&$0$	&$-$	&$-$	&$-$	&No-operation			&												&\texttt{NOP}\\\hline
+$0$	&$1$	&$0$	&$-$	&$-$	&Reset register			&\texttt{RF[d]$\leftarrow$0}					&\texttt{CLR Rd}\\
+$0$	&$1$	&$1$	&$-$	&$-$	&Reset status			&\texttt{Status$\leftarrow$0}					&\texttt{ClrS}\\\hline
+$1$	&$0$	&$0$	&$0$	&$0$	&Groter dan				&\texttt{Status$\leftarrow$RF[s1] > RF[s2]}		&\texttt{GT Rs1 Rs2}\\
+$1$	&$0$	&$0$	&$0$	&$1$	&Groter dan of gelijk	&\texttt{Status$\leftarrow$RF[s1] >= RF[s2]}	&\texttt{GE Rs1 Rs2}\\
+$1$	&$0$	&$0$	&$1$	&$0$	&Kleiner dan			&\texttt{Status$\leftarrow$RF[s1] < RF[s2]}		&\texttt{LT Rs1 Rs2}\\
+$1$	&$0$	&$0$	&$1$	&$1$	&Kleiner dan of gelijk	&\texttt{Status$\leftarrow$RF[s1] <= RF[s2]}	&\texttt{LE Rs1 Rs2}\\
+$1$	&$0$	&$1$	&$0$	&$0$	&Gelijk					&\texttt{Status$\leftarrow$RF[s1] == RF[s2]}	&\texttt{EQ Rs1 Rs2}\\
+$1$	&$0$	&$1$	&$0$	&$1$	&Niet gelijk			&\texttt{Status$\leftarrow$RF[s1] != RF[s2]}	&\texttt{NE Rs1 Rs2}\\\hline
+$1$	&$1$	&$-$	&$-$	&$-$	&Zet status				&\texttt{Status$\leftarrow$1}					&\texttt{SetS}
 }}

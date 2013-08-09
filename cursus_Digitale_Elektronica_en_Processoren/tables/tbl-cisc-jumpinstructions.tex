@@ -1,13 +1,13 @@
-\small{\defaulttable{ccccc|ll}
-{\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel\\
+\small{\defaulttable{ccccc|ll|l}
+{\multicolumn{5}{c|}{\bf Operatie/mode}&\bf Bewerking&\bf Formeel&\bf Assembleertaal\\
 $o_4$&$o_3$&$o_2$&$o_1$&$o_0$&&}
 {
-$0$	&$0$	&$-$	&$-$	&$-$	&Onconditionele sprong	&\texttt{PC$\leftarrow$Adres}\\
-$0$	&$1$	&$-$	&$-$	&$-$	&Conditionele sprong	&\texttt{PC$\leftarrow$Adres}\\
+$0$	&$0$	&$-$	&$-$	&$-$	&Onconditionele sprong	&\texttt{PC$\leftarrow$adres}				&\texttt{JMP adres}\\
+$0$	&$1$	&$-$	&$-$	&$-$	&Conditionele sprong	&\texttt{PC$\leftarrow$adres}				&\texttt{CJMP adres}\\
 	&		&		&		&		&						&of \texttt{PC$\leftarrow$PC+1}\\
-$1$	&$0$	&$-$	&$-$	&$-$	&Subroutine sprong		&\texttt{Mem[RF[Src1]]$\leftarrow$PC+1;}\\
-	&		&		&		&		&						&\texttt{RF[Src1]$\leftarrow$RF[Src1]+1;}\\
-	&		&		&		&		&						&\texttt{PC$\leftarrow$Adres}\\
-$1$	&$1$	&$-$	&$-$	&$-$	&Terugkeer subroutine	&\texttt{RF[Src1]$\leftarrow$RF[Src1]-1;}\\
-	&		&		&		&		&						&\texttt{PC$\leftarrow$Mem[RF[Src1]]}
+$1$	&$0$	&$-$	&$-$	&$-$	&Subroutine sprong		&\texttt{Mem[RF[s1]]$\leftarrow$PC+1;}		&\texttt{JSR adres (Rs1)}\\
+	&		&		&		&		&						&\texttt{RF[s1]$\leftarrow$RF[s1]+1;}\\
+	&		&		&		&		&						&\texttt{PC$\leftarrow$adres}\\
+$1$	&$1$	&$-$	&$-$	&$-$	&Terugkeer subroutine	&\texttt{RF[s1]$\leftarrow$RF[s1]-1;}		&\texttt{RTS (Rs1)}\\
+	&		&		&		&		&						&\texttt{PC$\leftarrow$Mem[RF[s1]]}
 }}
