@@ -29,7 +29,7 @@
 \coordinate (IOG) at (-5*\dx,0);
 \coordinate (IOH) at (-6*\dx,0);
 
-\coordinate (RETA) at (0,2);
+\coordinate (RETA) at (0,5);
 \coordinate (RETB) at (-7*\dx,0);
 \coordinate (RETC) at (14,0);
 
@@ -119,9 +119,11 @@
 	\end{scope}
   }
   \node[fcdecisionblockbg] (ISD-1001) at (ISC-10.output1 |- IOG) {$\mbox{Status}$};\draw[thick,->] (ISC-10.output1) -- (ISD-1001.input);
-  \foreach \i/\x/\o/\t in {00/1/0/{\jmpr},10/-1/2/{\saves\\\pushs\\\jmpr}} {
+  \foreach \i/\x/\o/\t in {0/0.5/0/{\incpc},1/-0.5/1/{$\jmpr$}} {
 	\begin{scope}[xshift=\x cm]
-	  \node[fcstateblock,rotate=-90] (ISF-10\i) at (\x,0 |- IOH) {$\begin{array}{l}\t\end{array}$};\draw[thick,->] (ISC-10.output\o) -- (ISC-10.output\o |- IPD) -| (ISF-10\i.north);
+	  \node[fcstateblock,rotate=-90] (ISF-1001\i) at (\x,0 |- IOH) {\t};\draw[thick,->] (ISD-1001.output\o) -- (ISD-1001.output\o |- IPF) -| (ISF-1001\i.north);
+	  \draw[thick] (ISF-1001\i.south |- RETB) -- (ISF-1001\i.south);
+	  \pdot{ISF-1001\i.south |- RETB};
 	\end{scope}
   }
 \end{scope}
