@@ -1,0 +1,16 @@
+\begin{tikzpicture}[rotate=-90,fcstateblock/.style={draw,rectangle,thick,fill=gray,rotate=-90},fcdecisionblockdf/.style={fcdecisionblockd,thick,fill=gray,rotate=-90}]
+
+\coordinate (INA) at (0,0);
+\coordinate (INB) at (0,-3);
+\coordinate (INC) at (0,-6);
+\coordinate (IND) at (0,-9);
+
+\coordinate (IMA) at (0,-1.5);
+\coordinate (IMB) at (0,-4.5);
+\coordinate (IMC) at (0,-7.5);
+
+\node[fcstateblock] (ISA) at (0,0 |- INA) {$\begin{array}{l}\mbox{PC}\leftarrow\mbox{Mem[PC]}\\\mbox{PC}\leftarrow\mbox{PC}+1\end{array}$};
+\node[fcdecisionblockdf] (ISB) at (0,0 |- INB) {$\mbox{IR}_{15}\mbox{IR}_{14}$};\draw[thick,->] (ISA) -- (ISB.input);
+\node[fcdecisionblockdf] (ISC-00) at (6,0 |- INC) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (ISB.output0) -- ++(ISB.output0 |- IMB) -| (ISC-00.input);
+\node[fcstateblock] (ISD-0000) at (10,0 |- IND) {$\mbox{RF[d]}\leftarrow\mbox{RF[s1]\texttt{>{}>}N}$};\draw[thick,->] (ISC-00.output0) -- ++(ISC-00.output0 |- IMB) -| (ISD-0000.north);
+\end{tikzpicture}
