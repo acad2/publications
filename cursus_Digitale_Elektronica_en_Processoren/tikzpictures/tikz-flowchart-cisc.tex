@@ -5,7 +5,12 @@
 \def\dxb{0.75};
 \def\dyb{-0.75};
 \def\kopy{$\mbox{RF[d]}\leftarrow\mbox{RF[s1]}$};
+\def\incpc{$\mbox{PC}\leftarrow\mbox{PC}+1$};
 \def\jmpr{\mbox{PC}\leftarrow\mbox{Mem[PC]}};
+\def\saves{\mbox{Mem[RF[s1]]}\leftarrow\mbox{PC}+1};
+\def\pushs{\mbox{RF[s1]}\leftarrow\mbox{RF[s1]}+1};
+\def\loadpcs{\mbox{PC}\leftarrow\mbox{Mem[RF[s1]]}};
+\def\popss{\mbox{RF[s1]}\leftarrow\mbox{RF[s1]}-1};
 
 \coordinate (INA) at (0,0);
 \coordinate (INB) at (0,\dy);
@@ -24,7 +29,8 @@
 \coordinate (IOG) at (-5*\dx,0);
 \coordinate (IOH) at (-6*\dx,0);
 
-\coordinate (RETB) at (-8,0);
+\coordinate (RETA) at (0,2);
+\coordinate (RETB) at (-7*\dx,0);
 \coordinate (RETC) at (14,0);
 
 \coordinate (IMA) at (0,\dyb);
@@ -107,15 +113,27 @@
 }
 \begin{scope}[yshift=2*\dy cm,rotate=-90]
   \node[fcdecisionblockdg] (ISC-10) at (0,0 |- IOE) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (ISB.output2) -| (ISC-10.input);
-  \foreach \i/\x/\o/\r/\t in {00/0.5/0/IOF/{\jmpr},10/-0.5/1/IOH/{\jmpr},11/-1/3/IOF/{}} {
+  \foreach \i/\x/\o/\r/\t in {00/1/0/IOF/{\jmpr},10/-1/2/IOF/{\saves\\\pushs\\\jmpr},11/-1.75/3/IOG/{\popss\\\loadpcs}} {
 	\begin{scope}[xshift=\x cm]
 	  \node[fcstateblock,rotate=-90] (ISF-10\i) at (\x,0 |- \r) {$\begin{array}{l}\t\end{array}$};\draw[thick,->] (ISC-10.output\o) -- (ISC-10.output\o |- IPD) -| (ISF-10\i.north);
 	\end{scope}
   }
+  \node[fcdecisionblockbg] (ISD-1001) at (ISC-10.output1 |- IOG) {$\mbox{Status}$};\draw[thick,->] (ISC-10.output1) -- (ISD-1001.input);
+  \foreach \i/\x/\o/\t in {00/1/0/{\jmpr},10/-1/2/{\saves\\\pushs\\\jmpr}} {
+	\begin{scope}[xshift=\x cm]
+	  \node[fcstateblock,rotate=-90] (ISF-10\i) at (\x,0 |- IOH) {$\begin{array}{l}\t\end{array}$};\draw[thick,->] (ISC-10.output\o) -- (ISC-10.output\o |- IPD) -| (ISF-10\i.north);
+	\end{scope}
+  }
 \end{scope}
-\draw[<-,thick] (ISA.north) -- ++(0,0.5) -| (IMH -| RETC);
+\draw[thick] (RETA) -| (ISF-1000.south -| RETB) -- (ISF-1000);
+\draw[thick] (ISF-1010.south -| RETB) -- (ISF-1010);
+\draw[thick] (ISF-1011.south -| RETB) -- (ISF-1011);
+\draw[<-,thick] (ISA.north) -- (RETA) -| (IMH -| RETC);
+\pdot{RETA};
 \pdot{IMF -| RETC};
 \pdot{IMG -| RETC};
+\pdot{ISF-1010.south -| RETB};
+\pdot{ISF-1011.south -| RETB};
 \foreach \o/\r in {10100/IMF,10010/IMH,10001/IMG,01101/IMF,01010/IMG,01011/IMH,00100/IMF,00010/IMH,00001/IMG,00000/IMF} {
   \draw[thick] (ISF-01\o.south) |- (ISF-01\o.south |- \r);
   \pdot{ISF-01\o.south |- \r};
