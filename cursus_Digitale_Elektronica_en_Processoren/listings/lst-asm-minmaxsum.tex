@@ -1,0 +1,27 @@
+ORG DATA
+      min Word
+      max Word
+      sum Word
+      A Array[1024]
+ORG PROGRAM
+      LOAD R0 #0xFFFF   --R0 bewaart het minimum
+      CLR  R1           --R1 bewaart het maximum
+      CLR  R2           --R2 bewaart de som
+      CLR  R3           --R3 bewaart de lus-teller (i)
+      LOAD R4 #0x03FF   --MaxCount (1023)
+      LOAD R5 #A        --beginadres A
+body: LOAD R6 (R5)      --begin for lus, R6 bewaart A[i]
+      ADD  R2 R2 R6     --sum=sum+A[i]
+      LE   R6 R1        --indien A[i] <= max
+      CJMP next         --spring naar next
+      COPY R1 R6        --anders: max = A[i]
+next: GE   R6 R0        --indien A[i] >= min
+      CJMP last         --spring naar last
+      COPY R0 R6        --anders: min = A[i]
+last: INC  R3 R3        --hoog lus teller op
+      INC  R5 R5        --hoog adres van de array op
+      LE   R3 R4        --indien i <= 1023
+      CJMP body         --spring terug naar het begin van de lus
+      STOR min R0       --plaats R0 in min
+      STOR max R1       --plaats R1 in max
+      STOR sum R2       --plaats R2 in sum

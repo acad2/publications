@@ -1,8 +1,10 @@
 \ProvidesPackage{importsreferences}
-\RequirePackage{tikz,subfigure,float}
+\RequirePackage{tikz,subfigure,float,listings}
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
+\newfloat{listing}{htb}{codes}[chapter]
+\floatname{listing}{Listing}
 
 \newcommand{\genlab}[2]{\label{#1:#2}}
 \newcommand{\genref}[3]{#2~\ref{#1:#3}}
@@ -74,33 +76,10 @@
 \end{algorithm}}
 
 \newcommand{\importlisting}[3][Java]{
-\begin{vhdlcode}[hbt]
+\begin{listing}[hbt]
 \centering
-\begin{lstlisting}
--- 2-naar-1 Multiplexer
---
-architecture Struct of MUX2 is
-  signal U,V,W : bit;
-  component AND2 is
-    port (X,Y: in bit;
-          Z: out bit);
-  end component AND2;
-  component OR2 is
-    port (X,Y: in bit;
-          Z: out bit);
-  end component OR2;
-  component INV is
-    port (X: in bit;
-          Z: out bit);
-    end component INV;
-begin
-  Gate1: component INV  port map (X=>S,Z=>U);
-  Gate2: component AND2 port map (X=>A,Y=>S,Z=>W);
-  Gate3: component AND2 port map (U,B,V);
-  Gate4: component OR2  port map (X=>W,Y=>V,Z=>Y);
-end Struct;
-\end{lstlisting}
-\caption{#2}
-\lstlab{}
-\end{vhdlcode}
+\lstinputlisting[caption=\relax,title=\relax,frame=none,language=#1]{listings/lst-#2.tex}
+\caption{#3}
+\lstlab{#2}
+\end{listing}
 }
