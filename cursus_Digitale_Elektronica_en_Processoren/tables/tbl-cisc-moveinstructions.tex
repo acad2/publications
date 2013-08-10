@@ -7,11 +7,11 @@ $0$	&$0$	&$0$	&$0$	&$1$	&Direct					&\texttt{RF[d]$\leftarrow$Mem[adres]}			&\te
 $0$	&$0$	&$0$	&$1$	&$0$	&Indirect				&\texttt{RF[d]$\leftarrow$Mem[Mem[adres]]}		&\texttt{LOAD Rd (adres)}\\
 $0$	&$0$	&$1$	&$0$	&$0$	&Register-ge\"indexeerd	&\texttt{RF[d]$\leftarrow$Mem[adres+RF[s1]]}	&\texttt{LOAD Rd adres+(Rs1)}\\
 $0$	&$1$	&$0$	&$1$	&$0$	&Register-indirect		&\texttt{RF[d]$\leftarrow$Mem[RF[s1]]}			&\texttt{LOAD Rd (Rs1)}\\
-$0$	&$1$	&$0$	&$1$	&$1$	&Register-relatief		&\texttt{RF[d]$\leftarrow$Mem[RF[s1]+Src2]}		&\texttt{LOAD Rd (Rs1)+Rs2}\\\hline
+$0$	&$1$	&$0$	&$1$	&$1$	&Register-relatief		&\texttt{RF[d]$\leftarrow$Mem[RF[s1]+s2]}		&\texttt{LOAD Rd (Rs1)+Rs2}\\\hline
 $-$	&$-$	&$1$	&$0$	&$1$	&Kopieer register		&\texttt{RF[d]$\leftarrow$RF[s1]}				&\texttt{COPY Rd Rs1}\\\hline
 $1$	&$0$	&$0$	&$0$	&$1$	&Direct					&\texttt{Mem[adres]$\leftarrow$RF[s1]}			&\texttt{STOR adres Rs1}\\
 $1$	&$0$	&$0$	&$1$	&$0$	&Indirect				&\texttt{Mem[Mem[adres]]$\leftarrow$RF[s1]}		&\texttt{STOR (adres) Rs1}\\
 $1$	&$0$	&$1$	&$0$	&$0$	&Register-ge\"indexeerd	&\texttt{Mem[adres+RF[d]]$\leftarrow$RF[s1]}	&\texttt{STOR adres+(Rd) Rs1}\\
 $1$	&$1$	&$0$	&$1$	&$0$	&Register-indirect		&\texttt{Mem[RF[d]]$\leftarrow$RF[s1]}			&\texttt{STOR (Rd) Rs1}\\
-$1$	&$1$	&$0$	&$1$	&$1$	&Register-relatief		&\texttt{Mem[RF[d]+Src2]$\leftarrow$RF[s1]}		&\texttt{STOR (Rd)+Rs2 Rs1}}
+$1$	&$1$	&$0$	&$1$	&$1$	&Register-relatief		&\texttt{Mem[RF[d]+s2]$\leftarrow$RF[s1]}		&\texttt{STOR (Rd)+Rs2 Rs1}}
 }

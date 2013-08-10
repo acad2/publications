@@ -21,6 +21,8 @@
   \anchor{input}{\centerpoint\advance\pgf@y by\halfheight}
   \anchor{output1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
   \anchor{output0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
+  \anchor{outputb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.3333\pgfutil@tempdima}
+  \anchor{outputa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.3333\pgfutil@tempdima}
   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
@@ -38,15 +40,14 @@
      \advance\pgf@y by -\halfheight
      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
      \centerpoint
-     \pgfpathclose
-%      \begingroup
-%      \tikzset{port labels}
-%      \tikz@textfont
-%      \pgf@anchor@fcdecisionblockb@output0
-%      \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{0}}
-%      \pgf@anchor@fcdecisionblockb@output1
-%      \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{1}}
-%      \endgroup
+     \pgfpathclose\begingroup
+     \tikzset{port labels}
+     \tikz@textfont
+     \pgf@anchor@fcdecisionblockb@outputa
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{0}}
+     \pgf@anchor@fcdecisionblockb@outputb
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{1}}
+     \endgroup
   }
 }
 
@@ -75,6 +76,10 @@
   \anchor{output2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.20\pgfutil@tempdima}
   \anchor{output1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.20\pgfutil@tempdima}
   \anchor{output0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.60\pgfutil@tempdima}
+  \anchor{outputd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.60\pgfutil@tempdima}
+  \anchor{outputc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.20\pgfutil@tempdima}
+  \anchor{outputb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.20\pgfutil@tempdima}
+  \anchor{outputa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.60\pgfutil@tempdima}
   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
@@ -93,17 +98,95 @@
      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
      \centerpoint
      \pgfpathclose
-%      \begingroup
-%      \tikzset{port labels}
-%      \tikz@textfont
-%      \pgf@anchor@fcdecisionblockd@output0
-%      \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{0}}
-%      \pgf@anchor@fcdecisionblockd@output1
-%      \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{1}}
-%      \pgf@anchor@fcdecisionblockd@output2
-%      \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{2}}
-%      \pgf@anchor@fcdecisionblockd@output3
-%      \pgftext[bottom,right,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep,x=-\pgfshapeinnerxsep]{\raisebox{0.0ex}{3}}
-%      \endgroup
+     \begingroup
+     \tikzset{port labels}
+     \tikz@textfont
+     \pgf@anchor@fcdecisionblockd@outputa
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{00}}
+     \pgf@anchor@fcdecisionblockd@outputb
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{01}}
+     \pgf@anchor@fcdecisionblockd@outputc
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{10}}
+     \pgf@anchor@fcdecisionblockd@outputd
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{11}}
+     \endgroup
+  }
+}
+
+\pgfdeclareshape{fcdecisionblockh} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{input}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{output7}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.778\pgfutil@tempdima}
+  \anchor{output6}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.556\pgfutil@tempdima}
+  \anchor{output5}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.333\pgfutil@tempdima}
+  \anchor{output4}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.111\pgfutil@tempdima}
+  \anchor{output3}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.111\pgfutil@tempdima}
+  \anchor{output2}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.333\pgfutil@tempdima}
+  \anchor{output1}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.556\pgfutil@tempdima}
+  \anchor{output0}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.778\pgfutil@tempdima}
+  \anchor{outputh}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.778\pgfutil@tempdima}
+  \anchor{outputg}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.556\pgfutil@tempdima}
+  \anchor{outputf}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.333\pgfutil@tempdima}
+  \anchor{outpute}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by-0.111\pgfutil@tempdima}
+  \anchor{outputd}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.111\pgfutil@tempdima}
+  \anchor{outputc}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.333\pgfutil@tempdima}
+  \anchor{outputb}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.556\pgfutil@tempdima}
+  \anchor{outputa}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@y by-\halfheight\advance\pgf@x by0.778\pgfutil@tempdima}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \centerpoint
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by \halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -\halfwidth
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \pgfpathclose
+     \begingroup
+     \tikzset{port labels}
+     \tikz@textfont
+     \pgf@anchor@fcdecisionblockh@outputa
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{000}}
+     \pgf@anchor@fcdecisionblockh@outputb
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{001}}
+     \pgf@anchor@fcdecisionblockh@outputc
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{010}}
+     \pgf@anchor@fcdecisionblockh@outputd
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{011}}
+     \pgf@anchor@fcdecisionblockh@outpute
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{100}}
+     \pgf@anchor@fcdecisionblockh@outputf
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{101}}
+     \pgf@anchor@fcdecisionblockh@outputg
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{110}}
+     \pgf@anchor@fcdecisionblockh@outputh
+     \pgftext[bottom,base,at={\pgfpoint{\pgf@x}{\pgf@y}},y=\pgfshapeinnerysep]{\raisebox{0.0ex}{111}}
+     \endgroup
   }
 }

@@ -1,16 +1,123 @@
-\begin{tikzpicture}[rotate=-90,fcstateblock/.style={draw,rectangle,thick,fill=gray,rotate=-90},fcdecisionblockdf/.style={fcdecisionblockd,thick,fill=gray,rotate=-90}]
+\begin{tikzpicture}[rotate=-90,fcstateblock/.style={draw,rectangle,thick,rotate=-90,scale=0.6},fcdecisionblockhf/.style={fcdecisionblockh,thick,rotate=-90,scale=0.6},fcdecisionblockdf/.style={fcdecisionblockd,thick,rotate=-90,scale=0.6},fcdecisionblockbf/.style={fcdecisionblockb,thick,rotate=-90,scale=0.6},fcdecisionblockhg/.style={fcdecisionblockh,thick,rotate=-180,scale=0.6},fcdecisionblockdg/.style={fcdecisionblockd,thick,rotate=-180,scale=0.6},fcdecisionblockbg/.style={fcdecisionblockb,thick,rotate=-180,scale=0.6}]
+
+\def\dx{1.5};
+\def\dy{-1.5};
+\def\dxb{0.75};
+\def\dyb{-0.75};
+\def\kopy{$\mbox{RF[d]}\leftarrow\mbox{RF[s1]}$};
+\def\jmpr{\mbox{PC}\leftarrow\mbox{Mem[PC]}};
 
 \coordinate (INA) at (0,0);
-\coordinate (INB) at (0,-3);
-\coordinate (INC) at (0,-6);
-\coordinate (IND) at (0,-9);
+\coordinate (INB) at (0,\dy);
+\coordinate (INC) at (0,2*\dy);
+\coordinate (IND) at (0,3*\dy);
+\coordinate (INE) at (0,4*\dy);
+\coordinate (INF) at (0,5*\dy);
+\coordinate (ING) at (0,6*\dy);
+\coordinate (INH) at (0,7*\dy);
 
-\coordinate (IMA) at (0,-1.5);
-\coordinate (IMB) at (0,-4.5);
-\coordinate (IMC) at (0,-7.5);
+\coordinate (IOB) at (0,0);
+\coordinate (IOC) at (-\dx,0);
+\coordinate (IOD) at (-2*\dx,0);
+\coordinate (IOE) at (-3*\dx,0);
+\coordinate (IOF) at (-4*\dx,0);
+\coordinate (IOG) at (-5*\dx,0);
+\coordinate (IOH) at (-6*\dx,0);
+
+\coordinate (RETB) at (-8,0);
+\coordinate (RETC) at (14,0);
+
+\coordinate (IMA) at (0,\dyb);
+\coordinate (IMB) at (0,\dy+\dyb);
+\coordinate (IMC) at (0,2*\dy+\dyb);
+\coordinate (IMD) at (0,3*\dy+\dyb);
+\coordinate (IME) at (0,4*\dy+\dyb);
+\coordinate (IMF) at (0,5*\dy+\dyb);
+\coordinate (IMG) at (0,6*\dy+\dyb);
+\coordinate (IMH) at (0,7*\dy+\dyb);
+
+\coordinate (IPA) at (-\dxb,0);
+\coordinate (IPB) at (-\dx-\dyb,0);
+\coordinate (IPC) at (-2*\dx-\dxb,0);
+\coordinate (IPD) at (-3*\dx-\dxb,0);
+\coordinate (IPE) at (-4*\dx-\dxb,0);
+\coordinate (IPF) at (-5*\dx-\dxb,0);
+\coordinate (IPG) at (-6*\dx-\dxb,0);
+\coordinate (IPH) at (-7*\dx-\dxb,0);
 
 \node[fcstateblock] (ISA) at (0,0 |- INA) {$\begin{array}{l}\mbox{PC}\leftarrow\mbox{Mem[PC]}\\\mbox{PC}\leftarrow\mbox{PC}+1\end{array}$};
 \node[fcdecisionblockdf] (ISB) at (0,0 |- INB) {$\mbox{IR}_{15}\mbox{IR}_{14}$};\draw[thick,->] (ISA) -- (ISB.input);
-\node[fcdecisionblockdf] (ISC-00) at (6,0 |- INC) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (ISB.output0) -- ++(ISB.output0 |- IMB) -| (ISC-00.input);
-\node[fcstateblock] (ISD-0000) at (10,0 |- IND) {$\mbox{RF[d]}\leftarrow\mbox{RF[s1]\texttt{>{}>}N}$};\draw[thick,->] (ISC-00.output0) -- ++(ISC-00.output0 |- IMB) -| (ISD-0000.north);
+% \node[fcdecisionblockdf] (ISC-00) at (6,0 |- INC) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (ISB.output0) -- (ISB.output0 |- IMB) -| (ISC-00.input);
+% \node[fcstateblock] (ISD-0000) at (10,0 |- IND) {$\mbox{RF[d]}\leftarrow\mbox{RF[s1]\texttt{>{}>}N}$};\draw[thick,->] (ISC-00.output0) -- (ISC-00.output0 |- IMC) -| (ISD-0000.north);
+% \node[fcstateblock] (ISE-0001) at (8,0 |- INE) {$\mbox{RF[d]}\leftarrow\mbox{RF[s1]\texttt{<{}<}N}$};\draw[thick,->] (ISC-00.output1) -- (ISC-00.output1 |- IMD) -| (ISE-0001.north);
+% \node[fcdecisionblockdf] (ISD-0010) at (4,0 |- IND) {$\mbox{IR}_{11}\mbox{IR}_{10}$};\draw[thick,->] (ISC-00.output2) -- (ISC-00.output2 |- IMC) -| (ISD-0010.input);
+% \node[fcdecisionblockbf] (ISE-001000) at (6,0 |- INE) {$\mbox{IR}_{9}$};\draw[thick,->] (ISD-0010.output0) -- (ISD-0010.output0 |- IMD) -| (ISE-001000.input);
+% \node[fcstateblock] (ISF-0010000) at (8.5,0 |- INF) {$\mbox{RF[d]}\leftarrow\mbox{RF[s1]}+\mbox{RF[s2]}$};\draw[thick,->] (ISE-001000.output0) -- (ISE-001000.output0 |- IME) -| (ISF-0010000.north);
+% \node[fcstateblock] (ISF-0010001) at (3.5,0 |- INF) {$\mbox{RF[d]}\leftarrow\mbox{RF[s1]}-\mbox{RF[s2]}$};\draw[thick,->] (ISE-001000.output1) -- (ISE-001000.output1 |- IME) -| (ISF-0010001.north);
+
+\begin{scope}[xshift=2 cm]
+  \node[fcdecisionblockbf] (ISC-01) at (0,0 |- INC) {$\mbox{IR}_{13}$};\draw[thick,->] (ISB.output1) -- (ISB.output1 |- IMB) -| (ISC-01.input);
+  \begin{scope}[xshift=5 cm]
+	\node[fcdecisionblockbf] (ISD-010) at (0,0 |- IND) {$\mbox{IR}_{12}$};\draw[thick,->] (ISC-01.output0) -- (ISC-01.output0 |- IMC) -| (ISD-010.input);
+	\begin{scope}[xshift=2.5 cm]
+	  \node[fcdecisionblockhf] (ISE-0100) at (0,0 |- INE) {$\mbox{IR}_{11}$};\draw[thick,->] (ISD-010.output0) -- (ISD-010.output0 |- IMD) -| (ISE-0100.input);
+	  \foreach \i/\x/\o/\r/\t in {000/2/0/INF/{PC},001/1/1/ING/{Mem[PC]},010/0/2/INH/{Mem[Mem[PC]]},100/-1/4/INF/{Mem[PC]+RF[s1]}} {
+		\begin{scope}[xshift=\x cm]
+		  \node[fcstateblock] (ISF-0100\i) at (0,0 |- \r) {$\begin{array}{l}\mbox{RF[d]}\leftarrow\mbox{Mem[\t]}\\\mbox{PC}\leftarrow\mbox{PC}+1\end{array}$};\draw[thick,->] (ISE-0100.output\o) -- (ISE-0100.output\o |- IME) -| (ISF-0100\i.north);
+		\end{scope}
+	  }
+	\end{scope}
+	\begin{scope}[xshift=-2.5 cm]
+	  \node[fcdecisionblockhf] (ISE-0101) at (0,0 |- INE) {$\mbox{IR}_{11}$};\draw[thick,->] (ISD-010.output1) -- (ISD-010.output1 |- IMD) -| (ISE-0101.input);
+	  \foreach \i/\x/\o/\r/\t in {010/1.25/2/ING/{RF[s1]},011/0/3/INH/{RF[s1]+s2}} {
+		\begin{scope}[xshift=\x cm]
+		  \node[fcstateblock] (ISF-0101\i) at (0,0 |- \r) {$\mbox{RF[d]}\leftarrow\mbox{Mem[\t]}$};\draw[thick,->] (ISE-0101.output\o) -- (ISE-0101.output\o |- IME) -| (ISF-0101\i.north);
+		\end{scope}
+	  }
+	  \begin{scope}[xshift=-1.25 cm]
+		\node[fcstateblock] (ISF-0101101) at (0,0 |- INF) {\kopy{}};\draw[thick,->] (ISE-0101.output5) -- (ISE-0101.output5 |- IME) -| (ISF-0101101.north);
+	  \end{scope}
+	\end{scope}
+  \end{scope}
+  \begin{scope}[xshift=-5 cm]
+	\node[fcdecisionblockbf] (ISD-011) at (0,0 |- IND) {$\mbox{IR}_{12}$};\draw[thick,->] (ISC-01.output1) -- (ISC-01.output1 |- IMC) -| (ISD-011.input);
+	\begin{scope}[xshift=2.5 cm]
+	  \node[fcdecisionblockhf] (ISE-0110) at (0,0 |- INE) {$\mbox{IR}_{11}$};\draw[thick,->] (ISD-011.output0) -- (ISD-011.output0 |- IMD) -| (ISE-0110.input);
+	  \foreach \i/\x/\o/\r/\t in {001/1/1/ING/{Mem[Mem[PC]]},010/0/2/INH/{Mem[Mem[Mem[PC]]]},100/-1/4/INF/{Mem[Mem[PC]+RF[s1]]}} {
+		\begin{scope}[xshift=\x cm]
+		  \node[fcstateblock] (ISF-0110\i) at (0,0 |- \r) {$\begin{array}{l}\mbox{\t}\leftarrow\mbox{RF[s1]}\\\mbox{PC}\leftarrow\mbox{PC}+1\end{array}$};\draw[thick,->] (ISE-0110.output\o) -- (ISE-0110.output\o |- IME) -| (ISF-0110\i.north);
+		\end{scope}
+	  }
+	\end{scope}
+	\begin{scope}[xshift=-2.5 cm]
+	  \node[fcdecisionblockhf] (ISE-0111) at (0,0 |- INE) {$\mbox{IR}_{11}$};\draw[thick,->] (ISD-011.output1) -- (ISD-011.output1 |- IMD) -| (ISE-0111.input);
+	  \foreach \i/\x/\o/\r/\t in {010/1.25/2/ING/{RF[s1]},011/0/3/INH/{RF[s1]+s2}} {
+		\begin{scope}[xshift=\x cm]
+		  \node[fcstateblock] (ISF-0111\i) at (0,0 |- \r) {$\mbox{Mem[\t]}\leftarrow\mbox{RF[s1]}$};\draw[thick,->] (ISE-0111.output\o) -- (ISE-0111.output\o |- IME) -| (ISF-0111\i.north);
+		\end{scope}
+	  }
+	  \begin{scope}[xshift=-1.25 cm]
+		\node[fcstateblock] (ISF-0111101) at (0,0 |- INF) {\kopy{}};\draw[thick,->] (ISE-0111.output5) -- (ISE-0111.output5 |- IME) -| (ISF-0111101.north);
+	  \end{scope}
+	\end{scope}
+  \end{scope}
+\end{scope}
+\foreach \o/\r in {11101/IMF,11010/IMG,11011/IMH} {
+  \draw[thick] (ISF-01\o.south) |- (\r -| RETC);
+}
+\begin{scope}[yshift=2*\dy cm,rotate=-90]
+  \node[fcdecisionblockdg] (ISC-10) at (0,0 |- IOE) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (ISB.output2) -| (ISC-10.input);
+  \foreach \i/\x/\o/\r/\t in {00/0.5/0/IOF/{\jmpr},10/-0.5/1/IOH/{\jmpr},11/-1/3/IOF/{}} {
+	\begin{scope}[xshift=\x cm]
+	  \node[fcstateblock,rotate=-90] (ISF-10\i) at (\x,0 |- \r) {$\begin{array}{l}\t\end{array}$};\draw[thick,->] (ISC-10.output\o) -- (ISC-10.output\o |- IPD) -| (ISF-10\i.north);
+	\end{scope}
+  }
+\end{scope}
+\draw[<-,thick] (ISA.north) -- ++(0,0.5) -| (IMH -| RETC);
+\pdot{IMF -| RETC};
+\pdot{IMG -| RETC};
+\foreach \o/\r in {10100/IMF,10010/IMH,10001/IMG,01101/IMF,01010/IMG,01011/IMH,00100/IMF,00010/IMH,00001/IMG,00000/IMF} {
+  \draw[thick] (ISF-01\o.south) |- (ISF-01\o.south |- \r);
+  \pdot{ISF-01\o.south |- \r};
+}
 \end{tikzpicture}
