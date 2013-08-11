@@ -29,9 +29,9 @@
 \coordinate (IOG) at (-5*\dx,0);
 \coordinate (IOH) at (-6*\dx,0);
 
-\coordinate (RETA) at (0,5);
-\coordinate (RETB) at (-7*\dx,0);
-\coordinate (RETC) at (14,0);
+\coordinate (RETA) at (0,-3*\dy-\dyb);
+\coordinate (RETB) at (-6.75*\dx,0);
+\coordinate (RETC) at (13,0);
 
 \coordinate (IMA) at (0,\dyb);
 \coordinate (IMB) at (0,\dy+\dyb);
@@ -153,7 +153,7 @@
 }
 \begin{scope}[yshift=2*\dy cm,rotate=-90]
   \node[fcdecisionblockdg] (ISC-10) at (0,0 |- IOE) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (ISB.output2) -| (ISC-10.input);
-  \foreach \i/\x/\o/\r/\t in {00/1/0/IPF/{\jmpr},10/-1/2/IOF/{\saves\\\pushs\\\jmpr},11/-1.75/3/IOG/{\popss\\\loadpcs}} {
+  \foreach \i/\x/\o/\r/\t in {00/1/0/IPF/{\jmpr},10/-1/2/IOF/{\saves\\\pushs\\\jmpr},11/-1.75/3/IOH/{\popss\\\loadpcs}} {
 	\begin{scope}[xshift=\x cm]
 	  \node[fcstateblock,rotate=-90] (ISF-10\i) at (\x,0 |- \r) {$\begin{array}{l}\t\end{array}$};\draw[thick,->] (ISC-10.output\o) -- (ISC-10.output\o |- IPD) -| (ISF-10\i.north);
 	\end{scope}
@@ -175,18 +175,18 @@
 	\end{scope}
   }
   \node[fcdecisionblockdh] (ISD-0010) at (-1,0 |- IQE) {$\mbox{IR}_{11}\mbox{IR}_{10}$};\draw[thick,->] (ISC-00.output2) -- (ISC-00.output2 |- IRD) -| (ISD-0010.input);
-	\node[fcdecisionblockhh] (ISD-0011) at (-3,0 |- IQH) {$\mbox{IR}_{11}\mbox{IR}_{10}\mbox{IR}_{9}$};\draw[thick,->] (ISC-00.output3) -- (ISC-00.output3 |- IRD) -| (ISD-0011.input);
+	\node[fcdecisionblockhh] (ISD-0011) at (-3,0 |- IQG) {$\mbox{IR}_{11}\mbox{IR}_{10}\mbox{IR}_{9}$};\draw[thick,->] (ISC-00.output3) -- (ISC-00.output3 |- IRD) -| (ISD-0011.input);
   \begin{scope}[xshift=-3 cm]
 	\foreach \i/\x/\o/\t in {000/1.75/0/AND,001/1.25/1/NAND,010/0.75/2/OR,011/0.25/3/NOR,100/1.5/4/XOR,101/1/5/XNOR} {
 	\begin{scope}[xshift=\x cm]
-	  \node[fcstateblock] (ISF-0010\i) at (ISD-0011.output\o|- IQJ) {$\texttt{RF[d]}\leftarrow\texttt{RF[s1] \t{} RF[s2]}$};\draw[thick,->] (ISD-0011.output\o) -- (ISF-0010\i.west);
+	  \node[fcstateblock] (ISF-0010\i) at (ISD-0011.output\o|- IRH) {$\texttt{RF[d]}\leftarrow\texttt{RF[s1] \t{} RF[s2]}$};\draw[thick,->] (ISD-0011.output\o) -- (ISF-0010\i.west);
 	  \draw[thick] (ISF-0010\i.east) -- (ISF-0010\i.east |- RETC);
 	  \pdot{ISF-0010\i.east |- RETC};
 	\end{scope}
 	}
 	\foreach \i/\x/\o/\t in {110/-1.25/6/{RF[s1] AND 1},111/-1.75/7/{INV(RF[s1])}} {
 	\begin{scope}[xshift=\x cm]
-	  \node[fcstateblock] (ISF-0010\i) at (ISD-0011.output\o |- IQJ) {$\texttt{RF[d]}\leftarrow\texttt{\t{}}$};\draw[thick,->] (ISD-0011.output\o) -- (ISF-0010\i.west);
+	  \node[fcstateblock] (ISF-0010\i) at (ISD-0011.output\o |- IRH) {$\texttt{RF[d]}\leftarrow\texttt{\t{}}$};\draw[thick,->] (ISD-0011.output\o) -- (ISF-0010\i.west);
 	  \draw[thick] (ISF-0010\i.east) -- (ISF-0010\i.east |- RETC);
 	  \pdot{ISF-0010\i.east |- RETC};
 	\end{scope}
@@ -219,12 +219,28 @@
 \end{scope}
 \begin{scope}[rotate=180,xshift=2*\dx cm,yshift=-\dy cm]
 \node[fcdecisionblockdi] (ISD-11) at (0,0) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (ISB.output3) -- (ISB.output3 |- IMB) -| (ISD-11.input);
-\node[fcdecisionblockbi] (ISD-1101) at (5,0 |- ISD) {$\mbox{IR}_{11}$};\draw[thick,->] (ISD-11.output1) -- (ISD-11.output1 |- ITC) -| (ISD-1101.input);
-\node[fcdecisionblockhi] (ISD-1110) at (0.5,0 |- ISD) {$\mbox{IR}_{11}\mbox{IR}_{10}\mbox{IR}_{10}$};\draw[thick,->] (ISD-11.output2) -- (ISD-11.output2 |- ITC) -| (ISD-1110.input);
-\node[fcstateblock,rotate=180] (ISF-1111) at (-1.5,0 |- ISB) {$\texttt{Status}\leftarrow1$};\draw[thick,->] (ISD-11.output3) -- (ISD-11.output3 |- ITZ) -| (ISF-1111.north);\draw[thick] (ISF-1111.south) |- (RETA |- ITA);
-\draw[thick] (ISD-11.output0) |- (RETB |- ITC);
-\pdot{RETB |- ITC}
-\pdot{RETA |- ITA}
+\node[fcdecisionblockhi] (ISD-1110) at (ISD-11.output2 |- ISC) {$\mbox{IR}_{11}\mbox{IR}_{10}\mbox{IR}_{10}$};\draw[thick,->] (ISD-11.output2) -- (ISD-1110.input);
+\foreach \i/\o/\f/\x in {000/0/{>}/4.75,001/1/{\geq}/3.5,010/2/{<}/2.25,011/3/{\leq}/1,100/4/{=}/-0.25,101/5/{\neq}/-1.5} {
+  \node[fcdecisionblockbi] (ISD-1110\i) at ($(ISD-1110.output\o |- ISD)+(\x,0)$) {$\texttt{RF[s1]} \f{} \texttt{RF[s2]}$};\draw[thick,->] (ISD-1110.output\o) -- (ISD-1110.output\o |- ITC) -| (ISD-1110\i.input);
+  \node[fcstateblock,rotate=90] (ISF-1110\i0) at (ISD-1110\i.output0 |- ISE) {$\texttt{Status}\leftarrow 0$};\draw[thick,->] (ISD-1110\i.output0) -- (ISF-1110\i0);\draw[thick] (ISF-1110\i0.east) -- (ISF-1110\i0.east |- RETA);\pdot{ISF-1110\i0.east |- RETA};
+  \node[fcstateblock,rotate=90] (ISF-1110\i1) at (ISD-1110\i.output1 |- ISE) {$\texttt{Status}\leftarrow 1$};\draw[thick,->] (ISD-1110\i.output1) -- (ISF-1110\i1);\draw[thick] (ISF-1110\i1.east) -- (ISF-1110\i1.east |- RETA);\pdot{ISF-1110\i1.east |- RETA};
+}
+\node[fcstateblock,rotate=180] (ISF-1111) at (-1.25,-1.5) {$\texttt{Status}\leftarrow1$};\draw[thick,->] (ISD-11.output3) -- (ISD-11.output3 |- ITZ) -| (ISF-1111.north);\draw[thick] (ISF-1111.south) |- (RETA |- ITA);
+\node[fcdecisionblockbi] (ISD-1101) at (1.5,-1.5) {$\mbox{IR}_{11}$};\draw[thick,->] (ISD-11.output1) -- (ISD-11.output1 |- ITZ) -| (ISD-1101.input);
+
+\node[fcstateblock,rotate=180] (ISF-11010) at (3.75,0 |- ISC) {$\texttt{RF[d]}\leftarrow0$};
+\coordinate (MID) at ($0.5*(ISD-1101.output1)+0.5*(ISF-11010.north)$);
+\coordinate (MIC) at ($(MID)+(0,0.1)$);
+\draw[thick,->] (ISD-1101.output0) -- (ISD-1101.output0 |- MIC) -| (ISF-11010.north);
+\node[fcstateblock,rotate=180] (ISF-11011) at (2.25,0 |- ISC) {$\texttt{Status}\leftarrow0$};\draw[thick,->] (ISD-1101.output1) -- (ISD-1101.output1 |- MID) -| (ISF-11011.north);
+\coordinate (MID) at ($(ISF-11010)+(0,-0.5)$);
+\draw[thick] (ISF-11011.south) |- (MID -| RETB);
+\draw[thick] (ISF-11010.south) |- (ISF-11010.south |- MID);
+\pdot{ISF-11010.south |- MID};
+\pdot{MID -| RETB};
+\draw[thick] (ISD-11.output0) |- (ISF-1111.south |- ITA);
+\pdot{RETA |- ITA};
+\pdot{ISF-1111.south |- ITA};
 \end{scope}
 \draw[thick] (ISF-0001.south) -| (RETA -| IRE);
 \draw[thick] (ISF-0000.south) -| (ISF-0000.south -| IRE);

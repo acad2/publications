@@ -242,7 +242,7 @@ Verplaatsinstructies zijn instructies die gegevens tussen het geheugen en de reg
 Doorgaans beschouwd men vier verschillende soorten sprongbevelen:
 \begin{itemize}
  \item \termen{Ongeconditioneerde sprong (JMP)}: in dit geval wordt de programmateller gezet op het opgegeven adres.
- \item \termen{Geconditioneerde sprong (CJMP)}: dit is een spronginstructie die enkel wordt uitgevoerd als aan een bepaalde voorwaarde wordt voldaan. Hiervoor houdt de processor een \termen{statusregister} bij. Sommige instructies die we verder zullen beschouwen kunnen op basis van een bepaalde voorwaarde een $0$ of een $1$ naar dat register schrijven. Enkel wanneer het statusregister op $1$ staat wordt de programmateller op het opgegeven adres gezet. In het andere geval wordt de programmateller opgehoogd.
+ \item \termen{Geconditioneerde sprong (CJMP)}: dit is een spronginstructie die enkel wordt uitgevoerd als aan een bepaalde voorwaarde wordt voldaan. Hiervoor houdt de processor een \termen{statusregister} bij. Een bit in het statusregister noemt men meestal een \termen{statusvlag}\footnote{Met het concept vlag introduceert men meestal een terminologie: de vlag is gehesen wanneer de bit op $1$ staat.}. Sommige instructies die we verder zullen beschouwen kunnen op basis van een bepaalde voorwaarde een $0$ of een $1$ naar dat register schrijven. Enkel wanneer het statusregister op $1$ staat wordt de programmateller op het opgegeven adres gezet. In het andere geval wordt de programmateller opgehoogd.
  \item \termen{Subroutine sprong (JSR)}: Wanneer het programma een subroutine wil uitvoeren, wordt het terugkeeradres eerst op een stapel gezet. Dit terugkeeradres is de opgehoogde programmateller. Nadat de stapel is verhoogt wordt de programmateller vervolgens aangepast zodat de processor aan het begin van de subroutine staat.
  \item \termen{Subroutine terugkeer (RTS)}: Eenmaal we de subroutine hebben uitgevoerd is het de bedoeling dat het processor terugkeert naar het stuk code net achter de plaats waar de subroutine werd opgeroepen. Omdat verschillende stukken code een subroutine kunnen oproepen werd daarom dit adres op de stapel geplaatst. Door het adres uit te lezen van de stapel en de stapel met \'e\'en element te reduceren bekomen we de bereikt de processor de correcte toestand.
 \end{itemize}
@@ -288,12 +288,22 @@ Bij het defini\"eren van de instructieset hebben we verondersteld dat we beschik
  \item een instructieregister (IR)
  \item een statusvlag (Status)
 \end{itemize}
-Op basis van deze componenten zullen we dus een stroomschema ontwerpen. Een stroomschema lijkt op een ASM-schema maar verschilt op enkele punten. Zo omvat een stroomschema geen concrete toestanden: we doen geen uitspraak over wat precies in welke klokcyclus moet worden afgehandeld, soms zullen bewerkingen in het stroomschema dus verder onderverdeeld worden. Daarnaast kan een stroomschema losse eindes bevatten: pijlen die uit een conditioneel blok vertrekken zonder ergens aan te komen. In een ASM-schema moeten alle uitgangen verbonden zijn met nieuwe blokken, wanneer er bijvoorbeeld een onbestaande opcode wordt ingelezen kan dit resulteren in het ophalen van de volgende instructie\footnote{Moderne processoren kennen een bit toe in het statusregister. Wanneer een onbestaande opcode wordt ingelezen wordt de bit gezet en wordt aan het besturingssysteem gevraagd de zaak af te handelen. Dit resulteert bij de meeste Linux systemen bijvoorbeeld in het onmiddellijk be\"eindigen van het proces.}.
 \paragraph{}
 Het stroomschema kent twee concepten: instructieblokken en beslissingsblokken. Een instructieblok wordt voorgesteld door een rechthoek terwijl een beslissingsblok wordt voorgesteld door een driehoek. Op het bovenste hoekpunt wordt de variabele gezet die betrokken is in de beslissing of een booleaanse expressie. Op de basis van de driehoek worden vervolgens de verschillende resultaten van de variabele of booleaanse expressie geplaatst en vertrekt vanuit elk resultaat een pijl. Men leest een stroomschema dan ook door de relevante pijl te volgen.
 \paragraph{}
+De beschrijving van een stroomschema lijkt op dat van een ASM-schema maar verschilt op enkele punten. Zo omvat een stroomschema geen concrete toestanden: we doen geen uitspraak over wat precies in welke klokcyclus moet worden afgehandeld, soms zullen bewerkingen in het stroomschema dus verder onderverdeeld worden. Verder kent een stroomschema wel een sequenti\"ele volgorde toe aan instructies. Instructies die vermeld staan in eenzelfde blok worden conceptueel na elkaar uitgevoerd\footnote{Dit hoeft echter niet te betekenen dat de opdrachten ook effectief na elkaar moeten worden uitgevoerd. Indien beide instructies niet interfereren bijvoorbeeld kan men de instructies omdraaien of tegelijk uitvoeren.}. In een ASM-schema worden alle instructies in een blok tegelijk uitgevoerd. Stel bijvoorbeeld dat men in een blok volgende instructies tegenkomt:
+\begin{equation}
+\begin{array}{l}
+a\leftarrow a+1
+b\leftarrow\mbox{Mem}[a]
+\end{array}
+\end{equation}
+In het geval deze instructies in een ASM-schema staat zal $b$ de waarde van het geheugen inlezen dat op het adres van de oude waarde van $a$ staat. In het geval van een stroomschema wordt de waarde op het adres ernaast uitgelezen.
+\paragraph{}
 Een stroomschema voor een instructieset omvat alle mogelijke instructies die kunnen worden uitgevoerd. Centraal staat doorgaans een instructieblok die beschrijft hoe de instructie wordt opgehaald en de programmateller wordt opgehoogd. Vanuit dit blok worden de stroom vervolgens opgedeeld op basis van mogelijke instructies. Elke vertakking voert vervolgens de instructie uit en keert terug naar het centrale blok zodat de volgende instructie kan worden opgehaald.
+\paragraph{}
 \importtikzfigure{flowchart-cisc}{Het instructieset-stroomschema van de CISC processor.}
+\figref{flowchart-cisc} toont het stroomschema van alle 44 instructies in \'e\'en afbeelding. De verschillende types instructies zijn in verschillende richtingen opgebouwd. Centraal zien we een instructieblok met twee instructies: $\texttt{IR}\leftarrow\texttt{Mem[PC]}$ laadt de instructie op het adres van de programmateller in het instructieregister en $\texttt{PC}\leftarrow\texttt{PC}$ hoogt de instructieteller op. Vanaf
 \subsubsection{Allocatie datapadcomponenten}
 \subsubsection{ASM-schema}
 \subsubsection{Ontwerp Controller}
