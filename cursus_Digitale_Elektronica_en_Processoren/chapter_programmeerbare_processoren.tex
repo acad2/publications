@@ -277,6 +277,19 @@ Na \verb+ORG PROGRAM+ begint het eigenlijke program. De instructies staan dus va
 \paragraph{}
 \importlisting[bin]{bin-minmaxsum}{Het min-max-sum algoritme in machinetaal.}
 We kunnen de code in assembleertaal handmatig omzetten in binaire machinetaal. Het resultaat na deze omzetting staat in \lstref{bin-minmaxsum}. In de listing beschouwen we twee formaten: \verb+-- ----- --- --- ---+ beschrijft instructies en \verb+---- ---- ---- ----+ beschrijft adresvelden. In werkelijkheid is er natuurlijk geen verschil bij de instructies. Verder beschouwen we in het bestand don't care bits. Men kan deze bits uiteraard niet voorstellen in een geheugen. In dat geval dienen we gewoon een waarde -- $0$ of $1$ -- in te vullen. Doorgaans kiest een assembleerprogramma $0$. We zien dat een assembleerprogramma zowel de labels als de variabelen vervangt door hun fysische equivalent. Verder worden de verschillende instructies omgezet en de opgegeven registers ingevuld. Samen met deze cursus komt het programma \verb+assembler-cisc.hs+ die in staat is om programma's geschreven in de gegeven assembleertaal om te zetten in de gegeven machinetaal. Men schrijft het programma in de assembleertaal en slaat het op in een bestand. Vervolgens roept men het programma aan met \verb+assembleer-cisc bestand program+. De uitvoer is een binair bestand genaamd \verb+program+ die de equivalente machinecode voorstelt. In \chpref{experiments} ten slotte vindt men terug hoe men de CISC-processor zelf kan realiseren. Op die manier kan men dus zelfgeschreven programma's uitvoeren.
+\paragraph{}
+\begin{table}[hbt]
+\centering
+\importtabularsubtable{minmaxsum-program}{Programma.}
+\importtabularsubtable{minmaxsum-execution}{Uitvoer.}
+\caption{Frequentietabel bij het uitvoeren van het voorbeeldprogramma.}
+\tbllab{freq-minmaxsum}
+\end{table}
+We zullen tot slot op basis van het programma cijfermateriaal berekenen over het aantal uitgevoerde instructies. Dit is nuttig wanneer we bijvoorbeeld een sneller datapad willen ontwikkelen en statistische gegevens nodig hebben in verband met het voorkomen van instructies. Bij het verzamelen van statistische gegevens kunnen we een onderscheid maken tussen enerzijds het programma en de uitvoer. Bij de uitvoer van een programma kunnen sommige instructies immers meermaals worden uitgevoerd. \tblref{minmaxsum-program} toont dan ook het gebruik van instructies in een programma. Wat opvalt is het hoge aantal verplaatsinstructies. Wanneer we de frequentie van de instructies willen berekenen zullen de meeste instructies $1024$ keer in de lus worden uitgevoerd: we denken bijvoorbeeld aan de increment instructies. Een probleem vormen echter de register-kopieer instructies (COPY). De uitvoer van deze instructies hangt immers af van de gegevens in de array. We kunnen echter stellen dat wanneer we reeds $k$ elementen hebben onderzocht, de kans om nog een minimum of maximum te bekomen gelijk is aan:
+\begin{equation}
+\fun{P_{\mbox{nieuw min/max}}}{k}=\displaystyle\frac{1}{1+k}
+\end{equation}
+In dat geval verwachten we dat we $15.018$ keer deze instructie zullen moeten uitvoeren. \tblref{minmaxsum-execution} beschrijft de frequentietabel bij de uitvoer. Wat opvalt is dat het aandeel aan verplaatsinstructies significant lager is. Dit is typisch: buiten de lussen voert men vooral instructies uit die gegevens inladen en wegschrijven. Binnen de lussen voert men meestal rekenwerk uit.
 \subsubsection{Instructieset-stroomschema}
 Na het opstellen van een instructieset volgt de volgende stap: het opstellen van een \termen{instructieset-stroomschema} ofwel \termen{Instruction Set Flowchart}. Een dergelijk stroomschema is een visuele voorstelling van alle instructies samen met de bijbehorende registertransfers. Meestal wordt dit schema dan ook gebruikt om later de \termen{instructiedecoder} te ontwikkelen: een onderdeel van de controller die de instructie omzet in de juiste stuursignalen voor het datapad.
 \paragraph{}
@@ -329,8 +342,17 @@ Op basis van het stroomdiagram kunnen we opmerken dat impliciete adressering het
 \begin{equation}
 \texttt{RF[d]}\leftarrow\texttt{Mem[Mem[Mem[PC]]]}
 \end{equation}
-Dit komt bijgevolg neer op $3$ geheugentoegangen.
+Dit komt bijgevolg neer op $4$ geheugentoegangen (inclusief het inlezen van de instructie). Stel dat het RAM-geheugen een toegangstijd heeft van $50~\mbox{ns}$, dan vereist de instructie dus minstens $200~\mbox{ns}$. Indien we dus de volledige instructie in \'e\'en klokcyclus uitvoeren, dan is de maximale klokfrequentie bijgevolg:
+\begin{equation}
+f_{\mbox{max}}=\displaystyle\frac{1}{4\cdot 50~\mbox{ns}}=5~\mbox{MHz}
+\end{equation}
+We kunnen de impliciete adressering onmogelijk versnellen met de gegeven toegangstijd. Anderzijds impliceert het uitvoeren van de instructie in \'e\'en klokcyclus dat alle instructies in $200~\mbox{ns}$ worden uitgevoerd, ook registeroperaties die geen geheugenoperaties vereisen. Dit betekent dat in het geval van vereist het uitvoeren van het programma $2\ 052\ 800~\mbox{ns}$.
+\paragraph{}
+We kunnen een multicycling transformatie uitvoeren waarin instructies worden uitgesmeerd zodat per klokcyclus er \'e\'en geheugentoegang wordt uitgevoerd. In dat geval is een klokcyclus ongeveer $50~\mbox{ns}$ lang. Wanneer we dus een LOAD instructie uitvoeren met behulp van impliciete adressering zal dit nog steeds $200~\mbox{ns}$ vereisen. Anderzijds zullen bijvoorbeeld registeroperaties in $1$ klokcyclus worden uitgevoerd. Uit \tblref{minmaxsum-execution} kunnen we echter afleiden dan het grootste deel van de instructies enkel toegang tot het geheugen vereisen om de instructie in te laden. De uitvoertijd van het programma zal dus ongeveer verviervoudigen.
+\paragraph{}
+Met de multicycling transformatie dienen we echter een nieuw register te introduceren: het \termen{adresregister (AR)}. Dit register houdt het adres bij tijdens de uitvoeren van verplaatsinstructies. We hebben slechts nood aan \'e\'en register omdat bij bijvoorbeeld impliciete adressering we dit register enkele malen kunnen overschrijven tot de instructie is uitgevoerd.
 \subsubsection{ASM-schema}
+Na het alloceren van componenten bij het datapad zullen we een ASM-schema opstellen. We stellen dit proces op op basis van enerzijds het stroomdiagram op \figref{flowchart-cisc} en anderzijds de allocatie van de componenten op het datapad. 
 \subsubsection{Ontwerp Controller}
 \subsubsection{Ontwerp Datapad}
 \subsection{Reduced Instruction Set Computer (RISC)}

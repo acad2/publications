@@ -1,0 +1,10 @@
+\small{\defaulttable{lrr|lrr|lrr|lrr}
+{\multicolumn{3}{c|}{\bf Register}&\multicolumn{3}{c|}{\bf Verplaats}&\multicolumn{3}{c|}{\bf Sprong}&\multicolumn{3}{c}{\bf Overige}\\
+Op&\#&\%&Op&\#&\%&Op&\#&\%&Op&\#&\%}
+{
+INC	&2048	&20	&LOAD5	&1024	&10	&CJMP	&3072	&30	&LE		&2048	&20\\
+ADD	&1024	&10	&COPY	&15		&0	&		&		&	&GE		&1024	&10\\
+	&		&	&STOR1	&3		&0	&		&		&	&CLR	&3		&0\\
+	&		&	&LOAD1	&3		&0	&		&		&	&		&		&\\\hline
+\bf Tot.&3072&30&\bf Tot.&1045&10&\bf Tot.&3072&30&\bf Tot.&3075&30
+}}
