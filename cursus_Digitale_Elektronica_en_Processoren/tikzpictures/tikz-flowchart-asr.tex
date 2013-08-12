@@ -1,0 +1,14 @@
+\begin{tikzpicture}[fcstateblock/.style={draw,rectangle,thick,scale=0.8},fcdecisionblockbf/.style={fcdecisionblockb,thick,scale=0.8},fcdecisionblockdf/.style={fcdecisionblockd,thick,scale=0.8},fcdecisionblockhf/.style={fcdecisionblockh,thick,scale=0.8}]
+\coordinate (AA) at (0,0.75);
+\coordinate (A) at (0,0);
+\coordinate (B) at (0,-1.5);
+\coordinate (C) at (0,-3);
+\coordinate (D) at (0,-4.5);
+\coordinate (DD) at (0,-5.25);
+\coordinate (RX) at (3,0);
+\node[fcstateblock] (IFA) at (A) {$\begin{array}{l}\mbox{IR}\leftarrow\mbox{Mem[PC]}\\\mbox{PC}\leftarrow\mbox{PC}+1\end{array}$};
+\node[fcdecisionblockdf] (IDB) at (B) {$\mbox{IR}_{15}\mbox{IR}_{14}$};\draw[thick,->] (IFA.south) -- (IDB.input);
+\node[fcdecisionblockdf] (IDC) at (IDB.output0 |- C) {$\mbox{IR}_{13}\mbox{IR}_{12}$};\draw[thick,->] (IDB.output0) -- (IDC.input);
+\node[fcstateblock] (IFD) at (IDC.output0 |- D) {$\texttt{RF[d]}\leftarrow\texttt{RF[s1]>{}>N}$};\draw[thick,->] (IDC.output0) -- (IFD.north);
+\draw[thick,->] (IFD.south) |- (RX |- DD) |- (IFA.north |- AA) -- (IFA.north);
+\end{tikzpicture}

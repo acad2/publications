@@ -322,11 +322,11 @@ Nadat per instructie een formele beschrijving werd opgesteld met betrekking tot 
 \begin{itemize}
  \item 	Een extern geheugen \texttt{Mem}: $2^{16}\times 16$ ofwel $128\mbox{ kiB}$ met $1$ lees/schrijfpoort.
  \item Een registerbank \texttt{RF}: $2^3\times 16$ met $2$ leespoorten en $1$ schrijfpoort.
- \item Een instructieregister \texttt{IR}
  \item Een statusvlag \texttt{Status}
+ \item Een instructieregister \texttt{IR}
  \item Een programmateller \texttt{PC}
 \end{itemize}
-We kunnen verder voor elke operatie een functionele eenheid voorzien. Anderzijds zal elke klokcyclus er hoogstens \'e\'en instructie actief zijn. Alle bewerkingen die moeten worden uitgevoerd kunnen we uitvoeren met drie algemene functionele eenheden:
+De laatste twee registers behoren echter tot de controller en zullen we in deze stap niet beschouwen. We kunnen verder voor elke operatie een functionele eenheid voorzien. Anderzijds zal elke klokcyclus er hoogstens \'e\'en instructie actief zijn. Alle bewerkingen die moeten worden uitgevoerd kunnen we uitvoeren met drie algemene functionele eenheden:
 \begin{itemize}
  \item Aritmetische Logische Eenheid (ALU)
  \item Vergelijker
@@ -353,6 +353,61 @@ We kunnen een multicycling transformatie uitvoeren waarin instructies worden uit
 Met de multicycling transformatie dienen we echter een nieuw register te introduceren: het \termen{adresregister (AR)}. Dit register houdt het adres bij tijdens de uitvoeren van verplaatsinstructies. We hebben slechts nood aan \'e\'en register omdat bij bijvoorbeeld impliciete adressering we dit register enkele malen kunnen overschrijven tot de instructie is uitgevoerd.
 \subsubsection{ASM-schema}
 Na het alloceren van componenten bij het datapad zullen we een ASM-schema opstellen. We stellen dit proces op op basis van enerzijds het stroomdiagram op \figref{flowchart-cisc} en anderzijds de allocatie van de componenten op het datapad. Met deze stap dienen we echter te beslissen welke bewerkingen we in welke toestand uitvoeren. Concreet betekent dit dat we de instructieblokken van het stroomdiagram opsplitsen in zo weinig mogelijk ASM-blokken. In principe kan men alle instructies altijd tegelijk uitvoeren. Anderzijds hebben we de componenten op het datapad reeds vastgelegd. Concreet betekent dit dat we in dit geval over slechts \'e\'en ALU beschikken, dat we slechts \'e\'en adres van het geheugen tegelijk kunnen uitlezen, we \'e\'en woord per toestand naar de registerbank kunnen wegschrijven, enzovoort. Bij wijze van voorbeeld zullen we enkele gevallen bespreken.
+\paragraph{Aritmetisch schuiven naar rechts (ASR)}
+Een stroomschema die enkel het geval van aritmetisch schuiven naar rechts (ASR) is getekend in \figref{flowchart-asr}.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{flowchart-asr}{Stroomschema.}
+\importtikzsubfigure{flowchartasm-asr}{Tussentoestand.}
+\importtikzsubfigure{asm-asr}{Tussentoestand.}
+\caption{Stroomschema naar ASM-schema voor de ASR-instructie.}
+\label{flowasm-asr}
+\end{figure}
+\paragraph{Laden van een constante (LOAD)}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{flowchart-load1}{Stroomschema.}
+\importtikzsubfigure{flowchartasm-load1}{Tussentoestand.}
+\importtikzsubfigure{asm-load1}{Tussentoestand.}
+\caption{Stroomschema naar ASM-schema voor de LOAD constante-instructie.}
+\label{flowasm-load1}
+\end{figure}
+\paragraph{Laad direct uit het geheugen (LOAD)}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{flowchart-load2}{Stroomschema.}
+\importtikzsubfigure{flowchartasm-load2}{Tussentoestand.}
+\importtikzsubfigure{asm-load2}{Tussentoestand.}
+\caption{Stroomschema naar ASM-schema voor de LOAD direct-instructie.}
+\label{flowasm-load2}
+\end{figure}
+\paragraph{Laad indirect uit het geheugen (LOAD)}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{flowchart-load3}{Stroomschema.}
+\importtikzsubfigure{flowchartasm-load3}{Tussentoestand.}
+\importtikzsubfigure{asm-load3}{Tussentoestand.}
+\caption{Stroomschema naar ASM-schema voor de LOAD indirect-instructie.}
+\label{flowasm-load3}
+\end{figure}
+\paragraph{Sprong naar een subroutine (JSR)}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{flowchart-jsr}{Stroomschema.}
+\importtikzsubfigure{flowchartasm-jsr}{Tussentoestand.}
+\importtikzsubfigure{asm-jsr}{Tussentoestand.}
+\caption{Stroomschema naar ASM-schema voor de JSR-instructie.}
+\label{flowasm-jsr}
+\end{figure}
+\paragraph{Terugkeer uit een subroutine (RTS)}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{flowchart-rts}{Stroomschema.}
+\importtikzsubfigure{flowchartasm-rts}{Tussentoestand.}
+\importtikzsubfigure{asm-rts}{Tussentoestand.}
+\caption{Stroomschema naar ASM-schema voor de RTS-instructie.}
+\label{flowasm-rts}
+\end{figure}
 \subsubsection{Ontwerp Controller}
 \subsubsection{Ontwerp Datapad}
 \subsection{Reduced Instruction Set Computer (RISC)}
