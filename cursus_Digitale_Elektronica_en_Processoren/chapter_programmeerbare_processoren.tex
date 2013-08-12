@@ -354,7 +354,6 @@ Met de multicycling transformatie dienen we echter een nieuw register te introdu
 \subsubsection{ASM-schema}
 Na het alloceren van componenten bij het datapad zullen we een ASM-schema opstellen. We stellen dit proces op op basis van enerzijds het stroomdiagram op \figref{flowchart-cisc} en anderzijds de allocatie van de componenten op het datapad. Met deze stap dienen we echter te beslissen welke bewerkingen we in welke toestand uitvoeren. Concreet betekent dit dat we de instructieblokken van het stroomdiagram opsplitsen in zo weinig mogelijk ASM-blokken. In principe kan men alle instructies altijd tegelijk uitvoeren. Anderzijds hebben we de componenten op het datapad reeds vastgelegd. Concreet betekent dit dat we in dit geval over slechts \'e\'en ALU beschikken, dat we slechts \'e\'en adres van het geheugen tegelijk kunnen uitlezen, we \'e\'en woord per toestand naar de registerbank kunnen wegschrijven, enzovoort. Bij wijze van voorbeeld zullen we enkele gevallen bespreken.
 \paragraph{Aritmetisch schuiven naar rechts (ASR)}
-Een stroomschema die enkel het geval van aritmetisch schuiven naar rechts (ASR) is getekend in \figref{flowchart-asr}.
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-asr}{Stroomschema.}
@@ -363,6 +362,9 @@ Een stroomschema die enkel het geval van aritmetisch schuiven naar rechts (ASR) 
 \caption{Stroomschema naar ASM-schema voor de ASR-instructie.}
 \label{flowasm-asr}
 \end{figure}
+Om de voorbeelden te bespreken zullen we telkens eerst de relevante delen van het stroomschema voorstellen. In het geval van aritmetisch schuiven naar rechts (ASR) is dit \figref{flowchart-asr}. De cyclus omvat slechts twee instructieblokken: het ophalen van een instructie en het uitvoeren. Dit is het geval bij alle registerinstructies. Hardwarematig is er geen probleem om de twee bewerkingen in \'e\'en klokcyclus uit te lezen: we kunnen de instructie uit het geheugen inlezen en deze tegelijk uitvoeren en in het instructieregister plaatsen. Er zijn echter drie redenen om dit niet te doen: in dat geval heeft het plaatsen van de instructie in het register geen nut: de volgende instructie zal de waarde immers overschrijven zonder dat deze ooit werd uitgelezen. Verder beschouwen we ook een Moore-machine als controller. Dat betekent dat de stuursignalen afhankelijk zijn van de data die in een vorige klokcyclus werd uitgevoerd. Tot slot is het ophalen van de instructie een bewerking die met alle overige instructies wordt gedeeld. De logica wordt meestal eenvoudiger als men bij het ophalen van de instructie niet voor sommige instructies meteen de relevante bewerkingen uitvoert.
+\paragraph{}
+We stellen dus twee verschillende toestanden: een toestand waarin we de instructie ophalen en een toestand waarin we de schuifoperatie naar rechts uitvoeren.
 \paragraph{Laden van een constante (LOAD)}
 \begin{figure}[hbt]
 \centering
