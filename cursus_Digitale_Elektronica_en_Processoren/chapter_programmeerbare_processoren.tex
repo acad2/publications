@@ -352,7 +352,7 @@ We kunnen een multicycling transformatie uitvoeren waarin instructies worden uit
 \paragraph{}
 Met de multicycling transformatie dienen we echter een nieuw register te introduceren: het \termen{adresregister (AR)}. Dit register houdt het adres bij tijdens de uitvoeren van verplaatsinstructies. We hebben slechts nood aan \'e\'en register omdat bij bijvoorbeeld impliciete adressering we dit register enkele malen kunnen overschrijven tot de instructie is uitgevoerd.
 \subsubsection{ASM-schema}
-Na het alloceren van componenten bij het datapad zullen we een ASM-schema opstellen. We stellen dit proces op op basis van enerzijds het stroomdiagram op \figref{flowchart-cisc} en anderzijds de allocatie van de componenten op het datapad. 
+Na het alloceren van componenten bij het datapad zullen we een ASM-schema opstellen. We stellen dit proces op op basis van enerzijds het stroomdiagram op \figref{flowchart-cisc} en anderzijds de allocatie van de componenten op het datapad. Met deze stap dienen we echter te beslissen welke bewerkingen we in welke toestand uitvoeren. Concreet betekent dit dat we de instructieblokken van het stroomdiagram opsplitsen in zo weinig mogelijk ASM-blokken. In principe kan men alle instructies altijd tegelijk uitvoeren. Anderzijds hebben we de componenten op het datapad reeds vastgelegd. Concreet betekent dit dat we in dit geval over slechts \'e\'en ALU beschikken, dat we slechts \'e\'en adres van het geheugen tegelijk kunnen uitlezen, we \'e\'en woord per toestand naar de registerbank kunnen wegschrijven, enzovoort. Bij wijze van voorbeeld zullen we enkele gevallen bespreken.
 \subsubsection{Ontwerp Controller}
 \subsubsection{Ontwerp Datapad}
 \subsection{Reduced Instruction Set Computer (RISC)}
