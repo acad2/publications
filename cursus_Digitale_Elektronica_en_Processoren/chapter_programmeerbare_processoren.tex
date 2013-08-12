@@ -294,7 +294,7 @@ Het stroomschema kent twee concepten: instructieblokken en beslissingsblokken. E
 De beschrijving van een stroomschema lijkt op dat van een ASM-schema maar verschilt op enkele punten. Zo omvat een stroomschema geen concrete toestanden: we doen geen uitspraak over wat precies in welke klokcyclus moet worden afgehandeld, soms zullen bewerkingen in het stroomschema dus verder onderverdeeld worden. Verder kent een stroomschema wel een sequenti\"ele volgorde toe aan instructies. Instructies die vermeld staan in eenzelfde blok worden conceptueel na elkaar uitgevoerd\footnote{Dit hoeft echter niet te betekenen dat de opdrachten ook effectief na elkaar moeten worden uitgevoerd. Indien beide instructies niet interfereren bijvoorbeeld kan men de instructies omdraaien of tegelijk uitvoeren.}. In een ASM-schema worden alle instructies in een blok tegelijk uitgevoerd. Stel bijvoorbeeld dat men in een blok volgende instructies tegenkomt:
 \begin{equation}
 \begin{array}{l}
-a\leftarrow a+1
+a\leftarrow a+1\\
 b\leftarrow\mbox{Mem}[a]
 \end{array}
 \end{equation}
@@ -303,8 +303,33 @@ In het geval deze instructies in een ASM-schema staat zal $b$ de waarde van het 
 Een stroomschema voor een instructieset omvat alle mogelijke instructies die kunnen worden uitgevoerd. Centraal staat doorgaans een instructieblok die beschrijft hoe de instructie wordt opgehaald en de programmateller wordt opgehoogd. Vanuit dit blok worden de stroom vervolgens opgedeeld op basis van mogelijke instructies. Elke vertakking voert vervolgens de instructie uit en keert terug naar het centrale blok zodat de volgende instructie kan worden opgehaald.
 \paragraph{}
 \importtikzfigure{flowchart-cisc}{Het instructieset-stroomschema van de CISC processor.}
-\figref{flowchart-cisc} toont het stroomschema van alle 44 instructies in \'e\'en afbeelding. De verschillende types instructies zijn in verschillende richtingen opgebouwd. Centraal zien we een instructieblok met twee instructies: $\texttt{IR}\leftarrow\texttt{Mem[PC]}$ laadt de instructie op het adres van de programmateller in het instructieregister en $\texttt{PC}\leftarrow\texttt{PC}$ hoogt de instructieteller op. Vanaf
+\figref{flowchart-cisc} toont het stroomschema van alle 44 instructies in \'e\'en afbeelding. De verschillende types instructies zijn in verschillende richtingen opgebouwd. Centraal zien we een instructieblok met twee instructies: $\texttt{IR}\leftarrow\texttt{Mem[PC]}$ laadt de instructie op het adres van de programmateller in het instructieregister en $\texttt{PC}\leftarrow\texttt{PC}$ hoogt de instructieteller op. Na het inladen van de instructie vertakt de stroom zich aan de hand van de data in het instructieregister. Allereerst maken we op basis van $\mbox{IR}_{15}$\footnote{Met deze notatie bedoelen we de $15$-de bit van het instructieregister.} en $\mbox{IR}_{14}$ een onderscheid tussen de verschillende types. Eenmaal voldoende vertakt beschrijft een instructieblok de concrete uitvoer van de bewerking. Het stroomdiagram toont ook details die niet in de tabellen met de instructies vermeld staan. We denken hierbij bijvoorbeeld aan het inlezen van het adresveld. In het geval de instructie gepaard gaat met een adresveld wordt wordt dit ook uitgelezen met $\texttt{Mem[PC]}$\footnote{Merk op dat alvorens we deze instructie bereiken, de programmateller al is opgehoogd. Bijgevolg staat de programmateller op dat moment op het adresveld.} waarna de programmateller nogmaals wordt opgehoogd. Na het uitvoeren van de instructies komen de verschillende stromen terug samen bij het instructieblok die de volgende instructie inleest.
 \subsubsection{Allocatie datapadcomponenten}
+Nadat per instructie een formele beschrijving werd opgesteld met betrekking tot de verschillende operaties, bestudeert men in een volgende fases het datapad. Op basis van de uitgevoerde bewerkingen, kunnen we immers de vereiste hardware vastleggen. Zo vereist het stroomdiagram vijf soorten geheugen:
+\begin{itemize}
+ \item 	Een extern geheugen \texttt{Mem}: $2^{16}\times 16$ ofwel $128\mbox{ kiB}$ met $1$ lees/schrijfpoort.
+ \item Een registerbank \texttt{RF}: $2^3\times 16$ met $2$ leespoorten en $1$ schrijfpoort.
+ \item Een instructieregister \texttt{IR}
+ \item Een statusvlag \texttt{Status}
+ \item Een programmateller \texttt{PC}
+\end{itemize}
+We kunnen verder voor elke operatie een functionele eenheid voorzien. Anderzijds zal elke klokcyclus er hoogstens \'e\'en instructie actief zijn. Alle bewerkingen die moeten worden uitgevoerd kunnen we uitvoeren met drie algemene functionele eenheden:
+\begin{itemize}
+ \item Aritmetische Logische Eenheid (ALU)
+ \item Vergelijker
+ \item $16$-bit bidirectionele schuifoperator.
+\end{itemize}
+We maken de assumptie dat de ALU alle basisbewerkingen (ADD, SUB, MUL, DIV, ROOT, NEG, AND, NAND, OR, NOR, XOR, XNOR, MASK en INV) kan uitvoeren, dat de vergelijker iedere conditie (GT, GE, LT, LE, EQ en NE) met betrekking tot twee registers kan uitrekenen en dat het schuifregister de twee schuifinstructies (ASR, ASL) kan uitvoeren. Instructies die niet onder het type registerinstructies vallen voeren doorgaans geen bewerkingen uit behalve de optelling. In dat geval is de ALU echter vrij waardoor dit geen probleem vormt.
+\paragraph{}
+In deze fase is het echter de bedoeling te onderzoeken of we de snelheid niet kunnen opdrijven door extra hardware te voorzien. Wanneer men echter aanpassingen aanbrengen aan het datapad zal men ook de instructieset moeten herzien.
+\paragraph{}
+Wanneer we de snelheid willen opdrijven zullen we dit altijd doen ter hoogte van het kritisch pad. Het heeft immers weinig zin andere instructies sneller uit te voeren wanneer de kloksnelheid onder druk staat van een andere instructie. We hebben reeds vermeld dat geheugen doorgaans een bottleneck vormt dus is het meestal interessant vooral naar instructies te kijken met een groot aantal geheugentoegangen.
+\paragraph{}
+Op basis van het stroomdiagram kunnen we opmerken dat impliciete adressering het meeste geheugenoproepen kent. De instructie vereist immers volgende bewerking:
+\begin{equation}
+\texttt{RF[d]}\leftarrow\texttt{Mem[Mem[Mem[PC]]]}
+\end{equation}
+Dit komt bijgevolg neer op $3$ geheugentoegangen.
 \subsubsection{ASM-schema}
 \subsubsection{Ontwerp Controller}
 \subsubsection{Ontwerp Datapad}
