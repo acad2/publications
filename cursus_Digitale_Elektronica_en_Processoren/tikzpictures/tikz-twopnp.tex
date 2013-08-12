@@ -1,3 +1,30 @@
-\begin{tikzpicture}[circuit logic US]
-
-\end{tikzpicture}
+\begin{circuitikz}
+\coordinate (AZ) at (-3,-1);
+\coordinate (AA) at (-2,-1);
+\coordinate (AD) at (2,-1);
+\coordinate (CA) at (-2,1);
+\coordinate (CB) at (-1,1);
+\coordinate (CC) at (1,1);
+\coordinate (CD) at (2,1);
+\coordinate (DZ) at (-3,3);
+\coordinate (DA) at (-2,3);
+\coordinate (DB) at (-1,3);
+\coordinate (DC) at (1,3);
+\coordinate (DD) at (2,3);
+\coordinate (TA) at (-2,0);
+\coordinate (TB) at (-1,0);
+\coordinate (TC) at (1,0);
+\coordinate (TD) at (2,0);
+\draw (TA) node[pnp,rotate=180] (pnp1) {};
+\draw (TD) node[pnp,yscale=-1] (pnp2) {};
+\draw (pnp1.B) -- (TB) -- (CC) node[circ] {};
+\draw (pnp2.B) -- (TC) -- (CB) node[circ] {};
+\draw (pnp1.C) -- (CA) node[circ] {} to[C=$C_1$] (CB);
+\draw (pnp2.C) -- (CD) node[circ] {} to[C=$C_2$,mirror] (CC);
+\foreach \a/\t in {A/1,B/2,C/3} {
+  \draw (C\a) to[R=$R_\t$] (D\a) node[circ] {};
+}
+\draw (CD) to[R=$R_4$] (DD) to[short,-o] (DZ) node[anchor=east]{+V};
+\draw (pnp1.E) -- (AA) node[circ] {};
+\draw (pnp2.E) -- (AD) to[short,-o] (AZ) node[anchor=east]{0~V};
+\end{circuitikz}
