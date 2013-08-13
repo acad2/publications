@@ -435,8 +435,9 @@
 \newcommand{\instti}[2]{\ensuremath{\mbox{in}_{#2}\left[#1\right]}}
 \newcommand{\outstti}[2]{\ensuremath{\mbox{out}_{#2}\left[#1\right]}}
 
+\pgfdeclarelayer{background}
 \pgfdeclarelayer{bg}
-\pgfsetlayers{bg,main}
+\pgfsetlayers{background,bg,main}
 
 \pgfkeys{/sigo/lines/.initial={$n$}}
 \pgfdeclaredecoration{sigo}{start}{

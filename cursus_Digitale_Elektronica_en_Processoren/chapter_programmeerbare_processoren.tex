@@ -364,13 +364,13 @@ Na het alloceren van componenten bij het datapad zullen we een ASM-schema opstel
 \end{figure}
 Om de voorbeelden te bespreken zullen we telkens eerst de relevante delen van het stroomschema voorstellen. In het geval van aritmetisch schuiven naar rechts (ASR) is dit \figref{flowchart-asr}. De cyclus omvat slechts twee instructieblokken: het ophalen van een instructie en het uitvoeren. Dit is het geval bij alle registerinstructies. Hardwarematig is er geen probleem om de twee bewerkingen in \'e\'en klokcyclus uit te lezen: we kunnen de instructie uit het geheugen inlezen en deze tegelijk uitvoeren en in het instructieregister plaatsen. Er zijn echter drie redenen om dit niet te doen: in dat geval heeft het plaatsen van de instructie in het register geen nut: de volgende instructie zal de waarde immers overschrijven zonder dat deze ooit werd uitgelezen. Verder beschouwen we ook een Moore-machine als controller. Dat betekent dat de stuursignalen afhankelijk zijn van de data die in een vorige klokcyclus werd uitgevoerd. Tot slot is het ophalen van de instructie een bewerking die met alle overige instructies wordt gedeeld. De logica wordt meestal eenvoudiger als men bij het ophalen van de instructie niet voor sommige instructies meteen de relevante bewerkingen uitvoert.
 \paragraph{}
-We stellen dus twee verschillende toestanden: een toestand waarin we de instructie ophalen en een toestand waarin we de schuifoperatie naar rechts uitvoeren.
+We stellen dus twee verschillende toestanden: een toestand waarin we de instructie ophalen en een toestand waarin we de schuifoperatie naar rechts uitvoeren. In het ASM-schema moeten we dus een leeg toestandskader introduceren na het toestandskader die de instructie ophaalt. Onder dit toestandskader plaatsen we vervolgens beslissingskaders die naar een conditioneel kader leiden waar de instructie wordt uitgevoerd. Een ASM-schema die enkel relevant is voor de ASR-instructie is getekend in \figref{asm-asr}. Merk op dat in een ASM-schema zaken die in hetzelfde toestandskader gebeuren tegelijk worden uitgevoerd, dit in tegenstelling tot een stroomschema.
 \paragraph{Laden van een constante (LOAD)}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-load1}{Stroomschema.}
 \importtikzsubfigure{flowchartasm-load1}{Tussentoestand.}
-\importtikzsubfigure{asm-load1}{Tussentoestand.}
+\importtikzsubfigure{asm-load1}{ASM-schema.}
 \caption{Stroomschema naar ASM-schema voor de LOAD constante-instructie.}
 \label{flowasm-load1}
 \end{figure}
