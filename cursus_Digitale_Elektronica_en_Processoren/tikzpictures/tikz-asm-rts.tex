@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\node[asmS] (S01) at (0,0) {$\begin{array}{l}\mbox{PC}\leftarrow\mbox{PC}+1\\\mbox{IR}\leftarrow\funmf{Mem}{\mbox{PC}}\end{array}$};
+\node[asmS] (S02) at (0,-1) {};
+\node[asmD] (D01) at (0,-2) {$\mbox{IR}_{15}$};
+% \node[asmC] (C01) at (5,-6) {$\funmf{RF}{d}\leftarrow\funmf{RF}{s1}\gg n$};
+% \path[->] (S01) edge (S02) (S02) edge (D01);
+% \draw[->] (D04.east) -| (C01.north);
+% \draw[->] (C01) |- ($(C01)+(2,-1)$) |- ($(S01)+(0,1)$) -- (S01);
+% \begin{pgfonlayer}{background}
+% \node[asmB,fit=(S01)] (B00) {};\draw (B00.north west) node[anchor=north east]{$S_0$};
+% \node[asmB,fit=(S02) (D01) (D02) (D03) (D04) (C01)] (B01) {};\draw (B01.north west) node[anchor=north east]{$S_2$};
+% \end{pgfonlayer}
+\end{tikzpicture}

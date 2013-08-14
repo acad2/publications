@@ -48,17 +48,17 @@ exAsl :: CISCState -> InstructionFields -> CISCState
 exAsl (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where n = fromIntegral (opc .&. 7)
                                                                rf' = rf//[(dest,shiftL (rf!src1) n)]
 
-exInc :: CISCState -> InstructionFields -> CISCState
-exInc (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)+1)]
-
-exDec :: CISCState -> InstructionFields -> CISCState
-exDec (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)-1)]
-
 exAdd :: CISCState -> InstructionFields -> CISCState
 exAdd (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)+(rf!src2))]
 
 exSub :: CISCState -> InstructionFields -> CISCState
 exSub (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)-(rf!src2))]
+
+exInc :: CISCState -> InstructionFields -> CISCState
+exInc (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)+1)]
+
+exDec :: CISCState -> InstructionFields -> CISCState
+exDec (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)-1)]
 
 exMul :: CISCState -> InstructionFields -> CISCState
 exMul (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)*(rf!src2))]
@@ -66,11 +66,35 @@ exMul (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(de
 exDiv :: CISCState -> InstructionFields -> CISCState
 exDiv (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,div (rf!src1) (rf!src2))]
 
+exRoot :: CISCState -> InstructionFields -> CISCState
+exRoot (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,squareRoot (rf!src1))]
+
 exNeg :: CISCState -> InstructionFields -> CISCState
 exNeg (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,-(rf!src1))]
 
-exRoot :: CISCState -> InstructionFields -> CISCState
-exRoot (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,squareRoot (rf!src1))]
+exAnd :: CISCState -> InstructionFields -> CISCState
+exAnd (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1) .&. (rf!src2))]
+
+exNand :: CISCState -> InstructionFields -> CISCState
+exNand (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ (rf!src1) .&. (rf!src2))]
+
+exOr :: CISCState -> InstructionFields -> CISCState
+exOr (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1) .|. (rf!src2))]
+
+exNor :: CISCState -> InstructionFields -> CISCState
+exNor (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ (rf!src1) .|. (rf!src2))]
+
+exXor :: CISCState -> InstructionFields -> CISCState
+exXor (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,xor (rf!src1) (rf!src2))]
+
+exXnor :: CISCState -> InstructionFields -> CISCState
+exXnor (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ xor (rf!src1) (rf!src2))]
+
+exMask :: CISCState -> InstructionFields -> CISCState
+exMask (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1) .&. 1)]
+
+exInv :: CISCState -> InstructionFields -> CISCState
+exInv (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ (rf!src1))]
 
 arithmetic :: CISCState -> InstructionFields -> CISCState
 arithmetic x inf = x

@@ -357,7 +357,6 @@ Na het alloceren van componenten bij het datapad zullen we een ASM-schema opstel
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-asr}{Stroomschema.}
-\importtikzsubfigure{flowchartasm-asr}{Tussentoestand.}
 \importtikzsubfigure{asm-asr}{Tussentoestand.}
 \caption{Stroomschema naar ASM-schema voor de ASR-instructie.}
 \label{flowasm-asr}
@@ -369,34 +368,33 @@ We stellen dus twee verschillende toestanden: een toestand waarin we de instruct
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-load1}{Stroomschema.}
-\importtikzsubfigure{flowchartasm-load1}{Tussentoestand.}
 \importtikzsubfigure{asm-load1}{ASM-schema.}
 \caption{Stroomschema naar ASM-schema voor de LOAD constante-instructie.}
 \label{flowasm-load1}
 \end{figure}
+We beschouwen vervolgens de LOAD-instructie met onmiddellijke adressering die een constante uit het programma in een register inladen. Een compact deel van het stroomschema staat op \figref{flowchart-load1}. In het geval van deze instructie zijn we verplicht om twee toestanden te voorzien. Dit komt omdat het geheugen slechts \'e\'en leespoort en we bijgevolg geen twee woorden tegelijk uit het geheugen kunnen laden. Verder wordt ook de programmateller tweemaal opgehoogd terwijl de controller slechts \'e\'en increment-operator omvat. We introduceren dus opnieuw twee toestanden: \'e\'en toestand waarbij we de instructie inlezen en \'e\'en toestand waarin we het adresveld inlezen en wegschrijven naar de registerbank. Dit leidt tot het ASM-schema in \figref{asm-load1}.
 \paragraph{Laad direct uit het geheugen (LOAD)}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-load2}{Stroomschema.}
-\importtikzsubfigure{flowchartasm-load2}{Tussentoestand.}
 \importtikzsubfigure{asm-load2}{Tussentoestand.}
 \caption{Stroomschema naar ASM-schema voor de LOAD direct-instructie.}
 \label{flowasm-load2}
 \end{figure}
+Naast het inladen van een constante bevat de instructieset ook een instructie om gegevens in te laden waarbij het adres gespecificeerd is. Opnieuw kunnen we omwille van het feit dat het geheugen slechts \'e\'en leespoort telt deze operatie enkel met minstens drie toestanden uitvoeren. Bij een multicycling-transformatie dienen we echter de tussenresultaten op te slaan. Hiervoor werd echter het adresregister ge\"introduceerd. Dit adresregister zal na toestand twee het adres bevatten dat moet worden uitgelezen. In de derde toestand wordt de waarde meteen terug uitgelezen om het correcte adres uit het geheugen uit te lezen.
 \paragraph{Laad indirect uit het geheugen (LOAD)}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-load3}{Stroomschema.}
-\importtikzsubfigure{flowchartasm-load3}{Tussentoestand.}
 \importtikzsubfigure{asm-load3}{Tussentoestand.}
 \caption{Stroomschema naar ASM-schema voor de LOAD indirect-instructie.}
 \label{flowasm-load3}
 \end{figure}
+De laatste LOAD-instructie die we beschouwen is de impliciete adressering. Deze instructie vereist in totaal viermaal toegang tot het geheugen. Bijgevolg vereist deze operatie minimum vier toestanden. Ook hier beschouwen we dus een multicycling-transformatie waarbij we \'e\'en instructieblok van het stroomschema op in drie toestandsblokken in het ASM-schema. We zullen bijgevolg de tussenresultaten opnieuw moeten wegschrijven. In een algemeen geval betekent dit dat we twee registers moeten voorzien\footnote{In een algemeen geval kan het immers voorkomen dat het finale resultaat afhangt van alle tussenresultaten berekend in de vorige toestanden.}. In dit geval hebben we slechts \'e\'en extra register nodig. We dienen immers enkel de resultaten van de vorige toestand te onthouden. Dit betekent dat we in de vierde toestand de resultaten van de tweede toestand niet meer nodig hebben.
 \paragraph{Sprong naar een subroutine (JSR)}
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-jsr}{Stroomschema.}
-\importtikzsubfigure{flowchartasm-jsr}{Tussentoestand.}
 \importtikzsubfigure{asm-jsr}{Tussentoestand.}
 \caption{Stroomschema naar ASM-schema voor de JSR-instructie.}
 \label{flowasm-jsr}
@@ -405,7 +403,6 @@ We stellen dus twee verschillende toestanden: een toestand waarin we de instruct
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{flowchart-rts}{Stroomschema.}
-\importtikzsubfigure{flowchartasm-rts}{Tussentoestand.}
 \importtikzsubfigure{asm-rts}{Tussentoestand.}
 \caption{Stroomschema naar ASM-schema voor de RTS-instructie.}
 \label{flowasm-rts}

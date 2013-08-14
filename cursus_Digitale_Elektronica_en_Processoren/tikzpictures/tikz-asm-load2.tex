@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+\node[asmS] (S01) at (0,0.75) {$\begin{array}{l}\mbox{PC}\leftarrow\mbox{PC}+1\\\mbox{IR}\leftarrow\funmf{Mem}{\mbox{PC}}\end{array}$};
+\node[asmS] (S02) at (0,-0.75) {};
+\node[asmD] (D01) at (0,-1.5) {$\mbox{IR}_{15}$};
+\foreach \i/\t/\x/\y in {2/14/1/2,3/13/2/3,4/12/3/4,5/11/0/4,6/10/1/5,7/9/2/6} {
+  \node[asmD] (D0\i) at (1.25*\x,-0.75*\y-0.75) {$\mbox{IR}_{\t}$};
+}
+\foreach \i/\j in {2/1,3/2,4/3,6/5,7/6} {
+  \draw[->] (D0\j.east) -| (D0\i.north);
+}
+\draw[->] (D04.east) -| ($(D04)+(1,-0.75)$) -| ($(D04)+(-1,0)$) -| ($(D03)+(-1,0)$) -| ($(D02)+(-1,0)$) -| (D05.north);
+\node[asmC] (C01) at (0.75,-6.5) {$\begin{array}{l}\mbox{AR}\leftarrow\funmf{Mem}{PC}\\\mbox{PC}\leftarrow\mbox{PC}+1\end{array}$};
+\path[->] (S01) edge (S02) (S02) edge (D01);
+\draw[->] (D07.west) -| (C01.north);
+\node[asmS] (S03) at (0.75,-8) {$\funmf{RF}{d}\leftarrow\funmf{Mem}{\mbox{AR}}$};
+\draw[->] (C01) -- (S03);
+\draw[->] (S03) |- ($(S03)+(4.5,-0.75)$) |- ($(S01)+(0,0.75)$) -- (S01);
+\begin{pgfonlayer}{background}
+\node[asmB,fit=(S01)] (B00) {};\draw (B00.north west) node[anchor=north east]{$S_0$};
+\node[asmB,fit=(S02) (D01) (D02) (D03) (D04) (D05) (D06) (D07) (C01)] (B01) {};\draw (B01.north west) node[anchor=north east]{$S_3$};
+\node[asmB,fit=(S03)] (B02) {};\draw (B02.north west) node[anchor=north east]{$S_4$};
+\end{pgfonlayer}
+\end{tikzpicture}
