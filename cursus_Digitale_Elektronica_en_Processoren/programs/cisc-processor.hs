@@ -40,61 +40,59 @@ executeRegisterInstruction x inf | op == 0 = exAsr x inf
                                  where (opc,_,_,_) = inf
                                        op = (shiftR opc 3) .&. 3;
 
-exAsr :: CISCState -> InstructionFields -> CISCState
-exAsr (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where n = fromIntegral (opc .&. 7)
-                                                               rf' = rf//[(dest,shiftR (rf!src1) n)]
+exAsr :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exAsr rf (opc,dest,src1,_) = rf//[(dest,shiftR (rf!src1) n)] where n = fromIntegral (opc .&. 7)
 
-exAsl :: CISCState -> InstructionFields -> CISCState
-exAsl (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where n = fromIntegral (opc .&. 7)
-                                                               rf' = rf//[(dest,shiftL (rf!src1) n)]
+exAsl :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exAsl rf (opc,dest,src1,_) = rf//[(dest,shiftL (rf!src1) n)] where n = fromIntegral (opc .&. 7)
 
-exAdd :: CISCState -> InstructionFields -> CISCState
-exAdd (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)+(rf!src2))]
+exAdd :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exAdd rf (opc,dest,src1,src2) = rf//[(dest,(rf!src1)+(rf!src2))]
 
-exSub :: CISCState -> InstructionFields -> CISCState
-exSub (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)-(rf!src2))]
+exSub :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exSub rf (opc,dest,src1,src2) = rf//[(dest,(rf!src1)-(rf!src2))]
 
-exInc :: CISCState -> InstructionFields -> CISCState
-exInc (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)+1)]
+exInc :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exInc rf (opc,dest,src1,_) = rf//[(dest,(rf!src1)+1)]
 
-exDec :: CISCState -> InstructionFields -> CISCState
-exDec (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)-1)]
+exDec :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exDec rf (opc,dest,src1,_) = rf//[(dest,(rf!src1)-1)]
 
-exMul :: CISCState -> InstructionFields -> CISCState
-exMul (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1)*(rf!src2))]
+exMul :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exMul rf (opc,dest,src1,src2) = rf//[(dest,(rf!src1)*(rf!src2))]
 
-exDiv :: CISCState -> InstructionFields -> CISCState
-exDiv (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,div (rf!src1) (rf!src2))]
+exDiv :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exDiv rf (opc,dest,src1,src2) = rf//[(dest,div (rf!src1) (rf!src2))]
 
-exRoot :: CISCState -> InstructionFields -> CISCState
-exRoot (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,squareRoot (rf!src1))]
+exRoot :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exRoot rf (opc,dest,src1,_) = rf//[(dest,squareRoot (rf!src1))]
 
-exNeg :: CISCState -> InstructionFields -> CISCState
-exNeg (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,-(rf!src1))]
+exNeg :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exNeg rf (opc,dest,src1,_) = rf//[(dest,-(rf!src1))]
 
-exAnd :: CISCState -> InstructionFields -> CISCState
-exAnd (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1) .&. (rf!src2))]
+exAnd :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exAnd rf (opc,dest,src1,src2) = rf//[(dest,(rf!src1) .&. (rf!src2))]
 
-exNand :: CISCState -> InstructionFields -> CISCState
-exNand (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ (rf!src1) .&. (rf!src2))]
+exNand :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exNand rf (opc,dest,src1,src2) = rf//[(dest,complement $ (rf!src1) .&. (rf!src2))]
 
-exOr :: CISCState -> InstructionFields -> CISCState
-exOr (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1) .|. (rf!src2))]
+exOr :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exOr rf (opc,dest,src1,src2) = rf//[(dest,(rf!src1) .|. (rf!src2))]
 
-exNor :: CISCState -> InstructionFields -> CISCState
-exNor (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ (rf!src1) .|. (rf!src2))]
+exNor :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exNor rf (opc,dest,src1,src2) = rf//[(dest,complement $ (rf!src1) .|. (rf!src2))]
 
-exXor :: CISCState -> InstructionFields -> CISCState
-exXor (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,xor (rf!src1) (rf!src2))]
+exXor :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exXor rf (opc,dest,src1,src2) = rf//[(dest,xor (rf!src1) (rf!src2))]
 
-exXnor :: CISCState -> InstructionFields -> CISCState
-exXnor (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ xor (rf!src1) (rf!src2))]
+exXnor :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exXnor rf (opc,dest,src1,src2) = rf//[(dest,complement $ xor (rf!src1) (rf!src2))]
 
-exMask :: CISCState -> InstructionFields -> CISCState
-exMask (ir,pc,mem,rf) (opc,dest,src1,src2) = (ir,pc,mem,rf') where rf' = rf//[(dest,(rf!src1) .&. 1)]
+exMask :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exMask rf (opc,dest,src1,src2) = rf//[(dest,(rf!src1) .&. 1)]
 
-exInv :: CISCState -> InstructionFields -> CISCState
-exInv (ir,pc,mem,rf) (opc,dest,src1,_) = (ir,pc,mem,rf') where rf' = rf//[(dest,complement $ (rf!src1))]
+exInv :: Array Word8 Word16 -> InstructionFields -> Array Word8 Word16
+exInv rf (opc,dest,src1,_) = rf//[(dest,complement $ (rf!src1))]
 
 arithmetic :: CISCState -> InstructionFields -> CISCState
 arithmetic x inf = x

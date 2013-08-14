@@ -399,6 +399,7 @@ De laatste LOAD-instructie die we beschouwen is de impliciete adressering. Deze 
 \caption{Stroomschema naar ASM-schema voor de JSR-instructie.}
 \label{flowasm-jsr}
 \end{figure}
+Ook in het geval van een sprong naar een subroutine moeten we het uitvoeren van de eigenlijke instructie opsplitsen in twee delen. De volledige set instructies staat op \figref{flowchart-jsr}. Dit komt opnieuw door de toegang tot het geheugen: we moeten zowel het adresveld uitlezen en de programmateller na uitlezen in het geheugen plaatsen. Het geheugen omvat echter \'e\'en lees/schrijfpoort. We kunnen dus niet tegelijk lezen en schrijven. Om de toestand te overbruggen zullen we bovendien opnieuw gebruik moeten maken van de adresregister. In de eerste toestand lezen we dus eenvoudigweg het adresveld uit en hogen we de programmateller op. In de tweede toestand schrijven we de programmateller weg naar het geheugen, hogen we de stapel op en stellen we tot slot de programmateller gelijk aan het adresregister. Men kan opmerken dat er nog een tweede reden is om de instructies in twee blokken op te splitsen: we dienen tweemaal een increment uit te voeren. In het geval van de programmateller valt deze verantwoordelijkheid echter onder de controller. De controller beschikt over een eigen increment-operator waardoor men in principe tegelijk een optelling met de ALU en een increment van de programmateller kan realiseren. Het ASM-schema die de twee blokken voorstelt staat in \figref{asm-jsr}.
 \paragraph{Terugkeer uit een subroutine (RTS)}
 \begin{figure}[hbt]
 \centering
@@ -407,7 +408,9 @@ De laatste LOAD-instructie die we beschouwen is de impliciete adressering. Deze 
 \caption{Stroomschema naar ASM-schema voor de RTS-instructie.}
 \label{flowasm-rts}
 \end{figure}
+Tot slot beschouwen we ook nog de terugkeer instructie waarvan het stroomschema is afgebeeld op \figref{flowchart-rts}. Deze instructie voeren we uit in \'e\'en toestand. Men kan opmerken dat we eerst de waarde van een register in de registerbank moeten aftellen om vervolgens de relevante geheugenplaats in te lezen. We kunnen echter zonder gebruik te maken van extra hardware een chaining-transformatie uitvoeren en dus niet alleen het resultaat na de decrement-operatie opslaan in de registerbank maar deze ook gebruiken om het adres te bepalen in het geheugen. We kunnen bijgevolg alle instructies in \'e\'en klokcyclus uitvoeren. Dit leidt dan ook tot het ASM-schema op \figref{asm-rts}.
 \subsubsection{Ontwerp Controller}
+Na het ontwerpen van een (gedeeltelijk) ASM-schema, 
 \subsubsection{Ontwerp Datapad}
 \subsection{Reduced Instruction Set Computer (RISC)}
 \subsubsection{Ontwerp Instructieset}
