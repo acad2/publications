@@ -1,0 +1,51 @@
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp] (SR) at (0,0) {PC};
+\node[subcomp] (Mem) at (2,0) {Mem};
+\node[subcomp] (IR) at (4,0) {IR};
+\node[mux4to1,fill=white,rotate=90,thick] (M) at (-1.35,0) {};
+\node[subcomp,minimum width=1.1 cm,minimum height=0.25] (INC) at ($(M.data3)+(-1.25,-0.25)$) {$+1$};
+\coordinate (LFD) at (M.data2 -| INC.north);
+\node[subcomp,minimum width=1.1 cm,minimum height=1.55 cm,anchor=south] (LIFO) at ($(LFD)+(0,-0.25)$) {LIFO};
+\draw[thick,->] (M.output) -- (SR.west);
+\draw[thick,->] (LIFO.east |- M.data1) -- (M.data1);
+\node[subcomp] (NSL) at (6.75,1.25) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\Logic\end{center}\end{varwidth}};
+\coordinate (TL) at (M.north |- NSL.north);\coordinate (TL) at ($(TL)+(-0.4,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
+\draw[thick,->] (INC.east) -- (INC.east -| TL) |- (M.data3);\pdot{M.data3 -| TL};\draw[thick,->] (M.data3 -| TL) |- (M.data2 -| LIFO.east);
+\node[subcomp] (OL) at (6.75,-1.25) {\begin{varwidth}{2 cm}\begin{center}Output\\Logic\end{center}\end{varwidth}};
+\coordinate (CSP) at ($(IR.east)+(1,0)$);
+\pdot{CSP};
+\coordinate (NSLA) at ($0.8*(NSL.south west)+0.2*(NSL.north west)$);
+\coordinate (NSLB) at ($0.6*(NSL.south west)+0.4*(NSL.north west)$);
+\coordinate (NSLC) at ($0.4*(NSL.south west)+0.6*(NSL.north west)$);
+\coordinate (NSLD) at ($0.2*(NSL.south west)+0.8*(NSL.north west)$);
+\coordinate (OLA) at ($0.75*(OL.south west)+0.25*(OL.north west)$);
+\coordinate (OLB) at ($0.5*(OL.south west)+0.5*(OL.north west)$);
+\coordinate (OLC) at ($0.25*(OL.south west)+0.75*(OL.north west)$);
+\draw[thick,->] (SR) -- (Mem);
+\draw[thick,->] (Mem) -- (IR);
+\draw[thick] (IR) -- (CSP);\draw[thick,->] (CSP) |- (NSLA);\draw[thick,->] (CSP) |- (OLC);
+\draw[thick,->] (NSL.east) -- ++(0.5,0) |- (TL) |- (M.data0);
+\draw[thick,->] ($0.5*(NSL.east)+0.5*(NSL.north east)$) -- ++(0.25,0) |- (TLA -| M.selout0) -- (M.selout0);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL) (M) (INC),inner sep=1cm] (CT) {};
+\end{pgfonlayer}
+\coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south]{CS};
+\coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
+ node[anchor=south]{SS};
+\coordinate (CI) at (CT.west);\draw[<-,thick] (CI) -- ++(-0.5,0) node[anchor=east]{CI};
+\coordinate (CO) at (CT.east);\draw[->,thick] (CO) -- ++(0.5,0) node[anchor=west]{CO};
+\coordinate (COD) at ($0.667*(OL.south east)+0.333*(OL.north east)$);\draw[thick] (COD) -| ($(CO)+(-0.25,0)$) -- (CO);
+\coordinate (PuPoD) at ($(NSL.north west)+(-0.25,0)$);\coordinate (PuPo) at (LIFO.north);
+\draw[thick,->] (NSLB) -| (PuPoD) -| (PuPo);
+\coordinate (CSD) at ($0.333*(OL.south east)+0.667*(OL.north east)$);\coordinate (CSE) at ($0.75*(NSL.south east)+0.25*(NSL.north east)+(0.75,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- ++(0.25,0) |- (CSE) |- (CSF) -- (CS);
+\coordinate (NSLSS) at ($(NSLD)+(-0.75,0)$);\coordinate (SRINC) at ($(SR.east)+(0.25,0)$);\coordinate (SRINCA) at ($(INC.west)+(-0.25,0)$);\coordinate (SRINCA) at (SRINCA |- OLB);
+\pdot{SRINC};
+\draw[thick,->] (SRINC) |- (SRINCA) |- (INC.west);
+\draw[thick,->] (SS) |- (NSLD);\draw[thick,->] (CI) -- ++(0.25,0) |- (NSLC);\draw[thick,->] ($(CI)+(0.25,0)$) |- (OLA);\pdot{$(CI)+(0.25,0)$};\pdot{NSLSS};\draw[thick,dashed,->] (NSLSS) |- (OLB);
+\begin{pgfonlayer}{background}
+\node[fit=(LIFO) (INC) (M),inner sep=0.125cm] (NSTPA) {};
+\node[fit=(NSL),inner sep=0.125cm] (NSTPB) {};
+\coordinate (NSTPC) at ($(IR.north east)+(0,0.25)$);
+\filldraw[dotted,fill=gray!10] (NSTPA.south west) -- (NSTPA.south east) |- (NSTPC) -- (NSTPB.south west) -- (NSTPB.south east) -- (NSTPB.north east) -- (NSTPB.north west) -| (NSTPA.north west) -- cycle;
+\end{pgfonlayer}
+\end{tikzpicture}
