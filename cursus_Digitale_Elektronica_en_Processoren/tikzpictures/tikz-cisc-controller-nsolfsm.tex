@@ -25,7 +25,7 @@
 \draw[thick,->] (NSOL.east) -- ++(0.5,0) |- (TL) |- (M.data0);
 \draw[thick,->] ($0.5*(NSOL.east)+0.5*(NSOL.north east)$) -- ++(0.25,0) |- (TLA -| M.selout0) -- (M.selout0);
 \begin{pgfonlayer}{background}
-\node[subcomp,fill=gray!20, fit=(SR) (NSL) (OL) (M) (INC),inner sep=1cm] (CT) {};
+\node[subcomp,fill=gray!20, fit=(SR) (NSOL) (M) (INC),inner sep=1cm] (CT) {};
 \end{pgfonlayer}
 \coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south]{CS};
 \coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
@@ -35,7 +35,7 @@
 \coordinate (COD) at ($0.667*(NSOL.south east)+0.333*(NSOL.east)$);\draw[thick] (COD) -| ($(CO)+(-0.25,0)$) -- (CO);
 \coordinate (PuPoD) at ($(NSOL.north west)+(-0.25,0)$);\coordinate (PuPo) at (LIFO.north);
 \draw[thick,->] (NSLB) -| (PuPoD) -| (PuPo);
-\coordinate (CSD) at ($0.333*(NSOL.south east)+0.667*(NSOL.east)$);\coordinate (CSE) at ($0.75*(NSOL.south east)+0.25*(NSOL.east)+(0.75,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- (CSE |- CSD) |- (CSF) -- (CS);
+\coordinate (CSD) at ($0.333*(NSOL.north east)+0.667*(NSOL.east)$);\coordinate (CSE) at ($0.75*(NSOL.south east)+0.25*(NSOL.east)+(0.75,0)$);\coordinate (CSF) at ($(CS)+(0,-0.25)$);\draw[thick] (CSD) -- (CSE |- CSD) |- (CSF) -- (CS);
 \coordinate (NSLSS) at ($(NSLD)+(-0.75,0)$);\coordinate (SRINC) at ($(SR.east)+(0.25,0)$);\coordinate (SRINCA) at ($(INC.west)+(-0.25,0)$);\coordinate (SRINCA) at (SRINCA |- OLB);
 \pdot{SRINC};
 \draw[thick,->] (SRINC) |- (SRINCA) |- (INC.west);
