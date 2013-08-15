@@ -77,7 +77,7 @@ Bij de synthese van een flipflop zullen we een eerste positief feedback componen
 \timebehav{5.00}{-1.00}{8.50}{4}{0.75}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$}{0/0.00/1/1.50/0, 0/1.50/0/3.25/1, 0/3.25/1/5.50/0, 0/5.50/0/6.25/1, 0/6.25/1/10.25/0, 0/10.25/0/10.50/1, 0/10.50/1/10.75/0, 0/10.75/0/11.00/1, 0/11.00/1/11.25/0, 0/11.25/0/11.48/0, 1/0.00/0/1.25/1, 1/1.25/1/3.50/0, 1/3.50/0/5.25/1, 1/5.25/1/7.25/0, 1/7.25/0/9.25/1, 1/9.25/1/10.25/0, 1/10.25/0/10.50/1, 1/10.50/1/10.75/0, 1/10.75/0/11.00/1, 1/11.00/1/11.25/0, 1/11.25/0/11.48/0, 2/0.00/1/3.00/0, 2/3.00/0/4.00/1, 2/4.00/1/6.00/0, 2/6.00/0/8.00/1, 2/8.00/1/9.00/0, 2/9.00/0/10.00/1, 2/10.00/1/11.48/1, 3/0.00/1/1.00/0, 3/1.00/0/2.00/1, 3/2.00/1/5.00/0, 3/5.00/0/7.00/1, 3/7.00/1/9.00/0, 3/9.00/0/10.00/1, 3/10.00/1/11.48/1}{1.25/0.25/1/0, 3.00/0.25/2/0, 5.25/0.25/1/0, 6.00/0.25/2/0, 10.00/0.25/2/0, 10.25/0.25/1/0, 10.50/0.25/1/0, 10.75/0.25/1/0, 11.00/0.25/1/0, 1.00/0.25/3/1, 3.25/0.25/0/1, 5.00/0.25/3/1, 7.00/0.25/3/1, 9.00/0.25/3/1, 10.00/0.25/3/1, 10.25/0.25/0/1, 10.50/0.25/0/1, 10.75/0.25/0/1, 11.00/0.25/0/1};
 \end{tikzpicture}}
 \caption{Set-reset latch.}
-\label{fig:setResetLatch}
+\figlab{setResetLatch}
 \end{figure}
 Figuur \ref{fig:setResetLatch} toont de NOR- en NAND-implementatie van de zogenaamde set-reset latch (ofwel \termen{SR-latch}). Dit component werkt met positieve terugkoppeling waarbij de uitgangen dus ook een deel van de ingangen vormen. We onthouden de uitvoer door bepaalde waarden aan de ingang aan te leggen, die resulteren in het opnieuw bekomen van dezelfde uitvoer. Bij de NOR-implementatie is dit $\left(S,R\right)=\left(0,0\right)$. De NAND-implementatie is in feite de volledig duale vorm en werkt volledig equivalent, alleen zijn $S$ en $R$ hier laag actieve signalen (zie \ref{s:negativeLogic}). We zouden ook negatieve logica aan $Q$ en $Q_n$ moeten toekennen maar omdat altijd geldt $Q_n=Q'$ kunnen we ook eenvoudigweg de twee uitgangen omdraaien en bekomen we positieve logica aan de uitgang. De stabiele invoer van de NAND-implementatie is dan ook $\left(S^*,R^*\right)=\left(1,1\right)$. Indien we \'e\'en van de ingangen laten afwijken van de stabiele toestand, komen we in een onstabiele toestand. Deze stabiele toestand kan maar op \'e\'en manier terug stabiel worden. Op deze manier kunnen we een nieuwe waarde toekennen aan de latch. Deze waarde zal ook verder gelden nadat de ingangen weer stabiel zijn. Hierdoor kent men ook de termen \termen{set} (1 in het geheugen) en \termen{reset} (0 in het geheugen) toe aan de ingangen. Indien beide ingangen afwijken van de stabiele ingangen is het gedrag niet meer bepaald. In dat geval zal de uiteindelijke waarde afhangen van de implementatie van de latch en de vertraging van de poorten. Bij identieke vertragingen leidt dit tot een oscillerend effect wat ook te zien is op de tijdsgrafieken op figuur \ref{fig:setResetLatch}. In een minder ideaal systeem zal de snelste poort\footnote{Uiteraard zijn de twee poorten in theorie even traag, in de praktijk zullen er altijd kleine verschillen zijn.} de uiteindelijke vertraging bepalen. Dit gedrag noemt men een ``\termen{race}'' (zie \ref{term:race}).
 \paragraph{Geklokte SR-latch}
@@ -128,7 +128,7 @@ Bij de SR-latch is er geen sprake van een klokingang. We kunnen immers ook geheu
 \end{tikzpicture}
 }
 \caption{Geklokte SR-latch.}
-\label{fig:clockedSRLatch}
+\figlab{clockedSRLatch}
 \end{figure}
 \paragraph{Geklokte D-latch}
 Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het meestal de moeite om de geklokte SR-latch om te vormen tot een \termen{geklokte D-latch}. Een geklokte D-latch zoals op figuur \ref{fig:clockedDLatch} bouwt meestal extra logica rond een geklokte SR-latch die met de \termen{data-ingang $D$} de $S$ en $R$ ingang aanstuurt. D-latches zijn populair bij schakelingen waarbij bij iedere klokflank een nieuwe waarde wordt ingelezen. Soms wordt dan echter ook een SR-latch gebruikt omdat dit de logica rond deze geheugenmodules soms kan vereenvoudigen.
@@ -162,7 +162,7 @@ Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het 
 \end{tikzpicture}
 }
 \caption{Geklokte D-latch.}
-\label{fig:clockedDLatch}
+\figlab{clockedDLatch}
 \end{figure}
 \paragraph{Set-up- en houdtijd}
 Aan de hand van de implementatie van de geklokte D-latch op figuur \ref{fig:clockedDLatch} zullen we de vertragingen van verschillende signalen berekenen:
@@ -200,7 +200,7 @@ We kunnen dergelijke vertragingen grafisch weergeven zoals op de tijdsgrafieken 
 %\timebehav{13.00}{-1.00}{6.70}{7}{0.80}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$,4/$D'$,5/Clk,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/6.40/1, 0/6.40/1/8.00/0, 0/8.00/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/5.00/0, 1/5.00/0/6.60/1, 1/6.60/1/7.80/0, 1/7.80/0/8.00/0, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/3.60/1, 3/3.60/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/8.00/0, 5/0.00/1/2.20/0, 5/2.20/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/8.00/1}{3.80/1.40/1/0, 5.00/1.40/1/0, 6.60/1.40/1/0, 2.40/1.40/3/1, 3.60/1.40/3/1, 5.20/1.40/0/1, 6.40/1.40/0/1, 2.00/1.40/4/2, 1.00/1.40/6/3, 2.20/1.40/5/3, 1.00/1.00/6/4};
 %\timebehav{13.00}{-6.00}{6.70}{7}{0.80}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$,4/$D'$,5/Clk,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/6.20/1, 0/6.20/1/8.00/0, 0/8.00/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/4.80/0, 1/4.80/0/6.60/1, 1/6.60/1/7.60/0, 1/7.60/0/8.00/0, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/3.40/1, 3/3.40/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/8.00/0, 5/0.00/1/2.00/0, 5/2.00/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/8.00/1}{3.80/1.40/1/0, 4.80/1.40/1/0, 6.60/1.40/1/0, 2.40/1.40/3/1, 3.40/1.40/3/1, 5.20/1.40/0/1, 6.20/1.40/0/1, 2.00/1.40/5/2, 2.00/1.40/4/2, 1.00/1.40/6/3, 2.00/1.40/5/3, 1.00/1.00/6/4};
 \end{tikzpicture}
-\label{fig:timebehavDLatchSetup}
+\figlab{timebehavDLatchSetup}
 }
 \subfigure[Houdtijd??]{%TODO: afwerken
 \begin{tikzpicture}
@@ -208,10 +208,10 @@ We kunnen dergelijke vertragingen grafisch weergeven zoals op de tijdsgrafieken 
 \timebehav{8.00}{0.00}{6.70}{7}{0.80}{0/$Qn$,1/$Q$,2/$R*$,3/$S*$,4/$Dn$,5/$Clk$,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/8.00/1, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/5.20/1, 3/5.20/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/4.80/1, 4/4.80/1/8.00/1, 5/0.00/1/4.00/0, 5/4.00/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/3.80/0, 6/3.80/0/8.00/0}{3.80/1.40/1/0, 2.40/1.40/3/1, 2.00/1.40/4/2, 1.00/1.40/6/3, 3.80/1.40/6/3, 1.00/1.00/6/4, 3.80/1.00/6/4};
 %\timebehav{5}{-1}{14.5}{6}{1.3}{0/$Q$,1/$R^*$,2/$S^*$,3/$D'$,4/Clk,5/$D$}{5/0/1/2.2/0, 4/0/1/1/0, 3/0/0/3.2/1}{1/1/5/3}
 \end{tikzpicture}
-\label{fig:timebehavDLatchHold}
+\figlab{timebehavDLatchHold}
 }
 \caption{Tijdsgrafieken van een D-latch.}
-\label{fig:timebehavDLatch}
+\figlab{timebehavDLatch}
 \end{figure}
 Deze grafische voorstelling toont twee bekende problemen die veroorzaakt worden door het niet respecteren van twee parameters:
 \begin{itemize}
@@ -235,7 +235,7 @@ Een ander probleem dat komt kijken bij latches is de \termen{metastabiliteit}. D
 \draw (NO1.output) -- (NO1.output -| 0.85,0) node[anchor=west,scale=0.75]{$x$} -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input -| -0.75,0) -- (NO0.input);
 \draw (NO0.output) -- (NO0.output -| 0.85,0) node[anchor=west,scale=0.75]{$y$} -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input -| -0.75,0) -- (NO1.input);
 \end{tikzpicture}
-\label{fig:metastabilityNotGates}}
+\figlab{metastabilityNotGates}}
 \subfigure[Transfer-functies.]{
 \begin{tikzpicture}
 \draw[thick,->] (-0.1,0) -- (2.2,0) node[anchor=north east,scale=0.75]{$x$};
@@ -246,7 +246,7 @@ Een ander probleem dat komt kijken bij latches is de \termen{metastabiliteit}. D
 \pdot{0.2538,1.7462};
 \pdot{1.7462,0.2538};
 \end{tikzpicture}
-\label{fig:metastabilityNotFunctions}}
+\figlab{metastabilityNotFunctions}}
 \subfigure[Bal-en-heuvel-analogie.]{
 \begin{tikzpicture}
 \draw[pattern=vertical lines] [samples=100,smooth,domain=-2:2,variable=\x] plot (\x,{cos(114.591559029*\x)}) -- (2,-1.3) -- (-2,-1.3) -- cycle;
@@ -254,9 +254,9 @@ Een ander probleem dat komt kijken bij latches is de \termen{metastabiliteit}. D
 \filldraw[fill=black!20,draw=black] (-1.570796327,-0.875) circle (0.125 cm);
 \filldraw[fill=black!20,draw=black] (1.570796327,-0.875) circle (0.125 cm);
 \end{tikzpicture}
-\label{fig:metastabilityAnalogy}}
+\figlab{metastabilityAnalogy}}
 \caption{Metastabiliteit.}
-\label{fig:metastability}
+\figlab{metastability}
 \end{figure}
 Indien we deze schakeling logisch analyseren zien we twee mogelijke stabiele oplossingen: waarbij ofwel $x$ ofwel $y$ 1 is, en de andere 0. Deze waarden zijn ook de enige die we beschouwen indien we de NOT-poort louter als logisch component zien. We implementeren deze poorten echter met behulp van transistoren, bijgevolg behoudt de poort een zeker analoog karakter. Op de grafiek op figuur \ref{fig:metastabilityNotFunctions} geven we de transfer-functie van de twee NOT-poorten weer. De stippelijn geeft de transfer-functie van de bovenste NOT-poort weer, de volle lijn de onderste. We zien zoals verwacht de twee \termen{stabiele toestanden}. We bemerken echter ook een \termen{metastabiele toestand}. Op het moment dat op $x$ of $y$ een kleine hoeveelheid ruis wordt aangebracht zullen de poorten dit effect versterken en zal zal de schakeling in een stabiele toestand terechtkomen. Het probleem is echter dat we uiteraard niet weten hoelang dit zal duren. We gaan er echter vanuit dat de kans dat na een bepaald tijdstip er nog onvoldoende ruis is opgetreden Poisson-verdeeld is\footnote{De meeste kansverdelingen op het voorkomen van een gebeurtenis zijn Poisson-verdeeld.}. We formaliseren dus tot:
 \begin{equation}
@@ -314,7 +314,7 @@ Een master-slave flipflop maakt gebruik van twee latches die beurtelings transpa
 \node[dff] (DFF) at (0,0) {};
 \end{tikzpicture}}
 \caption{Master-slave flipflop.}
-\label{fig:masterSlaveFlipflop}
+\figlab{masterSlaveFlipflop}
 \end{figure}
 \paragraph{Edge-triggered flipflop}
 Een Edge-trigger flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om om het signaal op te slaan die aan de ingang staat op het moment dat de klok van 0 naar 1 gaat. Figuur \ref{fig:edgeTriggeredFlipflop} toont een basis en meer uitgebreide implementatie samen met een tijdsgrafiek.
@@ -356,7 +356,7 @@ Een Edge-trigger flipflop maakt gebruik van een structuur die we kunnen groepere
 \pdot{\dx-1,0};
 \draw (NA03.input 2) -- (NA03.input 2 -| \dx-1.5,0) node[anchor=east,scale=0.75]{$D$};
 \end{tikzpicture}
-\label{fig:edgeTriggeredFlipflopBasic}}
+\figlab{edgeTriggeredFlipflopBasic}}
 \subfigure[Uitgebreide implementatie.]{
 \begin{tikzpicture}[circuit logic US]
 \def\dx{-1.75};
@@ -399,13 +399,13 @@ Een Edge-trigger flipflop maakt gebruik van een structuur die we kunnen groepere
 \draw (\dx-1.5,0 |- NA03.input 3) |- (NA01.input 3);
 \pdot{\dx-1.5,0 |- NA03.input 3};
 \end{tikzpicture}
-\label{fig:edgeTriggeredFlipflopExtended}}
+\figlab{edgeTriggeredFlipflopExtended}}
 \subfigure[Tijdsgrafiek]{\begin{tikzpicture}
 \timebehav{5.00}{-1.00}{8.50}{8}{0.75}{0/$Qn$,1/$Q$,2/$S^*$,3/$R^*$,4/$A$,5/$B$,6/$D$,7/Clk}{0/0.00/1/1.55/0, 0/1.55/0/3.88/1, 0/3.88/1/6.55/0, 0/6.55/0/8.88/1, 0/8.88/1/11.48/1, 1/0.00/0/1.30/1, 1/1.30/1/4.13/0, 1/4.13/0/6.30/1, 1/6.30/1/9.13/0, 1/9.13/0/11.48/0, 2/0.00/1/1.05/0, 2/1.05/0/2.30/1, 2/2.30/1/6.05/0, 2/6.05/0/7.30/1, 2/7.30/1/11.48/1, 3/0.00/1/3.63/0, 3/3.63/0/4.88/1, 3/4.88/1/8.63/0, 3/8.63/0/9.88/1, 3/9.88/1/11.13/0, 3/11.13/0/11.48/0, 4/0.00/0/0.68/1, 4/0.68/1/3.18/0, 4/3.18/0/5.38/1, 4/5.38/1/7.55/0, 4/7.55/0/11.48/0, 5/0.00/1/0.43/0, 5/0.43/0/2.93/1, 5/2.93/1/5.13/0, 5/5.13/0/6.68/1, 5/6.68/1/11.48/1, 6/0.00/0/0.18/1, 6/0.18/1/2.68/0, 6/2.68/0/3.93/1, 6/3.93/1/6.43/0, 6/6.43/0/11.48/0, 7/0.00/0/0.80/1, 7/0.80/1/2.05/0, 7/2.05/0/3.30/1, 7/3.30/1/4.55/0, 7/4.55/0/5.80/1, 7/5.80/1/7.05/0, 7/7.05/0/8.30/1, 7/8.30/1/9.55/0, 7/9.55/0/10.80/1, 7/10.80/1/11.48/1}{1.30/0.25/1/0, 3.63/0.25/3/0, 6.30/0.25/1/0, 8.63/0.25/3/0, 1.05/0.25/2/1, 3.88/0.25/0/1, 6.05/0.25/2/1, 8.88/0.25/0/1, 0.80/0.25/7/2, 2.05/0.25/7/2, 5.80/0.25/7/2, 7.05/0.25/7/2, 3.30/0.32/7/3, 4.55/0.32/7/3, 8.30/0.32/7/3, 9.55/0.32/7/3, 10.80/0.32/7/3, 0.43/0.25/5/4, 2.93/0.25/5/4, 5.13/0.25/5/4, 7.30/0.25/2/4, 0.18/0.25/6/5, 2.68/0.25/6/5, 4.88/0.25/3/5, 6.43/0.25/6/5};
 \end{tikzpicture}
 }
 \caption{Edge-triggered flipflop.}
-\label{fig:edgeTriggeredFlipflop}
+\figlab{edgeTriggeredFlipflop}
 \end{figure}
 In de meer uitgebreide versie zijn er naast de data- en klokingang ook nog twee andere ingangen beschreven:
 \begin{itemize}
@@ -445,7 +445,7 @@ Q&Q_{\mbox{\tiny{next}}}&S&R\\\hline
 \node[anchor=north] (ETT) at (ET.south |- IT.north) {Excitatietabel};
 \end{tikzpicture}
 \caption{Set-reset flipflop.}
-\label{fig:setResetFlipflop}
+\figlab{setResetFlipflop}
 \end{figure}
 \paragraph{D-flipflop} Ook de \termen{data-flipflop} of \termen{D-flipflop} is conceptueel equivalent aan zijn latch tegenhanger. Op het moment dat de klok van laag naar hoog gaat, zal het signaal dat aan de data-ingang $D$ staat in het geheugen worden geladen. Hierdoor is het bouwen van schakelingen met D-flipflops meestal zeer eenvoudig. Merk dus op dat elk signaal slechts \'e\'en klokperiode bewaard wordt. Figuur \ref{fig:dataFlipflop} toont het symbool samen met de karakteristieke- en excitatietabel.
 \begin{figure}[hbt]
@@ -469,7 +469,7 @@ Q&Q_{\mbox{\tiny{next}}}&D\\\hline
 \node[anchor=north] (ETT) at (ET.south |- IT.north) {Excitatietabel};
 \end{tikzpicture}
 \caption{Data-flipflop.}
-\label{fig:dataFlipflop}
+\figlab{dataFlipflop}
 \end{figure}
 \paragraph{T-flipflop} Een nieuwe variant is de zogenaamde \termen{toggle-flipflop} ofwel \termen{T-flipflop}. De toggle-flipflop heeft een `toggle'-ingang $T$. Indien deze ingang bij een stijgende klokflank hoog is, zal de flipflop het omgekeerde van zijn huidige waarde opslaan, de zogenaamde `\termen{toggle}'-operatie. Indien $T=0$, blijft opgeslagen toestand dezelfde. We kunnen een toggle-flipflop bouwen met behulp van een data-flipflop en een XOR-poort. Figuur \ref{fig:toggleFlipflop} toont het symbool, een mogelijke implementatie en de karakteristieke- en excitatietabel van de T-flipflop.
 \begin{figure}[hbt]
@@ -506,7 +506,7 @@ Q&Q_{\mbox{\tiny{next}}}&T\\\hline
 \node[anchor=north] (ETT) at (ET.south |- IT.north) {Excitatietabel};
 \end{tikzpicture}
 \caption{Toggle-flipflop.}
-\label{fig:toggleFlipflop}
+\figlab{toggleFlipflop}
 \end{figure}
 \paragraph{JK-flipflop} De \termen{JK-flipflop} of voluit \termen{Jack Kilby-flipflop}\footnote{Genoemd naar Jack Kilby (1923-2005), Amerikaans natuurkundige en nobelprijswinnaar.} is een combinatie van de set-reset flipflop en de toggle-flipflop. Bij een SR-flipflop komen we immers in een ongeldige toestand indien we aan de ingangen $\left(S,R\right)=\left(1,1\right)$. De JK-flipflop lost dit probleem op door in dat geval een toggle-operatie uit te voeren op het geheugenelement, zoals te zien op de karakteristieke tabel op figuur \ref{fig:jackKilbyFlipflop}. We kunnen een JK-flipflop realiseren met behulp van een SR-flipflop waarbij:
 \begin{equation}
@@ -557,7 +557,7 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 \node[anchor=north] (ETT) at (ET.south |- IT.north) {Excitatietabel};
 \end{tikzpicture}
 \caption{Jack-Kilby flipflop.}
-\label{fig:jackKilbyFlipflop}
+\figlab{jackKilbyFlipflop}
 \end{figure}
 \paragraph{Overzicht} We bundelen vervolgens al de latches en flipflops in figuur \ref{fig:latchFlipflopOverview}. Indien een cel leeg is bij dit overzicht is er geen realisatie mogelijk. Zo kunnen we onmogelijk een toggle-latch bouwen: deze zou immers bij een actief kloksignaal continue inverteren, waardoor het uiteindelijke resultaat onvoorspelbaar is. We kunnen elke flipflop verrijken met de assynchrone preset en clear ingangen. Verder bestaan er ook nog varianten van deze componenten waarbij we eerst een negatie toepassen op de ingang. In dat geval plaatsen we een cirkel bij deze ingang. Indien we een negatie toepassen op de klokingang bij een flipflop zal de flipflop dus de waarde memoriseren bij een falling edge, in plaats van een rising edge.
 \begin{figure}[hbt]
@@ -592,7 +592,7 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 }
 \end{tikzpicture}
 \caption{Overzicht van de interfaces van geheugencomponenten.}
-\label{fig:latchFlipflopOverview}
+\figlab{latchFlipflopOverview}
 \end{figure}
 \subsection{Registers}
 \label{ss:registers}
@@ -643,7 +643,7 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 \draw (D0.CLR |- 0,-0.8) -- (5.75,-0.8) node[scale=0.75,anchor=west]{$\mbox{Clr}^*$};
 \end{tikzpicture}}
 \caption{Interface en implementatie van een 4-bit register.}
-\label{fig:register}
+\figlab{register}
 \end{figure}
 \paragraph{Schuifregister}We hebben reeds vermeld dat men de meeste registers uitrust met extra functionaliteit. Een concreet voorbeeld hiervan is het \termen{schuifregister}. Indien we met normale registers werken kunnen we per klokflank tussen twee acties kiezen: een nieuwe waarde inladen (``load''), of de oude waarde behouden. Een schuifregisters voegt daar een functionaliteit aan toe: de oude waarde \'e\'en plaats naar rechts schuiven, en deze waarde bij de rising edge inladen. Hiervoor bevat een schuifregister een extra ingang $\mbox{Shft}$ die indien actief, de waarde van het register opschuift. Sommige shuifregisters bevatten bovendien extra ingangen om te bepalen of er naar links of rechts geschoven moet worden. $\mbox{SerIn}$ is een andere ingang, deze bepaalt welke bit er op de vrijgekomen plaats komt te staan. Figuur \ref{fig:shiftRegister} toont de implementatie van een schuifregister die de data naar rechts opschuift.
 \begin{figure}[hbt]
@@ -686,7 +686,7 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 \draw (D0.CLR |- 0,-0.8) -- (5.75,-0.8) node[scale=0.75*\sc,anchor=west]{$\mbox{Clr}^*$};
 \end{tikzpicture}}
 \caption{Implementatie van een 4-bit schuifregister.}
-\label{fig:shiftRegister}
+\figlab{shiftRegister}
 \end{figure}
 Schuifregisters worden vooral gebruikt om data serieel te maken: er wordt een getal ingeladen in het register, en vervolgens kunnen we per klokflank de laatste bit doorsturen. Aangezien het getal telkens verder opschuift sturen we zo na $n$-klokcycli een $n$-bit getal door. Dit kan handig zijn indien de kostprijs van meerdere draden te hoog is.
 \subsection{Tellers}
@@ -727,7 +727,7 @@ Een uitgang die we regelmatig in een teller zien terugkomen in \termen{Counter E
 \draw (Clk) -- (Clk -| TT0) |- (T0.Clk);
 \end{tikzpicture}
 \caption{Asynchrone 4-bit teller}
-\label{fig:asynchroneCounter}
+\figlab{asynchroneCounter}
 \end{figure}
 \paragraph{Asynchrone teller}
 Bij een \termen{asynchrone teller}, \termen{asynchronous counter} ofwel \termen{ripple counter} wordt de verandering van de bittoestand van \'e\'en van de bits gebruikt als klokingang voor de volgende bit. Dit leidt tot minimaal hardwaregebruik, maar heeft hetzelfde probleem als een ripple adder: het signaal dient te propageren door de bits\footnote{Hiervan komt overigens de notie van asynchroniciteit: niet alle bits veranderen op hetzelfde moment van waarde.}, wat leidt tot grote vertragingen als het om veel bits gaat. Vooral indien we logica koppelen aan hoge bits kunnen deze vertragingen nefast zijn en leiden tot een lage performantie. We kunnen een down-counter realiseren door de $Q_n$-uitgang aan de toggle-ingang van de volgende flipflop te koppelen (en niet de $Q$-uitgang). Eventueel kunnen we deze schakeling dus zelfs uitbreiden door een multiplexer te plaatsen tussen de flipflops die selecteert tussen $Q$ en $Q_n$ en zo de gebruiker laat kiezen in welke richting de teller werkt. Het nadeel is dat ook deze multiplexer een vertraging induceert. Een eenvoudige implementatie van een asynchrone teller staat op figuur \ref{fig:asynchroneCounter}.
@@ -767,7 +767,7 @@ Bij een \termen{asynchrone teller}, \termen{asynchronous counter} ofwel \termen{
 \draw (Clk) -- (Cl3);
 \end{tikzpicture}
 \caption{Synchrone 4-bit teller}
-\label{fig:synchroneCounter}
+\figlab{synchroneCounter}
 \end{figure}
 \paragraph{Synchrone teller}
 Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen. Dit doen we door de volgende toestand reeds vooraf uit te rekenen en bij het kloksignaal deze toestand op te slaan in de flipflops. Hoe we deze toestand berekenen staat ons in principe vrij net als de keuze van het type flipflop. Figuur \ref{fig:synchroneCounter} toont een implementatie met T-flipflops. Merk op dat ondanks het feit dat de nieuwe toestand berekend wordt voor de klokflank de teller daarom geen vertraging kan teweeg brengen: het berekenen van de volgende toestand van een teller met een grote woordlengte vraagt immers ook veel tijd (en kan dus het kritieke pad worden). Het voordeel van een synchrone teller is dat we deze berekening parallel doen met andere berekeningen die van de teller afhangen. Doordat de volgende toestand ook meteen beschikbaar is zullen berekeningen die afhangen van de teller ook onmiddellijk kunnen worden uitgerekend.
@@ -831,7 +831,7 @@ Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen.
 \draw (C3) -- (Clr);
 \draw (Clk) -- (Cl3);
 \end{tikzpicture}
-\label{fig:loadableSynchroneCounter}}
+\figlab{loadableSynchroneCounter}}
 \subfigure[Interface]{\begin{tikzpicture}[circuit logic US]
 \node[counterdbit] (C) at (0,0) {};
 \draw (C.Q0) -- ++(0,-0.4) node[scale=0.75,anchor=north]{$Q_0$};
@@ -849,7 +849,7 @@ Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen.
 \draw (C.DU) -- (-2.125,0 |- C.DU) node[scale=0.75,anchor=east]{D/U$^*$};
 \draw (C.Clk) -- (-2.125,0 |- C.Clk) node[scale=0.75,anchor=east]{Clk};
 \end{tikzpicture}
-\label{fig:counterInterface}}
+\figlab{counterInterface}}
 \subfigure[Hulpcomponent]{\begin{tikzpicture}[circuit logic US]
 \def\sc{0.8};
 \filldraw[dashed,fill=black!20] (-2.75*\sc,-1.25*\sc) rectangle (2.75*\sc,1.25*\sc);
@@ -872,9 +872,9 @@ Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen.
 \pdot{Qi |- Xa.input 1};
 \pdot{Ei -| -0.5*\sc,0};
 \end{tikzpicture}
-\label{fig:loadableSynchroneCounterLambda}}
+\figlab{loadableSynchroneCounterLambda}}
 \caption{Parallel-laarbare bidirectionele 4-bit teller.}
-\label{fig:loadableSynchroneCounterTotal}
+\figlab{loadableSynchroneCounterTotal}
 \end{figure}
 \paragraph{Parallel-laadbare bidirectionele teller}
 Een speciaal geval van een synchrone teller is een \termen{parallel-laadbare bidirectionele teller}. Een implementatie van zo'n teller staat op figuur \ref{fig:loadableSynchroneCounter}. Deze teller is \termen{parallel laadbaar} wanneer we de waarde van de teller kunnen zetten op een ingegeven waarde in \'e\'en klokflank\footnote{Het schuifregister of figuur \ref{fig:shiftRegister} kan bijvoorbeeld ook sequentieel geladen worden, waarbij we per klokflank een bit van het getal inschuiven.}. Bij het laden wordt de LD ingang hoog gezet. In het andere geval dienen we elke bit te berekenen. Hiervoor wordt op figuur \ref{fig:loadableSynchroneCounter} een naamloos component ingevoerd. De nieuwe waarde van een bit wordt ge\"inverteerd indien er geteld wordt op deze bit. In het andere geval blijft de bit onveranderd. Een bit wordt opgeteld indien de vorige bit geteld wordt en de bit \'e\'en is bij een telling naar boven (analoog aan een overdracht (``carry'') dus), of nul en een telling naar beneden (een lening (``borrow'') dus). Bij het berekenen van de eerste bit $Q_0$ gebruiken we logischerwijs de counter enabled CE ingang. Figuur \ref{fig:loadableSynchroneCounterLambda} toont een implementatie voor een dergelijk component. De teller die we hiermee ontwikkelen verenigt de meeste functionaliteiten die we in tellers kunnen terugvinden. Figuur \ref{fig:counterInterface} toont een interface die vaak gebruik wordt voor tellers. Indien een functionaliteit niet wordt aangeboden wordt de vermelding eenvoudigweg weggelaten.
@@ -927,7 +927,7 @@ Een speciaal geval van een synchrone teller is een \termen{parallel-laadbare bid
 \draw (CET) |- (-1.5,-1.5) |- (A1.input 1 |- 0,-3.75+2/7);
 \draw (O.output) |- (C.LD);
 \end{tikzpicture}
-\label{fig:moduloCounter}}
+\figlab{moduloCounter}}
 \subfigure[BCD-teller]{
 \begin{tikzpicture}[circuit logic US]
 \node[counterdbit] (C) at (0,0) {};%1,392625
@@ -972,7 +972,7 @@ Een speciaal geval van een synchrone teller is een \termen{parallel-laadbare bid
 \draw (CET) |- (-1.5,-1.5) |- (A2.input 2);
 \draw (O.output) |- (C.LD);
 \end{tikzpicture}
-\label{fig:bcdCounter}}
+\figlab{bcdCounter}}
 \caption{4-bit modulo-tellers.}
 \end{figure}
 We tellen hierbij van 0 tot en met MAX. Uiteraard moet MAX in dit geval wel voor te stellen zijn met 4-bit. Voor een $n$-bit modulo-counter geldt dus steeds: MAX$\leq 2^n$. Verder dienen we \'e\'en component afhankelijk van MAX te synthetiseren. Dit component vergelijkt de waarde die op de $Q_i$-uitgangen staat met MAX, indien deze aan elkaar gelijk zijn en $\mbox{D/U}^*$ en $\mbox{CE}_{\mbox{\tiny{in}}}$ hoog zijn, dient een 1 aan de uitgang van dit component te verschijnen, in alle andere gevallen een 0. Voor eender welke MAX is dit te realiseren met een AND-poort\footnote{Waarom?}. Verder zien we op de figuur ook een variant van een multiplexer. Deze multiplexer stelt eigenlijk 4 multiplexer voor die elk een bit uit het linkse en een bit uit het rechtse vak als invoer hebben, en die selecteren met dezelfde ingang, namelijk: $\mbox{D/U}^*$. Vanaf de volgende sectie zullen we vaak met registers met een groot aantal bits werken. In dat geval besparen ontwerpers zich het tekenen van de verschillende parallelle lijnen door \'e\'en lijn te tekenen. Verder wordt er dus gebruik gemaakt van de notatie van de multiplexers om aan te duiden dat elke bit van deze lijnen door een dergelijk component gaat.
@@ -1074,7 +1074,7 @@ Het opstellen van het \termen{toestandsdiagram} is meestal de moeilijkste stap. 
           edge[bend left] node {1/0} (C);
 \end{tikzpicture}}
 \caption{Toestandsdiagrammen van de leidende voorbeelden.}
-\label{fig:toestandsdiagram}
+\figlab{toestandsdiagram}
 \end{figure}
 \paragraph{Het toestandsdiagram} Alvorens we een toestandsdiagram kunnen opstellen zullen we eerst een toestandsdiagram formeel defini\"eren. Een toestandsdiagram bestaat uit een set van \termen{toestanden}. Een toestand duiden we aan met een ellips. Meestal benoemen we toestanden met een hoofdletter. Dit is niet verplicht maar maakt het makkelijk om naar een toestand te verwijzen. Verder zijn er ook \termen{transities}: overgangen van de ene toestand naar de andere\footnote{Een transitie kan ook naar dezelfde toestand gaan.} toestand onder een bepaalde \termen{ingangscombinatie}. Een transitie duiden we dan ook aan met behulp van een gerichte pijl tussen de twee toestanden. Voor elke mogelijke ingangscombinatie dienen we in elke toestand een transitie te voorzien. De ingangscombinatie waarbij de transitie van toepassing is noteren we bij de gerichte pijl. Het kloksignaal is in een synchrone sequenti\"ele schakeling geen onderdeel van de ingangscombinatie. Tot slot bevat een toestandsdiagram ook de \termen{initalisatie}. Een gerichte pijl die naar een bepaalde toestand wijst maar niet uit een toestand komt. Het is de eerste toestand waarin de schakeling zich bevindt. Verder keert de schakeling ook naar deze toestand terug als de gebruiker een reset-operatie op de schakeling uitvoert. De \termen{uitgangscombinatie} wordt ook weergegeven op het toestandsdiagram. Deze verschilt uiteraard tussen een Moore-machine en een Mealy-machine: bij een Moore-machine worden de uitgangen bij de toestanden genoteerd, dus in de ellips. Vermits de uitgangen bij een Mealy-machine afhangen van de ingangscombinatie wordt de uitgang bij de transitiepijlen gezet. We maken hierbij een onderscheid tussen de ingangscombinatie en de uitgang door hier een slash (``/'') tussen te plaatsen. Op figuur \ref{fig:toestandsdiagram} geven we de toestandsdiagrammen van de Moore- en Mealy-machine weer.
 \begin{table}[hbt]
@@ -1181,7 +1181,7 @@ Nadat we het aantal toestanden geminimaliseerd hebben, dienen we alleen nog een 
       (J) edge[bend left,swap] node {0} (B)
           edge[bend right] node {1} (E);
 \end{tikzpicture}
-\label{fig:minimaalToestandsdiagramMoore}}
+\figlab{minimaalToestandsdiagramMoore}}
 \subfigure[Mealy-machine]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
 \node[state,initial,initial text=RST, initial where=left] (A) {$A$};
 \node[state] (B) [right=of A] {$B$};
@@ -1193,9 +1193,9 @@ Nadat we het aantal toestanden geminimaliseerd hebben, dienen we alleen nog een 
       (E) edge[bend right,swap] node {0/1} (B)
           edge node {1/0} (A);
 \end{tikzpicture}
-\label{fig:minimaalToestandsdiagramMealy}}
+\figlab{minimaalToestandsdiagramMealy}}
 \caption{Geminimaliseerde toestandsdiagrammen van de leidende voorbeelden.}
-\label{fig:minimaalToestandsdiagram}
+\figlab{minimaalToestandsdiagram}
 \end{figure}
 \begin{table}[hbt]
 \centering
@@ -1324,7 +1324,7 @@ Uiteraard dienen we ons niet te beperken tot \'e\'en van deze implementaties. In
       (HH) edge node{3} (AA);
 \end{tikzpicture}}
 \caption{Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}
-\label{fig:grayCodeCounter}
+\figlab{grayCodeCounter}
 \end{figure}
 \paragraph{Leidende voorbeelden}Voor de Moore-machine kiezen we voor een minimal-bit-change benadering en voor de Mealy-machine een one-hot codering. Deze keuzes zijn louter didactief. De toegewezen bitvoorstellingen worden in een toestandstabel geschreven. Voor een one-hot codering is dit vrij triviaal. We wijzen elke toestand \'e\'en bit toe. Welke bit heeft geen invloed op de schakeling. Tabel \ref{tbl:mealyBitRepresentation} stelt de Mealy-machine uit de leidende voorbeelden voor met de one-hot codering.
 \begin{table}[hbt]
@@ -1583,7 +1583,7 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \pdot{I1 -| F3I};
 \pdot{I2 -| F4I};
 \end{tikzpicture}
-\label{fig:mooreTotalImplementationD}}
+\figlab{mooreTotalImplementationD}}
 \subfigure[T-flipflops]{
 \begin{tikzpicture}[circuit logic US]
 \def\ta{0.09};
@@ -1855,7 +1855,7 @@ Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In h
 \pdot{I2 -| F4I};
 \end{tikzpicture}}
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
-\label{fig:mooreCombImpl}
+\figlab{mooreCombImpl}
 \end{figure}
 Naast de logica voor de volgende toestand, verbinden we ook de klokingangen van de flipflops met het globale kloksignaal, en implementeren we de clear logica. De clear zorgt ervoor dat op het moment dat we de schakeling herzetten en dus het \clrsin{} signaal van de schakeling 0 wordt, de schakeling in de eerste toestand terechtkomt. In ons geval is dat 10. Daarom verbinden we de clear-ingang met de preset ingang van de eerste flipflop en de clear-ingang van de tweede flipflop. Op de clear-ingang van de eerste flipflop en de preset-ingang van de tweede wordt steeds een hoog signaal aangelegd. Merk verder ook op we in principe geen negatieve ingangen voor toestandssignalen moeten gebruiken. In plaats van een negatie aan de ingang van de AND-poort te plaatsen, kunnen we eenvoudig gebruik maken van de $\overline{Q}$-uitgang van de flipflop. Omdat we echter hiermee het aantal lijnen voor de flipflops bijna verdubbelen, maken we er in de figuur abstractie van. Dit principe kunnen we enkel toepassen voor signalen die uit de flipflops komen. De signalen die de ingangsconfiguratie bepalen hebben wel een expliciete NOT-poort nodig.
 \paragraph{Het one-hot-codering geval}Naast het geval van de Moore-machine zullen we ook de transitiefunctie van de Mealy-machine implementeren. Over deze realisatie is het ook eenvoudiger om enkele eigenschappen te formaliseren. Deze eigenschappen gaan over de kosten van de transitiefunctie v\'o\'or dat we minimalisatie van de Karnaugh-kaarten toepassen. Verder hangen de eigenschappen af van het type flipflop die we gebruiken:
@@ -2039,7 +2039,7 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar t
 \pdot{FFCLR1 -| FF1.CLR};
 \end{tikzpicture}}
 \caption{Implementatie van de Mealy-schakeling met verschillende soorten flipflops.}
-\label{fig:mealyCombImpl}
+\figlab{mealyCombImpl}
 \end{figure}
 Merk op dat we hier de verbindingen naar de \clrsin{} en \prsin{} ingangen anders geconfigureerd zijn dan bij de Moore-machine. Dit komt omdat de begintoestand van de Mealy-machine 001 is, terwijl dit 10 is bij de Moore-machine.
 \subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
@@ -2141,7 +2141,7 @@ toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun cod
 \pdot{I};
 \end{tikzpicture}
 \caption{Volledige implementatie van de Mealy-machine met D-flipflops.}
-\label{fig:mealyTotalImplementation}
+\figlab{mealyTotalImplementation}
 \end{figure}
 \subsection{Tijdsgedrag}
 \label{ss:timeBehaviorSeqSync}
@@ -2282,7 +2282,7 @@ We stellen de toestandstabel op met behulp van de configuratietabel en de tabel 
 \draw (F) .. controls ([shift={(4cm,-4cm)}] F) and ([shift={(2cm,-3cm)}] C).. (C) node[midway] {10};
 \end{tikzpicture}
 \caption{Toestandsdiagram van het leidend voorbeeld.}
-\label{fig:stateDiagramAsync}
+\figlab{stateDiagramAsync}
 \end{figure}
 \paragraph{}Een toestandtabel bij asynchrone schakelingen wordt ook een ``\termen{flow table}'' genoemd. Indien de tabel nog niet geminimaliseerd is, spreekt met van een ``\termen{primitive flow table}''.
 \subsection{Stap 2: Minimaliseren van de toestanden}
@@ -2329,7 +2329,7 @@ Het feit dat er de compatibiliteitsrelatie niet transitief is introduceert ook e
 \path [line] (E) -- node [near start,scale=0.75] {no} (F);
 \end{tikzpicture}
 \caption{Flowchart van het minimalisatieproces van asynchrone schakelingen.}
-\label{fig:flowchartMinimizeAsynchrone}
+\figlab{flowchartMinimizeAsynchrone}
 \end{figure}
 \paragraph{Samenvoegen van toestanden in een nieuwe toestand}
 Hoe bouwen we vanuit een groep toestanden een nieuwe toestand op? Dit kunnen we in principe al afleiden uit de definitie van compatibele toestanden. Uit de toestanden $\left\{s_1,s_2,\ldots,s_n\right\}$ construeren we een toestand $t$ indien alle toestanden met elkaar compatibel zijn. We dienen bij $t$ ook de overgangen te defini\"eren $s$ gaat onder een invoer $I$ over naar $\delta\left(s,I\right)$ deze functie noemen we ook de \termen{transitie-functie}. Verder voeren we ook een functie $\mathcal{G}\left(s\right)$ in, deze functie geeft de nieuwe toestand weer van de groep waar $s$ toe behoort. We kunnen dan volgende regels op $t$ defini\"eren\footnote{We voeren de regels in de volgorde van verschijnen uit. Het kan zijn dat een situatie aan twee criteria voldoet, in dat geval voeren we de eerste regel uit.}:
@@ -2428,7 +2428,7 @@ We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een 
 \node[draw,dashed,fit=(D) (E)] {};
 %\draw[rounded corners=3mm,dashed] (A.north west) -- (A.north east) -- (F.south east) -- (F.south west) -- cycle;
 \end{tikzpicture}
-\label{fig:mergerDiagram0}}
+\figlab{mergerDiagram0}}
 \hfill{}
 \subfigure[Iteratie 2]{\begin{tikzpicture}[shorten >=1pt,auto,node distance=1.3cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
 \node[state] (A) {$a$};
@@ -2440,7 +2440,7 @@ We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een 
 \path (C) edge (G);
 \node[draw,dashed,fit=(C) (G)] {};
 \end{tikzpicture}
-\label{fig:mergerDiagram1}}
+\figlab{mergerDiagram1}}
 \hfill{}
 \subfigure[Iteratie 3]{\begin{tikzpicture}[shorten >=1pt,auto,node distance=1.3cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
 \node[state] (A) {$a$};
@@ -2449,7 +2449,7 @@ We kunnen deze relatie ook grafisch voorstellen, dit doen we met behulp van een 
 \node[state] (D) [below=of A] {$d$};
 \node[state] (I) [right=of D] {$i$};
 \end{tikzpicture}
-\label{fig:mergerDiagram2}}
+\figlab{mergerDiagram2}}
 \hfill{}
 \caption{Merger-diagrammen van het leidend voorbeeld.}
 \end{figure}

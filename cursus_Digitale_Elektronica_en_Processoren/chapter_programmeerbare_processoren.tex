@@ -410,7 +410,7 @@ Ook in het geval van een sprong naar een subroutine moeten we het uitvoeren van 
 \end{figure}
 Tot slot beschouwen we ook nog de terugkeer instructie waarvan het stroomschema is afgebeeld op \figref{flowchart-rts}. Deze instructie voeren we uit in \'e\'en toestand. Men kan opmerken dat we eerst de waarde van een register in de registerbank moeten aftellen om vervolgens de relevante geheugenplaats in te lezen. We kunnen echter zonder gebruik te maken van extra hardware een chaining-transformatie uitvoeren en dus niet alleen het resultaat na de decrement-operatie opslaan in de registerbank maar deze ook gebruiken om het adres te bepalen in het geheugen. We kunnen bijgevolg alle instructies in \'e\'en klokcyclus uitvoeren. Dit leidt dan ook tot het ASM-schema op \figref{asm-rts}.
 \subsubsection{Ontwerp Controller}
-Na het ontwerpen van een (gedeeltelijk) ASM-schema, 
+Na het ontwerpen van een (gedeeltelijk) ASM-schema, kunnen we een specifieke controller ontwikkelen voor onze processor. In de eerste plaats beschouwen we altijd de controller uit \figrefpag{microprogrammableController}.
 \subsubsection{Ontwerp Datapad}
 \subsection{Reduced Instruction Set Computer (RISC)}
 \subsubsection{Ontwerp Instructieset}

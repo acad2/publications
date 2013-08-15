@@ -74,7 +74,7 @@ Een implementatie in het lamp-model is te vinden op figuur \ref{fig:switchLightB
 \end{scope}
 \end{scope}
 \end{tikzpicture}
-\label{fig:switchLightBasicGatesNot}
+\figlab{switchLightBasicGatesNot}
 }\\
 \subfigure[And]{\begin{tikzpicture}
 \draw[thick] (-0.3,0.05) -- (0.3,0.05);
@@ -193,7 +193,7 @@ Een implementatie in het lamp-model is te vinden op figuur \ref{fig:switchLightB
 \end{scope}
 \end{scope}
 \end{tikzpicture}
-\label{fig:switchLightBasicGatesAnd}
+\figlab{switchLightBasicGatesAnd}
 }\\
 \subfigure[Or]{\begin{tikzpicture}
 \draw[thick] (-0.3,0.05) -- (0.3,0.05);
@@ -318,10 +318,10 @@ Een implementatie in het lamp-model is te vinden op figuur \ref{fig:switchLightB
 \end{scope}
 \end{scope}
 \end{tikzpicture}
-\label{fig:switchLightBasicGatesOr}
+\figlab{switchLightBasicGatesOr}
 }
 \caption{Implementatie van de basispoorten volgens het lamp-model.}
-\label{fig:switchLightBasicGates}
+\figlab{switchLightBasicGates}
 \end{figure}
 \paragraph{}
 Door deze drie basisbewerkingen met elkaar te combineren kunnen we eindeloos veel nieuwe bewerkingen bouwen. Zoals bijvoorbeeld de exclusieve OR, ook wel de \termen{XOR} genoemd. De XOR is een bewerking waarbij het lampje gaat branden indien juist \'e\'en van de twee schakelaars ingedrukt is. Deze bewerking kunnen we realiseren door NOT, AND en OR bewerkingen te combineren als volgt:
@@ -382,7 +382,7 @@ Deze schakelingen kunnen we dan vervolgens in ons lamp-model omzetten zoals op f
 \end{scope}
 \end{tikzpicture}
 \caption{XOR-poort in het lamp-model.}
-\label{fig:switchLightXor}
+\figlab{switchLightXor}
 \end{figure}
 \subsection{Waarheidstabellen}
 Uiteraard kunnen we alle schakelingen voorstellen met het lamp-model. Toch is het niet echt praktisch, we gaan dus op zoek naar andere manieren om de logische formules te berekenen, en ook eenvoudig voor te stellen. Een makkelijke manier om logische schakelingen te berekenen is met behulp van \termen{waarheidstabellen}. Een waarheidstabel is een tabel waarbij we alle variabelen voorstellen, en vervolgens met eventuele tussenstappen de uiteindelijke bewerking berekenen. Hierbij maken we gebruik van waarheidstabellen die we reeds kennen. Namelijk de waarheidstabellen van de basisfuncties. Indien we $n$ variabelen beschouwen betekent dit dus dat onze tabel $2^n$ rijen telt. Immers kan elke variabele ofwel 0 ofwel 1 zijn. Bovendien is het aantal functies met $n$ variabelen beperkt tot $2^{2^n}$. Dit zegt echter het aantal implementaties. In tabel \ref{tbl:truthTablesBasicGates} geven we de waarheidstabellen van de basisoperaties weer.
@@ -437,7 +437,7 @@ Naast het uitrekenen van operaties heeft ons lamp-model nog een nadeel. Het is e
   \draw (A.input -| -1,0) node[anchor=east]{$x$} -- (A.input);
   \draw (A.output) -- ++(1,0) node[anchor=west]{$L$};
 \end{tikzpicture}
-\label{fig:basicGatesNot}
+\figlab{basicGatesNot}
 }
 \subfigure[And]{\begin{tikzpicture}[circuit logic US]
   \node[and gate] (A) {};
@@ -445,7 +445,7 @@ Naast het uitrekenen van operaties heeft ons lamp-model nog een nadeel. Het is e
         (A.input 2 -| -1,0) node[anchor=east]{$y$} -- (A.input 2);
   \draw (A.output) -- ++(1,0) node[anchor=west]{$L$};
 \end{tikzpicture}
-\label{fig:basicGatesAnd}
+\figlab{basicGatesAnd}
 }
 \subfigure[Or]{\begin{tikzpicture}[circuit logic US]
   \node[or gate] (A) {};
@@ -453,7 +453,7 @@ Naast het uitrekenen van operaties heeft ons lamp-model nog een nadeel. Het is e
         (A.input 2 -| -1,0) node[anchor=east]{$y$} -- (A.input 2);
   \draw (A.output) -- ++(1,0) node[anchor=west]{$L$};
 \end{tikzpicture}
-\label{fig:basicGatesOr}
+\figlab{basicGatesOr}
 }
 \subfigure[3-and]{\begin{tikzpicture}[circuit logic US]
   \node[and gate,inputs={normal,normal,normal}] (A) {};
@@ -462,7 +462,7 @@ Naast het uitrekenen van operaties heeft ons lamp-model nog een nadeel. Het is e
 	(A.input 3 -| -0.75,0) -- (A.input 3);
   \draw (A.output) -- ++(0.5,0);
 \end{tikzpicture}
-\label{fig:basicGatesAndExtended}
+\figlab{basicGatesAndExtended}
 }
 \subfigure[5-or]{\begin{tikzpicture}[circuit logic US]
   \node[or gate,inputs={normal,normal,normal,normal,normal}] (A) {};
@@ -473,10 +473,10 @@ Naast het uitrekenen van operaties heeft ons lamp-model nog een nadeel. Het is e
 	(A.input 5 -| -0.75,0) -- (A.input 5);
   \draw (A.output) -- ++(0.5,0);
 \end{tikzpicture}
-\label{fig:basicGatesOrExtended}
+\figlab{basicGatesOrExtended}
 }
 \caption{Basispoorten en uitbreidingen.}
-\label{fig:basicGates}
+\figlab{basicGates}
 \end{figure}
 \paragraph{Complexe poorten}
 Complexe poorten die in de loop der tijd een eigen symbool kregen zijn onder meer de \termen{NOR}, \termen{NAND} en XOR, deze staan afgebeeld op figuur \ref{fig:complexGates}, samen met een equivalent schema.
@@ -495,7 +495,7 @@ Complexe poorten die in de loop der tijd een eigen symbool kregen zijn onder mee
   \draw (A2.output) -- (A3.input);
   \draw (A3.output) -- ++(1,0) node[anchor=west]{$L$};
 \end{tikzpicture}
-\label{fig:complexGatesNand}
+\figlab{complexGatesNand}
 }
 \subfigure[NOR]{\begin{tikzpicture}[circuit logic US]
   \node[nor gate] (A) at (0.5,0) {};
@@ -509,7 +509,7 @@ Complexe poorten die in de loop der tijd een eigen symbool kregen zijn onder mee
   \draw (A2.output) -- (A3.input);
   \draw (A3.output) -- ++(1,0) node[anchor=west]{$L$};
 \end{tikzpicture}
-\label{fig:complexGatesNor}
+\figlab{complexGatesNor}
 }
 \subfigure[XOR]{\begin{tikzpicture}[circuit logic US]
   \node[xor gate] (A) at (0,-0.5) {};
@@ -531,10 +531,10 @@ Complexe poorten die in de loop der tijd een eigen symbool kregen zijn onder mee
   \draw (A5.output) -- ++(0.5,0) |- (A6.input 1);
   \draw (A6.output) -- ++(0.5,0) node[anchor=west]{$L$};
 \end{tikzpicture}
-\label{fig:complexGatesXor}
+\figlab{complexGatesXor}
 }
 \caption{Complexe poorten.}
-\label{fig:complexGates}
+\figlab{complexGates}
 \end{figure}
 De waarheidstabellen van deze complexe poorten staat in subsectie \ref{ss:appendixComplexePoorten}. De reden dat NAND en NOR poorten populair zijn komt hoofdzakelijk omdat het universele poorten zijn. Dat betekent dat iedere basispoort kan ge\"implementeerd worden met behulp van NAND of NOR poorten. In tabel \ref{tbl:nandNorUniversal} staan deze implementaties. Bovendien is het realiseren van NAND en NOR poorten in de meeste technologie\"en goedkoper dan het bouwen van AND en OR poorten.
 \begin{table}[htb]
@@ -650,7 +650,7 @@ met NOR&
 \end{tikzpicture}
 }
 \caption{Poorten met ge\"inverteerde ingangen.}
-\label{fig:basicGatesInvertedInput}
+\figlab{basicGatesInvertedInput}
 \end{figure}
 \subsection{Logische schakelingen}
 De vorige subsectie toonde al dat we met deze poorten netwerken kunnen bouwen. Deze netwerken worden \termen{logische schakelingen} genoemd. Deze schakelingen implementeren dan uiteindelijk de functionaliteiten waarvoor we een digitaal circuit ontwerpen. We kunnen logische schakelingen beschrijven doormiddel van een schema zoals we dat tot nu toe altijd gedaan hebben. Een andere techniek is echter op basis van een taal: VHDL\footnote{VHDL: VHSIC Hardware Design Language; VHSIC: Very High Speed Integrated Circuit.}. Deze taal komt onder meer aan bod in sectie \ref{s:vhdl}, en verder in de verdere hoofdstukken van deze cursus.
@@ -708,7 +708,7 @@ De verwerkingskracht wordt bepaald door het concept van de zwakste schakel. Kete
   \end{scope}
 \end{tikzpicture}
 \caption{Voorbeeld van het tijdsgedrag van een logische schakeling met een ``glitch''.}
-\label{fig:timeBehaviorGlitchExample}
+\figlab{timeBehaviorGlitchExample}
 \end{figure}
 \section{Booleaanse algebra}
 \label{s:booleaanseAlgebra}
@@ -1010,7 +1010,7 @@ Wanneer we de Sum-of-Products of Product-of-Sums methodes toepassen, zullen alle
 \end{scope}
 \end{tikzpicture}
 \caption{Herleiden naar Standaard Vorm van voorbeeld.}
-\label{fig:standardizationMinMaxTerms}
+\figlab{standardizationMinMaxTerms}
 \end{figure}
 \paragraph{}
 De Standaard Vorm is gegarandeerd de meest minimale vorm voor schakelingen met twee lagen. Het is echter wel mogelijk goedkopere schakelingen te ontwerpen die uit meerdere lagen bestaat. In dat geval dient er echter een trade-off gemaakt te worden tussen kosten enerzijds en performantie anderzijds. Zo toont figuur \ref{fig:alternativeStandardForm} een alternatieve implementatie van een standaardvorm. Deze is 8\% goedkoper\footnote{De relatieve kost van een circuit kan berekend worden met vergelijking \ref{eqn:kosten}.}, maar zal slechts aan 66\% van de snelheid werken. In dat geval zal de toepassing vaak uitmaken wat het meest opportuun is.
@@ -1050,7 +1050,7 @@ De Standaard Vorm is gegarandeerd de meest minimale vorm voor schakelingen met t
 \end{scope}
 \end{tikzpicture}
 \caption{Standaard vorm en alternatief.}
-\label{fig:alternativeStandardForm}
+\figlab{alternativeStandardForm}
 \end{figure}
 \subsection{Realisaties met NAND en NOR}
 Zoals reeds kort vermeld in subsectie \ref{ss:logischePoorten} zijn NAND en NOR poorten erg populair bij heel wat implementaties. Dit komt omdat ze alle basispoorten kunnen emuleren zoals blijkt uit tabel \ref{tbl:nandNorUniversal} op pagina \pageref{tbl:nandNorUniversal}. Bovendien is hun kostprijs lager dan een AND of OR poort\footnote{Denk aan de formule van de kostprijs: het aantal inverters wordt afgetrokken van de kostprijs.}. NAND en NOR poorten blijken bovendien ook makkelijk implementeerbaar als substituut voor AND en OR poorten in standaard vorm. Figuur \ref{fig:standardizationNandNor} toont hoe we ons voorbeeld in standaardvorm verder kunnen optimaliseren. In stap 1 inverteren we de min- en max-termen door van een AND en OR respectievelijk een NAND en NOR te maken. We behouden echter de functie door inverters aan de ingangen van het tweede niveau toe te voegen. Immers is tweemaal inverteren niets anders dan dezelfde waarde behouden. Door vervolgens de wetten van De Morgan toe te passen in stap 2, resulteert dit in een circuit die alleen gebruik maakt van NAND en NOR poorten. Bovendien geldt dat een circuit ge\"implementeerd met NAND en NOR poorten altijd zowel goedkoper en sneller is dan zijn canonisch equivalent.
@@ -1161,7 +1161,7 @@ Zoals reeds kort vermeld in subsectie \ref{ss:logischePoorten} zijn NAND en NOR 
 \end{scope}
 \end{tikzpicture}
 \caption{Standaardvorm van het voorbeeld met NAND en NOR's.}
-\label{fig:standardizationNandNor}
+\figlab{standardizationNandNor}
 \end{figure}
 \section{Digitaal ontwerp in grote lijnen}
 Nu we de concepten van een digitaal ontwerp in grote lijnen uitgetekend hebben, kunnen we het over de praktische kant van de zaak hebben. Immers komt bij een digitaal ontwerp veel meer kijken dan alleen het bouwen van de juiste schakeling. Een klant zal immers specificaties sturen waaraan de hardware moet voldoen, bovendien wil de klant naast de hardware vaak ook nog documentatie over hoe men het toestel dient te gebruiken. Bovendien willen we vermijden dat we bij het ontwerpen telkens opnieuw het wiel moeten uitvinden. Er bestaan immers al bibliotheken die allerhande schakelingen voor bijvoorbeeld optellingen, testen op gelijke waarde,... bevatten. Deze zijn meestal met de nodige zorg samengesteld zodat het vinden van een nog effici\"entere implementatie moeilijk wordt. Figuur \ref{fig:digitalDesignManagement} vat het hele verloop goed samen. Verder zullen we in de volgende subsecties de verschillende stappen want meer in detail bekijken.
@@ -1180,7 +1180,7 @@ Nu we de concepten van een digitaal ontwerp in grote lijnen uitgetekend hebben, 
 \draw[<-] (Sp) |- ++(2.5,0.5) -- ++(0,-1);
 \end{tikzpicture}
 \caption{Typisch verloop van een digitaal ontwerp.}
-\label{fig:digitalDesignManagement}
+\figlab{digitalDesignManagement}
 \end{figure}
 \subsection{Specificatie}
 \label{ss:specificatie}
@@ -1198,7 +1198,7 @@ De \termen{Synthese} is niets anders dan de vertaling van de specificaties van e
 \node[itm] (LD) at (0,6) {\begin{tabular}{c}Systeemsynthese\\(bouwblokken: processoren, geheugen, ASIC)\end{tabular}};
 \end{tikzpicture}
 \caption{De verschillende lagen bij de synthese.}
-\label{fig:synthesisPyramid}
+\figlab{synthesisPyramid}
 \end{figure}
 \subsection{Bibliotheek}
 \label{ss:bibliotheek}
@@ -1263,7 +1263,7 @@ Naast de hardware verlangt de klant meestal ook \termen{Documentatie}. Afhankeli
 \draw[->] (T) -- (C);
 \end{tikzpicture}
 \caption{Digitaal ontwerpen met CAD.}
-\label{fig:digitalDesignManagementCad}
+\figlab{digitalDesignManagementCad}
 \end{figure}
 \section{Taalgebaseerd hardware ontwerp: VHDL}
 \label{s:vhdl}

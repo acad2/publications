@@ -37,7 +37,7 @@ Alvorens we enige schakeling kunnen implementeren moeten we een conventie afspre
 \draw[dotted] (0.1,0) -- (7.25,0);
 \end{tikzpicture}
 \caption{Schematisch bereik van ``High'' en ``Low'' spanning.}
-\label{fig:potentialRange}
+\figlab{potentialRange}
 \end{figure}
 \paragraph{Negatieve logica}Het is niet per definitie zo dat $V_{\mbox{\tiny H}}$ geassocieerd wordt met 1, en $V_{\mbox{\tiny L}}$ met 0. Dit hangt af van het type logica dat gehanteerd wordt. In geval van \termen{Positieve Logica} is dit inderdaad het geval. Soms komt het echter voordeliger uit om deze orde om te draaien, in dat geval spreekt men van \termen{Negatieve Logica}. Merk op dat bij negatieve logica de poorten fysisch anders ge\"implementeerd moeten worden. Immers kent de fysische poort alleen maar spanningen. De belangrijkste reden om negatieve logica te gebruiken, is dan ook omdat sommige implementaties hierbij goedkoper kunnen zijn. Bovendien kan men in een circuit op verschillende plaatsen een andere logica gebruiken. Een concreet voorbeeld is de reset-module in veel elektronicasystemen.
 \section{Implementatie van poorten}
@@ -53,7 +53,7 @@ In hoofdstuk \ref{ch:basis} maakten we gebruik van het lichtmodel om poorten te 
 \draw[thick] (1.5,0) circle(0.625);
 \draw (1.5,-0.625) node[anchor=north]{Gesloten} -- ++(0,0.375) -- ++(-0.2,0) -- ++(0,0.5) -- ++(0.2,0) -- ++(0,0.375);
 \end{tikzpicture}
-\label{fig:switchNotationSwitch}
+\figlab{switchNotationSwitch}
 }
 \subfigure[NMOS Schakelaars met stuursignaal] {\begin{tikzpicture}
 \draw[thick] (0,0) circle(0.625);
@@ -69,7 +69,7 @@ In hoofdstuk \ref{ch:basis} maakten we gebruik van het lichtmodel om poorten te 
 \draw[thick] (3,0.625) -- ++(0,0.5);
 \draw[thick] (2.375,0) -- ++(-0.75,0) node[anchor=east]{H};
 \end{tikzpicture}
-\label{fig:switchNotationControlledNmos}
+\figlab{switchNotationControlledNmos}
 }
 \subfigure[PMOS Schakelaars met stuursignaal] {\begin{tikzpicture}
 \draw[thick] (6,0) circle(0.625);
@@ -87,10 +87,10 @@ In hoofdstuk \ref{ch:basis} maakten we gebruik van het lichtmodel om poorten te 
 \draw[thick] (9,0.625) -- ++(0,0.5);
 \draw[thick] (8.125,0) -- ++(-0.75,0) node[anchor=east]{H};
 \end{tikzpicture}
-\label{fig:switchNotationControlledPmos}
+\figlab{switchNotationControlledPmos}
 }
 \caption{Notatie van een schakelaar (met stuursignaal).}
-\label{fig:switchNotation}
+\figlab{switchNotation}
 \end{figure}
 \subsubsection{Werking van NMOS en PMOS}
 \label{ss:nmosPmosWork}
@@ -152,7 +152,7 @@ In de vorige subsectie werden twee types schakelaars ge\"introduceerd: NMOS en P
 \draw (0,0.75) -- (3,0.75);
 \end{tikzpicture}}
 \caption{Werking van NMOS en PMOS.}
-\label{fig:mosWork}
+\figlab{mosWork}
 \end{figure}
 \subsection{Basispoorten}
 Nu we automatische schakelaars kunnen gebruiken, wordt het tijd om met behulp van NMOS en PMOS de poorten te implementeren. Eerst zullen we de basispoorten met behulp van NMOS implementeren. Vervolgens zal blijken dat deze implementaties enkele nadelen hebben. Hierdoor zullen we opteren voor implementatie met \termen{CMOS}. CMOS is in feite een combinatie van NMOS en PMOS. We zullen alle schakelingen implementeren in positieve logica. In sectie \ref{s:negativeLogic} behandelen we nog enkele zaken in verband met negatieve logica.
@@ -187,7 +187,7 @@ Dit is op energieniveau een grote kost, vooral omdat er in een gemiddelde proces
 \draw (0.4,2.3) node[anchor=west,scale=0.75]{$V_{\mbox{\tiny SS}}\ (L)$};
 \end{circuitikz}}
 \caption{NOT poort ge\"implementeerd in NMOS.}
-\label{fig:notNmos}
+\figlab{notNmos}
 \end{figure}
 \paragraph{``Open-drain poort''}Indien we de weerstand als een extern component beschouwen, en meer NMOS transistoren in parallel aan de draad hangen, kunnen we het gedrag van een AND poort nabootsen, zoals op figuur \ref{fig:openDrainNmos}. Vanaf het moment dat \'e\'en van de transistoren gesloten wordt, lekt de stroom door die transistor, en krijgt $f$ dus een laag niveau. Alle ingangen moeten dus een lage spanning hebben, om een hoge spanning aan de uitgang te verkrijgen. We kunnen dit principe dus zien als een AND waarbij aan alle ingangen een inverter staat. Dit systeem wordt ``\termen{Open-Drain Poort}'' genoemd. En heeft het voordeel dat we een AND kunnen bouwen aan de hand van draden. Deze implementatie is dus goedkoop indien we een AND-poort willen maken met een zeer groot aantal ingangen. Standaard wordt dit soort implementatie dan ook gebruikt in de reset-functionaliteit van elektronica. Meestal wordt er immers een reset procedure aangeroepen indien \'e\'en van de detectoren een fout registreert. In dat geval zal de detector een hoge spanning aan zijn ingang genereren. Dit resulteert een lage uitgang, bij een lage uitgang treed de reset-procedure dan in werking.
 \begin{figure}[hbt]
@@ -206,7 +206,7 @@ Dit is op energieniveau een grote kost, vooral omdat er in een gemiddelde proces
 \draw (T2.source) -- ++(0,0) node[ground]{};
 \end{circuitikz}
 \caption{Open-Drain Poort in NMOS.}
-\label{fig:openDrainNmos}
+\figlab{openDrainNmos}
 \end{figure}
 \paragraph{NAND en NOR}
 De vorige paragraaf gaf reeds een opzet hoe we een NOR en NAND poort kunnen bouwen. We moeten er eenvoudig weg voor zorgen dat er stroom kan vloeien tussen $V_{\mbox{\tiny DD}}$ en $V_{\mbox{\tiny SS}}$ indien respectievelijk minstens \'e\'en of alle transistoren gesloten worden. Figuur \ref{fig:nandNorNmos} toont dan ook de implementaties voor een NAND en NOR poort. Een AND en OR poort kunnen we dan vervolgens synthetiseren door een inverter achter de poort te plaatsen. Deze implementaties maken ook meteen duidelijk waarom een NAND goedkoper is dan een AND.
@@ -237,7 +237,7 @@ De vorige paragraaf gaf reeds een opzet hoe we een NOR en NAND poort kunnen bouw
 \draw (T2.source) |- ++(-1,-0.25) -- ++(0,-0.25) node[ground]{};
 \end{circuitikz}}
 \caption{NAND en NOR poort ge\"implementeerd met NMOS.}
-\label{fig:nandNorNmos}
+\figlab{nandNorNmos}
 \end{figure}
 \subsubsection{Implementatie in CMOS}
 Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos verbruikt. CMOS biedt hiervoor een oplossing. CMOS is eigenlijk een techniek waarbij we zowel een NMOS als een PMOS transistor gebruiken. Analoog aan het ``Pull-Down Network'' fenomeen van de NMOS, spreken we dan over het ``\termen{Pull-Up Network (PUN)}'' fenomeen bij PMOS.
@@ -267,7 +267,7 @@ Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos
 \end{scope}
 \end{circuitikz}
 \caption{NOT poort ge\"implementeerd met CMOS.}
-\label{fig:notCmos}
+\figlab{notCmos}
 \end{figure}
 \paragraph{NAND en NOR} Ook NAND en NOR poorten hebben hun equivalent in CMOS. Figuur \ref{fig:nandNorCmos} toont hun implementatie. Wat opvalt is dat we redelijk eenvoudig het CMOS equivalent kunnen halen uit een NMOS implementatie. Immers is het onderste gedeelte van de NMOS-schakelaars volledig equivalent met de NMOS-implementatie. We plaatsen eenvoudigweg een PMOS circuit boven de uitgang. Dit circuit werkt met duale logica: indien de NMOS verbindingen parallel zijn, zullen we de PMOS transistoren in serie plaatsen, indien de NMOS transistoren in serie stonden, zetten we de PMOS transistoren in parallel. Verder kunnen we de weerstand ook weglaten. Deze weerstand stond er immers alleen om verschillende poorten aan eenzelfde voeding te kunnen hangen. Nu er echter geen stroom vloeit in om het even welke configuratie van de transistoren, is de weerstand dus nagenoeg nutteloos geworden, en brengt deze hoge kosten met zich mee.
 \begin{figure}[hbt]
@@ -290,7 +290,7 @@ Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos
 \draw (T3.source) -- (T4.drain);
 \draw (T4.source) -- ++(0,0) node[ground]{};
 \end{circuitikz}
-\label{fig:nandCmos}}
+\figlab{nandCmos}}
 \subfigure[NOR]{\begin{circuitikz}[american resistors]
 \node [nmosc] (T1) at (-1,-1) {};
 \node [nmosc] (T2) at (1,-1) {};
@@ -311,9 +311,9 @@ Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos
 \draw (0,0) -- (T3.drain);
 \draw (T3.source) -- (T4.drain);
 \end{circuitikz}
-\label{fig:norCmos}}
+\figlab{norCmos}}
 \caption{NAND en NOR poorten ge\"implementeerd met CMOS.}
-\label{fig:nandNorCmos}
+\figlab{nandNorCmos}
 \end{figure}
 \paragraph{Uitgangen verbinden}
 \label{term:kortsluiting}
@@ -343,7 +343,7 @@ Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met 
 \draw[dotted,thick,rounded corners,->] (0.35,4.1) -- (0.35,3.6) -| (1.35,1.6) -| (\dx+0.65,2.9) -| (\dx+0.35,2);
 \end{circuitikz}
 \caption{Kortsluiting bij wired poort implementaties met CMOS.}
-\label{fig:cmosFail}
+\figlab{cmosFail}
 \end{figure}
 \subsection{Complexe poorten}
 \begin{figure}[hbt]
@@ -361,7 +361,7 @@ Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met 
 \draw (A1.output) -- ++(0,1.4) -| (NO.input 1);
 \draw (A2.output) -- ++(0,1.4) -| (NO.input 2);
 \end{tikzpicture}
-\label{fig:aoiExample}}
+\figlab{aoiExample}}
 \subfigure[AOI op CMOS-niveau.]{
 \begin{circuitikz}
 \def\dxy{1.5};
@@ -430,7 +430,7 @@ Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met 
 \draw (NA3.source) |- (SNAe);
 \draw (SNAe) node[ground]{};
 \end{circuitikz}
-\label{fig:aoiCmos}
+\figlab{aoiCmos}
 }
 \subfigure[OAI op poortniveau.]{\begin{tikzpicture}[circuit logic US]
 \node[or gate,rotate=90] (A1) at (-0.85,0) {};
@@ -445,7 +445,7 @@ Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met 
 \draw (A1.output) -- ++(0,1.4) -| (NO.input 1);
 \draw (A2.output) -- ++(0,1.4) -| (NO.input 2);
 \end{tikzpicture}
-\label{fig:oaiExample}}
+\figlab{oaiExample}}
 \subfigure[OAI op CMOS-niveau.]{
 \begin{circuitikz}
 \def\dxy{1.5};
@@ -514,10 +514,10 @@ Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met 
 \draw (NA3.source) |- (SNAe);
 \draw[->] (SNAe) -- ++(0,0.5) node[anchor=west,scale=0.75]{$V_{\mbox{\tiny DD}}\ (H)$};
 \end{circuitikz}
-\label{fig:oaiCmos}
+\figlab{oaiCmos}
 }
 \caption{AND-OR-Inverter (AOI) en OR-AND-Inverter (OAI) in CMOS.}
-\label{fig:aoiOai}
+\figlab{aoiOai}
 \end{figure}
 In hoofdstuk \ref{ch:basis} hadden we het reeds over de XOR-poort. Een poort die 1 teruggeeft als de twee ingangen niet gelijk zijn aan elkaar. Deze poort hadden we toen ge\"implementeerd met een ingewikkeld schema van poorten. Omdat we echter op transistor niveau werken, kunnen we verschillende complexe poorten toch relatief simpel implementeren. In de volgende subsecties zullen we eerst de \termen{AND-OR-Invert (AOI)} en \termen{OR-AND-Invert (OAI)} implementeren. Deze schakelingen worden relatief vaak gebruikt, om bijvoorbeeld XOR en \termen{XNOR} poorten te implementeren.
 \subsubsection{AND-OR-Invert (AOI)}
@@ -563,7 +563,7 @@ Naast de NOT, NAND, NOR, AOI en OAI poorten, worden er nog enkele andere poorten
 \draw (F2) -- ++(1,0) node[anchor=west,scale=0.75]{$f$};
 \end{scope}
 \end{tikzpicture}
-\label{fig:bufferCmos}
+\figlab{bufferCmos}
 }
 \subfigure[AND-poort]{\begin{tikzpicture}[circuit logic US]
 \node [and gate,scale=0.75] (B) at (-1,0) {};
@@ -607,7 +607,7 @@ Naast de NOT, NAND, NOR, AOI en OAI poorten, worden er nog enkele andere poorten
 \draw (F2) -- ++(1,0) node[anchor=west,scale=0.75]{$f$};
 \end{scope}
 \end{tikzpicture}
-\label{fig:andCmos}
+\figlab{andCmos}
 }
 \subfigure[OR-poort]{\begin{tikzpicture}[circuit logic US]
 \node [or gate,scale=0.75] (B) at (-1,0) {};
@@ -651,7 +651,7 @@ Naast de NOT, NAND, NOR, AOI en OAI poorten, worden er nog enkele andere poorten
 \draw (F2) -- ++(1,0) node[anchor=west,scale=0.75]{$f$};
 \end{scope}
 \end{tikzpicture}
-\label{fig:orCmos}
+\figlab{orCmos}
 }
 \subfigure[XOR-poort]{\begin{tikzpicture}[circuit logic US]
 \node [xor gate,scale=0.75] (X) at (-1,0) {};
@@ -740,7 +740,7 @@ Naast de NOT, NAND, NOR, AOI en OAI poorten, worden er nog enkele andere poorten
 \end{scope}
 \end{scope}
 \end{tikzpicture}
-\label{fig:xorCmos}
+\figlab{xorCmos}
 }
 \subfigure[XNOR-poort]{\begin{tikzpicture}[circuit logic US]
 \node [xnor gate,scale=0.75] (X) at (-1,0) {};
@@ -845,10 +845,10 @@ Naast de NOT, NAND, NOR, AOI en OAI poorten, worden er nog enkele andere poorten
 \end{scope}
 
 \end{tikzpicture}
-\label{fig:xnorCmos}
+\figlab{xnorCmos}
 }
 \caption{Implementatie van populaire alternatieve poorten in CMOS.}
-\label{fig:alternativeGatesCmos}
+\figlab{alternativeGatesCmos}
 \end{figure}
 \paragraph{Buffer}
 Een \termen{buffer} of \termen{driver} is een speciaal type poort met \'e\'en ingang waarbij de uitgang dezelfde waarde heeft als de ingang. Men zou dus in principe een buffer kunnen vervangen door een draad. Toch wordt een buffer frequent gebruikt, indien een bepaalde draad verbonden wordt met vele ingangen van andere poorten. In dat geval immers, zou de spanning op deze draad verlaagd worden. Een buffer dient dus om bij complexe circuits een signaal over een groot aantal componenten te kunnen verspreiden, waar een eenvoudige vertakking zou falen. Figuur \ref{fig:bufferCmos} toont de notatie en de implementatie van een buffer. We implementeren een buffer meestal met twee opeenvolgende inverters.
@@ -927,7 +927,7 @@ Een effici\"entere manier van werken is met de zogenoemde ``\termen{standaard ce
 }
 \end{tikzpicture}
 \caption{Ontwerp met standaard cellen.}
-\label{fig:standardcells}
+\figlab{standardcells}
 \end{figure}
 \subsubsection{Gate-array}
 Een techniek die nog minder ontwerp-kosten met zich meebrengt is de \termen{Gate Array}. Hierbij beschouwen we een tweedimensionaal rooster van identieke poorten\footnote{Meestal worden hiervoor NAND-poorten gebruikt. Bijvoorbeeld een 3-input NAND-poort.}, de zogenoemde ``\termen{Sea of Gates}''. In dit rooster heeft elke poort identieke afmetingen, en wordt er ruimte gelaten voor bedrading. Opnieuw bevinden zich alle ingangen bovenaan en de uitgangen onderaan. Enkel de bedrading is vervolgens nog uniek aan het product. Dit heeft niet alleen het voordeel van goedkoop ontwerp, de rooster kunnen in massa geproduceerd worden, om daarna elk tot een specifieke circuit uit te groeien. Enkel de metallisatielaag\footnote{De laag waar de verbindingen gelegd worden.} is dus uniek.
@@ -984,7 +984,7 @@ In sectie \ref{s:synthese} zagen we reeds dat we alle logische functies kunnen m
 }
 \end{tikzpicture}
 \caption{Schematische voorstelling van een Programmable Logic Array (PLA).}
-\label{fig:plaSchema}
+\figlab{plaSchema}
 \end{figure}
 toont een schematische voorstelling van zo'n PLA. De punten tussen twee verbindingen stellen een zekering door. Door zekeringen door te branden kunnen we dus het model aanpassen. Punten waar een kruisje bij staat zijn in dit voorbeeld doorgebrand. Bij een doorgebrande zekering in de AND-matrix, komt er een 1 op de lijn, bij een doorgebrande zekering op de OR-matrix een 0. Er bestaan nog twee varianten op een PLA:
 \begin{itemize}
@@ -1051,7 +1051,7 @@ Een PLA is niet in staat complexe functies te beschrijven zonder de AND- en OR-m
 }
 \end{tikzpicture}%TODO: make more compact + multiplexer input
 \caption{Schematische voorstelling van een Programmable Logic Device (PLD).??}
-\label{fig:pldSchema}
+\figlab{pldSchema}
 \end{figure}
 toont het idee achter deze techniek. We beschouwen nog steeds een matrix, alleen is een groot deel van de invoer eigenlijk de uitvoer van andere geprogrammeerde functies. Zo zijn $x_1$ en $x_2$ de enig invoerlijnen, de andere lijnen zijn het resultaat van geprogrammeerde logica. Op de figuur bemerken we verder nog dat er componenten onder de uitgangen staan. Deze componenten komen later in de cursus aan bod. Het vierkant stelt een 1-bit geheugen voor (zie \ref{s:memory}), meestal een D-Flip Flop. De trapezium een multiplexer (zie \ref{ss:multiplexer}). Dit component laat ons dus toe complexere schakelingen te maken, en tegelijk het aantal zekeringen onder controle te houden.
 \subsubsection{Complex Programmable Logic Device (CPLD)}
@@ -1117,7 +1117,7 @@ toont het idee achter deze techniek. We beschouwen nog steeds een matrix, alleen
 }
 \end{tikzpicture}
 \caption{Schematische voorstelling van een Complex Programmable Logic Device (CPLD).}
-\label{fig:cpldSchema}
+\figlab{cpldSchema}
 \end{figure}
 Een aantal PLD componenten samen op \'e\'en chip samen met de zogenaamde \termen{Glue Logic} om ze samen te laten werken, noemen we een \termen{Complex Programmable Logic Device (CPLD)}. Figuur \ref{fig:cpldSchema} toont dat deze glue eigenlijk neerkomt op een \termen{schakelmatrix} om PLDs te laten samenwerken en \termen{in- en uitvoer modules} om te intrageren met de buitenwereld. Naast de PLDs zelf dient dus ook de schakelmatrix geprogrammeerd te worden. Een ander belangrijk verschil is dat CPLDs niet geprogrammeerd worden met behup van zekeringen. De chip wordt geprogrammeerd door ladingen op transistoren te plaatsen, bijgevolg kunnen de we deze chip enkele keren volledig herpogrammeren.
 \subsubsection{Field Programmable Gate Array (FPGA)}
@@ -1204,7 +1204,7 @@ Een nog meer geavanceerde programmeerbare chip is de \termen{Field Programmable 
 }
 \end{scope}
 \end{tikzpicture}
-\label{fig:fpgaSchemaFull}}
+\figlab{fpgaSchemaFull}}
 \subfigure[Logical Block (LB)] {
 \begin{tikzpicture}
 \filldraw[fill=black!35,draw=black] (-0.5,-0.5) rectangle (3.5,2.5);
@@ -1219,7 +1219,7 @@ Een nog meer geavanceerde programmeerbare chip is de \termen{Field Programmable 
   \draw (-1,1.2+0.4*\y) node[anchor=east,scale=0.7]{$x_\yt$} -- ++(1.1,0);
 }
 \end{tikzpicture}
-\label{fig:fpgaSchemaLB}}
+\figlab{fpgaSchemaLB}}
 \subfigure[Schakelmatrix]{
 \begin{tikzpicture}
 \filldraw[fill=black!35,draw=black] (0,0) rectangle (3,3);
@@ -1242,10 +1242,10 @@ Een nog meer geavanceerde programmeerbare chip is de \termen{Field Programmable 
 \fill (N3.source |- N1.source) circle (0.035 cm);
 \fill (N3.drain |- N6.source) circle (0.035 cm);
 \end{tikzpicture}
-\label{fig:fpgaSchemaSchakelMatrix}
+\figlab{fpgaSchemaSchakelMatrix}
 }
 \caption{Schematische voorstelling van een Field Programmable Gate Array (FPGA).}
-\label{fig:fpgaSchema}
+\figlab{fpgaSchema}
 \end{figure}
 schematiseert dit concept. In tegenstelling tot een CPLD heeft een FPGA andere logische bouwblokken, namelijk \termen{Logical Blocks (LB)}. Dit logische blok staat weergegeven op figuur \ref{fig:fpgaSchemaLB}. Het bestaat typisch uit 4 ingangen ($x_1$, $x_2$, $x_3$ en $x_4$). En twee uitgangen ($y$ en $y_Q$). Inwendig bestaat het uit een 16 bit \termen{Look-Up Table (LUT)} en een \termen{Data Flip-Flop (D-FF)}. Deze Look-Up Table is in feite niets anders dan een klein geheugen. Met de 4 ingangen zijn we in staat om 16 verschillende invoer-waarden te genereren. Voor elk van deze waarden programmeren we een bit als uitvoer. Deze wordt uitgevoerd langs de $y$. De Data Flip-Flop houdt deze bit 1 klokcyclus bij, en zal hem de volgende klokcyclus op $y_Q$ zetten. Het gevolg is dus dat $y_Q$ een klokflank na-ijlt op $y$. Tot slot beschouwen we op figuur \ref{fig:fpgaSchemaSchakelMatrix} de implementatie van een \termen{schakelmatrix}. Hierbij verbinden we 4 lijnen met elkaar. Dit levert dus 6 mogelijke verbindingen. Door het programmeren van de chip, kunnen we de transistoren openen of sluiten, wat resulteert in het al dan niet verbinden van twee verbindingen. De transistoren die men hierbij gebruikt zijn de zogenaamde ``\termen{Pass-transistoren}''.
 \paragraph{Spartan-3}
@@ -1320,7 +1320,7 @@ In sectie \ref{s:logischeWaarden} hebben we reeds kort beschreven dat we een ber
 \filldraw[fill=white,draw=black] (-6,0) node[scale=0.75,fill=white]{0.0 V};
 \end{tikzpicture}
 \caption{Werking van ruismarge bij CMOS en TTL.}
-\label{fig:noiseMargin}
+\figlab{noiseMargin}
 \end{figure}
 \paragraph{Onlogische Spanningen}
 Wanneer een transistor omschakelt, betekent dit niet dat van het ene moment op het andere er een andere spanning op de uitgang komt te staan, Deze overgang is een continue proces. Dit betekent dus dat op een zeker moment aan de uitgang de spanning in het ongedefinieerde gebied komt te liggen. Ideaal zou uiteraard zijn dat bij een continue verandering aan de ingang er toch een discrete verandering aan de uitgang plaatsvind. Dit is echter fysisch onmogelijk. De ontwerper dient dus rekening te houden met dit overgangsverschijnsel. Dit vormt bovendien een groot probleem omdat op dat moment beide transistoren\footnote{PMOS en NMOS.} halfopen zijn, en er dus stroom door de componenten vloeit. Verder weet men ook niet altijd welke spanning er aan de uitgang zal staan. De \termen{Transferfunctie} is immers afhankelijk van zowel het productieproces als omgevingsfactoren zoals warmte,... Figuur \ref{fig:transferFunctionMOS} toont verschillende realistische transferfuncties samen met de ideale transferfunctie.
@@ -1346,7 +1346,7 @@ Wanneer een transistor omschakelt, betekent dit niet dat van het ene moment op h
 \draw[thick,black!80,variable=\x,domain=0:3.5,smooth] plot (\x,{2.7*\sxy/(1.0+exp(4*\x-6))+0.4*\sxy});
 \draw[thick,black!80,variable=\x,domain=0:3.5,smooth] plot (\x,{2.7*\sxy/(1.0+exp(4*\x-5.5))+0.4*\sxy});
 \end{tikzpicture}
-\label{fig:transferFunctionMOS}
+\figlab{transferFunctionMOS}
 }
 \subfigure[Schmitt-Trigger transferfunctie]{
 \begin{tikzpicture}[circuit logic US]
@@ -1372,10 +1372,10 @@ Wanneer een transistor omschakelt, betekent dit niet dat van het ene moment op h
 \draw (-0.0625,-0.125) |- (0.0625,0.125);
 \end{scope}
 \end{tikzpicture}
-\label{fig:transferFunctionSchmittTrigger}
+\figlab{transferFunctionSchmittTrigger}
 }
 \caption{Transferfuncties en Schmitt-Trigger ingangen.}
-\label{fig:transferSchmittTrigger}
+\figlab{transferSchmittTrigger}
 \end{figure}
 \paragraph{Schmitt-trigger ingangen} Dit effect is vooral nadelig voor bijvoorbeeld in- en uitvoer. Deze signalen veranderen doorgaans traag, en bovendien niet strikt stijgend of dalend. Dit heeft tot gevolg dat indien het ingangssignaal van een 0 naar een 1 moet gaan, het meestal verschillende malen van signaal verandert. Een oplossing hiervoor zijn \termen{Schmitt-trigger ingangen}, dit zijn componenten met een \termen{hysteresis}. Dit betekent dat de overgangsspanning bij een overgang van laag naar hoog, hoger is dan de overgangsspanning van hoog naar laag. Deze transferfunctie staat op figuur \ref{fig:transferFunctionSchmittTrigger}. Samen met het symbool voor een Schmitt-Trigger ingang: een NOT poort, met een miniatuur van de inverse transferfunctie.
 \subsection{Dynamisch gedrag}
@@ -1409,7 +1409,7 @@ Wanneer een transistor omschakelt, betekent dit niet dat van het ene moment op h
 \end{scope}
 \end{tikzpicture}
 \caption{Dynamisch gedrag bij twee sequenti\"ele NOT poorten.}
-\label{fig:dynamicBehavior}
+\figlab{dynamicBehavior}
 \end{figure}
 Op simulaties zullen we meestal uitgaan van discreet gedrag. Dit betekent dus dat we veronderstellen dat indien we bijvoorbeeld de spanning aan de ingang van een poort naar een andere spanning brengen, de uitgang na enige vertraging van de oude naar de nieuwe spanning omschakelt. Dit zullen we illustreren met een voorbeeld zoals op figuur \ref{fig:dynamicBehavior} waar we twee NOT-poorten na elkaar plaatsen. We kunnen het gedrag van dit circuit nabootsen bij overgangen, door een lijn als een capaciteit te zien, verder zien we een gesloten transistor als een weerstand, open transistoren zijn open lijnen en worden dus niet beschouwd. We zullen eerst uit de beschreven modellen de spanning in functie van de tijd plaatsen.
 \paragraph{Hoog naar laag}
@@ -1497,7 +1497,7 @@ Al deze effecten zorgen ervoor dat een CMOS-implementatie betere karakteristieke
 \draw[<->] (IMB |- 0,\ybs) to node[midway,below]{$t_{pLH}$} (OMB |- 0,\ybs);
 \end{tikzpicture}
 \caption{Het dynamisch gedrag van een NOT-poort.}
-\label{fig:dynamicBehaviorNotGate}
+\figlab{dynamicBehaviorNotGate}
 \end{figure}
 We hebben het reeds uitvoerig gehad over het dynamisch karakter van een elektronische schakeling. Naast het feit dat het enige tijd duurt alvorens een spanning die op een draad wordt aangelegd daadwerkelijk dit spanningsniveau bereikt, heeft ook een poort een dynamisch karakter. Een interessante eigenschap is dat de stijg- en daaltijd invloed hebben op de vertraging van de poort. We zullen deze drie grootheden nu formaliseren:
 \begin{itemize}
@@ -1555,7 +1555,7 @@ Een oplettend lezer zal zich misschien de vraag gesteld hebben, waarom we een bu
 \coordinate (F2) at (1,0);
 \draw (F2) -- ++(1,0) node[anchor=west,scale=0.75]{$f$};
 \end{tikzpicture}
-\label{fig:goodBufferCmos}
+\figlab{goodBufferCmos}
 }
 \subfigure[Fout buffer]{\begin{tikzpicture}[circuit logic US]
 \coordinate (F0) at (-3,0);
@@ -1574,10 +1574,10 @@ Een oplettend lezer zal zich misschien de vraag gesteld hebben, waarom we een bu
 \draw[black!80] (-0.625*0.607-1,0.75-0.625*0.607) node[scale=0.75,anchor=north east]{$V_T$};
 \draw (F1) -- (O) node[anchor=west,scale=0.75]{$f$};
 \end{tikzpicture}
-\label{fig:badBufferCmos}
+\figlab{badBufferCmos}
 }
 \caption{Buffer ge\"implementeerd met omgekeerde transistoren: NMOS is een slechte pull-up.??}%TODO: betere naam zoeken.
-\label{fig:badNmosPmos}
+\figlab{badNmosPmos}
 \end{figure}
 \subsection{Fan-in en fan-out}
 Enkele belangrijke eigenschappen van een poort zijn de \termen{fan-in} en \termen{fan-out}. De fan-in, is het aantal ingangen die de poort in kwestie heeft. Deze eigenschap is eigen aan het type poort\footnote{Bijvoorbeeld een 3-nand heeft een fan-in van 3.}. De fan-out is het aantal ingangen van andere poorten die de poort kan aansturen, het aantal draden die uit de poort in kwestie komt zeg maar. Deze eigenschappen bepalen in grote mate de vertraging van een circuit. Indien we immers een groot aantal ingangen hebben, kan het een tijdje duren vooraleer de stroom doorheen de transistoren van de andere ingangen stroom, als \'e\'en van de transistoren omschakelt. Verder zullen we ook de spanning moeten opdrijven bij een groot aantal transistoren die we in serie schakelen. Elke transistor heeft immers indien gesloten nog steeds een kleine weerstand. Indien de stroom door een serie transistoren moet vloeien, betekent dit dat de uitgangsspanning van de poort teveel gereduceerd zou zijn. Een hogere spanning leidt weer tot hogere vermogens wat we juist willen tegengaan. Bijgevolg willen we de fan-in zo laag mogelijk houden. Daarom komen in de realiteit poorten met een groot\footnote{Met groot bedoelen we meer dan 5 ingangen.} aantal ingangen nooit voor, indien men een poort met een groot aantal ingangen wil realiseren zal men deze meestal met een sequentie van eenvoudige poorten realiseren. Ook de fan-out moeten we onder controle houden. Elke poort heeft immers maar \'e\'en uitgang. Door deze uitgang moet alle stroom naar de ingangen van andere poorten stromen. Vermits de stroom over een draad beperkt is, kunnen we spreken over een \termen{maximale stroomsterkte $I_{\mbox{\small{Omax}}}$}. Deze stroomsterkte bepaalt dan weer hoe snel we de parasitaire capaciteit kunnen op- en ontladen:
@@ -1600,7 +1600,7 @@ Een uitbreiding van een buffer is een \termen{Tri-state buffer} ofwel \termen{3-
 \draw (TS.x) -- ++(-0.5,0) node[anchor=east]{input $x$};
 \draw (TS.z) -- ++(0.5,0) node[anchor=west]{output $f$};
 \end{tikzpicture}
-\label{fig:triStateSymbol}}
+\figlab{triStateSymbol}}
 \subfigure[Tabel]{
 \begin{tikzpicture}
 \node (A) at (0,0) {\begin{tabular}{cc|c}
@@ -1611,7 +1611,7 @@ $1$&$0$&$0$\\
 $1$&$1$&$1$
 \end{tabular}};
 \end{tikzpicture}
-\label{fig:triStateTruth}}
+\figlab{triStateTruth}}
 \subfigure[Implementatie]{
 \begin{tikzpicture}[circuit logic US]
 \node[transgate] (TG) at (0,0) {};
@@ -1627,7 +1627,7 @@ $1$&$1$&$1$
 \pdot{-2.6,1};
 \draw (-2.6,1) |- (0,-1) -- (TG.c);
 \end{tikzpicture}
-\label{fig:triStateImplementation}}
+\figlab{triStateImplementation}}
 \subfigure[Transmission Gate]{
 \begin{tikzpicture}
 \node[transgate] (TG) at (0,0) {};
@@ -1650,7 +1650,7 @@ $1$&$1$&$1$
 \pdot{X};\pdot{F};
 \end{scope}
 \end{tikzpicture}
-\label{fig:triStateTransmission}}
+\figlab{triStateTransmission}}
 \subfigure[Bus]{
 \begin{tikzpicture}[circuit logic US]
 \node[tris] (T1) at (-0.75,0.5) {};
@@ -1669,7 +1669,7 @@ $1$&$1$&$1$
 \draw (B3.output) -- ++(0.5,0) node[anchor=west]{$f_3$};
 \pdot{0,0};\pdot{0,-0.5};\pdot{0,0.5};
 \end{tikzpicture}
-\label{fig:triStateBus}}
+\figlab{triStateBus}}
 \caption{Tri-state buffer.}
 \end{figure}
 De transmission gate zelf bestaat zoals te zien op figuur \ref{fig:triStateTransmission} uit twee transistoren. Indien $s=0$ zijn beide schakelaars open, en staat er dus geen signaal op uitgang $f$, in dat geval is de uitgang dus hoog impedant. Bij $s=1$ zijn beide transistoren gesloten, en wordt het signaal die aangelegd wordt op $x$ verder gepropageerd. De schakeling op \ref{fig:triStateImplementation} bevat extra componenten om het binnenkomende signaal opnieuw voldoende sterk te maken, dezelfde argumenten als met fan-in en fan-out gelden hier immers.
