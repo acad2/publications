@@ -8,7 +8,7 @@
 \node[subcomp,minimum width=1.1 cm,minimum height=1.55 cm,anchor=south] (LIFO) at ($(LFD)+(0,-0.25)$) {LIFO};
 \draw[thick,->] (M.output) -- (SR.west);
 \draw[thick,->] (LIFO.east |- M.data1) -- (M.data1);
-\node[subcomp,minimum height=4.25 cm] (NSOL) at (6.75,0) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\&Output\\Logic\\FSM\end{center}\end{varwidth}};
+\node[subcomp,minimum height=4.25 cm] (NSOL) at (6.75,0) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\\&Output\\Logic\\FSM\end{center}\end{varwidth}};
 \coordinate (TL) at (M.north |- NSL.north);\coordinate (TL) at ($(TL)+(-0.4,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
 \draw[thick,->] (INC.east) -- (INC.east -| TL) |- (M.data3);\pdot{M.data3 -| TL};\draw[thick,->] (M.data3 -| TL) |- (M.data2 -| LIFO.east);
 \coordinate (CSP) at ($(IR.east)+(1,0)$);
