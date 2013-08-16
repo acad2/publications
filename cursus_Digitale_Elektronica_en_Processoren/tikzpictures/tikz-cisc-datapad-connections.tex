@@ -1,0 +1,32 @@
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=1 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp] (RF) at (-2,1) {\begin{varwidth}{1.5 cm}\begin{center}RF\\$8\times 16$\end{center}\end{varwidth}};\coordinate (RF-I0) at (RF.north); \coordinate (RF-O0) at ($0.333*(RF.south east)+0.667*(RF.south west)$); \coordinate (RF-O1) at ($0.667*(RF.south east)+0.333*(RF.south west)$);
+\node[subcomp] (AR) at (0,1) {AR};\coordinate (AR-I0) at (AR.north);\coordinate (AR-O0) at (AR.south);
+\node[subcomp] (St) at (2,1) {Status};\coordinate (St-I0) at (St.north);\coordinate (St-O0) at (St.south);
+\node[subcomp] (Sh) at (-2,-1) {Shift};\coordinate (Sh-I0) at (Sh.north);\coordinate (Sh-O0) at (Sh.south);
+\node[subcomp] (AL) at (0,-1) {ALU};\coordinate (AL-I0) at ($0.333*(AL.north east)+0.667*(AL.north west)$); \coordinate (AL-I1) at ($0.667*(AL.north east)+0.333*(AL.north west)$); \coordinate (AL-O0) at (AL.south);
+\node[subcomp] (Co) at (2,-1) {Comp};\coordinate (Co-I0) at ($0.333*(Co.north east)+0.667*(Co.north west)$); \coordinate (Co-I1) at ($0.667*(Co.north east)+0.667*(Co.north west)$); \coordinate (Co-O0) at (Co.south);
+\foreach \c\n in {RF/0,AR/0,St/0,Sh/0,AL/0,AL/1,Co/0,Co/1} {
+  \draw[thick] (\c-I\n) -- ++(0,0.25);
+}
+\foreach \c\n in {RF/0,RF/1,AR/0,St/0,Sh/0,AL/0,Co/0} {
+  \draw[thick] (\c-O\n) -- ++(0,-0.25);
+}
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20,inner sep=0.75cm,fit=(RF) (AR) (St) (Sh) (AL) (Co)] (CT) {};
+\end{pgfonlayer}
+\coordinate (AB) at ($(CT.south)+(0,-0.25)$);
+\coordinate (DB) at ($(AB)+(0,-0.25)$);
+\coordinate (MT) at ($(DB)+(0,-0.25)$);
+\draw[thick] (AB -| CT.east) -- (AB -| CT.west) node[anchor=east,scale=0.8]{Adresbus};
+\draw[thick] (DB -| CT.east) -- (DB -| CT.west) node[anchor=east,scale=0.8]{Databus};
+\node[subcomp,anchor=north] (Mem) at (0,0 |- MT) {\begin{varwidth}{1.5 cm}Mem\\\\Data\\\&\\Prog.\end{varwidth}};
+\coordinate (MemA) at ($(Mem |- AB)+(-1,0)$);
+\draw[thick] (MemA) |- (Mem);\pdot{MemA}
+\coordinate (MemB) at ($(Mem |- DB)+(2,0)$);
+\coordinate (MemC) at ($(Mem |- DB)+(3,0)$);
+\coordinate (TCol) at ($0.5*(Mem)+0.5*(DB)$);
+\node[tris,rotate=-90,fill=white,thick] (TDA) at (MemB |- TCol) {};
+\node[tris,rotate=90,fill=white,thick] (TDB) at (MemC |- TCol) {};
+\draw[thick](Mem -| MemB) -- (TDA.z);\draw[thick](TDA.x) -- (MemB);\pdot{Mem -| MemB}\pdot{MemB}
+\draw[thick](Mem) -| (TDB.x);\draw[thick] (TDB.z) -- (MemC);\pdot{MemC}
+\end{tikzpicture}
