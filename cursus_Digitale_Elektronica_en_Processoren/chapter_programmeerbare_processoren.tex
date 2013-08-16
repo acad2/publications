@@ -435,5 +435,9 @@ Het is mogelijk dat er conflicten ontstaan tussen enerzijds het ASM-schema en an
 \end{itemize}
 \paragraph{}
 Bij het omzetten van het ASM-schema naar de verbindingen van het datapad is het belangrijk een onderscheid te maken tussen bewerkingen die onder de verantwoordelijkheid van de controller vallen en deze van het datapad. Zo beschrijft toestand $S_0$ het ophalen van een instructie en deze vervolgens in het instructieregister plaatsen. Zowel de programmateller en het instructieregister vallen echter onder de verantwoordelijkheid van de controller. Bijgevolg dienen we voor deze bewerkingen geen verbindingen te introduceren. Ook het interpreteren van de instructie is de verantwoordelijkheid van het datapad.
+\paragraph{}
 \importtikzfigure{cisc-datapad-basic}{De basis datapad-ontwerp van de CISC-processor.}
+Bij het ontwerp beginnen we met een datapad waar we enkel de componenten tekenen. Verder worden ook externe componenten (behalve de controller) die interagerend met het datapad getekend. In dit concrete geval is dit het centrale geheugen samen met de adres- en databus. We beschrijven ook de tri-state buffers van de databus van en naar het geheugen. Deze aspecten werden ook al beschreven bij het ontwerp van de controller. Dit resulteert in de afbeelding op \figref{cisc-datapad-basic}.
+\subsubsection{De 8086 Microprocessor}
+\subsubsection{De 8051 Microcontroller}
 \subsection{Reduced Instruction Set Computer (RISC)}
