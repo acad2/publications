@@ -13,9 +13,9 @@
 \coordinate (AB) at ($(CT.south)+(0,-0.25)$);
 \coordinate (DB) at ($(AB)+(0,-0.25)$);
 \coordinate (MT) at ($(DB)+(0,-0.25)$);
-\draw[thick] (AB -| CT.east) -- (AB -| CT.west);
-\draw[thick] (DB -| CT.east) -- (DB -| CT.west);
-\node[subcomp,anchor=north] (Mem) at (2,0 |- MT) {Mem\\ \\Data\\\&\\Prog.};
+\draw[thick] (AB -| CT.east) -- (AB -| CT.west) node[anchor=east,scale=0.8]{Adresbus};
+\draw[thick] (DB -| CT.east) -- (DB -| CT.west) node[anchor=east,scale=0.8]{Databus};
+\node[subcomp,anchor=north] (Mem) at (2,0 |- MT) {\begin{varwidth}{1.5 cm}Mem\\\\Data\\\&\\Prog.\end{varwidth}};
 \coordinate (MemIRM) at ($(Mem.north)+(0,0.25)$);
 \coordinate (NSLA) at ($0.8*(NSOL.west)+0.2*(NSOL.north west)$);
 \coordinate (NSLB) at ($0.6*(NSOL.west)+0.4*(NSOL.north west)$);

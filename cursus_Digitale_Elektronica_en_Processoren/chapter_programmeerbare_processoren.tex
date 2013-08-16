@@ -433,4 +433,7 @@ Het is mogelijk dat er conflicten ontstaan tussen enerzijds het ASM-schema en an
  \item De allocatie van de componenten: in dat geval voorzien we extra componenten zoals een extra ALU of registerbank. We dienen vervolgens wel opnieuw een ASM-schema op te stellen en mogelijk ook een nieuwe controller ontwerpen.
  \item Het ASM-schema: we kunnen extra toestanden introduceren zodat we de componenten op het datapad meermaals kunnen gebruiken. Hiervoor dienen we het ASM-schema en mogelijkerwijs de controller aan te passen. Dit leidt uiteraard tot meer klokcycli voor (sommige) instructies.
 \end{itemize}
+\paragraph{}
+Bij het omzetten van het ASM-schema naar de verbindingen van het datapad is het belangrijk een onderscheid te maken tussen bewerkingen die onder de verantwoordelijkheid van de controller vallen en deze van het datapad. Zo beschrijft toestand $S_0$ het ophalen van een instructie en deze vervolgens in het instructieregister plaatsen. Zowel de programmateller en het instructieregister vallen echter onder de verantwoordelijkheid van de controller. Bijgevolg dienen we voor deze bewerkingen geen verbindingen te introduceren. Ook het interpreteren van de instructie is de verantwoordelijkheid van het datapad.
+\importtikzfigure{cisc-datapad-basic}{De basis datapad-ontwerp van de CISC-processor.}
 \subsection{Reduced Instruction Set Computer (RISC)}

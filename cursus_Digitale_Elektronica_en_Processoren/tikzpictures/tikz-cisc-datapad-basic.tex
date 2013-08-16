@@ -1,0 +1,18 @@
+\begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
+\node[subcomp,fill=gray!20,inner sep=0.75cm] (CT) {};
+\coordinate (AB) at ($(CT.south)+(0,-0.25)$);
+\coordinate (DB) at ($(AB)+(0,-0.25)$);
+\coordinate (MT) at ($(DB)+(0,-0.25)$);
+\draw[thick] (AB -| CT.east) -- (AB -| CT.west) node[anchor=east,scale=0.8]{Adresbus};
+\draw[thick] (DB -| CT.east) -- (DB -| CT.west) node[anchor=east,scale=0.8]{Databus};
+\node[subcomp,anchor=north] (Mem) at (2,0 |- MT) {\begin{varwidth}{1.5 cm}Mem\\\\Data\\\&\\Prog.\end{varwidth}};
+\coordinate (MemA) at ($(Mem |- AB)+(-1,0)$);
+\draw[thick] (MemA) |- (Mem);\pdot{MemA}
+\coordinate (MemB) at ($(Mem |- DB)+(2,0)$);
+\coordinate (MemC) at ($(Mem |- DB)+(3,0)$);
+\coordinate (TCol) at ($0.5*(Mem)+0.5*(DB)$);
+\node[tris,rotate=-90,fill=white,thick] (TDA) at (MemB |- TCol) {};
+\node[tris,rotate=90,fill=white,thick] (TDB) at (MemC |- TCol) {};
+\draw[thick](Mem -| MemB) -- (TDA.z);\draw[thick](TDA.x) -- (MemB);\pdot{Mem -| MemB}\pdot{MemB}
+\draw[thick](Mem) -| (TDB.x);\draw[thick] (TDB.z) -- (MemC);\pdot{MemC}
+\end{tikzpicture}
