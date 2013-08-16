@@ -426,10 +426,11 @@ Wanneer we een subroutine uitvoeren doet een deel van het geheugen zelf dienst a
 Tot slot dienen we op te merken dat het geheugen in het van de ontwikkelde processor geen onderdeel is van de controller zelf: ook het datapad heeft toegang tot hetzelfde geheugen om bijvoorbeeld programmaconstanten uit te lezen. Een architectuur waar men een centraal geheugen beschouwd die zowel gegevens als programma's beschouwd noemen we Von Neumann-architectuur, in het geval beide geheugen gescheiden zijn spreken we over Hardvard-architectuur. We verplaatsen dus het geheugen uit de controller. Dit doen we door twee bussen te beschouwen: een \termen{adresbus} is een reeks verbindingen waarmee men de adresingangen van het geheugen kan aansturen en met behulp van de \termen{databus} leest men gegevens in of schrijft men deze weg in het geheugen. De databus is bijgevolg een bus die in twee richtingen werkt. We dienen bijgevolg tri-state buffers te voorzien voor zowel lees- als schrijfoperaties. Ook op de adresbus brengen we tri-state buffers aan: het datapad moet immers ook adressen kunnen aanleggen. De uiteindelijke controller beschrijven we in \figref{cisc-controller-memex}.
 \importtikzfigure{cisc-controller-memex}{Controller met extern geheugen (Von Neumann-architectuur).}
 \subsubsection{Ontwerp Datapad}
+De laatste stap is het ontwerpen van een datapad. We hebben reeds enkele stappen geleden de vereiste componenten voor het datapad vastgelegd. We dienen echter nog verbindingen te introduceren om de verschillende instructies te kunnen uitvoeren. Deze verbindingen omvatten ook tri-state buffers aan de ingangen van een bus en multiplexers aan de uitgangen. De vereiste verbindingen kunnen we uiteraard afleiden uit het ASM-schema.
+\paragraph{}
+Het is mogelijk dat er conflicten ontstaan tussen enerzijds het ASM-schema en anderzijds de componenten en verbindingen op het datapad. Dit kunnen we oplossen door terug te keren op \'e\'en van de volgende stappen:
+\begin{itemize}
+ \item De allocatie van de componenten: in dat geval voorzien we extra componenten zoals een extra ALU of registerbank. We dienen vervolgens wel opnieuw een ASM-schema op te stellen en mogelijk ook een nieuwe controller ontwerpen.
+ \item Het ASM-schema: we kunnen extra toestanden introduceren zodat we de componenten op het datapad meermaals kunnen gebruiken. Hiervoor dienen we het ASM-schema en mogelijkerwijs de controller aan te passen. Dit leidt uiteraard tot meer klokcycli voor (sommige) instructies.
+\end{itemize}
 \subsection{Reduced Instruction Set Computer (RISC)}
-\subsubsection{Ontwerp Instructieset}
-\subsubsection{Instructieset-stroomschema}
-\subsubsection{Allocatie datapadcomponenten}
-\subsubsection{ASM-schema}
-\subsubsection{Ontwerp Controller}
-\subsubsection{Ontwerp Datapad}

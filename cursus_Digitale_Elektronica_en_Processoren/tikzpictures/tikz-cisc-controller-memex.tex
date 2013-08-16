@@ -1,13 +1,21 @@
 \begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
-\node[subcomp] (SR) at (0,0) {PC};
-\node[subcomp] (Mem) at (2,0) {Mem};
+\node[subcomp] (SR) at (1,0) {PC};
 \node[subcomp] (IR) at (4,0) {IR};
-\node[mux2to1,fill=white,rotate=90,thick] (M) at (-1.35,0) {};
-\node[subcomp,minimum width=0.75 cm,minimum height=0.25] (INC) at ($(M.data1)+(-1,0)$) {$+1$};
+\node[mux2to1,fill=white,rotate=90,thick] (M) at (-0.35,0) {};
+\node[subcomp,minimum width=0.75 cm,minimum height=0.25] (INC) at ($(M.data0)+(-1.75,0)$) {$+1$};
 \draw[thick,->] (M.output) -- (SR.west);
 \node[subcomp,minimum height=4.25 cm] (NSOL) at (6,0) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\\&\\Output\\Logic\\FSM\end{center}\end{varwidth}};
 \coordinate (TL) at (M.north |- NSOL.north);\coordinate (TL) at ($(TL)+(-0.4,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
-\draw[thick,->] (INC.east) -- (INC.east -| TL) |- (M.data1);
+\draw[thick,->] (INC.east) -- (M.data0);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (NSOL) (M) (INC),inner sep=0.75cm] (CT) {};
+\end{pgfonlayer}
+\coordinate (AB) at ($(CT.south)+(0,-0.25)$);
+\coordinate (DB) at ($(AB)+(0,-0.25)$);
+\coordinate (MT) at ($(DB)+(0,-0.25)$);
+\draw[thick] (AB -| CT.east) -- (AB -| CT.west);
+\draw[thick] (DB -| CT.east) -- (DB -| CT.west);
+\node[subcomp,anchor=north] (Mem) at (2,0 |- MT) {Mem\\ \\Data\\\&\\Prog.};
 \coordinate (MemIRM) at ($(Mem.north)+(0,0.25)$);
 \coordinate (NSLA) at ($0.8*(NSOL.west)+0.2*(NSOL.north west)$);
 \coordinate (NSLB) at ($0.6*(NSOL.west)+0.4*(NSOL.north west)$);
@@ -15,20 +23,35 @@
 \coordinate (NSLD) at ($0.2*(NSOL.west)+0.8*(NSOL.north west)$);
 
 \coordinate (OLA) at ($0.75*(NSOL.south west)+0.25*(NSOL.west)$);
-\coordinate (OLB) at ($(Mem.south)+(0,-0.25)$);
+\coordinate (OLB) at ($(SR.south)+(0,-0.25)$);
 \coordinate (OLC) at ($0.25*(NSOL.south west)+0.75*(NSOL.west)$);
 
-\coordinate (MemIR) at ($0.5*(Mem)+0.5*(IR)$);
-\pdot{MemIR}
+\coordinate (TSL) at ($(SR)+(1.5,-2.25)$);
+\coordinate (INCMux) at ($0.5*(INC)+0.5*(M)-(0.25,0)$);
+\coordinate (TIL) at (TSL -| INCMux);
 
-\draw[thick,->] (SR) -- (Mem);
-\draw[thick,->] (Mem) -- (IR);
+\node[tris,rotate=-90,fill=white,thick] (TS) at (TSL) {};
+\node[tris,rotate=-90,fill=white,thick] (TI) at (TIL) {};
+\draw[thick] (SR) -| (TS.x);
+\draw[thick] (TI.x |- INC.east) -| (TI.x);
+\draw[thick] (TS.z) -- (TS.z |- AB);
+\draw[thick] (TI.z) -- (TI.z |- DB);
+\pdot{TS.z |- AB}\pdot{TI.x |- INC.east}\pdot{TI.z |- DB}
+\coordinate (MemA) at ($(Mem |- AB)+(-1,0)$);
+\draw[thick] (MemA) |- (Mem);\pdot{MemA}
+\coordinate (MemB) at ($(Mem |- DB)+(2,0)$);
+\coordinate (MemC) at ($(Mem |- DB)+(3,0)$);
+\coordinate (TCol) at ($0.5*(Mem)+0.5*(DB)$);
+\node[tris,rotate=-90,fill=white,thick] (TDA) at (MemB |- TCol) {};
+\node[tris,rotate=90,fill=white,thick] (TDB) at (MemC |- TCol) {};
+\draw[thick](Mem -| MemB) -- (TDA.z);\draw[thick](TDA.x) -- (MemB);\pdot{Mem -| MemB}\pdot{MemB}
+\draw[thick](Mem) -| (TDB.x);\draw[thick] (TDB.z) -- (MemC);\pdot{MemC}
+
 \draw[thick,->] (IR) -- (NSOL.west);
-\draw[thick,->] (MemIR) |- (MemIRM -| TL) |- (M.data0);
+\draw[thick,->] (DB -| TL) |- (M.data1);\pdot{DB -| TL};
+\coordinate (IRD) at ($(IR |- DB)+(-1,0)$);
+\draw[thick,<-] (IR) -| (IRD);\pdot{IRD};
 \draw[thick,->] ($0.5*(NSOL.east)+0.5*(NSOL.north east)$) -- ++(0.25,0) |- (TLA -| M.selout0) -- (M.selout0);
-\begin{pgfonlayer}{background}
-\node[subcomp,fill=gray!20, fit=(SR) (NSOL) (M) (INC),inner sep=0.75cm] (CT) {};
-\end{pgfonlayer}
 \coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south]{CS};
 \coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
  node[anchor=south]{SS};

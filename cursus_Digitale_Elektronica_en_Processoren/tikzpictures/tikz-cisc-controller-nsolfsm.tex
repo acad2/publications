@@ -19,14 +19,14 @@
 \coordinate (OLA) at ($0.75*(NSOL.south west)+0.25*(NSOL.west)$);
 \coordinate (OLB) at ($0.5*(NSOL.south west)+0.5*(NSOL.west)$);
 \coordinate (OLC) at ($0.25*(NSOL.south west)+0.75*(NSOL.west)$);
+\begin{pgfonlayer}{background}
+\node[subcomp,fill=gray!20, fit=(SR) (NSOL) (M) (INC),inner sep=1cm] (CT) {};
+\end{pgfonlayer}
 \draw[thick,->] (SR) -- (Mem);
 \draw[thick,->] (Mem) -- (IR);
 \draw[thick,->] (IR) -- (NSOL.west);
 \draw[thick,->] (NSOL.east) -- ++(0.5,0) |- (TL) |- (M.data0);
 \draw[thick,->] ($0.5*(NSOL.east)+0.5*(NSOL.north east)$) -- ++(0.25,0) |- (TLA -| M.selout0) -- (M.selout0);
-\begin{pgfonlayer}{background}
-\node[subcomp,fill=gray!20, fit=(SR) (NSOL) (M) (INC),inner sep=1cm] (CT) {};
-\end{pgfonlayer}
 \coordinate (CS) at ($0.333*(CT.north west)+0.667*(CT.north east)$);\draw[->,thick] (CS) -- ++(0,0.5) node[anchor=south]{CS};
 \coordinate (SS) at ($0.667*(CT.north west)+0.333*(CT.north east)$);\draw[<-,thick] (SS) -- ++(0,0.5)
  node[anchor=south]{SS};
