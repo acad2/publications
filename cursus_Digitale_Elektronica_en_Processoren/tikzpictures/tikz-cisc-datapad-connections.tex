@@ -1,11 +1,11 @@
 \begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=1 cm,draw=black,fill=white,thick,rectangle}]
-\def\yr{1};
+\def\yr{0.75};
 \def\yf{-2};
 \def\xb{3.25};
 \def\dty{0.5};
 \coordinate (CB) at (3,\yf-0.75);
-\coordinate (R1) at (0,2);
-\coordinate (RS) at (0,1.75);
+\coordinate (R1) at (0,1.75);
+\coordinate (RS) at (0,1.5);
 \coordinate (OT) at (0,\dty-1);
 \coordinate (O1) at (0,-1);
 \coordinate (O2) at (0,-1.25);
@@ -20,11 +20,6 @@
 \node[subcomp] (AL) at (0,\yf) {ALU};\coordinate (AL-I0) at ($0.333*(AL.north east)+0.667*(AL.north west)$); \coordinate (AL-I1) at ($0.667*(AL.north east)+0.333*(AL.north west)$); \coordinate (AL-O0) at (AL.south);
 \node[subcomp] (Co) at (2,\yf) {Comp};\coordinate (Co-I0) at ($0.333*(Co.north east)+0.667*(Co.north west)$); \coordinate (Co-I1) at ($0.667*(Co.north east)+0.333*(Co.north west)$); \coordinate (Co-O0) at (Co.south);
 
-\draw[thick] (RF.west |- O1) -- (St.east |- O1);
-\draw[thick] (RF.west |- O2) -- (St.east |- O2);
-
-\draw[thick] (RF.west |- R2) -- (\xb,0 |- R2) -- (\xb,0 |- R1) -- (RF.west |- R1);
-
 
 
 \foreach \c/\n/\b in {RF/0/R1,AR/0/R1,Sh/0/O1,AL/0/O1,AL/1/O2,Co/0/O1,Co/1/O2} {
@@ -33,16 +28,28 @@
   \draw[thick] (\c-I\n) -- (DOT);
 }
 
+\coordinate (X3) at ($(RF-O0)+(-1.5,-0.25)$);
+\coordinate (X4) at ($(X3)+(-0.5,0)$);
+\draw[thick] (X4) -- (X4 -| RF-O0);
+\pdot{X4 -| RF-O0}
+
+\draw[thick] (RF.west |- R2) -- (\xb,0 |- R2) -- (\xb,0 |- R1) -- (RF.west |- R1);
+
 \begin{pgfonlayer}{background}
-\node[subcomp,fill=gray!20,inner sep=0.75cm,fit=(RF) (AR) (St) (Sh) (AL) (Co) (O1) (O2) (O3) (R1) (R2)] (CT) {};
+\node[subcomp,fill=gray!20,inner sep=0.75cm,fit=(RF) (AR) (St) (Sh) (AL) (Co) (O1) (O2) (O3) (R1) (R2) (X3) (X4)] (CT) {};
 \end{pgfonlayer}
 
 \coordinate (AB) at ($(CT.south)+(0,-0.25)$);
 \coordinate (DB) at ($(AB)+(0,-0.25)$);
 \coordinate (MT) at ($(DB)+(0,-0.25)$);
+\coordinate (X5) at ($(X3 |- DB)+(0.5,0)$);
+
+\draw[thick] (X5 |- O1) -- (St.east |- O1);
+\draw[thick] (X5 |- O2) -- (St.east |- O2);
 
 \coordinate (X0) at (-1.5,0 |- DB);
 \coordinate (X1) at (-0.5,0 |- R2);
+\coordinate (X2) at (1,0);
 
 \draw[thick] (AB -| CT.east) -- (AB -| CT.west) node[anchor=east,scale=0.8]{Adresbus};
 \draw[thick] (DB -| CT.east) -- (DB -| CT.west) node[anchor=east,scale=0.8]{Databus};
@@ -52,13 +59,14 @@
 \coordinate (MemB) at ($(Mem |- DB)+(2,0)$);
 \coordinate (MemC) at ($(Mem |- DB)+(3,0)$);
 \coordinate (TCol) at ($0.5*(Mem)+0.5*(DB)$);
-\node[tris,rotate=-90,fill=white,thick] (TDA) at (MemB |- TCol) {};
-\node[tris,rotate=90,fill=white,thick] (TDB) at (MemC |- TCol) {};
+\node[tris,rotate=-90,scale=0.7,fill=white,thick] (TDA) at (MemB |- TCol) {};
+\node[tris,rotate=90,scale=0.7,fill=white,thick] (TDB) at (MemC |- TCol) {};
 \draw[thick](Mem -| MemB) -- (TDA.z);\draw[thick](TDA.x) -- (MemB);\pdot{Mem -| MemB}\pdot{MemB}
 \draw[thick](Mem) -| (TDB.x);\draw[thick] (TDB.z) -- (MemC);\pdot{MemC}
 \draw (Co-O0) |- (CB) |- (St-I0 |- RS) -- (St-I0);
+\draw[->] (St-O0) -- ++(0,-0.25);
 
-\foreach \i/\c/\n/\db in {2/RF-O0/OT/O1,3/RF-O1/OT/O2,4/Sh-O0/RT/R2,5/AL-O0/RT/R2,7/X1/KT/AB} {
+\foreach \i/\c/\n/\db in {2/RF-O0/OT/O1,3/RF-O1/OT/O2,4/Sh-O0/RT/R2,5/AL-O0/RT/R2,7/X1/KT/AB,8/X2/RT/AB,9/X3/RT/AB,10/X4/RT/DB} {
   \node[tris,rotate=-90,scale=0.7,fill=white,thick] (T\i) at (\c |- \n) {};
   \draw[thick] (\c) -- (T\i.x);
   \pdot{T\i.z |- \db}
@@ -71,5 +79,18 @@
   \pdot{T\i.z |- \db}
   \draw[thick] (T\i.z) -- (T\i.z |- \db);
 }
+
+\foreach \i/\c/\n/\db in {11/X5/KT/O2} {
+  \node[tris,rotate=90,scale=0.7,fill=white,thick] (T\i) at (\c |- \n) {};
+  \draw[thick] (\c) -- (T\i.x);
+  \draw[thick] (T\i.z) -- (T\i.z |- \db);
+}
+
+\draw[thick] (AR.south) |- (X2);
+
+\pdot{X0}
+\pdot{X1}
+\pdot{X3}
+\pdot{X5}
 
 \end{tikzpicture}
