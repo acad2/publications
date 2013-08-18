@@ -1,15 +1,21 @@
-\begin{tikzpicture}[reg/.style={draw,rectangle,fill=gray!20!white,scale=0.8,minimum width=1.5 cm, text width=1.5 cm, minimum height=0.75}]
+\begin{tikzpicture}[reg/.style={draw,rectangle,fill=gray!20!white,scale=0.8,minimum width=1.5 cm, text width=1.5 cm, minimum height=0.75 cm}]
 
-\foreach \i/\x in {0/0,1/2,2/4,3/6,4/8,5/10,6/12} {
+\foreach \i/\x in {0/0,1/2,2/4,3/6,4/8,5/10,B0/12,6/14,B1/15} {
   \coordinate (X\i) at (0.875*\x,0);
 }
-\foreach \i/\y in {0/0,1/2,2/4,3/6,4/8,5/10,6/12,7/14,8/16} {
+\foreach \i/\y in {0/0,B0/1,1/2,B1/4,2/6,3/8,4/10,5/12,6/14,B2/14,7/16,8/18} {
   \coordinate (Y\i) at (0,-0.875*\y);
 }
 
-\foreach \i/\y/\x/\t in {PD0/0/3/Port 0 Drivers,PD2/0/4/Port 2 Drivers,RAMA/1/0/RAM Address Register,RAM/1/2/RAM,P0L/1/3/Port 0 Latch,P2L/1/4/Port 2 Latch,EPROM/1/5/{EPROM/ ROM},ACC/2/1/ACC,SP/2/5/Stack Pointer,PAR/2/6/Program Address Register,BREG/3/0/B Register,TMP2/3/1/TMP2,TMP1/3/3/TMP1,BFF/3/6/Buffer,ISP/4/4/{Interrupt, Serial Port, and Timer Blocks},PCI/4/6/PC Increment,PSW/5/2/PSW,PC/5/6/Program Counter,DPTR/6/6/DPTR,P1L/7/3/Port 1 Latch,P3L/7/5/Port 3 Latch,OSC/8/0/OSC.,PD1/8/3/Port 1 Drivers,PD3/8/5/Port 3 Drivers} {
+\foreach \i/\y/\x/\t in {PD0/0/3/Port 0 Drivers,PD2/0/4/Port 2 Drivers,RAMA/1/0/RAM Address Register,RAM/1/2/RAM,P0L/1/3/Port 0 Latch,P2L/1/4/Port 2 Latch,EPROM/1/5/{EPROM/ ROM},ACC/2/1/ACC,SP/2/5/Stack Pointer,PAR/2/6/Program Address Register,BREG/3/0/B Register,TMP2/3/1/TMP2,TMP1/3/3/TMP1,BFF/3/6/Buffer,PCI/4/6/PC Increment,PSW/5/2/PSW,PC/5/6/Program Counter,DPTR/6/6/DPTR,P1L/7/3/Port 1 Latch,P3L/7/5/Port 3 Latch,OSC/8/0/OSC.,PD1/8/3/Port 1 Drivers,PD3/8/5/Port 3 Drivers} {
   \node[reg] (\i) at (X\x |- Y\y) {\t};
 }
+
+\node[reg,minimum width=2 cm, text width=2 cm] (ISP) at (Y4 -| X4) {Interrupt, Serial Port, and Timer Blocks};
+\node[reg,rotate=90,anchor=north,minimum width=2.5 cm,text width=2cm] (IR) at (Y6 -| X0) {Instruction Register};
+\node[reg,anchor=east,minimum height=2.5 cm] (TC) at (Y6 -| X0) {Time and Control};
+
+\node[alu,scale=2.0,fill=gray!20!white] (ALU) at (X2 |- Y4) {};
 
 \foreach \i/\a/\d in {0/north/1,2/north/1,1/south/-1,3/south/-1} {
   \coordinate (BAS) at (PD\i.\a);
@@ -18,9 +24,24 @@
     \draw[thick,<->] (SUB) -- ++(0,\d);
   }
 }
-
 \begin{pgfonlayer}{background}
-\node[draw,rectangle,dashed,thick,inner sep=0.5cm,fit=(PD0) (PD2) (RAMA) (RAM) (P0L) (P2L) (EPROM) (ACC) (SP) (PAR) (BREG) (TMP2) (TMP1) (BFF) (ISP) (PCI) (PSW) (PC) (DPTR) (P1L) (P3L) (OSC) (PD1) (PD3)] (IF) {};
+\node[draw,rectangle,dashed,thick,inner sep=0.5cm,fit=(PD0) (PD2) (RAMA) (RAM) (P0L) (P2L) (EPROM) (ACC) (SP) (PAR) (BREG) (TMP2) (TMP1) (BFF) (ISP) (PCI) (PSW) (PC) (DPTR) (P1L) (P3L) (OSC) (PD1) (PD3) (ALU) (XB0) (XB1) (YB0) (YB1) (TC) (IR)] (IF) {};
 \end{pgfonlayer}
+
+\foreach \a/\b in {P0L/PD0,P1L/PD1,P2L/PD2,P3L/PD3} {
+  \draw[busbarrow] (\a) -- (\b);
+}
+\draw[busarrow] (RAMA) -- (RAM);
+\draw[busbarrow] (IR.south) -- (DPTR.west);
+\draw[busbarrow] ($(ISP.south)+(-0.5,0)$) |- (PD1);
+\draw[busbarrow] ($(ISP.south)+(0.5,0)$) |- (PD3);
+\draw[busline] (YB2 -| XB0) -- (YB1 -| XB0) -- (YB1 -| RAMA.west);
+\foreach \x/\y in {RAM.south/1,P0L.south/1,P2L.south/1,EPROM.south/1,BREG.north/1,ACC.north/1,SP.north/1,P1L.north/2,P3L.north/2,ISP.south/2} {
+  \draw[busbarrow] (\x |- YB\y) -- (\x);
+}
+
+\foreach \x/\y in {RAMA.south/1,TMP2.north/1,TMP1.north/1,PSW.south/2} {
+  \draw[busarrow] (\x |- YB\y) -- (\x);
+}
 
 \end{tikzpicture}
