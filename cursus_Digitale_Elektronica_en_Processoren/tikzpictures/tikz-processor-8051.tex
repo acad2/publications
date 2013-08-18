@@ -1,6 +1,6 @@
 \begin{tikzpicture}[reg/.style={draw,rectangle,fill=gray!20!white,scale=0.8,minimum width=1.5 cm, text width=1.5 cm, minimum height=0.75 cm}]
 
-\foreach \i/\x in {0/0,M0/1,1/2,2/4,3/6,4/8,5/10,B0/11.5,6/13,B1/14.5,B2/13} {
+\foreach \i/\x in {0/0,M0/1,1/2,2/3,3/4,4/6,5/8,B0/9.5,6/11,B1/12.5,B2/11} {
   \coordinate (X\i) at (0.875*\x,0);
 }
 \foreach \i/\y in {0/0,B0/1,1/2,B1/3.5,2/5,3/6.5,M3/7.25,4/8,M4/8.75,5/9.5,6/11,B2/11,7/12.5,8/14} {
@@ -19,12 +19,13 @@
 
 \node[alu,scale=2.0,fill=gray!20!white] (ALU) at (X2 |- Y4) {};
 
-\foreach \i/\a/\d in {0/north/1,2/north/1,1/south/-1,3/south/-1} {
+\foreach \i/\a/\b/\d in {0/north/south/1,2/north/south/1,1/south/north/-1,3/south/north/-1} {
   \coordinate (BAS) at (PD\i.\a);
   \foreach \x in {-7,-5,...,7} {
     \coordinate (SUB) at ($(BAS)+(0.0625*\x,0)$);
     \draw[thick,<->] (SUB) -- ++(0,\d);
   }
+  \draw ($(BAS)+(0,\d)$) node[anchor=\b,scale=0.7] {P\i.0-P\i.7};
 }
 \begin{pgfonlayer}{background}
 \node[draw,rectangle,dashed,thick,inner sep=0.5cm,fit=(PD0) (PD2) (RAMA) (RAM) (P0L) (P2L) (EPROM) (ACC) (SP) (PAR) (BREG) (TMP2) (TMP1) (BFF) (ISP) (PCI) (PSW) (PC) (DPTR) (P1L) (P3L) (OSC) (PD1) (PD3) (ALU) (XB0) (XB1) (YB0) (YB1) (TC) (IR) (XB1)] (IF) {};
@@ -81,7 +82,14 @@
 \buscross{BUCO2}
 
 \draw[thick,->] (OSC) -- (TC);
-\draw ($(OSC.south)+(-0.375,0)$) -- ++(0,-1);
-\draw ($(OSC.south)+(0.375,0)$) -- ++(0,-1);
+\draw[thick] ($(OSC.south)+(-0.375,0)$) -- ++(0,-1) node[anchor=north,scale=0.7,rotate=30]{XTAL1};
+\draw[thick] ($(OSC.south)+(0.375,0)$) -- ++(0,-1) node[anchor=north,scale=0.7,rotate=30]{XTAL2};
+
+\draw[thick,->] ($(TC.west)+(0,0.75)$) -- ++(-1,0) node[anchor=east,scale=0.7]{PSEN*};
+\draw[thick,->] ($(TC.west)+(0,0.25)$) -- ++(-1,0) node[anchor=east,scale=0.7]{ALE/PROG*};
+\draw[thick,<-] ($(TC.west)+(0,-0.25)$) -- ++(-1,0) node[anchor=east,scale=0.7]{EA*/PP};
+\draw[thick,<-] ($(TC.west)+(0,-0.75)$) -- ++(-1,0) node[anchor=east,scale=0.7]{RST};
+\draw[thick] ($(IF.north west)+(0,-0.75)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vcc};
+\draw[thick] ($(IF.north west)+(0,-1.25)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vss} -- ++(0,-0.5) node[ground] {};
 
 \end{tikzpicture}
