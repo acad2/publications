@@ -638,6 +638,70 @@
   }
 }
 
+\pgfdeclareshape{crystaloscillator} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{pin0}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{pin1}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+
+  \backgroundpath{
+     \pgfutil@tempdima=\halfwidth
+     \centerpoint
+     \advance\pgf@x by 0.8\pgfutil@tempdima
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by 0.8\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -0.8\pgfutil@tempdima
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@x by -0.8\pgfutil@tempdima
+     \advance\pgf@y by \halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \pgfpathclose
+     \centerpoint
+     \advance\pgf@y by -\halfheight
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@y by -\halfheight
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@y by \halfheight
+     \advance\pgf@y by \halfheight
+     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+     \centerpoint
+     \advance\pgf@y by \halfheight
+     \advance\pgf@y by -\halfheight
+     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+  }
+}
+
 \pgfdeclareshape{mux2to1} {
 
   \savedanchor\centerpoint{
