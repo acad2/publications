@@ -1,0 +1,73 @@
+\begin{tikzpicture}[reg/.style={draw,rectangle,fill=gray!20!white,scale=0.8,minimum width=1.5 cm, text width=1.5 cm, minimum height=0.75 cm},regarr/.style={fill=gray!20!white,scale=0.8,minimum width=1.5 cm, minimum height=0.4 cm,inner sep=0.0cm}]
+
+\foreach \i/\x in {0/0,B1/1.5,1/3,2/3,B2/4.25,B3/4.75,3/5} {
+  \coordinate (X\i) at (0.875*\x,-5);
+}
+\foreach \i/\y in {0/0,B0/1,1/2,B4/2,B1/3,2/3,B5/5,3/5,4/6,5/7,B2/7,6/9,7/10,B3/10,8/11} {
+  \coordinate (Y\i) at (0,-0.875*\y);
+}
+
+\node[reg] (MI) at (Y0 -| X0) {Memory Interface};
+\node[reg] (CU) at (Y4 -| X1) {Control Unit};
+\node[reg] (OF) at (Y8 -| X2) {Operands Flags};
+
+\foreach \x/\t in {-2.5/1,-1.5/2,-0.5/3,0.5/4,1.5/5,2.5/6} {
+  \node[regarr] (ISBQ\t) at ($(Y2 -| X1)+(0,0.4*\x)$) {I\t};
+}
+
+\foreach \x/\t/\s in {0.5/D,1.5/C,2.5/B,3.5/A} {
+  \node[regarr, minimum height=0.4 cm,minimum width=0.75 cm] (REGH\t) at ($(Y7 -| X0)+(-0.325,0.4*\x)$) {\t{}H};
+  \node[regarr, minimum height=0.4 cm,minimum width=0.75 cm] (REGL\t) at ($(Y7 -| X0)+(0.325,0.4*\x)$) {\t{}L};
+}
+
+\foreach \x/\t/\s in {-3.5/DI,-2.5/SI,-1.5/BP,-0.5/SP} {
+  \node[regarr, minimum height=0.4 cm] (REG\t) at ($(Y7 -| X0)+(0,0.4*\x)$) {\t};
+}
+
+\foreach \x/\t/\s in {-2/IP,-1/ES,0/SS,1/DS,2/CS} {
+  \node[regarr, minimum height=0.4 cm] (OR\t) at ($(Y3 -| X0)+(0,0.4*\x)$) {\t};
+}
+
+\node[alu,scale=2.0,fill=gray!20!white,rotate=180] (AA) at (Y1 -| X0) {};
+\node[alu,scale=2.0,fill=gray!20!white] (ALU) at (Y6 -| X2) {};
+
+\node[draw,rectangle,thick,fit=(ORIP) (ORES) (ORSS) (ORDS) (ORCS)] (OR) {};
+\node[draw,rectangle,thick,fit=(ISBQ1) (ISBQ2) (ISBQ3) (ISBQ4) (ISBQ5) (ISBQ6)] (ISBQ) {};
+\node[draw,rectangle,thick,fit=(REGDI) (REGSI) (REGBP) (REGSP) (REGHA) (REGLA) (REGHB) (REGLB) (REGHC) (REGLC) (REGHD) (REGLD)] (REG) {};
+
+\begin{pgfonlayer}{background}
+\node[draw,rectangle,dashed,thick,inner sep=0.25cm,fit=(CU) (AA) (ALU) (OF) (ISBQ) (REG) (OR) (OF) (XB3) (YB0)] (IF) {};
+\end{pgfonlayer}
+
+\coordinate (ALU0) at ($(ALU.r)+(-0.375,0)$);
+
+\foreach \a/\b in {ALU0/OF.north} {
+  \draw[busbarrow] (\a) -- (\a |- \b);
+}
+\foreach \a/\b in {ISBQ.south/CU.north} {
+  \draw[busarrow] (\a) -- (\b);
+}
+
+\foreach \a/\b in {ALU.a/2,ALU.b/2} {
+  \draw[busarrow] (\a |- YB\b) -- (\a);
+}
+\foreach \a/\b in {REG/2,OR/2} {
+  \draw[busbarrow] (\a |- YB\b) -- (\a);
+}
+
+\coordinate (OR0) at ($(OR.north)-(0.375,0)$);
+\coordinate (OR1) at ($(OR.north)+(0.375,0)$);
+
+\draw[busline] (AA.east |- YB2) -- (X3 |- YB2);
+\draw[busarrow] (ALU.r) -- (ALU.r |- YB3) -| (XB2 |- YB2);
+\draw[busarrow] (OR0) -- (OR0 |- YB1) -| (AA.b);
+\draw[busarrow] (OR1) -- (OR1 |- YB1) -| (AA.a);
+\draw[busline] (XB1 |- YB0) |- (AA.a |- YB1);
+\draw[busarrow] (AA.r |- YB0) -| (ISBQ);
+\draw[busbarrow] (OF) -| (XB3 |- YB2);
+\draw[busarrow] (AA.r) -- (MI.south -| AA.r);
+\draw[busarrow] (X1 |- YB5) -| (XB3 |- YB2);
+\draw[thick] ($(IF.north west)+(0,-0.75)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vcc};
+\draw[thick] ($(IF.north west)+(0,-1.25)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vss} -- ++(0,-0.5) node[ground] {};
+
+\end{tikzpicture}
