@@ -1,4 +1,4 @@
-\begin{tikzpicture}[stdblock/.style={fill=gray!20!white,scale=0.8,minimum width=2 cm, text width=2 cm, minimum height=0.75 cm},reg/.style={draw,rectangle,stdblock},longreg/.style={draw,rectangle,stdblock,minimum width=4 cm, text width=4 cm},alum/.style={alu,stdblock,minimum width=4 cm, text width=4 cm},multerm/.style={multer,stdblock},shifterm/.style={shifter,stdblock}]
+\begin{tikzpicture}[stdblock/.style={fill=gray!20!white,scale=0.8,minimum width=2 cm, text width=2 cm, minimum height=0.75 cm,align=center},reg/.style={draw,rectangle,stdblock},longreg/.style={draw,rectangle,stdblock,minimum width=4 cm, text width=4 cm},alum/.style={alu,stdblock,minimum width=4 cm, text width=4 cm},multerm/.style={multer,stdblock},shifterm/.style={shifter,stdblock}]
 
 \foreach \i/\x in {0/-2,1/0,2/2.5,3/4} {
   \coordinate (XB\i) at (\x,0);
@@ -8,7 +8,7 @@
   \coordinate (YB\i) at (0,-0.875*\x);
 }
 
-\foreach \i/\t/\y/\x/\m in {AR/longreg/0/0/Adress Register,AI/reg/2/1/Address Incrementer,RF/longreg/4/0/Register bank ($31\times 32$-bit registers) ($6$ status registers),M/multerm/6/1/Multiplier,BS/shifterm/8/1/Barrel shifter,ALU/alum/10/0/,WDR/longreg/13/0/Write Data Register,IP/longreg/13/4/Instruction Pipeline \& Read Data Register \& Thumb Instruction Decoder} {
+\foreach \i/\t/\y/\x/\m in {AR/longreg/0/0/Adress Register,AI/reg/2/1/Address Incrementer,RF/longreg/4/0/Register bank \mbox{($31\times 32$-bit registers)} \mbox{($6$ status registers)},M/multerm/6/1/Multiplier,BS/shifterm/8/1/Barrel shifter,ALU/alum/10/0/,WDR/longreg/13/0/Write Data Register,IP/longreg/13/4/Instruction Pipeline \& Read Data Register \& Thumb Instruction Decoder} {
   \node[\t] (\i) at (\x,-0.875*\y) {\m};
 }
 
