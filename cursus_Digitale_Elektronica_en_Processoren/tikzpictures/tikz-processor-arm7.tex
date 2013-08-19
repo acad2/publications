@@ -1,15 +1,26 @@
-\begin{tikzpicture}[stdblock/.style={fill=gray!20!white,scale=0.8,minimum width=2 cm, text width=2 cm, minimum height=0.75 cm,align=center},reg/.style={draw,rectangle,stdblock},longreg/.style={draw,rectangle,stdblock,minimum width=4 cm, text width=4 cm},alum/.style={alu,stdblock,minimum width=4 cm, text width=4 cm},multerm/.style={multer,stdblock},shifterm/.style={shifter,stdblock}]
+\begin{tikzpicture}[stdblock/.style={fill=gray!20!white,scale=0.8,minimum width=2 cm, text width=2 cm, minimum height=0.75 cm,align=center},reg/.style={draw,rectangle,stdblock},longreg/.style={draw,rectangle,stdblock,minimum width=4 cm, text width=4 cm},llreg/.style={draw,rectangle,stdblock,minimum width=5 cm, text width=5 cm},alum/.style={alu,stdblock,minimum width=4 cm, text width=4 cm},multerm/.style={multer,stdblock},shifterm/.style={shifter,stdblock}]
 
 \foreach \i/\x in {0/-2,1/0,2/2.5,3/4} {
   \coordinate (XB\i) at (\x,0);
 }
 
-\foreach \i/\x in {0/-1,1/3,2/5,3/7,4/11,5/12,6/14} {
+\def\idy{11};
+
+\foreach \i/\x in {0/-1,1/2,2/5,3/7,4/11,5/12,6/14} {
   \coordinate (YB\i) at (0,-0.875*\x);
 }
 
-\foreach \i/\t/\y/\x/\m in {AR/longreg/0/0/Adress Register,AI/reg/2/1/Address Incrementer,RF/longreg/4/0/Register bank \mbox{($31\times 32$-bit registers)} \mbox{($6$ status registers)},M/multerm/6/1/Multiplier,BS/shifterm/8/1/Barrel shifter,ALU/alum/10/0/,WDR/longreg/13/0/Write Data Register,IP/longreg/13/4/Instruction Pipeline \& Read Data Register \& Thumb Instruction Decoder} {
+\foreach \i/\t/\y/\x/\m in {AR/longreg/0/0/Adress Register,SC/reg/0/6/Scan Control,AI/reg/2/1/Address Incrementer,RF/longreg/4/0/Register bank \mbox{($31\times 32$-bit registers)} \mbox{($6$ status registers)},M/multerm/6/1/Multiplier,BS/shifterm/8/1/Barrel shifter,ALU/alum/10/0/,WDR/longreg/13/0/Write Data Register,IP/llreg/13/5/\mbox{Instruction Pipeline} \& \mbox{Read Data Register} \& \mbox{Thumb Instruction Decoder}} {
   \node[\t] (\i) at (\x,-0.875*\y) {\m};
+}
+
+\node[reg,minimum height=\idy cm] (IDCL) at (6,-5.5) {Instruction Decoder \& Control Logic};
+
+\def\dyid{0.034482759};
+
+\foreach \i/\a/\t in {1/<-/DBGRQI,2/<-/BREAKPT,3/->/DBGACK,4/->/ECLK,5/->/EXEC*,6/<-/ISYNC,7/<-/BL[3:0],8/<-/APE,9/<-/MCLK,10/<-/WAIT*,11/->/RW*,12/->/MAS[1:0],13/<-/IRQ*,14/<-/FIQ*,15/<-/RESET*,16/<-/ABORT,17/->/TRANS*,18/->/MREQ*,19/->/OPC*,20/->/SEQ,21/->/LOCK,22/->/CPI*,23/<-/CPA,24/<-/CPB,25/->/M*[4:0],26/<-/TBE,27/->/TBIT,28/->/HIGHZ} {
+  \coordinate (BASE) at ($\dyid*\i*(IDCL.south east)+(IDCL.north east)-\dyid*\i*(IDCL.north east)$);
+  \draw[thick,\a] (BASE) -- ++(1,0) node[anchor=west,scale=0.7] {\t};
 }
 
 \begin{pgfonlayer}{background}
@@ -23,14 +34,18 @@
   \coordinate (RFI\i) at ($0.167*\x*(RF.north east)-0.167*\x*(RF.north west)+(RF.north west)$);
 }
 
+\foreach \i/\x in {0/1,1/2,2/3,3/4} {
+  \coordinate (WDRO\i) at ($0.20*\x*(WDR.south east)-0.20*\x*(WDR.south west)+(WDR.south west)$);
+}
+
 \coordinate (RFO1) at ($0.667*(RF.south east)+0.333*(RF.south west)$);
 \coordinate (XB4) at (ALU.a);
 
-\foreach \a/\b in {RF.north/ARO0,AR.south/AI.north,BS.south/ALU.b,RF.south/ALU.a} {
+\foreach \a/\b in {RF.north/ARO0,AR.south/AI.north,BS.south/ALU.b,RF.south/ALU.a,IP.north/IDCL.south} {
   \draw[busarrow] (\b |- \a) -- (\b);
 }
 
-\foreach \a/\y/\x in {BS.north/3/2,IP/6/2,RFI0/1/0} {
+\foreach \a/\y/\x in {BS.north/3/2,RFI0/1/0} {
   \draw[busarrow] (XB\x |- YB\y) -| (\a);
 }
 
@@ -44,8 +59,17 @@
 
 \draw[busarrow] ($(XB2 |- YB2)+(0,0.25)$) |- (WDR.north |- YB5) -- (WDR.north);
 \draw[busarrow] (ALU.r) |- (XB0 |- YB4) -- (XB0 |- YB0) -| (ARI0);
+\draw[busarrow] (IP.north) |- (XB2 |- YB5);
 \draw[busbarrow] (RF.east) -| (XB2 |- YB0) -| (ARI4);
 \draw[busline] (AI.east) -- (XB2 |- AI.east);
+\draw[busarrow] (WDRO3) |- (IP.south |- YB6) -- (IP.south);
+\draw[busarrow] (ARI2) -- (ARI2 |- YB0) -- ++(0,1.25) node[anchor=south,scale=0.8]{A[31:0]};
+\draw[<-,thick] (ARI1) -- (ARI1 |- YB0) -- ++(0,0.75) node[anchor=south,scale=0.8]{ALE};
+\draw[<-,thick] (ARI3) -- (ARI3 |- YB0) -- ++(0,0.75) node[anchor=south,scale=0.8]{ABE};
+\draw[busarrow] (XB2 |- YB6) -- ++(0,-0.75) node[anchor=north,scale=0.8]{D[31:0]};
+\draw[->,thick] (WDRO0) -- (WDRO0 |- YB6) -- ++(0,-0.75) node[anchor=north,scale=0.8]{ENOUT*};
+\draw[<-,thick] (WDRO1) -- (WDRO1 |- YB6) -- ++(0,-1.25) node[anchor=north,scale=0.8]{DBE};
+\draw[<-,thick] (WDRO2) -- (WDRO2 |- YB6) -- ++(0,-0.75) node[anchor=north,scale=0.8]{ENIN*};
 
 \draw[thick] ($(IF.north west)+(0,-0.75)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vcc};
 \draw[thick] ($(IF.north west)+(0,-1.25)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vss} -- ++(0,-0.5) node[ground] {};
