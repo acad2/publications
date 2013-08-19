@@ -1,0 +1,53 @@
+\begin{tikzpicture}[stdblock/.style={fill=gray!20!white,scale=0.8,minimum width=2 cm, text width=2 cm, minimum height=0.75 cm},reg/.style={draw,rectangle,stdblock},longreg/.style={draw,rectangle,stdblock,minimum width=4 cm, text width=4 cm},alum/.style={alu,stdblock,minimum width=4 cm, text width=4 cm},multerm/.style={multer,stdblock},shifterm/.style={shifter,stdblock}]
+
+\foreach \i/\x in {0/-2,1/0,2/2.5,3/4} {
+  \coordinate (XB\i) at (\x,0);
+}
+
+\foreach \i/\x in {0/-1,1/3,2/5,3/7,4/11,5/12,6/14} {
+  \coordinate (YB\i) at (0,-0.875*\x);
+}
+
+\foreach \i/\t/\y/\x/\m in {AR/longreg/0/0/Adress Register,AI/reg/2/1/Address Incrementer,RF/longreg/4/0/Register bank ($31\times 32$-bit registers) ($6$ status registers),M/multerm/6/1/Multiplier,BS/shifterm/8/1/Barrel shifter,ALU/alum/10/0/,WDR/longreg/13/0/Write Data Register,IP/longreg/13/4/Instruction Pipeline \& Read Data Register \& Thumb Instruction Decoder} {
+  \node[\t] (\i) at (\x,-0.875*\y) {\m};
+}
+
+\begin{pgfonlayer}{background}
+\node[draw,rectangle,dashed,thick,inner sep=0.25cm,fit=(AR) (AI) (RF) (M) (ALU) (WDR) (IP) (XB0) (XB3) (YB0) (YB6)] (IF) {};
+\end{pgfonlayer}
+
+\coordinate (ARO0) at ($0.667*(AR.south west)+0.333*(AR.south east)$);
+
+\foreach \i/\x in {0/1,1/2,2/3,3/4,4/5} {
+  \coordinate (ARI\i) at ($0.167*\x*(AR.north east)-0.167*\x*(AR.north west)+(AR.north west)$);
+  \coordinate (RFI\i) at ($0.167*\x*(RF.north east)-0.167*\x*(RF.north west)+(RF.north west)$);
+}
+
+\coordinate (RFO1) at ($0.667*(RF.south east)+0.333*(RF.south west)$);
+\coordinate (XB4) at (ALU.a);
+
+\foreach \a/\b in {RF.north/ARO0,AR.south/AI.north,BS.south/ALU.b,RF.south/ALU.a} {
+  \draw[busarrow] (\b |- \a) -- (\b);
+}
+
+\foreach \a/\y/\x in {BS.north/3/2,IP/6/2,RFI0/1/0} {
+  \draw[busarrow] (XB\x |- YB\y) -| (\a);
+}
+
+\foreach \a/\x/\t in {M.east/2/busbarrow,M.west/4/busbarrow} {
+  \draw[\t] (XB\x |- \a) -- (\a);
+}
+
+\foreach \a/\y/\x in {RFO1/2/2} {
+  \draw[busarrow] (\a) |- (XB\x |- YB\y);
+}
+
+\draw[busarrow] ($(XB2 |- YB2)+(0,0.25)$) |- (WDR.north |- YB5) -- (WDR.north);
+\draw[busarrow] (ALU.r) |- (XB0 |- YB4) -- (XB0 |- YB0) -| (ARI0);
+\draw[busbarrow] (RF.east) -| (XB2 |- YB0) -| (ARI4);
+\draw[busline] (AI.east) -- (XB2 |- AI.east);
+
+\draw[thick] ($(IF.north west)+(0,-0.75)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vcc};
+\draw[thick] ($(IF.north west)+(0,-1.25)$) -- ++(-0.5,0) node[anchor=east,scale=0.7]{Vss} -- ++(0,-0.5) node[ground] {};
+
+\end{tikzpicture}
