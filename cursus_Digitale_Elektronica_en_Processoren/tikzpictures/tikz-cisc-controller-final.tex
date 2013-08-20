@@ -1,10 +1,10 @@
 \begin{tikzpicture}[subcomp/.style={minimum width=1.5cm,minimum height=2 cm,draw=black,fill=white,thick,rectangle}]
 \node[subcomp] (SR) at (1,0) {PC};
-\node[subcomp] (IR) at (4,0) {IR};
+\node[subcomp] (IR) at (4.5,0) {IR};
 \node[mux2to1,fill=white,rotate=90,thick] (M) at (-0.35,0) {};
 \node[subcomp,minimum width=0.75 cm,minimum height=0.25] (INC) at ($(M.data0)+(-1.75,0)$) {$+1$};
 \draw[thick,->] (M.output) -- (SR.west);
-\node[subcomp,minimum height=4.25 cm] (NSOL) at (6,0) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\\&\\Output\\Logic\\FSM\end{center}\end{varwidth}};
+\node[subcomp,minimum height=4.25 cm] (NSOL) at (6.5,0) {\begin{varwidth}{2 cm}\begin{center}Next\\State\\\&\\Output\\Logic\\FSM\end{center}\end{varwidth}};
 \coordinate (TL) at (M.north |- NSOL.north);\coordinate (TL) at ($(TL)+(-0.4,0.5)$);\coordinate (TLA) at ($(TL)+(0.25,-0.25)$);
 \draw[thick,->] (INC.east) -- (M.data0);
 \begin{pgfonlayer}{background}
@@ -27,14 +27,19 @@
 \coordinate (OLC) at ($0.25*(NSOL.south west)+0.75*(NSOL.west)$);
 
 \coordinate (TSL) at ($(SR)+(1.5,-2.25)$);
+\coordinate (TSM) at ($(SR)+(2,-2.25)$);
 \coordinate (INCMux) at ($0.5*(INC)+0.5*(M)-(0.25,0)$);
 \coordinate (TIL) at (TSL -| INCMux);
 
-\node[tris,rotate=-90,fill=white,thick] (TS) at (TSL) {};
-\node[tris,rotate=-90,fill=white,thick] (TI) at (TIL) {};
+\node[tris,scale=0.7,rotate=-90,fill=white,thick] (TS) at (TSL) {};
+\node[tris,scale=0.7,rotate=-90,fill=white,thick] (TT) at (TSM) {};
+\node[tris,scale=0.7,rotate=-90,fill=white,thick] (TI) at (TIL) {};
 \draw[thick] (SR) -| (TS.x);
+\draw[thick] (SR -| TS.x) -| (TT.x);
+\pdot{SR -| TS.x}\pdot{TT.z |- DB}
 \draw[thick] (TI.x |- INC.east) -| (TI.x);
 \draw[thick] (TS.z) -- (TS.z |- AB);
+\draw[thick] (TT.z) -- (TT.z |- DB);
 \draw[thick] (TI.z) -- (TI.z |- DB);
 \pdot{TS.z |- AB}\pdot{TI.x |- INC.east}\pdot{TI.z |- DB}
 \coordinate (MemA) at ($(Mem |- AB)+(-1,0)$);
@@ -42,8 +47,8 @@
 \coordinate (MemB) at ($(Mem |- DB)+(2,0)$);
 \coordinate (MemC) at ($(Mem |- DB)+(3,0)$);
 \coordinate (TCol) at ($0.5*(Mem)+0.5*(DB)$);
-\node[tris,rotate=-90,fill=white,thick] (TDA) at (MemB |- TCol) {};
-\node[tris,rotate=90,fill=white,thick] (TDB) at (MemC |- TCol) {};
+\node[tris,scale=0.7,rotate=-90,fill=white,thick] (TDA) at (MemB |- TCol) {};
+\node[tris,scale=0.7,rotate=90,fill=white,thick] (TDB) at (MemC |- TCol) {};
 \draw[thick](Mem -| MemB) -- (TDA.z);\draw[thick](TDA.x) -- (MemB);\pdot{Mem -| MemB}\pdot{MemB}
 \draw[thick](Mem) -| (TDB.x);\draw[thick] (TDB.z) -- (MemC);\pdot{MemC}
 

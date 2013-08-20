@@ -50,10 +50,11 @@
 \coordinate (X0) at (-1.5,0 |- DB);
 \coordinate (X1) at (-0.5,0 |- R2);
 \coordinate (X2) at (1,0);
+\coordinate (X6) at (-1,0);
 
 \draw[thick] (AB -| CT.east) -- (AB -| CT.west) node[anchor=east,scale=0.8]{Adresbus};
 \draw[thick] (DB -| CT.east) -- (DB -| CT.west) node[anchor=east,scale=0.8]{Databus};
-\node[subcomp,anchor=north] (Mem) at (0,0 |- MT) {\begin{varwidth}{1.5 cm}Mem\\\\Data\\\&\\Prog.\end{varwidth}};
+\node[subcomp,anchor=north] (Mem) at (-1.5,0 |- MT) {\begin{varwidth}{1.5 cm}Mem\\\\Data\\\&\\Prog.\end{varwidth}};
 \coordinate (MemA) at ($(Mem |- AB)+(-1,0)$);
 \draw[thick] (MemA) |- (Mem);\pdot{MemA}
 \coordinate (MemB) at ($(Mem |- DB)+(2,0)$);
@@ -66,7 +67,7 @@
 \draw (Co-O0) |- (CB) |- (St-I0 |- RS) -- (St-I0);
 \draw[->] (St-O0) -- ++(0,-0.25);
 
-\foreach \i/\c/\n/\db in {2/RF-O0/OT/O1,3/RF-O1/OT/O2,4/Sh-O0/RT/R2,5/AL-O0/RT/R2,7/X1/KT/AB,8/X2/RT/AB,9/X3/RT/AB,10/X4/RT/DB} {
+\foreach \i/\c/\n/\db in {2/RF-O0/OT/O1,3/RF-O1/OT/O2,4/Sh-O0/RT/R2,5/AL-O0/RT/R2,7/X1/KT/AB,8/X2/RT/AB,9/X3/RT/AB,10/X4/RT/DB,12/X6/RT/DB} {
   \node[tris,rotate=-90,scale=0.7,fill=white,thick] (T\i) at (\c |- \n) {};
   \draw[thick] (\c) -- (T\i.x);
   \pdot{T\i.z |- \db}
@@ -87,10 +88,12 @@
 }
 
 \draw[thick] (AR.south) |- (X2);
+\draw[thick] (AR.south |- X2) -| (X6);
 
 \pdot{X0}
 \pdot{X1}
 \pdot{X3}
 \pdot{X5}
+\pdot{AR.south |- X2}
 
 \end{tikzpicture}
