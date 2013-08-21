@@ -1,13 +1,13 @@
 \begin{tikzpicture}[reg/.style={draw,rectangle,fill=gray!20!white,scale=0.8,minimum width=1.5 cm, text width=1.5 cm, minimum height=0.75 cm}]
 
-\foreach \i/\x in {0/0,M0/1,1/2,2/3,3/4,4/6,5/8,B0/9.5,6/11,B1/12.5,B2/11} {
+\foreach \i/\x in {0/0,M0/1,1/2,2/3,3/4,4/6,5/8,B0/8,6/9.5,B1/11,B2/9.5} {
   \coordinate (X\i) at (0.875*\x,0);
 }
 \foreach \i/\y in {0/0,B0/1,1/2,B1/3.5,2/5,3/6.5,M3/7.25,4/8,M4/8.75,5/9.5,6/11,B2/11,7/12.5,8/14} {
   \coordinate (Y\i) at (0,-0.875*\y);
 }
 
-\foreach \i/\y/\x/\t in {PD0/0/3/Port 0 Drivers,PD2/0/4/Port 2 Drivers,RAMA/1/0/RAM Address Register,RAM/1/1/RAM,P0L/1/3/Port 0 Latch,P2L/1/4/Port 2 Latch,EPROM/1/5/{EPROM/ ROM},ACC/2/M0/ACC,SP/2/5/Stack Pointer,PAR/2/6/Program Address Register,BREG/3/0/B Register,TMP2/3/1/TMP2,TMP1/3/3/TMP1,BFF/3/6/Buffer,PCI/4/6/PC Increment,PSW/5/1/PSW,PC/5/6/Program Counter,DPTR/6/6/DPTR,P1L/7/3/Port 1 Latch,P3L/7/5/Port 3 Latch,PD1/8/3/Port 1 Drivers,PD3/8/5/Port 3 Drivers} {
+\foreach \i/\y/\x/\t in {PD0/0/3/Port 0 Drivers,PD2/0/4/Port 2 Drivers,RAMA/1/0/RAM Address Register,RAM/1/1/RAM,P0L/1/3/Port 0 Latch,P2L/1/4/Port 2 Latch,EPROM/1/5/{EPROM/ ROM},ACC/2/M0/ACC,SP/2/4/Stack Pointer,PAR/2/6/Program Address Register,BREG/3/0/B Register,TMP2/3/1/TMP2,TMP1/3/3/TMP1,BFF/3/6/Buffer,PCI/4/6/PC Increment,PSW/5/1/PSW,PC/5/6/Program Counter,DPTR/6/6/DPTR,P1L/7/3/Port 1 Latch,P3L/7/5/Port 3 Latch,PD1/8/3/Port 1 Drivers,PD3/8/5/Port 3 Drivers} {
   \node[reg] (\i) at (X\x |- Y\y) {\t};
 }
 
