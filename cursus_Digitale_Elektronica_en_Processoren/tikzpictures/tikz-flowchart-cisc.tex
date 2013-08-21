@@ -1,4 +1,4 @@
-\begin{tikzpicture}[fcstateblock/.style={draw,rectangle,scale=0.6},fcdecisionblocksb/.style={fcdecisionblockb,scale=0.6},fcdecisionblocksd/.style={fcdecisionblockd,scale=0.6},fcdecisionblocksh/.style={fcdecisionblockh,scale=0.6}]%,fcdecisionblockhf/.style={fcdecisionblockh,thick,rotate=-90,scale=0.6},fcdecisionblockdf/.style={fcdecisionblockd,thick,rotate=-90,scale=0.6},fcdecisionblockbf/.style={fcdecisionblockb,thick,rotate=-90,scale=0.6},fcdecisionblockhg/.style={fcdecisionblockh,thick,rotate=-180,scale=0.6},fcdecisionblockdg/.style={fcdecisionblockd,thick,rotate=-180,scale=0.6},fcdecisionblockbg/.style={fcdecisionblockb,thick,rotate=-180,scale=0.6},fcdecisionblockhh/.style={fcdecisionblockh,thick,scale=0.6},fcdecisionblockdh/.style={fcdecisionblockd,thick,scale=0.6},fcdecisionblockbh/.style={fcdecisionblockb,thick,scale=0.6},fcdecisionblockhi/.style={fcdecisionblockh,thick,rotate=-270,scale=0.6},fcdecisionblockdi/.style={fcdecisionblockd,thick,rotate=-270,scale=0.6},fcdecisionblockbi/.style={fcdecisionblockb,thick,rotate=-270,scale=0.6}
+\begin{tikzpicture}[fcstateblock/.style={draw,scale=0.6,minimum width=5.5 cm, text width=5.5 cm, minimum height=0.75 cm},fcdecisionblocksb/.style={fcdecisionblockb,scale=0.6},fcdecisionblocksd/.style={fcdecisionblockd,scale=0.6},fcdecisionblocksh/.style={fcdecisionblockh,scale=0.6}]%,fcdecisionblockhf/.style={fcdecisionblockh,thick,rotate=-90,scale=0.6},fcdecisionblockdf/.style={fcdecisionblockd,thick,rotate=-90,scale=0.6},fcdecisionblockbf/.style={fcdecisionblockb,thick,rotate=-90,scale=0.6},fcdecisionblockhg/.style={fcdecisionblockh,thick,rotate=-180,scale=0.6},fcdecisionblockdg/.style={fcdecisionblockd,thick,rotate=-180,scale=0.6},fcdecisionblockbg/.style={fcdecisionblockb,thick,rotate=-180,scale=0.6},fcdecisionblockhh/.style={fcdecisionblockh,thick,scale=0.6},fcdecisionblockdh/.style={fcdecisionblockd,thick,scale=0.6},fcdecisionblockbh/.style={fcdecisionblockb,thick,scale=0.6},fcdecisionblockhi/.style={fcdecisionblockh,thick,rotate=-270,scale=0.6},fcdecisionblockdi/.style={fcdecisionblockd,thick,rotate=-270,scale=0.6},fcdecisionblockbi/.style={fcdecisionblockb,thick,rotate=-270,scale=0.6}
 
 % \def\dx{1.5};
 % \def\dy{-1.5};
@@ -260,16 +260,42 @@
 %   \pdot{ISF-01\o.south |- \r};
 % }
 
+\def\shrimm{\texttt{Mem[PC]}}
+\def\shrdir{\texttt{Mem[Mem[PC]}]}
+\def\shridr{\texttt{Mem[Mem[Mem[PC]]]}}
+\def\shrreg{\texttt{Mem[RF[s1]]}}
+\def\shrdar{\texttt{Mem[Mem[PC]+RF[s1]]}}
+\def\shrrar{\texttt{Mem[RF[s1]+s2]}}
+\def\shrrds{\texttt{RF[d]}}
+\def\shrrsa{\texttt{RF[s1]}}
+\def\shrrsb{\texttt{RF[s2]}}
 
 \def\cmdpccinc{\texttt{PC}\leftarrow\texttt{PC+1}}
 \def\cmdloadir{\texttt{IR}\leftarrow\texttt{Mem[PC]}}
+\def\cmdcopyrr{\shrrds\leftarrow\shrrsa}
+\def\cmdloada{\shrrds\leftarrow\shrimm}
+\def\cmdloadb{\shrrds\leftarrow\shrdir}
+\def\cmdloadc{\shrrds\leftarrow\shridr}
+\def\cmdloadd{\shrrds\leftarrow\shrdar}
+\def\cmdloade{\shrrds\leftarrow\shrreg}
+\def\cmdloadf{\shrrds\leftarrow\shrrar}
+
+\def\cmdstorb{\shrdir\leftarrow\shrrsa}
+\def\cmdstorc{\shridr\leftarrow\shrrsa}
+\def\cmdstord{\shrdar\leftarrow\shrrsa}
+\def\cmdstore{\shrreg\leftarrow\shrrsa}
+\def\cmdstorf{\shrrar\leftarrow\shrrsa}
 
 \def\dbirab{\texttt{IR}_{15}\texttt{IR}_{14}}
 \def\dbirca{\texttt{IR}_{13}}
 \def\dbirda{\texttt{IR}_{12}}
 \def\dbirec{\texttt{IR}_{11}\texttt{IR}_{10}\texttt{IR}_{9}}
 
-\def\dxy{1.75};
+\def\dxy{1};
+\def\dtw{2.5};
+\def\dxt{1.2};
+
+\begin{scope}[rotate=-90]
 
 \coordinate (FI) at (0,\dxy);
 \coordinate (O) at (0,0);
@@ -277,23 +303,43 @@
 \coordinate (D1Y1) at (0,-\dxy);
 \coordinate (D1Y2) at (0,-2*\dxy);
 \coordinate (D1Y3) at (0,-3*\dxy);
-\coordinate (D1Y4) at (0,-5*\dxy);
+\coordinate (D1Y4) at (0,-3*\dxy-\dtw);
 \coordinate (D1X) at (0,0);
 \coordinate (D1X0) at (1.5*\dxy,0);
-\coordinate (D1X00) at (2.25*\dxy,0);
-\coordinate (D1X01) at (0.75*\dxy,0);
 \coordinate (D1X1) at (-1.5*\dxy,0);
-\coordinate (D1X10) at (-0.75*\dxy,0);
-\coordinate (D1X11) at (-2.25*\dxy,0);
+\coordinate (D1X00) at (4.5*\dxt,0);
+\coordinate (D1X01) at (\dxt,0);
+\coordinate (D1X10) at (-2*\dxt,0);
+\coordinate (D1X11) at (-5*\dxt,0);
+\coordinate (D1X00000) at (6*\dxt,0);
+\coordinate (D1X00001) at (5*\dxt,0);
+\coordinate (D1X00010) at (4*\dxt,0);
+\coordinate (D1X00100) at (3*\dxt,0);
+\coordinate (D1X01010) at (2*\dxt,0);
+\coordinate (D1X01011) at (1*\dxt,0);
+\coordinate (D1X01101) at (0*\dxt,0);
+\coordinate (D1X10001) at (-1*\dxt,0);
+\coordinate (D1X10010) at (-2*\dxt,0);
+\coordinate (D1X10100) at (-3*\dxt,0);
+\coordinate (D1X11010) at (-4*\dxt,0);
+\coordinate (D1X11011) at (-5*\dxt,0);
+\coordinate (D1X11101) at (-6*\dxt,0);
 
-\node[fcstateblock] (NFI) at (FI) {$\begin{array}{l}\cmdloadir\\\cmdpccinc\end{array}$};
+\node[fcstateblock,rotate=-90] (NFI) at (FI) {$\begin{array}{l}\cmdloadir\\\cmdpccinc\end{array}$};
 
 \foreach \r/\i/\y/\x/\t in {d/N/O/O/$\dbirab$,b/N01/D1Y1/D1X/$\dbirca$,b/N010/D1Y2/D1X0/$\dbirda$,b/N011/D1Y2/D1X1/$\dbirda$,h/N0111/D1Y3/D1X11/$\dbirec$,h/N0110/D1Y3/D1X10/$\dbirec$,h/N0101/D1Y3/D1X01/$\dbirec$,h/N0100/D1Y3/D1X00/$\dbirec$} {
-  \node[fcdecisionblocks\r] (\i) at (\x |- \y) {\t};
+  \node[fcdecisionblocks\r,rotate=-90] (\i) at (\x |- \y) {\t};
+}
+
+\foreach \i/\j/\t in {00/000/\cmdloada\\\cmdpccinc,00/001/\cmdloadb\\\cmdpccinc,00/010/\cmdloadc\\\cmdpccinc,00/100/\cmdloadd\\\cmdpccinc,01/010/\cmdloade,01/011/\cmdloadf,01/101/\cmdcopyrr,10/001/\cmdstorb\\\cmdpccinc,10/010/\cmdstorc\\\cmdpccinc,10/100/\cmdstord\\\cmdpccinc,11/010/\cmdstore,11/011/\cmdstorf,11/101/\cmdcopyrr} {
+  \node[fcstateblock] (I1-\i\j) at (D1X\i\j |- D1Y4) {$\begin{array}{l}\t\end{array}$};
+  \draw[thick,->] (N01\i.output\j) --++(0,-0.25) -| (I1-\i\j.east);
 }
 
 \foreach \a/\b in {NFI/N} {
   \draw[thick,->] (\a.south) -- (\b.north);
 }
+
+\end{scope}
 
 \end{tikzpicture}
