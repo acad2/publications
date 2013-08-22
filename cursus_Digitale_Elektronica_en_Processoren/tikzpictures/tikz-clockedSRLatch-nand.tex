@@ -1,0 +1,19 @@
+\begin{tikzpicture}[circuit logic US]
+\node[nand gate] (NO0) at (0,0.65) {};
+\node[nand gate] (NO1) at (0,-0.65) {};
+\node[nand gate,anchor=output] (NA0) at (NO0.input 1 -| -1,0) {};
+\node[nand gate,anchor=output] (NA1) at (NO1.input 2 -| -1,0) {};
+\draw (NA0.output) -- (NO0.input 1);
+\draw (NA1.output) -- (NO1.input 2);
+\draw (NA0.input 2) -- (NA0.input 2 -| -2,0) |- (NA1.input 1);
+\pdot{-2,0};
+\draw (NA0.input 1) -- (NA0.input 1 -| -2.5,0) node[anchor=east,scale=0.75]{Set $S$};
+\draw (-2,0) -- (-2.5,0) node[anchor=east,scale=0.75]{Klok Clk};
+\draw (NA1.input 2) -- (NA1.input 2 -| -2.5,0) node[anchor=east,scale=0.75]{Reset $R$};
+\draw (NO0.output) -- (NO0.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q$};
+\draw (NO1.output) -- (NO1.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q_n$};
+\pdot{NO0.output -| 0.85,0};
+\pdot{NO1.output -| 0.85,0};
+\draw (NO1.output -| 0.85,0) -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input 2 -| -0.75,0) -- (NO0.input 2);
+\draw (NO0.output -| 0.85,0) -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input 1 -| -0.75,0) -- (NO1.input 1);
+\end{tikzpicture}

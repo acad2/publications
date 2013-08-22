@@ -294,6 +294,7 @@
 \def\dxy{1};
 \def\dtw{2.5};
 \def\dxt{1.2};
+\def\dxs{-0.125};
 
 \begin{scope}[rotate=-90]
 
@@ -304,36 +305,28 @@
 \coordinate (D1Y2) at (0,-2*\dxy);
 \coordinate (D1Y3) at (0,-3*\dxy);
 \coordinate (D1Y4) at (0,-3*\dxy-\dtw);
-\coordinate (D1X) at (0,0);
-\coordinate (D1X0) at (1.5*\dxy,0);
-\coordinate (D1X1) at (-1.5*\dxy,0);
-\coordinate (D1X00) at (4.5*\dxt,0);
-\coordinate (D1X01) at (\dxt,0);
-\coordinate (D1X10) at (-2*\dxt,0);
-\coordinate (D1X11) at (-5*\dxt,0);
-\coordinate (D1X00000) at (6*\dxt,0);
-\coordinate (D1X00001) at (5*\dxt,0);
-\coordinate (D1X00010) at (4*\dxt,0);
-\coordinate (D1X00100) at (3*\dxt,0);
-\coordinate (D1X01010) at (2*\dxt,0);
-\coordinate (D1X01011) at (1*\dxt,0);
-\coordinate (D1X01101) at (0*\dxt,0);
-\coordinate (D1X10001) at (-1*\dxt,0);
-\coordinate (D1X10010) at (-2*\dxt,0);
-\coordinate (D1X10100) at (-3*\dxt,0);
-\coordinate (D1X11010) at (-4*\dxt,0);
-\coordinate (D1X11011) at (-5*\dxt,0);
-\coordinate (D1X11101) at (-6*\dxt,0);
+
+\foreach \i/\x in {/0,0/2.75,1/-3.5,00/4,01/1,10/-2,11/-5,00000/6,00001/5,00010/4,00100/3,01010/2,01011/1,01101/0,10001/-1,10010/-2,10100/-3,11010/-4,11011/-5,11101/-6} {
+  \coordinate (D1X\i) at (\x*\dxt,0);
+}
 
 \node[fcstateblock,rotate=-90] (NFI) at (FI) {$\begin{array}{l}\cmdloadir\\\cmdpccinc\end{array}$};
 
-\foreach \r/\i/\y/\x/\t in {d/N/O/O/$\dbirab$,b/N01/D1Y1/D1X/$\dbirca$,b/N010/D1Y2/D1X0/$\dbirda$,b/N011/D1Y2/D1X1/$\dbirda$,h/N0111/D1Y3/D1X11/$\dbirec$,h/N0110/D1Y3/D1X10/$\dbirec$,h/N0101/D1Y3/D1X01/$\dbirec$,h/N0100/D1Y3/D1X00/$\dbirec$} {
-  \node[fcdecisionblocks\r,rotate=-90] (\i) at (\x |- \y) {\t};
+\foreach \r/\i/\y/\x/\t in {d//O/O/$\dbirab$,b/01/D1Y1/D1X/$\dbirca$,b/010/D1Y2/D1X0/$\dbirda$,b/011/D1Y2/D1X1/$\dbirda$,h/0111/D1Y3/D1X11/$\dbirec$,h/0110/D1Y3/D1X10/$\dbirec$,h/0101/D1Y3/D1X01/$\dbirec$,h/0100/D1Y3/D1X00/$\dbirec$} {
+  \node[fcdecisionblocks\r,rotate=-90] (N\i) at (\x |- \y) {\t};
 }
 
 \foreach \i/\j/\t in {00/000/\cmdloada\\\cmdpccinc,00/001/\cmdloadb\\\cmdpccinc,00/010/\cmdloadc\\\cmdpccinc,00/100/\cmdloadd\\\cmdpccinc,01/010/\cmdloade,01/011/\cmdloadf,01/101/\cmdcopyrr,10/001/\cmdstorb\\\cmdpccinc,10/010/\cmdstorc\\\cmdpccinc,10/100/\cmdstord\\\cmdpccinc,11/010/\cmdstore,11/011/\cmdstorf,11/101/\cmdcopyrr} {
   \node[fcstateblock] (I1-\i\j) at (D1X\i\j |- D1Y4) {$\begin{array}{l}\t\end{array}$};
-  \draw[thick,->] (N01\i.output\j) --++(0,-0.25) -| (I1-\i\j.east);
+  %\draw[thick,->] (N01\i.output\j) --++(0,-0.25) -| (I1-\i\j.east);
+}
+
+\foreach \a/\b/\c in {/01/1,01/0/1,01/1/1,010/0/1,010/1/1,011/0/1,011/1/1} {
+  \draw[thick,->] (N\a.output\b) -- ++(0,\dxs*\c) -| (N\a\b.north);
+}
+
+\foreach \a/\b/\c in {00/000/1,00/001/2,00/010/2,00/100/1,01/010/1,01/011/2,01/101/1,10/001/1,10/010/2,10/100/1,11/010/1,11/011/2,11/101/1} {
+  \draw[thick,->] (N01\a.output\b) -- ++(0,\dxs*\c) -| (I1-\a\b.east);
 }
 
 \foreach \a/\b in {NFI/N} {

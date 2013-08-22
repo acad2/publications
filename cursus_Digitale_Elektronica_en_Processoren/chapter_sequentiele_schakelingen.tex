@@ -46,87 +46,19 @@ Bij de synthese van een flipflop zullen we een eerste positief feedback componen
 \subsubsection{De latch}
 \begin{figure}[hbt]
 \centering
-\subfigure[Implementatie met NOR-poorten.]{\begin{tikzpicture}[circuit logic US]
-\node[nor gate] (NO0) at (0,0.65) {};
-\node[nor gate] (NO1) at (0,-0.65) {};
-\draw (NO0.input 1) -- (NO0.input 1 -| -1,0) node[anchor=east,scale=0.75]{Set $S$};
-\draw (NO1.input 2) -- (NO1.input 2 -| -1,0) node[anchor=east,scale=0.75]{Reset $R$};
-\draw (NO0.output) -- (NO0.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q_n$};
-\draw (NO1.output) -- (NO1.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q$};
-\pdot{NO0.output -| 0.85,0};
-\pdot{NO1.output -| 0.85,0};
-\draw (NO1.output -| 0.85,0) -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input 2 -| -0.75,0) -- (NO0.input 2);
-\draw (NO0.output -| 0.85,0) -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input 1 -| -0.75,0) -- (NO1.input 1);
-\node[scale=0.75] (TT) at (3,0) {$\begin{array}{cc|c}S&R&Q_{\mbox{\tiny{next}}}\\\hline0&0&Q\\0&1&0\\1&0&1\\1&1&\mbox{N/A}\end{array}$};
-%\timebehav{5}{-1}{8.5}{4}{0.75}{0/$Q_n$,1/$Q$,2/$R$,3/$S$}{3/0/0/1/1,3/1/1/2/0,3/2/0/5/1,3/5/1/7/0,3/7/0/9/1,3/9/1/10/0,3/10/0/11.5/0, 2/0/0/3/1,2/3/1/4/0,2/4/0/6/1,2/6/1/8/0,2/8/0/9/1,2/9/1/10/0,2/10/0/11.5/0, 1/0/0/1.5/1,1/1.5/1/3.25/0,1/3.25/0/5.5/1,1/5.5/1/6.25/0,1/6.25/0/10.25/1,1/10.25/1/10.5/0,1/10.5/0/10.75/1,1/10.75/1/11/0,1/11/0/11.25/1,1/11.25/1/11.5/1, 0/0/1/1.25/0,0/1.25/0/3.5/1,0/3.5/1/5.25/0,0/5.25/0/7.25/1,0/7.25/1/9.25/0,0/9.25/0/10.25/1,0/10.25/1/10.5/0,0/10.5/0/10.75/1,0/10.75/1/11/0,0/11/0/11.25/1,0/11.25/1/11.5/1}{1/0.25/3/0,1.25/0.25/0/1,3/0.25/2/1,3.25/0.25/1/0,5/0.25/3/0,5.25/0.25/0/1,6/0.25/2/1,7/0.25/3/0,9/0.25/3/0,10/0.25/3/0,10/0.25/2/1,10.25/0.25/1/0,10.25/0.25/0/1,10.5/0.25/1/0,10.5/0.25/0/1,10.75/0.25/1/0,10.75/0.25/0/1,11/0.25/1/0,11/0.25/0/1};
-\timebehav{5.00}{-1.00}{8.50}{4}{0.75}{0/$Q_n$,1/$Q$,2/$R$,3/$S$}{0/0.00/1/1.25/0, 0/1.25/0/3.50/1, 0/3.50/1/5.25/0, 0/5.25/0/7.25/1, 0/7.25/1/9.25/0, 0/9.25/0/10.25/1, 0/10.25/1/10.50/0, 0/10.50/0/10.75/1, 0/10.75/1/11.00/0, 0/11.00/0/11.25/1, 0/11.25/1/11.48/1, 1/0.00/0/1.50/1, 1/1.50/1/3.25/0, 1/3.25/0/5.50/1, 1/5.50/1/6.25/0, 1/6.25/0/10.25/1, 1/10.25/1/10.50/0, 1/10.50/0/10.75/1, 1/10.75/1/11.00/0, 1/11.00/0/11.25/1, 1/11.25/1/11.48/1, 2/0.00/0/3.00/1, 2/3.00/1/4.00/0, 2/4.00/0/6.00/1, 2/6.00/1/8.00/0, 2/8.00/0/9.00/1, 2/9.00/1/10.00/0, 2/10.00/0/11.48/0, 3/0.00/0/1.00/1, 3/1.00/1/2.00/0, 3/2.00/0/5.00/1, 3/5.00/1/7.00/0, 3/7.00/0/9.00/1, 3/9.00/1/10.00/0, 3/10.00/0/11.48/0}{1.00/0.25/3/0, 3.25/0.25/1/0, 5.00/0.25/3/0, 7.00/0.25/3/0, 9.00/0.25/3/0, 10.00/0.25/3/0, 10.25/0.25/1/0, 10.50/0.25/1/0, 10.75/0.25/1/0, 11.00/0.25/1/0, 1.25/0.25/0/1, 3.00/0.25/2/1, 5.25/0.25/0/1, 6.00/0.25/2/1, 10.00/0.25/2/1, 10.25/0.25/0/1, 10.50/0.25/0/1, 10.75/0.25/0/1, 11.00/0.25/0/1};
-\end{tikzpicture}}
-\subfigure[Implementatie met NAND-poorten.]{\begin{tikzpicture}[circuit logic US]
-\node[nand gate] (NO0) at (0,0.65) {};
-\node[nand gate] (NO1) at (0,-0.65) {};
-\draw (NO0.input 1) -- (NO0.input 1 -| -1,0) node[anchor=east,scale=0.75]{Set $S^*$};
-\draw (NO1.input 2) -- (NO1.input 2 -| -1,0) node[anchor=east,scale=0.75]{Reset $R^*$};
-\draw (NO0.output) -- (NO0.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q$};
-\draw (NO1.output) -- (NO1.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q_n$};
-\pdot{NO0.output -| 0.85,0};
-\pdot{NO1.output -| 0.85,0};
-\draw (NO1.output -| 0.85,0) -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input 2 -| -0.75,0) -- (NO0.input 2);
-\draw (NO0.output -| 0.85,0) -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input 1 -| -0.75,0) -- (NO1.input 1);
-\node[scale=0.75] (TT) at (3,0) {$\begin{array}{cc|c}S^*&R^*&Q_{\mbox{\tiny{next}}}\\\hline1&1&Q\\1&0&0\\0&1&1\\0&0&\mbox{N/A}\end{array}$};
-%\timebehav{5}{-1}{8.5}{4}{0.75}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$}{3/0/1/1/0,3/1/0/2/1,3/2/1/5/0,3/5/0/7/1,3/7/1/9/0,3/9/0/10/1,3/10/1/11.5/1, 2/0/1/3/0,2/3/0/4/1,2/4/1/6/0,2/6/0/8/1,2/8/1/9/0,2/9/0/10/1,2/10/1/11.5/1, 1/0/0/1.5/1,1/1.5/1/3.25/0,1/3.25/0/5.5/1,1/5.5/1/6.25/0,1/6.25/0/10.25/1,1/10.25/1/10.5/0,1/10.5/0/10.75/1,1/10.75/1/11/0,1/11/0/11.25/1,1/11.25/1/11.5/1, 0/0/1/1.25/0,0/1.25/0/3.5/1,0/3.5/1/5.25/0,0/5.25/0/7.25/1,0/7.25/1/9.25/0,0/9.25/0/10.25/1,0/10.25/1/10.5/0,0/10.5/0/10.75/1,0/10.75/1/11/0,0/11/0/11.25/1,0/11.25/1/11.5/1}{1/0.25/3/0,1.25/0.25/0/1,3/0.25/2/1,3.25/0.25/1/0,5/0.25/3/0,5.25/0.25/0/1,6/0.25/2/1,7/0.25/3/0,9/0.25/3/0,10/0.25/3/0,10/0.25/2/1,10.25/0.25/1/0,10.25/0.25/0/1,10.5/0.25/1/0,10.5/0.25/0/1,10.75/0.25/1/0,10.75/0.25/0/1,11/0.25/1/0,11/0.25/0/1};
-\timebehav{5.00}{-1.00}{8.50}{4}{0.75}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$}{0/0.00/1/1.50/0, 0/1.50/0/3.25/1, 0/3.25/1/5.50/0, 0/5.50/0/6.25/1, 0/6.25/1/10.25/0, 0/10.25/0/10.50/1, 0/10.50/1/10.75/0, 0/10.75/0/11.00/1, 0/11.00/1/11.25/0, 0/11.25/0/11.48/0, 1/0.00/0/1.25/1, 1/1.25/1/3.50/0, 1/3.50/0/5.25/1, 1/5.25/1/7.25/0, 1/7.25/0/9.25/1, 1/9.25/1/10.25/0, 1/10.25/0/10.50/1, 1/10.50/1/10.75/0, 1/10.75/0/11.00/1, 1/11.00/1/11.25/0, 1/11.25/0/11.48/0, 2/0.00/1/3.00/0, 2/3.00/0/4.00/1, 2/4.00/1/6.00/0, 2/6.00/0/8.00/1, 2/8.00/1/9.00/0, 2/9.00/0/10.00/1, 2/10.00/1/11.48/1, 3/0.00/1/1.00/0, 3/1.00/0/2.00/1, 3/2.00/1/5.00/0, 3/5.00/0/7.00/1, 3/7.00/1/9.00/0, 3/9.00/0/10.00/1, 3/10.00/1/11.48/1}{1.25/0.25/1/0, 3.00/0.25/2/0, 5.25/0.25/1/0, 6.00/0.25/2/0, 10.00/0.25/2/0, 10.25/0.25/1/0, 10.50/0.25/1/0, 10.75/0.25/1/0, 11.00/0.25/1/0, 1.00/0.25/3/1, 3.25/0.25/0/1, 5.00/0.25/3/1, 7.00/0.25/3/1, 9.00/0.25/3/1, 10.00/0.25/3/1, 10.25/0.25/0/1, 10.50/0.25/0/1, 10.75/0.25/0/1, 11.00/0.25/0/1};
-\end{tikzpicture}}
+\importtikzsubfigure{setResetLatch-nor}{Implementatie met NOR-poorten.}
+\importtikzsubfigure{setResetLatch-nand}{Implementatie met NAND-poorten.}
 \caption{Set-reset latch.}
 \figlab{setResetLatch}
 \end{figure}
-Figuur \ref{fig:setResetLatch} toont de NOR- en NAND-implementatie van de zogenaamde set-reset latch (ofwel \termen{SR-latch}). Dit component werkt met positieve terugkoppeling waarbij de uitgangen dus ook een deel van de ingangen vormen. We onthouden de uitvoer door bepaalde waarden aan de ingang aan te leggen, die resulteren in het opnieuw bekomen van dezelfde uitvoer. Bij de NOR-implementatie is dit $\left(S,R\right)=\left(0,0\right)$. De NAND-implementatie is in feite de volledig duale vorm en werkt volledig equivalent, alleen zijn $S$ en $R$ hier laag actieve signalen (zie \ref{s:negativeLogic}). We zouden ook negatieve logica aan $Q$ en $Q_n$ moeten toekennen maar omdat altijd geldt $Q_n=Q'$ kunnen we ook eenvoudigweg de twee uitgangen omdraaien en bekomen we positieve logica aan de uitgang. De stabiele invoer van de NAND-implementatie is dan ook $\left(S^*,R^*\right)=\left(1,1\right)$. Indien we \'e\'en van de ingangen laten afwijken van de stabiele toestand, komen we in een onstabiele toestand. Deze stabiele toestand kan maar op \'e\'en manier terug stabiel worden. Op deze manier kunnen we een nieuwe waarde toekennen aan de latch. Deze waarde zal ook verder gelden nadat de ingangen weer stabiel zijn. Hierdoor kent men ook de termen \termen{set} (1 in het geheugen) en \termen{reset} (0 in het geheugen) toe aan de ingangen. Indien beide ingangen afwijken van de stabiele ingangen is het gedrag niet meer bepaald. In dat geval zal de uiteindelijke waarde afhangen van de implementatie van de latch en de vertraging van de poorten. Bij identieke vertragingen leidt dit tot een oscillerend effect wat ook te zien is op de tijdsgrafieken op figuur \ref{fig:setResetLatch}. In een minder ideaal systeem zal de snelste poort\footnote{Uiteraard zijn de twee poorten in theorie even traag, in de praktijk zullen er altijd kleine verschillen zijn.} de uiteindelijke vertraging bepalen. Dit gedrag noemt men een ``\termen{race}'' (zie \ref{term:race}).
+\figref{setResetLatch} toont de NOR- en NAND-implementatie van de zogenaamde set-reset latch (ofwel \termen{SR-latch}). Dit component werkt met positieve terugkoppeling waarbij de uitgangen dus ook een deel van de ingangen vormen. We onthouden de uitvoer door bepaalde waarden aan de ingang aan te leggen, die resulteren in het opnieuw bekomen van dezelfde uitvoer. Bij de NOR-implementatie is dit $\left(S,R\right)=\left(0,0\right)$. De NAND-implementatie is in feite de volledig duale vorm en werkt volledig equivalent, alleen zijn $S$ en $R$ hier laag actieve signalen (zie \ref{s:negativeLogic}). We zouden ook negatieve logica aan $Q$ en $Q_n$ moeten toekennen maar omdat altijd geldt $Q_n=Q'$ kunnen we ook eenvoudigweg de twee uitgangen omdraaien en bekomen we positieve logica aan de uitgang. De stabiele invoer van de NAND-implementatie is dan ook $\left(S^*,R^*\right)=\left(1,1\right)$. Indien we \'e\'en van de ingangen laten afwijken van de stabiele toestand, komen we in een onstabiele toestand. Deze stabiele toestand kan maar op \'e\'en manier terug stabiel worden. Op deze manier kunnen we een nieuwe waarde toekennen aan de latch. Deze waarde zal ook verder gelden nadat de ingangen weer stabiel zijn. Hierdoor kent men ook de termen \termen{set} (1 in het geheugen) en \termen{reset} (0 in het geheugen) toe aan de ingangen. Indien beide ingangen afwijken van de stabiele ingangen is het gedrag niet meer bepaald. In dat geval zal de uiteindelijke waarde afhangen van de implementatie van de latch en de vertraging van de poorten. Bij identieke vertragingen leidt dit tot een oscillerend effect wat ook te zien is op de tijdsgrafieken op figuur \ref{fig:setResetLatch}. In een minder ideaal systeem zal de snelste poort\footnote{Uiteraard zijn de twee poorten in theorie even traag, in de praktijk zullen er altijd kleine verschillen zijn.} de uiteindelijke vertraging bepalen. Dit gedrag noemt men een ``\termen{race}'' (zie \ref{term:race}).
 \paragraph{Geklokte SR-latch}
-Bij de SR-latch is er geen sprake van een klokingang. We kunnen immers ook geheugens zonder klok gebruiken in bijvoorbeeld asynchrone schakelingen. Door extra hardware voor de SR-latch te plaatsen, kunnen we een \termen{geklokte SR-latch} bouwen. Figuur \ref{fig:clockedSRLatch} toont hoe we dit kunnen realiseren. Zolang het kloksignaal op 0 staat zal het geheugen zijn waarde behouden, indien het kloksignaal op 1 staat gelden dezelfde regels als bij een SR-latch.
+Bij de SR-latch is er geen sprake van een klokingang. We kunnen immers ook geheugens zonder klok gebruiken in bijvoorbeeld asynchrone schakelingen. Door extra hardware voor de SR-latch te plaatsen, kunnen we een \termen{geklokte SR-latch} bouwen. \figref{clockedSRLatch} toont hoe we dit kunnen realiseren. Zolang het kloksignaal op 0 staat zal het geheugen zijn waarde behouden, indien het kloksignaal op 1 staat gelden dezelfde regels als bij een SR-latch.
 \begin{figure}[hbt]
 \centering
-\subfigure[Met AND- en NOR-poorten.]{\begin{tikzpicture}[circuit logic US]
-\node[nor gate] (NO0) at (0,0.65) {};
-\node[nor gate] (NO1) at (0,-0.65) {};
-\node[and gate,anchor=output] (A0) at (NO0.input 1 -| -1,0) {};
-\node[and gate,anchor=output] (A1) at (NO1.input 2 -| -1,0) {};
-\draw (A0.output) -- (NO0.input 1);
-\draw (A1.output) -- (NO1.input 2);
-\draw (A0.input 2) -- (A0.input 2 -| -2,0) |- (A1.input 1);
-\pdot{-2,0};
-\draw (A0.input 1) -- (A0.input 1 -| -2.5,0) node[anchor=east,scale=0.75]{Set $S$};
-\draw (-2,0) -- (-2.5,0) node[anchor=east,scale=0.75]{Klok Clk};
-\draw (A1.input 2) -- (A1.input 2 -| -2.5,0) node[anchor=east,scale=0.75]{Reset $R$};
-\draw (NO0.output) -- (NO0.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q_n$};
-\draw (NO1.output) -- (NO1.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q$};
-\pdot{NO0.output -| 0.85,0};
-\pdot{NO1.output -| 0.85,0};
-\draw (NO1.output -| 0.85,0) -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input 2 -| -0.75,0) -- (NO0.input 2);
-\draw (NO0.output -| 0.85,0) -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input 1 -| -0.75,0) -- (NO1.input 1);
-\end{tikzpicture}}
-\subfigure[Met NAND-poorten.]{\begin{tikzpicture}[circuit logic US]
-\node[nand gate] (NO0) at (0,0.65) {};
-\node[nand gate] (NO1) at (0,-0.65) {};
-\node[nand gate,anchor=output] (NA0) at (NO0.input 1 -| -1,0) {};
-\node[nand gate,anchor=output] (NA1) at (NO1.input 2 -| -1,0) {};
-\draw (NA0.output) -- (NO0.input 1);
-\draw (NA1.output) -- (NO1.input 2);
-\draw (NA0.input 2) -- (NA0.input 2 -| -2,0) |- (NA1.input 1);
-\pdot{-2,0};
-\draw (NA0.input 1) -- (NA0.input 1 -| -2.5,0) node[anchor=east,scale=0.75]{Set $S$};
-\draw (-2,0) -- (-2.5,0) node[anchor=east,scale=0.75]{Klok Clk};
-\draw (NA1.input 2) -- (NA1.input 2 -| -2.5,0) node[anchor=east,scale=0.75]{Reset $R$};
-\draw (NO0.output) -- (NO0.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q$};
-\draw (NO1.output) -- (NO1.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q_n$};
-\pdot{NO0.output -| 0.85,0};
-\pdot{NO1.output -| 0.85,0};
-\draw (NO1.output -| 0.85,0) -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input 2 -| -0.75,0) -- (NO0.input 2);
-\draw (NO0.output -| 0.85,0) -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input 1 -| -0.75,0) -- (NO1.input 1);
-\end{tikzpicture}}
-\subfigure[Overgangstabel]{
-\begin{tikzpicture}
-\node[scale=0.75] (TT) at (3,0) {$\begin{array}{ccc|c}\mbox{Clk}&S&R&Q_{\mbox{\tiny{next}}}\\\hline0&-&-&Q\\1&0&0&Q\\1&0&1&0\\1&1&0&1\\1&1&1&\mbox{N/A}\end{array}$};
-\end{tikzpicture}
-}
+\importtikzsubfigure{clockedSRLatch-gates}{Met AND- en NOR-poorten.}
+\importtikzsubfigure{clockedSRLatch-nand}{Met NAND-poorten.}
+\importtikzsubfigure{clockedSRLatch-trans}{Overgangstabel.}
 \caption{Geklokte SR-latch.}
 \figlab{clockedSRLatch}
 \end{figure}
@@ -134,33 +66,8 @@ Bij de SR-latch is er geen sprake van een klokingang. We kunnen immers ook geheu
 Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het meestal de moeite om de geklokte SR-latch om te vormen tot een \termen{geklokte D-latch}. Een geklokte D-latch zoals op figuur \ref{fig:clockedDLatch} bouwt meestal extra logica rond een geklokte SR-latch die met de \termen{data-ingang $D$} de $S$ en $R$ ingang aanstuurt. D-latches zijn populair bij schakelingen waarbij bij iedere klokflank een nieuwe waarde wordt ingelezen. Soms wordt dan echter ook een SR-latch gebruikt omdat dit de logica rond deze geheugenmodules soms kan vereenvoudigen.
 \begin{figure}[hbt]
 \centering
-\subfigure[Implementatie.]{\begin{tikzpicture}[circuit logic US]
-\node[nand gate] (NO0) at (0,0.65) {};
-\node[nand gate] (NO1) at (0,-0.65) {};
-\node[nand gate,anchor=output] (NA0) at (NO0.input 1 -| -1,0) {};
-\node[nand gate,anchor=output] (NA1) at (NO1.input 2 -| -1,0) {};
-\node[not gate,anchor=output,rotate=-90,scale=0.6] (N0) at (NA1.input 1 -| -2.25,0) {};
-\draw (NA0.output) -- (NO0.input 1);
-\draw (NA1.output) -- (NO1.input 2);
-\draw (NA0.input 2) -- (NA0.input 2 -| -2,0) |- (NA1.input 1);
-\pdot{-2,0};
-\draw (NA0.input 1) -- (NA0.input 1 -| -2.5,0) node[anchor=east,scale=0.75]{Data $D$};
-\draw (-2,0) -- (-2.5,0) node[anchor=east,scale=0.75]{Klok Clk};
-\draw (NA1.input 2) -| (N0.output);
-\draw (N0.input) -- (N0.input |- NA0.input 1);
-\pdot{N0.input |- NA0.input 1};
-\draw (NO0.output) -- (NO0.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q$};
-\draw (NO1.output) -- (NO1.output -| 1.1,0) node[anchor=west,scale=0.75]{$Q_n$};
-\pdot{NO0.output -| 0.85,0};
-\pdot{NO1.output -| 0.85,0};
-\draw (NO1.output -| 0.85,0) -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input 2 -| -0.75,0) -- (NO0.input 2);
-\draw (NO0.output -| 0.85,0) -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input 1 -| -0.75,0) -- (NO1.input 1);
-\end{tikzpicture}}
-\subfigure[Overgangstabel]{
-\begin{tikzpicture}
-\node[scale=0.85] (TT) at (3,0) {$\begin{array}{cc|c}\mbox{Clk}&D&Q_{\mbox{\tiny{next}}}\\\hline0&-&Q\\1&0&0\\1&1&1\end{array}$};
-\end{tikzpicture}
-}
+\importtikzsubfigure{clockedDLatch-impl}{Implementatie.}
+\importtikzsubfigure{clockedDLatch-trans}{Overgangstabel.}
 \caption{Geklokte D-latch.}
 \figlab{clockedDLatch}
 \end{figure}
@@ -192,13 +99,8 @@ We kunnen dergelijke vertragingen grafisch weergeven zoals op de tijdsgrafieken 
 \centering
 \subfigure[Set-up-tijd??]{%TODO: ongeldige toestand op figuur zetten
 \begin{tikzpicture}
-%\timebehav{5}{-1}{14.5}{6}{1.3}{0/$Q$,1/$R^*$,2/$S^*$,3/$D'$,4/Clk,5/$D$}{5/0/0/1/1,5/1/1/5/1, 4/0/1/2.2/0,4/2.2/0/5/0, 3/0/1/2/0,3/2/0/5/0, 2/0/1/2.4/0,2/2.4/0/3.6/1,2/3.6/1/5/1, 1/0/0/3.4/1,1/3.4/1/5/1, 0/0/0/3.8/1,0/3.8/1/5/1, 5/6/0/7/1,5/7/1/11/1,4/6/1/7.5/0,4/7.5/0/11/0, 3/6/1/8/0,3/8/0/11/0, 2/6/1/8.4/0,2/8.4/0/8.9/1,2/8.9/1/11/1, 1/6/0/9.4/1,1/9.4/1/11/1, 0/6/0/9.8/1,0/9.8/1/11/1}{1/1/5/3,1/1.4/5/2,2/1.4/3/1,2.2/1.4/4/2,2.4/1.4/2/0, 7/1/5/3,7/1.4/5/2,7.5/1.4/4/2,8/1.4/3/1,8.4/1.4/2/0,8.9/1.4/2/0,9.4/1.4/1/0}
-%\timebehav{5.00}{-1.00}{6.70}{7}{0.80}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$,4/$D'$,5/Clk,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/8.00/1, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/5.40/1, 3/5.40/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/8.00/0, 5/0.00/1/4.00/0, 5/4.00/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/8.00/1}{3.80/1.40/1/0, 2.40/1.40/3/1, 2.00/1.40/4/2, 1.00/1.40/6/3, 4.00/1.40/5/3, 1.00/1.00/6/4};
-
 \timebehav{0.00}{0.00}{6.70}{7}{0.80}{0/$Qn$,1/$Q$,2/$R*$,3/$S*$,4/$Dn$,5/$Clk$,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/8.00/1, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/5.40/1, 3/5.40/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/8.00/0, 5/0.00/1/4.00/0, 5/4.00/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/8.00/1}{3.80/1.40/1/0, 2.40/1.40/3/1, 2.00/1.40/4/2, 1.00/1.40/6/3, 4.00/1.40/5/3, 1.00/1.00/6/4};
 \timebehav{8.00}{0.00}{6.70}{7}{0.80}{0/$Qn$,1/$Q$,2/$R*$,3/$S*$,4/$Dn$,5/$Clk$,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/5.70/1, 0/5.70/1/8.00/0, 0/8.00/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/4.30/0, 1/4.30/0/6.60/1, 1/6.60/1/7.10/0, 1/7.10/0/8.00/0, 2/0.00/0/2.90/1, 2/2.90/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/2.90/1, 3/2.90/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/8.00/0, 5/0.00/1/1.50/0, 5/1.50/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/8.00/1}{3.80/1.40/1/0, 4.30/1.40/1/0, 6.60/1.40/1/0, 2.40/1.40/3/1, 2.90/1.40/3/1, 5.20/1.40/0/1, 5.70/1.40/0/1, 1.50/1.40/5/2, 1.00/1.40/6/3, 1.50/1.40/5/3, 1.00/1.00/6/4};
-%\timebehav{13.00}{-1.00}{6.70}{7}{0.80}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$,4/$D'$,5/Clk,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/6.40/1, 0/6.40/1/8.00/0, 0/8.00/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/5.00/0, 1/5.00/0/6.60/1, 1/6.60/1/7.80/0, 1/7.80/0/8.00/0, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/3.60/1, 3/3.60/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/8.00/0, 5/0.00/1/2.20/0, 5/2.20/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/8.00/1}{3.80/1.40/1/0, 5.00/1.40/1/0, 6.60/1.40/1/0, 2.40/1.40/3/1, 3.60/1.40/3/1, 5.20/1.40/0/1, 6.40/1.40/0/1, 2.00/1.40/4/2, 1.00/1.40/6/3, 2.20/1.40/5/3, 1.00/1.00/6/4};
-%\timebehav{13.00}{-6.00}{6.70}{7}{0.80}{0/$Q_n$,1/$Q$,2/$R^*$,3/$S^*$,4/$D'$,5/Clk,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/6.20/1, 0/6.20/1/8.00/0, 0/8.00/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/4.80/0, 1/4.80/0/6.60/1, 1/6.60/1/7.60/0, 1/7.60/0/8.00/0, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/3.40/1, 3/3.40/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/8.00/0, 5/0.00/1/2.00/0, 5/2.00/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/8.00/1}{3.80/1.40/1/0, 4.80/1.40/1/0, 6.60/1.40/1/0, 2.40/1.40/3/1, 3.40/1.40/3/1, 5.20/1.40/0/1, 6.20/1.40/0/1, 2.00/1.40/5/2, 2.00/1.40/4/2, 1.00/1.40/6/3, 2.00/1.40/5/3, 1.00/1.00/6/4};
 \end{tikzpicture}
 \figlab{timebehavDLatchSetup}
 }
@@ -206,7 +108,6 @@ We kunnen dergelijke vertragingen grafisch weergeven zoals op de tijdsgrafieken 
 \begin{tikzpicture}
 \timebehav{0.00}{0.00}{6.70}{7}{0.80}{0/$Qn$,1/$Q$,2/$R*$,3/$S*$,4/$Dn$,5/$Clk$,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/7.70/1, 0/7.70/1/8.00/0, 0/8.00/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/6.30/0, 1/6.30/0/6.60/1, 1/6.60/1/8.00/1, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/4.90/1, 3/4.90/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/4.50/1, 4/4.50/1/8.00/1, 5/0.00/1/4.00/0, 5/4.00/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/3.50/0, 6/3.50/0/8.00/0}{3.80/1.40/1/0, 6.30/1.40/1/0, 6.60/1.40/1/0, 2.40/1.40/3/1, 4.90/1.40/3/1, 5.20/1.40/0/1, 2.00/1.40/4/2, 1.00/1.40/6/3, 3.50/1.40/6/3, 1.00/1.00/6/4, 3.50/1.00/6/4};
 \timebehav{8.00}{0.00}{6.70}{7}{0.80}{0/$Qn$,1/$Q$,2/$R*$,3/$S*$,4/$Dn$,5/$Clk$,6/$D$}{0/0.00/1/5.20/0, 0/5.20/0/8.00/0, 1/0.00/0/3.80/1, 1/3.80/1/8.00/1, 2/0.00/0/3.40/1, 2/3.40/1/8.00/1, 3/0.00/1/2.40/0, 3/2.40/0/5.20/1, 3/5.20/1/8.00/1, 4/0.00/1/2.00/0, 4/2.00/0/4.80/1, 4/4.80/1/8.00/1, 5/0.00/1/4.00/0, 5/4.00/0/8.00/0, 6/0.00/0/1.00/1, 6/1.00/1/3.80/0, 6/3.80/0/8.00/0}{3.80/1.40/1/0, 2.40/1.40/3/1, 2.00/1.40/4/2, 1.00/1.40/6/3, 3.80/1.40/6/3, 1.00/1.00/6/4, 3.80/1.00/6/4};
-%\timebehav{5}{-1}{14.5}{6}{1.3}{0/$Q$,1/$R^*$,2/$S^*$,3/$D'$,4/Clk,5/$D$}{5/0/1/2.2/0, 4/0/1/1/0, 3/0/0/3.2/1}{1/1/5/3}
 \end{tikzpicture}
 \figlab{timebehavDLatchHold}
 }
@@ -221,8 +122,8 @@ Deze grafische voorstelling toont twee bekende problemen die veroorzaakt worden 
 t_{\mbox{\tiny{set-up}}}=t_{pHL}\left(\mbox{inverter}\right)&\mbox{(vertraging van een hoog-naar-laag signaal door een inverter)}
 \end{array}
 \end{equation}
-Figuur \ref{fig:timebehavDLatchSetup} toont twee senarios. Bij het eerste wordt de set-up tijd gerespecteerd, bij het tweede faalt de toekenning. Dit komt omdat bij dit scenario $S^*$ weer hoog wordt alvorens $R^*$ een hoog signaal aanlegt. Indien we de vertragingen van de poorten doorrekenen komen we uit dat de vertraging van aan de inverter een cruciale rol speelt. Dit is ook enigszins logisch: indien we een 0 aan de data-ingang $D$ aanleggen zal gedurende deze periode 1 op zowel de $S$ als $R$ van de geklokte SR-latch worden aangelegd, wat eigenlijk een ongeldige invoer is.
- \item \termen{Houdtijd}: We moeten niet alleen het signaal op tijd aanleggen voor de klok een laag signaal aanlegt. Meestal moeten we het signaal daarna nog een tijdje laten staan om te vermijden dat de latch alsnog een foute waarde aanneemt. Figuur \ref{fig:timebehavDLatchHold} toont opnieuw twee scenarios.??%TODO: afwerken
+\figref{timebehavDLatchSetup} toont twee senarios. Bij het eerste wordt de set-up tijd gerespecteerd, bij het tweede faalt de toekenning. Dit komt omdat bij dit scenario $S^*$ weer hoog wordt alvorens $R^*$ een hoog signaal aanlegt. Indien we de vertragingen van de poorten doorrekenen komen we uit dat de vertraging van aan de inverter een cruciale rol speelt. Dit is ook enigszins logisch: indien we een 0 aan de data-ingang $D$ aanleggen zal gedurende deze periode 1 op zowel de $S$ als $R$ van de geklokte SR-latch worden aangelegd, wat eigenlijk een ongeldige invoer is.
+ \item \termen{Houdtijd}: We moeten niet alleen het signaal op tijd aanleggen voor de klok een laag signaal aanlegt. Meestal moeten we het signaal daarna nog een tijdje laten staan om te vermijden dat de latch alsnog een foute waarde aanneemt. \figref{timebehavDLatchHold} toont opnieuw twee scenarios.??%TODO: afwerken
 \end{itemize}
 \paragraph{Metastabiliteit}
 Een ander probleem dat komt kijken bij latches is de \termen{metastabiliteit}. Dit probleem treedt op bij de twee poorten\footnote{NAND- of NOR-implementatie maakt niet uit.} van de SR-latch en dus bijgevolg alle afgeleide latches. Als we bij de NOR-implementatie $\left(S,R\right)=\left(0,0\right)$ aanleggen, of bij een NAND-implementatie $\left(S^*,R^*\right)=\left(1,1\right)$, kunnen we deze poorten modelleren als NOT-poorten zoals op figuur \ref{fig:metastabilityNotGates}.
@@ -281,7 +182,7 @@ Latches geven echter problemen op het moment we verschillende latches na elkaar 
 \end{itemize}
 We zullen deze twee verschillende technieken in de volgende paragrafen toelichten.
 \paragraph{Master-slave flipflop}
-Een master-slave flipflop maakt gebruik van twee latches die beurtelings transparant zijn. De master (eerste latch) is transparant wanneer het kloksignaal laag is, de tweede latch is transparant bij een hoog kloksignaal. Gegroepeerd vormen we dus een geheugen die de laatste waarde opslaat die aan de ingang stond op het moment dat het kloksignaal laag was, en deze verder propageert op het moment dat het kloksignaal hoog is. Figuur \ref{fig:masterSlaveFlipflop} toont dit concept samen met een tijdsgrafiek.??
+Een master-slave flipflop maakt gebruik van twee latches die beurtelings transparant zijn. De master (eerste latch) is transparant wanneer het kloksignaal laag is, de tweede latch is transparant bij een hoog kloksignaal. Gegroepeerd vormen we dus een geheugen die de laatste waarde opslaat die aan de ingang stond op het moment dat het kloksignaal laag was, en deze verder propageert op het moment dat het kloksignaal hoog is. \figref{masterSlaveFlipflop} toont dit concept samen met een tijdsgrafiek.??
 \begin{figure}[hbt]
 \centering
 \subfigure[Implementatie.]{
@@ -317,7 +218,7 @@ Een master-slave flipflop maakt gebruik van twee latches die beurtelings transpa
 \figlab{masterSlaveFlipflop}
 \end{figure}
 \paragraph{Edge-triggered flipflop}
-Een Edge-trigger flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om om het signaal op te slaan die aan de ingang staat op het moment dat de klok van 0 naar 1 gaat. Figuur \ref{fig:edgeTriggeredFlipflop} toont een basis en meer uitgebreide implementatie samen met een tijdsgrafiek.
+Een Edge-trigger flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om om het signaal op te slaan die aan de ingang staat op het moment dat de klok van 0 naar 1 gaat. \figref{edgeTriggeredFlipflop} toont een basis en meer uitgebreide implementatie samen met een tijdsgrafiek.
 \begin{figure}[hbt]
 \centering
 \subfigure[Basisimplementatie.]{
@@ -421,7 +322,7 @@ Er bestaan analoog aan de latches ook verschillende types flipflops. Hierbij is 
  \item De \termen{excitatietabel}: deze tabel beschrijft de verschillende vormen van gedrag van het component aan de linkerkant, en aan de rechterkant hoe we dit gedrag kunnen verwezenlijken met de ingangen.
 \end{itemize}
 Deze twee tabellen zijn niet strikt het omgekeerde omdat de excitatietabel een kolom voorziet voor $Q$ en $Q_{\mbox{\tiny{next}}}$, terwijl de karakteristieke tabel uitsluitend \'e\'en kolom aan de rechterkant voorziet. In de volgende paragrafen zullen we de verschillende types flipflops bespreken met hun karakteristieke- en excitatietabel.
-\paragraph{SR-flipflop} De \termen{SR-flipflop} ofwel \termen{set-reset flipflop} werkt volledig analoog aan een SR-latch, alleen verandert de waarde uitsluitend op het moment dat de klok van een laag signaal naar een hoog signaal gaat. De karakteristieke tabel is dan ook volledig equivalent met deze van de SR-latch op figuur \ref{fig:setResetLatch}. Figuur \ref{fig:setResetFlipflop} toont de interface en de karakteristieke- en excitatietabel van de SR-flipflop.
+\paragraph{SR-flipflop} De \termen{SR-flipflop} ofwel \termen{set-reset flipflop} werkt volledig analoog aan een SR-latch, alleen verandert de waarde uitsluitend op het moment dat de klok van een laag signaal naar een hoog signaal gaat. De karakteristieke tabel is dan ook volledig equivalent met deze van de SR-latch op figuur \ref{fig:setResetLatch}. \figref{setResetFlipflop} toont de interface en de karakteristieke- en excitatietabel van de SR-flipflop.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -447,7 +348,7 @@ Q&Q_{\mbox{\tiny{next}}}&S&R\\\hline
 \caption{Set-reset flipflop.}
 \figlab{setResetFlipflop}
 \end{figure}
-\paragraph{D-flipflop} Ook de \termen{data-flipflop} of \termen{D-flipflop} is conceptueel equivalent aan zijn latch tegenhanger. Op het moment dat de klok van laag naar hoog gaat, zal het signaal dat aan de data-ingang $D$ staat in het geheugen worden geladen. Hierdoor is het bouwen van schakelingen met D-flipflops meestal zeer eenvoudig. Merk dus op dat elk signaal slechts \'e\'en klokperiode bewaard wordt. Figuur \ref{fig:dataFlipflop} toont het symbool samen met de karakteristieke- en excitatietabel.
+\paragraph{D-flipflop} Ook de \termen{data-flipflop} of \termen{D-flipflop} is conceptueel equivalent aan zijn latch tegenhanger. Op het moment dat de klok van laag naar hoog gaat, zal het signaal dat aan de data-ingang $D$ staat in het geheugen worden geladen. Hierdoor is het bouwen van schakelingen met D-flipflops meestal zeer eenvoudig. Merk dus op dat elk signaal slechts \'e\'en klokperiode bewaard wordt. \figref{dataFlipflop} toont het symbool samen met de karakteristieke- en excitatietabel.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -471,7 +372,7 @@ Q&Q_{\mbox{\tiny{next}}}&D\\\hline
 \caption{Data-flipflop.}
 \figlab{dataFlipflop}
 \end{figure}
-\paragraph{T-flipflop} Een nieuwe variant is de zogenaamde \termen{toggle-flipflop} ofwel \termen{T-flipflop}. De toggle-flipflop heeft een `toggle'-ingang $T$. Indien deze ingang bij een stijgende klokflank hoog is, zal de flipflop het omgekeerde van zijn huidige waarde opslaan, de zogenaamde `\termen{toggle}'-operatie. Indien $T=0$, blijft opgeslagen toestand dezelfde. We kunnen een toggle-flipflop bouwen met behulp van een data-flipflop en een XOR-poort. Figuur \ref{fig:toggleFlipflop} toont het symbool, een mogelijke implementatie en de karakteristieke- en excitatietabel van de T-flipflop.
+\paragraph{T-flipflop} Een nieuwe variant is de zogenaamde \termen{toggle-flipflop} ofwel \termen{T-flipflop}. De toggle-flipflop heeft een `toggle'-ingang $T$. Indien deze ingang bij een stijgende klokflank hoog is, zal de flipflop het omgekeerde van zijn huidige waarde opslaan, de zogenaamde `\termen{toggle}'-operatie. Indien $T=0$, blijft opgeslagen toestand dezelfde. We kunnen een toggle-flipflop bouwen met behulp van een data-flipflop en een XOR-poort. \figref{toggleFlipflop} toont het symbool, een mogelijke implementatie en de karakteristieke- en excitatietabel van de T-flipflop.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US]
@@ -596,7 +497,7 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 \end{figure}
 \subsection{Registers}
 \label{ss:registers}
-\paragraph{Register}Een flipflop kan \'e\'en bit opslaan voor \'e\'en of meerdere klokflanken. Meestal willen we echter meerdere bits opslaan om bijvoorbeeld een getal voor te stellen. Dit kunnen we doen door middel van verschillende flipflops die elk een individuele bit opslaan. Een \termen{register} is in dat opzicht eigenlijk ook een $n$-flipflop. Omdat we vaak meerdere bits opslaan defini\"eren we dus het registercomponent. Een register neemt enige functionaliteit weg van de flipflops: zo kunnen we niet beslissen dat een individuele flipflop een bit aan de ingang opslaat, en de andere flipflops niet. Desalniettemin maken ze schema's eenvoudiger en worden registers op chipniveau verkocht. Verder biedt een dergelijk chip naast geheugenopslag ook extra functies aan: bijvoorbeeld schuifregisters en tellers. Een register heeft tradioneel ingangen voor de klok $\mbox{Clk}$, data $D_1, D_2,\ldots, D_n$, load $\mbox{LD}$ en assynchrone preset $\mbox{Pr}^*$ en clear $\mbox{Clr}^*$. Als uitgangen heeft het minstens de data-uitgangen $Q_1, Q_2, \ldots, Q_n$. Enkel indien de load hoog is bij een rising edge zal de waarde die aan de data-ingangen staat opgeslagen worden. Indien dit niet zo is, wordt de vorige waarde behouden. Figuur \ref{fig:register} toont de interface van een register, samen met een mogelijke implementatie. We werken hier met D-flipflops en multiplexers om te kiezen tussen het laden van een nieuwe waarde en een vorige waarde. Meestal wordt de clear en preset in negatieve logica ge\"implementeerd\footnote{Vandaar de asterisk (*) bij $\mbox{Clr}^*$ en $\mbox{Pr}^*$.}.
+\paragraph{Register}Een flipflop kan \'e\'en bit opslaan voor \'e\'en of meerdere klokflanken. Meestal willen we echter meerdere bits opslaan om bijvoorbeeld een getal voor te stellen. Dit kunnen we doen door middel van verschillende flipflops die elk een individuele bit opslaan. Een \termen{register} is in dat opzicht eigenlijk ook een $n$-flipflop. Omdat we vaak meerdere bits opslaan defini\"eren we dus het registercomponent. Een register neemt enige functionaliteit weg van de flipflops: zo kunnen we niet beslissen dat een individuele flipflop een bit aan de ingang opslaat, en de andere flipflops niet. Desalniettemin maken ze schema's eenvoudiger en worden registers op chipniveau verkocht. Verder biedt een dergelijk chip naast geheugenopslag ook extra functies aan: bijvoorbeeld schuifregisters en tellers. Een register heeft tradioneel ingangen voor de klok $\mbox{Clk}$, data $D_1, D_2,\ldots, D_n$, load $\mbox{LD}$ en assynchrone preset $\mbox{Pr}^*$ en clear $\mbox{Clr}^*$. Als uitgangen heeft het minstens de data-uitgangen $Q_1, Q_2, \ldots, Q_n$. Enkel indien de load hoog is bij een rising edge zal de waarde die aan de data-ingangen staat opgeslagen worden. Indien dit niet zo is, wordt de vorige waarde behouden. \figref{register} toont de interface van een register, samen met een mogelijke implementatie. We werken hier met D-flipflops en multiplexers om te kiezen tussen het laden van een nieuwe waarde en een vorige waarde. Meestal wordt de clear en preset in negatieve logica ge\"implementeerd\footnote{Vandaar de asterisk (*) bij $\mbox{Clr}^*$ en $\mbox{Pr}^*$.}.
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{\begin{tikzpicture}
@@ -645,7 +546,7 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 \caption{Interface en implementatie van een 4-bit register.}
 \figlab{register}
 \end{figure}
-\paragraph{Schuifregister}We hebben reeds vermeld dat men de meeste registers uitrust met extra functionaliteit. Een concreet voorbeeld hiervan is het \termen{schuifregister}. Indien we met normale registers werken kunnen we per klokflank tussen twee acties kiezen: een nieuwe waarde inladen (``load''), of de oude waarde behouden. Een schuifregisters voegt daar een functionaliteit aan toe: de oude waarde \'e\'en plaats naar rechts schuiven, en deze waarde bij de rising edge inladen. Hiervoor bevat een schuifregister een extra ingang $\mbox{Shft}$ die indien actief, de waarde van het register opschuift. Sommige shuifregisters bevatten bovendien extra ingangen om te bepalen of er naar links of rechts geschoven moet worden. $\mbox{SerIn}$ is een andere ingang, deze bepaalt welke bit er op de vrijgekomen plaats komt te staan. Figuur \ref{fig:shiftRegister} toont de implementatie van een schuifregister die de data naar rechts opschuift.
+\paragraph{Schuifregister}We hebben reeds vermeld dat men de meeste registers uitrust met extra functionaliteit. Een concreet voorbeeld hiervan is het \termen{schuifregister}. Indien we met normale registers werken kunnen we per klokflank tussen twee acties kiezen: een nieuwe waarde inladen (``load''), of de oude waarde behouden. Een schuifregisters voegt daar een functionaliteit aan toe: de oude waarde \'e\'en plaats naar rechts schuiven, en deze waarde bij de rising edge inladen. Hiervoor bevat een schuifregister een extra ingang $\mbox{Shft}$ die indien actief, de waarde van het register opschuift. Sommige shuifregisters bevatten bovendien extra ingangen om te bepalen of er naar links of rechts geschoven moet worden. $\mbox{SerIn}$ is een andere ingang, deze bepaalt welke bit er op de vrijgekomen plaats komt te staan. \figref{shiftRegister} toont de implementatie van een schuifregister die de data naar rechts opschuift.
 \begin{figure}[hbt]
 \centering
 \subfigure[Implementatie]{\begin{tikzpicture}[scale=1.25]
@@ -770,7 +671,7 @@ Bij een \termen{asynchrone teller}, \termen{asynchronous counter} ofwel \termen{
 \figlab{synchroneCounter}
 \end{figure}
 \paragraph{Synchrone teller}
-Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen. Dit doen we door de volgende toestand reeds vooraf uit te rekenen en bij het kloksignaal deze toestand op te slaan in de flipflops. Hoe we deze toestand berekenen staat ons in principe vrij net als de keuze van het type flipflop. Figuur \ref{fig:synchroneCounter} toont een implementatie met T-flipflops. Merk op dat ondanks het feit dat de nieuwe toestand berekend wordt voor de klokflank de teller daarom geen vertraging kan teweeg brengen: het berekenen van de volgende toestand van een teller met een grote woordlengte vraagt immers ook veel tijd (en kan dus het kritieke pad worden). Het voordeel van een synchrone teller is dat we deze berekening parallel doen met andere berekeningen die van de teller afhangen. Doordat de volgende toestand ook meteen beschikbaar is zullen berekeningen die afhangen van de teller ook onmiddellijk kunnen worden uitgerekend.
+Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen. Dit doen we door de volgende toestand reeds vooraf uit te rekenen en bij het kloksignaal deze toestand op te slaan in de flipflops. Hoe we deze toestand berekenen staat ons in principe vrij net als de keuze van het type flipflop. \figref{synchroneCounter} toont een implementatie met T-flipflops. Merk op dat ondanks het feit dat de nieuwe toestand berekend wordt voor de klokflank de teller daarom geen vertraging kan teweeg brengen: het berekenen van de volgende toestand van een teller met een grote woordlengte vraagt immers ook veel tijd (en kan dus het kritieke pad worden). Het voordeel van een synchrone teller is dat we deze berekening parallel doen met andere berekeningen die van de teller afhangen. Doordat de volgende toestand ook meteen beschikbaar is zullen berekeningen die afhangen van de teller ook onmiddellijk kunnen worden uitgerekend.
 \begin{figure}[hbt]
 \centering
 \subfigure[Algemene implementatie]{\begin{tikzpicture}[circuit logic US]
@@ -877,8 +778,8 @@ Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen.
 \figlab{loadableSynchroneCounterTotal}
 \end{figure}
 \paragraph{Parallel-laadbare bidirectionele teller}
-Een speciaal geval van een synchrone teller is een \termen{parallel-laadbare bidirectionele teller}. Een implementatie van zo'n teller staat op figuur \ref{fig:loadableSynchroneCounter}. Deze teller is \termen{parallel laadbaar} wanneer we de waarde van de teller kunnen zetten op een ingegeven waarde in \'e\'en klokflank\footnote{Het schuifregister of figuur \ref{fig:shiftRegister} kan bijvoorbeeld ook sequentieel geladen worden, waarbij we per klokflank een bit van het getal inschuiven.}. Bij het laden wordt de LD ingang hoog gezet. In het andere geval dienen we elke bit te berekenen. Hiervoor wordt op figuur \ref{fig:loadableSynchroneCounter} een naamloos component ingevoerd. De nieuwe waarde van een bit wordt ge\"inverteerd indien er geteld wordt op deze bit. In het andere geval blijft de bit onveranderd. Een bit wordt opgeteld indien de vorige bit geteld wordt en de bit \'e\'en is bij een telling naar boven (analoog aan een overdracht (``carry'') dus), of nul en een telling naar beneden (een lening (``borrow'') dus). Bij het berekenen van de eerste bit $Q_0$ gebruiken we logischerwijs de counter enabled CE ingang. Figuur \ref{fig:loadableSynchroneCounterLambda} toont een implementatie voor een dergelijk component. De teller die we hiermee ontwikkelen verenigt de meeste functionaliteiten die we in tellers kunnen terugvinden. Figuur \ref{fig:counterInterface} toont een interface die vaak gebruik wordt voor tellers. Indien een functionaliteit niet wordt aangeboden wordt de vermelding eenvoudigweg weggelaten.
-\paragraph{Modulo-teller}Tot nu toe hebben we enkel teller geconstrueerd die tellen van 0 tot het maximaal voor te stellen getal. Bij een $n$-bit teller is dit dus $2^n-1$. In de praktijk komt het geregeld voor dat we tellen tot een bepaalde waarde om daarna terug bij 0 te beginnen. Stel bijvoorbeeld dat we een teller maken die het aantal minuten bijhoudt. Indien dit getal boven de 60 gaat komt het aantal minuten terug op 0, en dient het aantal uren verhoogd te worden. Ook controllers die elektronica aansturen dienen soms een beperkt aantal toestanden met de regelmaat van de klok te herhalen, zelden zijn dit aantal toestanden een macht van twee. Voor dergelijke problemen kunnen we een \termen{Modulo-teller} gebruiken. Een modulo-teller bestaat traditioneel uit een teller met daarrond extra logica die indien de maximale waarde wordt vastgesteld, in de volgende klokflank een 0 in de teller laadt. We kunnen deze teller veralgemenen door ook het tellen naar beneden toe te laten, in dat geval dient de maximale waarde in de klokcyclus na 0 ingeladen te worden. Figuur \ref{fig:moduloCounter} toont een algemeen geval van een 4-bit teller.
+Een speciaal geval van een synchrone teller is een \termen{parallel-laadbare bidirectionele teller}. Een implementatie van zo'n teller staat op figuur \ref{fig:loadableSynchroneCounter}. Deze teller is \termen{parallel laadbaar} wanneer we de waarde van de teller kunnen zetten op een ingegeven waarde in \'e\'en klokflank\footnote{Het schuifregister of figuur \ref{fig:shiftRegister} kan bijvoorbeeld ook sequentieel geladen worden, waarbij we per klokflank een bit van het getal inschuiven.}. Bij het laden wordt de LD ingang hoog gezet. In het andere geval dienen we elke bit te berekenen. Hiervoor wordt op figuur \ref{fig:loadableSynchroneCounter} een naamloos component ingevoerd. De nieuwe waarde van een bit wordt ge\"inverteerd indien er geteld wordt op deze bit. In het andere geval blijft de bit onveranderd. Een bit wordt opgeteld indien de vorige bit geteld wordt en de bit \'e\'en is bij een telling naar boven (analoog aan een overdracht (``carry'') dus), of nul en een telling naar beneden (een lening (``borrow'') dus). Bij het berekenen van de eerste bit $Q_0$ gebruiken we logischerwijs de counter enabled CE ingang. \figref{loadableSynchroneCounterLambda} toont een implementatie voor een dergelijk component. De teller die we hiermee ontwikkelen verenigt de meeste functionaliteiten die we in tellers kunnen terugvinden. \figref{counterInterface} toont een interface die vaak gebruik wordt voor tellers. Indien een functionaliteit niet wordt aangeboden wordt de vermelding eenvoudigweg weggelaten.
+\paragraph{Modulo-teller}Tot nu toe hebben we enkel teller geconstrueerd die tellen van 0 tot het maximaal voor te stellen getal. Bij een $n$-bit teller is dit dus $2^n-1$. In de praktijk komt het geregeld voor dat we tellen tot een bepaalde waarde om daarna terug bij 0 te beginnen. Stel bijvoorbeeld dat we een teller maken die het aantal minuten bijhoudt. Indien dit getal boven de 60 gaat komt het aantal minuten terug op 0, en dient het aantal uren verhoogd te worden. Ook controllers die elektronica aansturen dienen soms een beperkt aantal toestanden met de regelmaat van de klok te herhalen, zelden zijn dit aantal toestanden een macht van twee. Voor dergelijke problemen kunnen we een \termen{Modulo-teller} gebruiken. Een modulo-teller bestaat traditioneel uit een teller met daarrond extra logica die indien de maximale waarde wordt vastgesteld, in de volgende klokflank een 0 in de teller laadt. We kunnen deze teller veralgemenen door ook het tellen naar beneden toe te laten, in dat geval dient de maximale waarde in de klokcyclus na 0 ingeladen te worden. \figref{moduloCounter} toont een algemeen geval van een 4-bit teller.
 \begin{figure}[hbt]
 \centering
 \subfigure[Algemeen geval]{
@@ -1264,7 +1165,7 @@ Tot nu toe hebben we toestanden altijd voorgesteld met letters. Uiteraard dienen
 Uiteraard dienen we ons niet te beperken tot \'e\'en van deze implementaties. Indien het aantal uitgangen bijvoorbeeld niet voldoet om een straightforward codering toe te passen kunnen we dit bijvoorbeeld aanvullen met extra bits die een minimal-bit change gebruiken. We bespreken nu de verschillende coderingstechnieken in detail.
 \paragraph{Straightforward codering}Een codering kan triviaal zijn als de toestand een duidelijke betekenis heeft. Dit is doorgaans het geval bij bijvoorbeeld tellers. Ook indien we over een Moore-machine beschikken waarbij het elke toestand een andere uitgang heeft en de uitgang bevat minstens $\left\lceil\log_2 n\right\rceil$ bits kunnen we een straightforward codering toepassen. In dat geval gebruiken we de uitgang van een toestand ook als zijn codering. Merk op dat in dat geval we geen logica nodig hebben die de toestand naar de uitgang codeert. Deze codering is echter niet altijd ideaal. We reduceren dan de logica aan de uitgang, maar meestal resulteert dit in complexere logica om de transities te implementeren. Verder veranderen er meestal heel wat bits per overgang. We herinneren ons dat een CMOS-implementatie enkel energie verbruikt wanneer deze omschakelt. Indien we dus veel flipflops van waarde moeten laten veranderen betekent dit dus een groter vermogenverbruik. Een tweede aspect is dat niet elke bit tegelijk verandert. Vermits er meerdere bits zijn kan dit problemen opleveren: er bestaat een gevaar voor \termen{glitches}, een tijdelijk foute waarde op een lijn ten gevolge van asynchroon gedrag aan de ingang. Indien het resultaat van een teller dus nog in een andere schakeling gebruikt wordt leidt dit mogelijk tot problemen.??%TODO:extend
 \paragraph{One-hotcodering}We voorzien een flipflop voor elke toestand, hierdoor is het aantal flipflops \bigoh{n} in tegenstelling tot de \bigoh{\log_2n}. Bij elke toestand is er \'e\'en flipflop hoog, alle andere flipflops zijn laag. Het spreekt dus voor zich dat we deze configuratie enkel kunnen gebruiken bij een klein aantal toestanden. One-hotcoderingen hebben enkele voordelen: het ontwerp van een dergelijke schakeling is vrij eenvoudig en is dus snel te realiseren. Verder is het ideaal voor een implementatie bij een FPGA. Een one-hotcodering verbruikt doorgaans weinig vermogen aangezien bij elke overgang tussen twee verschillende toestanden er twee flipflops omschakelen. Tot slot zijn ook de combinatorische schakelingen voor de uitgangen en de transities doorgaans vrij goedkoop. Het grootste nadeel van een one-hot codering is dan ook de kostprijs voor de flipflops.
-\paragraph{Minimal-bit-change}Indien de kostprijs en vermogenverbruik een belangrijke factor zijn maken we meestal gebruik van de minimal-bit-change. Hierbij proberen we ervoor te zorgen dat de som van het aantal bits die veranderen van alle overgangen minimaal is. Dit probleem is echter niet triviaal en is NP-compleet. Bij een klein aantal toestanden kunnen we alle mogelijkheden uitproberen, bij een groter aantal maakt men gebruik van programma's zoals bijvoorbeeld MUSE, JEDI, MUSTANG,... Deze programma's werken op basis van heuristieken en geven meestal een benaderende oplossing. Soms worden er ook kansen bij de overgangen betrokken om het de kosten en het vermogenverbruik verder te minimaliseren. Een typisch voorbeeld is de \termen{Gray-code teller}\footnote{Vernoemd naar Frank Gray (1887-1969), fysicus bij Bell Labs.}. Gray ontwikkelde een teller die bij elke overgang slechts \'e\'en bit veranderde. Figuur \ref{fig:grayCodeCounter} toont het toestandsdiagram van een 2-bit en 3-bit teller. Op de bogen plaatsen we hier het aantal bits die veranderen. Het feit dat we niet voor een straightforward implementatie voor een teller kiezen kan vreemd lijken. Deze teller dient dan ook meestal niet om de binaire waarde onmiddellijk uit te lezen, maar kan bijvoorbeeld gebruikt worden als een controller die een lus vormt over een vast aantal toestanden. Over het concreet oplossen van dit probleem gaan we niet verder in.
+\paragraph{Minimal-bit-change}Indien de kostprijs en vermogenverbruik een belangrijke factor zijn maken we meestal gebruik van de minimal-bit-change. Hierbij proberen we ervoor te zorgen dat de som van het aantal bits die veranderen van alle overgangen minimaal is. Dit probleem is echter niet triviaal en is NP-compleet. Bij een klein aantal toestanden kunnen we alle mogelijkheden uitproberen, bij een groter aantal maakt men gebruik van programma's zoals bijvoorbeeld MUSE, JEDI, MUSTANG,... Deze programma's werken op basis van heuristieken en geven meestal een benaderende oplossing. Soms worden er ook kansen bij de overgangen betrokken om het de kosten en het vermogenverbruik verder te minimaliseren. Een typisch voorbeeld is de \termen{Gray-code teller}\footnote{Vernoemd naar Frank Gray (1887-1969), fysicus bij Bell Labs.}. Gray ontwikkelde een teller die bij elke overgang slechts \'e\'en bit veranderde. \figref{grayCodeCounter} toont het toestandsdiagram van een 2-bit en 3-bit teller. Op de bogen plaatsen we hier het aantal bits die veranderen. Het feit dat we niet voor een straightforward implementatie voor een teller kiezen kan vreemd lijken. Deze teller dient dan ook meestal niet om de binaire waarde onmiddellijk uit te lezen, maar kan bijvoorbeeld gebruikt worden als een controller die een lus vormt over een vast aantal toestanden. Over het concreet oplossen van dit probleem gaan we niet verder in.
 \begin{figure}[hbt]
 \centering
 \subfigure[Gray-code (minimal-bit-change)]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
