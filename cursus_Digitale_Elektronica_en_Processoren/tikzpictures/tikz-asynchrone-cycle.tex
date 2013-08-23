@@ -3,26 +3,32 @@
 \def\dy{0.5};
 \def\de{0.2};
 \def\dxe{0.4};
-\coordinate (XE) at (6.5*\dxe,0);
+\coordinate (XE) at (16*\dxe,0);
 \draw[thick,->] (0,-0.1) -- (0,5*\dye+\de);
-\draw[thick,->] (-0.1,0) -- (6.5*\dxe,0);
-\foreach \i/\t in {0/$s_1$,1/$s_0$,2/$b$,3/$a$,4/$i$} {
+\draw[thick,->] (-0.1,0) -- (XE);
+\foreach \i/\t in {0/$s_0$,1/$s_1$,2/$b'$,3/$a'$,4/$i$} {
   \draw (0,\dye*\i+0.5*\dy+0.5*\de) node [scale=0.8,anchor=east] {\t};
   \coordinate (I\i-0) at (0,\dye*\i+0.5*\de);
   \coordinate (I\i-1) at (0,\dye*\i+0.5*\de+\dy);
-  \draw[dotted] (I\i-0) -- ++(6.5*\dxe,0);
-  \draw[dotted] (I\i-1) -- ++(6.5*\dxe,0);
+  \draw[dotted] (I\i-0) -- ++(16*\dxe,0);
+  \draw[dotted] (I\i-1) -- ++(16*\dxe,0);
 }
-\foreach \i/\j/\k/\x in {4/0/1/1,2/1/0/5,1/1/0/4,0/1/0/3} {
+\foreach \i/\j/\k/\x in {4/0/1/1,0/1/0/3.8} {
   \coordinate (E\i-0) at (\x*\dxe,\dye*\i+0.5*\dy+0.5*\de);
   \draw[thick] (I\i-\j) -- (I\i-\j -| E\i-0) |- (I\i-\k -| XE);
 }
-\foreach \i/\j/\k/\xa/\xb in {3/1/0/2/6} {
+\foreach \i/\j/\k/\xa/\xb in {3/0/1/3.4/6.2} {
   \coordinate (E\i-0) at (\xa*\dxe,\dye*\i+0.5*\dy+0.5*\de);
   \coordinate (E\i-1) at (\xb*\dxe,\dye*\i+0.5*\dy+0.5*\de);
   \draw[thick] (I\i-\j) -- (I\i-\j -| E\i-0) |- (I\i-\k -| E\i-1) |- (I\i-\j -| XE);
 }
-\foreach \ia/\xa/\ib/\xb in {4/0/3/0,4/0/2/0,3/0/0/0,0/0/2/0,1/0/3/1} {
+\coordinate (TMP) at (I1-0);
+\foreach \i/\ja/\jb/\x in {0/0/1/5.8,1/1/0/8.6,2/0/1/10.6,3/1/0/13.4,4/0/1/15.4} {
+  \coordinate (E1-\i) at (\x*\dxe,\dye+0.5*\dy+0.5*\de);
+  \draw[thick] (TMP) -- (I1-\ja -| E1-\i) -- (I1-\jb -| E1-\i);
+  \coordinate (TMP) at (I1-\jb -| E1-\i);
+}
+\foreach \ia/\xa/\ib/\xb in {4/0/3/0,4/0/0/0,0/0/3/1} {
   \coordinate (MID) at ($0.5*(E\ia-\xa)+0.5*(E\ib-\xb)$);
   \draw[->,gray] (E\ia-\xa) .. controls (E\ia-\xa -| MID) and (E\ib-\xb -| MID) .. (E\ib-\xb);
 }
