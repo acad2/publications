@@ -2423,15 +2423,26 @@ $i$&$i$&$d$&$-$&$a$&$1$
 Op basis van deze tabel kunnen we verder bepalen welke toestanden compatibel zijn. Door de definitie van compatibele toestanden toe te passen zien we dat enkel $c$ en $g$ compatibel met elkaar zijn. Vermits er geen alternatieven zijn, voegen we beide toestanden samen en bekomen we \tblref{stateTableAltIteration2}. We kunnen opmerken dat deze tabel volledig identiek is aan de \tblref{stateTableIteration2}. Bijgevolg kunnen we deze tabel ook niet verder minimaliseren. We kunnen ook besluiten dat zelfs wanneer we een keuze kunnen maken tussen verschillende alternatieven, dit niet noodzakelijk betekent dat we een andere ofwel minder minimale configuratie zullen uitkomen. Soms kan men via verschillende keuzes toch hetzelfde of een even goedkope configuratie bekomen. Anderzijds is dit geen algemeen geldend principe: de keuze welke toestanden zullen worden samengevoegd kan wel degelijk verschillende eindconfiguraties opleveren.
 \paragraph{Leidend voorbeeld} Bij wijzen van oefening kan de lezer de toestandstabel van het leidend voorbeeld minimaliseren. De oplossing staat in \sscref{asynchronousSequentialMinimalisation}.
 \subsection{Stap 3: Codering van de toestanden}
+Net als bij synchrone schakelingen moeten we elk van deze toestanden op een manier coderen in het geheugen. Het probleem is dat we bij het coderen van toestanden bij asynchrone schakelingen op nieuwe problemen stuiten.
 \subsubsection{Terminologie}
 \label{term:race}
-Net als bij synchrone schakelingen moeten we elk van deze toestanden op een manier coderen in het geheugen. Het probleem is dat we bij het coderen van toestanden bij asynchrone schakelingen op nieuwe problemen stuiten. Deze problemen brengen nieuwe terminologie met zich mee die we eerst zullen introduceren:
+Deze problemen brengen nieuwe terminologie met zich mee die we eerst zullen introduceren:
 \begin{itemize}
  \item \termen{Race}: Een fenomeen dat optreedt wanneer door \'e\'en ingangsbit te veranderen er minstens twee toestandsvariabelen moeten veranderen.
  \item \termen{Critical race}: Indien een race tot een tijdelijk verkeerde toestand leidt (de codering van een andere toestand dus) spreken we van een critical race.
  \item \termen{Cycle}: Een sequentieel circuit werkt met terugkoppeling. Door deze terugkoppeling kunnen er oscillerende effecten optreden. Een race die in een oscillerend effect uitmondt heet een cycle.
 \end{itemize}
 Het optreden van deze een critical race of cycle hangt af van de vertragingskarakteristieken van de poorten. Het spreekt voor zich dat we trachten om deze fenomenen te voorkomen. Daarom zullen we ook technieken ontwikkelen die ons toelaten een goede toestandscodering te ontwikkelen waarbij we deze problemen reeds kunnen voorkomen.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{asynchrone-impl1}{Implementatie 1.}
+\importtikzsubfigure{asynchrone-impl2}{Implementatie 2.}
+\importtikzsubfigure{asynchrone-expected}{Verwacht gedrag.}
+\importtikzsubfigure{asynchrone-cycle}{Cycle.}
+%\importtikzsubfigure{asynchrone-criticalrace}{Critical race.}
+\caption{Voorbeelden van een cycle en critical race.}
+\end{figure}
+
 \paragraph{}Het aantal bits dat verandert tussen twee toestanden is een belangrijke eigenschap, deze wordt vaak ook de ``\termen{Hamming distance}'' ofwel ``\termen{Hammingafstand}'' genoemd, en is enkel gedefinieerd tussen twee bitreeksen van dezelfde lengte.
 \subsubsection{Elimineren van critical races}
 Er zijn grofweg drie methodes waarmee we critical races kunnen elimineren. We zullen deze methodes ordenen volgens het vermogen om problemen op te lossen. Zo is de laatste methode in staat om alle problemen op te lossen, maar zal deze meestal een hoge kostprijs met zich meebrengen. We proberen dus de problemen op te lossen in de volgorde waarin de methodes worden voorgesteld. Verder zullen de methodes meestal in staat zijn een gedeelte van het probleem op te lossen, waarna de andere methodes de overige problemen kunnen oplossen. De methodes zijn:
