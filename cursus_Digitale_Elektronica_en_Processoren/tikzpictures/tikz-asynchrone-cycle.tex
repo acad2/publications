@@ -28,6 +28,12 @@
   \draw[thick] (TMP) -- (I1-\ja -| E1-\i) -- (I1-\jb -| E1-\i);
   \coordinate (TMP) at (I1-\jb -| E1-\i);
 }
+\coordinate (TMP) at (I2-0);
+\foreach \i/\ja/\jb/\x in {0/0/1/5.8,1/1/0/8.6,2/0/1/10.6,3/1/0/13.4,4/0/1/15.4} {
+  \coordinate (E2-\i) at (\x*\dxe,\dye+0.5*\dy+0.5*\de);
+  \draw[thick] (TMP) -- (I2-\ja -| E2-\i) -- (I2-\jb -| E2-\i);
+  \coordinate (TMP) at (I2-\jb -| E2-\i);
+}
 \foreach \ia/\xa/\ib/\xb in {4/0/3/0,4/0/0/0,0/0/3/1} {
   \coordinate (MID) at ($0.5*(E\ia-\xa)+0.5*(E\ib-\xb)$);
   \draw[->,gray] (E\ia-\xa) .. controls (E\ia-\xa -| MID) and (E\ib-\xb -| MID) .. (E\ib-\xb);
