@@ -17,9 +17,11 @@
 \draw (A1.input 2) -| (I0 |- YI) node[anchor=south]{$i$};
 \draw (A2.input 1) -| (I1 |- YI) node[anchor=south]{$e$};
 \draw (B0O) -- ++(0.25*\dxg,0) node[anchor=south]{$q$};
-\draw (B0.output) node[anchor=south west]{$s_1$};
+\draw (B0.output) node[anchor=south]{$s_1$};
 \draw (A0.output) node[anchor=south west]{$s_0$};
 \draw (A0.input 2) -- (A0.input 2 -| I1); \pdot{A0.input 2 -| I1}
 \draw (A0.input 3) -- (A0.input 3 -| I0); \pdot{A0.input 3 -| I0}
+\draw (A1.output) node[anchor=south west]{$a'$};
+\draw (A2.output) node[anchor=north west]{$b'$};
 \pdot{B0O}
 \end{tikzpicture}
