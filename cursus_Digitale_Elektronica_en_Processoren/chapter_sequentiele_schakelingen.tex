@@ -1009,7 +1009,7 @@ $F$&$D/0$&$E/0$\\
 $G$&$F/0$&$G/0$
 \end{tabular}}}
 \caption{Toestandstabellen van de leidende voorbeelden.}
-\label{tbl:toestandstabel}
+\tbllab{toestandstabel}
 \end{table}
 \paragraph{Toestandstabel}Een toestandsdiagram is een grafische voorstelling. Bij een groot aantal toestanden of bij bijvoorbeeld invoer van een toestandsdiagram in een computer, maken we meestal gebruik van een alternatieve voorstelling: de \termen{toestandstabel}. De rijen in de toestandstabel stellen de verschillende toestanden voor, de kolommen stellen de invoercombinatie voor. In een cel $i,j$ voor toestand $A_i$ en invoer $I_j$ plaatsen we de volgende toestand. In het geval van een Moore-machine voorzien we een extra kolom die per rij de uitgangscombinatie van deze toestand weergeeft. Bij een Mealy-machine plaatsen we in elke cel naast de volgende toestand de uitgangscombinatie voor toestand $A_i$ en invoer $I_j$. Ook hier plaatsen we een slash om de volgende toestand van de uitvoer te onderscheiden. De toestandstabellen van de leidende voorbeelden staan in tabel \ref{tbl:toestandstabel}.
 \paragraph{Opstellen van een toestandsdiagram en -tabel}Zoals reeds gezegd is het opstellen van een toestandsdiagram of -tabel een kunst. Een algemene techniek die gehanteerd kan worden is het aantal klokflanken te bepalen dat we geheugen moeten voorzien.  In het geval van de voorbeelden is dit drie klokflanken voor de Moore-machine en twee klokflanken voor de Mealy-machine. Vervolgens kunnen we een toestandstabel of -diagram opstellen die de overgang naar verschillende toestanden van het geheugen voorstelt. Zo komt $A$ in beide voorbeelden overeen met de toestand waarin we starten, er is bijgevolg nog geen sprake over inhoud in het geheugen. $B$ en $C$ betekent dat er na de eerste klokflank respectievelijk een 0 en een 1 in het geheugen opgeslagen is. $D$, $E$, $F$ en $G$ spreken over de respectievelijke geheugentoestanden $00$, $01$, $10$ en $11$. Voor de Mealy-machine is dit reeds voldoende. Bij de Moore-machine introduceren we nog een extra niveau. De overgangen op dit laatste niveau houden in dat we de oudste bit vergeten en de nieuwe bit memoriseren. Hierdoor gaan alle overgangen van een toestand op het laatste niveau enkel naar toestanden op hetzelfde niveau. We kunnen machinaal eenvoudig een tabel opstellen voor een arbitraire diepte. Een groot nadeel is dat indien we $n$ klokflanken willen memoriseren, we $2^{n+1}-1$ toestanden bekomen. Na het opstellen van deze tabel dienen we enkel de specificaties nog te vertalen in de uitgangen van de toestanden in het geval van een Moore-machine, en de overgangen bij een Mealy-machine. Meestal kan men echter door logisch te redeneren voorkomen dat we dergelijke grote toestandstabellen moeten opstellen. In de volgende subsectie reduceren we het aantal toestanden tot de theoretische ondergrens. Of we de initi\"ele tabel opstellen met de hier beschreven methode of door logisch te redeneren verandert niets aan het resultaat van de volgende stap.
@@ -1114,7 +1114,7 @@ $B$&$B/0$&$E/0$\\
 $E$&$B/1$&$A/0$
 \end{tabular}}}
 \caption{Geminimaliseerde toestandstabellen van de leidende voorbeelden.}
-\label{tbl:minimaalToestandstabel}
+\tbllab{minimaalToestandstabel}
 \end{table}
 \paragraph{Een formeel algoritme}
 De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{alg:minimizeFSM}. ??%TODO: complete algorithm
@@ -1237,7 +1237,7 @@ Toestand&0&1\\\hline
 \texttt{100}&\texttt{010/1}&\texttt{001/0}\\
 \end{tabular}
 \caption{Codering van de Mealy-machine van het leidend voorbeeld.}
-\label{tbl:mealyBitRepresentation}
+\tbllab{mealyBitRepresentation}
 \end{table}
 Bij het zoeken naar een minimal-bit-change voor de Moore-machine maken we gebruik van een greedy algoritme. We stellen eerst een tabel op die het aantal bindingen tussen twee toestanden bevat. Vervolgens wijzen we coderingen aan toestanden toe volgens het aantal bindingen tussen de toestanden. De bindingstabel staat beschreven in tabel \ref{tbl:mooreBitRepresentationBinding}. We zien dat $E$ en $J$ een dubbele binding bevat. We kennen hier de waarde $01$ toe aan $E$ en $11$ bij $J$. Verder is $B$ gelinkt aan $E$ en daarom geven we dit de waarde $00$. $A$ krijgt ten slotte de waarde $10$.
 \begin{table}[hbt]
@@ -1250,7 +1250,7 @@ $B$&-&1&1&1\\
 $E$&-&-&0&2\\
 $J$&-&-&-&0\\
 \end{tabular}
-\label{tbl:mooreBitRepresentationBinding}
+\tbllab{mooreBitRepresentationBinding}
 }
 \subtable[Coderingstabel]{\begin{tabular}{c|cc|c}
 Toestand&0&1&Uitgang\\\hline
@@ -1260,7 +1260,7 @@ Toestand&0&1&Uitgang\\\hline
 \texttt{11}&\texttt{00}&\texttt{01}&\texttt{1}\\
 \end{tabular}}
 \caption{Codering van de Moore-machine van het leidend voorbeeld.}
-\label{tbl:mooreBitRepresentation}
+\tbllab{mooreBitRepresentation}
 \end{table}
 \subsubsection{Stap 3B: De keuze van het type flipflop}
 Nadat we elke toestand kunnen voorstellen met een sequentie aan bits, dienen we flipflops te voorzien om deze toestand bij te houden. Hierbij hebben we de keuze tussen de verschillende flipflops die we in \ref{sss:typesFlipflops} besproken hebben. Elk van deze types zal een specifieke combinatorische logica vereisen met specifieke kosten en vertraging. Om de meest optimale schakeling te realiseren zullen we altijd alle types moeten uitproberen. Verder kunnen we ook voor verschillende bits een verschillend type flipflop voorzien. Hierop gaan we echter niet in. De ervaring leert ons wel dat voor verschillende toepassingen verschillende soorten flipflops een zekere voorkeur genieten. De typische toepassingen zeg maar. Een cruciale factor is ook het aantal don't cares. In het algemeen is het zo dat hoe meer don't cares de combinatorische schakeling bevat, hoe eenvoudiger te implementeren. Sommige flipflops introduceren makkelijker don't cares dan andere flipflops.
@@ -1282,7 +1282,7 @@ Ontwerp&\verb/--/&\verb/-/&\verb/++/&\verb/+/\\\hline
 Toepassingen&\multicolumn{2}{c|}{veel veranderingen}&tijdelijke geheugens&tellers, frequentiedelers\\\hline
 \end{tabular}}
 \caption{Keuze van het type flipflop.}
-\label{tbl:whichFlipflop}
+\tbllab{whichFlipflop}
 \end{table}
 \subsection{Stap 4: Implementeren van de combinatorische logica}
 Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de volgende toestand berekent, en de logica die de uitgang bepaalt. We bespreken elk van deze onderdelen apart.
@@ -1298,7 +1298,7 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$J$&$K$\\\hline
 1&0&-&1\\
 1&1&-&0\\
 \end{tabular}
-\label{tbl:excitationTablesFlipflopsJK}}
+\tbllab{excitationTablesFlipflopsJK}}
 \subtable[SR]{
 \begin{tabular}{c|c|cc}
 $Q$&$Q_{\mbox{\small{next.}}}$&$S$&$R$\\\hline
@@ -1307,7 +1307,7 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$S$&$R$\\\hline
 1&0&0&1\\
 1&1&-&0\\
 \end{tabular}
-\label{tbl:excitationTablesFlipflopsSR}}
+\tbllab{excitationTablesFlipflopsSR}}
 \subtable[D]{
 \begin{tabular}{c|c|c}
 $Q$&$Q_{\mbox{\small{next.}}}$&$D$\\\hline
@@ -1316,7 +1316,7 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$D$\\\hline
 1&0&0\\
 1&1&1\\
 \end{tabular}
-\label{tbl:excitationTablesFlipflopsD}}
+\tbllab{excitationTablesFlipflopsD}}
 \subtable[T]{
 \begin{tabular}{c|c|c}
 $Q$&$Q_{\mbox{\small{next.}}}$&$T$\\\hline
@@ -1325,9 +1325,9 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$T$\\\hline
 1&0&1\\
 1&1&0\\
 \end{tabular}
-\label{tbl:excitationTablesFlipflopsT}}
+\tbllab{excitationTablesFlipflopsT}}
 \caption{Excitatietabellen van de verschillende flipflops}
-\label{tbl:excitationTablesFlipflops}
+\tbllab{excitationTablesFlipflops}
 \end{table}
 Op basis van deze tabellen kunnen we nu de excitatiefuncties berekenen. Deze functies bevatten traditioneel veel don't cares. Deze don't cares hebben drie oorzaken:
 \begin{itemize}
@@ -1346,7 +1346,7 @@ Toestand&0&1&Uitgang\\\hline
 \texttt{01}&\texttt{11}&\texttt{10}&\texttt{0}\\
 \texttt{11}&\texttt{00}&\texttt{01}&\texttt{1}\\
 \end{tabular}
-\label{tbl:stateTableMooreComb}}
+\tbllab{stateTableMooreComb}}
 \subtable[D-flipflop]{\begin{tabular}{ccc|cc}
 $F_0$&$F_1$&$I_0$&$D_0$&$D_1$\\\hline
 0&0&0&0&0\\
@@ -1358,7 +1358,7 @@ $F_0$&$F_1$&$I_0$&$D_0$&$D_1$\\\hline
 1&1&0&0&0\\
 1&1&1&0&1
 \end{tabular}
-\label{tbl:stateTableMooreCombLinD}}
+\tbllab{stateTableMooreCombLinD}}
 \subtable[T-flipflop]{\begin{tabular}{ccc|cc}
 $F_0$&$F_1$&$I_0$&$T_0$&$T_1$\\\hline
 0&0&0&0&0\\
@@ -1370,7 +1370,7 @@ $F_0$&$F_1$&$I_0$&$T_0$&$T_1$\\\hline
 1&1&0&1&1\\
 1&1&1&1&0
 \end{tabular}
-\label{tbl:stateTableMooreCombLinT}}
+\tbllab{stateTableMooreCombLinT}}
 \subtable[JK-flipflop]{\begin{tabular}{ccc|cccc}
 $F_0$&$F_1$&$I_0$&$J_0$&$K_0$&$J_1$&$K_1$\\\hline
 0&0&0&0&-&0&-\\
@@ -1382,7 +1382,7 @@ $F_0$&$F_1$&$I_0$&$J_0$&$K_0$&$J_1$&$K_1$\\\hline
 1&1&0&-&1&-&0\\
 1&1&1&-&1&-&1
 \end{tabular}
-\label{tbl:stateTableMooreCombLinJK}}
+\tbllab{stateTableMooreCombLinJK}}
 \subtable[SR-flipflop]{\begin{tabular}{ccc|cccc}
 $F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$\\\hline
 0&0&0&0&-&0&-\\
@@ -1394,9 +1394,9 @@ $F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$\\\hline
 1&1&0&0&1&-&0\\
 1&1&1&0&1&0&1
 \end{tabular}
-\label{tbl:stateTableMooreCombLinSR}}
+\tbllab{stateTableMooreCombLinSR}}
 \caption{Voorstelling van de transitiefunctie van de Moore-machine.}
-\label{tbl:stateTableMooreCombLin}
+\tbllab{stateTableMooreCombLin}
 \end{table}
 Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In het geval we niet met D-flipflops werken dienen we nog een extra stap te beschouwen: in dat geval beschouwen we voor elke flipflop het tupple $\left(F_i,D_i\right)$. Hierbij geldt $F_i=Q$ en $D_i=Q_{\mbox{\small{next.}}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft in de excitatietabellen (zie tabel \ref{tbl:excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen. Voorbeelden hiervan voor respectievelijk de T-, JK- en SR-flipflop staan in tabellen \ref{tbl:stateTableMooreCombLinT}, \ref{tbl:stateTableMooreCombLinJK} en \ref{tbl:stateTableMooreCombLinSR}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren. We minimaliseren eerste de functies met behulp van Karnaugh-kaarten en implementeren dan vervolgens de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben (1 per D- en T-flipflop en 2 per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op figuur \ref{fig:mooreCombImpl} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie.
 \begin{figure}[hbt]
@@ -1798,7 +1798,7 @@ $F_0$&$F_1$&$F_2$&$I_0$&$T_0$&$T_1$&$T_2$&$S_0$&$R_0$&$S_1$&$R_1$&$S_2$&$R_2$\\\
 1&0&0&1&1&0&1&0&1&0&-&1&0
 \end{tabular}}}
 \caption{Implementatie van de Mealy-schakeling met verschillende soorten flipflops.}
-\label{tbl:stateTableMealyCombLin}
+\tbllab{stateTableMealyCombLin}
 \end{table}
 We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitite naar toestand $E$ op figuur \ref{fig:minimaalToestandsdiagramMealy}, verder bevatten de kolommen voor toestand $A$ en $B$ respectievelijk 2 en 3 enen. Bij de JK-flipflop heeft toestand $A$ 1 transitie naar $A$ en 1 transitie uit $A$. We zien dat dit ook overeenkomt met het aantal enen bij $J_2$ en $K_2$. We kunnen dus besluiten dat dergelijke eigenschappen handig kunnen zijn bij het controleren van onze tabel. Een andere eigenschap is dat bij een T-flipflop er altijd twee bits veranderen. Bij elke rij zijn er dus ofwel 0 enen ofwel 2. Op figuur \ref{fig:mealyCombImpl} implementeren we de D- en JK-flipflop variant van de Mealy-machine het implementeren van de T- en SR-flipflop variant wordt als een oefening voor de lezer overgelaten.
 \begin{figure}[hbt]
@@ -1977,7 +1977,7 @@ $F_0$&$F_1$&$F_2$&$I_0$&$O_0$\\\hline
 1&0&0&1&0
 \end{tabular}}
 \caption{Uitgangslogica van de Moore- en Mealy-machine naast hun coderingstabellen.}
-\label{tbl:mooreMealyTables}
+\tbllab{mooreMealyTables}
 \end{table}
 toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun coderingstabellen. Daarna is het alleen nog een kwestie van de schakeling te implementeren, dit wordt meestal opnieuw gedaan met behulp van Karnaugh-kaarten. We implementeren vervolgens op figuur \ref{fig:mealyTotalImplementation} een volledige sequenti\"ele schakeling gebaseerd op de Mealy-machine met een D-flipflop. Merk op dat we in deze figuur gebruik maken van de $\overline{Q}$-uitgangen. Hoewel we in de figuur de logica implementeren met AND-OR logica zal men in de praktijk altijd opteren voor NAND- en NOR-poorten bij de implementatie. Een andere interessante vaststelling dat het geheugen van de tweede flipflop niet gebruikt wordt. We kunnen bijgevolg deze flipflop en de logica er rond weglaten. Deze extra flipflop is het gevolg van een slecht gekozen toestandscodering. Dit drukt niet alleen de kosten, maar zorgt ook voor een kleinere vertraging waardoor we de klokfrequentie kunnen opdrijven. We gaan kort in op het tijdsgedrag in subsectie \ref{ss:timeBehaviorSeqSync}.
 \begin{figure}[hbt]
@@ -2117,7 +2117,7 @@ $I:0\rightarrow 1$&$E=1$&$Q\rightarrow 1$\\
 $E:1\rightarrow 0$&&$Q\rightarrow 0$
 \end{tabular}
 \caption{Formele beschrijving van het leidend voorbeeld.}
-\label{tbl:formalDescriptionAsyncExample}
+\tbllab{formalDescriptionAsyncExample}
 \end{table}
 Merk verder op dat het onmogelijk is dat $Q$ een 1 bevat en $E$ een 0.
 \subsection{Stap 1: Opstellen van een toestandstabel}
@@ -2135,7 +2135,7 @@ $e$&$0$&$0$&$1$\\
 (onmogelijk)&$0$&$1$&$0$\\
 $f$&$0$&$1$&$1$
 \end{tabular}
-\label{tbl:configTableAsync}}
+\tbllab{configTableAsync}}
 \subtable[Toestandstabel]{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
 $a$&$a$&$b$&$-$&$c$&$0$\\
@@ -2145,7 +2145,7 @@ $d$&$-$&$b$&$d$&$c$&$0$\\
 $e$&$a$&$e$&$f$&$-$&$1$\\
 $f$&$-$&$e$&$f$&$c$&$1$
 \end{tabular}
-\label{tbl:stateTableAsync}
+\tbllab{stateTableAsync}
 }
 \caption{Configuratie- en toestandstabel van het leidend voorbeeld.}
 \end{table}
@@ -2260,7 +2260,7 @@ $k$&$-$&$b$&$k$&$e$&$1$\\
 $l$&$-$&$l$&$k$&$-$&$1$\\
 $m$&$m$&$l$&$-$&$e$&$1$
 \end{tabular}
-\label{tbl:stateTableAsyncMiniOrig}}
+\tbllab{stateTableAsyncMiniOrig}}
 \subtable[Tabel na partitionering]{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
 $a$&$a$&$f$&$-$&$c$&$0$\\
@@ -2275,7 +2275,7 @@ $i$&$i$&$e$&$-$&$f$&$1$\\
 $j$&$b$&$-$&$-$&$j$&$0$\\
 $m$&$m$&$b$&$-$&$e$&$1$
 \end{tabular}
-\label{tbl:stateTableAsyncMiniParty}}
+\tbllab{stateTableAsyncMiniParty}}
 \caption{Evolutie van de toestandstabel bij het minimaliseren voor en na partitioneren.}
 \end{table}
 Allereerst passen we de initialisatiestap van het partitiealgoritme toe. We dienen hierbij buiten een verschillende uitvoerconfiguratie ook rekening te houden met verschillende don't care configuraties. Dit leidt tot de volgende partitie:
@@ -2373,7 +2373,7 @@ $d$&$g$&$a$&$d$&$d$&$1$\\
 $g$&$b$&$g$&$c$&$-$&$0$\\
 $i$&$i$&$d$&$-$&$a$&$1$
 \end{tabular}}
-\label{tbl:stateTableIteration1}}
+\tbllab{stateTableIteration1}}
 \subtable[Iteratie 2 en 3]{\small{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
 $a$&$a$&$a$&$b$&$c$&$0$\\
@@ -2382,7 +2382,7 @@ $c$&$b$&$c$&$c$&$c$&$0$\\
 $d$&$c$&$a$&$d$&$d$&$1$\\
 $i$&$i$&$d$&$-$&$a$&$1$
 \end{tabular}}
-\label{tbl:stateTableIteration2}}
+\tbllab{stateTableIteration2}}
 \caption{Evolutie van de toestandstabel bij het minimaliseren voor en na twee iteraties.}
 \end{table}
 Hierbij voegen we dus de toestanden samen. We zullen in deze tekst de groep $\left\{b,h,m\right\}$ volledig uitwerken. Deze groep hebben we voorgesteld door $b$. Bij de invoer $\left(0,0\right)$ zien we dat zowel $b$ als $h$ een don't care bevatten. Voor $m$ is dit echter een stabiele toestand bijgevolg is deze ingang ook een stabiele toestand. Bij de configuratie $\left(0,1\right)$ wijzen alle toestanden naar $b$, vermits $b$ in de groep zit die later $b$ zal worden, plaatsen we $b$ in de tabel. Indien $\left(1,1\right)$ op de ingang wordt aangelegd gaan $b$ en $h$ naar $h$, $m$ bevat een don't care. We kunnen dus zonder problemen ook $h$ invullen bij die don't care. $h$ is een onderdeel van de groep die later toestand $b$ zal worden. Bijgevolg kunnen we ook voor deze kolom $b$ invullen. In de laatste configuratie ten slotte -- $\left(1,0\right)$ -- gaan $h$ en $m$ naar $e$. We zien dat $e$ een onderdeel is van de groep $\left\{d,e\right\}$. Deze groep zal dus later voorgesteld worden door de toestand $d$. Bijgevolg vullen we $d$ in. Indien we deze procedure ook toepassen op de andere groepen resulteert dit in tabel \ref{tbl:stateTableIteration1}. Hiermee zijn we aan het einde gekomen van de eerste iteratie. Vermist we echter een andere toestandstabel hebben tegenover het begin van de iteratie, dienen we een nieuwe iteratie aan te vatten. Hierbij berekenen we opnieuw een compatibiliteitsrelatie: $\equiv_1$. We zullen de berekening van deze relatie achterwege laten, vermits we reeds de vorige relatie uitgebreid hebben beschreven. We defini\"eren $\equiv_1$ op symmetrie na als volgt:
@@ -2396,8 +2396,32 @@ Het Merger-diagram van deze relatie staat op figuur \ref{fig:mergerDiagram1}. Hi
 \end{array}
 \end{equation}
 Op basis van deze partitie ruilen we dus $\left\{c,g\right\}$ in voor een nieuwe toestand $c$. De vernieuwde toestandstabel is dan tabel \ref{tbl:stateTableIteration2}. Merk op dat we niet enkel de rij van toestand $c$ moeten aanpassen. Ook toestanden die naar $g$ kunnen springen, springen nu naar $c$, bijvoorbeeld toestand $d$. Opnieuw hebben we dus de toestandstabel aangepast. Dit impliceert dat we nogmaals een iteratie uitvoeren. De compatibiliteitsrelatie $\equiv_2$ blijkt echter leeg te zijn, geen enkele toestand is dus compatibel met een andere. Dit leidt tot een Merger-diagram zoals op figuur \ref{fig:mergerDiagram2}. We kunnen bijgevolg geen toestanden groeperen waardoor de tabel onveranderd blijft. We hebben dus het aantal toestanden geminimaliseerd tot 5 zoals in tabel \ref{tbl:stateTableIteration2}.
-??%\paragraph{Alternatieve groepering}TODO: mss een alternatieve groepering tonen
-%\paragraph{Leidend voorbeeld} Bij wijzen van oefening kan de lezer de toestandstabel van het leidend voorbeeld 
+\paragraph{Alternatieve groepering}Bij de eerste iteratie bij het samenvoegen van de toestanden, konden we kiezen tussen twee vormen van groeperingen. Ofwel groeperen we $c$ en $j$ ofwel $g$ en $j$. Anderzijds hadden we ook $f$ en $j$ kunnen samenvoegen, maar deze configuratie is minder voordelig. We zullen bij wijze van extra voorbeeld ook het alternatieve scenario bespreken. Wanneer we dit alternatieve scenario uitwerken bekomen we na \'e\'en iteratie de waarden op \tblref{stateTableAltIteration1}.
+\begin{table}[hbt]
+\centering
+\subtable[Iteratie 1]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&$a$&$a$&$b$&$c$&$0$\\
+$b$&$b$&$b$&$b$&$d$&$1$\\
+$c$&$-$&$c$&$g$&$g$&$0$\\
+$d$&$g$&$a$&$d$&$d$&$1$\\
+$g$&$b$&$g$&$g$&$g$&$0$\\
+$i$&$i$&$d$&$-$&$a$&$1$
+\end{tabular}}
+\tbllab{stateTableAltIteration1}}
+\subtable[Iteratie 2 en 3]{\small{\begin{tabular}{c|cccc|c}
+\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
+$a$&$a$&$a$&$b$&$c$&$0$\\
+$b$&$b$&$b$&$b$&$d$&$1$\\
+$c$&$b$&$c$&$c$&$c$&$0$\\
+$d$&$c$&$a$&$d$&$d$&$1$\\
+$i$&$i$&$d$&$-$&$a$&$1$
+\end{tabular}}
+\tbllab{stateTableAltIteration2}}
+\caption{Evolutie van de toestandstabel bij een alternatieve minimalisering voor en na twee iteraties.}
+\end{table}
+Op basis van deze tabel kunnen we verder bepalen welke toestanden compatibel zijn. Door de definitie van compatibele toestanden toe te passen zien we dat enkel $c$ en $g$ compatibel met elkaar zijn. Vermits er geen alternatieven zijn, voegen we beide toestanden samen en bekomen we \tblref{stateTableAltIteration2}. We kunnen opmerken dat deze tabel volledig identiek is aan de \tblref{stateTableIteration2}. Bijgevolg kunnen we deze tabel ook niet verder minimaliseren. We kunnen ook besluiten dat zelfs wanneer we een keuze kunnen maken tussen verschillende alternatieven, dit niet noodzakelijk betekent dat we een andere ofwel minder minimale configuratie zullen uitkomen. Soms kan men via verschillende keuzes toch hetzelfde of een even goedkope configuratie bekomen. Anderzijds is dit geen algemeen geldend principe: de keuze welke toestanden zullen worden samengevoegd kan wel degelijk verschillende eindconfiguraties opleveren.
+\paragraph{Leidend voorbeeld} Bij wijzen van oefening kan de lezer de toestandstabel van het leidend voorbeeld minimaliseren. De oplossing staat in \sscref{asynchronousSequentialMinimalisation}.
 \subsection{Stap 3: Codering van de toestanden}
 \subsubsection{Terminologie}
 \label{term:race}
@@ -2430,7 +2454,7 @@ $b$&	$b$&	$b$&	$c$&	$d$&	$01$\\
 $c$&	$a$&	$c$&	$c$&	$d$&	$10$\\
 $d$&	$b$&	$-$&	$a$&	$d$&	$11$\\
 \end{tabular}}
-\label{tbl:coderingTableAsyncM0}}
+\tbllab{coderingTableAsyncM0}}
 \subtable[Na methode 1]{\small{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
 $00$&	\stAs{$00$}&	\ndAs{$11$}&	\stAs{$00$}&	$01$&		$00$\\
@@ -2438,7 +2462,7 @@ $11$&	\stAs{$11$}&	\stAs{$11$}&	$01$&		$10$&		$01$\\
 $01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\ndAs{$10$}&	$10$\\
 $10$&	$11$&		$-$&		$00$&		\stAs{$10$}&	$11$\\
 \end{tabular}}
-\label{tbl:coderingTableAsyncM1}}
+\tbllab{coderingTableAsyncM1}}
 \subtable[Na methode 2]{\small{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
 $00$&	\stAs{$00$}&	$11$&		\stAs{$00$}&	$01$&		$00$\\
@@ -2446,7 +2470,7 @@ $11$&	\stAs{$11$}&	\stAs{$11$}&	$01$&		$100$&		$01$\\
 $01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\stAs{$00$}&	$10$\\
 $10$&	$11$&		$-$&		$00$&		\stAs{$10$}&	$11$\\
 \end{tabular}}
-\label{tbl:coderingTableAsyncM2}}
+\tbllab{coderingTableAsyncM2}}
 \subtable[Na methode 3]{\small{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
 $00$&	\stAs{$00$}&	$11$&		\stAs{$00$}&	$01$&		$00$\\
@@ -2454,7 +2478,7 @@ $11$&	\stAs{$11$}&	\stAs{$11$}&	\stAs{$00$}&	$100$&		$01$\\
 $01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\stAs{$00$}&	$10$\\
 $10$&	\ndAs{$11$}&	$-$&		\stAs{$10$}&	\stAs{$10$}&	$11$\\
 \end{tabular}}
-\label{tbl:coderingTableAsyncM3}}
+\tbllab{coderingTableAsyncM3}}
 \caption{Coderingstabellen van het voorbeeld na het toepassen van de verschillende methodes.}
 \end{table}
 We voeren ook wat nieuwe syntax in die het ons in de volgende stappen makkelijker zal maken: stabiele configuraties zullen we noteren tussen twee vertical bars (``$|$'') in de tabel. Cellen waarbij de toestand naar een andere toestand gaat waarbij de encodering minstens twee bits verandert worden onderlijnd. Deze configuraties zullen we nog trachtten aan te passen met de volgende methodes.
