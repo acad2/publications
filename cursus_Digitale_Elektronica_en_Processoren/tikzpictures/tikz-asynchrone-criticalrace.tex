@@ -1,0 +1,25 @@
+\begin{tikzpicture}
+\def\dyg{1};
+\def\dxg{1.25};
+\node[and gate,inputs={inverted,normal,inverted}] (A0) at (0,\dyg) {};
+\node[and gate] (A1) at (0,0) {};
+\node[and gate] (A2) at (0,-\dyg) {};
+\node[or gate] (B0) at (\dxg,-0.5*\dyg) {};
+\coordinate (B0O) at (B0.output -| 1.65*\dxg,0);
+\coordinate (I0) at (-0.75*\dxg,0);
+\coordinate (I1) at (-1*\dxg,0);
+\coordinate (YI) at (0,1.5*\dyg);
+\draw (A0.output) -- (A0.output -| 0.5*\dxg,0) |- (-0.5*\dxg,0.5*\dyg) |- (A1.input 1);
+\draw (A1.output) -- (A1.output -| 0.5*\dxg,0) |- (B0.input 1);
+\draw (A2.output) -- (A2.output -| 0.5*\dxg,0) |- (B0.input 2);
+\draw (B0.output) -- (B0O) |- (-0.5*\dxg,-1.5*\dyg) |- (A2.input 2);
+\draw (B0O) |- (-0.5*\dxg,1.5*\dyg) |- (A0.input 1);
+\draw (A1.input 2) -| (I0 |- YI) node[anchor=south]{$i$};
+\draw (A2.input 1) -| (I1 |- YI) node[anchor=south]{$e$};
+\draw (B0O) -- ++(0.25*\dxg,0) node[anchor=south]{$q$};
+\draw (B0.output) node[anchor=south west]{$s_1$};
+\draw (A0.output) node[anchor=south west]{$s_0$};
+\draw (A0.input 2) -- (A0.input 2 -| I1); \pdot{A0.input 2 -| I1}
+\draw (A0.input 3) -- (A0.input 3 -| I0); \pdot{A0.input 3 -| I0}
+\pdot{B0O}
+\end{tikzpicture}
