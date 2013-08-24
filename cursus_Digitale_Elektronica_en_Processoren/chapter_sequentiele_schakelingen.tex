@@ -2435,17 +2435,23 @@ Deze problemen brengen nieuwe terminologie met zich mee die we eerst zullen intr
 Het optreden van deze een critical race of cycle hangt af van de vertragingskarakteristieken van de poorten. Het spreekt voor zich dat we trachten om deze fenomenen te voorkomen. Daarom zullen we ook technieken ontwikkelen die ons toelaten een goede toestandscodering te ontwikkelen waarbij we deze problemen reeds kunnen voorkomen.
 \begin{figure}[hbt]
 \centering
+\importtikzsubfigure{asynchrone-trans}{Toestandstabel.}
 \importtikzsubfigure{asynchrone-impl1}{Implementatie 1.}
 \importtikzsubfigure{asynchrone-impl2}{Implementatie 2.}
 \importtikzsubfigure{asynchrone-expected}{Verwacht gedrag.}
 \importtikzsubfigure{asynchrone-cycle}{Cycle.}
 \importtikzsubfigure{asynchrone-criticalrace}{Critical race.}
 \caption{Voorbeelden van een cycle en critical race.}
+\figlab{asynchrone-problems}
 \end{figure}
+\figref{asynchrone-problems} illustreert het principe van een critical race en cycle. Op \figref{asynchrone-impl1} en \figref{asynchrone-impl2} stellen we twee equivalente asynchrone schakelingen voor. Het enige wat we hebben aangepast is de twee NAND-poorten omzetten naar AND-poorten alsook een NAND-poort naar een OR-poort. In een combinatorische schakeling is dit een perfect geldige transformatie die tot equivalente resultaten leidt. In de implementatie bepalen de signalen $s_0$ en $s_1$ samen de toestand, $q$ bepaald de uitvoer en $i$ en $e$ de invoer. Bij wijze van voorbeeld beschouwen we het systeem in een toestand $\tupl{s_0,s_1}=\tupl{1,0}$ met aan de ingang een signaal $\tupl{i,e}=\tupl{0,1}$. We veranderen vervolgens het signaal van $i$ waardoor we volgens de toestandstabel op \figref{asynchrone-trans} in toestand $\tupl{s_0,s_1}=\tupl{1,0}$ zullen terechtkomen. Wanneer we dit doen volgens de eerste schakeling bekomen we het tijdsgedrag zoals op \figref{asynchrone-expected}. We zien dat beide toestandsignalen tegelijk veranderen. Zelfs wanneer er een klein tijdsverschil op de verandering zit zal dit echter niet tot grote problemen leiden.
+\paragraph{}
+Wanneer we echter werken met de tweede oplossing is het tijdsverschil veel groter. Hierdoor ontstaat er een terugkoppeling tussen het signaal $b'$ en $s_1$. Beide reageren telkens op de verandering van de ander waardoor we in een cycle terechtkomen. De toestandsverandering wordt dus $\tupl{s_0,s_1}=\tupl{0,1}\rightarrow\tupl{0,0}\rightarrow\tupl{0,1}\rightarrow\ldots$.
+\paragraph{}
 
 \paragraph{}Het aantal bits dat verandert tussen twee toestanden is een belangrijke eigenschap, deze wordt vaak ook de ``\termen{Hamming distance}'' ofwel ``\termen{Hammingafstand}'' genoemd, en is enkel gedefinieerd tussen twee bitreeksen van dezelfde lengte.
 \subsubsection{Elimineren van critical races}
-Er zijn grofweg drie methodes waarmee we critical races kunnen elimineren. We zullen deze methodes ordenen volgens het vermogen om problemen op te lossen. Zo is de laatste methode in staat om alle problemen op te lossen, maar zal deze meestal een hoge kostprijs met zich meebrengen. We proberen dus de problemen op te lossen in de volgorde waarin de methodes worden voorgesteld. Verder zullen de methodes meestal in staat zijn een gedeelte van het probleem op te lossen, waarna de andere methodes de overige problemen kunnen oplossen. De methodes zijn:
+Men kan critical races elimineren door ervoor te zorgen dat er nooit twee of meer toestandssignalen tegelijk moeten veranderen. Overgangen zoals van $00$ naar $11$ zijn dus uit den boze. Er zijn grofweg drie methodes waarmee we dit kunnen realiseren. We zullen deze methodes ordenen volgens het vermogen om problemen op te lossen. Zo is de laatste methode in staat om alle problemen op te lossen, maar zal deze meestal een hoge kostprijs met zich meebrengen. We proberen dus de problemen op te lossen in de volgorde waarin de methodes worden voorgesteld. Verder zullen de methodes meestal in staat zijn een gedeelte van het probleem op te lossen, waarna de andere methodes de overige problemen kunnen oplossen. De methodes zijn:
 \begin{enumerate}
  \item Het kiezen van een toestandscodering die elke overgang realiseert door hooguit \'e\'en bit te veranderen.
  \item Werken met zogezegde ``\termen{tussentoestanden}'': via een reeds bestaande toestand toch de finale toestand bereiken, bij de verschillende overgangen verandert dan telkens slechts \'e\'en bit.
@@ -2455,33 +2461,12 @@ We zullen elk van deze methodes in de volgende subsubsecties bespreken.
 \subsubsection{Methode 1: Zoeken naar een goede codering}
 Hierbij kunnen we terugdenken aan de ``minimal-bit-change'' en de ``Gray-code teller'' uit \ref{term:minimalBitChange}. Deze methode lost in de meeste gevallen reeds heel wat problemen op. Een methode die het beste resultaat oplevert is alle mogelijk toestandscoderingen afgaan en vervolgens het aantal overgangen met 1 veranderende bit tellen. Deze methode is wel niet effici\"ent vermits we \bigoh{n!} verschillende configuraties moeten analyseren. We kunnen uiteraard met behulp van heuristische methodes reeds tot een acceptabele configuratie komen. Bovendien is de kans groot dat niet elke overgang tot 1 veranderende bit is te herleiden, in dat geval moeten we de andere methodes gebruiken. Een optimale configuratie in methode 1 leidt niet noodzakelijk tot het beste eindresultaat.
 \paragraph{Voorbeeld}%We zullen een encodering bouwen voor de toestandtabel in tabel \ref{tbl:stateTableIteration2}. Deze zullen we bouwen op basis van het toewijzen van een encodering aan \'e\'en toestand, en vervolgens toestanden die overgangen van of naar deze toestand hebben een codering toewijzen met minimale bitverandering. De rest van de toestanden zullen we vervolgens op soortgelijke manier  invullen. We kennen $000$ toe aan toestand $b$. $b$ is verbonden met toestanden $a$, $c$ en $d$. We zullen dus moeten kiezen. Bijgevolg kennen we $001$ toe aan $a$, $010$ aan $c$ en $100$ aan $d$. Vervolgens dienen we alleen nog $i$ te bepalen. $i$ is enkel verbonden met $a$ en $d$, vermits deze de coderingen $001$ en $100$ hebben, kennen we $101$ toe aan $i$. Op basis van deze codering kunnen we de toestandstabel omzetten in een coderingstabel zoals in tabel \ref{tbl:coderingTableAsyncM1}.
-We zullen een codering bouwen voor de toestandstabel in tabel \ref{tbl:coderingTableAsyncM0}. Hierbij kennen we de toestand $d$ de codering $10$ toe. Omdat er slechts \'e\'en overgang is tussen $c$ en $d$, zullen we $c$ de encodering $01$ geven. $a$ krijgt de encodering $00$ omdat er zowel overgangen tussen $a$ en $c$, als tussen $a$ en $d$ zijn. $b$ krijgt ten slotte de overblijvende codering $11$. Het resultaat van deze codering staat in de coderingstabel in tabel \ref{tbl:coderingTableAsyncM1}.
+We zullen een codering bouwen voor de toestandstabel in \tblref{asynchrone-code-initial}. Hierbij kennen we de toestand $d$ de codering $10$ toe. Omdat er slechts \'e\'en overgang is tussen $c$ en $d$, zullen we $c$ de encodering $01$ geven. $a$ krijgt de encodering $00$ omdat er zowel overgangen tussen $a$ en $c$, als tussen $a$ en $d$ zijn. $b$ krijgt ten slotte de overblijvende codering $11$. Het resultaat van deze codering staat in de coderingstabel in \tblref{asynchrone-code-initial}.
 \begin{table}[hbt]
 \centering
-\subtable[Toestandstabel]{\small{\begin{tabular}{c|cccc|c}
-\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
-$a$&	$a$&	$b$&	$a$&	$c$&	$00$\\
-$b$&	$b$&	$b$&	$c$&	$d$&	$01$\\
-$c$&	$a$&	$c$&	$c$&	$d$&	$10$\\
-$d$&	$b$&	$-$&	$a$&	$d$&	$11$\\
-\end{tabular}}
-\tbllab{coderingTableAsyncM0}}
-\subtable[Na methode 1]{\small{\begin{tabular}{c|cccc|c}
-\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
-$00$&	\stAs{$00$}&	\ndAs{$11$}&	\stAs{$00$}&	$01$&		$00$\\
-$11$&	\stAs{$11$}&	\stAs{$11$}&	$01$&		$10$&		$01$\\
-$01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\ndAs{$10$}&	$10$\\
-$10$&	$11$&		$-$&		$00$&		\stAs{$10$}&	$11$\\
-\end{tabular}}
-\tbllab{coderingTableAsyncM1}}
-\subtable[Na methode 2]{\small{\begin{tabular}{c|cccc|c}
-\multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
-$00$&	\stAs{$00$}&	$11$&		\stAs{$00$}&	$01$&		$00$\\
-$11$&	\stAs{$11$}&	\stAs{$11$}&	$01$&		$100$&		$01$\\
-$01$&	$00$&		\stAs{$01$}&	\stAs{$01$}&	\stAs{$00$}&	$10$\\
-$10$&	$11$&		$-$&		$00$&		\stAs{$10$}&	$11$\\
-\end{tabular}}
-\tbllab{coderingTableAsyncM2}}
+\importtabularsubtable{asynchrone-code-initial}{Toestandstabel.}
+\importtabularsubtable{asynchrone-code-m1}{Na methode 1.}
+\importtabularsubtable{asynchrone-code-m2}{Na methode 2.}
 \subtable[Na methode 3]{\small{\begin{tabular}{c|cccc|c}
 \multirow{2}{*}{Toestand}&\multicolumn{4}{c|}{$I\ E$}&\multirow{2}{*}{$Q$}\\&00&01&11&10&\\\hline
 $00$&	\stAs{$00$}&	$11$&		\stAs{$00$}&	$01$&		$00$\\
@@ -2494,6 +2479,26 @@ $10$&	\ndAs{$11$}&	$-$&		\stAs{$10$}&	\stAs{$10$}&	$11$\\
 \end{table}
 We voeren ook wat nieuwe syntax in die het ons in de volgende stappen makkelijker zal maken: stabiele configuraties zullen we noteren tussen twee vertical bars (``$|$'') in de tabel. Cellen waarbij de toestand naar een andere toestand gaat waarbij de encodering minstens twee bits verandert worden onderlijnd. Deze configuraties zullen we nog trachtten aan te passen met de volgende methodes.
 \subsubsection{Methode 2: Gebruik maken van een tussentoestand}
-Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna deze toestand ons naar de uiteindelijke toestand brengt. Dit principe is bovendien niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuratie toch niet kan voorkomen, kunnen we een transitie invullen bij de don't cares.
+Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna deze toestand ons naar de uiteindelijke toestand brengt. Dit principe is bovendien niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuraties toch niet kunnen voorkomen, kunnen we een transitie invullen bij de bijbehorende don't cares.
+\paragraph{}
+Om de coderingstabel te transformeren, zullen we eerst de stabiele configuraties annoteren met een getal. Met zo'n configuratie bedoelen we de set van toestand- en input-bits die volgens de tabel omgeleid worden naar dezelfde toestand. In het voorbeeld op \tblref{asynchrone-code-m1} annoteren we de volgende zeven stabiele configuraties:
+\begin{equation}
+T_{s_0,s_1,i,e}=\acclarray{
+\tupl{\tupl{0,0}_a,\tupl{0,0}}_1\\
+\tupl{\tupl{0,0}_a,\tupl{1,1}}_2\\
+\tupl{\tupl{1,1}_b,\tupl{0,0}}_3\\
+\tupl{\tupl{1,1}_b,\tupl{0,1}}_4\\
+\tupl{\tupl{0,1}_c,\tupl{0,1}}_5\\
+\tupl{\tupl{0,1}_c,\tupl{1,1}}_6\\
+\tupl{\tupl{1,0}_d,\tupl{1,0}}_7
+}
+\end{equation}
+Elk van deze stabiele configuraties noteren we als een tuple die de toestand- en ingangbits bevat. De zesde stabiele configuratie is dus $\tupl{\tupl{s_0,s_1},\tupl{i,e}}=\tupl{\tupl{0,1},\tupl{1,1}}$. We kunnen stellen dat elke wijziging van de invoer uiteindelijk zal resulteren in een systeem die in \'e\'en van deze stabiele configuraties terecht komt. Met de geannoteerde stabiele configuraties kunnen we vervolgens een \termen{transitiediagram} opstellen. Dit is een grafe waar de toestanden worden voorgesteld door knopen 
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{asynchrone-transition-ita}{Alternatief 1.}
+\importtikzsubfigure{asynchrone-transition-itb}{Alternatief 2.}
+\importtikzsubfigure{asynchrone-transition-itc}{Na methode 2.}
+\end{figure}
 \subsubsection{Methode 3: Invoeren van extra overgangstoestand}
 \subsection{Stap 4: Realisatie met digitale logica}

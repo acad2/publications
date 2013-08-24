@@ -6,7 +6,7 @@
 \newcommand{\fbrk}[1]{\ensuremath{\left[ #1 \right]}}
 \newcommand{\accl}[1]{\ensuremath{\left\{ #1 \right\}}}
 \newcommand{\acclguard}[1]{\ensuremath{\left\{\begin{array}{ll} #1 \end{array}\right.}}
-\newcommand{\acclarray}[1]{\accl{\begin{array}{c} #1 \end{array}}}
+\newcommand{\acclarray}[2][c]{\accl{\begin{array}{#1} #2 \end{array}}}
 \newcommand{\accol}[1]{\ensuremath{\left\{#1\right\}}}
 \newcommand{\tuple}[1]{\ensuremath{\left\langle #1\right\rangle}}
 \newcommand{\ceil}[1]{\ensuremath{\left\lceil #1 \right\rceil}}
