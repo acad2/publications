@@ -2488,7 +2488,7 @@ Deze stabiele configuraties een belangrijke rol spelen in de verschillende metho
 \subsubsection{Methode 1: Zoeken naar een goede codering}
 Hierbij kunnen we terugdenken aan de ``minimal-bit-change'' en de ``Gray-code teller'' uit \ref{term:minimalBitChange}. Deze methode lost in de meeste gevallen reeds heel wat problemen op. Een methode die het beste resultaat oplevert is alle mogelijk toestandscoderingen afgaan en vervolgens het aantal overgangen met 1 veranderende bit tellen. Deze methode is wel niet effici\"ent vermits we \bigoh{n!} verschillende configuraties moeten analyseren. We kunnen uiteraard met behulp van heuristische methodes reeds tot een acceptabele configuratie komen. Bovendien is de kans groot dat niet elke overgang tot 1 veranderende bit is te herleiden, in dat geval moeten we de andere methodes gebruiken. Een optimale configuratie in methode 1 leidt niet noodzakelijk tot het beste eindresultaat.
 \paragraph{Voorbeeld}
-Bij wijze van voorbeeld zullen we een goede codering zoeken voor beide voorbeelden. In het eerste geval (\tblref{asynchrone-code-initial}) kunnen we oplossen met behulp van een heuristiek. Zo kennen we de toestand $d$ de codering $10$ toe. Omdat er slechts \'e\'en overgang is tussen $c$ en $d$, zullen we $c$ de encodering $01$ geven. $a$ krijgt de encodering $00$ omdat er zowel overgangen tussen $a$ en $c$, als tussen $a$ en $d$ zijn. $b$ krijgt ten slotte de overblijvende codering $11$. Het resultaat van deze codering staat in de coderingstabel in \tblref{asynchrone-code-exa-m1a}. We voeren ook wat nieuwe syntax in die het ons in de volgende stappen makkelijker zal maken: stabiele configuraties zullen we noteren tussen twee vertical bars (``$|$'') in de tabel. Cellen waarbij de toestand naar een andere toestand gaat waarbij de encodering minstens twee bits verandert worden onderlijnd. Deze configuraties zullen we nog trachtten aan te passen met de volgende methodes.
+Bij wijze van voorbeeld zullen we een goede codering zoeken voor beide voorbeelden. In het eerste geval (\tblref{asynchrone-code-exa}) kunnen we oplossen met behulp van een heuristiek. Zo kennen we de toestand $d$ de codering $10$ toe. Omdat er slechts \'e\'en overgang is tussen $c$ en $d$, zullen we $c$ de encodering $01$ geven. $a$ krijgt de encodering $00$ omdat er zowel overgangen tussen $a$ en $c$, als tussen $a$ en $d$ zijn. $b$ krijgt ten slotte de overblijvende codering $11$. Het resultaat van deze codering staat in de coderingstabel in \tblref{asynchrone-code-exa-m1a}. We voeren ook wat nieuwe syntax in die het ons in de volgende stappen makkelijker zal maken: stabiele configuraties zullen we noteren tussen twee vertical bars (``$|$'') in de tabel. Cellen waarbij de toestand naar een andere toestand gaat waarbij de encodering minstens twee bits verandert worden onderlijnd. Deze configuraties zullen we nog trachtten aan te passen met de volgende methodes.
 \begin{table}[hbt]
 \centering
 \importtabularsubtable{asynchrone-code-exa-m1a}{Voorbeeld 1, alternatief 1.}
@@ -2499,23 +2499,25 @@ Bij wijze van voorbeeld zullen we een goede codering zoeken voor beide voorbeeld
 \paragraph{}
 In het geval van een klein aantal toestanden wel degelijk exhaustief zoeken. Dit wordt vergemakkelijkt omdat we symmetrie\"en kunnen uitbuiten. De concrete codering maakt immers niet zoveel uit, zolang de Hammingafstand maar dezelfde blijft. We introduceren hiervoor een \termen{transitiediagram}. Een transitiediagram is een grafe waarbij de knopen toestanden voorstellen. We plaatsen bogen tussen twee toestanden wanneer er transities tussen twee toestanden kunnen plaatsvinden. Deze bogen worden bevatten de annotaties naar dewelke stabiele configuratie deze transitie uiteindelijk zal migreren. Deze annotaties worden opgedeeld in twee types. Wanneer we na de overgang meteen in een stabiele configuratie terecht komen zetten we de bijbehorende annotatie op de boog zonder deze te onderlijnen. Wanneer we echter na deze toestand niet in een stabiele configuratie terechtkomen, noteren we de annotatie van de stabiele toestand waar we uiteindelijk in zullen terecht komen en wordt deze onderlijnd.
 \paragraph{}
-Het eerste leidende voorbeeld telt vier toestanden. We kunnen bijgevolg een grafe beschouwen met vier toestanden. Rotaties en spiegelingen bij deze grafes dienen we niet te beschouwen. De Hammingafstand blijft immers onder deze transformaties gelijk. Bijgevolg zijn er slechts twee mogelijke configuraties voorgesteld op \figref{} en \figref{}.
+Het eerste leidende voorbeeld telt vier toestanden. We kunnen bijgevolg een grafe beschouwen met vier toestanden. Rotaties en spiegelingen bij deze grafes dienen we niet te beschouwen. De Hammingafstand blijft immers onder deze transformaties gelijk. Bijgevolg zijn er slechts twee mogelijke configuraties voorgesteld op \figref{asynchrone-code-exa-m1a} en \figref{asynchrone-code-exa-m1b}.
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{asynchrone-code-exa-m1a}{Voorbeeld 1, alternatief 1.}
 \importtikzsubfigure{asynchrone-code-exa-m1b}{Voorbeeld 1, alternatief 2.}
 \importtikzsubfigure{asynchrone-code-exb-m1}{Voorbeeld 2.}
 \caption{Transitiediagramma van het voorbeeld na het toepassen van de eerste methode.}
-\end{table}
+\end{figure}
+Zoals we kunnen vaststellen komt \figref{asynchrone-code-exa-m1a}. We kunnen door twee horizontale of verticale buren om te wisselen de andere versie bekomen. Indien we dit doen -- bijvoorbeeld met $B$ en $C$ -- bekomen we het alternatief op \figref{asynchrone-code-exa-m1b}. We hebben dit alternatief ook in tabelvorm geformaliseerd in \tblref{asynchrone-code-exa-m1b}. Een belangrijk aspect bij deze diagrammen is dat we het aantal overgangen waarbij twee of meer toestand-bits willen minimaliseren. Dit komt dus neer op de diagonale transities. We kunnen opmerken dat het eerste alternatief bijgevolg beter is dan het tweede.
+\paragraph{}
+Ook het tweede voorbeeld minimaliseren we met behulp van een transitiediagram zoals op \figref{asynchrone-code-exb-m1}. Men kan opnieuw stellen dat dit systeem equivalent is onder spiegeling. Onder rotatie is dit echter niet het geval. Hoe we immers de toestanden ook alloceren, er zal steeds een boog zijn met twee veranderen bits. We kunnen echter kiezen welke twee toestanden er verbonden zijn met deze boog. In het geval van $b$ en $c$ is er slechts sprake van \'e\'en transitie. Bijgevolg alloceren we de toestanden zoals weergegeven op \figref{asynchrone-code-exb-m1} en op \tblref{asynchrone-code-exb-m1}.
 \subsubsection{Methode 2: Gebruik maken van een tussentoestand}
 Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna deze toestand ons naar de uiteindelijke toestand brengt. Dit principe is bovendien niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuraties toch niet kunnen voorkomen, kunnen we een transitie invullen bij de bijbehorende don't cares.
 \paragraph{}
-Elk van deze stabiele configuraties noteren we als een tuple die de toestand- en ingangbits bevat. De zesde stabiele configuratie is dus $\tupl{\tupl{s_0,s_1},\tupl{i,e}}=\tupl{\tupl{0,1},\tupl{1,1}}$. We kunnen stellen dat elke wijziging van de invoer uiteindelijk zal resulteren in een systeem die in \'e\'en van deze stabiele configuraties terecht komt. Met de geannoteerde stabiele configuraties kunnen we vervolgens een \termen{transitiediagram} opstellen. Dit is een grafe waar de toestanden worden voorgesteld door knopen 
-\begin{figure}[hbt]
-\centering
-\importtikzsubfigure{asynchrone-transition-ita}{Alternatief 1.}
-\importtikzsubfigure{asynchrone-transition-itb}{Alternatief 2.}
-\importtikzsubfigure{asynchrone-transition-itc}{Na methode 2.}
-\end{figure}
+% \begin{figure}[hbt]
+% \centering
+% \importtikzsubfigure{asynchrone-transition-ita}{Alternatief 1.}
+% \importtikzsubfigure{asynchrone-transition-itb}{Alternatief 2.}
+% \importtikzsubfigure{asynchrone-transition-itc}{Na methode 2.}
+% \end{figure}
 \subsubsection{Methode 3: Invoeren van extra overgangstoestand}
 \subsection{Stap 4: Realisatie met digitale logica}
