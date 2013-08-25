@@ -2511,7 +2511,22 @@ Zoals we kunnen vaststellen komt \figref{asynchrone-code-exa-m1a}. We kunnen doo
 \paragraph{}
 Ook het tweede voorbeeld minimaliseren we met behulp van een transitiediagram zoals op \figref{asynchrone-code-exb-m1}. Men kan opnieuw stellen dat dit systeem equivalent is onder spiegeling. Onder rotatie is dit echter niet het geval. Hoe we immers de toestanden ook alloceren, er zal steeds een boog zijn met twee veranderen bits. We kunnen echter kiezen welke twee toestanden er verbonden zijn met deze boog. In het geval van $b$ en $c$ is er slechts sprake van \'e\'en transitie. Bijgevolg alloceren we de toestanden zoals weergegeven op \figref{asynchrone-code-exb-m1} en op \tblref{asynchrone-code-exb-m1}.
 \subsubsection{Methode 2: Gebruik maken van een tussentoestand}
-Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna deze toestand ons naar de uiteindelijke toestand brengt. Dit principe is bovendien niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuraties toch niet kunnen voorkomen, kunnen we een transitie invullen bij de bijbehorende don't cares.
+Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blijft zoeken naar een stabiele toestand, hoeven we niet noodzakelijk meteen de uiteindelijke toestand in een cel in te vullen. We kunnen ook een tijdelijke transitie naar een andere toestand ondernemen - en waarbij slechts \'e\'en toestandsbit verandert - waarna we met een reeks tussentoestanden in de uiteindelijke toestand belanden. Dit principe is dus niet beperkt tot \'e\'en tussentoestand. Een extra hulpmiddel die we hierbij kunnen hanteren zijn de don't cares die nog in de tabel staan. Vermits deze configuraties toch niet kunnen voorkomen, kunnen we een transitie invullen bij de bijbehorende don't cares. In het andere geval moeten we op zoek gaan naar een toestand die slechts \'e\'en bit verschilt van de huidige toestand en die dezelfde stabiele eindtoestand voor de invoer-bits stelt.
 \paragraph{}
+In het eerste voorbeeld is er sprake van twee transities die we moeten aanpassen: wanneer we ons in toestand $\tupl{0,0}_a$ met invoer $\tupl{0,1}$ en in toestand $\tupl{0,1}_c$ met invoer $\tupl{1,0}$. Om deze problemen op te lossen dien we de relevante kolommen van de invoer te inspecteren. In het eerste geval zoeken we naar een toestand met een Hammingafstand van 1 bit die ons onder invoer $\tupl{0,1}$ naar de toestand $\tupl{1,1}_b$ zal brengen. In het eerste geval lijkt zo'n toestand niet te bestaan. We kunnen echter toestand $\tupl{1,0}_d$ opmerken. Deze toestand verschilt slechts \'e\'en bit en bevat in de relevante kolom een don't care. Vermits de ingang toch niet kan voorkomen in deze toestand kunnen we deze gebruiken om de overgang te bewerkstelligen. We vullen dus $\tupl{1,1}_b$ in in de rij van toestand $\tupl{1,0}_d$ met invoer $\tupl{0,1}$. Verder passen we de rij van de originele toestand aan: de cel van toestand $\tupl{0,0}_a$ met invoer $\tupl{0,1}$ overschrijven we met de waarde $\tupl{1,0}_d$. Concreet betekent dit dus wanneer we ons in toestand $b$ bevinden en we leggen de relevante invoer aan, we eerst naar toestand $d$ zullen springen. Toestand $d$ is echter niet stabiel onder deze invoer waardoor we meteen naar toestand $b$ migreren. De oorspronkelijk bedoelde toestand.
+\paragraph{}
+Vervolgens proberen we de 
+\begin{table}[hbt]
+\centering
+\importtabularsubtable{asynchrone-code-exa-m2}{Voorbeeld 1.}
+\importtabularsubtable{asynchrone-code-exb-m2}{Voorbeeld 2.}
+\caption{Coderingstabellen van het voorbeeld na het toepassen van de tweede methode.}
+\end{table}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{asynchrone-code-exa-m2}{Voorbeeld 1}
+\importtikzsubfigure{asynchrone-code-exb-m2}{Voorbeeld 2.}
+\caption{Transitiediagramma van het voorbeeld na het toepassen van de tweede methode.}
+\end{figure}
 \subsubsection{Methode 3: Invoeren van extra overgangstoestand}
 \subsection{Stap 4: Realisatie met digitale logica}
