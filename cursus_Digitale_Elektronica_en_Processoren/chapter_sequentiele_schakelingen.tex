@@ -2515,18 +2515,23 @@ Vermits er geen kloksignaal is en we dus te maken hebben met schakeling die blij
 \paragraph{}
 In het eerste voorbeeld is er sprake van twee transities die we moeten aanpassen: wanneer we ons in toestand $\tupl{0,0}_a$ met invoer $\tupl{0,1}$ en in toestand $\tupl{0,1}_c$ met invoer $\tupl{1,0}$. Om deze problemen op te lossen dien we de relevante kolommen van de invoer te inspecteren. In het eerste geval zoeken we naar een toestand met een Hammingafstand van 1 bit die ons onder invoer $\tupl{0,1}$ naar de toestand $\tupl{1,1}_b$ zal brengen. In het eerste geval lijkt zo'n toestand niet te bestaan. We kunnen echter toestand $\tupl{1,0}_d$ opmerken. Deze toestand verschilt slechts \'e\'en bit en bevat in de relevante kolom een don't care. Vermits de ingang toch niet kan voorkomen in deze toestand kunnen we deze gebruiken om de overgang te bewerkstelligen. We vullen dus $\tupl{1,1}_b$ in in de rij van toestand $\tupl{1,0}_d$ met invoer $\tupl{0,1}$. Verder passen we de rij van de originele toestand aan: de cel van toestand $\tupl{0,0}_a$ met invoer $\tupl{0,1}$ overschrijven we met de waarde $\tupl{1,0}_d$. Concreet betekent dit dus wanneer we ons in toestand $b$ bevinden en we leggen de relevante invoer aan, we eerst naar toestand $d$ zullen springen. Toestand $d$ is echter niet stabiel onder deze invoer waardoor we meteen naar toestand $b$ migreren. De oorspronkelijk bedoelde toestand.
 \paragraph{}
-Vervolgens proberen we de 
+We proberen ook de tweede problematische transitie van het eerste voorbeeld op te lossen: invoer $\tupl{1,0}$ in toestand $\tupl{0,1}_c$. We gaan opnieuw op zoek naar een toestand die in dezelfde kolom ook tot toestand $\tupl{1,0}_d$ leidt. Er bestaat hiervoor \'e\'en toestand: $\tupl{1,1}_b$ heeft een Hamming-afstand van $1$ en we zien dat in de kolom voor invoer $\tupl{1,0}$ deze ook een transitie naar $\tupl{1,0}_d$ leidt. Bijgevolg modificeren we de eerste cel zodat deze naar $\tupl{1,1}_b$ leidt. Na deze stappen bekomen we de coderingstabel in \tblref{asynchrone-code-exa-m2} en het transitiediagram in \figref{asynchrone-code-exa-m2}. De schuingedrukte cellen zijn cellen die we hebben aangepast. Zoals we kunnen zien zijn er geen transities meer die meer dan \'e\'en bit aanpassen. De toestandscodering is dus volledig aangepast.
 \begin{table}[hbt]
 \centering
 \importtabularsubtable{asynchrone-code-exa-m2}{Voorbeeld 1.}
+\importtabularsubtable{asynchrone-code-exa-m2c}{Voorbeeld 1 met compressie.}
 \importtabularsubtable{asynchrone-code-exb-m2}{Voorbeeld 2.}
 \caption{Coderingstabellen van het voorbeeld na het toepassen van de tweede methode.}
 \end{table}
 \begin{figure}[hbt]
 \centering
-\importtikzsubfigure{asynchrone-code-exa-m2}{Voorbeeld 1}
+\importtikzsubfigure{asynchrone-code-exa-m2}{Voorbeeld 1.}
 \importtikzsubfigure{asynchrone-code-exb-m2}{Voorbeeld 2.}
 \caption{Transitiediagramma van het voorbeeld na het toepassen van de tweede methode.}
 \end{figure}
+\paragraph{}
+We kunnen in deze methode ook een ander aspect bewerkstelligen: compressie. Compressie probeert de sequentie van toestanden in te korten die de schakeling zal overlopen wanneer de ingang verandert. Stel dat de schakeling zich in toestand $\tupl{0,0}_a$ bevinden en de ingang vanuit een stabiele configuratie naar de invoer-bits $\tul{1,0}$ verandert. In dat geval doorloopt de schakeling de volgende toestanden: $\tupl{0,0}_a\rightarrow\tupl{0,1}_c\rightarrow\tupl{1,1}_b\rightarrow\tupl{1,0}_d$. We doorlopen dus vier toestanden alvorens we in de uiteindelijke stabiele configuratie terecht komen. Dit terwijl de Hammingafstand tussen $a$ en $d$ slechts \'e\'en bit bedraagt. Dit betekent dus dat we rechtstreeks naar $d$ kunnen migreren. Hiervoor dienen we dus enkel de transitie van toestand $\tupl{0,0}_a$ met invoer $\tupl{1,0}$ aan te passen naar $\tupl{1,0}_d$. We bekomen dus de coderingstabel in \tblref{asynchrone-code-exa-m2c}.
+\paragraph{}
+We 
 \subsubsection{Methode 3: Invoeren van extra overgangstoestand}
 \subsection{Stap 4: Realisatie met digitale logica}
