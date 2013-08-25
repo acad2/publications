@@ -1,0 +1,21 @@
+\begin{tikzpicture}[circuit logic US]
+\def\dx{1.25};
+\def\dy{1.25};
+\coordinate (XC) at (-\dx,0);
+\coordinate (NC) at (-0.5*\dx,0);
+\coordinate (AOC) at (0.5*\dx,0);
+\coordinate (FC) at (2*\dx,0);
+\node[and gate] (A0) at (0,0.5*\dy) {};
+\node[and gate] (A1) at (0,-0.5*\dy) {};
+\node[or gate] (O0) at (\dx,0) {};
+\node[not gate,rotate=-90,scale=0.7] (N0) at (NC) {};
+\draw (A0.output) -- (A0.output -| AOC) node[anchor=south]{$p$} |- (O0.input 1);
+\draw (A1.output) -- (A1.output -| AOC) node[anchor=north]{$q$} |- (O0.input 2);
+\draw (O0.output) -- (O0.output -| FC) node[anchor=west]{$f$};
+\draw (A0.input 1) -- (A0.input 1 -| XC) node[anchor=east]{$x$};
+\draw (A0.input 2) -- (A0.input 2 -| XC) node[anchor=east]{$y$};
+\draw (A0.input 2 -| NC) -- (N0.input);
+\draw (A1.input 1) -| (N0.output);
+\draw (A1.input 2) -- (A1.input 2 -| XC) node[anchor=east]{$z$};
+\pdot{A0.input 2 -| NC}
+\end{tikzpicture}
