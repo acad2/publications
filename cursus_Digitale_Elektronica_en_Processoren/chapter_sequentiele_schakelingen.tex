@@ -2557,16 +2557,18 @@ Naast eventuele overgangstoestanden kan het gebeuren dat niet alle coderingen zi
 \subsection{Stap 4: Realisatie met digitale logica}
 Wie denkt dat met een geldige toestandscodering alle problemen van de baan zijn moeten we teleurstellen. We hebben dan wel kritische races ge\"elimineerd. Maar bij het realiseren van de schakeling dienen we het volgende problemen op te lossen: \termen{hazards}. Een hazard vormt een ander probleem dan een race. Een race betekent dat door het tijdsverschil waartussen twee of meer signalen van waarde veranderen we in een foute toestand kunnen terechtkomen. Combinatorische logica kan echter ook andere problemen met zich meebrengen: namelijk dat de signalen alvorens de definitieve waarde aan te namen eerst enkele malen veranderen.
 \subsubsection{Terminologie}
-De vorige definitie is nogal abstract. We zullen deze dan ook verder toelichten aan de hand van een voorbeeld. Alvorens dit te doen introduceren we extra terminologie. Zo worden hazards opgedeeld in twee soorten: een \termen{statische hazard} en een \termen{dynamische hazard}. In het geval van een statische hazard zou het signaal eigenlijk niet moeten veranderen. Stel bijvoorbeeld dat we volgende expressie beschouwen:
+De vorige definitie is nogal abstract. We zullen deze dan ook verder toelichten aan de hand van een voorbeeld. Alvorens dit te doen introduceren we extra terminologie. Zo worden hazards opgedeeld in twee soorten: een \termen{statische hazard} en een \termen{dynamische hazard}.
+\paragraph{}
+In het geval van een statische hazard zou het signaal eigenlijk niet moeten veranderen. Stel bijvoorbeeld dat we volgende expressie beschouwen:
 \begin{equation}
 \fun{f}{x,y,z}=x\cdot y+y'\cdot z
 \end{equation}
-Wanneer we $\tupl{x,y,z}=\tupl{1,1,1}$ aanleggen is het duidelijk dat dit resulteert in een uitgang $\fun{f}{1,1,1}=1$. Stel nu dat we het signaal van $y$ aanpassen naar laag, dan geldt nog steeds dat $\fun{f}{1,0,1}=1$. We kunnen dus stellen dat het aanpassen van $y$ in deze context geen verschil zal maken. Een gevaar voor een race is er dus bijgevolg zeker niet.
-\paragraph{}
-Toch kan men dit niet zomaar stellen.
+Wanneer we $\tupl{x,y,z}=\tupl{1,1,1}$ aanleggen is het duidelijk dat dit resulteert in een uitgang $\fun{f}{1,1,1}=1$. Stel nu dat we het signaal van $y$ aanpassen naar laag, dan geldt nog steeds dat $\fun{f}{1,0,1}=1$. We kunnen dus stellen dat het aanpassen van $y$ in deze context geen verschil zal maken. Een gevaar voor een race is er dus bijgevolg zeker niet. Wanneer we deze formule implementeren met behulp van logica kunnen we een schakeling ontwerpen zoals op \figref{asynchrone-hazard-stat-ex}. Wanneer we de verandering van $y$ echter simuleren zien we op de bijbehorende tijdsgrafiek dat het signaal even naar $0$ gaat. We hebben dit fenomeen al eerder omschreven als glitch.
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{asynchrone-hazard-stat-ex}{Statische hazard.}
 \importtikzsubfigure{asynchrone-hazard-dyna-ex}{Dynamische hazard.}
 \caption{Voorbeelden van statische en dynamische hazards.}
+\paragraph{}
+Toch kan men dit niet zomaar stellen.
 \end{figure}
