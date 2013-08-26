@@ -2566,9 +2566,15 @@ In het geval van een statische hazard zou het signaal eigenlijk niet moeten vera
 Wanneer we $\tupl{x,y,z}=\tupl{1,1,1}$ aanleggen is het duidelijk dat dit resulteert in een uitgang $\fun{f}{1,1,1}=1$. Stel nu dat we het signaal van $y$ aanpassen naar laag, dan geldt nog steeds dat $\fun{f}{1,0,1}=1$. We kunnen dus stellen dat het aanpassen van $y$ in deze context geen verschil zal maken. Een gevaar voor een race is er dus bijgevolg zeker niet. Wanneer we deze formule implementeren met behulp van logica kunnen we een schakeling ontwerpen zoals op \figref{asynchrone-hazard-stat-ex}. Wanneer we de verandering van $y$ echter simuleren zien we op de bijbehorende tijdsgrafiek dat het signaal even naar $0$ gaat. We hebben dit fenomeen al eerder omschreven als glitch.
 \begin{figure}[hbt]
 \centering
-\importtikzsubfigure{asynchrone-hazard-stat-ex}{Statische hazard.}
-\importtikzsubfigure{asynchrone-hazard-dyna-ex}{Dynamische hazard.}
-\caption{Voorbeelden van statische en dynamische hazards.}
+\importtikzsubfigure{asynchrone-hazard-stat-ex}{Implementatie met statische hazard.}
+\importtikzsubfigure{asynchrone-hazard-stat-extim}{Tijdsgedrag van het voorbeeld.}
+\caption{Statische hazards.}
+\end{figure}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{asynchrone-hazard-dyna-ex}{Implementatie met statische hazard.}
+\importtikzsubfigure{asynchrone-hazard-dyna-extim}{Tijdsgedrag van het voorbeeld.}
+\caption{Dynamische hazards.}
+\end{figure}
 \paragraph{}
 Toch kan men dit niet zomaar stellen.
-\end{figure}
