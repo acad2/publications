@@ -12,9 +12,9 @@
 \coordinate (3C) at (3*\dx,0);
 \coordinate (FC) at (3.75*\dx,0);
 \node[nand gate] (A0) at (3C) {};
-\node[nand gate] (A1) at (2C |- 0,-\dy) {}; \draw (A1.output) -- (A1.output -| 2MC) |- (A0.input 2);
-\node[nand gate] (A2) at (1C |- A0.input 1) {}; \draw (A2.output) -- (A2.output -| 1MC) |- (A0.input 1);
-\node[nand gate] (A3) at (1C |- A1.input 1) {}; \draw (A3.output) -- (A3.output -| 1MC) |- (A1.input 1);
+\node[nand gate] (A1) at (2C |- 0,-\dy) {}; \draw (A1.output) -- (A1.output -| 2MC) node[anchor=north]{$d$} |- (A0.input 2);
+\node[nand gate] (A2) at (1C |- A0.input 1) {}; \draw (A2.output) -- (A2.output -| 1MC) node[anchor=south]{$b$} |- (A0.input 1);
+\node[nand gate] (A3) at (1C |- A1.input 1) {}; \draw (A3.output) -- (A3.output -| 1MC) node[anchor=south]{$c$} |- (A1.input 1);
 \coordinate (MID) at ($0.5*(A2)+0.5*(A3)$);
 \node[nand gate] (A4) at (0C |- MID) {};
 \draw (A2.input 2) -- (A2.input 2 -| 0MC) |- (A3.input 1);
@@ -22,6 +22,7 @@
 \pdot{A4.output -| 0MC}
 \draw (A2.input 1) -| (A4.input 1 -| NC);
 \pdot{A4.input 1 -| NC}
+\draw (A4.output -| 0MC) node[anchor=west]{$a$};
 \draw (A4.input 1) -- (A4.input 1 -| XC) node[anchor=east]{$x$};
 \draw (A4.input 2) -- (A4.input 2 -| XC) node[anchor=east]{$y$};
 \draw (A3.input 2) -- (A3.input 2 -| XC) node[anchor=east]{$z$};

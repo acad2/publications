@@ -2556,25 +2556,36 @@ In het leidend voorbeeld hebben we een overgangstoestand ge\"introduceerd. Wanne
 Naast eventuele overgangstoestanden kan het gebeuren dat niet alle coderingen zijn toegewezen aan werkelijke of overgangstoestanden. Stel bijvoorbeeld dat we een coderingstabel beschouwen met $6$ rijen. Hoewel er slechts zes toestanden zijn, zullen er in werkelijkheid meer toestandscoderingen mogelijk zijn. Zoals we al hebben aangehaald kan men niet voorspellen in welke toestandscodering de schakeling zich initieel zal bevinden wanneer de stroom opkomt. Daarom dienen we de overige coderingen dus ook te beschouwen en transities te voorzien naar eerder ge\"introduceerde stabiele configuraties. De werkwijze is dan ook volledig identiek aan deze bij het aanpassen van de don't cares van de overgangstoestanden. We gaan er dan ook niet verder op in.
 \subsection{Stap 4: Realisatie met digitale logica}
 Wie denkt dat met een geldige toestandscodering alle problemen van de baan zijn moeten we teleurstellen. We hebben dan wel kritische races ge\"elimineerd. Maar bij het realiseren van de schakeling dienen we het volgende problemen op te lossen: \termen{hazards}. Een hazard vormt een ander probleem dan een race. Een race betekent dat door het tijdsverschil waartussen twee of meer signalen van waarde veranderen we in een foute toestand kunnen terechtkomen. Combinatorische logica kan echter ook andere problemen met zich meebrengen: namelijk dat de signalen alvorens de definitieve waarde aan te namen eerst enkele malen veranderen.
-\subsubsection{Terminologie}
+\subsubsection{Hazards}
 De vorige definitie is nogal abstract. We zullen deze dan ook verder toelichten aan de hand van een voorbeeld. Alvorens dit te doen introduceren we extra terminologie. Zo worden hazards opgedeeld in twee soorten: een \termen{statische hazard} en een \termen{dynamische hazard}.
 \paragraph{}
 In het geval van een statische hazard zou het signaal eigenlijk niet moeten veranderen. Stel bijvoorbeeld dat we volgende expressie beschouwen:
 \begin{equation}
 \fun{f}{x,y,z}=x\cdot y+y'\cdot z
 \end{equation}
-Wanneer we $\tupl{x,y,z}=\tupl{1,1,1}$ aanleggen is het duidelijk dat dit resulteert in een uitgang $\fun{f}{1,1,1}=1$. Stel nu dat we het signaal van $y$ aanpassen naar laag, dan geldt nog steeds dat $\fun{f}{1,0,1}=1$. We kunnen dus stellen dat het aanpassen van $y$ in deze context geen verschil zal maken. Een gevaar voor een race is er dus bijgevolg zeker niet. Wanneer we deze formule implementeren met behulp van logica kunnen we een schakeling ontwerpen zoals op \figref{asynchrone-hazard-stat-ex}. Wanneer we de verandering van $y$ echter simuleren zien we op de bijbehorende tijdsgrafiek dat het signaal even naar $0$ gaat. We hebben dit fenomeen al eerder omschreven als glitch.
+Wanneer we $\tupl{x,y,z}=\tupl{1,1,1}$ aanleggen is het duidelijk dat dit resulteert in een uitgang $\fun{f}{1,1,1}=1$. Stel nu dat we het signaal van $y$ aanpassen naar laag, dan geldt nog steeds dat $\fun{f}{1,0,1}=1$. We kunnen dus stellen dat het aanpassen van $y$ in deze context geen verschil zal maken. Een gevaar voor een race is er dus bijgevolg zeker niet. Wanneer we deze formule implementeren met behulp van logica kunnen we een schakeling ontwerpen zoals op \figref{asynchrone-hazard-stat-ex}. Wanneer we de verandering van $y$ echter simuleren zien we op de bijbehorende tijdsgrafiek (\figref{asynchrone-hazard-stat-extim}) dat het signaal even naar $0$ gaat. We hebben dit fenomeen al eerder omschreven als glitch.
 \begin{figure}[hbt]
 \centering
-\importtikzsubfigure{asynchrone-hazard-stat-ex}{Implementatie met statische hazard.}
+\importtikzsubfigure{asynchrone-hazard-stat-ex}{Voorbeeldimplementatie.}
 \importtikzsubfigure{asynchrone-hazard-stat-extim}{Tijdsgedrag van het voorbeeld.}
 \caption{Statische hazards.}
 \end{figure}
+Men deelt statische hazards verder onder in een \termen{statische 0-hazard} en een \termen{statische 1-hazard}. De waarde verwijst naar de waarde die de uitgang oorspronkelijk had (en de waarde die dus ook moet worden aangehouden). Wanneer men schakelingen implementeert volgens het sum-of-products principe kan men enkel statische 1-hazards bekomen. Wanneer men werkt volgens de product-of-sums methodologie treden enkel statische 0-hazards op. We zullen dit principe verderop uitleggen.
+\paragraph{}
+We beschrijven dynamische hazards aan de hand van een andere formule:
+\begin{equation}
+\fun{f}{x,y,z,t}=\brak{\brak{x\wedge\brak{x\wedge y}'}'\wedge\brak{\brak{\brak{x \wedge y}'\wedge z}'\wedge t}'}'
+\end{equation}
+Deze formule kunnen we implementeren met een schakeling zoals op \figref{asynchrone-hazard-dyna-ex}. Wanneer we deze formule uitrekenen met de invoer $\tupl{x,y,z,t}=\tupl{0,1,1,1}$ zal het uitgang-signaal laag zijn: $\fun{f}{0,1,1,1}=0$. Wanneer we echter $x$ aanpassen naar een hoog signaal bekomen we $\fun{f}{1,1,1,1}=1$. Het signaal zal dus sowieso omkeren. Wanneer we dit echter simuleren in de tijd bekomen we de grafiek op \figref{asynchrone-hazard-dyna-extim}. We zien dat uiteindelijk het signaal naar hoog gaat, maar dat er eerst storingen op de uitgang verschijnen. Een dynamische hazard is dan ook een storing waarbij de uitgang niet eenmaal verandert van signaal, maar een oneven aantal keer (groter dan $1$). Een voordeel van een sum-of-products of product-of-sums implementatie te gebruiken is echter dat dynamische hazards niet kunnen voorkomen.
 \begin{figure}[hbt]
 \centering
-\importtikzsubfigure{asynchrone-hazard-dyna-ex}{Implementatie met statische hazard.}
+\importtikzsubfigure{asynchrone-hazard-dyna-ex}{Voorbeeldimplementatie.}
 \importtikzsubfigure{asynchrone-hazard-dyna-extim}{Tijdsgedrag van het voorbeeld.}
 \caption{Dynamische hazards.}
 \end{figure}
 \paragraph{}
-Toch kan men dit niet zomaar stellen.
+Bij het defini\"eren van de terminologie rond hazards hebben we niet stilgestaan hoe deze fenomenen tot stand komen. Hazards worden veroorzaakt door een tijdsverschil waarin een verandering doorheen de verschillende poorten wordt gepropageerd. Als voorbeeld nemen we opnieuw de schakeling bij statische hazards op \figref{asynchrone-hazard-stat-ex}. We zien dat het resultaat berekend wordt door een OR-poort die het resultaat van twee AND-poorten binair optelt. Wanneer we $y$ aanpassen zal de bovenste AND-poort deze verandering meteen waarnemen. De onderste AND-poort zal dit echter nog niet waarnemen: het signaal moet eerst nog door de NOT-poort propageren. Daardoor zal de bovenste AND-poort een $0$ op de OR-poort kunnen aanleggen alvorens de onderste AND-poort dit kan goedmaken door terug een $1$ op een ingang van de OR-poort aan te leggen. Wanneer we dus $y$ van $1$ naar $0$ zouden aanpassen treden er geen problemen op: de bovenste AND-poort zal een $1$ aanleggen op \'e\'en van de ingangen van de OR-poort alvorens de onderste dit doet waardoor dit niet aan de uitgang merkbaar zal zijn. Samenvattend kunnen we dus stellen dat de oorzaak van een hazard een verschilin vertraging is van eenzelfde ingang naar eenzelfde uitgang langs verschillende paden.
+\paragraph{}
+Omdat hazards veroorzaakt wordt door tijdsverschillen doorheen de schakeling zouden we ervoor kunnen opteren om een schakeling te ontwerpen waar alle signalen gestroomlijnd door de schakeling propageren. Dit is echter onmogelijk te realiseren. Allereerst zou men allerhande poorten moeten tussenvoegen om bepaalde signalen voldoende te vertragen waardoor de schakeling duurder wordt. Daarnaast is het theoretische vertragingsmodel slechts een benadering. De werkelijke vertraging van een poort is ook afhankelijk van bijvoorbeeld de lengte van de verbindingen, de temperatuur van de poort, enzovoort. Vermits sommige parameters zoals de temperatuur bovendien op voorhand niet gekend.
+\paragraph{}
+In combinatorische en synchrone sequenti\"ele schakelingen komen hazard natuurlijk ook voor. Nochtans vormen hazards in deze schakelingen geen probleem. Dit komt omdat een combinatorische schakeling maar na een bepaalde tijd het correcte resultaat op de uitgangen moet kunnen aanleggen. Bij een synchrone schakeling bepaald het kloksignaal dan weer wanneer de signalen aan de uitgang zullen worden ingelezen. Zolang het signaal dus correct berekend is voor de rising-edge die het resultaat in de flipflops zal opslaan, is er geen enkel probleem. 
