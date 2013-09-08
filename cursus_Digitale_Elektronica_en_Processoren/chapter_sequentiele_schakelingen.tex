@@ -2594,5 +2594,16 @@ Het detecteren van hazards ten slotte is een niet triviaal probleem en vereist d
 \subsubsection{Hazards en Karnaugh-kaarten}
 Combinatorische schakelingen komen meestal tot stand met behulp van een Karnaugh-kaart volgens het sum-of-products concept. We hebben reeds aangehaald dat wanneer de logica het sum-of-products principe volgt, uitsluitend statische 1-hazards kunnen optreden. In deze subsubsectie gaan we hier dieper op in. Bovendien kunnen we op basis van Karnaugh-kaarten een methode voorstellen om combinatorische schakelingen te ontwikkelen waar geen hazards kunnen optreden.
 \paragraph{}
+Op \figref{asynchrone-hazard-karnaugh-ex} tonen we de bijbehorende Karnaugh-kaart voor de schakeling op \figref{asynchrone-hazard-stat-ex}. Op de figuur tonen we ook voor elke AND-poort welke gevallen worden bedekt. In het voorbeeld veranderden we de invoer van $\tupl{x,y,z}=\tupl{1,1,1}$ naar $\tupl{x,y,z}=\tupl{1,0,1}$. Zoals we op de figuur zien behoort dit tot een ander gebied. Men zou kunnen stellen dat de AND-poorten controleren of de invoer zich in hun overeenkomstige rechthoek bevindt en zo ja, komt er een \'e\'en op de uitgang. Een statische 1-hazard wordt veroorzaakt wanneer de rechthoek die we verlaten dit eerder ``opmerkt'' en dus de uitvoer op $0$ brengt alvorens de rechthoek waarin we toekomen dit merkt en de uitvoer terug hoog maakt. Door deze analogie kunnen we ook verklaren waarom we bij een schakeling volgens het sum-of-product-principe nooit een statisch 0-hazard zullen realiseren: we verplaatsen ons van cel naar cel. Wanneer beide cellen $0$ zijn, zal geen enkel rechthoek ooit actief worden. Bijgevolg zal op geen enkel moment er een $1$ aan de ingang van de OR-poort verschijnen.
 \importtikzfigure{asynchrone-hazard-karnaugh-ex}{Karnaugh-kaart bij het leidende voorbeeld.}
-\importtikzfigure{asynchrone-hazard-karnaugh-exred}{Karnaugh-kaart met redundante termen bij het leidende voorbeeld.}
+\paragraph{Hazards voorkomen}
+We kunnen een hazard voorkomen door ervoor te zorgen dat als we tussen twee cellen een transitie uitvoeren, er een rechthoek bestaat die beide cellen omvat. Een concrete oplossing wordt hiervoor voorgesteld in \figref{asynchrone-hazard-karnaugh-exred}. Wanneer we in dit voorbeeld een transitie uitvoeren, zullen de AND-poorten van de oorspronkelijke schakeling nog steeds een tijdsverschil optekenen. We introduceren echter een AND-poort die onder de transitie telkens een $1$ zal blijven aanleggen op de OR-poort. Bijgevolg za de uitvoer altijd $1$ blijven.
+\begin{figure}[hbt]
+\centering
+\importtikzfigure{asynchrone-hazard-karnaugh-exred}{Karnaugh-kaart.}
+\importtikzfigure{asynchrone-hazard-impl-exred}{Implementatie.}
+\caption{Het invoeren van redundante termen elimineert statische 1-hazards.}
+\end{figure}
+Om dus hazards te vermijden introduceren we \termen{redundante termen}: AND-poorten die niet strikt gezien nodig zijn om de correcte combinatorische logica voor te stellen, maar poorten die bij een wijziging aan de invoer ervoor zorgen dat er nooit een statische 1-hazard kan optreden.
+\paragraph{}
+Is het altijd mogelijk om zo'n AND-poort te realiseren. Wat indien we bijvoorbeeld een dambord partroon beschouwen zoals op \figref{}.

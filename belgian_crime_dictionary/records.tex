@@ -1,0 +1,121 @@
+\documentclass[twocolumn,a4paper,landscape]{article}
+\usepackage[dutch]{babel}
+\usepackage[cm]{fullpage}
+\usepackage[nonumberlist,xindy]{glossaries}
+\usepackage{hyperref}
+\makeglossaries
+\glsenablehyper
+%Criminal
+% -identifier
+% -name
+% -identity
+% -description
+\newcommand{\individual}[4]{\newglossaryentry{ind:#1}{name={#2},sort={#1},
+description={{(#3) #4}}}}
+\newcommand{\caseentry}[3]{\newglossaryentry{case:#1}{name={Zaak #2},sort={#1},
+description={#3}}}
+\newcommand{\annon}[3]{\individual{ann:#1}{Anoniem \##1}{#2}{#3}}
+\newcommand{\indref}[1]{\gls{ind:#1}}
+\newcommand{\annref}[1]{}
+\newcommand{\caseref}[1]{\gls{case:#1}}
+\newcommand{\location}[1]{\emph{#1}}
+\newcommand{\institution}[1]{\emph{#1}}
+\begin{document}
+\individual{dutrouxmarc}{Marc Dutroux}{kinderverkrachter en moordenaar}{Wordt in augustus 1996 gearresteerd samen met \indref{lelievremichel} en \indref{martinmichel}. Na twee dagen te zijn verhoord leidt Dutroux de speurders naar een kelder. In deze kelder bevindt zich achter een rek een ruimte van twee vierkante meter groot. In deze ruimte worden \indref{delhezletitia} en \indref{dardennesabine} levend aangetroffen. Sabine bracht 80 dagen in de kelder door. In de volgende dagen worden alle huizen van Dutroux doorzocht. Men vindt de lijken van \indref{lejeunejulie} en \indref{russomelissa}. Er werd reeds 14 maanden naar deze meisjes gezocht. Waarschijnlijk zijn ze in de kelder omgekomen van honger. Ook het huis van een vermoorde medeplichtige van Dutroux wordt onderzocht: hier worden de lijken van \indref{marshalan} en \indref{lambreckxeefje} gevonden. In een ander huis van Dutroux ontdekte men bouwmateriaal en een ondergronds tunnelcomplex.\cite{zdf20011028}}.
+\individual{coenraadschristiaan}{Christiaan Coenraads}{gevangene}{Zou in de Brusselse gevangenis worden gehoord over zijn relatie met \indref{dutrouxmarc} en medeverdachten. Een dag voor dit verhoor ontsnapt hij uit de gevangenis. Een maand later wordt hij in een voorstad van Brussel vermoord teruggevonden.\cite{zdf20011028}}
+\individual{dardennesabine}{Sabine Dardenne}{}{Slachtoffer van \indref{dutrouxmarc}.}
+\individual{delhezletitia}{Letitia Delhez}{}{Slachtoffer van \indref{dutrouxmarc}.}
+\caseentry{dutroux}{Dutroux}{}
+\individual{jenartbrigitte}{Brigitte Jenart}{tandarts}{Was bevriend met \indref{nihoulmichel}. Zij geldt als een belangrijke getuige. Een jaar later is ze dood. Men stelt dat dit zelfdoding is.\cite{zdf20011028}}
+\individual{konjevodaanna}{Anna Konjevoda}{?? - voor 7 april 1998}{Deze vrouw werd op 7 april 1998 uit de waterzuiveringsinstallatie van de \location{Maas bij Luik} opgevist. Ze werd geslagen en gewurgd.\cite{zdf20011028}}
+\individual{lambreckxeefje}{Eefje Lambreckx}{}{Slachtoffer van \indref{dutrouxmarc}.}
+\individual{lejeunejeandenis}{Jean-Denis Lejeune}{×}{Vader van \indref{lejeunejulie}. Lejeune stelt dat een significant aantal getuigen in de \caseref{dutroux} op mysterieuze wijze zijn verdwenen:
+\begin{quote}
+En heel toevallig sterven mensen op onverklaarbare wijze. Ze hebben bijvoorbeeld een auto ongeluk wanneer ze als getuige willen optreden. Of men vindt ze verbrand in hun huizen. Wonderbaarlijk verontrust dit justitie niet.
+\end{quote}\cite{zdf20011028}}
+\individual{lejeunejulie}{Julie Lejeune}{}{Slachtoffer van \indref{dutrouxmarc}.}
+\individual{marshalan}{An Marshal}{}{Slachtoffer van \indref{dutrouxmarc}.}
+\individual{massahubert}{Hubert Massa}{hoofdofficier van justitie}{Hij werkt kort aan de \caseref{dutroux}. Op een dag treft men hem dood aan in zijn kantoor: neergeschoten. Hij liet geen brieven achter voor vrouw of kinderen. Het ministerie besluit zelfmoord.\cite{zdf20011028}}
+\individual{nihoulmichel}{Michel Nihoul}{}{Nihoul wordt in augustus 1996 voorgeleid voor de onderzoeksrechter. Hij is de enige belangrijke verdachte in de \caseref{dutroux} die tot de veroordeling vrij is. \indref{loufregina} stelde dat hij de organisator was van een kinderprostitutie-netwerk. Nihoul wijst de beschuldigingen af:\begin{quote}Ik heb deze vrouw nooit gezien. Ik zeg vrouw omdat zij nu getrouwd is en kinderen heeft. Daarnaast spreekt zijn geen woord Frans en ik geen woord Nederlands. U zult zich waarschijnlijk stellen dat men de taal niet moet kennen om iemand te verkrachten. Maar als men aan groepsseks deelneemt, dan spreek je toch de taal van degene die het organiseert.\end{quote}.\cite{zdf20011028}}
+\individual{routmonbernard}{Bernard Routmon}{}{Film maker die handelt in pornocassettes. Hij wordt verdacht van het ontvoeren van een meisje en een mogelijke connectie met \indref{dutrouxmarc}. Bij een huiszoeking vindt men kinderkleding en speelgoed. Na enkele vruchteloze verhoren meldt hij zich plotseling telefonisch bij de politie. Op weg naar het verhoor rijdt hij met zijn auto tegen de pui van een huis. Hij komt om bij dit ongeluk.\cite{zdf20011028}}
+\individual{russomelissa}{Melissa Russo}{}{Slachtoffer van \indref{dutrouxmarc}.}
+\individual{russocarine}{Carine Russo}{}{Moeder van \indref{russomelissa}. Russo stelt dat wanneer \indref{dutrouxmarc} alleen handelde, het onderzoek sneller tot resultaten had moeten leiden. Ze stelt echter dat men op de belangrijkste vragen nog steeds geen antwoord is geformuleerd. Bijgevolg zou er een netwerk achter de \caseref{dutroux} schuilgaan. Daarnaast vertelt Russo omtrent het verhoor van \indref{reykensfrancois}:\begin{quote}Op de dag dat het verhoor van Fran\c{c}ois Reykens was gepland kwamen er rijkswachters bij ons thuis om te melden dat het verhoor niet doorging en dat Fran\c{c}ois Reykens onder de trein was omgekomen.\end{quote}\cite{zdf20011028}}
+\annon{6209}{}{Crimineel in de buurt van \location{Charleroi}. Leerde \indref{dutrouxmarc} in de gevangenis kennen. Hij stelt dat vermits de kinderen niet kortstondig na hun verdwijning werden teruggevonden, Dutroux geen ordinaire verkrachter is. Hij stelt dat er nooit losgeld is gevraagd aan de ouders van de vermoorde kinderen. Nochtans bezat Dutroux vele huizen. Hij stelt dan ook dat Dutroux aan geld kwam door de meisjes uit te lenen.\cite{zdf20011028}}
+\individual{weinsteinbernard}{Bernard Weinstein}{×}{Vriend (en mogelijke medeplichtige) van \indref{dutrouxmarc}. Woonde in de \location{Rue Daubresse, Charleroi}. De plaats waar tevens de lijken van \indref{marshalan} en \indref{lambreckxeefje} werden gevonden. Dutroux zou zijn medeplichtige rohypnol hebben toegediend (in een boterham met pat\'e\cite{xdossiers}) en vervolgens levend hebben begraven. Men vermoedt dat Weinstein eruit wilde stappen en Dutroux hem als een gevaarlijke getuige zag.\cite{zdf20011028}}
+\individual{steppejose}{Jose Steppe}{1939-1997}{Jose Steppe was van eenvoudige komaf maar was gedurende zijn hele leven bekend in \location{Charleroi}. Hij was een belangrijk vertrouwenspersoon voor de medebewoners in zijn wijk. Enkele weken na de arrestatie van \indref{dutrouxmarc} meldt hij zich telefonisch bij een journalist (vermoedelijk \indref{nabercaspar}) en de rijkswacht: hij zou belangrijke informatie hebben over Dutroux. Twee dagen voor zijn afspraak met de politie overlijdt hij in een caf\'e. De lokale hoofdofficier van justitie oordeelde dat het overlijden niet verdacht was: er werd geen autopsie uitgevoerd.\cite{zdf20011028}}
+\individual{nabercaspar}{Caspar Naber}{journalist}{Naber is een getuige bij de dood van \indref{steppejose}. Naber stelt dat Steppe last had van astma en hij bij zijn overlijden een beademingsapparaat bij hem lag. Naber inspecteerde het apparaat samen met de zoon van Steppe. In het apparaat bevond zich een hoeveelheid rohypnol. Rohypnol is een verdovingsmiddel en wordt nooit in een beademingsapparaat gebruikt. \indref{dutrouxmarc} gebruikte echter rohypnol om zijn slachtoffers te drogeren.\cite{zdf20011028}}
+\individual{goebelsguy}{Guy Goebels}{rijkswachter}{Rijkswachter in \location{Gr\^ace-Hollogne} (de plaats waar \indref{lejeunejulie} en \indref{russomelissa} verdwenen). Goebels werkte vanaf het begin aan de zaak (wat later de \caseref{dutroux} werd). Zijn collegas treffen hem op een dag dood aan in zijn woning: met zijn dienstwapen neergeschoten. Men stel zelfmoord vast, hoewel sommigen hier aan twijfelen. Familieleden stellen dat hij geen grote problemen had en niet suicidaal was.\cite{zdf20011028}}
+\individual{tagliaferrobruno}{Bruno Tagliaferro}{}{Oud ijzerhandelaar, sloper en bekende van \indref{dutrouxmarc}. Man van \indref{jauparifabienne}. Zijn vrouw beweerde dat Tagliaferro werd omgebracht omdat hij teveel wist. Ook zijn vader stelt dit:
+\begin{quote}
+Bruno stond in de weg, hij heeft rotzooi gemaakt, ik weet niet wat. Men chanteerde hem via zijn kinderen en heeft hem smerige zaakjes laten opknappen.\end{quote}Ook een vriendin van zijn vrouw stelt dit:
+\begin{quote}
+Fabienne heeft mij verteld dat dat Bruno een auto gesloopt heeft dat bij de ontvoering van twee kleine meisjes was gebruikt. Niks zal men daarvan terugvinden. Pas later begreep ik dat het ging om Julie (\indref{lejeunejulie}, red.) en Melissa (\indref{russomelissa}, red.).
+\end{quote}
+De politie zocht in \location{Keumi\'ee, Namur} naar sporen. Een autopsie toont aan dat Tagliaferro werd vergiftigd.\cite{zdf20011028}}
+\individual{jauparifabienne}{Fabienne Jaupari}{17 juli 1964-15 december 1998}{vrouw van \indref{tagliaferrobruno}. Jaupari stelde dat haar man werd vermoord.
+Vlak voor zijn dood zou Tagliaferro tegen Jaupari gezegd hebben:\begin{quote}Dat alles voorbij is, dat hij teveel wist en op korte termijn zou sterven.\end{quote}. Een autopsie gaf Jaupari gelijk: Tagliaferro werd vergiftigd. Niet veel later werd Jaupari zelf bedreigd. Ze vroeg tevergeefs om politiebescherming. Ze dacht belangrijke bewijsstukken van haar man te hebben ontdekt. Kort daarna vindt haar zoon haar dood in de slaapkamer. Ze is half verbrand en haar matras is met methanol overgoten. De justitie stelt zelfmoord of een ongeluk. Een vriendin spreekt dit echter tegen:\begin{quote}Weet u, iemand die zelfmoord wil plegen laat niet de wasmachine lopen, zet geen pan met aardappelen en zout op het vuur. (...) Ze (\indref{jauparifabienne}, red.) was geen zwetser, ze wist precies wat ze deed. Ze was ook niet gek, ze wist alleen niet meer wie ze kon vertrouwen.\end{quote}Een ongeval is bovendien onwaarschijnlijk: op de foto's van het plaats delict staat de fles methanol dichtgedraaid op het nachtkastje.\cite{zdf20011028}}
+\individual{thiraultclaude}{Claude Thirault}{}{Bekende van \indref{dutrouxmarc}. Thirault getuigt dat Dutroux het plan had opgevat om \indref{tagliaferrobruno} om te brengen:
+\begin{quote}
+Dutroux wilde hem (\indref{tagliaferrobruno}, red.) ombrengen, maar waarom vertelde hij niet. (...) Hij (\indref{dutrouxmarc}, red.) bood hiervoor 50'000 Belgische franken en een wapen. (...) Ik zat bij Dutroux in de auto, daar heeft hij het tegen mij verteld.
+\end{quote}.\cite{zdf20011028}}
+\individual{russogino}{Gino Russo}{}{Vader van \indref{russomelissa}.}
+\individual{loufregina}{Regina Louf}{}{Getuige X1 in de \caseref{dutroux}. Getrouwde vrouw met vier kinderen en uitbater van een hondenpension. Bij het uitbreken van de \caseref{dutroux} meldt ze zich en getuigt anoniem. Gedurende dagenlange verhoren vertelt zij over gruwelijke belevenissen met rijke en machtige mannen die bij seksfeesten jonge meisjes verkrachter, martelen en soms zelfs doden. De onderzoekers (\indref{debaetspatriek} en \indref{hupezphillipe}) controleren haar beweringen en vinden voldoende bewijzen om haar verklaringen ernstig te nemen. In de \caseref{dutroux} verklaart ze dat \indref{dutrouxmarc} de leverancier en \indref{nihoulmichel} de organisator van een kinderprostitutie-netwerk zijn:
+\begin{quote}
+Wel ik kende Nihoul (\indref{nihoulmichel}, red.) de tweede helft van de jaren zeventig en het begin van de jaren tachtig. In die zin is hij weinig verandert dus zijn uiterlijk is hetzelfde gebleven. Ik herkende hem dan ook onmiddellijk als een van de pooiers die kinderen misbruikte en voor seksfeesten opleidde, om misbruikt te worden.
+\end{quote}
+Louf werd onderzocht door het team van \indref{igodtpaul}. De onderzoekers stellen dat Louf tijdens haar jeugd massaal werd blootgesteld aan seksueel misbruik. Haar advocate, \indref{vandermissenpatricia} stelt op grond hiervan6 dat indien Louf haar getuigenis niet als juridisch bewijsmateriaal kan worden gebruikt, er verder onderzoek moet plaatsvinden op basis van deze getuigenissen. De Belgische justitie oordeelde dat de feiten niet verder moesten worden onderzocht.\cite{zdf20011028}}
+\individual{debaetspatriek}{Patriek De Baets}{×}{Rijkswachtadjudant en ondervrager bij de eerste verhoren van \indref{loufregina}.\cite{xdossiers}}
+\individual{hupezphillipe}{Philippe Hupez}{×}{Eerste wachtmeester van de rijkswacht en ondervrager bij de eerste verhoren van \indref{loufregina}.\cite{xdossiers}}
+\individual{vandermissenpatricia}{Patricia Vandermissen}{}{Vandermissen was de advocaat van \indref{loufregina} tijdens het proces rond de \caseref{dutroux}. Vandermissen argumenteert dat de getuigenis van Louf geloofwaardig is vanwege een onderzoek door specialisten onder leiding van \indref{igodtpaul} van de \institution{KU Leuven}. Vandermissen stelt dat indien de getuigenissen van Louf niet als juridisch bewijsmateriaal kunnen worden gebruikt, er verder onderzoek dient plaats te vinden op grond van deze verklaringen. De Belgische justitie besliste echter deze getuigenissen niet verder te onderzoeken.\cite{zdf20011028}}
+\individual{igodtpaul}{Paul Igodt}{gewoon hoogleraar}{Igodt is gewoon hoogleraar aan de \institution{KU Leuven} en onderzocht de geloofwaardigheid van de getuigenissen van \indref{loufregina} in de \caseref{dutroux}. Igodt stelde dat Louf tijdens haar jeugd aan massaal seksueel misbruik is blootgesteld. Verder stelt Igodt dat het zich loont te onderzoeken wat Louf vertelt.\cite{zdf20011028}}
+\individual{pardaensgina}{Gina Pardaens}{-mei 1998}{Sociaal maatschappelijk werker. Deze vrouw steunde slachtoffers van een kinderprostitutie-netwerk. Ze overleed na een ongeluk waarbij ze s'nachts met 80 kilometer per uur tegen de railing van een brug knalde op weg naar huis. Het openbaar ministerie stelde een ongeluk vast. Sommige vrienden (zoals \indref{vervloessemmarcel} en \annref{2167}) stellen echter dat er sabotage in het spel is. Enkele dagen voor haar dood schreef ze een brief. Hierin verklaart ze dat ze in het kader van haar werk doodsbedreigingen kreeg en voor haar leven vreesde. Ze vertelde de politie dat ze haar bedreigd hadden met een auto-ongeluk. Vlak voor haar dood vertelde Pardaens enkele vrienden over een videoband van een seksfeest waarop meisjes werden vermoord. Ze herkende \'e\'en van de deelnemers als \indref{nihoulmichel}.\cite{zdf20011028}}
+\individual{vervloessemmarcel}{Marcel Vervloessem}{×}{Bekende van \indref{pardaensgina}. Vervloessem getuigde dat nadat Pardaens de bedreigingen kenbaar maakte aan de politie ze regelmatig met de dood wordt bedreigd. Verder wordt ze geschaduwd en gevolgd. Verder waren er merkwaardige problemen aan haar telefoontoestel. Een man belde haar en zei dat beter met haar werk kon stoppen, of anders niet lang meer zou leven.\cite{zdf20011028}}
+\annon{2167}{}{Vriendin van \indref{pardaensgina}. De getuige stelt dat Pardaens teveel met de dood is bedreigd om dergelijk ongeval nog geloofwaardig te laten lijken. Voor de getuige is een ongeval dan ook uitgesloten.\cite{zdf20011028}}
+\individual{taminiaujeanpaul}{Jean-Paul Taminiau}{×}{Taminiau verdween kort nadat hij een vriend had vertelt dat hij over belangrijke informatie beschikte. Taminiau huurde een garagebox waarbij de hangar ertegenover door \indref{dutrouxmarc} werd gebruikt voor illegale praktijken. Een jaar na zijn verdwijning vindt een visser een voet van Taminiau in het nabijgelegen kanaal. De rest van zijn lijk wordt nooit gevonden.\cite{zdf20011028}}
+\individual{deulinjeanine}{Jeanin Deulin}{×}{Moeder van \indref{taminiaujeanpaul}. Deulin getuigt het volgende: \begin{quote}Die vriend die hem een nog een dag voor zijn verdwijning heeft gezien kwam een aantal weken later bij mij en vertelde: ``Voor mij is hij niet dood: hij verstopt zich. Hij is bang voor iets. De politie maakt het hem moeilijk, hij heeft angst.\end{quote} Deulin denkt dat indien er geen priv\'eredenen zijn om haar zoon om te brengen, haar zoon vermoord is door de mensen die \indref{dutrouxmarc} proberen te beschermen.\cite{zdf20011028}}
+\individual{reykensfrancois}{Fran\c{c}ois Reykens}{×}{Op 28 jarige leeftijd wenst Reykens een getuigenverklaring af te leggen. De rijkswacht wil weten wat hij over \indref{russomelissa} weet. Het verhoor vindt nooit plaats: spoormedewerkers vinden zijn lijk langs het spoor. Hij werd door een trein overleden. Reykens was actief in het drugsmilieu en de criminaliteit. En kende reeds voor de bekendmakigng details over de \caseref{dutroux}.\cite{zdf20011028}}
+\individual{melonfrancois}{Fran\c{c}ois Melon}{×}{Een bekende van \indref{melonfrancois}. Melon getuigde dat op een dat Reykens hem heeft aangesproken. Er was iets ernstigs gebeurd en Reykens wilde erover praten. Melon stelde voor het toen te vertellen. Reykens antwoorde hierop dat hij over \indref{russomelissa} wilde praten. Melon verklaart dat Reykens iets weet over de ontvoering als volgt:\begin{quote}het zijn geen mensen zoals wij, uit ons milieu uit onze kringen, die over dergelijke informatie beschikken, dat kon alleen Fran\c{c}ois.\end{quote}.\cite{zdf20011028}}
+\individual{reykensjean}{Jean Reykens}{×}{Vader van \indref{reykensfrancois}. Reykens had een nogal moeilijke relatie met zijn zoon. Hij weet niet of er bij het ongeval van zijn zoon geen kwaad opzet was.\cite{zdf20011028}}
+\individual{priomichel}{Michel Piro}{×}{Piro was een bordeel- en nachtclub-bezitter. Drie maanden na de arrestatie van \indref{dutrouxmarc} wordt Piro koelbloedig op een parkeerplaats neergeschoten. Piro is een bekende in de onderwereld van \location{Charleroi}. Kort voor zijn dood neemt hij contact op met de ouders van \indref{lejeunejulie} en \indref{russomelissa} met een verzoek hen te ontmoeten. Hij wilde een avond organiseren om iets te onthullen maar waarover het precies ging werd niet onthult.}
+\individual{ponceletguy}{Guy Poncelet}{×}{Oud hoofd van justitie. Vader van \indref{ponceletsimon}. Sinds de dood van zijn zoon probeert hij de \caseref{dutroux} zelf op te lossen. Poncelet is bezorgd dat veel getuigen onder verdachte omstandigheden zijn omgekomen en anderen reeds oud geworden zijn. Hierdoor zijn de getuigenissen minder scherp. Daarom vindt Guy Poncelet dat het proces sneller moest worden gevoerd in de \caseref{dutroux}.\cite{zdf20011028}}
+\individual{ponceletsimon}{Simon Poncelet}{1955-1996}{Poncelet was een politieagent die onderzoek deed in de kringen van \indref{dutrouxmarc}. Hij werd tijdens een nachtdienst in zijn bureau neergeschoten. De moord is tot op vandaag niet opgehelderd.\cite{zdf20011028}}
+\individual{henrottemarielouise}{Marie-Louise Henrotte}{}{Henrotte is vermoedelijk de enige getuige die heeft gezien hoe \indref{lejeunejulie} en \indref{russomelissa} werden ontvoerd:
+\begin{quote}
+Het was een donkere auto met vier deuren. (...) De meisjes zijn ingestapt. (...) Hij (\indref{dutrouxmarc}, red.) deed niks. Hij heeft alleen de deur open gedaan en de meisjes zijn achterin gaan zitten en hij is weggereden.
+\end{quote}
+Henrotte kon tijdens het proces niet getuigen: ze leed aan Alzheimer op dat moment.
+\cite{zdf20011028}}
+\individual{renardadeche}{Adeche Renard}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{gosselinalexandre}{Alexandre Gosselin}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{dinantmichel}{Michel Dinant}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{gregoirechristof}{Christof Gregoire}{}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{toussaintjoseph}{Joseph Toussaint}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{antipinegregory}{Gr\'egory Antipine}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{purshhenriette}{Henriette Push}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{bahrklaus}{Klaus Bahr}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{ferontjeanjacquesg}{Jean-Jacques Feront}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{derijckepierrepol}{Pierre-Pol de Rijcke}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{claeyssandra}{Sandra Claeys}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{pinonvirginie}{Virginie Pinon}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{vanessagerard}{G\'erard Vanessa}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\individual{deleuzephilippe}{Philippe Deleuze}{×}{Getuige in de \caseref{dutroux}. De getuige was voor de aanvang van het proces reeds overleden.\cite{zdf20011028}}
+\caseentry{bendevannijvel}{Bende Van Nijvel}{×}
+
+\begin{quotation}
+Dames en heren\\
+Op verzoek van onderzoeksrechter Willy Van Wezel van het parket van \location{Nijvel}, lezen wij volgend bericht.\\
+Naar aanleiding van de bloedige hold-up gepleegd gisteren 30 september '82 te \location{Waver}, heeft de rijkswacht een robotfoto samengesteld van \'e\'en van de daders.\\
+Beschrijving van de dader: 25 \`a 30 jaar, een normale tot zware lichaamsbouw, zwart haar en hij is 1 meter 70 tot 1 meter 75 lang.\\
+Alle personen die inlichten kunnen verstrekken omtrent deze persoon: gelieve deze door te geven aan de rijkswacht van \location{Waver}. Het kan telefonisch op het volgende nummer (010) 22 38 15. Of aan de dichtstbijgelegen rijkswacht- of politie-post.
+\end{quotation}
+
+\section*{Inleiding}
+In dit woordenboek bespreken we de verschillende personen die op de \'e\'en of andere manier betrokken zijn in het Belgische misdaadmilieu. Dit zijn zowel daders, slachtoffers, getuigen of personen die eerder onrechtstreeks betrokken zijn. In belangrijke zaken (zoals de \caseref{dutroux} en de \caseref{bendevannijvel}) is niet altijd duidelijk hoe de feiten precies verlopen zijn. Daarom stellen we de getuigenissen in dit boek niet voor als feiten. De meestel zaken worden dan ook in genuanceerde vorm vertelt. Bij elk element worden bovendien de bronnen vermeld.
+\paragraph{}
+Personen die extra informatie willen leveren, of bestaande informatie willen corrigeren kunnen mailen naar \hyperref[mailto:belgischcrimineelwoordenboek@gmail.com]{belgischcrimineelwoordenboek@gmail.com}.
+\glsaddall{}
+\printglossaries
+\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{biblio}
+\end{document}
