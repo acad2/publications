@@ -1,0 +1,9 @@
+20130927a/Lexer/Tokenizer/An algorithm that takes as input a stream of characters or bytes and calculates a stream of {tokens|Token}. The input is thus grouped into fundamental units of a language. A lexer is used as a first stage in a compiler to process code described in a formal language or expressions in natural language processing.
+20130928a/Regular expression//An expression describing a regular language. A regular language consist out of four elements: characters, concatenation, union and Kleene-star.
+20130928b/Language//A set of strings. Languages can sometimes be described by {regular expression}s, {context-free grammar}s, {context-sensitive grammar}s or a program executed on a {Turing machine}. However {Rice theorem} states that most languages are undecidable.
+20130928c/Finite State Machine/Finite State Automaton/A finite state machine is a tuple $\tupl{S,}$
+20130928d/
+20130928e/
+20130928f/
+20130928g/
+20130928h/
