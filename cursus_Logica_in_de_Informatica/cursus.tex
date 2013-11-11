@@ -1,5 +1,24 @@
 \documentclass[titlepage,a4paper]{book}
-\usepackage{fullpage,tikz}
+\usepackage[dutch]{babel}
+\usepackage{glossaries}
+\usepackage{fullpage}
+\usepackage{tikz}
+\usepackage{index}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{framed}
+\usepackage{tabularx}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{stmaryrd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{bbding}
+\usepackage{array}
+\usepackage{../SharedData/commusoftScripts}
 \title{Logica in de Informatica}
 \author{Willem M. A. Van Onsem, BSc.}
 \date{mei 2014}
@@ -8,16 +27,35 @@
 \newcommand{\idp}{\textsc{Idp}}
 
 \begin{document}
+\frontmatter
 \begin{titlepage}
 \maketitle
 \end{titlepage}
 \chapter*{Notities vooraf}
 Op verschillende vlakken komt een student informatica in aanraking met logica. Allereerst bestaan de meeste programma's uit een grote hoeveelheid logische expressies. Dit noemt men vaak de ``business logic'' of ``application logic'' van het programma. Anderzijds bestaan er een grote hoeveelheid programma's die logica beschouwen en manipuleren. We denken hierbij bijvoorbeeld aan \prolog{} en \idp{}. Logica wordt dan ook vaak als de fundamentele bouwsteen gezien van de Artifici\"ele intelligentie.
 \paragraph{}
-Verschillende vormen van logica worden in verschillende opleidingsonderdelen onderwezen. Dit resulteert soms in een eerder chaotisch parcours met verschillende notaties, terminologie en semantiek. Het leidt er meestal toe dat studenten kostbare uren verspillen aan het opnieuw analyseren van een gelijkaardige inleiding. Deze ``cursus'' wenst hierop een antwoord te bieden. In plaats van \'e\'en opleidingsonderdeel uit te spitten worden alle opleidingsonderdelen in verband met logica samengevat in \'e\'en werk.
+Verschillende vormen van logica worden in verschillende opleidingsonderdelen onderwezen. Dit resulteert soms in een eerder chaotisch parcours met verschillende notaties, terminologie en semantiek. Het leidt er meestal toe dat studenten kostbare uren verspillen aan het opnieuw analyseren van een gelijkaardige inleiding. Deze ``cursus'' wenst hierop een antwoord te bieden. In plaats van \'e\'en opleidingsonderdeel uit te spitten worden alle opleidingsonderdelen in verband met logica samengevat in \'e\'en werk. Sommige cursussen worden slechts gedeeltelijk behandelt: dit omdat slechts in een deel van de cursus logica aan bod komt.
 \paragraph{}
 Het samenbrengen van verschillende opleidingsonderdelen brengt traditioneel enige overhead met zich mee: men deelt een boek in in hoofdstukken en sommige hoofdstukken zullen meer beschouwen dan het strikt noodzakelijk. Veel inspanningen werden ge\"investeerd in het opsplitsen van de kennis in een structuur die deze overhead zo laag mogelijk houdt. We hopen dat we in deze opzet geslaagd zijn en dat lezers die toch met deze overhead worden geconfronteerd de bijkomende kennis interessant zullen vinden.
+\paragraph{Ondersteunde opleidingsonderdelen} Volgende opleidingsonderdelen worden volledig of gedeeltelijk ondersteund. Onderdelen die worden aangeduid met een ster ($\star$) worden gedeeltelijk ondersteund:
+\begin{multicols}{2}
+\begin{itemize}
+ \item Logic as a Foundation of A.I. (H02A2)
+ \item Logica en Argumentatieleer (C01B6, C01X5)
+ \item Logica, met oefeningen (W0AA3)
+ \item Logica, Verzamelingen en Relaties (S1WI1)
+ \item Computational Logic (H02A9)
+ \item Logica voor Informatici (G0T43)
+ \item Wiskundige Logica (G0A98)
+\end{itemize}
+\end{multicols}
+\mainmatter
 \chapter{Terminologie}
+\chapterquote{Hij gaf de dingen andere namen. Zo noemde hij een stoel een krant. De tafel noemde hij een deurknop. Een briefje noemde hij een hand.}{Herman van Veen}
 
+\chapter{Epistemische logica}
+\chapterquote{Nu mobiele telefoons en het Internet het epistemische selectieve landschap hebben veroverd, moet elke religie zijn verdedigingen laten mee\"evolueren of uitsterven.}{Daniel Dennett}
 \chapter{Compiler-implementatie}
+\chapterquote{Iedere serieuze software ingenieur zal zeggen dat een compiler en interpreter uitwisselbaar zijn.}{Tim Berners-Lee}
+\backmatter
 \end{document}
