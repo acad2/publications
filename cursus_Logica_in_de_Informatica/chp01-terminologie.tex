@@ -1,0 +1,56 @@
+\chapter{Terminologie}
+\chapterquote{Hij gaf de dingen andere namen. Zo noemde hij een stoel een krant. De tafel noemde hij een deurknop. Een briefje noemde hij een hand.}{Herman van Veen}
+In het eerste hoofdstuk introduceren we enkele termen om de verschillende componenten in logica te kunnen benoemen. Zo hebben verschillende logische symbolen een eigen naam samen met de syntaxmatige structuren in logische programma's. Verder delen we de logica in propositie- en predicatenlogica.
+\section{Symbolen}
+Een logische taal bestaat doorgaans uit \termen{taal-onafhankelijke taalelementen} en \termen{taal-afhankelijke elementen}. De taal-onafhankelijke elementen zijn elementen die men in elke instantie van het gebruik van logica terug zal vinden. Deze symbolen hebben bijgevolg een vaste betekenis. Taal-afhankelijke elementen hangen af van het probleem zelf. Er wordt dan ook een betekenis ad-hoc aan toegekend.
+\paragraph{}
+Onder de taal-onafhankelijke elementen rekenen we:
+\begin{enumerate}
+ \item \termen{variabelen} zoals $x$, $y$, $Lx$,...
+ \item \termen{propositionele constanten} zoals \xtrue{} en \xfalse{}. In het geval van driewaardige of vierwaardige logica kunnen hier nog meer constanten bijkomen.
+ \item \termen{leestekens} zoals de \termen{haakjes} (\verb+(+, \verb+)+) en de \termen{komma} (\verb+,+)
+ \item \termen{logische connectieven}: $\neg$, $\wedge$, $\vee$, $\rightarrow$ en $\leftrightarrow$.
+ \item \termen{kwantoren}: de \termen{universele kwantor} ($\forall$), de \termen{existenti\"ele kwantor} ofwel \termen{existentiekwantor} ($\exists$) en in mindere mate de \termen{unieke existenti\"ele kwantor} ($\exists!$)
+\end{enumerate}
+\paragraph{}
+Het taal-afhankelijke gedeelte bevat dan weer
+\begin{enumerate}
+ \item \termen{constanten} zoals \ldm{maarten}, \ldm{agnes}, ...
+ \item \termen{functiesymbolen} ofwel \termen{functoren} zoals \ldm{hart/1}, \ldm{+/2}, ...
+ \item \termen{predicaat-symbolen} zoals \ldm{mens/1}, \ldm{het\_regent/0} en \ldm{fan\_van/2}, ...
+\end{enumerate}
+Bij functors en predicaat-symbolen noteren we ook de \termen{ariteit}: het aantal argumenten die de functor of het predicaat vereist. De expressie \ldm{predicaat/ariteit} noemen we de \termen{signatuur} van het predicaat. De ariteit is een eigenschap van een predicaat of functor. \ldm{min/2} is dus een andere functor dan bijvoorbeeld \ldm{min/3}. Constanten zijn in wezen functoren met een ariteit gelijk aan 0. \ldm{maarten} is dus in principe gelijk aan \ldm{maarten/0}. Bij een functor of predicaat met ariteit gelijk aan 0 hoeven we geen haakjes te schrijven.
+\paragraph{}
+In deze cursus maken we de afspraak dat taal-afhankelijke elementen (constanten, functors, predicaten) in het vetjes zullen worden geschreven. Dit is echter louter om de expressies makkelijker te kunnen begrijpen en is zeker niet verplicht. Voorbeelden hiervan zijn \ldm{jan}, \ldm{hart/1}, \ldm{regen/0}. Taal-onafhankelijke elementen zoals variabelen schrijven we dan weer cursief zoals $x$, $y$ en $Lx$.
+\section{Grammatica}
+In de vorige sectie hebben we de verschillende symbolen die we in de taal kunnen gebruiken gedefinieerd. We kunnen deze symbolen echter niet in om het even welke volgorde gebruiken: er zijn regels hoe een logische formule er moet uitzien. Om deze regels te specificeren zullen we verdere terminologie invoeren.
+\paragraph{}
+We beginnen met een \termen{term}. Een term defini\"eren we inductief:
+\begin{definition}[Term]
+Volgende expressies zijn termen:
+\begin{enumerate}
+ \item Een constante
+ \item Een variabele
+ \item \label{itm:compoundtermf} $\fun{\ldm{f}}{t_1,t_2,\ldots,t_n}$ met \ldm{f/$n$} een functor met ariteit $n$ en $t_1,t_2,\ldots,t_n$ allemaal termen.
+\end{enumerate}
+Termen van de vorm zoals in \ref{itm:compoundtermf} noemen we ook \termen{samengestelde termen} ofwel \termen{compound terms}.
+\end{definition}
+\begin{example}[Termen van hartelijke mensen]
+Stel constanten $\accl{\ldm{maarten},\ldm{agnes},\ldm{ruben}}$, variabelen $\accl{x,y,z}$ en functoren $\accl{\ldm{hart/1}, \ldm{vader/1}, \ldm{gelijkaardig/2}}$ dan zijn volgende expressies termen:
+\begin{multicols}{2}
+\begin{itemize}
+ \item $y$
+ \item $\ldm{maarten}$
+ \item $\func{hart}{\ldm{maarten}}$
+ \item $\func{hart}{\func{vader}{\ldm{maarten}}}$
+ \item $\func{hart}{\func{vader}{\func{vader}{x}}}$
+ \item $\func{vader}{\func{hart}{\func{vader}{x}}}$
+ \item $\func{gelijkaardig}{x,y}$
+ \item $\func{gelijkaardig}{x,\ldm{maarten}}$
+\end{itemize}
+\end{multicols}
+\end{example}
+\subsection{Vrije variabelen en de scope van kwantoren}
+\section{Soorten logica}
+\section{Logische programma's}
+Logische programma's zoals \prolog{} en \problog{} programma's kenmerken zich door een vaste vorm: expressies worden in een vast formaat geschreven. Alle mogelijke vormen van logisch programmeren overlopen is geen sinecure. In deze sectie zullen we de terminologie rond logische programma's echter zo algemeen mogelijk bespreken.

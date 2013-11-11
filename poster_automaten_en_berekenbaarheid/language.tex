@@ -1,0 +1,42 @@
+alfa/LANG/4.5/2.5/8 cm/Alfabet/{$\Sigma$}/{Een alfabet $\Sigma$ is een set karakters die relevant zijn in een gegeven taal $L$.},
+stri/LANG/4.5/5/8 cm/String/{$s\in\Sigma^*$}/{Een string over een alfabet $\Sigma$ is een sequentie van 0, 1 of meer karakters uit $\Sigma$. $\Sigma^*$ beschrijft de verzameling van alle strings over $\Sigma$},
+lang/LANG/4.5/8/8 cm/Taal/{$L\subseteq\Sigma^*$}/{Een taal over een alfabet $\Sigma$ is een verzameling strings over $\Sigma$.},
+conc/LANG/12.5/2.5/6 cm/Concatenatie van talen/{$L_1L_2$}/{Gegeven twee talen $L_1$ en $L_2$ over eenzelfde alfabet $\Sigma$, dan is de concatenatie $L_1L_2=\accl{xy|x\in L_1,y\in L_2}$. $L_n$ is de concatenatie van $n$ keer de taal $L$.},
+klee/LANG/12.5/7/6 cm/Kleene-ster/{$L^*$}/{De Kleene-ster van een taal $L$ is de unie van nul, \'e\'en of meer concatenaties van de taal: $L^*=\displaystyle\cup_{n=0}^n{L^n}$.},
+rege/REGEX/5.5/2.5/10 cm/Reguliere expressie over een alfabet $\Sigma$/RE/{$E$ is een reguliere expressie over $\Sigma$ indien $E$ van de vorm is:\begin{itemize}
+ \item $\epsilon$
+ \item $\phi$
+ \item $a$ met $a\in\Sigma$
+ \item $\brak{E_1E_2}$ waarbij $E_1$ en $E_2$ reguliere expressies zijn over $\Sigma$.
+ \item $\brak{E_1|E_2}$ waarbij $E_1$ en $E_2$ reguliere expressies zijn over $\Sigma$.
+ \item $\brak{E_1}^*$ waarbij $E_1$ een reguliere expressie is over $\Sigma$.
+\end{itemize}},
+rela/REGEX/18/2.5/14 cm/Een reguliere expressie bepaalt een taal/$\mbox{RE}\sim L_{\mbox{RE}}$/{Een reguliere expressie $E$ bepaalt een taal $L_E$ over hetzelfde alfabet $\Sigma$ als volgt:\begin{itemize}
+ \item Als $E=\epsilon$, dan is $L_E=\accl{\epsilon}$
+ \item Als $E=\phi$, dan is $L_E=\emptyset$
+ \item Als $E=a$ met $a\in\Sigma$, dan is $L_E=\accl{a}$
+ \item $\brak{E_1E_2}$ waarbij $E_1$ en $E_2$ reguliere expressies zijn over $\Sigma$, dan is $L_E=L_1L_2$.
+ \item $\brak{E_1|E_2}$ waarbij $E_1$ en $E_2$ reguliere expressies zijn over $\Sigma$, dan is $L_E=L_1\cup L_2$.
+ \item $\brak{E_1}^*$ waarbij $E_1$ een reguliere expressie is over $\Sigma$, dan is $L_E=L_{E_1}^*$.
+\end{itemize}},
+regl/REGEX/5.5/7.75/10 cm/Reguliere taal/$\mbox{RegLan}$/{Een taal die door een reguliere expressie bepaald wordt is een reguliere taal. De verzameling van reguliere talen duiden we aan met $\mbox{RegLan}$.},
+nfa/REGEX/35/1.2/10 cm/Niet-deterministische eindige toestandsautomaat/NFA/{Een niet-deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
+ \item $Q$ een eindige verzameling toestanden is;
+ \item $\Sigma$ een eindig alfabet;
+ \item $\delta:Q\times\Sigma_{\epsilon}\rightarrow\powset{Q}$ de overgangsfunctie van de automaat;
+ \item $q_s\in Q$ de starttoestand en een element van $Q$;
+ \item $F\subseteq Q$ de verzameling eindtoestanden.
+\end{itemize}},
+nfaeq/REGEX/43.5/1.2/6 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
+nfastr/REGEX/35/6.15/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}}$/{Een string $s$ wordt aanvaard door een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan geschreven worden als $a_1a_2\ldots a_n$ met $a_i\in\Sigma_{\epsilon}$, en er een rij toestanden $q_1q_2\ldots,q_{n+1}$ bestaat zodat:\begin{itemize}
+ \item $t_1=q_s$;
+ \item $t_{i+1}\in\fun{\delta}{t_i,a_i}$;
+ \item $t_{n+1}\in F$.
+\end{itemize}},
+gnfa/REGEX/55/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een gegeneraliseerde niet-deterministische eindige toestandsautomaat is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
+ \item slechts \'e\'en eindtoestand $F=\accl{q_f}$ zodat $q_f\neq q_s$;
+ \item de bogen bevatten een reguliere expressie als label;
+ \item $\forall q_i,q_j\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_j$;
+ \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_s,c}=q_j$;
+ \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_f$.
+\end{itemize}}

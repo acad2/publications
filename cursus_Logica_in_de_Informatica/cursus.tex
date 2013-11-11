@@ -11,20 +11,32 @@
 \usepackage{wrapfig}
 \usepackage{listings}
 \usepackage{multicol}
-\usepackage{multicol}
 \usepackage{multirow}
 \usepackage{stmaryrd}
+\usepackage{amsthm}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{bbding}
 \usepackage{array}
-\usepackage{../SharedData/commusoftScripts}
+\usepackage{../SharedData/commusoftScripts,../SharedData/brackets}
+\makeindex
 \title{Logica in de Informatica}
 \author{Willem M. A. Van Onsem, BSc.}
 \date{mei 2014}
 
-\newcommand{\prolog}{\textsc{Prolog}}
+\newcommand{\prolog}{\textsc{ProLog}}
+\newcommand{\problog}{\textsc{ProbLog}}
 \newcommand{\idp}{\textsc{Idp}}
+\newcommand{\ld}[1]{\textbf{\ensuremath{#1}}}
+\newcommand{\ldm}[1]{\ld{\mbox{#1}}}
+\newcommand{\func}[2]{\fun{\ldm{#1}}{#2}}
+\newcommand{\pred}[2]{\fun{\ldm{#1}}{#2}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definitie}[chapter]
+\AtEndEnvironment{definition}{\null\hfill$\diamond$}
+\theoremstyle{remark}
+\newtheorem{example}{Voorbeeld}[chapter]
 
 \begin{document}
 \frontmatter
@@ -53,24 +65,12 @@ Het samenbrengen van verschillende opleidingsonderdelen brengt traditioneel enig
 \paragraph{}
 Het is niet altijd eenvoudig om de kennis homogeen uit te drukken. Een negatie in eerste orde logica heeft immers een andere betekenis dan een negatie in bijvoorbeeld logisch programmeren, in dit laatste zal men meestal werken met principes zoals \emph{negatie als eindige faling} of de \emph{gesloten wereld assumptie}. Inspanningen werden geleverd om de pure logica gescheiden te houden van logisch programmeren. We roepen echter de lezer op dit verschil indachtig te blijven.
 \mainmatter
-\chapter{Terminologie}
-\chapterquote{Hij gaf de dingen andere namen. Zo noemde hij een stoel een krant. De tafel noemde hij een deurknop. Een briefje noemde hij een hand.}{Herman van Veen}
-In het eerste hoofdstuk introduceren we enkele termen om de verschillende componenten in logica te kunnen benoemen. Zo hebben verschillende logische symbolen een eigen naam samen met de syntaxmatige structuren in logische programma's. Verder delen we de logica in propositie- en predicatenlogica.
-\section{Symbolen}
-
-\chapter{Epistemische logica}
-\chapterquote{Nu mobiele telefoons en het Internet het epistemische selectieve landschap hebben veroverd, moet elke religie zijn verdedigingen laten mee\"evolueren of uitsterven.}{Daniel Dennett}
-\chapter{Compiler-implementatie}
-\chapterquote{Iedere serieuze software ingenieur zal zeggen dat een compiler en interpreter uitwisselbaar zijn.}{Tim Berners-Lee}
-Soms wenst men een programma te ontwikkelen dat als invoer \'e\'en of meer logische expressies neemt. Hierop worden dan vervolgens operaties uitgevoerd zoals de $T_P$ operator. In dit hoofdstuk zullen we enkele aspecten bespreken rond de implementatie van een compiler of interpreter dat op een of andere wijze te maken krijgt met logica. Dit hoofdstuk is niet exhaustief: voor de implementatie van bijvoorbeeld een volledig operationeel \prolog{} systeem is een meer gesofisticeerde implementatie vereist.
-\section{Syntax: Lexer en Parser}
-Niet alle programma's die met logica te maken hebben, zullen noodzakelijkerwijs te maken krijgen met invoer van logische expressies. Toch is het een vaak voorkomend fenomeen. In dat geval dient men eerst de invoer te analyseren, iets wat men bewerkstelligt met een \termen{lexer} en \termen{parser}.
-\subsection{Lexer}
-Een lexer is een component die een stroom van karakters omzet in een stroom van tokens. Een \termen{token} is een reeks karakters die eerder op zichzelf staat. In een programmeertaal is dit typisch een codewoord zoals \verb+if+ of \verb+while+, operatoren zoals \verb+=+ of \verb+!=+ enzovoort.
-\paragraph{}
-Alle programmeer en specificatie-talen lenen zich doorgaans goed tot het omzetten van reeksen karakters in tokens. Meestal stelt men dat bij een dergelijke taal, de strings die onder een token vallen moeten kunnen worden gespecificeerd aan de hand van een reguliere expressie.
-\subsection{Parser}
-\section{Semantiek: Symbooltabellen en Typesystemen}
-\section{Processing: logische inferentie}
+\input{chp01-terminologie}
+\input{chp50-epistemisch}
+\input{chp99-compiler}
 \backmatter
+\bibliographystyle{alpha}
+\nocite{*}
+\bibliography{biblio}
+\printindex
 \end{document}

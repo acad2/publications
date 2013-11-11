@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage[a0paper,landscape,margin=1cm,centering]{geometry}
+\usepackage{color,tikz,amssymb,graphicx,enumitem}
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+\usepackage{../SharedData/brackets}
+\definecolor{backg}{rgb}{0.99,0.96,0.9}
+\definecolor{redback}{rgb}{1,0.88,0.85}
+\definecolor{greenback}{rgb}{0.9,0.98,0.85}
+\definecolor{blueback}{rgb}{0.9,0.88,0.95}
+\definecolor{orangeback}{rgb}{1.0,0.93,0.85}
+\pagecolor{backg}
+\usepackage{tikz,amsfonts}
+\usetikzlibrary{fit,patterns,snakes,calc,decorations,decorations.text,positioning,decorations.pathreplacing,matrix}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{classes}
+\pgfsetlayers{background,classes,main}
+\usepackage{catchfile,varwidth}
+\newcommand{\ssfunc}[1]{\ensuremath{#1:\left\{0,1\right\}^*\rightarrow\left\{0,1\right\}^*}}
+\newcommand{\NNfunc}[1]{\ensuremath{#1:\NN\rightarrow\NN}}
+\newcommand{\slang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^*}}
+\newcommand{\nlang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^n}}
+\newcommand{\sstri}[1]{\ensuremath{#1\in\left\{0,1\right\}^*}}
+\newcommand{\nstri}[1]{\ensuremath{#1\in\left\{0,1\right\}^n}}
+\newcommand{\cstri}[2]{\ensuremath{#1\in\left\{0,1\right\}^{#2}}}
+\newcommand{\cc}[1]{\textbf{#1}}
+\newcommand{\ccc}[1]{\textbf{#1}-\textit{complete}}
+\newcommand{\cch}[1]{\textbf{#1}-\textit{hard}}
+\newcommand{\cca}[2]{\ensuremath{\mbox{\cc{#1}}\left(#2\right)}}
+\newcommand{\red}[1]{\ensuremath{\leq_{#1}}}
+\newcommand{\prb}[1]{\ensuremath{\Pr\left[#1\right]}}
+\newcommand{\bigoh}[1]{\ensuremath{O\left(#1\right)}}
+\newcommand{\smalloh}[1]{\ensuremath{o\left(#1\right)}}
+\newcommand{\bigomega}[1]{\ensuremath{\Omega\left(#1\right)}}
+\newcommand{\smallomega}[1]{\ensuremath{\omega\left(#1\right)}}
+\newcommand{\bigtheta}[1]{\ensuremath{\Theta\left(#1\right)}}
+\newcommand{\xlogx}[1]{\ensuremath{#1\log\left(#1\right)}}
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcommand{\defgroup}[7]{
+\begin{scope}[xshift=#1,yshift=#2]
+\filldraw[#6!40!backg,draw=black,very thick,rounded corners] (0.5*\dma,0.5*\dma) rectangle ++(#3-\dma,#4-\dma);\draw (0.5*\dma,#4-0.5*\dma) node[anchor=north west]{\Huge{\bf #5}};
+\coordinate (#7) at (0.5*\dma,#4-0.5*\dma);
+\coordinate (#7-LT) at (0.5*\dma,#4-0.5*\dma);
+\coordinate (#7-RT) at (#3-0.5*\dma,#4-0.5*\dma);
+\coordinate (#7-LB) at (0.5*\dma,0.5*\dma);
+\coordinate (#7-RB) at (#3-0.5*\dma,0.5*\dma);
+\end{scope}
+}
+\newcounter{tmpA}
+\begin{document}
+\begin{center}
+\begin{tikzpicture}[infl/.style={dashed},special/.style={snake},decoration={brace,amplitude=20}]
+\def\dma{5 mm};
+\def\mid{594.5 mm};
+\def\dyl{100.0 mm};
+\def\dylm{5.0 mm};
+\def\dylma{105.0 mm};
+\def\dyw{1100.0 mm};
+\def\dywb{550.0 mm};
+\node[scale=4] (TITLE) at (\mid,0) {\Huge{\textsc{Automaten en Berekenbaarheid}}};
+\node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{Inleiding tot}}};
+\node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{../SharedData/sedes.pdf}};
+\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{6 cm}{prof. B. Demoen\\Departement Computerwetenschappen\\KU Leuven}};
+\node[anchor=west] (AUTHOR2) at ($(AUTHOR.east)+(1 cm,0)$) {\parbox{6 cm}{W. Van Onsem\\Departement Computerwetenschappen\\KU Leuven}};
+\begin{scope}[yshift=-3*\dylm]
+\begin{pgfonlayer}{background}
+\defgroup{0}{-\dylma}{\dyw}{\dyl}{Turing (\S3.1-3.9)}{red}{TURING}
+\defgroup{0}{-2*\dylma}{\dyw}{\dyl}{Context-sensitief (\S2.26)}{purple}{CTXSE}
+\defgroup{0}{-3*\dylma}{\dyw}{\dyl}{Context-vrij (\S2.19-\S2.25)}{blue}{CTXFR}
+\defgroup{0}{-4*\dylma}{\dyw}{\dyl}{Regulier (\S2.4-\S2.18)}{green}{REGEX}
+\defgroup{0}{-5*\dylma-5*\dma}{\dyw}{\dyl}{Herschrijfsystemen ($\Lambda$-calculus; \S4)}{yellow}{LAMBDA}
+\defgroup{0}{-6*\dylma-5*\dma}{\dyw}{\dyl}{Andere paradigma's (\S5)}{orange}{OTHER}
+\defgroup{0}{-7*\dylma-5*\dma}{\dywb}{\dyl}{Taal-aspecten (\S2.1-\S2.3)}{backg}{LANG}
+\defgroup{\dywb}{-7*\dylma-5*\dma}{\dywb}{\dyl}{Problemen}{backg}{PROB}
+\draw [decorate,line width=3pt] ($(REGEX-LB)+(-0.5,0)$) -- ($(TURING-LT)+(-0.5,0)$);
+\draw ($0.5*(REGEX-LB)+0.5*(TURING-LT)+(-2,0)$) node[rotate=90] {\Huge{\bf Chomsky hi\"erarchie (\S2-\S3)}};
+\draw [decorate,line width=3pt] ($(REGEX-LB)+(26,-0.5)$) -- ++(-26,0);
+\draw ($(REGEX-LB)+(13,-2)$) node {\Huge{\bf Beschrijven}};
+\draw [decorate,line width=3pt] ($(REGEX-RB)+(-27,-0.5)$) -- ($(REGEX-LB)+(27,-0.5)$);
+\draw ($0.5*(REGEX-LB)+0.5*(REGEX-RB)+(0,-2)$) node {\Huge{\bf Automaten}};
+\draw [decorate,line width=3pt] ($(REGEX-RB)+(0,-0.5)$) -- ++(-26,0);
+\draw ($(REGEX-RB)+(-13,-2)$) node {\Huge{\bf Berekenbaarheid}};
+\end{pgfonlayer}
+\CatchFileDef{\tempa}{language.tex}{}
+  \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+	\begin{scope}[shift={(\o)}]
+\node[anchor=north] (CCD\l) at (\x,-\y) {\begin{varwidth}{\twid}\textbf{\xa}: \xc\end{varwidth}};\node[anchor=north,anchor=south] (CCT\l) at (CCD\l.north) [scale=2]{\xb};\draw(CCT\l.south west) -- (CCT\l.south east);\end{scope}
+\begin{pgfonlayer}{classes}
+\node[fit=(CCT\l) (CCD\l),draw=black,rectangle,dotted,rounded corners,fill=white] (CC\l) {};
+\end{pgfonlayer}}
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{document}
