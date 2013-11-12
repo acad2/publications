@@ -50,7 +50,13 @@ Stel constanten $\accl{\ldm{maarten},\ldm{agnes},\ldm{ruben}}$, variabelen $\acc
 \end{itemize}
 \end{multicols}
 \end{example}
+Men dient op te merken dat termen niet noodzakelijk semantisch zinvol zijn. Zo is \func{vader}{\func{hart}{x}} een term, terwijl semantisch gezien deze expressie niet zinvol is: een hart heeft namelijk geen vader.
+\paragraph{}
+Naast termen bestaan er ook atomen. Een \termen{atoom} is als volgt gedefinieerd:
+\begin{definition}[Atoom]
+Een expressie \pred{p}{t_1,t_2,\ldots,t_m} is een atoom indien \ldm{p/$m$} een predicaat is met ariteit $m$ en $t_1,t_2,\ldots,t_m$ allemaal termen zijn.
+\end{definition}
+\subsection{In logische programma's}
+Logische programma's zoals \prolog{} en \problog{} programma's kenmerken zich door een vaste vorm: expressies worden in een vast formaat geschreven. Alle mogelijke vormen van logisch programmeren overlopen is geen sinecure. In deze sectie zullen we de terminologie rond logische programma's echter zo algemeen mogelijk bespreken.
 \subsection{Vrije variabelen en de scope van kwantoren}
 \section{Soorten logica}
-\section{Logische programma's}
-Logische programma's zoals \prolog{} en \problog{} programma's kenmerken zich door een vaste vorm: expressies worden in een vast formaat geschreven. Alle mogelijke vormen van logisch programmeren overlopen is geen sinecure. In deze sectie zullen we de terminologie rond logische programma's echter zo algemeen mogelijk bespreken.
