@@ -1,0 +1,20 @@
+\begin{circuitikz}[xscale=4,yscale=2]
+\def\sc{0.75};
+\def\dt{0.1};
+\def\ds{0.1};
+\def\du{0.1};
+\def\dr{-1};
+\coordinate (SL) at (0,3);
+\coordinate (DL) at (0,-1);
+\foreach \i in {0,1,2} {
+  \foreach \j in {0,1,2} {
+    \node[npn,scale=\sc] (pnpa\i\j) at (\i-\dt-\du*\j,\j) {};
+    \node[npn,scale=\sc] (pnpb\i\j) at (\i+\dt-\du*\j,\j+\ds) {};
+    \draw (pnpa\i\j.d) to[R=$330$,scale=\sc] ($(pnpa\i\j.d)+(0,\dr)$);
+    \draw (pnpb\i\j.d) to[R=$330$,scale=\sc] ($(pnpb\i\j.d)+(0,\dr)$);
+    \draw (pnpa\i\j.s) -- (pnpa\i\j.s |- SL);
+    \draw (pnpb\i\j.s) -- (pnpb\i\j.s |- SL);
+    
+  }
+}
+\end{circuitikz}
