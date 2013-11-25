@@ -1,13 +1,16 @@
-cursus.pdf: *.tex *sty *.bib
-	pdflatex cursus.tex
-	pdflatex cursus.tex
-	bibtex cursus
-	makeindex cursus
-	bibtex cursus
-	pdflatex cursus.tex
-	pdflatex cursus.tex
-
-
+cursus.pdf: *.tex *.bib *.sty
+	pdflatex --interaction nonstopmode cursus.tex || true
+	makeglossaries cursus || true
+	makeindex cursus || true
+	pdflatex --interaction nonstopmode cursus.tex || true
+	bibtex cursus || true
+	makeglossaries cursus || true
+	makeindex cursus || true
+	pdflatex --interaction nonstopmode cursus.tex || true
+	bibtex cursus || true
+	pdflatex --interaction nonstopmode cursus.tex || true
+	pdflatex --interaction nonstopmode cursus.tex || true
+	make clean
 
 clean:
-	rm -f *.aux *.out *.pdf *.log *.bbl *.blg *~
+	rm *.aux *.out *.log *.bbl *.blg *~ *.*~*
