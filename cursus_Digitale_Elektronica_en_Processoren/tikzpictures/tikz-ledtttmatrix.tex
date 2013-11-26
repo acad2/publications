@@ -1,28 +1,26 @@
 \begin{circuitikz}
+\draw (0,0) -- (2,1);
+\def\dx{4};
+\def\dy{4};
+\def\dl{-1};
+\def\du{0.6};
+\def\dv{0.6};
+\def\dxy{2};
+\def\dyx{2};
 \def\sc{0.75};
-\def\du{0.15};
-\def\dx{0.5};
-\def\dy{0.5};
-\def\dt{0.1};
-\def\ds{0.1};
-\def\dr{-1};
-\def\sx{4};
-\def\sy{4};
-\coordinate (SL) at (0,3*\sy);
-\coordinate (DL) at (0,-1*\sy);
-\coordinate (IL) at (-1*\sy,0);
+\coordinate (SL) at (0,2*\dy);
+\coordinate (DL) at (0,-2*\dy);
+\coordinate (IL) at (-1.5*\dx,0);
 \foreach \i in {0,1,2} {
   \foreach \j in {0,1,2} {
-    \foreach \n/\di in {a/0,b/1} {
-      \node[npn,scale=\sc] (pnp\n\i\j) at (\sx*\i+\sx*\du*\j+\sx*\dx*\di,\sy*\j+\sy*\di*\dy+\sy*\du*\i) {};
-      \draw (pnp\n\i\j.C) -- (pnp\n\i\j.C |- SL);
-      \pdot{pnp\n\i\j.C |- SL};
-      \draw (pnp\n\i\j.B) -- (pnp\n\i\j.B -| IL);
-      \pdot{pnp\n\i\j.B -| IL};
+    \foreach \n in {0,1} {
+      \node[npn,scale=\sc] (pnp\n\i\j) at (\dx*\j+\dyx*\i+\du*\n,-\dy*\i+\dxy*\j+\dv*\n) {};
+      \draw (pnp\n\i\j.collector) -- (pnp\n\i\j.collector |- SL);
+      %\draw (pnp\n\i\j.collector) -- to [empty led,l=LED1] ($(pnp\n\i\j.collector)+(0,\dl)$);
+      \draw (pnp\n\i\j.base) -- (pnp\n\i\j.base -| DL);
+      \pdot{pnp\n\i\j.collector |- SL}
+      \pdot{pnp\n\i\j.base -| DL}
     }
-%     \draw (pnpa\i\j.d) to[R=$330$,scale=\sc] ($(pnpa\i\j.d)+(0,\dr)$);
-%     \draw (pnpb\i\j.d) to[R=$330$,scale=\sc] ($(pnpb\i\j.d)+(0,\dr)$);
-    
   }
 }
 \end{circuitikz}

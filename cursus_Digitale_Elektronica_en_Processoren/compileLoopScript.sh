@@ -2,7 +2,10 @@
 cd "`dirname $0`"
 while true
 do
-	sleep 40
-	rm cursus.pdf
-	make
+	for i in {1..50}
+	do
+		make
+		sleep 60
+	done
+	git commit -a -m "temporary commit"
 done
