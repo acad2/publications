@@ -2,8 +2,24 @@
 \chplab{experiments}
 \section{Tic tac toe-machine}
 \emph{Tic tac toe} is een spel waarbij twee spelers beurtelings een zet spelen. Tijdens een zet schrijft een speler een cirkel of een kruis op het scorebord, een $3\times 3$ raster. De eerste speler zet altijd een cirkel, de tweede een kruis. Elke speler probeert een situatie te bekomen waarbij drie van de eigen symbolen op een rij staan. Het spel is simpel en kan daarom goedkoop op zelf in electronica ge\"implementeerd worden. We zullen bij dit experiment twee schakelingen ontwerpen en realiseren: een schakeling zodat twee personen tegen elkaar spelen, en een schakeling waarbij het ook mogelijk is om te spelen tegen een artifici\"ele intelligentie\footnote{Deze AI-bot zal perfect spelen: als eerste speler zal hij altijd winnen}.
+\subsection{Benodigdheden}
+Volgende componenten heeft men nodig om deze schakeling te implementeren.
+\begin{enumerate}
+ \item $11$ leds.
+ \item $11$ NPN transistoren. Bij voorkeur \verb+BC547C+.
+ \item $11$ weerstanden van $330\ \Omega$.
+ \item $6$ drukschakelaars.
+ \item $1$ normale schakelaar.
+ \item $1$ europrintplaat.
+\end{enumerate}
+Alle componenten zijn verkrijgbaar bij Conrad. De richtprijs is ongeveer $\mbox{\euro}\ ??.??$
 \subsection{Implementatie-specificaties}
 Alvorens we dit spel kunnen implementeren, zullen we eerst moeten specificeren hoe we bijvoorbeeld met de gebruiker(s) gaan communiceren, hoe we de toestand van het bord gaan voorstellen, hoe het spel verloopt, enzovoort.
 \paragraph{Uitvoer}
 De uitvoer is een $3\times 3$ bord waar op elke tegel in principe een cirkel of kruis kan worden geplaatst. Dit geeft dus ongeveer\footnote{Niet alle toestanden zijn mogelijk: wanneer bijvoorbeeld de tweede speler wint, is er altijd \'e\'en vakje niet toegekend. Een situatie waarbij alle vakjes zijn opgevuld en er drie kruiss op \'e\'en rij staan is bijgevolg niet mogelijk.} $3^9$ toestanden. De uitvoeren realiseren we aan de hand van leds. Op elk vakje brengen we twee leds aan, bijvoorbeeld een rode en groene. We maken de afspraak dat indien de rode led brandt, er een cirkel op het respectievelijke vak staat. Wanneer de groene led brandt stelt dit een kruis voor. Wanneer geen van de twee leds brandt is het vakje leeg. In het vorige hoofdstuk hebben we reeds beargumenteerd dat men niet zomaar leds aan de uitgang van een poort kan schakelen. We voorzien dus een relay-mechanimsme met behulp van transistoren\footnote{We kunnen in principe ook echte relays gebruiken. Leds hebben echter een laag verbruik waardoor de taak ook door transistoren kan worden uitgevoerd.}. We dienen dus een schakeling te realiseren zoals op \figref{ledtttmatrix}.
-\importtikzfigure{ledtttmatrix}{Een led-matrix voor het tic tac toe spel.}
+\paragraph{}
+Om te communiceren met de spelers is meer hardware nodig. Zo is het nuttig dat de schakeling aangeeft wie aan zet is, of de gespeelde zet legaal is en wie er gewonnen heeft. Daarom voorzien we nog twee leds: een rode en een groene. Wanneer \'e\'en rode let brandt, is de eerste speler aan zet, in het geval van de groene led speelt de tweede speler. Wanneer een speler gewonnen is knippert de overeenkomstige led. Wanneer een speler een onmogelijke zet speelt, branden beide leds voor een korte periode allebei.
+\importtikzfigure{ledtttmatrix}{Een led-matrix en invoer-component voor het tic tac toe spel.}
+\paragraph{Invoer}
+We kunnen ervoor opteren om per vak een schakelaar te voorzien. Wanneer een speler dan op de schakelaar drukt, zal de schakeling de overeenkomstige led laten branden. Dit betekent echter dat we $9$ schakelaars moeten voorzien. We hebben daarom besloten om aan de rand van de twee dimensies elk $3$ schakelaars te voorzien. $3$ schakelaars laten dus toe om de rij te specificeren, met de overige $3$ kan een gebruiker de kolom aangeven. Ook vanuit educatief standpunt is deze beslissing positief: men zal immers meer logica moeten voorzien om de invoer te interpreteren.
+\paragraph{Spelverloop}
