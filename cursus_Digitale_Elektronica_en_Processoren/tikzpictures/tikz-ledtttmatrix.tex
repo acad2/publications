@@ -1,25 +1,32 @@
+\scalebox{0.5}{
 \begin{circuitikz}
-\def\dx{4};
-\def\dy{4};
-\def\dl{-1};
-\def\du{0.6};
-\def\dv{0.6};
-\def\dxy{1.2};
-\def\dyx{1.2};
-\def\sc{0.75};
+\def\dx{8};
+\def\dy{8};
+\def\du{1.2};
+\def\dv{1.2};
+\def\dxy{2.4};
+\def\dyx{2.4};
+\def\scnpn{0.75};
+\def\scled{0.5};
+\def\scr{0.5};
+\def\dr{1.5};
+\def\dl{2};
 \coordinate (SL) at (0,\dy);
-\coordinate (DL) at (0,-3*\dy);
-\coordinate (IL) at (-0.5*\dx,0);
+\coordinate (DL) at (0,-2.5*\dy);
+\coordinate (IL) at (-0.125*\dx,0);
 \foreach \i in {0,1,2} {
   \foreach \j in {0,1,2} {
-    \foreach \n in {0,1} {
-      \node[npn,scale=\sc] (pnp\n\i\j) at (\dx*\j+\dyx*\i+\du*\n,-\dy*\i+2*\dxy-\dxy*\j+\dv-\dv*\n) {};
-      \node[led,scale=\sc] (led\n\i\j) at (\dx*\j+\dyx*\i+\du*\n,-\dy*\i+2*\dxy-\dxy*\j+\dv-\dv*\n+\dl) {};
-      \draw (pnp\n\i\j.collector) -- (pnp\n\i\j.collector |- SL);
-      \draw (pnp\n\i\j.base) -- (pnp\n\i\j.base -| IL);
-      \pdot{pnp\n\i\j.collector |- SL};
+    \foreach \n/\na in {0/red,1/green} {
+      \node[npn,scale=\scnpn,thick] (pnp\n\i\j) at (\dx*\j+\dyx*\i+\du*\n,-\dy*\i+2*\dxy-\dxy*\j+\dv-\dv*\n) {};
+      %\node (led\n\i\j) at (\dx*\j+\dyx*\i+\du*\n,-\dy*\i+2*\dxy-\dxy*\j+\dv-\dv*\n+\dl) {};
+      \draw[thick] (pnp\n\i\j.collector) -- (pnp\n\i\j.collector |- SL);
+      \draw[thick] (pnp\n\i\j.emitter) to[R,sloped,l=$1\mbox{k}$,scale=\scr] ++(0,-\dr) to[leD*,l=\na,scale=\scled] ++(0,-\dl) -- (pnp\n\i\j.emitter |- DL);
+      \draw[thick] (pnp\n\i\j.base) -- (pnp\n\i\j.base -| IL) node[anchor=east,scale=2.0]{$i_{\i,\j,\n}$};
+      \pdot[0.8 mm]{pnp\n\i\j.collector |- SL};
+      \pdot[0.8 mm]{pnp\n\i\j.emitter |- DL};
     }
   }
 }
-\draw (pnp122.emittor |- SL) -- (pnp000.emittor |- SL);
-\end{circuitikz}
+\draw[thick] (pnp122.emittor |- SL) -- (pnp000.emittor |- SL) -- (IL |- SL) node[anchor=east,scale=2.0]{$V_{DD}$};
+\draw[thick] (pnp122.emittor |- DL) -- (pnp000.emittor |- DL) -- (IL |- DL) node[anchor=east,scale=2.0]{$V_{SS}$};
+\end{circuitikz}}

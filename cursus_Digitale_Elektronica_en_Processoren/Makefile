@@ -2,13 +2,17 @@ cursus.pdf: *.tex *.bib *.sty */*.tex
 	pdflatex --interaction nonstopmode cursus.tex || true
 	makeglossaries cursus || true
 	makeindex cursus || true
+	sleep 1
 	pdflatex --interaction nonstopmode cursus.tex || true
 	bibtex cursus || true
 	makeglossaries cursus || true
 	makeindex cursus || true
+	sleep 1
 	pdflatex --interaction nonstopmode cursus.tex || true
 	bibtex cursus || true
+	sleep 1
 	pdflatex --interaction nonstopmode cursus.tex || true
+	sleep 1
 	pdflatex --interaction nonstopmode cursus.tex || true
 	make clean
 
