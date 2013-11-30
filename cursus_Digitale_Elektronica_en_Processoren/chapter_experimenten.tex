@@ -1,20 +1,44 @@
 \chapter{Experimenten}
 \chplab{experiments}
+\chapterquote{Het leven is niets dan een experiment. Hoe meer je experimenteert, hoe beter.}{Ralph Waldo Emerson, Amerikaans dichter en filosoof (1803-1882)}
+\begin{chapterintro}
+In dit hoofdstuk beschrijven we enkele experimenten die we kunnen uitvoeren om praktische en nuttige digitale schakelingen te realiseren voor dagelijks gebruik.
+\end{chapterintro}
+\minitoc[n]
 \section{Fietslicht}
 Men kan vandaag fietslichten kopen met verschillende knippermodes. Bij wijze van experiment zullen we een knipperlicht implementeren gebaseerd op een ledlamp van \emph{Hema}.
 \paragraph{}
-Het fietslicht bestaat uit drie leds en kent 4 standen: uit, links-rechts, knipperen en aan. \figref{bicycle} beschrijft de verschillende modi. Men verandert de modus door een drukschakelaar in te duwen.
+Het fietslicht bestaat uit drie leds en kent 4 standen: uit, links-rechts, knipperen en aan. \figref{bicycle} beschrijft de verschillende modi. Men verandert de modus door een drukschakelaar in te duwen. In het geval dat men in knipper-modus staat, is de frequentie waarmee men van toestand van led verandert, slechts de helft.
 \importtikzfigure{bicycle}{De verschillende standen van een \emph{Hema}-fietslicht}
-
-
+\subsection{Benodigdheden}
+Volgende componenten heeft men nodig om deze schakeling te implementeren:
+\begin{itemize}
+ \item $3$ leds
+ \item $3$ NPN transistoren. Bij voorkeur \verb+BC547C+
+ \item $3$ weerstanden van $1~\mbox{k}\Omega$.
+ \item $1$ drukschakelaar.
+ \item $1$ europrintplaat.
+\end{itemize}
+Alle componenten zijn verkrijgbaar bij Conrad. De richtprijs is ongeveer $\mbox{\euro}\ ??.??$
+\subsection{Implementatie-specificaties}
+In deze subsectie bespreken we hoe we de schakeling zullen implementeren. Dit betekent dat we onder meer de in- en uitvoer vastleggen.
+\paragraph{In- en Uitvoer}
+Naast de drie leds van het fietslicht is er geen uitvoer: we gaan er immers vanuit dat een gebruiker door op de drukschakelaar te duwen de werking van het licht zelf kan leren. Als invoer voorzien we \'e\'en enkele drukschakelaar. We realiseren de in- en uitvoer aan de hand van de schakeling op \figref{bicycle-io}.
+\importtikzfigure{bicycle-io}{De IO-module van het fietslicht}
+\paragraph{Toestanden en soort schakeling}
+We dienen ook te beslissen wat soort schakeling we zullen implementeren. Vermits het aantal toestanden en de mogelijkheden nogal beperkt is, is het implementeren van een processor niet nodig: we kunnen deze schakeling met een eenvoudige sequenti\"ele schakeling realiseren.
+\paragraph{}
+Verder dienen we te beslissen of we een synchrone of asynchrone schakeling zullen bouwen. Er speelt natuurlijk een tijdsaspect: we willen niet dat we meteen in de volgende toestand geraken wanneer een led aan of uitgaat. Anders is het verschil tussen knipperen en aan moeilijk te zien. We kunnen echter ook het kloksignaal als een ingangsignaal beschouwen. Dit laatste pleit voor een asynchrone schakeling: er is sprake van twee soorten ingangen: de schakelaar van het fietslicht die aangeeft dat we een volgende toestand willen kiezen, en het kloksignaal die wanneer het opkomt betekent dat we de bij links-rechts en knipperen leds aan of uit moeten zetten. Een asynchrone schakeling is echter moeilijker te implementeren. Wanneer we voor een synchrone schakeling opteren zal de gebruiker wanneer hij de schakelaar induwt moeten wachten tot het volgende kloksignaal voor de volgende stand van het fietslicht wordt ge\"activeerd. Het tijdverlies valt echter goed mee en is meestal niet levensbedreigend. In dit boek kiezen we daarom voor een synchrone schakeling.
+\paragraph{}
+Verder rest ons nog het aangeven van de verschillende toestand en wat we doen wanneer een gebruiker de schakelaar indrukt.
 \section{Tic tac toe-machine}
 \emph{Tic tac toe} is een spel waarbij twee spelers beurtelings een zet spelen. Tijdens een zet schrijft een speler een cirkel of een kruis op het scorebord, een $3\times 3$ raster. De eerste speler zet altijd een cirkel, de tweede een kruis. Elke speler probeert een situatie te bekomen waarbij drie van de eigen symbolen op een rij staan. Het spel is simpel en kan daarom goedkoop op zelf in electronica ge\"implementeerd worden. We zullen bij dit experiment twee schakelingen ontwerpen en realiseren: een schakeling zodat twee personen tegen elkaar spelen, en een schakeling waarbij het ook mogelijk is om te spelen tegen een artifici\"ele intelligentie\footnote{Deze AI-bot zal perfect spelen: als eerste speler zal hij altijd winnen}.
 \subsection{Benodigdheden}
 Volgende componenten heeft men nodig om deze schakeling te implementeren.
 \begin{enumerate}
- \item $11$ leds.
+ \item $22$ leds waaronder $11$ rode en $11$ groene.
  \item $11$ NPN transistoren. Bij voorkeur \verb+BC547C+.
- \item $11$ weerstanden van $330\ \Omega$.
+ \item $11$ weerstanden van $1~\mbox{k}\Omega$.
  \item $6$ drukschakelaars.
  \item $1$ normale schakelaar.
  \item $1$ europrintplaat.
