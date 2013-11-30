@@ -1,4 +1,4 @@
-cursus.pdf: *.tex *.bib *.sty */*.tex
+cursus.pdf: *.tex *.bib *.sty */*.tex tables/*.tex tikzpictures/*.tex
 	pdflatex --interaction nonstopmode cursus.tex || true
 	makeglossaries cursus || true
 	makeindex cursus || true
