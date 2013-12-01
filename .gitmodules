@@ -1,0 +1,3 @@
+[submodule "cursus_Digitale_Elektronica_en_Processoren/programs"]
+	path = cursus_Digitale_Elektronica_en_Processoren/programs
+	url = https://github.com/KommuSoft/digitalelectronicsprograms.git
