@@ -1,9 +1,28 @@
-\chapter{Softwarepaketten}
+\chapter{Softwarepakketten}
 \chapterquote{Mensen die bezig zijn met software, zouden hun eigen hardware moeten bouwen.}{Alan Kay, Amerikaans informaticus (1940-)}
 \begin{chapterintro}
-Bij het schrijven van de cursus Digitale Elektronica en Processoren werden enkele softwarepaketten geschreven. Deze software laat toe aan de lezer om zelf oefeningen te maken, oplossingen te controleren en op een geautomatiseerde manier kleine combinatorische en sequenti\"ele te realiseren alsook een processor te bouwen. In dit hoofdstuk geven we een kort overzicht van deze software. Voor het \emph{Linux} besturingssysteem bestaat ook software die helpt bij het concreet realiseren van een schakeling op bijvoorbeeld een printplaat of het simuleren van een schakeling. Deze software wordt kort besproken in enkele secties.
+Bij het schrijven van de cursus Digitale Elektronica en Processoren werden enkele softwarepakketten geschreven. Deze software laat toe aan de lezer om zelf oefeningen te maken, oplossingen te controleren en op een geautomatiseerde manier kleine combinatorische en sequenti\"ele te realiseren alsook een processor te bouwen. In dit hoofdstuk geven we een kort overzicht van deze software. Voor het \emph{Linux} besturingssysteem bestaat ook software die helpt bij het concreet realiseren van een schakeling op bijvoorbeeld een printplaat of het simuleren van een schakeling. Deze software wordt kort besproken in enkele secties.
 \end{chapterintro}
 \minitoc[n]
 \section{Geschreven software}
 \subsection{De software installeren}
-De software is geschreven in Haskell en kan worden gedownload op volgend adres: \texttt{http://goo.gl/tkyilf}. De code staat onder git-subversiebeheer. Bijdragen aan de software wordt aangemoedigd. Men kan de software gebruiken door de \texttt{Makefile} te draaien. Dit doet men door in de desbetreffende map het commando \texttt{make} te typen. Standaard wordt de software niet ge\"installeerd.
+De software is geschreven in Haskell en kan worden gedownload op volgend adres: \texttt{http://goo.gl/tkyilf}. De code staat onder git-subversiebeheer. Bijdragen aan de software wordt aangemoedigd. Men kan de software gebruiken door de \texttt{Makefile} te draaien. Dit doet men door in de desbetreffende map het commando \texttt{make} te typen. Standaard wordt de software niet ge\"installeerd op het systeem: de commando's kunnen alleen in de map zelf uitgevoerd worden. Indien men de programma's in om het even welke map wenst uit te voeren, kan men \texttt{make install} draaien.
+\subsection{Invoer en Uitvoer}
+Het programma neemt tekst als invoer en geeft tekst of diagrammen als uitvoer. We overlopen in de volgende subsubsecties de verschillende vormen van invoer.
+\subsubsection{Bit}
+Een bit is een logische waarde waarmee doorheen het volledige programma wordt gerekend. Een bit kent drie toestanden: waar (\texttt{1}), onwaar (\texttt{0}) en don't care (\texttt{-}). Het programma is echter in staat op verschillende manieren een bit te lezen. Zo stellen \texttt{t}, \texttt{T} en \texttt{1} alle drie waar voor; \texttt{f}, \texttt{F} en \texttt{0} duiden onwaar aan; en \texttt{d}, \texttt{D}, \texttt{x}, \texttt{X}, \texttt{-} betekenen allemaal don't care.
+\subsubsection{Bitstring}
+Meestal beperkt een toestand, invoer en uitvoer zich niet tot \'e\'en bit. Een bitstring is een sequentie van nul of meer bits. Men schrijft een bitstring eenvoudigweg aan de hand van een sequentie van voorstellingen voor bits zonder spaties of andere tekens. Een voorbeeld is \texttt{t-TX1xfDFd0} een geldige representatie van een bitstring.
+\subsubsection{Tabel}
+Een tabel is een twee dimensionale structuur. Een tabel is onderverdeeld in cellen. Een horizontale groep cellen noemt men een rij, een verticale groep een kolom. De bovenste rij noemt men doorgaans de hoofding en verklaart meestal de inhoud van de cellen eronder.
+\paragraph{}
+Cellen worden verticaal opgedeeld aan de hand van een verticaal streepje (\texttt{|}), horizontaal worden ze van elkaar onderscheiden door een nieuwe lijn. Optioneel kan men tussen twee lijnen ook een reeks streepjes (\texttt{-}) zetten, optioneel aangevuld met plus (\texttt{+}) en asterisk (\texttt{*}), een dergelijke lijn wordt eenvoudigweg genegeerd. De verticale streepjes hoeven niet op elkaar uitgelijnd te zijn: men kan bijvoorbeeld in de ene rij het eerste verticale streepje op positie $2$ zetten terwijl dit in de lijn erna op positie $20$ staat, maar het wordt toch aangeraden consistent te zijn.%TODO: voorbeeld
+\subsubsection{Karnaugh-kaart}
+Een Karnaugh-kaart is een grafische voorstelling van een booleaanse-functie. 
+\subsubsection{Assembler code}
+Assembler-code is een datastructuur die is afgeleid uit het hoofdstuk rond programmeerbare processoren (\chpref{programmableprocessors}).
+\subsection{Ondersteunde functies}
+Volgende instructies worden ondersteund. Het is de bedoeling om het programma \texttt{dep} op te roepen met de instructie, bijvoorbeeld \texttt{dep showKarnaugh}. Men kan elke instructie ook aanroepen met de \texttt{-help} parameter om een overzicht te krijgen van wat de functie precies doet. Typische parameters zijn \texttt{-html}, \texttt{-latex} en \texttt{-svg} om de uitvoer niet aan de hand van ASCII-tekens op de \texttt{stdout} te regelen.
+\begin{enumerate}
+ \item \texttt{showKarnaugh}: toont \'e\'en of meerdere Karnaugh-kaarten aan de hand van een ingegeven tabel. De kaarten worden standaard op de \texttt{stdout} geschreven. Men kan ook gebruik maken van de \texttt{-svg} optie om een grafische uitvoer te genereren.
+\end{enumerate}
