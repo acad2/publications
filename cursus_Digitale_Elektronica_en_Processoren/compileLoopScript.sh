@@ -1,4 +1,10 @@
 #!/bin/sh
+if [ $# -le 0 ]
+then
+	msg="temp commit"
+else
+	msg=$1
+fi
 cd "`dirname $0`"
 while true
 do
@@ -7,5 +13,5 @@ do
 		make
 		sleep 60
 	done
-	git commit -a -m "temporary commit"
+	git commit -a -m "$msg"
 done
