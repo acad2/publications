@@ -84,22 +84,34 @@
 \end{tikzpicture}
 \end{figure}
 }
-\newcommand{\kkaartb}[5]{
-\begin{scope}[xshift=#1 cm, yshift=#2 cm]
+\newcommand{\kkaartb}[6][1.00]{
+\begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
 \draw[thick] (0,0) -- ++(1,0) -- ++(0,1) -- ++(-1,0) -- cycle;
 \draw[thick] (0,0.5) -- ++(1,0);
 \draw[thick] (0.5,0) -- ++(0,1);
 \draw[thick] (0,1) -- (-0.25,1.25);
-\draw (-0.15,1.15) node[anchor=south east]{#3};
-\foreach \va/\vb in {#4} {
+\draw (-0.15,1.15) node[anchor=south east]{#4};
+\foreach \va/\vb in {#5} {
   \draw[thick] (-0.125,0) to node[sloped,below,rotate=180]{\va} (-0.125,0.5);
   \draw[thick] (0.5,1.125) to node[sloped,above]{\vb} (1,1.125);
 }
-\foreach \va/\vb/\vc/\vd in {#5} {
+\foreach \va/\vb/\vc/\vd in {#6} {
   \draw (0.25,0.25) node{\vc};
   \draw (0.25,0.75) node{\va};
   \draw (0.75,0.25) node{\vd};
   \draw (0.75,0.75) node{\vb};
+}
+\end{scope}
+}
+\newcommand{\kkaartbmarks}[4][1.00]{
+\begin{scope}[xshift=#2 cm, yshift=#3 cm, scale=#1]
+%fill
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \fill[rounded corners,black!10] (0.5*\xo+\tt,1-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,1-0.5*\yf-0.5+\tt);
+}
+%draw
+\foreach \ss/\yo/\xo/\yf/\xf/\tt in {#4} {
+  \draw[\ss,rounded corners,black!90] (0.5*\xo+\tt,1-0.5*\yo-\tt) rectangle (0.5*\xf+0.5-\tt,1-0.5*\yf-0.5+\tt);
 }
 \end{scope}
 }

@@ -2612,11 +2612,11 @@ In dat geval zouden we geen redundante termen kunnen introduceren: we kunnen dus
 \paragraph{Product of sums}
 In het geval van sum-of-product voegen we mintermen toe voor disjuncte $1$-gebieden. Soms is het echter goedkoper om een product-of-sum te implementeren. In dat geval voorzien we maxtermen voor disjunctie $0$-gebieden. We gaan hier niet verder op in.
 \subsubsection{Realisatie leidend voorbeeld}
-We zullen voor het leidend voorbeeld doorheen deze sectie (coderingstabel in \tblrefpag{asynchrone-code-exb-m3}) een schakeling realiseren. Hiervoor zullen we eerst de Karnaugh-kaarten opstellen.
+We zullen voor het leidend voorbeeld doorheen deze sectie (coderingstabel in \tblrefpag{asynchrone-code-exb-m3}) een schakeling realiseren. Hiervoor zullen we eerst de Karnaugh-kaarten opstellen zoals op \figref{asynchrone-real-karnaugh}. We doen dit voor zowel $s_0$, $s_1$ en $Q$. De volgende toestand hangt af van de originele toestand en van de ingangen. De variabelen zijn dus $s_0$, $s_1$, $I$ en $E$. Bij de uitgang $Q$ is enkel de toestand van belang. Bijgevolg vermelden we enkel $s_0$ en $s_1$ op de Karnaugh-kaart.
 \begin{figure}[hbt]
 \centering
-\importtikzsubfigure{asynchrone-real-karnaugh}{Kaart.}
-\importtikzsubfigure{asynchrone-hazard-impl-exred}{Implementatie.}
+\importtikzsubfigure{asynchrone-real-karnaugh}{Karnaugh-kaarten.}
+\importtikzsubfigure{asynchrone-real-impl}{Implementatie.}
 \caption{Realisatie van het leidend voorbeeld.}
 \end{figure}
 \subsubsection{Problemen ten gevolge van skew op ingangen}
