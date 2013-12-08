@@ -349,7 +349,7 @@
 \end{scope}
 }
 
-\newcommand{\asyncGate}[7]{
+\newcommand{\asyncGate}[6]{
 \def\dx{0.35}
 \def\dl{0.125}
 \def\dy{0.7}
@@ -385,6 +385,7 @@
   \addtocounter{tmpF}{1}
 }
 \addtocounter{tmpC}{1}
+\coordinate (OutCol) at (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},0);
 \foreach \l/\i/\ni/\nj/\f in {#6} {
   \addtocounter{tmpF}{-1}
   \setcounter{tmpE}{\nj}
@@ -398,13 +399,6 @@
   }
   \draw (O\l.output) -| (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},#3+\dl*\arabic{tmpF}) -| (V\f |- 0,#3);
 }
-% 
-% \foreach \l/\i in {#5} {
-%   \draw (A\l.output) -- (A\l.output -| \dx*\arabic{tmpC},0) |- (O.input \arabic{tmpD});
-%   \addtocounter{tmpD}{-1}
-% }
-% \addtocounter{tmpC}{3}
-% \draw (O.output) -- (O.output -| \dx*\arabic{tmpC},0) node[anchor=west]{$f$};
 \end{scope}
 }
 
