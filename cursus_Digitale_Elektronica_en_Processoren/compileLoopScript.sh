@@ -15,4 +15,5 @@ do
 	done
 	git add .
 	git commit -a -m "$msg"
+	git push
 done
