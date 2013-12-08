@@ -2600,10 +2600,12 @@ Op \figref{asynchrone-hazard-karnaugh-ex} tonen we de bijbehorende Karnaugh-kaar
 We kunnen een hazard voorkomen door ervoor te zorgen dat als we tussen twee cellen een transitie uitvoeren, er een rechthoek bestaat die beide cellen omvat. Een concrete oplossing wordt hiervoor voorgesteld in \figref{asynchrone-hazard-karnaugh-exred}. Wanneer we in dit voorbeeld een transitie uitvoeren, zullen de AND-poorten van de oorspronkelijke schakeling nog steeds een tijdsverschil optekenen. We introduceren echter een AND-poort die onder de transitie telkens een $1$ zal blijven aanleggen op de OR-poort. Bijgevolg za de uitvoer altijd $1$ blijven.
 \begin{figure}[hbt]
 \centering
-\importtikzfigure{asynchrone-hazard-karnaugh-exred}{Karnaugh-kaart.}
-\importtikzfigure{asynchrone-hazard-impl-exred}{Implementatie.}
+\importtikzsubfigure{asynchrone-hazard-karnaugh-exred}{Kaart.}
+\importtikzsubfigure{asynchrone-hazard-impl-exred}{Implementatie.}
 \caption{Het invoeren van redundante termen elimineert statische 1-hazards.}
 \end{figure}
 Om dus hazards te vermijden introduceren we \termen{redundante termen}: AND-poorten die niet strikt gezien nodig zijn om de correcte combinatorische logica voor te stellen, maar poorten die bij een wijziging aan de invoer ervoor zorgen dat er nooit een statische 1-hazard kan optreden.
 \paragraph{}
-Is het altijd mogelijk om zo'n AND-poort te realiseren. Wat indien we bijvoorbeeld een dambord partroon beschouwen zoals op \figref{}.
+Is het altijd mogelijk om zo'n AND-poort te realiseren. Wat indien we bijvoorbeeld een dambord patroon beschouwen zoals op \figref{asynchrone-hazard-karnaugh-exreddam}.
+\importtikzfigure{asynchrone-hazard-karnaugh-exreddam}{Dambord patroon.}
+In dat geval zouden we geen redundante termen kunnen introduceren: we kunnen dus bijvoorbeeld geen overgang van $\tupl{x,y,z}=\tupl{1,0,1}$ naar $\tupl{x,y,z}=\tupl{1,1,0}$ nemen en voorkomen dat we in een $0$ terecht komen. Merk echter op dat we hier twee ingangen hebben aangepast. Iets wat volgens de specificaties niet mag. Indien we dus een dergelijke overgang nemen, zullen we altijd eerst \'e\'en van de ingangen eerst aanpassen en wachten tot de effecten zijn uitgewerkt. Dan pas passen we de andere ingang aan. Bijgevolg vormt dit geen probleem.

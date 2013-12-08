@@ -281,6 +281,17 @@
 }
 \end{scope}
 }
+
+\newcommand{\combinGate}[5]{
+\begin{scope}[xshift=#1 cm, yshift=#2 cm]
+\setcounter{tmpC}{0}
+\foreach \l/\t in {#3} {
+  \coordinate (V\l) at (0.25*\arabic{tmpC},0);
+  \draw[anchor=north] (V\l) node {\t};
+  \addtocounter{tmpC}{1}
+}
+\end{scope}
+}
 %Timebehav
 %arg0	X
 %arg1	Y
