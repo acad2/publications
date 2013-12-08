@@ -13,5 +13,6 @@ do
 		make
 		sleep 60
 	done
+	git add .
 	git commit -a -m "$msg"
 done

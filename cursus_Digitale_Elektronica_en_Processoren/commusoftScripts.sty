@@ -282,10 +282,10 @@
 \end{scope}
 }
 
-\newcommand{\combinGate}[6]{
-\def\dx{0.5}
+\newcommand{\combinGate}[7]{
+\def\dx{0.35}
 \def\dy{0.7}
-\def\ny{0.75}%We are the knights who say Ni!
+\def\ny{0.5}%We are the knights who say Ni!
 \def\noy{0.25}
 \def\sc{0.65}
 \begin{scope}[xshift=#1 cm, yshift=#2 cm]
@@ -312,26 +312,28 @@
 }
 \addtocounter{tmpC}{1}
 \setcounter{tmpD}{0}
-\setcounter{tmpF}{0}
+\setcounter{tmpF}{1}
 \foreach \l/\i/\k in {#5} {
   \addtocounter{tmpF}{1}
 }
 \foreach \l/\i/\k in {#5} {
-  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\dy*\arabic{tmpD}+2*\ny);
+  \addtocounter{tmpD}{1}
+  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},2*\ny+\arabic{tmpD}*#3/\arabic{tmpF}-\arabic{tmpD}*2*\ny/\arabic{tmpF});
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
     \pdot{A\l.input \arabic{tmpE} -| V\v}
     \addtocounter{tmpE}{1}
   }
-  \addtocounter{tmpD}{1}
 }
 \addtocounter{tmpC}{1}
-\node[or gate,inputs=#6,scale=\sc] (O) at (\dx*\arabic{tmpC}+\dx,\ny+0.5*#3 cm);
+\node[or gate,inputs=#6,scale=\sc] (O) at (\dx*\arabic{tmpC}+\dx,\ny+0.5*#3);
 \foreach \l/\i in {#5} {
   \draw (A\l.output) -- (A\l.output -| \dx*\arabic{tmpC},0) |- (O.input \arabic{tmpD});
   \addtocounter{tmpD}{-1}
 }
+\addtocounter{tmpC}{2}
+\draw (O.output) -- (O.output -| \dx*\arabic{tmpC},0) node[anchor=west]{$f$};
 \end{scope}
 }
 %Timebehav
