@@ -2619,5 +2619,10 @@ We zullen voor het leidend voorbeeld doorheen deze sectie (coderingstabel in \tb
 \importtikzsubfigure{asynchrone-real-impl}{Implementatie.}
 \caption{Realisatie van het leidend voorbeeld.}
 \end{figure}
+Vervolgens dienen we de logica zelf te implementeren. Hiervoor realiseren we de combinatorische schakelingen die we hebben gespecificeerd met behulp van de Karnaugh-kaarten. In dit geval doen we dit met een $3$-OR poort voor $s_0$ en een $2$-OR poort voor $s_1$. In het geval van $Q$ hebben we bovendien geen poorten nodig: de uitgang komt immers overeen met \'e\'en van de toestand-bits $s_0$. Daarna verbinden we de uitgang van de combinatorische schakelingen met de ingangen die de respectievelijke toestand-bits voorstellen. We bekomen dus een implementatie zoals op \figref{asynchrone-real-impl}.
 \subsubsection{Problemen ten gevolge van skew op ingangen}
-Met het voorkomen van hazards zijn alle theoretische problemen opgelost bij het realiseren van een asynchrone schakeling: wanneer we een digitale schakeling simuleren met de reeds vermelde vertragingen op de poorten zal de schakeling correct werken. 
+Met het voorkomen van hazards zijn de theoretische problemen opgelost bij het realiseren van een asynchrone schakeling: wanneer we een digitale schakeling simuleren met de reeds vermelde vertragingen op de poorten zal de schakeling correct werken. Maar zoals reeds verschillende malen werd aangehaald is het theoretische model omtrent vertragingen niet helemaal correct.
+\paragraph{}\termen{skew} is een fenomeen waarbij een extra vertraging wordt ge\"introduceerd op een lokale plaats in de schakeling.
+\paragraph{}
+\subsubsection{Essenti\"ele hazard}
+\subsubsection{Besluit}
