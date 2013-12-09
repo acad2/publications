@@ -2639,10 +2639,10 @@ Bij wijze van voorbeeld beschouwen we de schakeling op \figref{asynchrone-real-i
 \importtabulartable{asynchrone-real-skew-ex}{Coderingstabel van de schakeling uit \figref{asynchrone-real}.}
 We zullen eerst het scenario in abstracto beschouwen:
 \begin{enumerate}
- \item We bevinden ons in toestand $\tupl{s_0,s_1}=\tupl{1,0}$ met invoer $\tupl{I,E}=\tupl{0,1}$
- \item De invoer van $I$ verandert naar $\tupl{I,E}=\tupl{1,1}$
- \item De toestand wordt omgeschakeld naar $\tupl{s_0,s_1}=\tupl{0,0}$ maar de eerste AND poort heeft de omschakeling van de ingang nog niet opgemerkt %TODO
- \item De AND-poort wordt hierdoor actief, bijgevolg schakelt de schakeling nu om naar toestand $\tupl{s_0,s_1}=\tupl{0,1}$
+ \item We bevinden ons in toestand $\tupl{s_0,s_1}=\tupl{1,0}$ met invoer $\tupl{I,E}=\tupl{0,1}$.
+ \item De invoer van $I$ verandert naar $\tupl{I,E}=\tupl{1,1}$.
+ \item De toestand wordt omgeschakeld naar $\tupl{s_0,s_1}=\tupl{0,0}$ maar de eerste AND poort heeft de omschakeling van de ingang nog niet opgemerkt.
+ \item De AND-poort wordt hierdoor actief, bijgevolg schakelt de schakeling nu om naar toestand $\tupl{s_0,s_1}=\tupl{0,1}$.
  \item Deze toestand is stabiel met zowel de oude en de nieuwe invoer. Bijgevolg blijft de schakeling in toestand $\tupl{s_0,s_1}=\tupl{0,1}$ stabiel.
 \end{enumerate}
 Dit scenario treedt op wanneer op de verbinding tussen $I$ en de eerste AND-poort een significante vertraging plaatsgrijpt. Dit kan bijvoorbeeld het gevolg zijn van een lange lijn. \figref{asynchrone-real-skew-ex} toont de schakeling met de skew en \figref{asynchrone-real-skew-extime} het tijdsgedrag van de schakeling.
