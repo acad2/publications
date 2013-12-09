@@ -2621,8 +2621,18 @@ We zullen voor het leidend voorbeeld doorheen deze sectie (coderingstabel in \tb
 \end{figure}
 Vervolgens dienen we de logica zelf te implementeren. Hiervoor realiseren we de combinatorische schakelingen die we hebben gespecificeerd met behulp van de Karnaugh-kaarten. In dit geval doen we dit met een $3$-OR poort voor $s_0$ en een $2$-OR poort voor $s_1$. In het geval van $Q$ hebben we bovendien geen poorten nodig: de uitgang komt immers overeen met \'e\'en van de toestand-bits $s_0$. Daarna verbinden we de uitgang van de combinatorische schakelingen met de ingangen die de respectievelijke toestand-bits voorstellen. We bekomen dus een implementatie zoals op \figref{asynchrone-real-impl}.
 \subsubsection{Problemen ten gevolge van skew op ingangen}
-Met het voorkomen van hazards zijn de theoretische problemen opgelost bij het realiseren van een asynchrone schakeling: wanneer we een digitale schakeling simuleren met de reeds vermelde vertragingen op de poorten zal de schakeling correct werken. Maar zoals reeds verschillende malen werd aangehaald is het theoretische model omtrent vertragingen niet helemaal correct.
-\paragraph{}\termen{skew} is een fenomeen waarbij een extra vertraging wordt ge\"introduceerd op een lokale plaats in de schakeling.
+Met het voorkomen van hazards zijn de theoretische problemen opgelost bij het realiseren van een asynchrone schakeling: wanneer we een digitale schakeling simuleren zal de schakeling correct werken. Maar zoals reeds verschillende malen werd aangehaald is het theoretische model niet helemaal correct.
+\paragraph{}\termen{skew} is een fenomeen waarbij een extra vertraging wordt ge\"introduceerd op een lokale plaats in de schakeling. Of anders gesteld, een verandering op een lijn wordt niet overal op hetzelfde moment opgemerkt. Verder in deze cursus zullen we een speciale vorm van skew beschouwen: clock skew. Een mogelijk gevolg is een \termen{essenti\"ele hazard}: de verandering van slechts \'e\'en ingangssignaal brengt de schakeling in een foute toestand.
+\paragraph{Voorbeeld}
+Bij wijze van voorbeeld beschouwen we de schakeling op \figref{asynchrone-real-impl}.
+\paragraph{Detectie}
+\paragraph{Oplossing}
+Een elegante oplossing voor het probleem bestaat er niet. Men moet proberen te voorkomen dat toestandsvariabelen veranderen alvorens het ingangssignaal op alle poorten is aangekomen. Door de coderingstabel aan te passen kan men het probleem meestal reduceren, bijvoorbeeld door het aantal wijzigingen van toestandsvariabelen beperkt te houden. Maar bij sommige specificaties kan men dit effect niet wegnemen. In dat geval moet men op elektronisch niveau het plan aanpassen: men kan bijvoorbeeld vertragingen introduceren bij de andere poorten om het verschil weg te nemen. Meestal vereist dit zorgvuldige en complexe bewerkingen, deze liggen buiten het bereik van deze cursus.
+\subsection{Besluit}
+Als algemene conclusie kunnen we stellen:
+\begin{quote}
+Vermijd asynchrone sequenti\"ele schakelingen.
+\end{quote}
+Asynchrone schakelingen zijn immers complexer te ontwerpen: twee ingangen mogen niet tegelijk aangepast worden dus dient men in sommige gevallen dit op te lossen aan de hand van extra (synchrone) logica voor de ingangen. Verder dient men verschillende problemen indachtig te zijn: de coderingstabel moet worden aangepast aan races en hazards. Tot slot wordt de meeste elektronica gebouwd aan de hand van CAD software. In deze software zijn asynchrone sequenti\"ele schakelingen meestal beperkt ondersteund.
 \paragraph{}
-\subsubsection{Essenti\"ele hazard}
-\subsubsection{Besluit}
+Asynchrone schakelingen dan ook enkel gebruikt in twee gevallen: wanneer snelheid van cruciaal belang is en een synchrone sequenti\"ele schakeling op geen enkele manier de gewenste doorvoer kan bereiken. Verder is het niet altijd mogelijk om een sequentieel systeem te implementeren. We kunnen bijvoorbeeld denken aan een computernetwerk: elke machine heeft een eigen klok. Het synchroniseren van klokken is een onmogelijk opdracht. In dat geval zal men met behulp van een kleine en eenvoudige asynchrone schakeling data tussen de twee synchrone ``eilanden'' uit wisselen.
