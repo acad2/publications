@@ -2618,13 +2618,26 @@ We zullen voor het leidend voorbeeld doorheen deze sectie (coderingstabel in \tb
 \importtikzsubfigure{asynchrone-real-karnaugh}{Karnaugh-kaarten.}
 \importtikzsubfigure{asynchrone-real-impl}{Implementatie.}
 \caption{Realisatie van het leidend voorbeeld.}
+\figlab{asynchrone-real}
 \end{figure}
 Vervolgens dienen we de logica zelf te implementeren. Hiervoor realiseren we de combinatorische schakelingen die we hebben gespecificeerd met behulp van de Karnaugh-kaarten. In dit geval doen we dit met een $3$-OR poort voor $s_0$ en een $2$-OR poort voor $s_1$. In het geval van $Q$ hebben we bovendien geen poorten nodig: de uitgang komt immers overeen met \'e\'en van de toestand-bits $s_0$. Daarna verbinden we de uitgang van de combinatorische schakelingen met de ingangen die de respectievelijke toestand-bits voorstellen. We bekomen dus een implementatie zoals op \figref{asynchrone-real-impl}.
 \subsubsection{Problemen ten gevolge van skew op ingangen}
 Met het voorkomen van hazards zijn de theoretische problemen opgelost bij het realiseren van een asynchrone schakeling: wanneer we een digitale schakeling simuleren zal de schakeling correct werken. Maar zoals reeds verschillende malen werd aangehaald is het theoretische model niet helemaal correct.
 \paragraph{}\termen{skew} is een fenomeen waarbij een extra vertraging wordt ge\"introduceerd op een lokale plaats in de schakeling. Of anders gesteld, een verandering op een lijn wordt niet overal op hetzelfde moment opgemerkt. Verder in deze cursus zullen we een speciale vorm van skew beschouwen: clock skew. Een mogelijk gevolg is een \termen{essenti\"ele hazard}: de verandering van slechts \'e\'en ingangssignaal brengt de schakeling in een foute toestand.
+\paragraph{}
+Algemeen verloopt een essenti\"ele hazard altijd als volgt:
+\begin{enumerate}
+ \item Het ingangssignaal wordt aangepast (door \'e\'en bit te veranderen, dus conform de regels).
+ \item Enkele poorten merken de verandering op en een bit van de toestand wordt aangepast.
+ \item Een poort merkt de verandering van de toestand op, maar heeft de aanpassing van de invoer nog niet opgemerkt.
+ \item Deze poort verandert op zijn beurt een toestand-bit.
+ \item Pas later wordt de verandering van de invoer opgemerkt.
+\end{enumerate}
+Empirisch zijn essenti\"ele hazards moeilijk op te sporen: het gebeurt niet zelden dat tijdelijk in de verkeerde toestand terechtkomen geen probleem vormt, de foute toestand kan immers dienst doen als een via-toestand waardoor de schakeling alsnog in de correcte toestand terecht komt. Er bestaat wel een algoritmische manier om essenti\"ele hazards te ontdekken.
 \paragraph{Voorbeeld}
-Bij wijze van voorbeeld beschouwen we de schakeling op \figref{asynchrone-real-impl}.
+Bij wijze van voorbeeld beschouwen we de schakeling op \figref{asynchrone-real-impl}. We stellen op basis van de Karnaugh-kaarten een coderingstabel op in \tblref{asynchrone-real-skew-ex}.
+\importtabulartable{asynchrone-real-skew-ex}{Coderingstabel van de schakeling uit \figref{asynchrone-real}.}
+We zullen stellen dat op de verbinding tussen $E$ en de derde AND-poort een significante vertraging plaatsgrijpt. Dit kan bijvoorbeeld het gevolg zijn van een lange lijn.
 \paragraph{Detectie}
 \paragraph{Oplossing}
 Een elegante oplossing voor het probleem bestaat er niet. Men moet proberen te voorkomen dat toestandsvariabelen veranderen alvorens het ingangssignaal op alle poorten is aangekomen. Door de coderingstabel aan te passen kan men het probleem meestal reduceren, bijvoorbeeld door het aantal wijzigingen van toestandsvariabelen beperkt te houden. Maar bij sommige specificaties kan men dit effect niet wegnemen. In dat geval moet men op elektronisch niveau het plan aanpassen: men kan bijvoorbeeld vertragingen introduceren bij de andere poorten om het verschil weg te nemen. Meestal vereist dit zorgvuldige en complexe bewerkingen, deze liggen buiten het bereik van deze cursus.
