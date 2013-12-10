@@ -1,19 +1,19 @@
 cursus.pdf: *.tex *.bib *.sty */*.tex tables/*.tex tikzpictures/*.tex
-	pdflatex --interaction nonstopmode cursus.tex || true
-	makeglossaries cursus || true
-	makeindex cursus || true
+	pdflatex --interaction nonstopmode cursus.tex > /dev/null || true
+	makeglossaries -q cursus > /dev/null || true
+	makeindex -q cursus > /dev/null || true
 	sleep 1
-	pdflatex --interaction nonstopmode cursus.tex || true
-	bibtex cursus || true
-	makeglossaries cursus || true
-	makeindex cursus || true
+	pdflatex --interaction nonstopmode cursus.tex > /dev/null || true
+	bibtex cursus > /dev/null || true
+	makeglossaries -q cursus > /dev/null || true
+	makeindex -q cursus > /dev/null || true
 	sleep 1
-	pdflatex --interaction nonstopmode cursus.tex || true
-	bibtex cursus || true
+	pdflatex --interaction nonstopmode cursus.tex > /dev/null || true
+	bibtex cursus > /dev/null || true
 	sleep 1
-	pdflatex --interaction nonstopmode cursus.tex || true
+	pdflatex --interaction nonstopmode cursus.tex > /dev/null || true
 	sleep 1
-	pdflatex --interaction nonstopmode cursus.tex || true
+	pdflatex --interaction nonstopmode cursus.tex > /dev/null || true
 	make clean
 
 clean:
