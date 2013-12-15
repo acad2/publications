@@ -83,7 +83,7 @@ Dit concept beschrijven we op figuur \ref{fig:datapadInformationStreams}.
 \paragraph{}
 In het datapad doen we dan ook niets anders dan waardes uit het tijdelijke geheugen inlezen, er een operatie van een functionele eenheid op uitvoeren en vervolgens in een tijdelijk geheugen plaatsen. Dit proces noemen we ook wel de ``\termen{registertransfer}'' en formaliseren we als:
 \begin{equation}
-\mbox{register}_a\leftarrow\mbox{FU}_a\left(\mbox{register}_{a_1},\mbox{register}_{a_1},\mbox{register}_{a_2},\ldots,\mbox{register}_{a_n}\right)
+\mbox{register}_a\leftarrow\mbox{FU}_a\left(\mbox{register}_{a_1},\mbox{register}_{a_2},\ldots,\mbox{register}_{a_n}\right)
 \end{equation}
 In het eerste hoofdstuk hebben we reeds vermeld dat we schakelingen bij het bouwen van een processor beschrijven op registertransfer-niveau. Dit betekent dat we bijvoorbeeld abstractie zullen maken van flipflops en zullen werken met registers. Ook zullen we details als het aantal bits die een opteller nodig heeft verwaarlozen. Deze nieuwe notatiestijl zullen we geleidelijk invoeren.
 \section{Formeel Beschrijven van een Algoritme}
@@ -2014,7 +2014,7 @@ Indien we \mbox{abs1} betrekken in de combinatie, ontstaat er echter een problee
 Bij de compatibiliteitsgraaf hebben we de max-cut methode gebruikt om tot een goed resultaat te komen. Dit algoritme is echter minder geschikt voor compatibiliteitsgrafes met prioriteitsranden met drie of meer knopen. Het algoritme werkt minder goed vanaf het moment dat de winst op een prioriteitsrand voor drie of meer knopen verschilt van de som van de winsten van prioriteitsranden tussen twee van de knopen. Daarom zullen we gebruik maken van een gretig\footnote{Engels: greedy.} algoritme. We zoeken de prioriteitrand met de meeste winst. Alle betrokken knopen worden vervolgens in een aparte partitie ondergebracht. De knopen samen met prioriteitsranden die betrokken zijn in minstens \'e\'en van de knopen worden vervolgens uit de grafe verwijdert waarna we het proces herhalen.
 \paragraph{}
 \importalgorithmicalgorithm{compatibilitygraph-multiple}{Het bepalen van sterke samengestelde functionele eenheden.}
-\algoref{compatibilitygraph-multiple} formaliseert het principe. In het algoritme beschouwen we $V$ de verzameling van oorspronkelijke bewerkingen. In het geval van het leidend voorbeeld is $V$ dus:
+\algoref{alg:compatibilitygraph-multiple} formaliseert het principe. In het algoritme beschouwen we $V$ de verzameling van oorspronkelijke bewerkingen. In het geval van het leidend voorbeeld is $V$ dus:
 \begin{equation}
 V_0=\accl{\mbox{abs1},\mbox{abs2},\mbox{min},\mbox{max1},\mbox{max2},-,+,\mbox{shr1},\mbox{shr3}}
 \end{equation}
@@ -2240,7 +2240,13 @@ Minimaliseren van het datapad is bijgevolg een complex proces waarbij het nageno
 \section{Tijdsgedrag}
 \seclab{timeFSMD}
 \label{s:timeFSMD}
+Hoewel een niet-programmeerbare processor in wezen een sequenti\"ele schakeling is, en we het tijdsgedrag omtrent sequenti\"ele schakelingen al hebben besproken, zullen we in deze sectie tijdsaspecten bespreken die enkel relevant zijn voor niet-programmeerbare processoren.
 \subsection{Kritisch pad}
+Een belangrijk aspect is deze van het kritisch pad. We hebben al besproken dat het kritisch pad bepaalt hoe snel een verandering aan de ingang effect heeft op de uitgang. In een processor is er niet altijd een in- of uitgang. Wel moet op het moment van een klokflank de correcte data op de ingang van de registers staan. Bovendien dienen we ook de controller in rekening te brengen die waar nodig de functionele eenheden configureert, en ook bepaald welke data er bijvoorbeeld uit de registers wordt uitgelezen.
+\paragraph{}
+Concreet komt het kritische pad nog altijd neer op het langste combinatorische pad. De verleiding is groot om hierbij enkel het datapad in rekening te brengen: namelijk vanuit een register door een functionele eenheid naar een register. Om te beantwoorden aan de formele definitie dient men dus de controller mee in rekening te brengen. Bovendien is het nagenoeg altijd zo dat het kritische pad zowel door de controller en het datapad loopt. Een typisch kritisch pad vertrekt dan ook vanuit bijvoorbeeld de ingang van een register die de toestand van de controller bijhoudt. Hierdoor wordt een nieuwe toestand in de registers van de controller geklokt. Vervolgens loopt het kritische pad doorheen de uitvoer-logica van de controller naar bijvoorbeeld een register van waaruit data dan door een functionele eenheid loopt om vervolgens ofwel terug te keren als status-signaal naar de controller of als resultaat-signaal naar de flipflop.
+\paragraph{}
+Het concreet bepalen van het kritisch pad is geen sinecure. Meestal stelt men tabellen op per functionele eenheid/register om te bepalen hoelang het signaal onderweg is, en wordt op basis van de tabellen dan het kritische pad bepaald. Meestal kan men het kritisch pad ook niet meteen vertalen naar de klokfrequentie: men dient meestal enige buffer te nemen die te wijten is aan meta-stabiliteit, lange lijnen, enzovoort.
 \subsection{Verschoven kloksignalen (``clock skew'')}
 \ssclab{clockSkew}
 
