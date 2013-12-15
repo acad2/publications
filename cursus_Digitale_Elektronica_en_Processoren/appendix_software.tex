@@ -7,12 +7,12 @@ Bij het schrijven van de cursus Digitale Elektronica en Processoren werden enkel
 \minitoc[n]
 \section{Geschreven software}
 \subsection{De software installeren}
-De software is geschreven in Haskell en kan worden gedownload op volgend adres: \texttt{http://goo.gl/tkyilf}. De code staat onder git-subversiebeheer. Bijdragen aan de software wordt aangemoedigd. Men kan de software gebruiken door de \texttt{Makefile} te draaien. Dit doet men door in de desbetreffende map het commando \texttt{make} te typen. Standaard wordt de software niet ge\"installeerd op het systeem: de commando's kunnen alleen in de map zelf uitgevoerd worden. Indien men de programma's in om het even welke map wenst uit te voeren, kan men \texttt{make install} draaien.
+De software is geschreven in \texttt{Haskell} en kan worden gedownload op volgend adres: \texttt{http://goo.gl/tkyilf}. De code staat onder git-subversiebeheer. Bijdragen aan de software wordt aangemoedigd. Men kan de software gebruiken door de \texttt{Makefile} te draaien. Dit doet men door in de desbetreffende map het commando \texttt{make} te typen. Standaard wordt de software niet ge\"installeerd op het systeem: de commando's kunnen alleen in de map zelf uitgevoerd worden. Indien men de programma's in om het even welke map wenst uit te voeren, kan men \texttt{make install} draaien.
 \subsection{Invoer en Uitvoer}
 Het programma neemt tekst als invoer en geeft tekst of diagrammen als uitvoer. We overlopen in de volgende subsubsecties de verschillende vormen van invoer.
 \subsubsection{Bit}
 Een bit is een logische waarde waarmee doorheen het volledige programma wordt gerekend. Een bit kent drie toestanden: waar (\texttt{1}), onwaar (\texttt{0}) en don't care (\texttt{-}). Het programma is echter in staat op verschillende manieren een bit te lezen. Zo stellen \texttt{t}, \texttt{T} en \texttt{1} alle drie waar voor; \texttt{f}, \texttt{F} en \texttt{0} duiden onwaar aan; en \texttt{d}, \texttt{D}, \texttt{x}, \texttt{X}, \texttt{-} betekenen allemaal don't care.
-\subsubsection{Bitstring}
+\subsubsection{Bit-sequenties (bitstring)}
 Meestal beperkt een toestand, invoer en uitvoer zich niet tot \'e\'en bit. Een bitstring is een sequentie van nul of meer bits. Men schrijft een bitstring eenvoudigweg aan de hand van een sequentie van voorstellingen voor bits zonder spaties of andere tekens. Een voorbeeld is \texttt{t-TX1xfDFd0} een geldige representatie van een bitstring.
 \subsubsection{Tabel}
 Een tabel is een twee dimensionale structuur. Een tabel is onderverdeeld in cellen. Een horizontale groep cellen noemt men een rij, een verticale groep een kolom. De bovenste rij noemt men doorgaans de hoofding en verklaart meestal de inhoud van de cellen eronder.
@@ -31,6 +31,7 @@ moeilijk|  leesbaar |  |        |
 \paragraph{Soorten tabellen}
 Een tabel bevat data die door het programma verwerkt kan worden. Om een tabel te kunnen verwerken dient deze niet alleen syntax-matig in orde te zijn. Het is ook belangrijk wat er waar in de tabellen staat. Hieronder geven we een kort overzicht van de verschillende types tabellen:
 \begin{enumerate}
+ \item \emph{Combinatorische tabel}: Een tabel die uit twee kolommen bestaat. Alle cellen bestaan uit bit-sequenties. De lengte van de bit-sequenties van alle linkse cellen moet gelijk zijn, alsook deze uit de rechtse cellen.
  \item \emph{Toestandstabel}: In de eerste kolom staan vanaf de tweede rij toestanden (tekst die geen bitstring voorstelt). Toestandstabellen komen verder in twee gedaantes voor: de \emph{Moore-toestandstabel} en de \emph{Mealy-toestandstabel}.
  \item \emph{Moore-toestandstabel}: Dit is een toestandstabel waarbij vanaf de tweede rij, de tweede tot en met de voorlaatste uit toestanden (tekst bestaat). In deze tabel staan in de eerste rij vanaf de $2$-de tot en met de voorlaatste kolom bitstrings die invoer weergeven. De toestanden moeten ook gedefinieerd zijn ergens in een rij in de eerste kolom. In de laatste kolom staan vanaf de tweede rij bitstrings.
  \item \emph{Mealy-toestandstabel}: Dit is een toestandstabel waarbij vanaf de tweede rij, de tweede tot en met de laatste uit toestanden (tekst bestaat) gepaard met bitstrings. De toestand en de bitstring worden van elkaar onderscheiden door middel van een slash (\texttt{/}). De toestanden moeten ook gedefinieerd zijn ergens in een rij in de eerste kolom.
@@ -45,8 +46,11 @@ Een schakeling beschrijft op poort-niveau, en soms op hoger niveau hoe verschill
 Een Karnaugh-kaart is een grafische voorstelling van een booleaanse-functie. Karnaugh-kaarten worden enkel geproduceerd als uitvoer.
 \subsubsection{Assembler code}
 Assembler-code is een datastructuur die is afgeleid uit het hoofdstuk rond programmeerbare processoren (zie \chpref{programmableprocessors}).
+\subsection{Uitvoer}
+Standaard wordt de uitvoer in tekstvorm op de \texttt{stdout} geschreven. Andere uitvoer kan worden geregeld met de parameters \texttt{-html}, \texttt{-latex} en \texttt{-svg} om de uitvoer respectievelijk als webpagina, latex-code of vectorgrafiek uit te geven.
 \subsection{Ondersteunde functies}
-Volgende instructies worden ondersteund. Het is de bedoeling om het programma \texttt{dep} op te roepen met de instructie, bijvoorbeeld \texttt{dep showKarnaugh}. Men kan elke instructie ook aanroepen met de \texttt{-help} parameter om een overzicht te krijgen van wat de functie precies doet. Typische parameters zijn \texttt{-html}, \texttt{-latex} en \texttt{-svg} om de uitvoer niet aan de hand van ASCII-tekens op de \texttt{stdout} te regelen.
+Volgende instructies worden ondersteund. Het is de bedoeling om het programma \texttt{dep} op te roepen met de instructie, bijvoorbeeld \texttt{dep showKarnaugh}. Men kan elke instructie ook aanroepen met de \texttt{-help} parameter om een overzicht te krijgen van wat de functie precies doet.
 \begin{enumerate}
+ \item \texttt{expand}: neemt als invoer een combinatorische tabel en breidt deze uit zodat de don't cares in de linkse kolom verdwijnen.
  \item \texttt{showKarnaugh}: toont \'e\'en of meerdere Karnaugh-kaarten aan de hand van een ingegeven tabel. De kaarten worden standaard op de \texttt{stdout} geschreven. Men kan ook gebruik maken van de \texttt{-svg} optie om een grafische uitvoer te genereren.
 \end{enumerate}

@@ -403,14 +403,14 @@
 }
 
 %Timebehav
-%arg0	X	the x-offset of the time behavior
-%arg1	Y	the y-offset of the time behavior
-%arg2	T	the difference in time of the scope (the width of the time behavior)
-%arg3	N	the number of variables
-%arg4	dx	the scale in time
-%arg5	X	the index and name of each variable
-%arg6	E	(ni,xi,bi,xj,bj) a time event
-%arg7	C	(t,dt,i,j) a causality-relation arrow
+%arg0	X	the x-offset of the time behavior.
+%arg1	Y	the y-offset of the time behavior.
+%arg2	T	the difference in time of the scope (the width of the time behavior).
+%arg3	N	the number of variables.
+%arg4	dx	the scale in time.
+%arg5	X	the index and name of each variable.
+%arg6	E	(ni,xi,bi,xj,bj) a time event with ni the variable index, bi the first value, bj the second value, xi the initial time, xj the time when the event takes place.
+%arg7	C	(t,dt,i,j) a causality-relation arrow the time of the causing event, dt the time difference, i the causing variable and j the resulting variable.
 \newcommand{\timebehav}[8]{
 \def\xs{#5};
 \begin{scope}[xshift=#1 cm,yshift=#2 cm]
