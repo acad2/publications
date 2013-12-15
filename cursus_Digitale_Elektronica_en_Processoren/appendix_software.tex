@@ -1,4 +1,5 @@
 \chapter{Softwarepakketten}
+\applab{software}
 \chapterquote{Mensen die bezig zijn met software, zouden hun eigen hardware moeten bouwen.}{Alan Kay, Amerikaans informaticus (1940-)}
 \begin{chapterintro}
 Bij het schrijven van de cursus Digitale Elektronica en Processoren werden enkele softwarepakketten geschreven. Deze software laat toe aan de lezer om zelf oefeningen te maken, oplossingen te controleren en op een geautomatiseerde manier kleine combinatorische en sequenti\"ele te realiseren alsook een processor te bouwen. In dit hoofdstuk geven we een kort overzicht van deze software. Voor het \emph{Linux} besturingssysteem bestaat ook software die helpt bij het concreet realiseren van een schakeling op bijvoorbeeld een printplaat of het simuleren van een schakeling. Deze software wordt kort besproken in enkele secties.
@@ -16,7 +17,30 @@ Meestal beperkt een toestand, invoer en uitvoer zich niet tot \'e\'en bit. Een b
 \subsubsection{Tabel}
 Een tabel is een twee dimensionale structuur. Een tabel is onderverdeeld in cellen. Een horizontale groep cellen noemt men een rij, een verticale groep een kolom. De bovenste rij noemt men doorgaans de hoofding en verklaart meestal de inhoud van de cellen eronder.
 \paragraph{}
-Cellen worden verticaal opgedeeld aan de hand van een verticaal streepje (\texttt{|}), horizontaal worden ze van elkaar onderscheiden door een nieuwe lijn. Optioneel kan men tussen twee lijnen ook een reeks streepjes (\texttt{-}) zetten, optioneel aangevuld met plus (\texttt{+}) en asterisk (\texttt{*}), een dergelijke lijn wordt eenvoudigweg genegeerd. De verticale streepjes hoeven niet op elkaar uitgelijnd te zijn: men kan bijvoorbeeld in de ene rij het eerste verticale streepje op positie $2$ zetten terwijl dit in de lijn erna op positie $20$ staat, maar het wordt toch aangeraden consistent te zijn.%TODO: voorbeeld
+Cellen worden verticaal opgedeeld aan de hand van een verticaal streepje (\texttt{|}), horizontaal worden ze van elkaar onderscheiden door een nieuwe lijn. Optioneel kan men tussen twee lijnen ook een reeks streepjes (\texttt{-}) zetten, optioneel aangevuld met plus (\texttt{+}) en asterisk (\texttt{*}), een dergelijke lijn wordt eenvoudigweg genegeerd. De verticale streepjes hoeven niet op elkaar uitgelijnd te zijn: men kan bijvoorbeeld in de ene rij het eerste verticale streepje op positie $2$ zetten terwijl dit in de lijn erna op positie $20$ staat, maar het wordt toch aangeraden consistent te zijn.
+\paragraph{Voorbeeld}
+Een voorbeeld van een tabel is de volgende code:
+\begin{verbatim}
+dit|   is     | een | 001001-DXXD
+-----------------------------------
+geldige| 01111 | Tabel | a/0010 | Ook
+  al     | is  | de    | tabel  | 111
+---------+-----+-------+--------+----
+moeilijk|  leesbaar |  |        |
+\end{verbatim}
+\paragraph{Soorten tabellen}
+Een tabel bevat data die door het programma verwerkt kan worden. Om een tabel te kunnen verwerken dient deze niet alleen syntax-matig in orde te zijn. Het is ook belangrijk wat er waar in de tabellen staat. Hieronder geven we een kort overzicht van de verschillende types tabellen:
+\begin{enumerate}
+ \item \emph{Toestandstabel}: In de eerste kolom staan vanaf de tweede rij toestanden (tekst die geen bitstring voorstelt). Toestandstabellen komen verder in twee gedaantes voor: de \emph{Moore-toestandstabel} en de \emph{Mealy-toestandstabel}.
+ \item \emph{Moore-toestandstabel}: Dit is een toestandstabel waarbij vanaf de tweede rij, de tweede tot en met de voorlaatste uit toestanden (tekst bestaat). In deze tabel staan in de eerste rij vanaf de $2$-de tot en met de voorlaatste kolom bitstrings die invoer weergeven. De toestanden moeten ook gedefinieerd zijn ergens in een rij in de eerste kolom. In de laatste kolom staan vanaf de tweede rij bitstrings.
+ \item \emph{Mealy-toestandstabel}: Dit is een toestandstabel waarbij vanaf de tweede rij, de tweede tot en met de laatste uit toestanden (tekst bestaat) gepaard met bitstrings. De toestand en de bitstring worden van elkaar onderscheiden door middel van een slash (\texttt{/}). De toestanden moeten ook gedefinieerd zijn ergens in een rij in de eerste kolom.
+ \item \emph{Coderingstabel}: In de eerste kolom staan vanaf de tweede rij bitstrings. Coderingstabellen komen verder in twee gedaantes voor: de \emph{Moore-coderingstabel} en de \emph{Mealy-coderingstabel}.
+\end{enumerate}
+\subsubsection{Schakeling}
+Een schakeling beschrijft op poort-niveau, en soms op hoger niveau hoe verschillende componenten gegevens uitwisselen. Om het programma eenvoudig te houden werd niet geopteerd voor een grafische schil, maar voor tekstuele invoer. Een schakeling bestaat daarom uit twee delen:
+\begin{enumerate}
+ \item 
+\end{enumerate}
 \subsubsection{Karnaugh-kaart}
 Een Karnaugh-kaart is een grafische voorstelling van een booleaanse-functie. Karnaugh-kaarten worden enkel geproduceerd als uitvoer.
 \subsubsection{Assembler code}
