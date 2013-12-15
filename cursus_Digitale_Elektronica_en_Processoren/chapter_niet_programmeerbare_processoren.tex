@@ -91,9 +91,9 @@ In het eerste hoofdstuk hebben we reeds vermeld dat we schakelingen bij het bouw
 Alvorens we een processor kunnen bouwen die een algoritme uitvoert, moeten we eerst een formeel algoritme kunnen opstellen. Dit algoritme vertrekt altijd vanuit een probleemstelling. Hoe we een probleemstelling omzetten naar een algoritme behoort niet tot de inhoud van deze cursus\footnote{Het omzetten van een probleem in een algoritme is geen exacte wetenschap. Het is een vaardigheid die wel geoefend kan worden. Hiervoor bestaan er andere cursussen.}. We zullen altijd stellen dat het algoritme vooraf gekend moet zijn.
 \subsection{Leidend Voorbeeld: Deler}
 Als leidend voorbeeld doorheen dit hoofdstuk zullen we een processor bouwen die natuurlijke getallen kan delen. Uiteraard zouden we hiervoor een combinatorische schakeling kunnen bouwen. We zullen echter een algoritme beschouwen om de berekening te maken. De processor heeft 2 4-bit ingangen die het deeltal en de deler inlezen. Verder bevat het ook een controle-ingang. Zolang we een laag signaal op de controle-ingang aanleggen betekent dit dat er geen correcte invoer op de data-ingangen staat. Pas wanneer we een hoog signaal aanleggen zal het algoritme dus een deling uitvoeren. Verder bevat de processor ook 2 4-bit uitgang om het quoti\"ent en de rest naar buiten te brengen, en een controle uitgang die hoog wordt op het moment dat het algoritme het quoti\"ent en de rest heeft berekend. Zolang de controle-uitgang dus laag is, is het algoritme nog bezig met de berekening. Verder zal de processor ook wachten totdat de controle-ingang eerst laag is geweest alvorens opnieuw te beginnen. We maken de assumptie dat
-de deler nooit gelijk is aan 0. Het algoritme dat dan vervolgens het deeltal en de deler omzet in het quoti\"ent en rest staat op \algoref{alg:devisionFSMD}.
+de deler nooit gelijk is aan 0. Het algoritme dat dan vervolgens het deeltal en de deler omzet in het quoti\"ent en rest staat op \algoref{devisionFSMD}.
 \begin{algorithm}[hbt]
-\caption{Delen van twee $n$-bit getallen.}\label{alg:devisionFSMD}
+\caption{Delen van twee $n$-bit getallen.}\alglab{devisionFSMD}
 \begin{algorithmic}[1]
 \Function{Division}{$N,D$}
 \State $Q\gets 0$
