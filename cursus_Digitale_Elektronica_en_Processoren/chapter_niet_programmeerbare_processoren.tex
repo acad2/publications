@@ -2249,5 +2249,25 @@ Concreet komt het kritische pad nog altijd neer op het langste combinatorische p
 Het concreet bepalen van het kritisch pad is geen sinecure. Meestal stelt men tabellen op per functionele eenheid/register om te bepalen hoelang het signaal onderweg is, en wordt op basis van de tabellen dan het kritische pad bepaald. Meestal kan men het kritisch pad ook niet meteen vertalen naar de klokfrequentie: men dient meestal enige buffer te nemen die te wijten is aan meta-stabiliteit, lange lijnen, enzovoort.
 \subsection{Verschoven kloksignalen (``clock skew'')}
 \ssclab{clockSkew}
-
+In het vorige hoofdstuk hebben we het reeds gehad over ``skew''. Een speciaal geval van skew die in de context van processoren belangrijk wordt is \termen{clock skew}, dit is de verschuiving van het kloksignaal. Processoren zijn immers grote en complexe schakelingen. Een constante doorheen de schakeling is echter dat de controller, de registers en eventuele RAM-geheugens allemaal afhankelijk zijn van \'e\'en en hetzelfde kloksignaal. Het gevolg is dat een verandering die aanvangt bij de klok zelf niet altijd op alle plaatsen in de schakeling op hetzelfde moment wordt waargenomen. Oorzaken van de vertraging zijn:
+\begin{enumerate}
+ \item Vertraging op de verbinding
+ \begin{enumerate}
+  \item Een verbinding die over de volledige schakeling loopt is relatief lang. Hoewel de snelheid van een elektrisch signaal twee derde van de lichtsnelheid bedraagt, is de frequentie zeer hoog en kan een relatief kleine afstand toch een significant tijdsverschil betekenen in verhouding tot de periode van de klok.
+  \item Wanneer we werken met een FPGA doorloopt een kloksignaal meestal \'e\'en of meerdere schakelmatrices. Deze matrices zijn opgebouwd uit poorten die een significante vertraging teweeg brengen.
+ \end{enumerate}
+ \item Combinatorische logica op het klokpad
+ \begin{enumerate}
+  \item Sommige schakelingen werken met een clock-enabled. Een clock-enabled werkt door het kloksigaal door een AND-poort te sturen. Deze AND-poort levert een extra vertraging op.
+  \item Een \termen{Klokbuffer}: een poort mag slechts een beperkte fan-out hebben. Het kloksignaal wordt echter gepropageerd naar een zeer groot aantal componenten. Men propageert het signaal dan ook door een hi\"erarchische structuur van klokbuffers. Wanneer componenten echter niet aangesloten zijn op dezelfde diepte van deze hi\"erarchie, ontstaat er een tijdsverschil.
+ \end{enumerate}
+ \item Verschillende daal- en stijgtijden: door verschillende capacitieve belasting (tussen bijvoorbeeld twee klokbuffers) zijn de vertragingen op lange lijnen -- zelfs al zijn ze identiek in lengte -- niet altijd gelijk. Wanneer een bepaalde lijn bijvoorbeeld een grote oppervlakte aan metaal vertegenwoordigt, stijgt de capaciteit van de virtuele condensator.
+\end{enumerate}
+\paragraph{Clock enabled bij laadbare registers}
+In registers werken we vaak met een clock enabled. Dit is een belangrijke oorzaak van clock skew en kan zelfs leiden tot het inklokken van foute waarden: wanneer de data aan de ingang zelf afhankelijk is van de klok en sneller wordt aangepast dan de het signaal door de AND-poort propageert, wordt soms de nieuwe waarde opgeslagen.
+\begin{figure}[hbt]
+\importtikzsubfigure{loadregi-mux}{Met multiplexer.}
+\importtikzsubfigure{loadregi-cle}{Met clock enabled.}
+\caption{Laadbaar registers}
+\end{figure}
 \subsection{Asynchrone ingangen}
