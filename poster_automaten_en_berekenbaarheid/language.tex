@@ -39,4 +39,43 @@ gnfa/REGEX/55/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestands
  \item $\forall q_i,q_j\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_s,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_f$.
+\end{itemize}},
+cfgr/CTXFR/5.5/2.5/10 cm/Contextvrije grammatica over een alfabet $\Sigma$/CFG/{$\tupl{V,\Sigma,R,S}$ is een contextvrije grammatica over $\Sigma$ indien:\begin{itemize}
+ \item $V$ een eindige verzameling niet-eindsymbolen is;
+ \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
+ \item $R$ een eindige verzameling regels; een regel is een koppel van  ́\'e\'en niet-eindsymbool en een string van elementen uit $V\cup\Sigma_{\epsilon}$; we schrijven de twee delen van zulk een koppel met een $\rightarrow$ ertussen;
+ \item $S$ is het startsymbool en behoort tot $V$.
+\end{itemize}},
+cfgder/CTXFR/18/2.5/14 cm/Afleiding met behulp van een contextvrije grammatica/$b\Rightarrow_{CFG}^{\star}f$/{Gegeven een contextvrije grammatica $\tupl{V,\Sigma,R,S}$. Een string $f$ over $V\cup\Sigma_{\epsilon}$ wordt afgeleid uit een string $b$ uit $V\cup\Sigma_{\epsilon}$ met behulp van de contextvrije grammatica indien er een eindige rij strings $s_0,s_1,\ldots,s_n$ bestaat zodat:\begin{itemize}
+ \item $s_0=b\wedge s_n=f$
+ \item $s_{i+1}$ verkregen wordt uit $s_i$ (voor $i<n$) door in $s_i$ een niet-eindsymbool $X$ te vervangen door de rechterkant van een regel waarin $X$ links voorkomt.
+\end{itemize}
+We noteren $s_i\Rightarrow s_{i+1}$ en $b\rightarrow^{\star}f$},
+cfgla/CTXFR/18/7.5/14 cm/Een contextvrije grammatica bepaalt een taal/$\mbox{CFG}\sim L_{\mbox{CFG}}$/{De taal $L_{CFG}$ bepaald door een contextvrije grammatica $\tupl{V,\Sigma,R,S}$ is de verzameling strings over $\Sigma$ die kunnen afgeleid worden van het startsymbool $S$; of meer formeel: $L_{CFG}=\accl{s\in\Sigma^{\star}|S\Rightarrow^{\star}s}$.},
+cfgl/CTXFR/5.5/7.75/10 cm/Contextvrije taal/$\mbox{CFL}$/{Een taal $L$ is contextvrij indien er een contextvrije grammatica is zodat $L=L_{CFG}$. De verzameling van contextvrije talen duiden we aan met $\mbox{CFL}$.},
+pda/CTXFR/34/1.2/12 cm/Push-down automaat/PDA/{Een push-down automaat is een $5$-tal $\tupl{Q,\Sigma,\Gamma,\delta,q_s,F}$ waarbij:\begin{itemize}
+ \item $Q$ een eindige verzameling toestanden is;
+ \item $\Sigma$ een eindig inputalfabet;
+ \item $\Gamma$ een eindig stapelalfabet;
+ \item $\delta:Q\times\Sigma_{\epsilon}\times\Gamma_{\epsilon}\rightarrow\powset{Q\times\Gamma_{\epsilon}}$ de overgangsfunctie;
+ \item $q_s\in Q$ de starttoestand en een element van $Q$;
+ \item $F\subseteq Q$ de verzameling eindtoestanden.
+\end{itemize}},
+pdastr/CTXFR/34/6.15/12 cm/String aanvaard door een PDA/$s\in L_{\mbox{\tiny PDA}}$/{Een string $s$ wordt aanvaard door een PDA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan worden opgesplitst in
+delen $w_i,i=1\ldots m$ ($w_i\in\Sigma$), er toestanden $q_j,j=0\ldots m$ ($q_j\in Q$) zijn, en stapels $\mbox{stapel}_k,k=0\ldots m$ ($\mbox{stapel}_k\in\Gamma^{\star}$) zodat:\begin{itemize}
+ \item $\mbox{stapel}_0=\epsilon\wedge q_0=q_s\wedge q_m\in F$;
+ \item $\tupl{q_{i+1},y}\in\fun{\delta}{q_i,w_{i+1},x}$ waarbij $x,y\in\Gamma_{\epsilon}$ en $\mbox{stapel}_i=xt$, $\mbox{stapel}_{i+1}=yt$ met $t\in\Gamma^{\star}$.
+\end{itemize}},
+pdaeqcfg/CTXFR/43.5/1.2/6 cm/Equivalentie van CFG en PDA/$\mbox{CFG}\equiv\mbox{PDA}$/{Elke push-down automaat bepaalt een contextvrije taal en elke contextvrije taal wordt bepaald door een push-down automaat.},
+lincfl/CTXFR/46/4.7/10 cm/Pompend lemma voor contextvrije talen/$L\in\mbox{CFL}$/{Voor een contextvrije taal $L$ bestaat een getal $d$ (de pomplengte) zodat elke string $s\in L$ met lengte minstens $d$ kan opgedeeld worden in $5$ stukken $u,v,x,y,z\in\Sigma^{\star}$ zodat $s=uvxyz$ en:
+\begin{enumerate}
+ \item $\forall i\geq 0:uv^ixy^iz\in L$;
+ \item $\abs{vy}>0$;
+ \item $\abs{vxy}\leq d$.
+\end{enumerate}},
+csgr/CTXSE/5.5/2.5/10 cm/Context-sensitieve grammatica over een alfabet $\Sigma$/CSG/{$\tupl{V,\Sigma,R,S}$ is een context-sensitieve grammatica over $\Sigma$ indien:\begin{itemize}
+ \item $V$ een eindige verzameling niet-eindsymbolen is;
+ \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
+ \item $R$ een eindige verzameling regels; een regel is een koppel van $\alpha A\beta\rightarrow\alpha\gamma\beta$ ́met $\alpha,\beta,\gamma\in\brak{\Sigma\cup V}^{\star}$ en $A\in V$;
+ \item $S$ is het startsymbool en behoort tot $V$.
 \end{itemize}}
