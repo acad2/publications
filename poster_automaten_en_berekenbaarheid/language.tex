@@ -79,6 +79,8 @@ csgr/CTXSE/5.5/2.5/10 cm/Context-sensitieve grammatica over een alfabet $\Sigma$
  \item $R$ een eindige verzameling regels; een regel is een koppel van $\alpha A\beta\rightarrow\alpha\gamma\beta$ ́met $\alpha,\beta,\gamma\in\brak{\Sigma\cup V}^{\star}$ en $A\in V$;
  \item $S$ is het startsymbool en behoort tot $V$.
 \end{itemize}},
+lba/CTXSE/34/1.2/10 cm/Lineair begrensde automaat/LBA/{Een lineair begrensde automaat is een Turingmachine die niet leest of schrijft buiten het deel van de band dat initieel invoer bevat.},
+lbaeqcsg/CTXSE/43.5/1.2/6 cm/Equivalentie van CSG en LBA/$\mbox{CSG}\equiv\mbox{LBA}$/{Elke lineair begrensde automaat bepaalt een context-sensitieve taal en elke context-sensitieve taal wordt bepaald door een lineair begrensde automaat.},
 tuma/TURING/5.5/2.5/10 cm/Turingmachine/TM/{Een Turingmachine is een tuple $\tupl{Q,\Sigma,\Gamma,\delta,q_s,q_a,q_r}$ waarbij:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden is;
  \item $\Sigma$ een invoeralfabet dat niet $\#$ bevat;
@@ -88,18 +90,17 @@ tuma/TURING/5.5/2.5/10 cm/Turingmachine/TM/{Een Turingmachine is een tuple $\tup
 \end{itemize}},
 sintuma/TURING/16.5/1.5/10 cm/String die door de Turingmachine wordt geaccepteerd/$s\in L_{\mbox{\small TM}}$/{De machine wordt ge\"initialiseerd in toestand $q_s$ met de invoerstring op de tape op de overige plaatsen staat een $\#$ en de leeskop op het meest linkse invoerteken. Zolang de machine niet in $q_a$ en $q_r$ zit, wordt het karakter uitgelezen onder de leeskop. Op basis van de transitiefunctie $\delta$ wordt een nieuw karakter onder de leeskop gezet, wordt de leeskop naar links/rechts verplaatst en komt de machine in een nieuwe toestand. Als de Turingmachine na een eindig aantal stappen in $q_a$ komt wordt de string aanvaard.},
 sininftuma/TURING/16.5/7.5/10 cm/String waarvoor de Turingmachine niet stopt/$s\in\infty_{\mbox{\small TM}}$/{Een string $s$ behoort tot $\infty_{\mbox{\small TM}}$ indien bij invoer van $s$, de machine nooit in $q_a$ of $q_r$ terecht komt.},
-recog/TURING/27.5/1.5/10 cm/Herkennen/Recognize/{Een Turingmachine TM herkent $L_{\mbox{\small TM}}$.},
-decid/TURING/27.5/3.5/10 cm/Beslissen/Decide/{Een Turingmachine TM beslist een taal $L$ indien de Turingmachine $L$ herkent en bovendien $\infty_{\mbox{\small TM}}=\emptyset$.},
+recog/TURING/27.5/1.5/10 cm/Herkennen/Recognize/{Een Turingmachine TM herkent $L_{\mbox{\small TM}}$. Een taal $L$ waarvoor zo'n Turingmachine bestaat noemt men een herkenbare taal.},
+decid/TURING/27.5/4.5/10 cm/Beslissen/Decide/{Een Turingmachine TM beslist een taal $L$ indien de Turingmachine $L$ herkent en bovendien $\infty_{\mbox{\small TM}}=\emptyset$. Een taal $L$ waarvoor zo'n Turingmachine bestaat noemt men een beslisbare taal.},
 enum/TURING/39/1.5/10 cm/Enumeratormachine/EM/{Een Enumeratormachine is een Turingmachine met volgende uitbreidingen:\begin{itemize}
  \item Een enumeratortoestand $q_e$;
  \item Een uitvoerband met uitvoermarker;
- \item De transitiefunctie $\funsig{\delta}{Q\times\Gamma}{Q\times\Gamma\times\Gammma_{\epsilon}\times\accl{L,S,R}}$.
-\end{itemize}De machine start met lege band en lege outputband, in de gewone q s en begint te
-werken. Telkens bij een overgang iets op de output wordt geschreven verschuift de
-schrijfkop naar rechts. Telkens de machine in toestand q e komt, wordt op de out-
-put de outputmarker geschreven, overgegaan naar q s en de machine loopt verder.},
-pac/PROB/8/2.5/14 cm/Acceptatie/$A_{\phi}$/{$A_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die string $s$ accepteert}}$.},
-phalt/PROB/23/2.5/14 cm/Stopt/$H_{\phi}$/{$H_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
-pe/PROB/38/2.5/14 cm/Leegheid/$E_{\phi}$/{$E_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
-peq/PROB/8/7.5/14 cm/Gelijkheid/$EQ_{\phi}$/{$EQ_{\phi}=\accl{\tupl{M_1,M_2}|\mbox{$M_1$ en $M_2$ zijn $\phi$'s die dezelfde taal bepalen}}$.},
-pes/PROB/23/7.5/14 cm/Lege string/$ES_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ bepaald de lege taal}}$.}
+ \item De transitiefunctie $\funsig{\delta}{Q\times\Gamma}{Q\times\Gamma\times\Gamma_{\epsilon}\times\accl{L,S,R}}$.
+\end{itemize}De machine start met lege band en lege uitvoerband, in de $q_s$ toestand en werkt als een Turingmachine. Wanneer iets op de uitvoer wordt geschreven verschuift de schrijfkop naar rechts. Wanneer de machine in toestand $q_e$ komt, wordt op de uitvoer de uitvoermarker geschreven en komt de machine opnieuw in $q_s$ terecht.},
+recogenum/TURING/39/7.5/10 cm/Enumeratormachine/$\mbox{Recognize}\equiv\mbox{EM}$/{De taal door een enumerator bepaald is herkenbaar en elke herkenbare taal wordt door een enumerator ge\"enumereerd.},
+pac/PROB/8/2.5/14 cm/Acceptatie/$\mbox{\textsc{A}}_{\phi}$/{$A_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die string $s$ accepteert}}$.},
+phalt/PROB/23/2.5/14 cm/Stopt/$\mbox{\textsc{H}}_{\phi}$/{$H_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
+pe/PROB/38/2.5/14 cm/Leegheid/$\mbox{\textsc{E}}_{\phi}$/{$E_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
+peq/PROB/8/5/14 cm/Gelijkheid/$\mbox{\textsc{EQ}}_{\phi}$/{$EQ_{\phi}=\accl{\tupl{M_1,M_2}|\mbox{$M_1$ en $M_2$ zijn $\phi$'s die dezelfde taal bepalen}}$.},
+pes/PROB/23/5/14 cm/Lege string/$\mbox{\textsc{ES}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ bepaalt de lege taal}}$.},
+reges/PROB/38/5/14 cm/Lege string/$\mbox{\textsc{Regular}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ bepaalt een reguliere taal}}$.}
