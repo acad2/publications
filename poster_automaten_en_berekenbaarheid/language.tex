@@ -73,9 +73,33 @@ lincfl/CTXFR/46/4.7/10 cm/Pompend lemma voor contextvrije talen/$L\in\mbox{CFL}$
  \item $\abs{vy}>0$;
  \item $\abs{vxy}\leq d$.
 \end{enumerate}},
-csgr/CTXSE/5.5/2.5/10 cm/Context-sensitieve grammatica over een alfabet $\Sigma$/CSG/{$\tupl{V,\Sigma,R,S}$ is een context-sensitieve grammatica over $\Sigma$ indien:\begin{itemize}
+csgr/CTXSE/5.5/2.5/10 cm/Context-sensitieve grammatica over een alfabet $\Sigma$/CSG/{Een tuple $\tupl{V,\Sigma,R,S}$ is een context-sensitieve grammatica over $\Sigma$ indien:\begin{itemize}
  \item $V$ een eindige verzameling niet-eindsymbolen is;
  \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
  \item $R$ een eindige verzameling regels; een regel is een koppel van $\alpha A\beta\rightarrow\alpha\gamma\beta$ ́met $\alpha,\beta,\gamma\in\brak{\Sigma\cup V}^{\star}$ en $A\in V$;
  \item $S$ is het startsymbool en behoort tot $V$.
-\end{itemize}}
+\end{itemize}},
+tuma/TURING/5.5/2.5/10 cm/Turingmachine/TM/{Een Turingmachine is een tuple $\tupl{Q,\Sigma,\Gamma,\delta,q_s,q_a,q_r}$ waarbij:\begin{itemize}
+ \item $Q$ een eindige verzameling toestanden is;
+ \item $\Sigma$ een invoeralfabet dat niet $\#$ bevat;
+ \item $\Gamma$ een tape alfabet met $\#\in\Gamma$ en $\Sigma\subsetneq\Gamma$;
+ \item $q_s$ de start-toestand, $q_a$ de accepterende eindtoestand, $q_r\neq q_a$ de verwerpende eindtoestand.
+ \item $\funsig{\delta}{Q\times\Gamma}{Q\times\Gamma\times\acc{L,S,R}}$ de totale transitiefunctie.
+\end{itemize}},
+sintuma/TURING/16.5/1.5/10 cm/String die door de Turingmachine wordt geaccepteerd/$s\in L_{\mbox{\small TM}}$/{De machine wordt ge\"initialiseerd in toestand $q_s$ met de invoerstring op de tape op de overige plaatsen staat een $\#$ en de leeskop op het meest linkse invoerteken. Zolang de machine niet in $q_a$ en $q_r$ zit, wordt het karakter uitgelezen onder de leeskop. Op basis van de transitiefunctie $\delta$ wordt een nieuw karakter onder de leeskop gezet, wordt de leeskop naar links/rechts verplaatst en komt de machine in een nieuwe toestand. Als de Turingmachine na een eindig aantal stappen in $q_a$ komt wordt de string aanvaard.},
+sininftuma/TURING/16.5/7.5/10 cm/String waarvoor de Turingmachine niet stopt/$s\in\infty_{\mbox{\small TM}}$/{Een string $s$ behoort tot $\infty_{\mbox{\small TM}}$ indien bij invoer van $s$, de machine nooit in $q_a$ of $q_r$ terecht komt.},
+recog/TURING/27.5/1.5/10 cm/Herkennen/Recognize/{Een Turingmachine TM herkent $L_{\mbox{\small TM}}$.},
+decid/TURING/27.5/3.5/10 cm/Beslissen/Decide/{Een Turingmachine TM beslist een taal $L$ indien de Turingmachine $L$ herkent en bovendien $\infty_{\mbox{\small TM}}=\emptyset$.},
+enum/TURING/39/1.5/10 cm/Enumeratormachine/EM/{Een Enumeratormachine is een Turingmachine met volgende uitbreidingen:\begin{itemize}
+ \item Een enumeratortoestand $q_e$;
+ \item Een uitvoerband met uitvoermarker;
+ \item De transitiefunctie $\funsig{\delta}{Q\times\Gamma}{Q\times\Gamma\times\Gammma_{\epsilon}\times\accl{L,S,R}}$.
+\end{itemize}De machine start met lege band en lege outputband, in de gewone q s en begint te
+werken. Telkens bij een overgang iets op de output wordt geschreven verschuift de
+schrijfkop naar rechts. Telkens de machine in toestand q e komt, wordt op de out-
+put de outputmarker geschreven, overgegaan naar q s en de machine loopt verder.},
+pac/PROB/8/2.5/14 cm/Acceptatie/$A_{\phi}$/{$A_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die string $s$ accepteert}}$.},
+phalt/PROB/23/2.5/14 cm/Stopt/$H_{\phi}$/{$H_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
+pe/PROB/38/2.5/14 cm/Leegheid/$E_{\phi}$/{$E_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
+peq/PROB/8/7.5/14 cm/Gelijkheid/$EQ_{\phi}$/{$EQ_{\phi}=\accl{\tupl{M_1,M_2}|\mbox{$M_1$ en $M_2$ zijn $\phi$'s die dezelfde taal bepalen}}$.},
+pes/PROB/23/7.5/14 cm/Lege string/$ES_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ bepaald de lege taal}}$.}
