@@ -56,6 +56,10 @@
 \def\dylma{105.0 mm};
 \def\dyw{1100.0 mm};
 \def\dywb{550.0 mm};
+\def\dywt{366.7 mm};
+\def\dywq{275.0 mm};
+\def\dywu{220.0 mm};
+\def\dywh{183.3 mm};
 \node[scale=4] (TITLE) at (\mid,0) {\Huge{\textsc{Automaten en Berekenbaarheid}}};
 \node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{Inleiding tot}}};
 \node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{../SharedData/sedes.pdf}};
@@ -63,16 +67,17 @@
 \node[anchor=west] (AUTHOR2) at ($(AUTHOR.east)+(1 cm,0)$) {\parbox{6 cm}{W.~Van~Onsem\\Departement Computerwetenschappen\\KU Leuven}};
 \begin{scope}[yshift=-3*\dylm]
 \begin{pgfonlayer}{background}
-\defgroup{0}{-\dylma}{\dyw}{\dyl}{Turing (\S3.1-3.9)}{red}{TURING}
-\defgroup{0}{-2*\dylma}{\dyw}{\dyl}{Context-sensitief (\S2.26)}{purple}{CTXSE}
-\defgroup{0}{-3*\dylma}{\dyw}{\dyl}{Context-vrij (\S2.19-\S2.25)}{blue}{CTXFR}
-\defgroup{0}{-4*\dylma}{\dyw}{\dyl}{Regulier (\S2.4-\S2.18)}{green}{REGEX}
-\defgroup{0}{-5*\dylma-5*\dma}{\dyw}{\dyl}{Herschrijfsystemen ($\Lambda$-calculus; \S4)}{yellow}{LAMBDA}
-\defgroup{0}{-6*\dylma-5*\dma}{\dyw}{\dyl}{Andere paradigma's (\S5)}{orange}{OTHER}
-\defgroup{0}{-7*\dylma-5*\dma}{\dywb}{\dyl}{Taal-aspecten (\S2.1-\S2.3)}{backg}{LANG}
-\defgroup{\dywb}{-7*\dylma-5*\dma}{\dywb}{\dyl}{Problemen}{backg}{PROB}
-\draw [decorate,line width=3pt] ($(REGEX-LB)+(-0.5,0)$) -- ($(TURING-LT)+(-0.5,0)$);
-\draw ($0.5*(REGEX-LB)+0.5*(TURING-LT)+(-2,0)$) node[rotate=90] {\Huge{\bf Chomsky hi\"erarchie (\S2-\S3)}};
+\defgroup{0}{-\dylma}{\dyw}{\dyl}{Orakel (\S3.17)}{orange}{ORAKEL}
+\defgroup{0}{-2*\dylma}{\dyw}{\dyl}{Turing (\S3.1-3.9)}{red}{TURING}
+\defgroup{0}{-3*\dylma}{\dyw}{\dyl}{Context-sensitief (\S2.26)}{purple}{CTXSE}
+\defgroup{0}{-4*\dylma}{\dyw}{\dyl}{Context-vrij (\S2.19-\S2.25)}{blue}{CTXFR}
+\defgroup{0}{-5*\dylma}{\dyw}{\dyl}{Regulier (\S2.4-\S2.18)}{green}{REGEX}
+\defgroup{0}{-6*\dylma-5*\dma}{\dyw}{\dyl}{Herschrijfsystemen ($\Lambda$-calculus; \S4)}{yellow}{LAMBDA}
+\defgroup{\dywh}{-7*\dylma-5*\dma}{\dyw-\dywh-\dywt}{\dyl}{Andere paradigma's (\S5)}{gray}{OTHER}
+\defgroup{0}{-7*\dylma-5*\dma}{\dywh}{\dyl}{Taal-aspecten (\S2.1-\S2.3)}{backg}{LANG}
+\defgroup{\dyw-\dywt}{-7*\dylma-5*\dma}{\dywt}{\dyl}{Problemen}{backg}{PROB}
+\draw [decorate,line width=3pt] ($(REGEX-LB)+(-0.5,0)$) -- ($(ORAKEL-LT)+(-0.5,0)$);
+\draw ($0.5*(REGEX-LB)+0.5*(ORAKEL-LT)+(-2,0)$) node[rotate=90] {\Huge{\bf Chomsky hi\"erarchie (\S2-\S3)}};
 \draw [decorate,line width=3pt] ($(REGEX-LB)+(26,-0.5)$) -- ++(-26,0);
 \draw ($(REGEX-LB)+(13,-2)$) node {\Huge{\bf Beschrijven}};
 \draw [decorate,line width=3pt] ($(REGEX-RB)+(-27,-0.5)$) -- ($(REGEX-LB)+(27,-0.5)$);
