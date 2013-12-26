@@ -98,9 +98,14 @@ enum/TURING/39/1.5/10 cm/Enumeratormachine/EM/{Een Enumeratormachine is een Turi
  \item De transitiefunctie $\funsig{\delta}{Q\times\Gamma}{Q\times\Gamma\times\Gamma_{\epsilon}\times\accl{L,S,R}}$.
 \end{itemize}De machine start met lege band en lege uitvoerband, in de $q_s$ toestand en werkt als een Turingmachine. Wanneer iets op de uitvoer wordt geschreven verschuift de schrijfkop naar rechts. Wanneer de machine in toestand $q_e$ komt, wordt op de uitvoer de uitvoermarker geschreven en komt de machine opnieuw in $q_s$ terecht.},
 recogenum/TURING/39/7.5/10 cm/Enumeratormachine/$\mbox{Recognize}\equiv\mbox{EM}$/{De taal door een enumerator bepaald is herkenbaar en elke herkenbare taal wordt door een enumerator ge\"enumereerd.},
+recogenum/TURING/55/1.5/10 cm/Stelling van Rice/Rice/{Voor elke niet-triviale taal-invariante eigenschap $P$ van Turingmachines geldt $L_{P}=\accl{\tupl{M}|\mbox{$M$ voldoet aan $P$}}$ is niet beslisbaar.},
+tcalc/TURING/55/4.375/10 cm/Turing-berekenbare functie/Turing-berekenbaar/{Een functie $f$ is Turing-berekenbaar indien er een Turingmachine bestaat die bij input $s$ uiteindelijk stopt met $\fun{f}{s}$ op de band.},
+langrec/TURING/55/7.25/10 cm/Reductie van talen/$L_1\leq_mL_2$/{Een taal $L_1$ (over $\Sigma_1$) is reduceerbaar naar een taal $L_2$ (over $\Sigma_2$) indien er een afbeelding $\funsig{f}{\Sigma_1^{\star}}{\Sigma_2^{\star}}$ bestaat zodat $\fun{f}{L_1}\subseteq L_2$ en $\overline{\fun{f}{L_1}}\subseteq\overline{L_2}$ en $f$ Turing-berekenbaar is. We noteren dat door $L_1\leq_mL_2$.},
+pcorp/OTHER/5.5/2.5/10 cm/Post Correspondence Problem/PCP/{Gegeven een set $S$ van tuples $\accl{\alpha,\beta}$ met $\alpha,\beta\in\Sigma^{\star}$ over een alfabet $\Sigma$. Bestaat er een sequentie elementen $s_0s_1\ldots s_n$, zodat de concatenatie van het eerste element van de tuples gelijk is aan de concatenatie van het tweede element van de tuples?},
 pac/PROB/8/2.5/14 cm/Acceptatie/$\mbox{\textsc{A}}_{\phi}$/{$A_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die string $s$ accepteert}}$.},
 phalt/PROB/23/2.5/14 cm/Stopt/$\mbox{\textsc{H}}_{\phi}$/{$H_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
 pe/PROB/38/2.5/14 cm/Leegheid/$\mbox{\textsc{E}}_{\phi}$/{$E_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
 peq/PROB/8/5/14 cm/Gelijkheid/$\mbox{\textsc{EQ}}_{\phi}$/{$EQ_{\phi}=\accl{\tupl{M_1,M_2}|\mbox{$M_1$ en $M_2$ zijn $\phi$'s die dezelfde taal bepalen}}$.},
 pes/PROB/23/5/14 cm/Lege string/$\mbox{\textsc{ES}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ bepaalt de lege taal}}$.},
-reges/PROB/38/5/14 cm/Lege string/$\mbox{\textsc{Regular}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ bepaalt een reguliere taal}}$.}
+reges/PROB/38/5/14 cm/Regulier/$\mbox{\textsc{Regular}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ bepaalt een reguliere taal}}$.},
+alles/PROB/8/7.5/14 cm/Alle strings/$\mbox{\textsc{ALL}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ accepteert alle strings}}$.}
