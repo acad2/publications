@@ -102,7 +102,7 @@ recogenum/TURING/55/1.5/10 cm/Stelling van Rice/Rice/{Voor elke niet-triviale ta
 tcalc/TURING/55/4.375/10 cm/Turing-berekenbare functie/Turing-berekenbaar/{Een functie $f$ is Turing-berekenbaar indien er een Turingmachine bestaat die bij input $s$ uiteindelijk stopt met $\fun{f}{s}$ op de band.},
 langrec/TURING/55/7.25/10 cm/Reductie van talen/$L_1\leq_mL_2$/{Een taal $L_1$ (over $\Sigma_1$) is reduceerbaar naar een taal $L_2$ (over $\Sigma_2$) indien er een afbeelding $\funsig{f}{\Sigma_1^{\star}}{\Sigma_2^{\star}}$ bestaat zodat $\fun{f}{L_1}\subseteq L_2$ en $\overline{\fun{f}{L_1}}\subseteq\overline{L_2}$ en $f$ Turing-berekenbaar is. We noteren dat door $L_1\leq_mL_2$.},
 buzbev/TURING/70/5.75/10 cm/Bezige bever/$\fun{\Sigma}{n}$/{de bezige bever is een totale functie $\funsig{\Sigma}{\NN}{\NN}$ die voor invoer $n$ het maximale aantal $1$'en uitschrijft voor een Turingmachine bij lege invoer die eindigt.},
-ora/ORAKEL/5.5/2.5/10 cm/Orakelmachine/O/{Een Orakelmachine is een tuple $\tupl{Q,\Sigma,\Gamma,\delta,q_s,q_a,q_r}$ waarbij:\begin{itemize}
+ora/ORAKEL/6.5/2.5/12 cm/Orakelmachine/$O^L$/{Een Orakelmachine is een tuple $\tupl{Q,\Sigma,\Gamma,\delta,q_s,q_a,q_r}$ waarbij:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden is;
  \item $\Sigma$ een invoeralfabet dat niet $\#$ bevat;
  \item $\Gamma$ een tape alfabet met $\#\in\Gamma$ en $\Sigma\subsetneq\Gamma$;
@@ -141,8 +141,8 @@ ift/LAMBDA/44.5/6/8 cm/{True, False en If}/$\BBB$/{Booleaanse waarden $b\in\BBB$
 lis/LAMBDA/53.5/1.5/8 cm/{Lijsten}/$\vec{x}$/{Lijsten worden meestal door het gelinkte-lijst-paradigma voorgesteld. Elke node heeft een \textsc{Hoofd} en een \textsc{Staart}. Men stelt een node voor met \textsc{Cons}:\begin{itemize}\item $\mbox{\sc Hoofd}=\lambda\ c\ .\ c\ \brak{\lambda\ a\ b\ .\ a}$\item $\mbox{\sc Staart}=\lambda\ c\ .\ c\ \brak{\lambda\ a\ b\ .\ b}$\item $\mbox{\sc Cons}=\lambda\ a\ b\ f.f\ a\ b$\end{itemize}},
 pac/PROB/7/2.5/14 cm/Acceptatie/$\mbox{\textsc{A}}_{\phi}$/{$A_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die string $s$ accepteert}}$.},
 phalt/PROB/18/2.5/14 cm/Stopt/$\mbox{\textsc{H}}_{\phi}$/{$H_{\phi}=\accl{\tupl{M,s}|\mbox{$M$ is een $\phi$ die stopt bij string $s$}}$.},
-pe/PROB/29/2.5/14 cm/Leegheid/$\mbox{\textsc{E}}_{\phi}$/{$E_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die de lege taal herkent}}$.},
-peq/PROB/7/5/14 cm/Gelijkheid/$\mbox{\textsc{EQ}}_{\phi}$/{$EQ_{\phi}=\accl{\tupl{M_1,M_2}|\mbox{$M_1$ en $M_2$ zijn $\phi$'s die dezelfde taal bepalen}}$.},
-pes/PROB/18/5/14 cm/Lege string/$\mbox{\textsc{ES}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die de lege string accepteert}}$.},
-reges/PROB/29/5/14 cm/Regulier/$\mbox{\textsc{Regular}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die een reguliere taal herkent}}$.},
-alles/PROB/7/7.5/14 cm/Alle strings/$\mbox{\textsc{ALL}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ is een $\phi$ die alle strings herkent}}$.}
+pe/PROB/29/2.5/14 cm/Leegheid/$\mbox{\textsc{E}}_{\phi}$/{$E_{\phi}=\accl{\tupl{M}|\mbox{$M$ herkent de lege taal}}$.},
+peq/PROB/7/5/14 cm/Gelijkheid/$\mbox{\textsc{EQ}}_{\phi}$/{$EQ_{\phi}=\accl{\tupl{M_1,M_2}|\mbox{$M_1$ en $M_2$ bepalen dezelfde taal}}$.},
+pes/PROB/18/5/14 cm/Lege string/$\mbox{\textsc{ES}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ accepteert de lege string}}$.},
+reges/PROB/29/5/14 cm/Regulier/$\mbox{\textsc{Regular}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ herkent een reguliere taal}}$.},
+alles/PROB/7/7.5/14 cm/Alle strings/$\mbox{\textsc{ALL}}_{\phi}$/{$ES_{\phi}=\accl{\tupl{M}|\mbox{$M$ herkent alle strings $\Sigma^{\star}$}}$.}
