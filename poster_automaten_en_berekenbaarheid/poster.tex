@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[a0paper,landscape,margin=1cm,centering]{geometry}
-\usepackage{color,amsfonts,tikz,amssymb,graphicx,enumitem,xparse,ifthen}
-\usetikzlibrary{positioning}
+\usepackage[dutch]{babel}
+\usepackage{color,amsfonts,tikz,amssymb,graphicx,enumitem,xparse,ifthen,epstopdf}
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \usepackage{../SharedData/brackets}
 \definecolor{backg}{rgb}{0.99,0.96,0.9}
@@ -84,6 +84,7 @@
 \node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{../SharedData/sedes.pdf}};
 %\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{8 cm}{prof.~B.~Demoen\\Declaratieve Talen en Artifici\"ele Intelligentie (DTAI)\\Departement Computerwetenschappen\\KU Leuven}};
 \node[anchor=west] (AUTHOR2) at ($(SEDES.east)+(1 cm,0)$) {\parbox{8 cm}{W.~Van~Onsem\\Declaratieve Talen en Artifici\"ele Intelligentie (DTAI)\\Departement Computerwetenschappen\\KU Leuven}};
+\node[anchor=east] (BAR) at ($(TITLE.west)+(-1 cm,0)$) {\includegraphics{bar.eps}};
 \begin{scope}[yshift=-3*\dylm]
 \begin{pgfonlayer}{background}
 \defgroup{0}{-\dylma}{\dyw}{\dyl}{Orakel (\S3.17)}{orange}{ORAKEL}

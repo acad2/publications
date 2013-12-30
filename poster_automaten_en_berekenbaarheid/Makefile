@@ -1,5 +1,6 @@
-poster.pdf : *.tex
-	pdflatex --interaction nonstopmode poster.tex >/dev/null 2>/dev/null
+poster.pdf : *.tex Makefile
+	qrencode -o "bar.eps" -l H -t EPS "http://goo.gl/csd51c"
+	pdflatex --shell-escape --interaction nonstopmode poster.tex >/dev/null 2>/dev/null
 	make clean
 upload :
 	make poster.pdf || true
