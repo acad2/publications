@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage[a0paper,landscape,margin=1cm,centering]{geometry}
-\usepackage{color,tikz,amssymb,graphicx,enumitem}
+\usepackage{color,tikz,amssymb,graphicx,enumitem,xparse}
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \usepackage{../SharedData/brackets}
 \definecolor{backg}{rgb}{0.99,0.96,0.9}
@@ -35,7 +35,17 @@
 \newcommand{\bigtheta}[1]{\ensuremath{\Theta\left(#1\right)}}
 \newcommand{\xlogx}[1]{\ensuremath{#1\log\left(#1\right)}}
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
-\newcommand{\comput}{\filldraw[fill=red,rounded corners] (0,0) rectangle (1,1);}
+\DeclareDocumentCommand{{\comput}{O{LABEL} O{2.00} m}{
+\begin{scope}[scale=#2]
+  \begin{scope}
+    \clip[rounded corners=2 mm] (-0.5,-0.5) rectangle (0.5,0.5);
+    \fill[fill=green!60,rounded corners] (-0.5,-0.5) |- (0.5,0.5) -- cycle;
+    \fill[fill=red!60,rounded corners] (-0.5,-0.5) -| (0.5,0.5) -- cycle;
+    \draw[thick] (-0.5,-0.5) -- (0.5,0.5);
+    \node[scale=#2] (T) at (0,0) {#2};
+  \end{scope}
+  \draw[rounded corners=2 mm,thick] (-0.5,-0.5) rectangle (0.5,0.5);
+\end{scope}}
 \newcommand{\defgroup}[7]{
 \begin{scope}[xshift=#1,yshift=#2]
 \filldraw[#6!40!backg,draw=black,very thick,rounded corners] (0.5*\dma,0.5*\dma) rectangle ++(#3-\dma,#4-\dma);\draw (0.5*\dma,#4-0.5*\dma) node[anchor=north west]{\Huge{\bf #5}};
@@ -95,8 +105,8 @@
 \node[fit=(CCT\l) (CCD\l),draw=black,rectangle,dotted,rounded corners,fill=white] (CC\l) {};
 \end{pgfonlayer}}
 \end{scope}
-\begin{scope}[yshift=-0.5*\mid,xshift=\dywb]
-\comput{}
+\begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
+\comput{$L$}{2}
 \end{scope}
 \end{tikzpicture}
 \end{center}
