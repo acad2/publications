@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[a0paper,landscape,margin=1cm,centering]{geometry}
-\usepackage{color,tikz,amssymb,graphicx,enumitem,xparse,ifthen}
+\usepackage{color,amsfonts,tikz,amssymb,graphicx,enumitem,xparse,ifthen}
+\usetikzlibrary{positioning}
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \usepackage{../SharedData/brackets}
 \definecolor{backg}{rgb}{0.99,0.96,0.9}
@@ -28,13 +29,17 @@
 \newcommand{\cca}[2]{\ensuremath{\mbox{\cc{#1}}\left(#2\right)}}
 \newcommand{\red}[1]{\ensuremath{\leq_{#1}}}
 \newcommand{\prb}[1]{\ensuremath{\Pr\left[#1\right]}}
-\newcommand{\bigoh}[1]{\ensuremath{O\left(#1\right)}}
+\newcommand{\bigoh}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
 \newcommand{\smalloh}[1]{\ensuremath{o\left(#1\right)}}
 \newcommand{\bigomega}[1]{\ensuremath{\Omega\left(#1\right)}}
 \newcommand{\smallomega}[1]{\ensuremath{\omega\left(#1\right)}}
 \newcommand{\bigtheta}[1]{\ensuremath{\Theta\left(#1\right)}}
 \newcommand{\xlogx}[1]{\ensuremath{#1\log\left(#1\right)}}
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
+
+\newcommand{\constant}[1]{\mathrm{#1}}
+\newcommand{\eulercon}{\constant{e}}
+
 \DeclareDocumentCommand{\comput}{ O{LABEL} O{1.00} O{2.00} m m}{
 \begin{scope}[scale=#3]
   \begin{scope}
@@ -94,10 +99,15 @@
 \draw ($0.5*(REGEX-LB)+0.5*(ORAKEL-LT)+(-2,0)$) node[rotate=90] {\Huge{\bf Chomsky hi\"erarchie (\S2-\S3)}};
 \draw [decorate,line width=3pt] ($(REGEX-LB)+(26,-0.5)$) -- ++(-26,0);
 \draw ($(REGEX-LB)+(13,-2)$) node {\Huge{\bf Beschrijven}};
-\draw [decorate,line width=3pt] ($(REGEX-RB)+(-27,-0.5)$) -- ($(REGEX-LB)+(27,-0.5)$);
-\draw ($0.5*(REGEX-LB)+0.5*(REGEX-RB)+(0,-2)$) node {\Huge{\bf Automaten}};
+\draw [decorate,line width=3pt] ($(REGEX-RB)+(-15,-0.5)$) -- ($(REGEX-LB)+(27,-0.5)$);
+\draw ($0.5*(REGEX-LB)+0.5*(REGEX-RB)+(6,-2)$) node {\Huge{\bf Automaten}};
 \draw [decorate,line width=3pt] ($(REGEX-RB)+(0,-0.5)$) -- ++(-10,0);
 \draw ($(REGEX-RB)+(-5,-2)$) node {\Huge{\bf Berekenbaarheid}};
+\draw [decorate,line width=3pt] ($(REGEX-RB)+(-11,-0.5)$) -- ++(-3,0);
+\draw ($(REGEX-RB)+(-12.5,-2)$) node{\Huge{\bf Complexiteit}};
+\foreach \c/\cmp in {REGEX/n,CTXFR/n^3,CTXSE/\eulercon^n,TURING/\infty,ORAKEL/\infty} {
+  \node[scale=4.00] (CC-\c) at ($(\c-RB)+(-12.5,0.5*\dyl)$) {\bigoh{\cmp}};
+}
 \end{pgfonlayer}
 \CatchFileDef{\tempa}{language.tex}{}
   \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
@@ -114,7 +124,7 @@
 \draw[<-,thick] (testlang-H) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
 \draw[<-,thick] (testlang-C) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
 \end{scope}
-\foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3},CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/0,Eq/2.00/0,Es/2.00/3,Regular/0.90/0,All/1.70/0},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/0,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {%
+\foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3}, CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1}, CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/1,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/0,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {
   \begin{scope}[shift={(\c-RT)},xshift=-7.5 cm,yshift=-2.5 cm]
   \setcounter{tmpA}{0}
   \setcounter{tmpB}{0}
