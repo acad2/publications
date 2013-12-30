@@ -96,8 +96,8 @@
 \draw ($(REGEX-LB)+(13,-2)$) node {\Huge{\bf Beschrijven}};
 \draw [decorate,line width=3pt] ($(REGEX-RB)+(-27,-0.5)$) -- ($(REGEX-LB)+(27,-0.5)$);
 \draw ($0.5*(REGEX-LB)+0.5*(REGEX-RB)+(0,-2)$) node {\Huge{\bf Automaten}};
-\draw [decorate,line width=3pt] ($(REGEX-RB)+(0,-0.5)$) -- ++(-26,0);
-\draw ($(REGEX-RB)+(-13,-2)$) node {\Huge{\bf Berekenbaarheid}};
+\draw [decorate,line width=3pt] ($(REGEX-RB)+(0,-0.5)$) -- ++(-10,0);
+\draw ($(REGEX-RB)+(-5,-2)$) node {\Huge{\bf Berekenbaarheid}};
 \end{pgfonlayer}
 \CatchFileDef{\tempa}{language.tex}{}
   \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
@@ -114,7 +114,7 @@
 \draw[<-,thick] (testlang-H) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
 \draw[<-,thick] (testlang-C) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
 \end{scope}
-\foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/2.00/3}} {%,CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/2.00/3}
+\foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3},CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/0,Eq/2.00/0,Es/2.00/3,Regular/0.90/0,All/1.70/0},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/0,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {%
   \begin{scope}[shift={(\c-RT)},xshift=-7.5 cm,yshift=-2.5 cm]
   \setcounter{tmpA}{0}
   \setcounter{tmpB}{0}
