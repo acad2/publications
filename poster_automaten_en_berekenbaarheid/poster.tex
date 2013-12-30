@@ -106,8 +106,10 @@
 \draw ($(REGEX-RB)+(-5,-2)$) node {\Huge{\bf Berekenbaarheid}};
 \draw [decorate,line width=3pt] ($(REGEX-RB)+(-11,-0.5)$) -- ++(-3,0);
 \draw ($(REGEX-RB)+(-12.5,-2)$) node{\Huge{\bf Complexiteit}};
-\foreach \c/\cmp in {REGEX/n,CTXFR/n^3,CTXSE/\eulercon^n,TURING/\infty,ORAKEL/\infty} {
+\foreach \c/\sb/\cmp/\toep in {REGEX/RE/n/{\item Extraheren van informatie\item Compilers\item Internetprotocollen\item Digitale elektronica},CTXFR/CFG/n^3/{\item Extraheren van informatie\item Compilers\item Natuurlijke taalverwerking},CTXSE/CSG/\eulercon^n/{\item Natuurlijke taalverwerking\item Webservers\item Gegevensbanken},TURING/TM/\infty/{\item Programmeertalen\item Tweede wereldoorlog},ORAKEL/O/\infty/{\item Filosofie\item Complexiteitstheorie}} {
   \node[scale=4.00] (CC-\c) at ($(\c-RB)+(-12.5,0.5*\dyl)$) {\bigoh{\cmp}};
+  \node[anchor=south] (CC-\c-t) at (CC-\c.north) {$s\in L_{\mbox{\small \sb}}$ wordt beslist in};
+  \node[anchor=north] (CC-\c-app) at (CC-\c.south) {\parbox{5 cm}{Toepassingen:\begin{itemize}\toep\end{itemize}}};
 }
 \end{pgfonlayer}
 \CatchFileDef{\tempa}{language.tex}{}
@@ -125,7 +127,7 @@
 \draw[<-,thick] (testlang-H) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
 \draw[<-,thick] (testlang-C) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
 \end{scope}
-\foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3}, CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1}, CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/1,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/0,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {
+\foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3}, CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1}, CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/1,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/1,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {
   \begin{scope}[shift={(\c-RT)},xshift=-7.5 cm,yshift=-2.5 cm]
   \setcounter{tmpA}{0}
   \setcounter{tmpB}{0}
