@@ -102,13 +102,7 @@ recogenum/TURING/55/1.5/10 cm/Stelling van Rice/Rice/{Voor elke niet-triviale ta
 tcalc/TURING/55/4.375/10 cm/Turing-berekenbare functie/Turing-berekenbaar/{Een functie $f$ is Turing-berekenbaar indien er een Turingmachine bestaat die bij input $s$ uiteindelijk stopt met $\fun{f}{s}$ op de band.},
 langrec/TURING/55/7.25/10 cm/Reductie van talen/$L_1\leq_mL_2$/{Een taal $L_1$ (over $\Sigma_1$) is reduceerbaar naar een taal $L_2$ (over $\Sigma_2$) indien er een afbeelding $\funsig{f}{\Sigma_1^{\star}}{\Sigma_2^{\star}}$ bestaat zodat $\fun{f}{L_1}\subseteq L_2$ en $\overline{\fun{f}{L_1}}\subseteq\overline{L_2}$ en $f$ Turing-berekenbaar is. We noteren dat door $L_1\leq_mL_2$.},
 buzbev/TURING/70/5.75/10 cm/Bezige bever/$\fun{\Sigma}{n}$/{de bezige bever is een totale functie $\funsig{\Sigma}{\NN}{\NN}$ die voor invoer $n$ het maximale aantal $1$'en uitschrijft voor een Turingmachine bij lege invoer die eindigt.},
-ora/ORAKEL/6.5/2.5/12 cm/Orakelmachine/$O^L$/{Een Orakelmachine is een tuple $\tupl{Q,\Sigma,\Gamma,\delta,q_s,q_a,q_r}$ waarbij:\begin{itemize}
- \item $Q$ een eindige verzameling toestanden is;
- \item $\Sigma$ een invoeralfabet dat niet $\#$ bevat;
- \item $\Gamma$ een tape alfabet met $\#\in\Gamma$ en $\Sigma\subsetneq\Gamma$;
- \item $q_s$ de start-toestand, $q_a$ de accepterende eindtoestand, $q_r\neq q_a$ de verwerpende eindtoestand.
- \item $\funsig{\delta}{Q\times\Gamma}{Q\times\Gamma\times\acc{L,S,R}}$ de totale transitiefunctie.
-\end{itemize}},
+ora/ORAKEL/6.5/2.5/12 cm/Orakelmachine/$O^L$/{Een Orakelmachine $O^L$ is een Turing-machine met een orakel voor de taal $L$. Men kan dit voorstellen als een Turingmachine met een extra band (de orakel-tape) en drie toestanden $q_o$, $q_{oa}$ en $q_{or}$. De Turingmachine raadpleegt het orakel door de string op de orakelband te schrijven en in toestand $q_o$ te gaan. Het orakel brengt wanneer de string tot $L$ behoort de machine in toestand $q_{oa}$ en anders in toestand $q_{or}$.},
 turrec/ORAKEL/55/7.25/10 cm/Turing-reductie van talen/$L_1\leq_TL_2$/{Een taal $L_1$ is Turingreduceerbaar naar taal $L_2$, indien $L_1$ beslisbaar is relatief ten opzichte van $L_2$, dit wil zeggen: er bestaat een orakelmachine $O^{L_2}$ die $L_1$ beslist. We schrijven $L_1\leq_TL_2$.},
 pcorp/OTHER/5.5/2.5/10 cm/Post Correspondence Problem/PCP/{Gegeven een set $S$ van tuples $\accl{\alpha,\beta}$ met $\alpha,\beta\in\Sigma^{\star}$ over een alfabet $\Sigma$. Bestaat er een sequentie elementen $s_0s_1\ldots s_n$, zodat de concatenatie van het eerste element van de tuples gelijk is aan de concatenatie van het tweede element van de tuples?},
 priem/OTHER/20/1.5/13 cm/Primitief recursieve functies/Primitief recursief/{Een primitief recursieve functie is inductief gedefinieerd als volgt:

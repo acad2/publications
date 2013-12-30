@@ -35,6 +35,7 @@
 \newcommand{\bigtheta}[1]{\ensuremath{\Theta\left(#1\right)}}
 \newcommand{\xlogx}[1]{\ensuremath{#1\log\left(#1\right)}}
 \newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcommand{\comput}{\filldraw[fill=red,rounded corners] (0,0) rectangle (1,1);}
 \newcommand{\defgroup}[7]{
 \begin{scope}[xshift=#1,yshift=#2]
 \filldraw[#6!40!backg,draw=black,very thick,rounded corners] (0.5*\dma,0.5*\dma) rectangle ++(#3-\dma,#4-\dma);\draw (0.5*\dma,#4-0.5*\dma) node[anchor=north west]{\Huge{\bf #5}};
@@ -61,10 +62,10 @@
 \def\dywu{220.0 mm};
 \def\dywh{183.3 mm};
 \node[scale=4] (TITLE) at (\mid,0) {\Huge{\textsc{Automaten en Berekenbaarheid}}};
-\node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{Inleiding tot}}};
+\node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{Samenvatting van}}};
 \node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{../SharedData/sedes.pdf}};
-\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{6 cm}{prof.~B.~Demoen\\Departement Computerwetenschappen\\KU Leuven}};
-\node[anchor=west] (AUTHOR2) at ($(AUTHOR.east)+(1 cm,0)$) {\parbox{6 cm}{W.~Van~Onsem\\Departement Computerwetenschappen\\KU Leuven}};
+%\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{8 cm}{prof.~B.~Demoen\\Departement Computerwetenschappen\\KU Leuven}};
+\node[anchor=west] (AUTHOR2) at ($(SEDES.east)+(1 cm,0)$) {\parbox{8 cm}{W.~Van~Onsem\\Declaratieve Talen en Artifici\"ele Intelligentie (DTAI)\\Departement Computerwetenschappen\\KU Leuven}};
 \begin{scope}[yshift=-3*\dylm]
 \begin{pgfonlayer}{background}
 \defgroup{0}{-\dylma}{\dyw}{\dyl}{Orakel (\S3.17)}{orange}{ORAKEL}
@@ -93,7 +94,9 @@
 \begin{pgfonlayer}{classes}
 \node[fit=(CCT\l) (CCD\l),draw=black,rectangle,dotted,rounded corners,fill=white] (CC\l) {};
 \end{pgfonlayer}}
-
+\end{scope}
+\begin{scope}[yshift=-0.5*\mid,xshift=\dywb]
+\comput{}
 \end{scope}
 \end{tikzpicture}
 \end{center}
