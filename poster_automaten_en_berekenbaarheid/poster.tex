@@ -66,7 +66,7 @@
 }
 
 \newcommand{\hogrp}[3]{
-\draw [decorate,line width=3pt] ($(COL-#2)+(-0.5,-0.5)$) -- ($(COL-#1)+(0.5,-0.5)$);
+\draw [decorate,line width=3pt] ($(COL-#2)+(-0.25,-0.5)$) -- ($(COL-#1)+(0.25,-0.5)$);
 \draw ($0.5*(COL-#2)+0.5*(COL-#1)+(0,-2)$) node {\Huge{\bf #3}};
 }
 
@@ -108,7 +108,7 @@
 \foreach \n/\x in {A/0.0,B/26.5} {
   \coordinate (COL-\n) at ($(REGEX-LB)+(\x,0)$);
 }
-\foreach \n/\x in {C/14.5,D/10.5,E/0.0} {
+\foreach \n/\x in {C/15.25,D/9.75,E/0.0} {
   \coordinate (COL-\n) at ($(REGEX-RB)-(\x,0)$);
 }
 
@@ -119,13 +119,6 @@
 \hogrp{B}{C}{Automaten}
 \hogrp{C}{D}{Complexiteit}
 \hogrp{D}{E}{Berekenbaarheid}
-
-% \draw [decorate,line width=3pt] ($(REGEX-RB)+(-15,-0.5)$) -- ($(REGEX-LB)+(27,-0.5)$);
-% \draw ($0.5*(REGEX-LB)+0.5*(REGEX-RB)+(6,-2)$) node {\Huge{\bf Automaten}};
-% \draw [decorate,line width=3pt] ($(REGEX-RB)+(0,-0.5)$) -- ++(-10,0);
-% \draw ($(REGEX-RB)+(-5,-2)$) node {\Huge{\bf Berekenbaarheid}};
-% \draw [decorate,line width=3pt] ($(REGEX-RB)+(-11,-0.5)$) -- ++(-3,0);
-% \draw ($(REGEX-RB)+(-12.5,-2)$) node{\Huge{\bf Complexiteit}};
 
 \foreach \n in {B,C,D} {
   \draw[dashed,gray,thick] (COL-\n) -- (ORAKEL-LT -| COL-\n);
