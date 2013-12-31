@@ -20,27 +20,27 @@ rela/REGEX/18/1.5/14 cm/Een reguliere expressie bepaalt een taal/$\mbox{RE}\sim 
  \item $\brak{E_1}^*$ waarbij $E_1$ een reguliere expressie is over $\Sigma$, dan is $L_E=L_{E_1}^*$.
 \end{itemize}},
 regl/REGEX/5.5/7.75/10 cm/Reguliere taal/$\mbox{RegLan}$/{Een taal die door een reguliere expressie bepaald wordt is een reguliere taal. De verzameling van reguliere talen duiden we aan met $\mbox{RegLan}$.},
-nfa/REGEX/35/1.2/10 cm/Niet-deterministische eindige toestandsautomaat/NFA/{Een niet-deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
+nfa/REGEX/32/1.2/10 cm/Niet-deterministische eindige toestandsautomaat/NFA/{Een niet-deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden is;
  \item $\Sigma$ een eindig alfabet;
  \item $\delta:Q\times\Sigma_{\epsilon}\rightarrow\powset{Q}$ de overgangsfunctie van de automaat;
  \item $q_s\in Q$ de starttoestand en een element van $Q$;
  \item $F\subseteq Q$ de verzameling eindtoestanden.
 \end{itemize}},
-nfaeq/REGEX/43.5/1.2/6 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
-nfastr/REGEX/35/6.15/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}}$/{Een string $s$ wordt aanvaard door een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan geschreven worden als $a_1a_2\ldots a_n$ met $a_i\in\Sigma_{\epsilon}$, en er een rij toestanden $t_1t_2\ldots,t_{n+1}$ bestaat zodat:\begin{itemize}
+nfaeq/REGEX/40.5/1.2/6 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
+nfastr/REGEX/32/6.15/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}}$/{Een string $s$ wordt aanvaard door een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan geschreven worden als $a_1a_2\ldots a_n$ met $a_i\in\Sigma_{\epsilon}$, en er een rij toestanden $t_1t_2\ldots,t_{n+1}$ bestaat zodat:\begin{itemize}
  \item $t_1=q_s$;
  \item $t_{i+1}\in\fun{\delta}{t_i,a_i}$;
  \item $t_{n+1}\in F$.
 \end{itemize}},
-gnfa/REGEX/55/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een gegeneraliseerde niet-deterministische eindige toestandsautomaat is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
+gnfa/REGEX/49/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een gegeneraliseerde niet-deterministische eindige toestandsautomaat is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
  \item slechts \'e\'en eindtoestand $F=\accl{q_f}$ zodat $q_f\neq q_s$;
  \item de bogen bevatten een reguliere expressie als label;
  \item $\forall q_i,q_j\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_s,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_f$.
 \end{itemize}},
-redgnfa/REGEX/55/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:
+redgnfa/REGEX/49/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:
 \begin{tikzpicture}[[auto,node distance=1.4cm,semithick]
 \begin{scope}[xshift=-2.5cm]
 \node[state] (A) {$a$};
@@ -58,13 +58,14 @@ redgnfa/REGEX/55/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setmi
 \path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);
 \end{scope}
 \end{tikzpicture}},
-dfa/REGEX/66/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
+dfa/REGEX/59.5/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden is;
  \item $\Sigma$ een eindig alfabet;
  \item $\delta:Q\times\Sigma\rightarrow Q$ de overgangsfunctie van de automaat;
  \item $q_s\in Q$ de starttoestand en een element van $Q$;
  \item $F\subseteq Q$ de verzameling eindtoestanden.
 \end{itemize}},
+nfatodfa/REGEX/59.5/6.2/10 cm/NFA naar DFA/$\mbox{NFA}\rightarrow\mbox{DFA}$/{},
 cfgr/CTXFR/5.5/2.5/10 cm/Contextvrije grammatica over een alfabet $\Sigma$/CFG/{$\tupl{V,\Sigma,R,S}$ is een contextvrije grammatica over $\Sigma$ indien:\begin{itemize}
  \item $V$ een eindige verzameling niet-eindsymbolen is;
  \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
