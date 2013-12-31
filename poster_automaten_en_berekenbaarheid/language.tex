@@ -40,24 +40,7 @@ gnfa/REGEX/49/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestands
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_s,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_f$.
 \end{itemize}},
-redgnfa/REGEX/49/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:
-\begin{tikzpicture}[[auto,node distance=1.4cm,semithick]
-\begin{scope}[xshift=-2.5cm]
-\node[state] (A) {$a$};
-\node[state] (X)[right of=A] {$x$};
-\node[state] (B)[right of=X] {$b$};
-\path[->] (A) edge              node {$e_1$} (X)
-              edge [bend right] node[below] {$e_4$} (B)
-          (X) edge [loop above,looseness=3] node {$e_2$} (X)
-          (X) edge              node {$e_3$} (B);
-\end{scope}
-\draw (1.4,-0.25) node {$\Rightarrow$};
-\begin{scope}[xshift=2.5cm]
-\node[state] (A) at (0,0) {$a$};
-\node[state] (B) at (2.8,0) {$b$};
-\path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);
-\end{scope}
-\end{tikzpicture}},
+redgnfa/REGEX/49/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:\begin{tikzpicture}[[auto,node distance=1.4cm,semithick]\begin{scope}[xshift=-2.5cm]\node[state] (A) {$a$};\node[state] (X)[right of=A] {$x$};\node[state] (B)[right of=X] {$b$};\path[->] (A) edge node {$e_1$} (X) edge [bend right] node[below] {$e_4$} (B) (X) edge [loop above,looseness=3] node {$e_2$} (X) (X) edge node {$e_3$} (B);\end{scope}\draw (1.4,-0.25) node {$\Rightarrow$};\begin{scope}[xshift=2.5cm]\node[state] (A) at (0,0) {$a$};\node[state] (B) at (2.8,0) {$b$};\path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);\end{scope}\end{tikzpicture}},
 dfa/REGEX/59.5/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden is;
  \item $\Sigma$ een eindig alfabet;
@@ -65,9 +48,8 @@ dfa/REGEX/59.5/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een det
  \item $q_s\in Q$ de starttoestand en een element van $Q$;
  \item $F\subseteq Q$ de verzameling eindtoestanden.
 \end{itemize}},
-nfatodfa/REGEX/59.5/6.2/10 cm/NFA naar DFA/$\mbox{NFA}\rightarrow\mbox{DFA}$/{
-
-},
+nfatodfa/REGEX/59.5/6.2/10 cm/NFA naar DFA/$\mbox{NFA}\rightarrow\mbox{DFA}$/{Volgende vergelijkingen geven voor elke NFA $\tupl{Q_n,\Sigma,\delta_n,q_{s,n},F_n}$ een DFA $\tupl{Q_d,\Sigma,\delta_d,q_{s,d},F_d}$ die dezelfde taal bepaalt:\[\begin{array}{rlrl}Q_d=&\powset{Q_n}&F_d=&\accl{q|q\in Q_d\wedge Q\cap F_n\neq\emptyset}\\q_{s,d}=&\fun{\delta_n^{\star}}{q_{s,n},\epsilon}&\fun{\delta_d}{Q,a}=&\bigcup_{q\in Q}\fun{\delta_n^{\star}}{\fun{\delta_n}{q,a},\epsilon}\end{array}\]},
+feq/REGEX/70.5/1.5/10 cm/{$f$-gelijk}/$f^=$/{Twee toestanden $q_1,q_2\in Q$ in een deterministische eindige toestandsautomaat zijn $f$-gelijk indien:\[\forall w\in\Sigma^{\star}:\fun{\delta^{\star}}{q_1,w}\in F\leftrightarrow\fun{\delta^{\star}}{q_2,w}\in F\]Twee toestanden zijn $f$-verschillend indien ze niet $f$-gelijk zijn.},
 cfgr/CTXFR/5.5/2.5/10 cm/Contextvrije grammatica over een alfabet $\Sigma$/CFG/{$\tupl{V,\Sigma,R,S}$ is een contextvrije grammatica over $\Sigma$ indien:\begin{itemize}
  \item $V$ een eindige verzameling niet-eindsymbolen is;
  \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
