@@ -13,7 +13,7 @@ the poster requires some packages).
 
 It is possible that the poster cannot be generated on a Windows system since that operating system uses `\r\n` to denote a newline.
 
-`make upload` is only used by the author to upload the poster to a webserver.
+`make upload` is only used by the author to upload the poster to a webserver (and can only be uploaded using private ssh-keys).
 
 Download and other links
 ------------------------
