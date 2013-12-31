@@ -58,6 +58,13 @@ redgnfa/REGEX/55/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setmi
 \path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);
 \end{scope}
 \end{tikzpicture}},
+dfa/REGEX/66/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
+ \item $Q$ een eindige verzameling toestanden is;
+ \item $\Sigma$ een eindig alfabet;
+ \item $\delta:Q\times\Sigma\rightarrow Q$ de overgangsfunctie van de automaat;
+ \item $q_s\in Q$ de starttoestand en een element van $Q$;
+ \item $F\subseteq Q$ de verzameling eindtoestanden.
+\end{itemize}},
 cfgr/CTXFR/5.5/2.5/10 cm/Contextvrije grammatica over een alfabet $\Sigma$/CFG/{$\tupl{V,\Sigma,R,S}$ is een contextvrije grammatica over $\Sigma$ indien:\begin{itemize}
  \item $V$ een eindige verzameling niet-eindsymbolen is;
  \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
@@ -124,7 +131,7 @@ buzbev/TURING/70/5.75/10 cm/Bezige bever/$\fun{\Sigma}{n}$/{de bezige bever is e
 ora/ORAKEL/6.5/2.5/12 cm/Orakelmachine/$O^L$/{Een Orakelmachine $O^L$ is een Turing-machine met een orakel voor de taal $L$. Men kan dit voorstellen als een Turingmachine met een extra band (de orakel-tape) en drie toestanden $q_o$, $q_{oa}$ en $q_{or}$. De Turingmachine raadpleegt het orakel door de string op de orakelband te schrijven en in toestand $q_o$ te gaan. Het orakel brengt wanneer de string tot $L$ behoort de machine in toestand $q_{oa}$ en anders in toestand $q_{or}$.},
 turrec/ORAKEL/55/7.25/10 cm/Turing-reductie van talen/$L_1\leq_TL_2$/{Een taal $L_1$ is Turingreduceerbaar naar taal $L_2$, indien $L_1$ beslisbaar is relatief ten opzichte van $L_2$, dit wil zeggen: er bestaat een orakelmachine $O^{L_2}$ die $L_1$ beslist. We schrijven $L_1\leq_TL_2$.},
 pcorp/OTHER/5.5/2.5/10 cm/Post Correspondence Problem/PCP/{Gegeven een set $S$ van tuples $\accl{\alpha,\beta}$ met $\alpha,\beta\in\Sigma^{\star}$ over een alfabet $\Sigma$. Bestaat er een sequentie elementen $s_0s_1\ldots s_n$, zodat de concatenatie van het eerste element van de tuples gelijk is aan de concatenatie van het tweede element van de tuples?},
-priem/OTHER/20/1.5/13 cm/Primitief recursieve functies/Primitief recursief/{Een primitief recursieve functie is inductief gedefinieerd als volgt:
+priem/OTHER/17.75/1.5/13 cm/Primitief recursieve functies/Primitief recursief/{Een primitief recursieve functie is inductief gedefinieerd als volgt:
 \begin{itemize}
  \item De nulfunctie: $\funsig{\mbox{nul}}{\NN}{\NN}:x\mapsto 0$;
  \item De successorfunctie: $\funsig{\mbox{succ}}{\NN}{\NN}:x\mapsto x+1$;
@@ -132,9 +139,9 @@ priem/OTHER/20/1.5/13 cm/Primitief recursieve functies/Primitief recursief/{Een 
  \item De compositiefunctie: $\funsig{\funmf{Cn}{f,g_1,g_2,\ldots,g_m}}{\NN^k}{\NN}:\vec{x}\mapsto\fun{f}{\fun{g_1}{\vec{x}},\fun{g_2}{\vec{x}},\ldots,\fun{g_m}{\vec{x}}}$ met $\funsig{f}{\NN^m}{\NN}$ en $\funsig{g_i}{\NN^k}{\NN}$ primitieve functies;
  \item De primitieve recursie: \[\funsig{\funmf{Pr}{f,g}}{\NN^k}{\NN}:\tupl{\vec{x},y}\mapsto\acclguard{\fun{f}{\vec{x}}&\mbox{\bf if } y=0\\\fun{g}{\vec{x},y-1,\fun{\funmf{Pr}{f,g}}{\vec{x},y-1}}&\mbox{\bf otherwise}}\] met $\funsig{f}{\NN^k}{\NN}$ en $\funsig{g}{\NN^{k+2}}{\NN}$ primitieve functies;
 \end{itemize}},
-ack/OTHER/33/1.5/11 cm/Ackermann-functie/Ack/{Een functie die niet kan worden voorgesteld aan de hand van primitieve recursie is de Ackermann-functie:
+ack/OTHER/30.5/1.5/11 cm/Ackermann-functie/Ack/{Een functie die niet kan worden voorgesteld aan de hand van primitieve recursie is de Ackermann-functie:
 \[\funsig{\mbox{Ack}}{\NN^2}{\NN}:\tupl{x,y}\mapsto\acclguard{y+1&\mbox{\bf if } x=0\\\funm{Ack}{x-1,1}&\mbox{\bf if } y=0\\\funm{Ack}{x-1,\funm{Ack}{x,y-1}}&\mbox{\bf otherwise}}\]},
-mu/OTHER/33/5.75/11 cm/Recursieve functies/$\mu$-recursief/{Een $\mu$ recursieve functie is een uitbreiding op primitief recursieve functies met volgende de onbegrensde minimalisatie: \[\funsig{\funmf{Mn}{f}}{\NN^k}{\NN}:\vec{x}\mapsto\acclguard{y&\mbox{\bf if }\fun{f}{\vec{x},y}=0\wedge\forall z<y:\fun{f}{\vec{x},z}\neq 0\\\mbox{\bf undef}&\mbox{\bf otherwise}}\] met $\funsig{f}{\NN^{k+1}}{\NN}$ een $\mu$-recursieve functies.},
+mu/OTHER/30.5/5.75/11 cm/Recursieve functies/$\mu$-recursief/{Een $\mu$ recursieve functie is een uitbreiding op primitief recursieve functies met volgende de onbegrensde minimalisatie: \[\funsig{\funmf{Mn}{f}}{\NN^k}{\NN}:\vec{x}\mapsto\acclguard{y&\mbox{\bf if }\fun{f}{\vec{x},y}=0\wedge\forall z<y:\fun{f}{\vec{x},z}\neq 0\\\mbox{\bf undef}&\mbox{\bf otherwise}}\] met $\funsig{f}{\NN^{k+1}}{\NN}$ een $\mu$-recursieve functies.},
 equivla/LAMBDA/3/2.5/5 cm/Equivalente termen/$A\sim B$/{Twee termen $A$ en $B$ zijn equivalent indien er een sequentie van herschrijfregels bestaat zodat $A\rightarrow\ldots\rightarrow X$ en $B\rightarrow\ldots\rightarrow X$.},
 curry/LAMBDA/9/2.5/5 cm/Currying/$f\ x$/{$f\ x$ lezen we als $f$ toegepast op argument $x$. Elke functie in $\lambda$-calculus heeft maar \'e\'en argument (maar resulteert soms in een nieuwe functie).},
 cra/LAMBDA/4.5/6.5/8 cm/Church-Rosser I/CR-1/{Gegeven twee expressies $E_1$ en $E_2$. Indien $E_1\leftrightarrow^{\star}E_2$, dan bestaat er een expressie $E$ zodat $E_1\rightarrow^{\star}E$ en $E_2\rightarrow^{\star}E$.o Bijgevolg kan geen expressie geconverteerd worden naar twee verschillende normaalvormen.},
