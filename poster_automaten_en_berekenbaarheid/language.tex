@@ -40,6 +40,24 @@ gnfa/REGEX/55/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestands
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_s,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_f$.
 \end{itemize}},
+redgnfa/REGEX/55/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:
+\begin{tikzpicture}[[auto,node distance=1.4cm,semithick]
+\begin{scope}[xshift=-2.5cm]
+\node[state] (A) {$a$};
+\node[state] (X)[right of=A] {$x$};
+\node[state] (B)[right of=X] {$b$};
+\path[->] (A) edge              node {$e_1$} (X)
+              edge [bend right] node[below] {$e_4$} (B)
+          (X) edge [loop above,looseness=3] node {$e_2$} (X)
+          (X) edge              node {$e_3$} (B);
+\end{scope}
+\draw (1.4,-0.25) node {$\Rightarrow$};
+\begin{scope}[xshift=2.5cm]
+\node[state] (A) at (0,0) {$a$};
+\node[state] (B) at (2.8,0) {$b$};
+\path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);
+\end{scope}
+\end{tikzpicture}},
 cfgr/CTXFR/5.5/2.5/10 cm/Contextvrije grammatica over een alfabet $\Sigma$/CFG/{$\tupl{V,\Sigma,R,S}$ is een contextvrije grammatica over $\Sigma$ indien:\begin{itemize}
  \item $V$ een eindige verzameling niet-eindsymbolen is;
  \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
