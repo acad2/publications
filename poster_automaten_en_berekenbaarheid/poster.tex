@@ -96,12 +96,7 @@
 \end{pgfonlayer}
 \CatchFileDef{\tempa}{language.tex}{}
   \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
-  \tempb {
-	\begin{scope}[shift={(\o)}]
-\node[anchor=north] (CCD\l) at (\x,-\y) {\begin{varwidth}{\twid}\textbf{\xa}: \xc\end{varwidth}};\node[anchor=north,anchor=south] (CCT\l) at (CCD\l.north) [scale=2]{\xb};\draw(CCT\l.south west) -- (CCT\l.south east);\end{scope}
-\begin{pgfonlayer}{classes}
-\node[fit=(CCT\l) (CCD\l),draw=black,rectangle,dotted,rounded corners,fill=white] (CC\l) {};
-\end{pgfonlayer}}
+  \tempb {\titleminibox[(\o)][\l][\x][\y][\twid]{\xa}{\xb}{\xc}}
 \end{scope}
 \begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
 \comput[testlang][2.00]{$L$}{2}
