@@ -11,10 +11,6 @@
 \definecolor{blueback}{rgb}{0.9,0.88,0.95}
 \definecolor{orangeback}{rgb}{1.0,0.93,0.85}
 \pagecolor{backg}
-\usetikzlibrary{fit,patterns,snakes,calc,decorations,decorations.text,positioning,decorations.pathreplacing,matrix,arrows,automata}
-\pgfdeclarelayer{background}
-\pgfdeclarelayer{classes}
-\pgfsetlayers{background,classes,main}
 \usepackage{catchfile,varwidth}
 \newcommand{\ssfunc}[1]{\ensuremath{#1:\left\{0,1\right\}^*\rightarrow\left\{0,1\right\}^*}}
 \newcommand{\NNfunc}[1]{\ensuremath{#1:\NN\rightarrow\NN}}
@@ -34,23 +30,11 @@
 \newcommand{\eulercon}{\constant{e}}
 
 \DeclareDocumentCommand{\comput}{ O{LABEL} O{1.00} O{2.00} m m}{
-\begin{scope}[scale=#3]
-  \begin{scope}
-    \clip[rounded corners=2 mm] (-0.5,-0.5) rectangle (0.5,0.5);
-    \ifthenelse{#5>1}{\fill[fill=green!60,rounded corners] (-0.5,-0.5) |- (0.5,0.5) -- cycle;}{\fill[fill=red!60,rounded corners] (-0.5,-0.5) |- (0.5,0.5) -- cycle;}
-    \ifthenelse{\isodd{#5}}{\fill[fill=green!60,rounded corners] (-0.5,-0.5) -| (0.5,0.5) -- cycle;}{\fill[fill=red!60,rounded corners] (-0.5,-0.5) -| (0.5,0.5) -- cycle;}
-    \draw[very thick,gray] (-0.5,-0.5) -- (0.5,0.5);
-    \node[scale=#2] (#1-L) at (0,0) {#4};
-    \node (#1-H) at (-0.25,0.25) {};
-    \node (#1-C) at (0.25,-0.25) {};
-  \end{scope}
-  \draw[rounded corners=2 mm,gray,very thick] (-0.5,-0.5) rectangle (0.5,0.5);
-\end{scope}}
-
-\newcommand{\hogrp}[3]{
-\draw [decorate,line width=3pt] ($(COL-#2)+(-0.25,-0.5)$) -- ($(COL-#1)+(0.25,-0.5)$);
-\draw ($0.5*(COL-#2)+0.5*(COL-#1)+(0,-2)$) node {\Huge{\bf #3}};
-}
+\def\cola{red};
+\def\colb{red};
+\ifthenelse{#5>1}{\def\cola{green};}{}
+\ifthenelse{\isodd{#5}}{\def\colb{green};}{}
+\computmul[#1][#2][#3]{#4}{\cola,\colb}}
 
 \newcounter{tmpA}
 \newcounter{tmpB}
@@ -94,13 +78,11 @@
   \coordinate (COL-\n) at ($(REGEX-RB)-(\x,0)$);
 }
 
-\draw [decorate,line width=3pt] ($(REGEX-LB)+(-0.5,0)$) -- ($(ORAKEL-LT)+(-0.5,0)$);
-\draw ($0.5*(REGEX-LB)+0.5*(ORAKEL-LT)+(-2,0)$) node[rotate=90] {\Huge{\bf Chomsky hi\"erarchie (\S2-\S3)}};
-
-\hogrp{A}{B}{Beschrijven}
-\hogrp{B}{C}{Automaten}
-\hogrp{C}{D}{Complexiteit}
-\hogrp{D}{E}{Berekenbaarheid}
+\grpvelef{ORAKEL-T}{REGEX-B}{Chomsky hi\"erarchie (\S2-\S3)}
+\grpholow{A}{B}{Beschrijven}
+\grpholow{B}{C}{Automaten}
+\grpholow{C}{D}{Complexiteit}
+\grpholow{D}{E}{Berekenbaarheid}
 
 \foreach \n in {B,C,D} {
   \draw[dashed,gray,thick] (COL-\n) -- (ORAKEL-LT -| COL-\n);
@@ -124,8 +106,8 @@
 \begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
 \comput[testlang][2.00]{$L$}{2}
 \draw[<-,thick] (testlang-L) -- ++(-1.25,0) node[anchor=east]{Taal};
-\draw[<-,thick] (testlang-H) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
-\draw[<-,thick] (testlang-C) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
+\draw[<-,thick] (testlang-S1) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
+\draw[<-,thick] (testlang-S2) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
 \end{scope}
 \foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3}, CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1}, CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/1,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/1,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {
   \begin{scope}[shift={(\c-RT)},xshift=-7.5 cm,yshift=-2.5 cm]

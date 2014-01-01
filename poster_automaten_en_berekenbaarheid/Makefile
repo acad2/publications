@@ -1,4 +1,4 @@
-poster.pdf : *.tex Makefile
+poster.pdf : *.tex Makefile ../SharedData/*.sty
 	qrencode -o "bar.eps" -l H -t EPS "http://goo.gl/csd51c"
 	pdflatex --shell-escape --interaction nonstopmode poster.tex >/dev/null 2>/dev/null
 	make clean
