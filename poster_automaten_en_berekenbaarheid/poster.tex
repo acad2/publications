@@ -13,7 +13,7 @@
 \pagecolor{backg}
 \usepackage{catchfile,varwidth}
 \newcommand{\ssfunc}[1]{\ensuremath{#1:\left\{0,1\right\}^*\rightarrow\left\{0,1\right\}^*}}
-\newcommand{\NNfunc}[1]{\ensuremath{#1:\NN\rightarrow\NN}}
+\newcommand{\NNfunc}[1]{\ensuremath{#1:\NNN\rightarrow\NNN}}
 \newcommand{\slang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^*}}
 \newcommand{\nlang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^n}}
 \newcommand{\sstri}[1]{\ensuremath{#1\in\left\{0,1\right\}^*}}
@@ -26,8 +26,10 @@
 \newcommand{\red}[1]{\ensuremath{\leq_{#1}}}
 \newcommand{\xlogx}[1]{\ensuremath{#1\log\left(#1\right)}}
 
-\newcommand{\constant}[1]{\mathrm{#1}}
-\newcommand{\eulercon}{\constant{e}}
+\newcommand{\constant}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\eulercon}[0]{\constant{e}}
+\newcommand{\mnrel}[0]{\ensuremath{\sim_{\mbox{\small{mn}}}}}
+\newcommand{\langrel}[0]{\ensuremath{\sim_{L}}}
 
 \DeclareDocumentCommand{\comput}{ O{LABEL} O{1.00} O{2.00} m m}{
 \def\cola{red};
@@ -97,6 +99,9 @@
 \CatchFileDef{\tempa}{language.tex}{}
   \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
   \tempb {\titleminibox[(\o)][\l][\x][\y][\twid]{\xa}{\xb}{\xc}}
+
+\input{grps.tex}
+
 \end{scope}
 \begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
 \comput[testlang][2.00]{$L$}{2}
