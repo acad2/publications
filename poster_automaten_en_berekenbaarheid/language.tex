@@ -52,6 +52,12 @@ nfatodfa/REGEX/59.5/6.2/10 cm/NFA naar DFA/$\mbox{NFA}\rightarrow\mbox{DFA}$/{Vo
 feq/REGEX/69/1.5/7 cm/{$f$-gelijk}/$f^=$/{Twee toestanden $q_1,q_2\in Q$ in een DFA zijn $f$-gelijk indien:\[\forall w\in\Sigma^{\star}:\fun{\delta^{\star}}{q_1,w}\in F\leftrightarrow\fun{\delta^{\star}}{q_2,w}\in F\]Twee toestanden zijn $f$-verschillend indien ze niet $f$-gelijk zijn.},
 mindfa/REGEX/69/6/7 cm/{Minimale DFA}/Min DFA/{Gegeven een DFA zonder onbereikbare toestanden en waarbij elke twee verschillende toestanden, $f$-verschillend zijn, hiervoor bestaat er geen DFA met strikt minder toestanden die dezelfde taal bepaalt.},
 isodfa/REGEX/77.25/1.5/8 cm/Isomorfe DFA/{$\mbox{DFA}\cong\mbox{DFA}$}/{Twee DFA's $\tupl{Q_1,\Sigma,\delta_1,q_{s,1},F_1}$ en $\tupl{Q_2,\Sigma,\delta_2,q_{s,2},F_2}$ zijn isomorf indien er een bijectie $\funsig{b}{Q_1}{Q_2}$ bestaat zodat:\begin{itemize}\item $\fun{b}{F_1}=F_2$;\item $\fun{b}{q_{s,1}}=q_{s,2}$;\item $\forall q\in Q_1:\forall a\in\Sigma:\fun{b}{\fun{\delta_1}{q,a}}=\fun{\delta_2}{\fun{b}{q},a}$\end{itemize}},
+linreglan/REGEX/77.25/5/8 cm/Pompend lemma voor RegLan/$L\in\mbox{RegLan}$/{Voor een reguliere taal $L$ bestaat een pomplengte $d$ zodat elke string $s\in L$ met $\abs{s}\geq d$ kan opgedeeld worden in $s=xyz$ met $x,y,z\in\Sigma^{\star}$ zodat:
+\begin{itemize}
+ \item $\forall i\geq 0:xy^iz\in L$;
+ \item $\abs{y}>0$;
+ \item $\abs{xy}\leq d$.
+\end{itemize}},
 finer/REGEX/84.25/5.75/4 cm/Fijnere partitie/{$\calP\leq\calP$}/{Een partitie $\calP_1$ is fijner dan $P_2$ indien elk element van $\calP_1$ vervat zit in een element van $\calP_2$.},
 mn/REGEX/87.75/2/11 cm/Myhill-Nerode relatie/$\mnrel$/{Een Myhill-Nerode relatie over een taal $L$ is een equivalentie-relatie $\mnrel$ die aan volgende eigenschappen voldoet:\begin{itemize}\item $\forall x,y\in\Sigma^{\star},a\in\Sigma:x\mnrel y\rightarrow xa\mnrel ya$;\item $\mnrel\leq\langrel$;\item $\mnrel$ heeft een eindig aantal equivalentieklassen.\end{itemize}},
 mneqdfa/REGEX/90.125/5.75/6.25 cm/Myhill-Nerode relaties tegenover eindige toestandsautomaten/$DFA\equiv\mnrel$/{De overgangen van DFA naar de NM relatie, en van de MN relatie naar een DFA zijn elkaars inversen -- op isomorfisme na.},
@@ -76,18 +82,9 @@ pda/CTXFR/34/1.2/12 cm/Push-down automaat/PDA/{Een push-down automaat is een $5$
  \item $q_s\in Q$ de starttoestand en een element van $Q$;
  \item $F\subseteq Q$ de verzameling eindtoestanden.
 \end{itemize}},
-pdastr/CTXFR/34/6.15/12 cm/String aanvaard door een PDA/$s\in L_{\mbox{\tiny PDA}}$/{Een string $s$ wordt aanvaard door een PDA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan worden opgesplitst in
-delen $w_i,i=1\ldots m$ ($w_i\in\Sigma$), er toestanden $q_j,j=0\ldots m$ ($q_j\in Q$) zijn, en stapels $\mbox{stapel}_k,k=0\ldots m$ ($\mbox{stapel}_k\in\Gamma^{\star}$) zodat:\begin{itemize}
- \item $\mbox{stapel}_0=\epsilon\wedge q_0=q_s\wedge q_m\in F$;
- \item $\tupl{q_{i+1},y}\in\fun{\delta}{q_i,w_{i+1},x}$ waarbij $x,y\in\Gamma_{\epsilon}$ en $\mbox{stapel}_i=xt$, $\mbox{stapel}_{i+1}=yt$ met $t\in\Gamma^{\star}$.
-\end{itemize}},
+pdastr/CTXFR/34/6.15/12 cm/String aanvaard door een PDA/$s\in L_{\mbox{\tiny PDA}}$/{Een string $s$ wordt aanvaard door een PDA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan worden opgesplitst in delen $w_i,i=1\ldots m$ ($w_i\in\Sigma$), er toestanden $q_j,j=0\ldots m$ ($q_j\in Q$) zijn, en stapels $\mbox{stapel}_k,k=0\ldots m$ ($\mbox{stapel}_k\in\Gamma^{\star}$) zodat:\begin{itemize}\item $\mbox{stapel}_0=\epsilon\wedge q_0=q_s\wedge q_m\in F$;\item $\tupl{q_{i+1},y}\in\fun{\delta}{q_i,w_{i+1},x}$ waarbij $x,y\in\Gamma_{\epsilon}$ en $\mbox{stapel}_i=xt$, $\mbox{stapel}_{i+1}=yt$ met $t\in\Gamma^{\star}$.\end{itemize}},
 pdaeqcfg/CTXFR/43.5/1.2/6 cm/Equivalentie van CFG en PDA/$\mbox{CFG}\equiv\mbox{PDA}$/{Elke push-down automaat bepaalt een contextvrije taal en elke contextvrije taal wordt bepaald door een push-down automaat.},
-lincfl/CTXFR/46/4.7/10 cm/Pompend lemma voor contextvrije talen/$L\in\mbox{CFL}$/{Voor een contextvrije taal $L$ bestaat een getal $d$ (de pomplengte) zodat elke string $s\in L$ met lengte minstens $d$ kan opgedeeld worden in $5$ stukken $u,v,x,y,z\in\Sigma^{\star}$ zodat $s=uvxyz$ en:
-\begin{enumerate}
- \item $\forall i\geq 0:uv^ixy^iz\in L$;
- \item $\abs{vy}>0$;
- \item $\abs{vxy}\leq d$.
-\end{enumerate}},
+lincfl/CTXFR/46/4.7/10 cm/Pompend lemma voor contextvrije talen/$L\in\mbox{CFL}$/{Voor een contextvrije taal $L$ bestaat een getal $d$ (de pomplengte) zodat elke string $s\in L$ met lengte minstens $d$ kan opgedeeld worden in $5$ stukken $u,v,x,y,z\in\Sigma^{\star}$ zodat $s=uvxyz$ en:\begin{itemize}\item $\forall i\geq 0:uv^ixy^iz\in L$;\item $\abs{vy}>0$;\item $\abs{vxy}\leq d$.\end{itemize}},
 csgr/CTXSE/5.5/2.5/10 cm/Context-sensitieve grammatica over een alfabet $\Sigma$/CSG/{Een tuple $\tupl{V,\Sigma,R,S}$ is een context-sensitieve grammatica over $\Sigma$ indien:\begin{itemize}
  \item $V$ een eindige verzameling niet-eindsymbolen is;
  \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;

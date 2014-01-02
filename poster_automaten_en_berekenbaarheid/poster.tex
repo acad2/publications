@@ -3,7 +3,8 @@
 \usepackage[dutch]{babel}
 \usepackage{../SharedData/posters}
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
-\usepackage{../SharedData/brackets}
+\usepackage{../SharedData/brackets,../SharedData/Haskelllogo}
+\usepackage{multicol}
 \usepackage[pdftitle={Poster Automaten en Berekenbaarheid},pdfauthor={Willem Van Onsem},pdfsubject={Berekenbaarheid},pdfkeywords={Turing, Reguliere Expressie, Automaten, Berekenbaarheid}]{hyperref}
 \definecolor{backg}{rgb}{0.99,0.96,0.9}
 \definecolor{redback}{rgb}{1,0.88,0.85}
@@ -40,6 +41,9 @@
 
 \newcounter{tmpA}
 \newcounter{tmpB}
+
+\newenvironment{twoitemize}{\begin{multicols}{2}\begin{itemize}}{\end{itemize}\end{multicols}}
+
 \begin{document}
 \begin{center}
 \begin{tikzpicture}[infl/.style={dashed},special/.style={snake},decoration={brace,amplitude=20}]
@@ -68,7 +72,7 @@
 \defgroup[\dma][0][-3*\dylma]{\dyw}{\dyl}{Context-sensitief (\S2.26)}{purple}{CTXSE}
 \defgroup[\dma][0][-4*\dylma]{\dyw}{\dyl}{Context-vrij (\S2.19-\S2.25)}{blue}{CTXFR}
 \defgroup[\dma][0][-5*\dylma]{\dyw}{\dyl}{Regulier (\S2.4-\S2.18)}{green}{REGEX}
-\defgroup[\dma][0][-6*\dylma-5*\dma]{\dyw}{\dyl}{Herschrijfsystemen ($\Lambda$-calculus; \S4)}{yellow}{LAMBDA}
+\defgroup[\dma][0][-6*\dylma-5*\dma]{\dyw}{\dyl}{Herschrijfsystemen ($\Lambda$-calculus; \S4)}{yellow}{LAMBDA}\begin{scope}[shift={(LAMBDA-RB)},xshift=-1.8cm,yshift=0.1 cm]\haskelltikzlogo[unit=0.1 cm]\end{scope}
 \defgroup[\dma][\dywh][-7*\dylma-5*\dma]{\dyw-\dywh-\dywt}{\dyl}{Andere paradigma's (\S5)}{gray}{OTHER}
 \defgroup[\dma][0][-7*\dylma-5*\dma]{\dywh}{\dyl}{Taal-aspecten (\S2.1-\S2.3)}{backg}{LANG}
 \defgroup[\dma][\dyw-\dywt][-7*\dylma-5*\dma]{\dywt}{\dyl}{Problemen}{backg}{PROB}
