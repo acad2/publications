@@ -20,35 +20,35 @@ rela/REGEX/14.75/1.5/10 cm/Een reguliere expressie bepaalt een taal/$\mbox{RE}\s
  \item $\brak{E_1|E_2}$ met $E_1$ en $E_2$ Re's zijn over $\Sigma$, dan is $L_E=L_1\cup L_2$.
  \item $\brak{E_1}^*$ met $E_1$ een RE is over $\Sigma$, dan is $L_E=L_{E_1}^*$.
 \end{itemize}},
-nfa/REGEX/32/1.2/10 cm/Niet-deterministische eindige toestandsautomaat/NFA/{Een NFA is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
+nfa/REGEX-B/5.5/1.2/10 cm/Niet-deterministische eindige toestandsautomaat/NFA/{Een NFA is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden;
  \item $\Sigma$ een eindig alfabet;
  \item $\delta:Q\times\Sigma_{\epsilon}\rightarrow\powset{Q}$ de overgangsfunctie van de automaat;
  \item $q_s\in Q$ de starttoestand;
  \item $F\subseteq Q$ de verzameling eindtoestanden.
 \end{itemize}},
-nfastr/REGEX/32/5.8/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}}$/{Een string $s$ wordt aanvaard door een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan geschreven worden als $a_1a_2\ldots a_n$ met $a_i\in\Sigma_{\epsilon}$, en er een rij toestanden $t_1t_2\ldots,t_{n+1}$ bestaat zodat:\begin{itemize}
+nfastr/REGEX-B/5.5/5.8/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}}$/{Een string $s$ wordt aanvaard door een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan geschreven worden als $a_1a_2\ldots a_n$ met $a_i\in\Sigma_{\epsilon}$, en er een rij toestanden $t_1t_2\ldots,t_{n+1}$ bestaat zodat:\begin{itemize}
  \item $t_1=q_s$;
  \item $t_{i+1}\in\fun{\delta}{t_i,a_i}$;
  \item $t_{n+1}\in F$.
 \end{itemize}},
-nfaeq/REGEX/32/10.3/10 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
-gnfa/REGEX/43/1.2/10.5 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een GNFA is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
+nfaeq/REGEX-B/5.5/10.3/10 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
+gnfa/REGEX-B/16.5/1.2/10.5 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een GNFA is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
  \item slechts \'e\'en eindtoestand $F=\accl{q_f}$ zodat $q_f\neq q_s$;
  \item de bogen bevatten een reguliere expressie als label;
  \item $\forall q_i,q_j\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_s,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_f$.
 \end{itemize}},
-redgnfa/REGEX/43/5.75/10.5 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:\begin{center}\begin{tikzpicture}[[auto,node distance=1.4cm,semithick]\begin{scope}[xshift=-2.5cm]\node[state] (A) {$a$};\node[state] (X)[right of=A] {$x$};\node[state] (B)[right of=X] {$b$};\path[->] (A) edge node {$e_1$} (X) edge [bend right] node[below] {$e_4$} (B) (X) edge [loop above,looseness=3] node {$e_2$} (X) (X) edge node {$e_3$} (B);\end{scope}\draw (1.4,-0.25) node {$\Rightarrow$};\begin{scope}[xshift=2.5cm]\node[state] (A) at (0,0) {$a$};\node[state] (B) at (2.8,0) {$b$};\path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);\end{scope}\end{tikzpicture}\end{center}},
-dfa/REGEX/59.5/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
- \item $Q$ een eindige verzameling toestanden is;
+redgnfa/REGEX-B/16.5/5.75/10.5 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:\begin{center}\begin{tikzpicture}[[auto,node distance=1.4cm,semithick]\begin{scope}[xshift=-2.5cm]\node[state] (A) {$a$};\node[state] (X)[right of=A] {$x$};\node[state] (B)[right of=X] {$b$};\path[->] (A) edge node {$e_1$} (X) edge [bend right] node[below] {$e_4$} (B) (X) edge [loop above,looseness=3] node {$e_2$} (X) (X) edge node {$e_3$} (B);\end{scope}\draw (1.4,-0.25) node {$\Rightarrow$};\begin{scope}[xshift=2.5cm]\node[state] (A) at (0,0) {$a$};\node[state] (B) at (2.8,0) {$b$};\path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);\end{scope}\end{tikzpicture}\end{center}},
+dfa/REGEX-B/27.5/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een DFA is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
+ \item $Q$ een eindige verzameling toestanden;
  \item $\Sigma$ een eindig alfabet;
  \item $\delta:Q\times\Sigma\rightarrow Q$ de overgangsfunctie van de automaat;
- \item $q_s\in Q$ de starttoestand en een element van $Q$;
+ \item $q_s\in Q$ de starttoestand;
  \item $F\subseteq Q$ de verzameling eindtoestanden.
 \end{itemize}},
-nfatodfa/REGEX/59.5/6.2/10 cm/NFA naar DFA/$\mbox{NFA}\rightarrow\mbox{DFA}$/{Volgende vergelijkingen geven voor elke NFA $\tupl{Q_n,\Sigma,\delta_n,q_{s,n},F_n}$ een DFA $\tupl{Q_d,\Sigma,\delta_d,q_{s,d},F_d}$ die dezelfde taal bepaalt:\[\begin{array}{rlrl}Q_d=&\powset{Q_n}&F_d=&\accl{q|q\in Q_d\wedge Q\cap F_n\neq\emptyset}\\q_{s,d}=&\fun{\delta_n^{\star}}{q_{s,n},\epsilon}&\fun{\delta_d}{Q,a}=&\bigcup_{q\in Q}\fun{\delta_n^{\star}}{\fun{\delta_n}{q,a},\epsilon}\end{array}\]},
+nfatodfa/REGEX-B/27.5/5.75/10 cm/NFA naar DFA/$\mbox{NFA}\rightarrow\mbox{DFA}$/{Volgende vergelijkingen geven voor elke NFA $\tupl{Q_n,\Sigma,\delta_n,q_{s,n},F_n}$ een DFA $\tupl{Q_d,\Sigma,\delta_d,q_{s,d},F_d}$ die dezelfde taal bepaalt:\[\begin{array}{rlrl}Q_d=&\powset{Q_n}&F_d=&\accl{q|q\in Q_d\wedge Q\cap F_n\neq\emptyset}\\q_{s,d}=&\fun{\delta_n^{\star}}{q_{s,n},\epsilon}&\fun{\delta_d}{Q,a}=&\bigcup_{q\in Q}\fun{\delta_n^{\star}}{\fun{\delta_n}{q,a},\epsilon}\end{array}\]},
 feq/REGEX/69/1.5/7 cm/{$f$-gelijk}/$f^=$/{Twee toestanden $q_1,q_2\in Q$ in een DFA zijn $f$-gelijk indien:\[\forall w\in\Sigma^{\star}:\fun{\delta^{\star}}{q_1,w}\in F\leftrightarrow\fun{\delta^{\star}}{q_2,w}\in F\]Twee toestanden zijn $f$-verschillend indien ze niet $f$-gelijk zijn.},
 mindfa/REGEX/69/6/7 cm/{Minimale DFA}/Min DFA/{Gegeven een DFA zonder onbereikbare toestanden en waarbij elke twee verschillende toestanden, $f$-verschillend zijn, hiervoor bestaat er geen DFA met strikt minder toestanden die dezelfde taal bepaalt.},
 isodfa/REGEX/77.25/1.5/8 cm/Isomorfe DFA/{$\mbox{DFA}\cong\mbox{DFA}$}/{Twee DFA's $\tupl{Q_1,\Sigma,\delta_1,q_{s,1},F_1}$ en $\tupl{Q_2,\Sigma,\delta_2,q_{s,2},F_2}$ zijn isomorf indien er een bijectie $\funsig{b}{Q_1}{Q_2}$ bestaat zodat:\begin{itemize}\item $\fun{b}{F_1}=F_2$;\item $\fun{b}{q_{s,1}}=q_{s,2}$;\item $\forall q\in Q_1:\forall a\in\Sigma:\fun{b}{\fun{\delta_1}{q,a}}=\fun{\delta_2}{\fun{b}{q},a}$\end{itemize}},
