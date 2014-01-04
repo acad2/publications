@@ -3,7 +3,7 @@ stri/LANG/4/5/7 cm/String/{$s\in\Sigma^*$}/{Een string over een alfabet $\Sigma$
 lang/LANG/4/8/7 cm/Taal/{$L\subseteq\Sigma^*$}/{Een taal over een alfabet $\Sigma$ is een verzameling strings over $\Sigma$.},
 conc/LANG/12.75/2.5/9 cm/Concatenatie van talen/{$L_1L_2$}/{Gegeven twee talen $L_1$ en $L_2$ over eenzelfde alfabet $\Sigma$, dan is de concatenatie $L_1L_2=\accl{xy|x\in L_1,y\in L_2}$. $L^n$ is de concatenatie van $n$ keer de taal $L$.},
 klee/LANG/10.75/5.75/5 cm/Kleene-ster/{$L^*$}/{De Kleene-ster van een taal $L$ is de unie van nul, \'e\'en of meer concatenaties van de taal: $L^*=\displaystyle\cup_{i=0}^{\infty}{L^i}$.},
-rege/REGEX/4.75/2.5/8.5 cm/Reguliere expressie over een alfabet $\Sigma$/RE/{$E$ is een RE over $\Sigma$ indien $E$ van de vorm is:\begin{itemize}
+rege/REGEX-A/4.75/2.5/8.5 cm/Reguliere expressie over een alfabet $\Sigma$/RE/{$E$ is een RE over $\Sigma$ indien $E$ van de vorm is:\begin{itemize}
  \item $\epsilon$
  \item $\phi$
  \item $a$ met $a\in\Sigma$
@@ -11,8 +11,8 @@ rege/REGEX/4.75/2.5/8.5 cm/Reguliere expressie over een alfabet $\Sigma$/RE/{$E$
  \item $\brak{E_1|E_2}$ met $E_1$ en $E_2$ RE's zijn over $\Sigma$.
  \item $\brak{E_1}^*$ met $E_1$ een RE is over $\Sigma$.
 \end{itemize}},
-regl/REGEX/4.75/7.75/8.5 cm/Reguliere taal/$\mbox{RegLan}$/{Een taal die door een reguliere expressie bepaald wordt is een reguliere taal. De verzameling van reguliere talen duiden we aan met $\mbox{RegLan}$.},
-rela/REGEX/14.75/1.5/10 cm/Een reguliere expressie bepaalt een taal/$\mbox{RE}\sim L_{\mbox{RE}}$/{Een RE $E$ bepaalt een taal $L_E$ over hetzelfde alfabet $\Sigma$ als volgt:\begin{itemize}
+regl/REGEX-A/4.75/7.75/8.5 cm/Reguliere taal/$\mbox{RegLan}$/{Een taal die door een reguliere expressie bepaald wordt is een reguliere taal. De verzameling van reguliere talen duiden we aan met $\mbox{RegLan}$.},
+rela/REGEX-A/14.75/1.5/10 cm/Een reguliere expressie bepaalt een taal/$\mbox{RE}\sim L_{\mbox{RE}}$/{Een RE $E$ bepaalt een taal $L_E$ over hetzelfde alfabet $\Sigma$ als volgt:\begin{itemize}
  \item Als $E=\epsilon$, dan is $L_E=\accl{\epsilon}$
  \item Als $E=\phi$, dan is $L_E=\emptyset$
  \item Als $E=a$ met $a\in\Sigma$, dan is $L_E=\accl{a}$
@@ -53,23 +53,14 @@ isodfa/REGEX-B/31.375/9.375/18 cm/Isomorfe DFA/{$\mbox{DFA}\cong\mbox{DFA}$}/{Tw
 feq/REGEX-B/36.75/1.5/7 cm/{$f$-gelijk}/$f^=$/{Twee toestanden $q_1,q_2\in Q$ in een DFA zijn $f$-gelijk indien:\[\forall w\in\Sigma^{\star}:\fun{\delta^{\star}}{q_1,w}\in F\leftrightarrow\fun{\delta^{\star}}{q_2,w}\in F\]Anders zijn ze $f$-verschillend.},
 mindfa/REGEX-B/36.75/5.75/7 cm/{Minimale DFA}/Min DFA/{Gegeven een DFA zonder onbereikbare toestanden en waarbij elke twee verschillende toestanden, $f$-verschillend zijn, hiervoor bestaat er geen DFA met strikt minder toestanden die dezelfde taal bepaalt.},
 linreglan/REGEX-B/43.75/1.5/6 cm/Pompend lemma voor RegLan/$L\in\mbox{RegLan}$/{Voor een reguliere taal $L$ bestaat een pomplengte $d$ zodat elke string $s\in L$ met $\abs{s}\geq d$ kan opgedeeld worden in $s=xyz$ met $x,y,z\in\Sigma^{\star}$ zodat:\begin{itemize}\item $\forall i\geq 0:xy^iz\in L$;\item $\abs{y}>0$;\item $\abs{xy}\leq d$.\end{itemize}},
-mn/REGEX/87.75/1.75/11 cm/Myhill-Nerode relatie/$\mnrel$/{Een Myhill-Nerode relatie over een taal $L$ is een equivalentie-relatie $\mnrel$ die aan volgende eigenschappen voldoet:\begin{itemize}\item $\forall x,y\in\Sigma^{\star},a\in\Sigma:x\mnrel y\rightarrow xa\mnrel ya$;\item $\mnrel\leq\langrel$;\item $\mnrel$ heeft een eindig aantal equivalentieklassen.\end{itemize}},
-mntodfa/REGEX/87.75/5.375/11 cm/Myhill-Nerode relatie naar DFA/$\mnrel\rightarrow\mbox{DFA}$/{Gegeven een taal $L$ over een alfabet $\Sigma$ en een MN-relatie $\sim$ over $\Sigma^*$. Dan is $\tupl{Q,\Sigma,\delta,q_s,F}$ een DFA die $L$ bepaalt met: $Q=\accl{x_{\sim}|x\in\Sigma}$, $q_s=\epsilon_{\sim}$, $F=\accl{x_{\sim}|x\in L}$ en $\fun{\delta}{x_{\sim},a}=\brak{xa}_{\sim}$.},
-finer/REGEX/84.25/8.625/4 cm/Fijnere partitie/{$\calP\leq\calP$}/{Een partitie $\calP_1$ is fijner dan $P_2$ indien elk element van $\calP_1$ vervat zit in een element van $\calP_2$.},
-mneqdfa/REGEX/90.125/8.625/6.25 cm/Myhill-Nerode relaties tegenover eindige toestandsautomaten/$\mbox{DFA}\equiv\mnrel$/{De overgangen van DFA naar de NM relatie, en van de MN relatie naar een DFA zijn elkaars inversen -- op isomorfisme na.},
-cfgr/CTXFR/5.5/2.5/10 cm/Contextvrije grammatica over een alfabet $\Sigma$/CFG/{$\tupl{V,\Sigma,R,S}$ is een contextvrije grammatica over $\Sigma$ indien:\begin{itemize}
- \item $V$ een eindige verzameling niet-eindsymbolen is;
- \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$;
- \item $R$ een eindige verzameling regels; een regel is een koppel van  ́\'e\'en niet-eindsymbool en een string van elementen uit $V\cup\Sigma_{\epsilon}$; we schrijven de twee delen van zulk een koppel met een $\rightarrow$ ertussen;
- \item $S$ is het startsymbool en behoort tot $V$.
-\end{itemize}},
-cfgder/CTXFR/18/2.5/14 cm/Afleiding met behulp van een contextvrije grammatica/$b\Rightarrow_{CFG}^{\star}f$/{Gegeven een contextvrije grammatica $\tupl{V,\Sigma,R,S}$. Een string $f$ over $V\cup\Sigma_{\epsilon}$ wordt afgeleid uit een string $b$ uit $V\cup\Sigma_{\epsilon}$ met behulp van de contextvrije grammatica indien er een eindige rij strings $s_0,s_1,\ldots,s_n$ bestaat zodat:\begin{itemize}
- \item $s_0=b\wedge s_n=f$
- \item $s_{i+1}$ verkregen wordt uit $s_i$ (voor $i<n$) door in $s_i$ een niet-eindsymbool $X$ te vervangen door de rechterkant van een regel waarin $X$ links voorkomt.
-\end{itemize}
-We noteren $s_i\Rightarrow s_{i+1}$ en $b\rightarrow^{\star}f$},
-cfgla/CTXFR/18/7.5/14 cm/Een contextvrije grammatica bepaalt een taal/$\mbox{CFG}\sim L_{\mbox{CFG}}$/{De taal $L_{CFG}$ bepaald door een contextvrije grammatica $\tupl{V,\Sigma,R,S}$ is de verzameling strings over $\Sigma$ die kunnen afgeleid worden van het startsymbool $S$; of meer formeel: $L_{CFG}=\accl{s\in\Sigma^{\star}|S\Rightarrow^{\star}s}$.},
-cfgl/CTXFR/5.5/7.75/10 cm/Contextvrije taal/$\mbox{CFL}$/{Een taal $L$ is contextvrij indien er een contextvrije grammatica is zodat $L=L_{CFG}$. De verzameling van contextvrije talen duiden we aan met $\mbox{CFL}$.},
+mn/REGEX-B/61.25/1.75/11 cm/Myhill-Nerode relatie/$\mnrel$/{Een Myhill-Nerode relatie over een taal $L$ is een equivalentie-relatie $\mnrel$ die aan volgende eigenschappen voldoet:\begin{itemize}\item $\forall x,y\in\Sigma^{\star},a\in\Sigma:x\mnrel y\rightarrow xa\mnrel ya$;\item $\mnrel\leq\langrel$;\item $\mnrel$ heeft een eindig aantal equivalentieklassen.\end{itemize}},
+mntodfa/REGEX-B/61.25/5.375/11 cm/Myhill-Nerode relatie naar DFA/$\mnrel\rightarrow\mbox{DFA}$/{Gegeven een taal $L$ over een alfabet $\Sigma$ en een MN-relatie $\sim$ over $\Sigma^*$. Dan is $\tupl{Q,\Sigma,\delta,q_s,F}$ een DFA die $L$ bepaalt met: $Q=\accl{x_{\sim}|x\in\Sigma}$, $q_s=\epsilon_{\sim}$, $F=\accl{x_{\sim}|x\in L}$ en $\fun{\delta}{x_{\sim},a}=\brak{xa}_{\sim}$.},
+finer/REGEX-B/57.75/8.625/4 cm/Fijnere partitie/{$\calP\leq\calP$}/{Een partitie $\calP_1$ is fijner dan $\calP_2$ indien elk element van $\calP_1$ vervat zit in een element van $\calP_2$.},
+mneqdfa/REGEX-B/63.625/8.625/6.25 cm/Myhill-Nerode relaties tegenover eindige toestandsautomaten/$\mbox{DFA}\equiv\mnrel$/{De overgangen van DFA naar de NM relatie, en van de MN relatie naar een DFA zijn elkaars inversen -- op isomorfisme na.},
+cfgr/CTXFR-A/6/2.5/11 cm/Contextvrije grammatica over een alfabet $\Sigma$/CFG/{$\tupl{V,\Sigma,R,S}$ is een CFG over $\Sigma$ indien:\begin{itemize}\item $V$ een eindige verzameling niet-eindsymbolen is; \item $\Sigma$ een eindig alfabet van eindsymbolen disjunct met $V$; \item $R$ een eindige verzameling regels; een regel is een koppel van  ́\'e\'en niet-eindsymbool en een string van elementen uit $V\cup\Sigma_{\epsilon}$; we schrijven de twee delen van zulk een koppel met een $\rightarrow$ ertussen;\item $S\in V$ is het startsymbool.\end{itemize}},
+cfgder/CTXFR-A/16.75/1.5/9 cm/Afleiding met behulp van een contextvrije grammatica/$b\Rightarrow_{CFG}^{\star}f$/{Gegeven een CFG $\tupl{V,\Sigma,R,S}$. Een string $f$ over $V\cup\Sigma_{\epsilon}$ wordt afgeleid uit een string $b$ uit $V\cup\Sigma_{\epsilon}$ met behulp van de CFG indien er een eindige rij strings $s_0,s_1,\ldots,s_n$ bestaat zodat:\begin{itemize}\item $s_0=b\wedge s_n=f$; \item $s_{i+1}$ verkregen wordt uit $s_i$ (voor $i<n$) door in $s_i$ een niet-eindsymbool $X$ te vervangen door de rechterkant van een regel waarin $X$ links voorkomt.\end{itemize}We noteren $s_i\Rightarrow s_{i+1}$ en $b\rightarrow^{\star}f$},
+cfgla/CTXFR-A/16.75/7.5/9 cm/Een contextvrije grammatica bepaalt een taal/$\mbox{CFG}\sim L_{\mbox{CFG}}$/{De taal $L_{CFG}$ bepaald door een CFG $\tupl{V,\Sigma,R,S}$ is gedefinieerd als: $L_{CFG}=\accl{s\in\Sigma^{\star}|S\Rightarrow^{\star}s}$.},
+cfgl/CTXFR-A/6/7.5/11 cm/Contextvrije taal/$\mbox{CFL}$/{Een taal $L$ is contextvrij indien er een CFG bestaat zodat $L=L_{CFG}$. De verzameling van contextvrije talen duiden we aan met $\mbox{CFL}$.},
 pda/CTXFR/34/1.2/12 cm/Push-down automaat/PDA/{Een push-down automaat is een $5$-tal $\tupl{Q,\Sigma,\Gamma,\delta,q_s,F}$ waarbij:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden is;
  \item $\Sigma$ een eindig inputalfabet;
