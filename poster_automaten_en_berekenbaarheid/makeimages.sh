@@ -1,4 +1,5 @@
-for f in {turing,panini}
+for f in *.svg
 do
-	make "$f.pdf"
+	g=$(basename "$f" ".svg")
+	make "$g.pdf"
 done
