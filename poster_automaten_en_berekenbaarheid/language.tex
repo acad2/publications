@@ -20,19 +20,19 @@ rela/REGEX/14.75/1.5/10 cm/Een reguliere expressie bepaalt een taal/$\mbox{RE}\s
  \item $\brak{E_1|E_2}$ met $E_1$ en $E_2$ Re's zijn over $\Sigma$, dan is $L_E=L_1\cup L_2$.
  \item $\brak{E_1}^*$ met $E_1$ een RE is over $\Sigma$, dan is $L_E=L_{E_1}^*$.
 \end{itemize}},
-nfa/REGEX/32/1.2/10 cm/Niet-deterministische eindige toestandsautomaat/NFA/{Een niet-deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
- \item $Q$ een eindige verzameling toestanden is;
+nfa/REGEX/32/1.2/10 cm/Niet-deterministische eindige toestandsautomaat/NFA/{Een NFA is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
+ \item $Q$ een eindige verzameling toestanden;
  \item $\Sigma$ een eindig alfabet;
  \item $\delta:Q\times\Sigma_{\epsilon}\rightarrow\powset{Q}$ de overgangsfunctie van de automaat;
- \item $q_s\in Q$ de starttoestand en een element van $Q$;
+ \item $q_s\in Q$ de starttoestand;
  \item $F\subseteq Q$ de verzameling eindtoestanden.
 \end{itemize}},
-nfaeq/REGEX/40.5/1.2/6 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
-nfastr/REGEX/32/6.15/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}}$/{Een string $s$ wordt aanvaard door een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan geschreven worden als $a_1a_2\ldots a_n$ met $a_i\in\Sigma_{\epsilon}$, en er een rij toestanden $t_1t_2\ldots,t_{n+1}$ bestaat zodat:\begin{itemize}
+nfastr/REGEX/32/5.8/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}}$/{Een string $s$ wordt aanvaard door een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ indien $s$ kan geschreven worden als $a_1a_2\ldots a_n$ met $a_i\in\Sigma_{\epsilon}$, en er een rij toestanden $t_1t_2\ldots,t_{n+1}$ bestaat zodat:\begin{itemize}
  \item $t_1=q_s$;
  \item $t_{i+1}\in\fun{\delta}{t_i,a_i}$;
  \item $t_{n+1}\in F$.
 \end{itemize}},
+nfaeq/REGEX/32/10.3/10 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
 gnfa/REGEX/49/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een gegeneraliseerde niet-deterministische eindige toestandsautomaat is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
  \item slechts \'e\'en eindtoestand $F=\accl{q_f}$ zodat $q_f\neq q_s$;
  \item de bogen bevatten een reguliere expressie als label;
