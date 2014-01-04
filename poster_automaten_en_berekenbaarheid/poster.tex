@@ -76,12 +76,7 @@
 \defgroup[\dma][0][-7*\dylma-5*\dma][\includegraphics{kleene.pdf}]{\dywh}{\dyl}{Taal-aspecten (\S2.1-\S2.3)}{backg}{LANG}
 \defgroup[\dma][\dyw-\dywt][-7*\dylma-5*\dma][\includegraphics{godel.pdf}]{\dywt}{\dyl}{Problemen}{backg}{PROB}
 
-\foreach \n/\x in {A/0.0,B/26.5} {
-  \coordinate (COL-\n) at ($(REGEX-LB)+(\x,0)$);
-}
-\foreach \n/\x in {C/15.25,D/9.75,E/0.0} {
-  \coordinate (COL-\n) at ($(REGEX-RB)-(\x,0)$);
-}
+\defgroupcols{REGEX}{A/0.0,B/26.5}{C/15.25,D/9.75,E/0.0};
 
 \grpvelef{TURING-T}{REGEX-B}{Chomsky hi\"erarchie (\S2-\S3)}
 \grpholow{A}{B}{Beschrijven}
