@@ -1,8 +1,8 @@
-alfa/LANG/4.5/2.5/8 cm/Alfabet/{$\Sigma$}/{Een alfabet $\Sigma$ is een set karakters die relevant zijn in een gegeven taal $L$.},
-stri/LANG/4.5/5/8 cm/String/{$s\in\Sigma^*$}/{Een string over een alfabet $\Sigma$ is een sequentie van 0, 1 of meer karakters uit $\Sigma$. $\Sigma^*$ beschrijft de verzameling van alle strings over $\Sigma$.},
-lang/LANG/4.5/8/8 cm/Taal/{$L\subseteq\Sigma^*$}/{Een taal over een alfabet $\Sigma$ is een verzameling strings over $\Sigma$.},
-conc/LANG/12.5/2.5/6 cm/Concatenatie van talen/{$L_1L_2$}/{Gegeven twee talen $L_1$ en $L_2$ over eenzelfde alfabet $\Sigma$, dan is de concatenatie $L_1L_2=\accl{xy|x\in L_1,y\in L_2}$. $L^n$ is de concatenatie van $n$ keer de taal $L$.},
-klee/LANG/12.5/6/6 cm/Kleene-ster/{$L^*$}/{De Kleene-ster van een taal $L$ is de unie van nul, \'e\'en of meer concatenaties van de taal: $L^*=\displaystyle\cup_{i=0}^{\infty}{L^i}$.},
+alfa/LANG/4/2.5/7 cm/Alfabet/{$\Sigma$}/{Een alfabet $\Sigma$ is een set karakters die relevant zijn in een gegeven taal $L$.},
+stri/LANG/4/5/7 cm/String/{$s\in\Sigma^*$}/{Een string over een alfabet $\Sigma$ is een sequentie van 0, 1 of meer karakters uit $\Sigma$. $\Sigma^*$ is de verzameling van alle strings over $\Sigma$.},
+lang/LANG/4/8/7 cm/Taal/{$L\subseteq\Sigma^*$}/{Een taal over een alfabet $\Sigma$ is een verzameling strings over $\Sigma$.},
+conc/LANG/12.75/2.5/9 cm/Concatenatie van talen/{$L_1L_2$}/{Gegeven twee talen $L_1$ en $L_2$ over eenzelfde alfabet $\Sigma$, dan is de concatenatie $L_1L_2=\accl{xy|x\in L_1,y\in L_2}$. $L^n$ is de concatenatie van $n$ keer de taal $L$.},
+klee/LANG/10.75/5.75/5 cm/Kleene-ster/{$L^*$}/{De Kleene-ster van een taal $L$ is de unie van nul, \'e\'en of meer concatenaties van de taal: $L^*=\displaystyle\cup_{i=0}^{\infty}{L^i}$.},
 rege/REGEX/4.75/2.5/8.5 cm/Reguliere expressie over een alfabet $\Sigma$/RE/{$E$ is een RE over $\Sigma$ indien $E$ van de vorm is:\begin{itemize}
  \item $\epsilon$
  \item $\phi$
@@ -33,14 +33,14 @@ nfastr/REGEX/32/5.8/10 cm/String aanvaard door een NFA/$s\in L_{\mbox{\tiny NFA}
  \item $t_{n+1}\in F$.
 \end{itemize}},
 nfaeq/REGEX/32/10.3/10 cm/Equivalentie van twee NFA's/$\mbox{NFA}\equiv\mbox{NFA}$/{Twee NFA's worden equivalent genoemd als ze dezelfde taal bepalen.},
-gnfa/REGEX/49/1.2/10 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een gegeneraliseerde niet-deterministische eindige toestandsautomaat is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
+gnfa/REGEX/43/1.2/10.5 cm/Gegeneraliseerde niet-deterministische eindige toestandsautomaat/GNFA/{Een GNFA is een NFA $\tupl{Q,\Sigma,\delta,q_s,F}$ met:\begin{itemize}
  \item slechts \'e\'en eindtoestand $F=\accl{q_f}$ zodat $q_f\neq q_s$;
  \item de bogen bevatten een reguliere expressie als label;
  \item $\forall q_i,q_j\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_s,c}=q_j$;
  \item $\forall q_i\in Q\setminus\accl{q_s,q_f}:\exists c\in\funm{RegExp}{\Sigma}:\fun{\delta}{q_i,c}=q_f$.
 \end{itemize}},
-redgnfa/REGEX/49/6.2/10 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:\begin{tikzpicture}[[auto,node distance=1.4cm,semithick]\begin{scope}[xshift=-2.5cm]\node[state] (A) {$a$};\node[state] (X)[right of=A] {$x$};\node[state] (B)[right of=X] {$b$};\path[->] (A) edge node {$e_1$} (X) edge [bend right] node[below] {$e_4$} (B) (X) edge [loop above,looseness=3] node {$e_2$} (X) (X) edge node {$e_3$} (B);\end{scope}\draw (1.4,-0.25) node {$\Rightarrow$};\begin{scope}[xshift=2.5cm]\node[state] (A) at (0,0) {$a$};\node[state] (B) at (2.8,0) {$b$};\path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);\end{scope}\end{tikzpicture}},
+redgnfa/REGEX/43/5.75/10.5 cm/Reductie-stap/Reduce/{Neem een toestand $x\in Q\setminus\accl{q_s,q_f}$ en toestanden $a,b\in Q$ en voer volgende reductie uit:\begin{center}\begin{tikzpicture}[[auto,node distance=1.4cm,semithick]\begin{scope}[xshift=-2.5cm]\node[state] (A) {$a$};\node[state] (X)[right of=A] {$x$};\node[state] (B)[right of=X] {$b$};\path[->] (A) edge node {$e_1$} (X) edge [bend right] node[below] {$e_4$} (B) (X) edge [loop above,looseness=3] node {$e_2$} (X) (X) edge node {$e_3$} (B);\end{scope}\draw (1.4,-0.25) node {$\Rightarrow$};\begin{scope}[xshift=2.5cm]\node[state] (A) at (0,0) {$a$};\node[state] (B) at (2.8,0) {$b$};\path[->] (A) edge node[below] {$e_1e_2^{\star}e_3|e_4$} (B);\end{scope}\end{tikzpicture}\end{center}},
 dfa/REGEX/59.5/1.2/10 cm/Deterministische eindige toestandsautomaat/DFA/{Een deterministische eindige toestandsautomaat is een $5$-tal $\tupl{Q,\Sigma,\delta,q_s,F}$ waarbij:\begin{itemize}
  \item $Q$ een eindige verzameling toestanden is;
  \item $\Sigma$ een eindig alfabet;
