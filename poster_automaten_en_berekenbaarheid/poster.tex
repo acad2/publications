@@ -52,6 +52,8 @@
 \def\dyl{100.0 mm};
 \def\dylm{5.0 mm};
 \def\dylma{105.0 mm};
+\def\dylhma{65.0 mm};
+\def\dylqma{125.0 mm};
 \def\dyw{1100.0 mm};
 \def\dywb{550.0 mm};
 \def\dywt{366.7 mm};
@@ -66,11 +68,11 @@
 \begin{scope}[yshift=-3*\dylm]
 \begin{pgfonlayer}{background}
 
-\defgroup[\dma][0][-\dylma][\includegraphics{pythia.pdf}]{\dyw}{\dyl}{Orakel (\S3.17)}{orange}{ORAKEL}
-\defgroup[\dma][0][-2*\dylma][\includegraphics{turing.pdf}]{\dyw}{\dyl}{Turing (\S3.1-3.9)}{red}{TURING}
-\defgroup[\dma][0][-3*\dylma][\includegraphics{chomsky.pdf}]{\dyw}{\dyl}{Context-sensitief (\S2.26)}{purple}{CTXSE}
-\defgroup[\dma][0][-4*\dylma][\includegraphics{panini.pdf}]{\dyw}{\dyl}{Context-vrij (\S2.19-\S2.25)}{blue}{CTXFR}
-\defgroup[\dma][0][-5*\dylma][\includegraphics{rabin.pdf}]{\dyw}{\dyl}{Regulier (\S2.4-\S2.18)}{green}{REGEX}
+\defgroup[\dma][0][-\dylhma][\includegraphics{pythia.pdf}]{\dyw}{0.6*\dyl}{Orakel (\S3.17)}{orange}{ORAKEL}
+\defgroup[\dma][0][-\dylhma-\dylqma][\includegraphics{turing.pdf}]{\dyw}{1.2*\dyl}{Turing (\S3.1-3.9)}{red}{TURING}
+\defgroup[\dma][0][-\dylma-\dylhma-\dylqma][\includegraphics{chomsky.pdf}]{\dyw}{\dyl}{Context-sensitief (\S2.26)}{purple}{CTXSE}
+\defgroup[\dma][0][-2*\dylma-\dylhma-\dylqma][\includegraphics{panini.pdf}]{\dyw}{\dyl}{Context-vrij (\S2.19-\S2.25)}{blue}{CTXFR}
+\defgroup[\dma][0][-2*\dylma-\dylhma-2*\dylqma][\includegraphics{rabin.pdf}]{\dyw}{1.2*\dyl}{Regulier (\S2.4-\S2.18)}{green}{REGEX}
 \defgroup[\dma][0][-6*\dylma-5*\dma][\begin{tikzpicture}\haskelllogo\end{tikzpicture}]{\dyw}{\dyl}{Herschrijfsystemen ($\Lambda$-calculus; \S4)}{yellow}{LAMBDA}
 \defgroup[\dma][\dywh][-7*\dylma-5*\dma][\includegraphics{conway.pdf}]{\dyw-\dywh-\dywt}{\dyl}{Andere paradigma's (\S5)}{gray}{OTHER}
 \defgroup[\dma][0][-7*\dylma-5*\dma][\includegraphics{kleene.pdf}]{\dywh}{\dyl}{Taal-aspecten (\S2.1-\S2.3)}{backg}{LANG}
@@ -89,7 +91,9 @@
 }
 
 \foreach \c/\sb/\cmp/\toep in {REGEX/RE/n/{\item Extraheren van informatie\item Compilers\item Internetprotocollen\item Digitale elektronica},CTXFR/CFG/n^3/{\item Extraheren van informatie\item Compilers\item Natuurlijke taalverwerking},CTXSE/CSG/c^n/{\item Natuurlijke taalverwerking\item Webservers\item Gegevensbanken},TURING/TM//{\item Programmeertalen\item Levens redden (WO-II)},ORAKEL/O//{\item Filosofie\item Complexiteitstheorie}} {
-  \ifthenelse{\equal{\cmp}{}}{\node[anchor=north] (CC-\c-app) at ($(\c-RB)+(-12.5,0.5*\dyl)$) {\parbox{5 cm}{Toepassingen:\begin{itemize}\toep\end{itemize}}};}{\node[scale=4.00] (CC-\c) at ($(\c-RB)+(-12.5,0.5*\dyl)$) {\bigoh{\cmp}};\node[anchor=south] (CC-\c-t) at (CC-\c.north) {$s\in L_{\mbox{\small \sb}}$ wordt beslist in};\node[anchor=north] (CC-\c-app) at (CC-\c.south) {\parbox{5 cm}{Toepassingen:\begin{itemize}\toep\end{itemize}}};}
+  \coordinate (TMPR) at ($0.5*(\c-RB)+0.5*(\c-RT)$);
+  \coordinate (TMPC) at ($0.5*(COL-C)+0.5*(COL-D)$);
+  \ifthenelse{\equal{\cmp}{}}{\node (CC-\c-app) at (TMPR -| TMPC) {\parbox{5 cm}{Toepassingen:\begin{itemize}\toep\end{itemize}}};}{\node[scale=4.00] (CC-\c) at (TMPR -| TMPC) {\bigoh{\cmp}};\node[anchor=south] (CC-\c-t) at (CC-\c.north) {$s\in L_{\mbox{\small \sb}}$ wordt beslist in};\node[anchor=north] (CC-\c-app) at (CC-\c.south) {\parbox{5 cm}{Toepassingen:\begin{itemize}\toep\end{itemize}}};}
 }
 \end{pgfonlayer}
 \CatchFileDef{\tempa}{language.tex}{}
