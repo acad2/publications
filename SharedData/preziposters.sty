@@ -19,3 +19,8 @@
 \DeclareDocumentCommand{\groupbox}{ O{3 mm} O{white,semitransparent} m m }{\node[fit=#3,inner sep=#1] (TMP) {};\begin{pgfonlayer}{classes}\node (TMP-TITLE) at (TMP.north) {\bf #4};\end{pgfonlayer}\begin{pgfonlayer}{background}\filldraw[rounded corners,fill=#2] (TMP-TITLE.north west) -- (TMP-TITLE.west) -- (TMP.north west) -- (TMP.south west) -- (TMP.south east) -- (TMP.north east) -- (TMP-TITLE.east) -- (TMP-TITLE.north east) -- cycle;\end{pgfonlayer}}
 \DeclareDocumentCommand{\defgroupcols}{ m m m }{\foreach \n/\x in {#2} {\coordinate (COL-\n) at ($(#1-LB)+(\x,0)$);}\foreach \n/\x in {#3} {\coordinate (COL-\n) at ($(#1-RB)-(\x,0)$);}}
 \DeclareDocumentCommand{\expandgroupcols}{ m m }{\foreach \g in {#1} {\foreach\c in {#2} {\coordinate (\g-\c-LB) at (\g-LB -| COL-\c);\coordinate (\g-\c-LT) at (\g-LT -| COL-\c);\coordinate (\g-\c) at (\g-\c-LT);}}}
+\DeclareDocumentCommand{\colorlegend}{ m }{
+\foreach \x in {#1} {
+
+}
+}
