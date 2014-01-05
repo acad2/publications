@@ -34,6 +34,8 @@
 \newcommand{\langrel}[0]{\ensuremath{\sim_{L}}}
 
 \DeclareDocumentCommand{\comput}{ O{LABEL} O{1.00} O{2.00} m m}{\def\cola{red};\def\colb{red};\ifthenelse{#5>1}{\def\cola{green};}{}\ifthenelse{\isodd{#5}}{\def\colb{green};}{}\computmul[#1][#2][#3]{#4}{\cola,\colb}}
+\newcommand{\findcolor}[2]{\def#1{gray}\ifthenelse{\equal{#2}{TURING}}{\def#1{red}}{\ifthenelse{\equal{#2}{REGEX}}{\def#1{green}}{\ifthenelse{\equal{#2}{CTXFR}}{\def#1{blue}}{\ifthenelse{\equal{#2}{CTXSE}}{\def#1{purple}}{}}}}}
+\DeclareDocumentCommand{\innerc}{ O{LABEL} O{1.00} O{2.00} m m m}{\findcolor{\cola}{#4}\findcolor{\colb}{#5}\findcolor{\colc}{#6}\computmul[#1][#2][#3]{}{\cola,\colb,\colc}}
 
 \newcounter{tmpA}
 \newcounter{tmpB}
@@ -98,6 +100,16 @@
 \CatchFileDef{\tempa}{defs.tex}{}
   \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
   \tempb {\titleminibox[(\o)][\l][\x][\y][\twid]{\xa}{\xb}{\xc}}
+
+\CatchFileDef{\tempa}{inner.tex}{}
+  \edef\tempb{\unexpanded{\foreach \f/\fa/\fb/\fc in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {
+  
+  \begin{scope}[shift={(\f-C-LB)},xshift=1.5 cm,yshift=1.5 cm]
+  \innerc{\fa}{\fb}{\fc}
+  \end{scope}
+  
+  }
 
 \input{grps.tex}
 
