@@ -35,7 +35,7 @@
 
 \DeclareDocumentCommand{\comput}{ O{LABEL} O{1.00} O{2.00} m m}{\def\cola{red};\def\colb{red};\ifthenelse{#5>1}{\def\cola{green};}{}\ifthenelse{\isodd{#5}}{\def\colb{green};}{}\computmul[#1][#2][#3]{#4}{\cola,\colb}}
 \newcommand{\findcolor}[2]{\def#1{gray}\ifthenelse{\equal{#2}{TURING}}{\def#1{red}}{\ifthenelse{\equal{#2}{REGEX}}{\def#1{green}}{\ifthenelse{\equal{#2}{CTXFR}}{\def#1{blue}}{\ifthenelse{\equal{#2}{CTXSE}}{\def#1{purple}}{}}}}}
-\DeclareDocumentCommand{\innerc}{ O{LABEL} O{1.00} O{2.00} m m m}{\findcolor{\cola}{#4}\findcolor{\colb}{#5}\findcolor{\colc}{#6}\computmul[#1][#2][#3]{}{\cola,\colb,\colc}}
+\DeclareDocumentCommand{\innerc}{ O{LABEL} O{1.00} O{2.00} m m m m m m }{\findcolor{\cola}{#4}\findcolor{\colb}{#5}\findcolor{\colc}{#6}\findcolor{\cold}{#7}\findcolor{\cole}{#8}\findcolor{\colf}{#9}\computmul[#1][#2][#3]{}{\cola,\colb,\colc,\cold,\cole,\colf}}
 
 \newcounter{tmpA}
 \newcounter{tmpB}
@@ -101,21 +101,24 @@
   \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
   \tempb {\titleminibox[(\o)][\l][\x][\y][\twid]{\xa}{\xb}{\xc}}
 
+%Doorsnede/Unie/Complement/Concatenatie/Omkeren/Kleene-ster
 \CatchFileDef{\tempa}{inner.tex}{}
-  \edef\tempb{\unexpanded{\foreach \f/\fa/\fb/\fc in }{\unexpanded\expandafter{\tempa}}}
-  \tempb {
-  
-  \begin{scope}[shift={(\f-C-LB)},xshift=1.5 cm,yshift=1.5 cm]
-  \innerc{\fa}{\fb}{\fc}
-  \end{scope}
-  
-  }
+  \edef\tempb{\unexpanded{\foreach \f/\fa/\fb/\fc/\fd/\fe/\ff in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {\begin{scope}[shift={(\f-C-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc{\fa}{\fb}{\fc}{\fd}{\fe}{\ff}\end{scope}}
+
+\begin{scope}[shift={(LEGEND-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc[testlang]{TURING}{CTXSE}{CTXFR}{REGEX}{TURING}{CTXSE}\end{scope}
+\begin{scope}[shift={(LEGEND-LB)},xshift=5.5 cm,yshift=2.25 cm]\colorlegend{Turing-beslisbaar/red,Context-senstief/purple,Contextvrij/blue,Regulier/green}\end{scope}
+
+\foreach \x/\t in {1/Doorsnede,2/Unie,3/Complement,4/Concatenatie,5/Omkeren,6/Kleene-ster} {
+  \draw[<-,thick] (testlang-S\x) -- ++(1.25,0) node[anchor=west]{\t};
+}
 
 \input{grps.tex}
 
 \end{scope}
 \begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
 \comput[testlang][2.00]{$L$}{2}
+\begin{scope}[xshift=-3 cm,yshift=-0.25 cm]\colorlegend{ja/green,nee/red}\end{scope}
 \draw[<-,thick] (testlang-L) -- ++(-1.25,0) node[anchor=east]{Taal};
 \draw[<-,thick] (testlang-S1) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
 \draw[<-,thick] (testlang-S2) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
