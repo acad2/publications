@@ -1,0 +1,37 @@
+\documentclass[titlepage]{book}
+\newcommand{\plover}[0]{\textsc{Plover}}
+\newcommand{\github}[0]{\textsc{GitHub}}
+\newcommand{\python}[0]{\textsc{Python}}
+\title{Learning \plover{}}
+\author{Willem M. A. Van Onsem}
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\chapter{Introduction}
+\paragraph{}The software is free of charge, however one needs to buy a gaming keyboard (around \$45.00) and practice.
+\paragraph{}This book is mainly for qwerty-users who aim to speed up typing.
+\section{Installing \plover{}}
+\plover{} is available on \github{}. One can obtain a copy using the following command.
+\begin{verbatim}
+wget https://github.com/openstenoproject/plover/archive/v2.5.7.tar.gz
+\end{verbatim}
+After the archive is downloaded, one can decompress it, and install it using the following commands:
+\begin{verbatim}
+tar -zxf v2.5.7.tar.gz
+cd plover-2.5.7
+sudo python setup.py install
+\end{verbatim}
+The programming will copy the executable to \verb+/usr/local/bin/plover+. One can then remove the installation files:
+\begin{verbatim}
+cd ..
+rm -rf plover-2.5.7
+\end{verbatim}
+The program depends on several \python{} libraries. One can use the following commands to install these libraries:
+\begin{verbatim}
+sudo apt-get install python-xlib python-wxgtk2.8 wmctrl python-dev python-pip
+sudo pip install -U appdirs simplejson pyserial
+\end{verbatim}
+\chapter{The \plover{} system}
+
+\end{document}
