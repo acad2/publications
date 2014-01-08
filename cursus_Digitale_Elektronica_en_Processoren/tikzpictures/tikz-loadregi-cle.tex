@@ -1,0 +1,9 @@
+\begin{tikzpicture}[circuit logic US]
+\coordinate (IC) at (-2.5,0);
+\node[dff] (D) at (0,0) {};
+\node[and gate,anchor=output] (A) at ($(D.Clk)+(-0.5,0)$) {};
+\draw (A.output) -- (D.Clk);
+\draw (A.input 2) -- (A.input 2 -| IC) node[anchor=east]{Clk};
+\draw (A.input 1) -- (A.input 1 -| IC) node[anchor=east]{CE};
+\draw (D.D) -- (D.D -| IC) node[anchor=east]{D};
+\end{tikzpicture}

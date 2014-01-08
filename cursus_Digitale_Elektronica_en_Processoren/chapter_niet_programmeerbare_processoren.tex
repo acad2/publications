@@ -2266,8 +2266,16 @@ In het vorige hoofdstuk hebben we het reeds gehad over ``skew''. Een speciaal ge
 \paragraph{Clock enabled bij laadbare registers}
 In registers werken we vaak met een clock enabled. Dit is een belangrijke oorzaak van clock skew en kan zelfs leiden tot het inklokken van foute waarden: wanneer de data aan de ingang zelf afhankelijk is van de klok en sneller wordt aangepast dan de het signaal door de AND-poort propageert, wordt soms de nieuwe waarde opgeslagen.
 \begin{figure}[hbt]
+\centering
 \importtikzsubfigure{loadregi-mux}{Met multiplexer.}
 \importtikzsubfigure{loadregi-cle}{Met clock enabled.}
 \caption{Laadbaar registers}
+\figlab{loadregi}
 \end{figure}
+Er zijn dan ook grofweg twee technieken om een selectief op bepaalde klokflanken nieuwe waarden op te slaan:
+\begin{enumerate}
+ \item Met behulp van een multiplexer (zoals bij \figref{loadregi-mux});
+ \item Met behulp van een AND-poort (zoals bij \figref{loadregi-cle}).
+\end{enumerate}
+Zoals zo vaak is geen van de twee technieken altijd te verkiezen: beide implementaties hebben hun voor- en nadelen. Zo kost register met multiplexer significant meer dan 
 \subsection{Asynchrone ingangen}
