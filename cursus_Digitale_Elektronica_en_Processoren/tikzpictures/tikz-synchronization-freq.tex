@@ -1,13 +1,20 @@
 \begin{tikzpicture}[circuit logic US]
-\node[dff,scale=0.75] (DFF1) at (-1.5,0) {};
-\node[dff,scale=0.75] (DFF2) at (1.5,0) {};
-\draw (DFF1.D) -- ++(-0.5,0) node[anchor=east]{async.};
-\node[draw=black,fill=white,rounded rectangle] (COMB) at (DFF1.Q -| 0,0) {comb.};
-\coordinate (CLK1) at ($(DFF1.south west)-(0.25,0.25)$);
-\coordinate (CLK2) at ($(DFF2.south west)-(0.25,0.25)$);
-\draw (DFF1.Clk) -| (CLK1) -- (CLK2) |- (DFF2.Clk) (DFF1.Q) -- (COMB.west) (COMB.east) -- (DFF2.D);
-\pdot{CLK1};
+\node[dff,scale=0.75] (DFFF) at (1,0) {};
+\coordinate (CLKF) at ($(DFFF.south west)-(0.25,0.25)$);
+\draw (DFFF.Clk) -| (CLKF);
+\foreach \x/\t in {1/2,2/1} {
+  \node[dff,scale=0.75] (DFF\x) at (-1.5*\x,0) {$\mbox{FF}_{\t}$};
+  \coordinate (CLK\x) at ($(DFF\x.south west)-(0.25,0.25)$);
+  \draw (DFF\x.Clk) -| (CLK\x);
+}
+\pdot{CLK2};
+\node[draw=black,fill=white,rounded rectangle,scale=0.75] (COMB) at (DFF1.Q -| -0.25,0) {comb.};
+\draw (DFF2.Q) -- (DFF1.D);
+\draw (CLK1) -- (CLK2) (DFF1.Q) -- (COMB.west) (COMB.east) -- (DFFF.D);
+\draw (CLK2) -- ++(-0.25,0) node[anchor=east] {$\mbox{clk}/n$};
+\draw (CLKF) -- ++(-0.25,0) node[anchor=east] {clk};
+\draw (DFF2.D) -- ++(-0.5,0) node[anchor=east]{async.};
 \begin{pgfonlayer}{background}
-\node[fit=(COMB) (DFF2),fill=gray!50] (SYNC) {};
+\node[fit=(COMB) (DFFF),fill=gray!50] (SYNC) {};
 \end{pgfonlayer}
 \end{tikzpicture}
