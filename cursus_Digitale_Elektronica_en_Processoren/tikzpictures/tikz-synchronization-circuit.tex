@@ -1,5 +1,6 @@
 \begin{tikzpicture}[circuit logic US]
-\node[dff] (DFF1) at (0,1) {};
-\node[dff] (DFF2) at (0,-1) {};
-\node[clockedblock] (CB) at (2,0) {};
+\node[dff,scale=0.75] (DFF1) at (0,1) {$F_1$};
+\node[dff,scale=0.75] (DFF2) at (0,-1) {$F_2$};
+\node[unclockedblock,minimum width=2 cm,minimum height=3 cm] (UB) at (-2,0) {};
+\node[clockedblock,minimum width=2 cm,minimum height=3 cm] (CB) at (2,0) {};
 \end{tikzpicture}
