@@ -2307,10 +2307,26 @@ De klokperiode $t_{\mbox{\small clock}}$ staat in principe niet vast: we kunnen 
 \paragraph{}
 Men kan ook inzetten op technologie. Snelle flipflops hebben een kortere set-up tijd en bovendien verkleint ook de halfwaardetijd: hierdoor zullen we dus ook sneller de metastabiele toestand verlaten. Bijgevolg wordt $t_{\mbox{\small meta}}$ kleiner. Een nadeel van deze flipflops is dat ze meer vermogen verbruiken.
 \paragraph{}
-Extra hardware kan ook een bijdrage leveren. Wanneer de processor de data moet verwerken met een bepaalde doorvoersnelheid, maar de vertraging niet zo belangrijk is\footnote{De vertraging is bijvoorbeeld wel van belang bij televisieuitzendingen.} kan men in plaats van \'e\'en flipflop, een opeenvolging aan flipflops plaatsen. Men geeft hierdoor meer tijd aan het signaal om uit de metastabiele toestand te komen maar behoudt tegelijk een sterke klokfrequentie.
+Extra hardware kan ook een bijdrage leveren. Wanneer de processor de data moet verwerken met een bepaalde doorvoersnelheid, maar de vertraging niet zo belangrijk is\footnote{De vertraging is bijvoorbeeld wel van belang bij real-time applicaties zoals live televisie-uitzendingen en \emph{Skype}.} kan men in plaats van \'e\'en flipflop, een opeenvolging aan flipflops plaatsen. Men geeft hierdoor meer tijd aan het signaal om uit de metastabiele toestand te komen maar behoudt tegelijk een sterke (interne) klokfrequentie.
 \begin{figure}[hbt]
 \centering
 \importtikzsubfigure{synchronization-multi}{Zelfde kloksignaal.}
 \importtikzsubfigure{synchronization-freq}{Trager kloksignaal.}
 \caption{Metastabiliteit oplossen door een opeenvolging van flipflops.}
 \end{figure}
+\paragraph{}
+Indien de ingangssignalen zelf met hoge frequentie worden aangeleverd kunnen we $n$ flipflops plaatsen die de synchronisatie uitvoeren. Een signaal propageert dus eerst door $n$ flipflops en heeft dus meer tijd om uit de metastabiele toestand te geraken. In dat geval is de resolutie-tijd:
+\begin{equation}
+\begin{array}{cr}
+t_r=n\cdot\brak{t_{\mbox{\small clock}}-t_{\mbox{\small set-up}}}-t_{\mbox{\small comb}}&\mbox{(\figref{synchronization-multi})}
+\end{array}
+\end{equation}
+Meestal volstaan $2$ of $3$ flipflops. Een abstracte implementatie staat beschreven in \figref{synchronization-multi}.
+\paragraph{}
+Soms verandert het signaal niet zo snel. Denk bijvoorbeeld aan een processor die een deling moet uitrekenen. Meestal zal de interne klok significant sneller klokken omdat er veel operaties moeten worden uitgevoerd om het quoti\"ent uit te rekenen. Dit terwijl de invoer trager bijvoorbeeld maar om de 10 klokflanken wordt aangepast. In dat geval kunnen we werken met twee flipflops die aan een lagere (in dit geval $\dfrac{1}{10}$ van de originele klokfrequentie nieuwe waardes opslaan. De resolutie-tijd wordt dan:
+\begin{equation}
+\begin{array}{cr}
+t_r=n\cdot t_{\mbox{\small clock}}+t_{\mbox{\small clock}}-t_{\mbox{\small comb}}-2\cdot t_{\mbox{\small set-up}}&\mbox{(\figref{synchronization-freq})}
+\end{array}
+\end{equation}
+Een abstracte implementatie staat beschreven in \figref{synchronization-freq}.
