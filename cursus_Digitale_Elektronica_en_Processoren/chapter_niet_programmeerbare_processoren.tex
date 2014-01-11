@@ -2301,12 +2301,15 @@ Metastabiliteit is echter een probleem waar men wel iets aan kan doen. Uit \sscr
 t_r=t_{\mbox{\small clock}}-t_{\mbox{\small comb}}-t_{\mbox{\small set-up}}
 \end{equation}
 Met $t_{\mbox{\small clock}}$ de periode van de klok, $t_{\mbox{\small clock}}$ de tijd die het signaal nodig heeft om door de combinatorische schakeling te propageren van het circuit en $t_{\mbox{\small set-up}}$ de set-up tijd om de resultaten op te slaan in de flipflops van het circuit\footnote{Bijvoorbeeld om op basis van de invoer een nieuwe toestand aan te nemen.}.
+\importtikzfigure{synchronization-single}{De verschillende componenten van de ``metastability resolution time''.}
 \paragraph{}
 De klokperiode $t_{\mbox{\small clock}}$ staat in principe niet vast: we kunnen zelf de kloksnelheid bepalen, maar wensen meestal een hoge kloksnelheid. Bovendien wordt de kloksnelheid ook beperkt in de mate dat invoer beschikbaar komt: wanneer we bijvoorbeeld geluid verwerken moet we $40~\mbox{kHz}$ aan metingen kunnen aanbieden. In het geval we echter een niet-programmeerbare processor beschouwen, staat de toepassing meestal vast en dus ook de invoersnelheid van die toepassing. De kloksnelheid verder opdrijven heeft dan geen zin. We kunnen dus de klokperiode altijd proberen te maximaliseren.
 \paragraph{}
 Men kan ook inzetten op technologie. Snelle flipflops hebben een kortere set-up tijd en bovendien verkleint ook de halfwaardetijd: hierdoor zullen we dus ook sneller de metastabiele toestand verlaten. Bijgevolg wordt $t_{\mbox{\small meta}}$ kleiner. Een nadeel van deze flipflops is dat ze meer vermogen verbruiken.
 \paragraph{}
 Extra hardware kan ook een bijdrage leveren. Wanneer de processor de data moet verwerken met een bepaalde doorvoersnelheid, maar de vertraging niet zo belangrijk is\footnote{De vertraging is bijvoorbeeld wel van belang bij televisieuitzendingen.} kan men in plaats van \'e\'en flipflop, een opeenvolging aan flipflops plaatsen. Men geeft hierdoor meer tijd aan het signaal om uit de metastabiele toestand te komen maar behoudt tegelijk een sterke klokfrequentie.
+\importtikzfigure{synchronization-multi}{De verschillende componenten van de ``metastability resolution time''.}
+\importtikzfigure{synchronization-freq}{De verschillende componenten van de ``metastability resolution time''.}
 % \begin{figure}[hbt]
 % \importtikzsubfigure{metastability-sequenceff}{Zelfde kloksignaal}
 % \importtikzsubfigure{metastability-sequencefffreq}{Trager kloksignaal}
