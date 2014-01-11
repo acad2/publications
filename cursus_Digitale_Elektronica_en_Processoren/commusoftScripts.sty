@@ -427,10 +427,47 @@
     \draw[thick] (\xi*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bj+0.5*\ni);
   }
   \foreach \t/\dt/\i/\j in {#8} {
-     \draw[gray,very tiny,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
+    \draw[gray,very tiny,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
   }
 \end{scope}
 }
+
+%Timebehavi
+%arg0	T	the difference in time of the scope (the width of the time behavior).
+%arg1	dx	the scale in time.
+%arg2	X	the index and name of each variable.
+%arg3	E	(ni,ti,bi,tj,bj) a time event with ni the variable index, bi the first value, bj the second value, xi the initial time, xj the time when the event takes place.
+%arg3	M	(ni,xi,xj) a metastability phase of variable ni from ti to tj.
+%arg4	C	(t,dt,i,j) a causality-relation arrow the time of the causing event, dt the time difference, i the causing variable and j the resulting variable.
+%arg5	T	(ti,tj,n) denotes a timespan
+\newcommand{\timebehavi}[7]{
+\def\xs{#2};
+  \draw[thick,->] (-0.1,0) -- ++(#1+0.6,0) node[anchor=north east,scale=0.75]{$t$};
+  \setcounter{tmpC}{0}
+  \foreach \i/\t in {#3} {
+    \addtocounter{tmpC}{1}
+    \draw (-0.5,0.25+0.5*\i) node[scale=0.85]{\t};
+    \draw (0,0.125+0.5*\i) node[anchor=east,scale=0.65]{$0$};
+    \draw (0,0.375+0.5*\i) node[anchor=east,scale=0.65]{$1$};
+    \draw[dotted,tiny] (0,0.375+0.5*\i) -- (#1+0.3,0.375+0.5*\i);
+    \draw[dotted,tiny] (0,0.125+0.5*\i) -- (#1+0.3,0.125+0.5*\i);
+  }
+  \draw[thick,->] (0,-0.1) -- ++(0,0.5*\arabic{tmpC}+0.2);
+  \foreach \ni/\ti/\tj in {#4} {
+    \fill[fill=gray] (\ti*\xs,0.125+0.5*\ni) rectangle (\tj*\xs,0.375+0.5*\ni);
+  }
+  \foreach \ni/\xi/\bi/\xj/\bj in {#5} {
+    \draw[thick] (\xi*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bj+0.5*\ni);
+  }
+  \foreach \t/\dt/\i/\j in {#6} {
+     \draw[gray,very tiny,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
+  }
+  \foreach \ti/\tj/\n in {#7} {
+    \draw[decorate,decoration={brace}] (\tj*\xs,-0.1) -- (\ti*\xs,-0.1);
+    \draw ($0.5*(\tj*\xs,-0.5)+0.5*(\ti*\xs,-0.5)$) node[scale=0.85] {\n};
+  }
+}
+
 \DeclareMathOperator{\rem}{rem}
 \DeclareMathOperator{\fix}{fix}
 \DeclareMathOperator{\float}{float}
