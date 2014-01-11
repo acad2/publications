@@ -1,14 +1,18 @@
 \begin{tikzpicture}[circuit logic US]
 \node[dff,scale=0.75] (DFF1) at (0,1) {$F_1$};
 \node[dff,scale=0.75] (DFF2) at (0,-1) {$F_2$};
-\node[clockedblock,minimum width=2 cm,minimum height=3 cm] (CB) at ($0.5*(DFF1.Q)+0.5*(DFF2.Q)+(1.5,0)$) {};
-\node[unclockedblock,minimum width=2 cm,minimum height=3 cm] (UB) at ($0.5*(DFF1.D)+0.5*(DFF2.D)-(1.5,0)$) {};
+\node[clockedblock,minimum width=2 cm,minimum height=3 cm,text width=2 cm,align=center] (CB) at ($0.5*(DFF1.Q)+0.5*(DFF2.Q)+(2,0)$) {Synchroon sequentieel signaal};
+\node[unclockedblock,minimum width=2 cm,minimum height=3 cm,text width=2 cm,align=center] (UB) at ($0.5*(DFF1.D)+0.5*(DFF2.D)-(2,0)$) {Externe signalen};
 \coordinate (CLKL) at ($(DFF2.south west)-(0.25,0.25)$);
 \coordinate (CLKM) at ($(CB.south west)-(0.25,0.25)$);
-\foreach \i in {1,2} {
-  \draw (DFF\i.D) -- (DFF\i.D -| UB.east) (DFF\i.Q) -- (DFF\i.Q -| CB.west);
+\coordinate (CLKN) at (CLKM |- CLKL);
+\coordinate (CLKO) at (CLKN -| CB.east);
+\foreach \i/\a in {1/above,2/below} {
+  \draw (DFF\i.D) to node[midway,\a]{$a_{\i}$} (DFF\i.D -| UB.east) (DFF\i.Q) to node[midway,\a]{$s_{\i}$} (DFF\i.Q -| CB.west);
 }
-\draw (CK.Clk) -| (CLKM) |- (CLKL) |- (DFF2.Clk);
+\draw (CB.Clk) -| (CLKM) |- (CLKL) |- (DFF2.Clk);
+\pdot{CLKN}
+\draw (CLKN) -- (CLKO);
 \draw (CLKL |- DFF2.Clk) |- (DFF1.Clk);
 \pdot{CLKL |- DFF2.Clk};
 \begin{pgfonlayer}{background}
