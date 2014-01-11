@@ -11,9 +11,10 @@ do
 	for i in {1..50}
 	do
 		make
+		evince cursus.pdf
 		sleep 60
 	done
 	git add .
-	git commit -a -m "$msg"
+	git commit -S -a -m "$msg"
 	git push
 done

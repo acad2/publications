@@ -2278,7 +2278,7 @@ Er zijn dan ook grofweg twee technieken om een selectief op bepaalde klokflanken
  \item Met behulp van een AND-poort (zoals bij \figref{loadregi-cle}).
 \end{enumerate}
 Zoals zo vaak is geen van de twee technieken altijd te verkiezen: beide implementaties hebben hun voor- en nadelen. Zo kost register met multiplexer $6$ transistoren per bit meer dan een AND-poort. Ook het energie-verbruik ligt hoger: het kloksignaal komt immers in de flipflop terecht waar een groot aantal transistoren zullen schakelen. Dit verbruik is nutteloos wanneer we geen nieuwe gegevens willen inklokken en we dus opnieuw dezelfde waarde op de data-ingang aanbieden. Anderzijds is een multiplexer een vrij veilige optie. De nadelen van een AND-poort zijn dat dit typisch clock-skew introduceert omdat het kloksignaal duidelijk vertraging oploopt wanneer het door de AND-poort propageert. Wanneer het kloksignaal hoog is, mag de ``clock enabled'' bovendien niet zomaar worden verandert: de flipflop zou dit immers interpreteren als een veranderend kloksignaal. Het vereist dus wat ontwerpervaring om implementatie met een AND-poort veilig te stellen.
-\subsection{Asynchrone ingangen}
+\subsection{Synchroniseren van asynchrone ingangen}
 Ondanks voorzichtig ontwerp van een niet-programmeerbare processor, komt invoer doorgaans van buiten de schakeling. Deze data wordt misschien ook door een synchrone schakeling -- bijvoorbeeld een processor -- aangeboden, maar het synchroniseren van verschillende klokken is onmogelijk. Zelfs in eenzelfde synchrone schakeling kunnen bovendien synchronisatieproblemen ontstaan, bijvoorbeeld wanneer bepaalde delen van de schakeling sneller resultaten berekenen. Dergelijke effecten maken het echter niet evident om logica te ontwikkelen: meestal gaan we ervan uit dat tijdens berekeningen van de processor de ingang niet zomaar een andere waarde aanneemt. Stel dat de processor afwisselend de twee getallen aan de ingang optelt en aftrekt maken we meestal de assumptie dat halverwege de optelling de operanden niet veranderen. Om asynchrone veranderingen op te vangen gebruikt men doorgaans flipflops die de waarden aan de ingangen op vaste momenten inlezen. De data-uitgangen van deze flipflops zijn gedurende een klokflank stabiel.
 \paragraph{}
 Dit is echter de theorie en ook hier kunnen dingen foutlopen. Een signaal moet immers een tijdje op de ingang van een flipflop worden aangelegd voor de klokflank om het correct in te klokken. Indien de gegevens op tijd worden aangelegd is er dus geen probleem. Wanneer de gegevens echter kort voor de klokflank worden aangeleverd kunnen er verschillende problemen ontstaan:
@@ -2288,6 +2288,13 @@ Dit is echter de theorie en ook hier kunnen dingen foutlopen. Een signaal moet i
  \item \'E\'en of meer flipflops komen in een metastabiele toestand terecht: er wordt noch $0$ noch $1$ op de ingang aangelegd. Het duurt een zekere tijd voor een flipflop uit dergelijke toestand gaat. Dit effect kan ook optreden wanneer de nieuwe data al lang op de flipflop wordt aangelegd.
 \end{itemize}
 Aan de eerste twee problemen is weinig te verhelpen. In de praktijk zal men dit meestal oplossen met een synchronisatiesignaal: men stuurt bijvoorbeeld het kloksignaal mee op \'e\'en van de verbindingen tussen de twee circuits, of in het geval er maar af en toe data op de ingang komt te staan kondigt men dit aan door de ingangen met de regelmaat van de klok te laten veranderen van signaal\footnote{Dit is het geval bij Ethernet (IEEE 802.3).}.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{synchronization-circuit}{Schakeling.}
+\importtikzsubfigure{synchronization-problems}{Problemen met synchronisatie.}
+\figlab{synchronization}
+\caption{Synchronisatie.}
+\end{figure}
 \paragraph{}
 Metastabiliteit is echter een probleem waar men wel iets aan kan doen. Uit \sscref{flipflop} weten we immers dat de kans dat een schakeling zich na een zekere tijd nog steeds in een metastabiele toestand bevindt, exponentieel daalt met de tijd. Als we dus een redelijk termijn wachten, kunnen we vrij zeker stellen dat de de binnenkomende signalen niet metastabiel zijn. Deze tijd noemt men de \termen{metastability resolution time $t_r$}. Logischerwijs wensen we dat $t_r\geq t_{\mbox{\small meta}}$ met $t_{\mbox{\small meta}}$ de tijd om uit een metastabiele toestand te geraken. $t_r$ hangt echter van drie andere parameters af:
 \begin{equation}
@@ -2300,8 +2307,8 @@ De klokperiode $t_{\mbox{\small clock}}$ staat in principe niet vast: we kunnen 
 Men kan ook inzetten op technologie. Snelle flipflops hebben een kortere set-up tijd en bovendien verkleint ook de halfwaardetijd: hierdoor zullen we dus ook sneller de metastabiele toestand verlaten. Bijgevolg wordt $t_{\mbox{\small meta}}$ kleiner. Een nadeel van deze flipflops is dat ze meer vermogen verbruiken.
 \paragraph{}
 Extra hardware kan ook een bijdrage leveren. Wanneer de processor de data moet verwerken met een bepaalde doorvoersnelheid, maar de vertraging niet zo belangrijk is\footnote{De vertraging is bijvoorbeeld wel van belang bij televisieuitzendingen.} kan men in plaats van \'e\'en flipflop, een opeenvolging aan flipflops plaatsen. Men geeft hierdoor meer tijd aan het signaal om uit de metastabiele toestand te komen maar behoudt tegelijk een sterke klokfrequentie.
-\begin{figure}[hbt]
-\importtikzsubfigure{metastability-sequenceff}{Zelfde kloksignaal}
-\importtikzsubfigure{metastability-sequencefffreq}{Trager kloksignaal}
-\caption{Metastabiliteit oplossen door een opeenvolging van flipflops.}
-\end{figure}
+% \begin{figure}[hbt]
+% \importtikzsubfigure{metastability-sequenceff}{Zelfde kloksignaal}
+% \importtikzsubfigure{metastability-sequencefffreq}{Trager kloksignaal}
+% \caption{Metastabiliteit oplossen door een opeenvolging van flipflops.}
+% \end{figure}
