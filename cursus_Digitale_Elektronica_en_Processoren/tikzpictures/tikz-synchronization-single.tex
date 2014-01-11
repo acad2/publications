@@ -5,7 +5,7 @@
 \node[draw=black,fill=white,rounded rectangle] (COMB) at (DFF1.Q -| 0,0) {comb.};
 \coordinate (CLK1) at ($(DFF1.south west)-(0.25,0.25)$);
 \coordinate (CLK2) at ($(DFF2.south west)-(0.25,0.25)$);
-\draw (DFF1.Clk) -| (CLK1) -- (CLK2) |- (DFF2.Clk) (DFF1.Q) -- (COMB.west) (COMB.east) -- (DFF2.D) (CLK1) -- ++(-0.25,0) node[ancho=east] {clock};
+\draw (DFF1.Clk) -| (CLK1) -- (CLK2) |- (DFF2.Clk) (DFF1.Q) -- (COMB.west) (COMB.east) -- (DFF2.D) (CLK1) -- ++(-0.25,0) node[anchor=east] {clock};
 \pdot{CLK1};
 \begin{pgfonlayer}{background}
 \node[fit=(COMB) (DFF2),fill=gray!50] (SYNC) {};

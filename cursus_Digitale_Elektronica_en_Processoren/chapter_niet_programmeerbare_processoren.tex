@@ -2308,10 +2308,9 @@ De klokperiode $t_{\mbox{\small clock}}$ staat in principe niet vast: we kunnen 
 Men kan ook inzetten op technologie. Snelle flipflops hebben een kortere set-up tijd en bovendien verkleint ook de halfwaardetijd: hierdoor zullen we dus ook sneller de metastabiele toestand verlaten. Bijgevolg wordt $t_{\mbox{\small meta}}$ kleiner. Een nadeel van deze flipflops is dat ze meer vermogen verbruiken.
 \paragraph{}
 Extra hardware kan ook een bijdrage leveren. Wanneer de processor de data moet verwerken met een bepaalde doorvoersnelheid, maar de vertraging niet zo belangrijk is\footnote{De vertraging is bijvoorbeeld wel van belang bij televisieuitzendingen.} kan men in plaats van \'e\'en flipflop, een opeenvolging aan flipflops plaatsen. Men geeft hierdoor meer tijd aan het signaal om uit de metastabiele toestand te komen maar behoudt tegelijk een sterke klokfrequentie.
-\importtikzfigure{synchronization-multi}{De verschillende componenten van de ``metastability resolution time''.}
-\importtikzfigure{synchronization-freq}{De verschillende componenten van de ``metastability resolution time''.}
-% \begin{figure}[hbt]
-% \importtikzsubfigure{metastability-sequenceff}{Zelfde kloksignaal}
-% \importtikzsubfigure{metastability-sequencefffreq}{Trager kloksignaal}
-% \caption{Metastabiliteit oplossen door een opeenvolging van flipflops.}
-% \end{figure}
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{synchronization-multi}{Zelfde kloksignaal.}
+\importtikzsubfigure{synchronization-freq}{Trager kloksignaal.}
+\caption{Metastabiliteit oplossen door een opeenvolging van flipflops.}
+\end{figure}
