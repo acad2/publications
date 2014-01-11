@@ -1,13 +1,14 @@
 \begin{tikzpicture}[circuit logic US]
 \node[dff,scale=0.75] (DFF1) at (0,1) {$F_1$};
 \node[dff,scale=0.75] (DFF2) at (0,-1) {$F_2$};
-\node[unclockedblock,minimum width=2 cm,minimum height=3 cm] (UB) at ($0.5*(DFF1.Q)+0.5*(DFF2.Q)+(1.5,0)$) {};
-\node[clockedblock,minimum width=2 cm,minimum height=3 cm] (CB) at ($0.5*(DFF1.D)+0.5*(DFF2.D)-(1.5,0)$) {};
+\node[clockedblock,minimum width=2 cm,minimum height=3 cm] (CB) at ($0.5*(DFF1.Q)+0.5*(DFF2.Q)+(1.5,0)$) {};
+\node[unclockedblock,minimum width=2 cm,minimum height=3 cm] (UB) at ($0.5*(DFF1.D)+0.5*(DFF2.D)-(1.5,0)$) {};
 \coordinate (CLKL) at ($(DFF2.south west)-(0.25,0.25)$);
+\coordinate (CLKM) at ($(CB.south west)-(0.25,0.25)$);
 \foreach \i in {1,2} {
   \draw (DFF\i.D) -- (DFF\i.D -| UB.east) (DFF\i.Q) -- (DFF\i.Q -| CB.west);
 }
-\draw (CLKL) |- (DFF2.Clk);
+\draw (CK.Clk) -| (CLKM) |- (CLKL) |- (DFF2.Clk);
 \draw (CLKL |- DFF2.Clk) |- (DFF1.Clk);
 \pdot{CLKL |- DFF2.Clk};
 \begin{pgfonlayer}{background}
