@@ -5,6 +5,18 @@
 In dit hoofdstuk beschrijven we enkele experimenten die we kunnen uitvoeren om praktische en nuttige digitale schakelingen te realiseren voor dagelijks gebruik.
 \end{chapterintro}
 \minitoc[n]
+\section{Oneindig vermenigvuldigen}
+\'E\'en van de voordeling van delen en vermenigvuldigen met constanten, is dat de overdracht of het lenen ook beperkt is. Wanneer we een binair getal bijvoorbeeld vermenigvuldigen met $3$, kan de carry nooit groter worden dan $4$. Wanneer we dit veralgemenen naar een vermenigvuldiging in het binair stelsel met $n$, kan de overdracht nooit groter worden dan $2\cdot n-1$. We kunnen dit uitbuiten om een sequenti\"ele vermenigvuldiger te maken die over bit-stromen met oneindige lengte werkt. We realiseren dus een schakeling waar als invoer een stroom aan bits en het bijbehorende kloksignaal binnenkomt, en als uitvoer een andere stroom bits geklokt volgens hetzelfde kloksignaal maar waarbij de bits het $k$-voud voorstellen van de inkomende bitstroom. We werken volgen big-endian encodering: de eerste bit die in de schakeling binnenkomt is altijd de minst significante.
+\subsection{Benodigdheden}
+Dit hangt grotendeels af van de constante $k$ waarmee we willen vermenigvuldigen. Voor een constante $k=5$ zijn de benodigdheden de volgende:
+\begin{itemize}
+ \item $2$ leds.
+\end{itemize}
+\subsection{Model}
+In de inleiding hebben we de werking van het component niet gespecificeerd. Dit zullen we in deze sectie doen. Wanneer een getal bit-na-bit wordt ingelezen in het circuit, dient het circuit dit getal de vermenigvuldigen. We kunnen echter de eigenschap uitbuiten dat de overdracht die bij de vermenigvuldiging optreedt, altijd eindig zal zijn. Bij voorbeeld zullen we een vermenigvuldiging met $k=5$ modelleren.
+\paragraph{}
+\importtikzfigure{infinitemul-carry5}{Een toestandsdiagram voor $k=5$.}
+De machine begint in een toestand waar er geen overdracht is, formeler $c=0$. Dit is de toestand $q_0$ op \figref{infinitemul-carry5}. Wanneer er nu een $0$ binnenkomt, is het resultaat logischerwijs $0$ en blijft de overdracht ook op $0$ staan. We trekken dus een lus vanuit $q_0$ met boog $0/0$. Wanneer er echter een $1$ op de invoer wordt aangelegd, dan weten we dat de uitvoer-bit ook $1$ moet worden, en dat we vanaf dat moment met overdracht $c=4$ moeten rekening houden. Nu hebben we alle invoer voor $q_0$ gemodelleerd, maar $q_4$ dienen we verder in te vullen.
 \section{Fietslicht}
 Men kan vandaag fietslichten kopen met verschillende knippermodes. Bij wijze van experiment zullen we een knipperlicht implementeren gebaseerd op een ledlamp van \emph{Hema}.
 \paragraph{}
