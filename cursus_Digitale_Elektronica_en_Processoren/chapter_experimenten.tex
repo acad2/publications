@@ -16,7 +16,25 @@ Dit hangt grotendeels af van de constante $k$ waarmee we willen vermenigvuldigen
 In de inleiding hebben we de werking van het component niet gespecificeerd. Dit zullen we in deze sectie doen. Wanneer een getal bit-na-bit wordt ingelezen in het circuit, dient het circuit dit getal de vermenigvuldigen. We kunnen echter de eigenschap uitbuiten dat de overdracht die bij de vermenigvuldiging optreedt, altijd eindig zal zijn. Bij voorbeeld zullen we een vermenigvuldiging met $k=5$ modelleren.
 \paragraph{}
 \importtikzfigure{infinitemul-carry5}{Een toestandsdiagram voor $k=5$.}
-De machine begint in een toestand waar er geen overdracht is, formeler $c=0$. Dit is de toestand $q_0$ op \figref{infinitemul-carry5}. Wanneer er nu een $0$ binnenkomt, is het resultaat logischerwijs $0$ en blijft de overdracht ook op $0$ staan. We trekken dus een lus vanuit $q_0$ met boog $0/0$. Wanneer er echter een $1$ op de invoer wordt aangelegd, dan weten we dat de uitvoer-bit ook $1$ moet worden, en dat we vanaf dat moment met overdracht $c=4$ moeten rekening houden. Nu hebben we alle invoer voor $q_0$ gemodelleerd, maar $q_4$ dienen we verder in te vullen.
+De machine begint in een toestand waar er geen overdracht is, formeler $c=0$. Dit is de toestand $q_0$ op \figref{infinitemul-carry5}. Wanneer er nu een $0$ binnenkomt, is het resultaat logischerwijs $0$ en blijft de overdracht ook op $0$ staan. We trekken dus een lus vanuit $q_0$ met boog $0/0$. Wanneer er echter een $1$ op de invoer wordt aangelegd, dan weten we dat de uitvoer-bit ook $1$ moet worden, en dat we vanaf dat moment met overdracht $c=4$ moeten rekening houden. Nu hebben we alle invoer voor $q_0$ gemodelleerd, maar $q_4$ dienen we verder in te vullen. In het algemeen geldt de regel voor een vermenigvuldiging van $k$ dat we een boog van $q_i$ naar $q_j$ trekken met label $b_i/b_o$ zodat:
+\begin{eqnarray}
+b_i\in\accl{0,1}\\
+r=\displaystyle\frac{i}{2}+k\cdot b_i\\
+b_o=r\mod 2\\
+j=r-b_o
+\end{eqnarray}
+Voor $q_4$ betekent dit dus dat we een boog $0/0$ naar $q_2$ trekken en een boog $1/1$ naar $q_6$. We dienen vervolgens ook bogen uit deze toestanden te trekken en dit tot er geen nieuwe toestanden meer opduiken. We bekomen vervolgens een diagram zoals op \figref{infinitemul-carry5}. We kunnen dit voor iedere $k$ doen.
+\paragraph{Reset}
+Getallen hebben altijd een eindig aantal cijfers en bijgevolg ook een eindig aantal bits. We willen de schakeling dan ook niet noodzakelijk gebruiken om een product uit te rekenen over een oneindige sequentie bits. Maar wel op een snelle manier getallen van willekeurige lengte vermenigvuldigen. We dienen echter aan het circuit duidelijk te maken dat we een nieuw getal willen vermenigvuldigen. We kunnen dit op twee manieren doen:
+\begin{enumerate}
+ \item We lezen de resterende bits uit door telkens $0$ op de ingang aan te leggen tot het circuit zich terug in toestand $q_0$ bevindt, dit duurt hoogstens $\fun{\log_2}{n}+1$ stappen. Dit is ook in principe de correcte methode omdat het resultaat van een vermenigvuldiging nu eenmaal een getal met meer bits kan opleveren. Een nadeel is echter wanneer we dit circuit in een processor zouden gebruiken, waarbij de registers een beperkt aantal bits hebben, we meestal ge\"interesseerd zijn in de $n$ minst significante bits\footnote{Analoog met de overloop bij bijvoorbeeld een optelling.}, en we dus klokflanken ``verspillen''.
+ \item We voorzien een reset-ingang die de schakeling terug in de grondtoestand brengt. De meest significante bits gaan verloren.
+\end{enumerate}
+In dit voorbeeld kiezen we voor de eerste variant. Dit houdt immers ook het circuit eenvoudig en goedkoop.
+\subsection{Realisatie}
+\subsubsection{Toestanden en soorten schakeling}
+In de vorige subsectie hebben we besproken hoe we een diagram kunnen opstellen voor de overdracht. Dit diagram is precies het diagram voor de Mealy-machine om onze schakeling te realiseren. We kunnen het diagram dus rechtstreeks gebruiken om een toestandstabel op te stellen zoals in \tblref{infinitemul-state}.
+\importtabulartable{ininitemul-state5}{Toestandstabel van de schakeling.}
 \section{Fietslicht}
 Men kan vandaag fietslichten kopen met verschillende knippermodes. Bij wijze van experiment zullen we een knipperlicht implementeren gebaseerd op een ledlamp van \emph{Hema}.
 \paragraph{}

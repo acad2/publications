@@ -11,7 +11,6 @@ do
 	for i in {1..50}
 	do
 		make
-		evince cursus.pdf
 		sleep 60
 	done
 	git add .
