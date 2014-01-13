@@ -4,4 +4,4 @@ cursus.pdf: *.tex *.bib *.sty */*.tex tables/*.tex tikzpictures/*.tex
 	echo "[Done]"
 
 clean:
-	rm *.aux *.out *.log *.bbl *.blg *~ *.*~*
+	rm *.aux *.out *.log *.bbl *.blg *~ *.*~* *.mtc*
