@@ -1,3 +1,38 @@
-\begin{tikzpicture}
-
-\end{tikzpicture}
+\scalebox{0.5}{
+\begin{circuitikz}
+\def\dx{4};
+\def\dy{4};
+\def\dh{0.125};
+\def\dxy{1.2};
+\def\scnpn{0.75};
+\def\scled{0.5};
+\def\scr{0.5};
+\def\dr{1.5};
+\def\dl{1.5};
+\coordinate (SL) at (0,\dy);
+\coordinate (DL) at (0,-\dy);
+\coordinate (IL) at (-\dx,0);
+\coordinate (OL) at (3*\dx,0);
+\coordinate (OM) at (0,0);
+\coordinate (KL) at (2.5*\dx,0);
+\foreach \x/\hops in {0/{},1/{0},2/{1,0}} {
+  \node[npn,scale=\scnpn,l=BC547C,thick] (pnp\x) at (\dx*\x,\dxy*\x) {};
+  \draw[thick] (pnp\x.collector) -- (pnp\n\i\j.collector |- SL);
+  \draw[thick] (pnp\x.emitter) -- (pnp\x.emitter |- pnp0.emitter) to[R,sloped,l=$1\mbox{k}$,scale=\scr] ++(0,-\dr) to[leD*,l=white,scale=\scled] ++(0,-\dl) -- (pnp\x.emitter |- DL);
+  \coordinate (PB) at (pnp\x.base);
+  \foreach \h in \hops {
+    \draw[thick] (PB) -- (PB -| \dx*\h+\dh,0) arc (0:180:\dh cm);
+    \coordinate (PB) at (PB -| \dx*\h-\dh,0);
+  }
+  \draw[thick] (PB) -- (PB -| IL) node[anchor=east,scale=2.0]{$l_{\x}$};
+}
+\foreach \x in {0,1} {
+  \pdot[0.8 mm]{pnp\x.collector |- SL};
+  \pdot[0.8 mm]{pnp\x.emitter |- DL};
+}
+\pdot[0.8 mm]{pnp2.collector |- SL};
+\draw[thick] (pnp2.collector |- SL) -- (KL |- SL);
+\draw[thick] (KL |- SL) to[push button] (KL |- OM) -- (OL |- OM) node[anchor=west,scale=2.0]{$k_0$};
+\draw[thick] (pnp2.collector |- SL) -- (IL |- SL) node[anchor=east,scale=2.0]{$V_{DD}$};
+\draw[thick] (pnp2.emitter |- DL) -- (IL |- DL) node[anchor=east,,scale=2.0]{$V_{SS}$};
+\end{circuitikz}}

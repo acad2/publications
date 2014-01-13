@@ -9,9 +9,12 @@ In dit hoofdstuk beschrijven we enkele experimenten die we kunnen uitvoeren om p
 \'E\'en van de voordeling van delen en vermenigvuldigen met constanten, is dat de overdracht of het lenen ook beperkt is. Wanneer we een binair getal bijvoorbeeld vermenigvuldigen met $3$, kan de carry nooit groter worden dan $4$. Wanneer we dit veralgemenen naar een vermenigvuldiging in het binair stelsel met $n$, kan de overdracht nooit groter worden dan $2\cdot n-1$. We kunnen dit uitbuiten om een sequenti\"ele vermenigvuldiger te maken die over bit-stromen met oneindige lengte werkt. We realiseren dus een schakeling waar als invoer een stroom aan bits en het bijbehorende kloksignaal binnenkomt, en als uitvoer een andere stroom bits geklokt volgens hetzelfde kloksignaal maar waarbij de bits het $k$-voud voorstellen van de inkomende bitstroom. We werken volgen big-endian encodering: de eerste bit die in de schakeling binnenkomt is altijd de minst significante.
 \subsection{Benodigdheden}
 Dit hangt grotendeels af van de constante $k$ waarmee we willen vermenigvuldigen. Voor een constante $k=5$ zijn de benodigdheden de volgende:
-\begin{itemize}
- \item $2$ leds.
-\end{itemize}
+\begin{enumerate}
+ \item $2$ leds;
+ \item $3$ npn-transistoren;
+ \item $1$ pnp-transistoren;
+ \item $2$ drukschakelaars.
+\end{enumerate}
 Samen kosten deze componenten (zonder gereedschap, printplaten en soldeersel) ongeveer $\mbox{\euro}\ ??.??$\footnote{Gebaseerd op prijzen bij Conrad.}.
 \subsection{Model}
 In de inleiding hebben we de werking van het component niet gespecificeerd. Dit zullen we in deze sectie doen. Wanneer een getal bit-na-bit wordt ingelezen in het circuit, dient het circuit dit getal de vermenigvuldigen. We kunnen echter de eigenschap uitbuiten dat de overdracht die bij de vermenigvuldiging optreedt, altijd eindig zal zijn. Bij voorbeeld zullen we een vermenigvuldiging met $k=5$ modelleren.
@@ -35,7 +38,7 @@ Getallen hebben altijd een eindig aantal cijfers en bijgevolg ook een eindig aan
 In dit voorbeeld kiezen we voor de eerste variant. Dit houdt immers ook het circuit eenvoudig en goedkoop.
 \paragraph{In- en Uitvoer}
 Normaal kunnen we een dergelijk circuit gebruiken in bijvoorbeeld een processor, of kunnen we het in een ethernet-kaart implementeren wanneer data moet worden aangepast. Wanneer we echter de schakeling op zichzelf willen implementeren, dienen we deze te kunnen testen. Bijgevolg zullen we ook invoer-uitvoer voorzien. Communicatie tussen mens en modules wordt meestal gerealiseerd met behulp van leds en schakelaars. Om duidelijk te maken welk signaal we zelf zullen aanleggen zullen we ook leds aan de ingang gebruiken. Een probleem die zich soms stelt is dat er een groot aantal bits aan de invoer kunnen worden aangelegd, en het dus niet eenvoudig is om met drukschakelaars een bepaalde configuratie aan te leggen. In dat geval kunnen we gebruik maken van een tuimelschakelaar. Een tuimelschakelaar kan worden aangekocht, maar ook ge\"implementeerd met behulp van een drukschakelaar en drie weerstanden. Een dergelijke implementatie staat beschreven in \figref{toggleswitch-transistor}.
-\importtikzfigure{toggleswitch-transistor}{Implementatie van een tuimelschakelaar.}
+%\importtikzfigure{toggleswitch-transistor}{Implementatie van een tuimelschakelaar.}
 \subsection{Realisatie}
 \subsubsection{Toestanden en soorten schakeling}
 In de vorige subsectie hebben we besproken hoe we een diagram kunnen opstellen voor de overdracht. Dit diagram is precies het diagram voor de Mealy-machine om onze schakeling te realiseren. We kunnen het diagram dus rechtstreeks gebruiken om een toestandstabel op te stellen zoals in \tblref{infinitemul-state5}.
