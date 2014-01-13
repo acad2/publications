@@ -25,6 +25,7 @@ b_o=r\mod 2\\
 j=r-b_o
 \end{eqnarray}
 Voor $q_4$ betekent dit dus dat we een boog $0/0$ naar $q_2$ trekken en een boog $1/1$ naar $q_6$. We dienen vervolgens ook bogen uit deze toestanden te trekken en dit tot er geen nieuwe toestanden meer opduiken. We bekomen vervolgens een diagram zoals op \figref{infinitemul-carry5}. We kunnen dit voor iedere $k$ doen.
+\subsubsection{Implementatie-specificaties}
 \paragraph{Reset}
 Getallen hebben altijd een eindig aantal cijfers en bijgevolg ook een eindig aantal bits. We willen de schakeling dan ook niet noodzakelijk gebruiken om een product uit te rekenen over een oneindige sequentie bits. Maar wel op een snelle manier getallen van willekeurige lengte vermenigvuldigen. We dienen echter aan het circuit duidelijk te maken dat we een nieuw getal willen vermenigvuldigen. We kunnen dit op twee manieren doen:
 \begin{enumerate}
@@ -32,15 +33,22 @@ Getallen hebben altijd een eindig aantal cijfers en bijgevolg ook een eindig aan
  \item We voorzien een reset-ingang die de schakeling terug in de grondtoestand brengt. De meest significante bits gaan verloren.
 \end{enumerate}
 In dit voorbeeld kiezen we voor de eerste variant. Dit houdt immers ook het circuit eenvoudig en goedkoop.
+\paragraph{In- en Uitvoer}
+
 \subsection{Realisatie}
 \subsubsection{Toestanden en soorten schakeling}
 In de vorige subsectie hebben we besproken hoe we een diagram kunnen opstellen voor de overdracht. Dit diagram is precies het diagram voor de Mealy-machine om onze schakeling te realiseren. We kunnen het diagram dus rechtstreeks gebruiken om een toestandstabel op te stellen zoals in \tblref{infinitemul-state5}.
-\importtabulartable{ininitemul-state5}{Toestandstabel van de oneindige vermenigvuldiger.}
+% \importtabulartable{ininitemul-state5}{Toestandstabel van de oneindige vermenigvuldiger.}
 \subsubsection{Toestandscodering}
 We dienen nu enkel nog een codering te bedenken om de verschillende toestanden op te slaan. Een logische manier kan zijn om $q_i$ op te slaan als het binaire equivalent van $i/2$. Dit biedt bovendien in dit geval vrij mooie overgangen: bij twee overgangen verandert er geen bit, bij vijf overgangen slechts \'e\'en bit, \'e\'en overgang brengt twee veranderingen teweeg en \'e\'en overgang drie. We kunnen echter $q_8$ ook encoderen als $111$. Dit zorgt ervoor dat er geen overgangen met drie bits meer zijn. Dit is natuurlijk heuristisch: er is geen echte garantie dat dit effectief tot een goedkopere implementatie zal leiden, al wordt het wel verondersteld. De coderingstabel wordt dan zoals voorgesteld als in \tblref{infinitemul-code5}
-\importtabulartable{ininitemul-code5}{Coderingstabel van de oneindige vermenigvuldiger.}
+% \importtabulartable{ininitemul-code5}{Coderingstabel van de oneindige vermenigvuldiger.}
 \subsubsection{Type flipflop}
 Het is niet echt duidelijk welk type flipflop hier nodig is. We zullen de schakeling met een D-flipflop implementeren.
+% \importtabulartable{ininitemul-combine5}{De oneindige vermenigvuldiger.}
+Wanneer we D-flipflops gebruiken bekomen dienen we combinatorische schakelingen te implementeren zoals op \figref{ininitemul-combine5} een grafische voorstelling met behulp van Karnaugh-kaarten staat op \figref{ininitemul-karnaugh5}.
+% \importtikzfigure{ininitemul-karnaugh5}{Karnaugh-kaarten voor de oneindige vermenigvuldiger.}
+\subsubsection{Implementatie}
+Tot slot dienen we enkel nog de schakeling 
 \section{Fietslicht}
 Men kan vandaag fietslichten kopen met verschillende knippermodes. Bij wijze van experiment zullen we een knipperlicht implementeren gebaseerd op een ledlamp van \emph{Hema}.
 \paragraph{}
