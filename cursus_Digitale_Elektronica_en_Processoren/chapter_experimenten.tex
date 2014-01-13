@@ -38,7 +38,7 @@ In dit voorbeeld kiezen we voor de eerste variant. Dit houdt immers ook het circ
 \subsection{Realisatie}
 \subsubsection{Toestanden en soorten schakeling}
 In de vorige subsectie hebben we besproken hoe we een diagram kunnen opstellen voor de overdracht. Dit diagram is precies het diagram voor de Mealy-machine om onze schakeling te realiseren. We kunnen het diagram dus rechtstreeks gebruiken om een toestandstabel op te stellen zoals in \tblref{infinitemul-state5}.
-% \importtabulartable{ininitemul-state5}{Toestandstabel van de oneindige vermenigvuldiger.}
+\importtabulartable{ininitemul-state5}{Toestandstabel van de oneindige vermenigvuldiger.}
 \subsubsection{Toestandscodering}
 We dienen nu enkel nog een codering te bedenken om de verschillende toestanden op te slaan. Een logische manier kan zijn om $q_i$ op te slaan als het binaire equivalent van $i/2$. Dit biedt bovendien in dit geval vrij mooie overgangen: bij twee overgangen verandert er geen bit, bij vijf overgangen slechts \'e\'en bit, \'e\'en overgang brengt twee veranderingen teweeg en \'e\'en overgang drie. We kunnen echter $q_8$ ook encoderen als $111$. Dit zorgt ervoor dat er geen overgangen met drie bits meer zijn. Dit is natuurlijk heuristisch: er is geen echte garantie dat dit effectief tot een goedkopere implementatie zal leiden, al wordt het wel verondersteld. De coderingstabel wordt dan zoals voorgesteld als in \tblref{infinitemul-code5}
 % \importtabulartable{ininitemul-code5}{Coderingstabel van de oneindige vermenigvuldiger.}
