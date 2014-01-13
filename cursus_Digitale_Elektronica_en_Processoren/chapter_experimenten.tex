@@ -38,7 +38,7 @@ Getallen hebben altijd een eindig aantal cijfers en bijgevolg ook een eindig aan
 In dit voorbeeld kiezen we voor de eerste variant. Dit houdt immers ook het circuit eenvoudig en goedkoop.
 \paragraph{In- en Uitvoer}
 Normaal kunnen we een dergelijk circuit gebruiken in bijvoorbeeld een processor, of kunnen we het in een ethernet-kaart implementeren wanneer data moet worden aangepast. Wanneer we echter de schakeling op zichzelf willen implementeren, dienen we deze te kunnen testen. Bijgevolg zullen we ook invoer-uitvoer voorzien. Communicatie tussen mens en modules wordt meestal gerealiseerd met behulp van leds en schakelaars. Om duidelijk te maken welk signaal we zelf zullen aanleggen zullen we ook leds aan de ingang gebruiken. Een probleem die zich soms stelt is dat er een groot aantal bits aan de invoer kunnen worden aangelegd, en het dus niet eenvoudig is om met drukschakelaars een bepaalde configuratie aan te leggen. In dat geval kunnen we gebruik maken van een tuimelschakelaar. Een tuimelschakelaar kan worden aangekocht, maar ook ge\"implementeerd met behulp van een drukschakelaar en drie weerstanden. Een dergelijke implementatie staat beschreven in \figref{toggleswitch-transistor}.
-%\importtikzfigure{toggleswitch-transistor}{Implementatie van een tuimelschakelaar.}
+\importtikzfigure{toggleswitch-transistor}{Implementatie van een tuimelschakelaar.}
 \subsection{Realisatie}
 \subsubsection{Toestanden en soorten schakeling}
 In de vorige subsectie hebben we besproken hoe we een diagram kunnen opstellen voor de overdracht. Dit diagram is precies het diagram voor de Mealy-machine om onze schakeling te realiseren. We kunnen het diagram dus rechtstreeks gebruiken om een toestandstabel op te stellen zoals in \tblref{infinitemul-state5}.
@@ -50,7 +50,7 @@ We dienen nu enkel nog een codering te bedenken om de verschillende toestanden o
 Het is niet echt duidelijk welk type flipflop hier nodig is. We zullen de schakeling met een D-flipflop implementeren.
 \importtabulartable{infinitemul-combine5}{De oneindige vermenigvuldiger.}
 Wanneer we D-flipflops gebruiken bekomen dienen we combinatorische schakelingen te implementeren zoals op \figref{ininitemul-combine5} een grafische voorstelling met behulp van Karnaugh-kaarten staat op \figref{infinitemul-karnaugh5}.
-\importtikzfigure{ininitemul-karnaugh5}{Karnaugh-kaarten voor de oneindige vermenigvuldiger.}
+\importtikzfigure{infinitemul-karnaugh5}{Karnaugh-kaarten voor de oneindige vermenigvuldiger.}
 \subsubsection{Implementatie}
 Tot slot dienen we enkel nog de schakeling 
 \section{Fietslicht}
