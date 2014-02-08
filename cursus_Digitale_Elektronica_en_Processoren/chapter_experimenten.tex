@@ -54,7 +54,24 @@ Wanneer we D-flipflops gebruiken bekomen dienen we combinatorische schakelingen 
 \subsubsection{Implementatie}
 Tot slot dienen we enkel nog de schakeling te implementeren. Het logische circuit staat om dit te realiseren staat op \figref{infinitemul-impl5}.
 \importtikzfigure{infinitemul-impl5}{Mogelijke implementatie voor de oneindige vermenigvuldiger.}
-In de praktijk worden poorten meestal niet per eenheid verkocht: het is goedkoper om vier poorten op \'e\'en chip te zetten dan vier afzonderlijke chips te produceren. Bijgevolg dienen we nog een keuze te maken hoe we.
+In de praktijk worden poorten meestal niet per eenheid verkocht: het is goedkoper om vier poorten op \'e\'en chip te zetten dan vier afzonderlijke chips te produceren. Bijgevolg dienen we nog een keuze te maken hoe we deze schakeling realiseren.
+\paragraph{}
+Wanneer we naar de schakeling op \figref{infinitemul-impl5} kijken, kunnen we de verschillende types poorten tellen.:
+\begin{enumerate}
+ \item $3\times$ NOT poort;
+ \item $2\times$ 2-NOR poorten;
+ \item $1\times$ 3-NOR poort;
+ \item $4\times$ 2-NAND poorten; en
+ \item $2\times$ 3-NAND poorten.
+ \item $3\times$ D-flipflops.
+\end{enumerate}
+Op chipniveau zullen we daarom werken met volgende poorten:
+\begin{enumerate}
+ \item $1\times$ 7404 ($6\times$ NOT-poorten);
+ \item $1\times$
+ \item $2\times$ 7474 ($2\times$ D-flipflops);
+\end{enumerate}
+
 \section{Fietslicht}
 Men kan vandaag fietslichten kopen met verschillende knippermodes. Bij wijze van experiment zullen we een knipperlicht implementeren gebaseerd op een ledlamp van \emph{Hema}.
 \paragraph{}
