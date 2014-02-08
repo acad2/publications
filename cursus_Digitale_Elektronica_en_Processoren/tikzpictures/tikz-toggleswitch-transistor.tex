@@ -1,41 +1,25 @@
-\scalebox{0.5}{
-\begin{circuitikz}%TODO
-\def\dx{2};
-\def\dy{2};
+\scalebox{0.85}{\begin{circuitikz}
+\def\dx{3};
+\def\dy{3};
 \def\dh{0.125};
 \def\dxy{1.2};
-\def\scnpn{0.75};
-\def\scled{0.5};
-\def\scr{0.5};
-\def\dr{1.5};
-\def\dl{1.5};
+\def\scnpn{1};
+\def\scr{1};
 \coordinate (SL) at (0,\dy);
 \coordinate (DL) at (0,-\dy);
-\coordinate (IL) at (-\dx,0);
-\coordinate (OL) at (3*\dx,0);
-\coordinate (OM) at (0,0);
-\coordinate (KL) at (2.5*\dx,0);
-%\draw (SL) -- (DL);
-\node[pnp,scale=\scnpn,l=2N3906,thick] (pnp) at (0,0) {};
-\node[npn,scale=\scnpn,l=2N3904,thick] (npn) at (\dx,-0.5*\dy) {};
-% \foreach \x/\hops in {0/{},1/{0},2/{1,0}} {
-%   \draw[thick] (pnp\x.collector) -- (pnp\n\i\j.collector |- SL);
-%   \draw[thick] (pnp\x.emitter) -- (pnp\x.emitter |- pnp0.emitter) to[R,sloped,l=$1\mbox{k}$,scale=\scr] ++(0,-\dr) to[leD*,l=white,scale=\scled] ++(0,-\dl) -- (pnp\x.emitter |- DL);
-%   \coordinate (PB) at (pnp\x.base);
-%   \foreach \h in \hops {
-%     \draw[thick] (PB) -- (PB -| \dx*\h+\dh,0) arc (0:180:\dh cm);
-%     \coordinate (PB) at (PB -| \dx*\h-\dh,0);
-%   }
-%   \draw[thick] (PB) -- (PB -| IL) node[anchor=east,scale=2.0]{$l_{\x}$};
-% }
-% \foreach \x in {0,1} {
-%   \pdot[0.8 mm]{pnp\x.collector |- SL};
-%   \pdot[0.8 mm]{pnp\x.emitter |- DL};
-% }
-% \pdot[0.8 mm]{pnp2.collector |- SL};
-\draw[thick] (pnp.emitter) -- (pnp.emitter |- SL);
-\draw[thick] (npn.emitter) |- (pnp.base);
-\draw[thick] (KL |- SL) to[push button] (KL |- OM) -- (OL |- OM) node[anchor=west,scale=2.0]{$k_0$};
-\draw[thick] (SL) -- (IL |- SL) node[anchor=east,scale=2.0]{$V_{DD}$};
-\draw[thick] (DL) -- (IL |- DL) node[anchor=east,,scale=2.0]{$V_{SS}$};
+\coordinate (OL) at (0,0.5*\dy);
+\coordinate (IM) at (-\dx,0);
+\coordinate (OM) at (\dx,0);
+\coordinate (KM) at (-0.5*\dx,0);
+\node[pnp,scale=-\scnpn,yscale=-1,l=2N3906] (pnp) at (0,0) {};
+\node[npn,scale=\scnpn,l=2N3904] (npn) at (0.5*\dx,-0.5*\dy) {};
+\draw (npn.collector) |- (pnp.base);
+\draw (pnp.collector) |- (npn.base);
+\draw (KM |- SL) to[push button] (KM |- npn.base) to[R,sloped,l=$100\mbox{k}$,scale=\scr] (pnp.collector |- npn.base);
+\draw (OL) -- (OM |- OL) node[anchor=west]{output};
+\pdot[0.8mm]{OL};
+\pdot[0.8mm]{pnp.emitter |- npn.base};
+\draw (SL) to [R,sloped,l=$20\mbox{k}$,scale=\scr] (OL) -- (pnp.emitter);
+\draw (SL) -- (IM |- SL) node[anchor=east]{$V_{DD}$};
+\draw (npn.emitter) -- (npn.emitter |- DL) -- (IM |- DL) node[anchor=east]{$V_{SS}$};
 \end{circuitikz}}
