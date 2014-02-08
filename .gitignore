@@ -33,6 +33,7 @@
 *.pdf
 *.backup
 *~
+*-
 *.*~*
 *.mtc*
 *.codes
