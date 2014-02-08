@@ -405,13 +405,13 @@
 }
 
 %Implementation of a synchronous sequential circuit
-\newcommand{\syncGate}[7][dff]{
+\newcommand{\syncGate}[8][dff]{
 \def\dx{0.35}
 \def\dl{0.125}
 \def\dy{0.7}
 \def\ny{0.5}%We are the knights who say Ni!
 \def\noy{0.25}
-\def\sc{0.65}
+\def\sc{1}
 \begin{scope}[xshift=#2 cm, yshift=#3 cm]
 \setcounter{tmpC}{0}
 \foreach \l/\t in {#5} {
@@ -428,7 +428,7 @@
 }
 \foreach \l/\i/\k/\t in {#6} {
   \addtocounter{tmpD}{1}
-  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#4/\arabic{tmpF});
+  \node[\t,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#4/\arabic{tmpF});
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
@@ -453,6 +453,18 @@
     \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
     \addtocounter{tmpE}{-1}
   }
+}
+\addtocounter{tmpC}{1}
+\foreach \l/\t/\i/\o/\sca in {#8} {
+%   \addtocounter{tmpD}{1}
+  \node[\t,anchor=\o,scale=\sca] (FF\l) at (\i.output -| \dx*\arabic{tmpC}+2*\dx,0) {};
+  \draw (\i.output) -- (FF\l.\o);
+%   \setcounter{tmpE}{1}
+%   \foreach\v in \k {
+%     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
+%     \pdot{A\l.input \arabic{tmpE} -| V\v}
+%     \addtocounter{tmpE}{1}
+%   }
 }
 \end{scope}
 }

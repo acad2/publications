@@ -31,5 +31,5 @@
 
 
 \begin{tikzpicture}[circuit logic US]
-\syncGate{0}{0}{3}{i/$I$,q0/$q_0$,q1/$q_1$,q2/$q_2$}{0/nnn/{i,q0,q1}/and,1/nn/{i,q2}/or,2/nn/{i,q0}/and,3/ni/{q1,q2}/and,4/ini/{i,q0,q2}/and,5/nn/{i,q2}/and,6/ni/{i,q0}/and}{1/nn/4/5,2/nnn/6/8}
+\syncGate{0}{0}{4}{i/$I$,q0/$q_0$,q1/$q_1$,q2/$q_2$}{0/ini/{i,q0,q2}/and gate,1/nn/{i,q2}/and gate,2/ni/{i,q0}/and gate,3/nnn/{i,q0,q1}/and gate,4/nn/{i,q2}/or gate,5/nn/{i,q0}/and gate,6/ni/{q1,q2}/and gate}{0/nnn/0/2,1/nn/5/6}{0/dff/A3/D/0.25,1/dff/A4/D/0.25,2/dff/O1/D/0.25}
 \end{tikzpicture}
