@@ -405,7 +405,7 @@
 }
 
 %Implementation of a synchronous sequential circuit
-\newcommand{\syncGate}[7][t]{
+\newcommand{\syncGate}[7][dff]{
 \def\dx{0.35}
 \def\dl{0.125}
 \def\dy{0.7}
@@ -423,10 +423,10 @@
 \addtocounter{tmpC}{1}
 \setcounter{tmpD}{0}
 \setcounter{tmpF}{1}
-\foreach \l/\i/\k in {#6} {
+\foreach \l/\i/\k/\t in {#6} {
   \addtocounter{tmpF}{1}
 }
-\foreach \l/\i/\k in {#6} {
+\foreach \l/\i/\k/\t in {#6} {
   \addtocounter{tmpD}{1}
   \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#4/\arabic{tmpF});
   \setcounter{tmpE}{1}
@@ -442,7 +442,7 @@
 }
 \addtocounter{tmpC}{1}
 \coordinate (OutCol) at (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},0);
-\foreach \l/\i/\ni/\nj/\f in {#7} {
+\foreach \l/\i/\ni/\nj in {#7} {
   \addtocounter{tmpF}{-1}
   \setcounter{tmpE}{\nj}
   \addtocounter{tmpE}{-\ni}
@@ -453,7 +453,6 @@
     \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
     \addtocounter{tmpE}{-1}
   }
-  \draw (O\l.output) -| (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},#4+\dl*\arabic{tmpF}) -| (V\f |- 0,#4);
 }
 \end{scope}
 }
