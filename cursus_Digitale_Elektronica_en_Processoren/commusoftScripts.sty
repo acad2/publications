@@ -294,6 +294,7 @@
 \end{scope}
 }
 
+%Implementation of a combinatorial circuit
 \newcommand{\combinGate}[7]{
 \def\dx{0.35}
 \def\dy{0.7}
@@ -349,6 +350,7 @@
 \end{scope}
 }
 
+%Implementation of an asynchronous sequential circuit
 \newcommand{\asyncGate}[6]{
 \def\dx{0.35}
 \def\dl{0.125}
@@ -398,6 +400,60 @@
     \addtocounter{tmpE}{-1}
   }
   \draw (O\l.output) -| (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},#3+\dl*\arabic{tmpF}) -| (V\f |- 0,#3);
+}
+\end{scope}
+}
+
+%Implementation of a synchronous sequential circuit
+\newcommand{\syncGate}[7][t]{
+\def\dx{0.35}
+\def\dl{0.125}
+\def\dy{0.7}
+\def\ny{0.5}%We are the knights who say Ni!
+\def\noy{0.25}
+\def\sc{0.65}
+\begin{scope}[xshift=#2 cm, yshift=#3 cm]
+\setcounter{tmpC}{0}
+\foreach \l/\t in {#5} {
+  \coordinate (V\l) at (\dx*\arabic{tmpC},0);
+  \draw[anchor=north] (V\l) node {\t};
+  \draw (V\l) -- (V\l |- 0,#4 cm);
+  \addtocounter{tmpC}{1}
+}
+\addtocounter{tmpC}{1}
+\setcounter{tmpD}{0}
+\setcounter{tmpF}{1}
+\foreach \l/\i/\k in {#6} {
+  \addtocounter{tmpF}{1}
+}
+\foreach \l/\i/\k in {#6} {
+  \addtocounter{tmpD}{1}
+  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#4/\arabic{tmpF});
+  \setcounter{tmpE}{1}
+  \foreach\v in \k {
+    \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
+    \pdot{A\l.input \arabic{tmpE} -| V\v}
+    \addtocounter{tmpE}{1}
+  }
+}
+\setcounter{tmpF}{0}
+\foreach \l/\i/\ni/\nj/\f in {#7} {
+  \addtocounter{tmpF}{1}
+}
+\addtocounter{tmpC}{1}
+\coordinate (OutCol) at (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},0);
+\foreach \l/\i/\ni/\nj/\f in {#7} {
+  \addtocounter{tmpF}{-1}
+  \setcounter{tmpE}{\nj}
+  \addtocounter{tmpE}{-\ni}
+  \addtocounter{tmpE}{1}
+  \coordinate (TMP) at ($0.5*(A\ni.output)+0.5*(A\nj.output)$);
+  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0);
+  \foreach \nk in {\ni,...,\nj} {
+    \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
+    \addtocounter{tmpE}{-1}
+  }
+  \draw (O\l.output) -| (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},#4+\dl*\arabic{tmpF}) -| (V\f |- 0,#4);
 }
 \end{scope}
 }
