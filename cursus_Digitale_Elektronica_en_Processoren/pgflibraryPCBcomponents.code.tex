@@ -68,11 +68,14 @@
   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{pin1}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{pin2}{\centerpoint}
+  \anchor{pin3}{\centerpoint\advance\pgf@x by\halfwidth}
   \anchor{midwest}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.85\pgfutil@tempdima}
 
   \backgroundpath{
-    \pgfseteorule
     \pgfutil@tempdima=\radius
+    \pgfseteorule
     \pgfpathcircle{\centerpoint}{0.3333\pgfutil@tempdima}
     \pgfpathcircle{\centerpoint}{0.1667\pgfutil@tempdima}
     \centerpoint\advance\pgf@x by-\halfwidth
@@ -85,8 +88,15 @@
     \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1667\pgfutil@tempdima}
     \color{gray}
     \pgfusepath{fill}
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    %\pgfpatharctoprecomputed{\centerpoint}{45}{315}{\centerpoint}{\pgfutil@tempdima}{\pgfutil@tempdima}{1}
+    \centerpoint
+    \advance\pgf@x by0.707\pgfutil@tempdima
+    \advance\pgf@y by0.707\pgfutil@tempdima
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfpatharc{45}{-225}{\pgfutil@tempdima and \pgfutil@tempdima}
+    \centerpoint
+    \advance\pgf@x by0.707\pgfutil@tempdima
+    \advance\pgf@y by0.707\pgfutil@tempdima
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \color{black}
     \pgfusepath{stroke}
   }
