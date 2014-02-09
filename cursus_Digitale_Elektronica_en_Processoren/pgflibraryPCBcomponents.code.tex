@@ -32,7 +32,7 @@
   \backgroundpath{
     \pgfseteorule
     \pgfutil@tempdima=\radius
-    \pgfpathcircle{\centerpoint}{0.7\pgfutil@tempdima}
+    \pgfpathcircle{\centerpoint}{0.5\pgfutil@tempdima}
     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
     \color{gray}
     \pgfusepath{fill}
@@ -71,18 +71,23 @@
   \anchor{midwest}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.85\pgfutil@tempdima}
 
   \backgroundpath{
+    \pgfseteorule
     \pgfutil@tempdima=\radius
     \pgfpathcircle{\centerpoint}{0.3333\pgfutil@tempdima}
-    \pgfpathclose
-    \pgfpathcircle{\centerpoint}{0.2333\pgfutil@tempdima}
-    \pgfpathclose
-    \pgfpathcircle{\pgf@anchor@pcbto92@east}{0.3333\pgfutil@tempdima}
-    \pgfpathclose
-    \pgfpathcircle{\pgf@anchor@pcbto92@east}{0.2333\pgfutil@tempdima}
-    \pgfpathclose
-    \pgfpathcircle{\pgf@anchor@pcbto92@west}{0.3333\pgfutil@tempdima}
-    \pgfpathclose
-    \pgfpathcircle{\pgf@anchor@pcbto92@west}{0.2333\pgfutil@tempdima}
-    \pgfpathclose
+    \pgfpathcircle{\centerpoint}{0.1667\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3333\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1667\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3333\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1667\pgfutil@tempdima}
+    \color{gray}
+    \pgfusepath{fill}
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+    %\pgfpatharctoprecomputed{\centerpoint}{45}{315}{\centerpoint}{\pgfutil@tempdima}{\pgfutil@tempdima}{1}
+    \color{black}
+    \pgfusepath{stroke}
   }
 }
