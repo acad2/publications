@@ -141,7 +141,7 @@
     \pgf@x=.5\pgf@yb%
   }
   
-  \savedmacro\numinputs{\let\numinputs4}
+  \savedmacro\numinputs{\let\numinputs7}
 
   \anchor{center}{\centerpoint}
   \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
@@ -161,7 +161,7 @@
       \pgfutil@tempdimb=\halfheight
       \advance\pgfutil@tempdimb by0.25\pgfutil@tempdima
       \pgfmathloop%
-      \ifnum\pgfmathcounter>\numinputs
+      \ifnum\pgfmathcounter>7
       \else
 	\advance\pgfutil@tempdimb by-0.5\pgfutil@tempdima
 	\centerpoint\advance\pgf@x by0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
@@ -175,13 +175,15 @@
 	\repeatpgfmathloop
       \fi
       \advance\pgfutil@tempdimb by-0.25\pgfutil@tempdima
+    \color{gray}
+    \pgfusepath{fill}
       \centerpoint\advance\pgf@x by0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
       \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
       \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\halfheight
       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-      \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\tempdimb
+      \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\pgfutil@tempdimb
       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-      \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\tempdimb
+      \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\pgfutil@tempdimb
       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
       \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\halfheight
       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
@@ -190,7 +192,5 @@
       \pgfpatharc{-180}{0}{0.25\pgfutil@tempdima and 0.25\pgfutil@tempdima}
       \color{black}
       \pgfusepath{stroke}
-    \color{gray}
-    \pgfusepath{fill}
   }
 }
