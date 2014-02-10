@@ -194,3 +194,68 @@
       \pgfusepath{stroke}
   }
 }
+
+\pgfdeclareshape{pcbr} {
+
+  \savedanchor\centerpoint{
+    \pgf@x=.5\wd\pgfnodeparttextbox
+    \pgf@y=.5\ht\pgfnodeparttextbox
+    \advance\pgf@y by-.5\dp\pgfnodeparttextbox
+  } 
+  \saveddimen\halfwidth{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgf@x=0.5\pgf@xb
+  }
+  \saveddimen\halfheight{
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=0.5\pgf@yb
+  }
+  \saveddimen\radius{%
+    \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
+    \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
+    \pgf@x=.5\pgf@xb%
+    \pgf@x=.5\pgf@yb%
+  }
+
+  \anchor{center}{\centerpoint}
+  \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
+  \anchor{base}{\centerpoint\pgf@y=0pt}
+  \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
+  \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
+  \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{pin1}{\centerpoint\advance\pgf@x by-\halfwidth}
+  \anchor{pin2}{\centerpoint}
+  \anchor{pin3}{\centerpoint\advance\pgf@x by\halfwidth}
+  \anchor{midwest}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.85\pgfutil@tempdima}
+
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\halfwidth
+    \centerpoint\advance\pgf@x by-\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\halfwidth
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
+    \color{gray}
+    \pgfusepath{fill}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \centerpoint
+    \pgf@xa=\pgf@x
+    \pgf@ya=\pgf@y
+    \centerpoint\advance\pgf@x by-\halfwidth
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-0.6666\pgfutil@tempdima\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@ya by-\halfheight
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\halfwidth
+    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by0.6666\pgfutil@tempdima\pgf@xb=\pgf@x\pgf@yb=\pgf@y\advance\pgf@yb by\halfheight
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfpathrectanglecorners{\pgfpoint{\pgf@xa}{\pgf@ya}}{\pgfpoint{\pgf@xb}{\pgf@yb}}
+    \color{black}
+    \pgfusepath{stroke}
+  }
+}
