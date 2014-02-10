@@ -140,6 +140,8 @@
     \pgf@x=.5\pgf@xb%
     \pgf@x=.5\pgf@yb%
   }
+  
+  \savedmacro\numinputs{\let\numinputs4}
 
   \anchor{center}{\centerpoint}
   \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
@@ -152,37 +154,42 @@
 
   \backgroundpath{
     \pgfutil@tempdima=\halfwidth
-    \centerpoint\advance\pgf@x by0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
-    \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\halfheight
-    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by-\halfheight
-    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by-\halfheight
-    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\halfheight
-    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
-    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgfpatharc{-180}{0}{0.25\pgfutil@tempdima and 0.25\pgfutil@tempdima}
-    \color{black}
-    \pgfusepath{stroke}
-    
     \pgfseteorule
 %     \pgfmathloop
 %     \ifnum\pgfmathcounter>2
 %     \else
-      \centerpoint
-      \pgf@xa=\pgf@x
-      \pgf@ya=\pgf@y
-      \advance\pgf@xa by0.75\pgfutil@tempdima\advance\pgf@ya by\halfheight\advance\pgf@ya by-0.25\pgfutil@tempdima
-      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.15\pgfutil@tempdima}
-      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.075\pgfutil@tempdima}
-      \advance\pgf@xa by-1.5\pgfutil@tempdima
-      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.15\pgfutil@tempdima}
-      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.075\pgfutil@tempdima}
-%     \fi
-%     \repeatpgfmathloop
+      \pgfutil@tempdimb=\halfheight
+      \advance\pgfutil@tempdimb by0.25\pgfutil@tempdima
+      \pgfmathloop%
+      \ifnum\pgfmathcounter>\numinputs
+      \else
+	\advance\pgfutil@tempdimb by-0.5\pgfutil@tempdima
+	\centerpoint\advance\pgf@x by0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
+	\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
+	\centerpoint\advance\pgf@x by0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
+	\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.075\pgfutil@tempdima}
+	\centerpoint\advance\pgf@x by-0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
+	\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
+	\centerpoint\advance\pgf@x by-0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
+	\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.075\pgfutil@tempdima}
+	\repeatpgfmathloop
+      \fi
+      \advance\pgfutil@tempdimb by-0.25\pgfutil@tempdima
+      \centerpoint\advance\pgf@x by0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
+      \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+      \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\halfheight
+      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+      \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\tempdimb
+      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+      \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\tempdimb
+      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+      \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\halfheight
+      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+      \centerpoint\advance\pgf@x by-0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
+      \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+      \pgfpatharc{-180}{0}{0.25\pgfutil@tempdima and 0.25\pgfutil@tempdima}
+      \color{black}
+      \pgfusepath{stroke}
     \color{gray}
     \pgfusepath{fill}
   }
