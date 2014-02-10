@@ -80,16 +80,16 @@
   \backgroundpath{
     \pgfutil@tempdima=\radius
     \pgfseteorule
-    \pgfpathcircle{\centerpoint}{0.3333\pgfutil@tempdima}
-    \pgfpathcircle{\centerpoint}{0.1667\pgfutil@tempdima}
+    \pgfpathcircle{\centerpoint}{0.3\pgfutil@tempdima}
+    \pgfpathcircle{\centerpoint}{0.15\pgfutil@tempdima}
     \centerpoint\advance\pgf@x by-\halfwidth
-    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3333\pgfutil@tempdima}
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3\pgfutil@tempdima}
     \centerpoint\advance\pgf@x by-\halfwidth
-    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1667\pgfutil@tempdima}
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
     \centerpoint\advance\pgf@x by\halfwidth
-    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3333\pgfutil@tempdima}
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.3\pgfutil@tempdima}
     \centerpoint\advance\pgf@x by\halfwidth
-    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.1667\pgfutil@tempdima}
+    \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
     \color{gray}
     \pgfusepath{fill}
     \centerpoint
@@ -138,19 +138,20 @@
   \anchor{midwest}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.85\pgfutil@tempdima}
 
   \backgroundpath{
-    \pgfutil@tempdima=\radius
-    \centerpoint\advance\pgf@x by0.2\pgfutil@tempdima\advance\pgf@y by-\halfheight
+    \pgfutil@tempdima=\halfwidth
+    \centerpoint\advance\pgf@x by0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
     \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by-\halfheight
-    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\halfheight
+    \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by-\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by-\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-0.2\pgfutil@tempdima\advance\pgf@y by-\halfheight
+    \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
+    \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfpatharc{-180}{0}{0.25\pgfutil@tempdima and 0.25\pgfutil@tempdima}
 %     \centerpoint\advance\pgf@x by-2\halfwidth
 %     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
 %     \centerpoint\advance\pgf@y by2\halfheight
