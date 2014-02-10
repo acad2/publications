@@ -1,3 +1,16 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% This file is an extension library of PGF/Tikz.
+%%%
+%%% This library can be used to typeset pcb layouts.
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% Copyright 2014 by Willem Van Onsem
+%
+% This file may be distributed and/or modified under the GNU General Public License.
+
 \pgfkeys{/pgf/.cd,
 	pcbdippins/.initial=14
 }
@@ -86,7 +99,7 @@
     \centerpoint
     \pgf@xa=\pgf@x
     \pgf@ya=\pgf@y
-    \advance\pgf@xa by-\halfwidth
+    \advance\pgf@xa by-\pgfutil@tempdimb
     \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.3\pgfutil@tempdima}
     \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
     \advance\pgf@xa by2\pgfutil@tempdimb
@@ -163,9 +176,7 @@
       \centerpoint
       \pgf@xa=\pgf@x
       \pgf@ya=\pgf@y
-      \advance\pgf@xa by0.75\pgfutil@tempdima
-      \advance\pgf@ya by\halfheight
-      \advance\pgf@ya by-0.25\pgfutil@tempdima
+      \advance\pgf@xa by0.75\pgfutil@tempdima\advance\pgf@ya by\halfheight\advance\pgf@ya by-0.25\pgfutil@tempdima
       \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.15\pgfutil@tempdima}
       \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.075\pgfutil@tempdima}
       \advance\pgf@xa by-1.5\pgfutil@tempdima
