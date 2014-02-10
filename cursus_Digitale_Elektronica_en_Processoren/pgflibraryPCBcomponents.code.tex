@@ -152,11 +152,26 @@
     \centerpoint\advance\pgf@x by-0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgfpatharc{-180}{0}{0.25\pgfutil@tempdima and 0.25\pgfutil@tempdima}
-%     \centerpoint\advance\pgf@x by-2\halfwidth
-%     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \centerpoint\advance\pgf@y by2\halfheight
-%     \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \color{black}
     \pgfusepath{stroke}
+    
+    \pgfseteorule
+%     \pgfmathloop
+%     \ifnum\pgfmathcounter>2
+%     \else
+      \centerpoint
+      \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+      \advance\pgf@xa by0.75\pgfutil@tempdima
+      \advance\pgf@ya by\halfheight
+      \advance\pgf@ya by-0.25\pgfutil@tempdima
+      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.15\pgfutil@tempdima}
+      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.075\pgfutil@tempdima}
+      \advance\pgf@xa by-1.5\pgfutil@tempdima
+      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.15\pgfutil@tempdima}
+      \pgfpathcircle{\pgfpoint{\pgf@xa}{\pgf@ya}}{0.075\pgfutil@tempdima}
+%     \fi
+%     \repeatpgfmathloop
+    \color{gray}
+    \pgfusepath{fill}
   }
 }
