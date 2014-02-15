@@ -13,10 +13,11 @@
 
 \pgfkeys{/pgf/.cd,
 	pcbdippins/.initial=7,
-	pcbdpin/.initial=0.1 cm,
 	pcbcircleout/.initial=0.03 cm,
-	pcbcirclein/.initial=0.015 cm
+	pcbcirclein/.initial=0.015 cm,
+	pcbcirclediff/.initial=0.1 cm
 }
+\newdimen\pgfutil@tempdimc
 
 \pgfdeclareshape{pcbbase} {
   \savedanchor\centerpoint{
@@ -50,6 +51,7 @@
 
 \pgfdeclareshape{pcbvia} {
   \inheritsavedanchors[from=pcbbase]
+  \anchor{pin0}{\centerpoint}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \backgroundpath{
@@ -65,20 +67,33 @@
 
 \pgfdeclareshape{pcbto92} {
   \inheritsavedanchors[from=pcbbase]
-  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcirclein}}}
-  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcircleout}}}
-  \saveddimen\dpin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbdpin}}}
+  \anchor{pin0}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{pin1}{\centerpoint}
+  \anchor{pin2}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
   \backgroundpath{
     \pgfseteorule
     \pgfutil@tempdima=\circlein
     \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
     \color{gray}
     \pgfusepath{fill}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \centerpoint\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@xa by0.707\pgfutil@tempdimc\advance\pgf@ya by0.707\pgfutil@tempdimc
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpatharc{45}{-225}{\pgfutil@tempdima and \pgfutil@tempdima}\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \color{black}
+    \pgfusepath{stroke}
   }
 }
-
+% 
 % \pgfdeclareshape{pcbdip} {
 %   \inheritsavedanchors[from=pcbbase]
 %   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcirclein}}}
@@ -171,78 +186,78 @@
 %   \backgroundpath{
 %   }
 % }
-
-\pgfdeclareshape{pcbcrystal} {
-  \inheritsavedanchors[from=pcbbase]
-  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-  \backgroundpath{
-    \pgfseteorule
-    \pgfutil@tempdima=\circlein
-    \pgfutil@tempdimb=\circleout
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-    \color{gray}
-    \pgfusepath{fill}
-  }
-}
-
-\pgfdeclareshape{pcbelco} {
-  \inheritsavedanchors[from=pcbbase]
-  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-  \backgroundpath{
-    \pgfseteorule
-    \pgfutil@tempdima=\circlein
-    \pgfutil@tempdimb=\circleout
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-    \color{gray}
-    \pgfusepath{fill}
-  }
-}
-
-\pgfdeclareshape{pcbsip} {
-  \inheritsavedanchors[from=pcbbase]
-  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-  \backgroundpath{
-    \pgfseteorule
-    \pgfutil@tempdima=\circlein
-    \pgfutil@tempdimb=\circleout
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-    \color{gray}
-    \pgfusepath{fill}
-  }
-}
-
-\pgfdeclareshape{pcbzip} {
-  \inheritsavedanchors[from=pcbbase]
-  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-  \backgroundpath{
-    \pgfseteorule
-    \pgfutil@tempdima=\circlein
-    \pgfutil@tempdimb=\circleout
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-    \color{gray}
-    \pgfusepath{fill}
-  }
-}
-
-\pgfdeclareshape{pcbjumber} {
-  \inheritsavedanchors[from=pcbbase]
-  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-  \backgroundpath{
-    \pgfseteorule
-    \pgfutil@tempdima=\circlein
-    \pgfutil@tempdimb=\circleout
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-    \color{gray}
-    \pgfusepath{fill}
-  }
-}
+% 
+% \pgfdeclareshape{pcbcrystal} {
+%   \inheritsavedanchors[from=pcbbase]
+%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+%   \backgroundpath{
+%     \pgfseteorule
+%     \pgfutil@tempdima=\circlein
+%     \pgfutil@tempdimb=\circleout
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+%     \color{gray}
+%     \pgfusepath{fill}
+%   }
+% }
+% 
+% \pgfdeclareshape{pcbelco} {
+%   \inheritsavedanchors[from=pcbbase]
+%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+%   \backgroundpath{
+%     \pgfseteorule
+%     \pgfutil@tempdima=\circlein
+%     \pgfutil@tempdimb=\circleout
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+%     \color{gray}
+%     \pgfusepath{fill}
+%   }
+% }
+% 
+% \pgfdeclareshape{pcbsip} {
+%   \inheritsavedanchors[from=pcbbase]
+%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+%   \backgroundpath{
+%     \pgfseteorule
+%     \pgfutil@tempdima=\circlein
+%     \pgfutil@tempdimb=\circleout
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+%     \color{gray}
+%     \pgfusepath{fill}
+%   }
+% }
+% 
+% \pgfdeclareshape{pcbzip} {
+%   \inheritsavedanchors[from=pcbbase]
+%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+%   \backgroundpath{
+%     \pgfseteorule
+%     \pgfutil@tempdima=\circlein
+%     \pgfutil@tempdimb=\circleout
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+%     \color{gray}
+%     \pgfusepath{fill}
+%   }
+% }
+% 
+% \pgfdeclareshape{pcbjumber} {
+%   \inheritsavedanchors[from=pcbbase]
+%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+%   \backgroundpath{
+%     \pgfseteorule
+%     \pgfutil@tempdima=\circlein
+%     \pgfutil@tempdimb=\circleout
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+%     \color{gray}
+%     \pgfusepath{fill}
+%   }
+% }
