@@ -12,12 +12,20 @@
 % This file may be distributed and/or modified under the GNU General Public License.
 
 \pgfkeys{/pgf/.cd,
-	pcbdippins/.initial=7,
-	pcbcircleout/.initial=0.03 cm,
-	pcbcirclein/.initial=0.015 cm,
-	pcbcirclediff/.initial=0.1 cm
+	pcbdippins/.initial=14,
+	pcbdipdx/.initial=3 cm,
+	pcbdipwidth/.initial=4 cm,
+	pcbdipnudge/.initial=0.5 cm,
+	pcbcircleout/.initial=0.3 cm,
+	pcbcirclein/.initial=0.15 cm,
+	pcbcirclediff/.initial=1 cm
 }
 \newdimen\pgfutil@tempdimc
+\newdimen\pgfutil@tempdimd
+\newdimen\pgfutil@tempdime
+\newdimen\pgfutil@tempdimf
+\newdimen\pgfutil@tempdimg
+\newdimen\pgfutil@tempdimh
 
 \pgfdeclareshape{pcbbase} {
   \savedanchor\centerpoint{
@@ -88,39 +96,39 @@
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
     \centerpoint\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@xa by0.707\pgfutil@tempdimc\advance\pgf@ya by0.707\pgfutil@tempdimc
-    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpatharc{45}{-225}{\pgfutil@tempdima and \pgfutil@tempdima}\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpatharc{45}{-225}{\pgfutil@tempdimc and \pgfutil@tempdimc}\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
     \color{black}
     \pgfusepath{stroke}
   }
 }
-% 
-% \pgfdeclareshape{pcbdip} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcircleout}}}
-%   \saveddimen\dpin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbdpin}}}
-%   \backgroundpath{
-%     \pgfutil@tempdima=\halfwidth
-%     \pgfseteorule
-%     \pgfutil@tempdimb=\halfheight
-%     \advance\pgfutil@tempdimb by0.25\pgfutil@tempdima
-%     \pgfmathloop%
-%     \ifnum\pgfmathcounter>7
-%     \else
-%       \advance\pgfutil@tempdimb by-0.5\pgfutil@tempdima
-%       \centerpoint\advance\pgf@x by0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
-%       \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
-%       \centerpoint\advance\pgf@x by0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
-%       \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.075\pgfutil@tempdima}
-%       \centerpoint\advance\pgf@x by-0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
-%       \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.15\pgfutil@tempdima}
-%       \centerpoint\advance\pgf@x by-0.75\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb
-%       \pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{0.075\pgfutil@tempdima}
-%       \repeatpgfmathloop
-%     \fi
+
+\pgfdeclareshape{pcbdip} {
+  \inheritsavedanchors[from=pcbbase]
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\dipdx{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipdx}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
+    \pgfutil@tempdimd=\dipdx
+    \pgfutil@tempdime=0 cm
+    \pgfmathloop
+    \ifnum\pgfmathcounter>7
+    \else
+      \advance\pgfutil@tempdime by-\pgfutil@tempdimc
+      \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+      \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+      \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+      \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+      \repeatpgfmathloop
+    \fi
 %     \advance\pgfutil@tempdimb by-0.25\pgfutil@tempdima
-%     \color{gray}
-%     \pgfusepath{fill}
+    \color{gray}
+    \pgfusepath{fill}
+    \pgfsetlinewidth{2\pgflinewidth}
 %       \centerpoint\advance\pgf@x by0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
 %       \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
 %       \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\halfheight
@@ -136,8 +144,8 @@
 %       \pgfpatharc{-180}{0}{0.25\pgfutil@tempdima and 0.25\pgfutil@tempdima}
 %       \color{black}
 %       \pgfusepath{stroke}
-%   }
-% }
+  }
+}
 % 
 % \pgfdeclareshape{pcbr} {
 %   \inheritsavedanchors[from=pcbbase]
