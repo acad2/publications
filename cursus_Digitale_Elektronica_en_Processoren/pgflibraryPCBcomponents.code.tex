@@ -72,56 +72,18 @@
     \pgfseteorule
     \pgfutil@tempdima=\circlein
     \pgfutil@tempdimb=\circleout
-    \pgfutil@tempdimc=\dpin
     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
     \color{gray}
     \pgfusepath{fill}
-    \centerpoint\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@xa by0.707\pgfutil@tempdimc\advance\pgf@ya by0.707\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-    \pgfpatharc{45}{-225}{\pgfutil@tempdimc and \pgfutil@tempdimc}
-    \pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
-    \color{black}
-    \pgfusepath{stroke}
   }
 }
-% 
+
 % \pgfdeclareshape{pcbdip} {
-% 
-%   \savedanchor\centerpoint{
-%     \pgf@x=.5\wd\pgfnodeparttextbox
-%     \pgf@y=.5\ht\pgfnodeparttextbox
-%     \advance\pgf@y by-.5\dp\pgfnodeparttextbox
-%   } 
-%   \saveddimen\halfwidth{%
-%     \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
-%     \pgf@x=0.5\pgf@xb
-%   }
-%   \saveddimen\halfheight{
-%     \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
-%     \pgf@x=0.5\pgf@yb
-%   }
-%   \saveddimen\radius{%
-%     \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
-%     \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
-%     \pgf@x=.5\pgf@xb%
-%     \pgf@x=.5\pgf@yb%
-%   }
-%   
-%   \savedmacro\numinputs{\let\numinputs7}
-% 
-%   \anchor{center}{\centerpoint}
-%   \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
-%   \anchor{base}{\centerpoint\pgf@y=0pt}
-%   \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
-%   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
-%   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
-%   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
-%   \anchor{midwest}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.85\pgfutil@tempdima}
-% 
+%   \inheritsavedanchors[from=pcbbase]
+%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcirclein}}}
+%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcircleout}}}
+%   \saveddimen\dpin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbdpin}}}
 %   \backgroundpath{
 %     \pgfutil@tempdima=\halfwidth
 %     \pgfseteorule
@@ -202,39 +164,10 @@
 % }
 % 
 % \pgfdeclareshape{pcbtact} {
-% 
-%   \savedanchor\centerpoint{
-%     \pgf@x=.5\wd\pgfnodeparttextbox
-%     \pgf@y=.5\ht\pgfnodeparttextbox
-%     \advance\pgf@y by-.5\dp\pgfnodeparttextbox
-%   } 
-%   \saveddimen\halfwidth{%
-%     \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
-%     \pgf@x=0.5\pgf@xb
-%   }
-%   \saveddimen\halfheight{
-%     \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
-%     \pgf@x=0.5\pgf@yb
-%   }
-%   \saveddimen\radius{%
-%     \pgfmathsetlength{\pgf@xb}{\pgfkeysvalueof{/pgf/minimum width}}%  
-%     \pgfmathsetlength{\pgf@yb}{\pgfkeysvalueof{/pgf/minimum height}}%  
-%     \pgf@x=.5\pgf@xb%
-%     \pgf@x=.5\pgf@yb%
-%   }
-% 
-%   \anchor{center}{\centerpoint}
-%   \anchor{mid}{\centerpoint\pgfmathsetlength\pgf@y{.5ex}}
-%   \anchor{base}{\centerpoint\pgf@y=0pt}
-%   \anchor{north}{\centerpoint\advance\pgf@y by\halfheight}
-%   \anchor{south}{\centerpoint\advance\pgf@y by-\halfheight}
-%   \anchor{west}{\centerpoint\advance\pgf@x by-\halfwidth}
-%   \anchor{east}{\centerpoint\advance\pgf@x by\halfwidth}
-%   \anchor{pin1}{\centerpoint\advance\pgf@x by-\halfwidth}
-%   \anchor{pin2}{\centerpoint}
-%   \anchor{pin3}{\centerpoint\advance\pgf@x by\halfwidth}
-%   \anchor{midwest}{\centerpoint\pgfutil@tempdima=\halfwidth\advance\pgf@x by-0.85\pgfutil@tempdima}
-% 
+%   \inheritsavedanchors[from=pcbbase]
+%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcirclein}}}
+%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcircleout}}}
+%   \saveddimen\dpin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbdpin}}}
 %   \backgroundpath{
 %   }
 % }
