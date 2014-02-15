@@ -163,9 +163,53 @@
     \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimg\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
     \color{black}
     \pgfusepath{stroke}
+    
     \begingroup
-    \pgftext[base,at={\centerpoint},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \tikzset{pcb/part labels}
+    \tikz@textfont
+    
+    \centerpoint
+    \pgftext[base,at={\pgfpoint{\pgf@x}{\pgf@y}},x=-\pgfshapeinnerxsep]{\raisebox{-.75ex}{4017}}
+    
     \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbtact} {
+  \inheritsavedanchors[from=pcbbase]
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\dipwidth{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipwidth}}}
+  \saveddimen\dipheight{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipheight}}}
+  \saveddimen\dipnudge{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipnudge}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
+    \pgfutil@tempdimd=\dipdx
+    \pgfutil@tempdime=0.5\pgfutil@tempdimc
+    \pgfutil@tempdimf=\dipheight
+    \pgfutil@tempdimg=\dipwidth
+    \pgfutil@tempdimh=\dipnudge
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \color{black}
+    \pgfusepath{stroke}
   }
 }
 
