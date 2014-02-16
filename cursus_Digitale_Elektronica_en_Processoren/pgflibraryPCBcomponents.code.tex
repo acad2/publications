@@ -310,33 +310,33 @@
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{0}{\pgfutil@tempdimd and \pgfutil@tempdimd}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{360}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{0}{-180}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
     \color{black}
     \pgfusepath{stroke}
-    \advance\pgfutil@tempdime by-\pgfutil@tempdimc
+    \advance\pgfutil@tempdime by-0.5\pgfutil@tempdimc
     \pgfsetlinewidth{\pgflinewidth}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgfusepath{stroke}
   }
 }
+
+\pgfdeclareshape{pcbzip} {
+  \inheritsavedanchors[from=pcbbase]
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+  }
+}
 % 
 % \pgfdeclareshape{pcbelco} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-%     \color{gray}
-%     \pgfusepath{fill}
-%   }
-% }
-% 
-% \pgfdeclareshape{pcbzip} {
 %   \inheritsavedanchors[from=pcbbase]
 %   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
 %   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
