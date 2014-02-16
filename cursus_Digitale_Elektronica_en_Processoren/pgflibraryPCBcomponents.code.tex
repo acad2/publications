@@ -305,16 +305,18 @@
       \advance\pgfutil@tempdime by\pgfutil@tempdimc
       \repeatpgfmathloop
     \fi
+    \advance\pgfutil@tempdime by-\pgfutil@tempdimc
     \color{gray}
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{0}{\pgfutil@tempdimd and \pgfutil@tempdimd}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{360}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
+    \color{black}
+    \pgfusepath{stroke}
     \advance\pgfutil@tempdime by-\pgfutil@tempdimc
-    \advance\pgfutil@tempdime by0.5\pgfutil@tempdimf
+    \pgfsetlinewidth{\pgflinewidth}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
-    \color{black}
     \pgfusepath{stroke}
   }
 }
