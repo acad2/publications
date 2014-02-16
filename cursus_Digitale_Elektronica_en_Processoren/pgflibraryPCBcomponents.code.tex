@@ -24,7 +24,7 @@
   pcbtactright/.initial=0.2 cm,
   pcbouterradius/.initial=0.5 cm,
   pcbrcyradius/.initial=1 cm,
-  pcbrcymargin/.initial=0.2 cm,
+  pcbrcyrmargin/.initial=0.2 cm,
   pcbrcyrmarks/.initial=0.4 cm,
   pcblabel/.initial={}
 }
@@ -403,10 +403,11 @@
 \pgfdeclareshape{pcbrcyp} {
   \inheritsavedanchors[from=pcbrcy]
 %   \saveddimen\rcyradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyradius}}}
-  \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcymargin}}}
-  \saveddimen\rcymarks{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcymarks}}}
+  \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmargin}}}
+  \saveddimen\rcymarks{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmarks}}}
   \inheritbackgroundpath[from=pcbrcy]
   \beforebackgroundpath{
+    \color{black}
 %     \pgfutil@tempdima=\rcyradius
     \pgfsetlinewidth{2\pgflinewidth}
     \pgfutil@tempdima=0 cm
@@ -418,7 +419,6 @@
     \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by-0.5\pgfutil@tempdimb\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by0.5\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \color{black}
     \pgfsetlinewidth{2\pgflinewidth}
     \pgfusepath{stroke}
   }
