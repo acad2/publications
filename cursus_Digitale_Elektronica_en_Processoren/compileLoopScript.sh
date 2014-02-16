@@ -15,5 +15,6 @@ do
 	done
 	git add .
 	git commit -S -a -m "$msg"
-	git push
+	git push --all
+	git push --tags
 done
