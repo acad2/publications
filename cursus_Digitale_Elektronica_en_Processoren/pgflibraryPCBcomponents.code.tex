@@ -24,8 +24,8 @@
   pcbtactright/.initial=0.2 cm,
   pcbouterradius/.initial=0.5 cm,
   pcbrcyradius/.initial=1 cm,
-  pcbrcyrmargin/.initial=0.1 cm,
-  pcbrcyrmarks/.initial=0.2 cm,
+  pcbrcyrmargin/.initial=0.2 cm,
+  pcbrcyrmarks/.initial=0.4 cm,
   pcblabel/.initial={}
 }
 \newdimen\pgfutil@tempdimc
@@ -328,14 +328,14 @@
 \pgfdeclareshape{pcbjumper} {
   \inheritsavedanchors[from=pcbsip]
   \inheritbackgroundpath[from=pcbsip]
-%   \beforebackgroundpath{
-%     \advance\pgfutil@tempdime by\pgfutil@tempdimc
-%     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
-%     \pgfusepath{stroke}
-%   }
+  \beforebackgroundpath{
+    \advance\pgfutil@tempdime by\pgfutil@tempdimc
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+    \pgfusepath{stroke}
+  }
 }
 
 \pgfdeclareshape{pcbzip} {
@@ -439,7 +439,6 @@
     \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by-0.5\pgfutil@tempdimb\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by0.5\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgfsetlinewidth{2\pgflinewidth}
     \pgfusepath{stroke}
   }
 }
