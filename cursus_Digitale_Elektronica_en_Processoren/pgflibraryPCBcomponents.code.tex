@@ -363,9 +363,11 @@
 %     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
 %     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
 %     \pgfusepath{stroke}
-    \advance\pgfutil@tempdime by0.5\pgfutil@tempdimc
-    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{0}{\pgfutil@tempdimd and \pgfutil@tempdimd}
-    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{0}{-180}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
+    %\advance\pgfutil@tempdime by0.5\pgfutil@tempdimc
+    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
     \pgfsetlinewidth{2\pgflinewidth}
     \pgfusepath{stroke}
   }
