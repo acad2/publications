@@ -527,13 +527,14 @@
 
 \pgfdeclareshape{pcbled} {
   \inheritsavedanchors[from=pcbbase]
-  \anchor{pina}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@y by0.5\pgfutil@tempdimc}
-  \anchor{pinb}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimc}
+  \anchor{pina}{\pgfutil@tempdimc=\ledskew\advance\pgfutil@tempdimc by 0.5\circlediff\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{pinb}{\pgfutil@tempdimc=\ledskew\advance\pgfutil@tempdimc by -0.5\circlediff\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
   \anchor{pin0}{\pgf@anchor@pcbled@pina}
   \anchor{pin1}{\pgf@anchor@pcbled@pinb}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\ledskew{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbledskew}}}
   \backgroundpath{
     \pgfseteorule
     \pgfutil@tempdima=\circlein
