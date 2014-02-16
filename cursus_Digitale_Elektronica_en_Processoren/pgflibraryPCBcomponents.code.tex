@@ -459,12 +459,13 @@
 
 \pgfdeclareshape{pcbacy} {
   \inheritsavedanchors[from=pcbbase]
-  \anchor{pin0}{\pgfutil@tempdimd=\acyhalfwidth\advance\pgfutil@tempdimd by\acywire\centerpoint\advance\pgf@x by-\pgfutil@tempdimd}
-  \anchor{pin1}{\pgfutil@tempdimd=\acyhalfwidth\advance\pgfutil@tempdimd by\acywire\centerpoint\advance\pgf@x by\pgfutil@tempdimd}
-  \anchor{pinmarka}{\pgfutil@tempdimd=\acyhalfwidth\advance\pgfutil@tempdimd by\acywire\centerpoint\advance\pgf@x by-\pgfutil@tempdimd}
-  \anchor{pinmarkb}{\pgfutil@tempdimd=\acyhalfwidth\advance\pgfutil@tempdimd by\acywire\centerpoint\advance\pgf@x by\pgfutil@tempdimd}
+  \anchor{pin0}{\pgfutil@tempdima=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\centerpoint\advance\pgf@x by-\pgfutil@tempdima}
+  \anchor{pin1}{\pgfutil@tempdima=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\centerpoint\advance\pgf@x by\pgfutil@tempdima}
+  \anchor{pinmarka}{\pgfutil@tempdima=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\pgfutil@tempdimb=\circleout\advance\pgfutil@tempdimb by\rcymargin\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb}
+  \anchor{pinmarkb}{\pgfutil@tempdima=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\pgfutil@tempdimb=\circleout\advance\pgfutil@tempdimb by\rcymargin\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmargin}}}
   \saveddimen\acyhalfwidth{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfwidth}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
   \saveddimen\acyhalfthick{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfthick}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
   \saveddimen\acywire{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacywire}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
@@ -508,21 +509,17 @@
   \inheritanchor[from=pcbacy]{pin1}
   \inheritanchor[from=pcbacy]{pinmarka}
   \inheritanchor[from=pcbacy]{pinmarkb}
-  \saveddimen\rcyradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyradius}}}
-  \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmargin}}}
   \saveddimen\rcymarks{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmarks}}}
   \inheritbackgroundpath[from=pcbacy]
   \beforebackgroundpath{
     \color{black}
-    \pgfutil@tempdima=\rcyradius
-    \advance\pgfutil@tempdima by\rcymargin
-    \pgfutil@tempdimb=\rcymarks
-    \pgf@anchor@pcbacyp@pinmarkb\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgf@anchor@pcbacyp@pinmarkb\advance\pgf@x by\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgf@anchor@pcbacyp@pinmarka\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgf@anchor@pcbacyp@pinmarka\advance\pgf@x by-\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgf@anchor@pcbacyp@pinmarka\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by-0.5\pgfutil@tempdimb\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgf@anchor@pcbacyp@pinmarka\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by0.5\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfutil@tempdimc=\rcymarks
+    \pgf@anchor@pcbacy@pinmarkb\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarkb\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\advance\pgf@y by\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgfusepath{stroke}
   }
 }
