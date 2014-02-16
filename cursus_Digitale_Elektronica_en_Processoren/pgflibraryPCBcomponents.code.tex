@@ -192,6 +192,12 @@
 
 \pgfdeclareshape{pcbtact} {
   \inheritsavedanchors[from=pcbbase]
+  \anchor{pin0}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdimb}
+  \anchor{pin1}{\pgfutil@tempdimb=\dipdx\centerpoint\centerpoint\advance\pgf@y by0.5\pgfutil@tempdimb}
+  \anchor{pin2}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdimb}
+  \anchor{pin3}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
+  \anchor{pin4}{\pgfutil@tempdimb=\dipdx\centerpoint\centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimb}
+  \anchor{pin5}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
@@ -246,6 +252,8 @@
 % 
 \pgfdeclareshape{pcbhc49} {
   \inheritsavedanchors[from=pcbbase]
+  \anchor{pin0}{\centerpoint\advance\pgf@x by-\circlediff}
+  \anchor{pin1}{\centerpoint\advance\pgf@x by\circlediff}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
@@ -395,6 +403,8 @@
 }
 
 \pgfdeclareshape{pcbrcy} {
+  \anchor{pin0}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc}
+  \anchor{pin1}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc}
   \inheritsavedanchors[from=pcbbase]
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}

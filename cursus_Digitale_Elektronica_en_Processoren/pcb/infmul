@@ -6,7 +6,7 @@ FileVersion[20070407]
 PCB["infmul" 600000 500000]
 
 Grid[1000.0 0 0 1]
-Cursor[361000 270000 0.000000]
+Cursor[269000 355000 0.000000]
 PolyArea[3100.006200]
 Thermal[0.500000]
 DRC[1000 1000 1000 1000 1500 1000]
@@ -1180,6 +1180,23 @@ Element["" "Bottom lead polar circular component (typically capacitor)" "" "RCY1
 
 	)
 
+Element["" "Jumper, i.e. single row headers" "" "JUMPER6" 490000 180000 11000 -5000 3 100 ""]
+(
+	Pin[0 0 6000 3000 6600 3800 "1" "1" "square"]
+	Pin[0 10000 6000 3000 6600 3800 "2" "2" ""]
+	Pin[0 20000 6000 3000 6600 3800 "3" "3" ""]
+	Pin[0 30000 6000 3000 6600 3800 "4" "4" ""]
+	Pin[0 40000 6000 3000 6600 3800 "5" "5" ""]
+	Pin[0 50000 6000 3000 6600 3800 "6" "6" ""]
+	ElementLine [-5000 -5000 -5000 55000 1000]
+	ElementLine [-5000 55000 5000 55000 1000]
+	ElementLine [5000 55000 5000 -5000 1000]
+	ElementLine [5000 -5000 -5000 -5000 1000]
+	ElementLine [-5000 5000 5000 5000 1000]
+	ElementLine [5000 5000 5000 -5000 1000]
+
+	)
+
 Element["" "Jumper, i.e. single row headers" "" "JUMPER17" 464000 158000 11000 -5000 3 100 ""]
 (
 	Pin[0 0 6000 3000 6600 3800 "1" "1" "square"]
@@ -1208,46 +1225,58 @@ Element["" "Jumper, i.e. single row headers" "" "JUMPER17" 464000 158000 11000 -
 
 	)
 
-Element["" "Jumper, i.e. single row headers" "" "JUMPER6" 490000 180000 11000 -5000 3 100 ""]
+Element["" "Axial non-polar component (typically resistor or capacitor)," "" "ACY500" 340000 311000 39500 6100 0 100 ""]
 (
-	Pin[0 0 6000 3000 6600 3800 "1" "1" "square"]
-	Pin[0 10000 6000 3000 6600 3800 "2" "2" ""]
-	Pin[0 20000 6000 3000 6600 3800 "3" "3" ""]
-	Pin[0 30000 6000 3000 6600 3800 "4" "4" ""]
-	Pin[0 40000 6000 3000 6600 3800 "5" "5" ""]
-	Pin[0 50000 6000 3000 6600 3800 "6" "6" ""]
-	ElementLine [-5000 -5000 -5000 55000 1000]
-	ElementLine [-5000 55000 5000 55000 1000]
-	ElementLine [5000 55000 5000 -5000 1000]
-	ElementLine [5000 -5000 -5000 -5000 1000]
-	ElementLine [-5000 5000 5000 5000 1000]
-	ElementLine [5000 5000 5000 -5000 1000]
+	Pin[0 0 5500 3000 6100 3000 "1" "1" "square,edge2"]
+	Pin[50000 0 5500 3000 6100 3000 "2" "2" "edge2"]
+	ElementLine [0 0 12500 0 1000]
+	ElementLine [37500 0 50000 0 1000]
+	ElementLine [12500 -4100 37500 -4100 1000]
+	ElementLine [37500 -4100 37500 4100 1000]
+	ElementLine [37500 4100 12500 4100 1000]
+	ElementLine [12500 4100 12500 -4100 1000]
 
 	)
 
-Element["" "Axial non-polar component (typically resistor or capacitor)," "" "ACY800" 325000 304000 62000 8600 0 100 ""]
+Element["" "Axial non-polar component (typically resistor or capacitor)," "" "ACY1000" 333000 336000 77000 10300 0 100 ""]
 (
 	Pin[0 0 8000 3000 8600 5000 "1" "1" "square,edge2"]
-	Pin[80000 0 8000 3000 8600 5000 "2" "2" "edge2"]
-	ElementLine [0 0 20000 0 1000]
-	ElementLine [60000 0 80000 0 1000]
-	ElementLine [20000 -6600 60000 -6600 1000]
-	ElementLine [60000 -6600 60000 6600 1000]
-	ElementLine [60000 6600 20000 6600 1000]
-	ElementLine [20000 6600 20000 -6600 1000]
+	Pin[100000 0 8000 3000 8600 5000 "2" "2" "edge2"]
+	ElementLine [0 0 25000 0 1000]
+	ElementLine [75000 0 100000 0 1000]
+	ElementLine [25000 -8300 75000 -8300 1000]
+	ElementLine [75000 -8300 75000 8300 1000]
+	ElementLine [75000 8300 25000 8300 1000]
+	ElementLine [25000 8300 25000 -8300 1000]
 
 	)
 
-Element["" "Axial non-polar component (typically resistor or capacitor)," "" "ACY1600" 305000 327000 122000 15300 0 100 ""]
+Element["" "Axial non-polar component (typically resistor or capacitor)," "" "ACY500" 340000 300000 39500 6100 0 100 ""]
 (
-	Pin[0 0 8000 3000 8600 5000 "1" "1" "square,edge2"]
-	Pin[160000 0 8000 3000 8600 5000 "2" "2" "edge2"]
-	ElementLine [0 0 40000 0 1000]
-	ElementLine [120000 0 160000 0 1000]
-	ElementLine [40000 -13300 120000 -13300 1000]
-	ElementLine [120000 -13300 120000 13300 1000]
-	ElementLine [120000 13300 40000 13300 1000]
-	ElementLine [40000 13300 40000 -13300 1000]
+	Pin[0 0 5500 3000 6100 3000 "1" "1" "square,edge2"]
+	Pin[50000 0 5500 3000 6100 3000 "2" "2" "edge2"]
+	ElementLine [0 0 12500 0 1000]
+	ElementLine [37500 0 50000 0 1000]
+	ElementLine [12500 -4100 37500 -4100 1000]
+	ElementLine [37500 -4100 37500 4100 1000]
+	ElementLine [37500 4100 12500 4100 1000]
+	ElementLine [12500 4100 12500 -4100 1000]
+
+	)
+
+Element["" "Axial polar component (typically capacitor)," "" "ACY400P" 331000 358000 32000 5300 0 100 ""]
+(
+	Pin[0 0 5500 3000 6100 3000 "1" "1" "square,edge2"]
+	Pin[40000 0 5500 3000 6100 3000 "2" "2" "edge2"]
+	ElementLine [0 0 10000 0 1000]
+	ElementLine [30000 0 40000 0 1000]
+	ElementLine [10000 -3300 30000 -3300 1000]
+	ElementLine [30000 -3300 30000 3300 1000]
+	ElementLine [30000 3300 10000 3300 1000]
+	ElementLine [10000 3300 10000 -3300 1000]
+	ElementLine [0 -7700 0 -3700 1000]
+	ElementLine [-2000 -5700 2000 -5700 1000]
+	ElementLine [38000 -5700 42000 -5700 1000]
 
 	)
 Layer(1 "top")
