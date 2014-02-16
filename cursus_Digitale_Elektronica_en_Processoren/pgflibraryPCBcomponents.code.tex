@@ -23,6 +23,7 @@
   pcbtactleft/.initial=0.3 cm,
   pcbtactright/.initial=0.2 cm,
   pcbouterradius/.initial=0.5 cm,
+  pcbrcyradius/.initial=1 cm,
   pcblabel/.initial={}
 }
 \newdimen\pgfutil@tempdimc
@@ -360,8 +361,8 @@
     \color{black}
     \advance\pgfutil@tempdimd by0.5\pgfutil@tempdimc
     \centerpoint\advance\pgf@y by-\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgfusepath{stroke}
     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
@@ -371,21 +372,44 @@
     \pgfusepath{stroke}
   }
 }
-% 
-% \pgfdeclareshape{pcbelco} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-%     \color{gray}
-%     \pgfusepath{fill}
-%   }
-% }
+
+\pgfdeclareshape{pcbrcy} {
+  \inheritsavedanchors[from=pcbbase]
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\rcyradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyradius}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
+    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgfusepath{stroke}
+  }
+}
+
+\pgfdeclareshape{pcbrcyp} {
+  \inheritsavedanchors[from=pcbrcy]
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+  }
+}
 % 
 % \pgfdeclareshape{pcbjumber} {
 %   \inheritsavedanchors[from=pcbbase]
