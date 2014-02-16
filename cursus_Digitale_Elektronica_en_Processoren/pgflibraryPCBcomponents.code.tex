@@ -460,17 +460,17 @@
   }
 }
 
-\pgfdeclareshape{pcbwired} {
-  \backgroundpath{
-    \color{black}
-    \pgfsetlinewidth{2\pgflinewidth}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgfusepath{stroke}
-  }
-}
+% \pgfdeclareshape{pcbwired} {
+%   \backgroundpath{
+%     \color{black}
+%     \pgfsetlinewidth{2\pgflinewidth}
+%     \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \pgfusepath{stroke}
+%   }
+% }
 
 \pgfdeclareshape{pcbacy} {
   \inheritsavedanchors[from=pcbbase]
@@ -532,7 +532,7 @@
   \inheritanchor[from=pcbacy]{pinmarkb}
   \saveddimen\rcymarks{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmarks}}}
   \inheritbehindbackgroundpath[from=pcbacy]
-  \inheritbackgroundpath[from=pcbacy]
+  \inheritbehindbackgroundpath[from=pcbacy]
   \beforebackgroundpath{
     \color{black}
     \pgfutil@tempdimc=\rcymarks
