@@ -527,8 +527,10 @@
 
 \pgfdeclareshape{pcbled} {
   \inheritsavedanchors[from=pcbbase]
-  \anchor{pin0}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
-  \anchor{pin1}{\centerpoint}
+  \anchor{pina}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@y by0.5\pgfutil@tempdimc}
+  \anchor{pinb}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimc}
+  \anchor{pin0}{\pgf@anchor@pcbled@pina}
+  \anchor{pin1}{\pgf@anchor@pcbled@pinb}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
@@ -537,16 +539,14 @@
     \pgfutil@tempdima=\circlein
     \pgfutil@tempdimb=\circleout
     \pgfutil@tempdimc=\circlediff
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbled@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbled@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbled@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbled@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
     \color{gray}
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
-    \centerpoint\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@xa by0.707\pgfutil@tempdimc\advance\pgf@ya by-0.707\pgfutil@tempdimc
+    \centerpoint\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@xa by-0.707\pgfutil@tempdimc\advance\pgf@ya by-0.707\pgfutil@tempdimc
     \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpatharc{225}{-45}{\pgfutil@tempdimc and \pgfutil@tempdimc}\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpathclose
     \color{black}
     \pgfusepath{stroke}
@@ -554,8 +554,8 @@
     \begingroup
     \tikzset{pcb/part labels} % Use font from this style
     \tikz@textfont
-    \centerpoint\advance\pgf@y by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimb
-    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \centerpoint\advance\pgf@y by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimb
+    \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
     \endgroup
   }
 }
