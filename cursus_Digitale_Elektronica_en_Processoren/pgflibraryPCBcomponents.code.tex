@@ -24,6 +24,8 @@
   pcbtactright/.initial=0.2 cm,
   pcbouterradius/.initial=0.5 cm,
   pcbrcyradius/.initial=1 cm,
+  pcbrcymargin/.initial=0.2 cm,
+  pcbrcyrmarks/.initial=0.4 cm,
   pcblabel/.initial={}
 }
 \newdimen\pgfutil@tempdimc
@@ -391,7 +393,9 @@
     \color{gray}
     \pgfusepath{fill}
     \color{black}
+    \pgfutil@tempdimc=\rcyradius
     \pgfsetlinewidth{2\pgflinewidth}
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdimc}
     \pgfusepath{stroke}
   }
 }
