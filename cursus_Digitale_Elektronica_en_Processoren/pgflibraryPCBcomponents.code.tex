@@ -336,34 +336,36 @@
     \pgfutil@tempdimb=\circleout
     \pgfutil@tempdimc=\circlediff
     \pgfutil@tempdimd=\outerradius
-    \pgfutil@tempdime=0.5\pgfutil@tempdimc
+    \pgfutil@tempdime=-0.25\pgfutil@tempdimc
     \pgfmathloop
     \ifnum\pgfmathcounter>\pins
     \else
-      \advance\pgfutil@tempdime by -0.5\pgfutil@tempdimc
+      \advance\pgfutil@tempdime by 0.25\pgfutil@tempdimc
       \repeatpgfmathloop
     \fi
-    \pgfutil@tempdimf=\dipheight
-    \pgfutil@tempdimg=\dipwidth
-    \pgfutil@tempdimh=\dipnudge
     \pgfmathloop
     \ifnum\pgfmathcounter>\pins %pins
     \else
-      \centerpoint\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-      \centerpoint\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-      \advance\pgfutil@tempdime by\pgfutil@tempdimc
+      \pgfutil@tempdimf = 0.5\pgfutil@tempdimc
+      \ifodd\pgfmathcounter
+	\pgfutil@tempdimf = -0.5\pgfutil@tempdimc
+      \fi
+      \centerpoint\advance\pgf@x by\pgfutil@tempdimf\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+      \centerpoint\advance\pgf@x by\pgfutil@tempdimf\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+      \advance\pgfutil@tempdime by-0.5\pgfutil@tempdimc
       \repeatpgfmathloop
     \fi
     \color{gray}
     \pgfusepath{fill}
     \color{black}
-    \advance\pgfutil@tempdime by-1.5\pgfutil@tempdimc
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgfusepath{stroke}
+%     \advance\pgfutil@tempdime by-1\pgfutil@tempdimc
+%     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \pgfusepath{stroke}
     \advance\pgfutil@tempdime by0.5\pgfutil@tempdimc
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{0}{\pgfutil@tempdimd and \pgfutil@tempdimd}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{0}{-180}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
+    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{0}{\pgfutil@tempdimd and \pgfutil@tempdimd}
+    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{0}{-180}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
     \pgfsetlinewidth{2\pgflinewidth}
     \pgfusepath{stroke}
   }
