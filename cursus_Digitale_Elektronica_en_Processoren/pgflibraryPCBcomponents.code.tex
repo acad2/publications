@@ -26,8 +26,8 @@
   pcbrcyradius/.initial=1 cm,
   pcbrcyrmargin/.initial=0.2 cm,
   pcbrcyrmarks/.initial=0.4 cm,
-  pcbacywidth/.initial=0.005 cm,
-  pcbacythick/.initial=0.0016 cm,
+  pcbacyhalfwidth/.initial=0.0025 cm,
+  pcbacyhalfthick/.initial=0.0008 cm,
   pcbacywire/.initial=0.0025 cm,
   pcbacyindex/.initial=500,
   pcblabel/.initial={}
@@ -451,26 +451,35 @@
   \inheritsavedanchors[from=pcbbase]
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-  \saveddimen\acywidth{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacywidth}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
-  \saveddimen\acythick{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacythick}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \saveddimen\acyhalfwidth{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfwidth}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \saveddimen\acyhalfthick{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfthick}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
   \saveddimen\acywire{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacywire}}{\pgfkeysvalueof{/pgf/pcbacyindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
   \backgroundpath{
     \pgfseteorule
     \pgfutil@tempdima=\circlein
     \pgfutil@tempdimb=\circleout
-    \pgfutil@tempdimc=\acywidth
-    \advance\pgfutil@tempdimc by\acywire
-    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgfutil@tempdimc=\acyhalfwidth
+    \pgfutil@tempdimd=\acyhalfwidth
+    \advance\pgfutil@tempdimd by\acywire
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
     \color{gray}
     \pgfusepath{fill}
     \color{black}
-%     \pgfutil@tempdimc=\rcyradius
-%     \pgfsetlinewidth{2\pgflinewidth}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimc}
-%     \pgfusepath{stroke}
+    \pgfutil@tempdimd=\acywire
+    \pgfsetlinewidth{2\pgflinewidth}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfutil@tempdimd=\acyhalfthick
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+    \pgfusepath{stroke}
     % Draw port labels
 %     \begingroup
 %     \tikzset{pcb/part labels} % Use font from this style
@@ -483,6 +492,7 @@
 
 \pgfdeclareshape{pcbacyp} {
   \inheritsavedanchors[from=pcbacy]
+  \inheritbackgroundpath[from=pcbacy]
 }
 
 % \pgfdeclareshape{pcbr} {
