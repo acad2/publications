@@ -325,17 +325,17 @@
   }
 }
  
-\pgfdeclareshape{pcbjumber} {
+\pgfdeclareshape{pcbjumper} {
   \inheritsavedanchors[from=pcbsip]
   \inheritbackgroundpath[from=pcbsip]
-  \beforebackgroundpath{
-    \advance\pgfutil@tempdime by\pgfutil@tempdimc
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
-    \pgfusepath{stroke}
-  }
+%   \beforebackgroundpath{
+%     \advance\pgfutil@tempdime by\pgfutil@tempdimc
+%     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+%     \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+%     \pgfusepath{stroke}
+%   }
 }
 
 \pgfdeclareshape{pcbzip} {
