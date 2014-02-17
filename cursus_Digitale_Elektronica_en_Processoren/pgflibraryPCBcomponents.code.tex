@@ -35,6 +35,10 @@
   pcbalfhalfthick/.initial=0.00016 in,
   pcbalfwire/.initial=0.00033 in,
   pcbledskew/.initial=0.01 in,
+  pcbusbdiffy/.initial=0.08 in,
+  pcbusbhalfheight/.initial=0.125 in,
+  pcbusbhalfwidth/.initial=0.24 in,
+  pcbusbhalfskewy/.initial=0.065 in,
   pcbindex/.initial=500,
   pcblabel/.initial={}
 }
@@ -621,10 +625,14 @@
 
 \pgfdeclareshape{pcbconnusb} {
   \inheritsavedanchors[from=pcbbase]
-  \anchor{pina}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimc}
-  \anchor{pinb}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimc}
-  \anchor{pinc}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimc}
-  \anchor{pind}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimc}
+  \anchor{pina}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd}
+  \anchor{pinb}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd}
+  \anchor{pinc}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd}
+  \anchor{pind}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd}
+  \anchor{bara}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{barb}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{barc}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{bard}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
   \anchor{pin0}{\pgf@anchor@pcbconnusb@pina}
   \anchor{pin1}{\pgf@anchor@pcbconnusb@pinb}
   \anchor{pin2}{\pgf@anchor@pcbconnusb@pinc}
@@ -632,6 +640,9 @@
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\usbdiffy{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbdiffy}}}
+  \saveddimen\usbhalfw{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbhalfwidth}}}
+  \saveddimen\usbhalfh{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbhalfheight}}}
   \backgroundpath{
     \pgfseteorule
     \pgfutil@tempdima=\circlein
@@ -647,6 +658,11 @@
     \color{gray}
     \pgfusepath{fill}
     \color{black}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgf@anchor@pcbconnusb@bara\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbconnusb@barb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbconnusb@barc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbconnusb@bard\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgfusepath{stroke}
     % Draw port labels
     \begingroup
