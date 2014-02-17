@@ -15,4 +15,7 @@
 \node[pcbacy,pcblabel={20k}] (R3) at (6,3.5) {};
 \node[pcbtact,pcblabel={U01}] (U0) at (-3,0) {};
 \node[pcbtact,pcblabel={U02}] (U1) at (-3,5) {};
+\begin{scope}[gray]
+  \pcbpintopin{TO92-0.pin0}{U0.pin0}
+\end{scope}
 \end{tikzpicture}

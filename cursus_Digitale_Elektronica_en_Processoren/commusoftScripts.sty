@@ -958,3 +958,7 @@
 \draw[white,line width=0.08mm] ($(#1)-(0.0575,0.0575)$) -- ($(#1)+(0.0575,-0.0575)$);
 \draw[white,line width=0.08mm] ($(#1)+(0.0575,0.0575)$) -- ($(#1)-(0.0575,-0.0575)$);
 }
+
+\newcommand{\pcbpintopin}[2]{
+  \draw[line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in] (#1) -- (#2);
+}
