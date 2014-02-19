@@ -105,9 +105,16 @@
 
 \pgfdeclareshape{pcbto92} {
   \inheritsavedanchors[from=pcbbase]
+  \anchor{pina}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{pinb}{\centerpoint}
+  \anchor{pinc}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
   \anchor{pin0}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
   \anchor{pin1}{\centerpoint}
   \anchor{pin2}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
+  \anchor{collector}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{basis}{\centerpoint}
+  \anchor{base}{\centerpoint}
+  \anchor{emitter}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}

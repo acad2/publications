@@ -1,22 +1,31 @@
 \begin{tikzpicture}
-\node[pcbdip,pcblabel={7400}] (DIP00-0) at (0,0) {};
-\node[pcbdip,pcblabel={7404}] (DIP04-0) at (0,2) {};
-\node[pcbdip,pcblabel={7410}] (DIP10-0) at (3,0) {};
-\node[pcbdip,pcblabel={7427}] (DIP27-0) at (3,2) {};
-\node[pcbdip,pcblabel={7474}] (DIP74-0) at (6,0) {};
-\node[pcbdip,pcblabel={7474}] (DIP74-1) at (6,2) {};
-\node[pcbto92,pcblabel={2N3904}] (TO92-0) at (0,5) {};
-\node[pcbto92,pcblabel={2N3906}] (TO92-1) at (2,5) {};
-\node[pcbto92,pcblabel={2N3904}] (TO92-2) at (4,5) {};
-\node[pcbto92,pcblabel={2N3906}] (TO92-3) at (6,5) {};
+% \node[pcbdip,pcblabel={7400}] (DIP00-0) at (0,0) {};
+% \node[pcbdip,pcblabel={7404}] (DIP04-0) at (0,2) {};
+% \node[pcbdip,pcblabel={7410}] (DIP10-0) at (3,0) {};
+% \node[pcbdip,pcblabel={7427}] (DIP27-0) at (3,2) {};
+% \node[pcbdip,pcblabel={7474}] (DIP74-0) at (6,0) {};
+% \node[pcbdip,pcblabel={7474}] (DIP74-1) at (6,2) {};
+\node[pcbto92,pcblabel={2N3904}] (NPN-0) at (0,5) {};%npn
+\node[pcbto92,pcblabel={2N3906}] (PNP-0) at (2,5) {};%pnp
+\node[pcbto92,pcblabel={2N3904}] (NPN-1) at (4,5) {};%npn
+\node[pcbto92,pcblabel={2N3906}] (PNP-1) at (6,5) {};%pnp
 \node[pcbacy,pcblabel={100k}] (R0) at (0,3.5) {};
 \node[pcbacy,pcblabel={20k}] (R1) at (2,3.5) {};
 \node[pcbacy,pcblabel={100k}] (R2) at (4,3.5) {};
 \node[pcbacy,pcblabel={20k}] (R3) at (6,3.5) {};
 \node[pcbtact,pcblabel={U01}] (U0) at (-3,0) {};
 \node[pcbtact,pcblabel={U02}] (U1) at (-3,5) {};
-\node[pcbconnusb,pcblabel={USB}] (USB) at (-3,2.5) {};
+%\node[pcbconnusb,pcblabel={USB}] (USB) at (-3,2.5) {};
 \begin{scope}[gray]
-  \pcbpintopin{TO92-0.pin0}{U0.pin0}
+%\draw[step=1 in,black,thin] (-1,-1) grid (7,6);
+\begin{pgfonlayer}{background}
+  %\pcbpintopin{NPN-0.pin0}{U0.pin0}
+  \pcbbridge{NPN-0.base}{PNP-0.collector}
+  \pcbbridge[0.2 in]{PNP-0.base}{NPN-0.collector}
+  \pcbbridge{NPN-1.base}{PNP-1.collector}
+  \pcbbridge[0.2 in]{PNP-1.base}{NPN-1.collector}
+  \pcbpintopin{PNP-0.emitter}{R1.pin0}
+  \pcbpintopin{PNP-1.emitter}{R3.pin0}
+\end{pgfonlayer}
 \end{scope}
 \end{tikzpicture}
