@@ -41,6 +41,7 @@
   pcbusbhalfskewy/.initial=0.065 in,
   pcbwirelength/.initial=0.3 in,
   pcbindex/.initial=500,
+  pcblabelmargin/.initial=0.0015 in,
   pcblabel/.initial={},
   pcblabelupper/.initial={}
 }
@@ -480,8 +481,8 @@
   \inheritsavedanchors[from=pcbbase]
   \anchor{pina}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
   \anchor{pinb}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
-  \anchor{labelup}{\pgfutil@tempdimc=\acyhalfthick\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
-  \anchor{labeldn}{\pgfutil@tempdimc=\acyhalfthick\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
+  \anchor{labelup}{\pgfutil@tempdimc=\acyhalfthick\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{labeldn}{\pgfutil@tempdimc=\acyhalfthick\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
   \anchor{acylt}{\pgfutil@tempdimc=\acyhalfwidth\pgfutil@tempdimd=\acyhalfthick\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \anchor{acyrt}{\pgfutil@tempdimc=\acyhalfwidth\pgfutil@tempdimd=\acyhalfthick\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \anchor{acylb}{\pgfutil@tempdimc=\acyhalfwidth\pgfutil@tempdimd=\acyhalfthick\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
@@ -490,10 +491,11 @@
   \anchor{acyr}{\pgfutil@tempdimc=\acyhalfwidth\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
   \anchor{pin0}{\pgf@anchor@pcbacy@pina}
   \anchor{pin1}{\pgf@anchor@pcbacy@pinb}
-  \anchor{pinmarka}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\pgfutil@tempdimd=\circleout\advance\pgfutil@tempdimd by\rcymargin\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
-  \anchor{pinmarkb}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\pgfutil@tempdimd=\circleout\advance\pgfutil@tempdimd by\rcymargin\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{pinmarka}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\pgfutil@tempdimd=\circleout\advance\pgfutil@tempdimd by\rcymargin\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{pinmarkb}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\pgfutil@tempdimd=\circleout\advance\pgfutil@tempdimd by\rcymargin\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\labelmargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcblabelmargin}}}
   \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmargin}}}
   \saveddimen\acyhalfwidth{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfwidth}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
   \saveddimen\acyhalfthick{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfthick}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
@@ -546,7 +548,7 @@
     \pgf@anchor@pcbacy@pinmarka\advance\pgf@x by-0.5\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdima\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgf@anchor@pcbacy@pinmarka\advance\pgf@x by0.5\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdima\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgf@anchor@pcbacy@pinmarka\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-    \pgf@anchor@pcbacy@pinmarka\advance\pgf@y by\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\advance\pgf@y by\pgfutil@tempdima\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgfusepath{stroke}
   }
 }
