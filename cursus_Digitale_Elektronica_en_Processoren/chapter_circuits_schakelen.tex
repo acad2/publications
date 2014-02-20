@@ -96,6 +96,29 @@ Een typische manier om dit te realiseren is een symmetrische schakeling met twee
 Een nadeel van de $555$-timer is dat de periodieke functie meestal niet nauwkeurig wordt aangelegd. Componenten op basis van transistoren en weerstanden zijn bijvoorbeeld onderhevig aan de temperatuur. Indien men dus een kloksignaal met een zekere frequentie aanlegt kan men fluctuaties op die frequentie verwachten. Zolang de frequentie laag is, levert dit weinig problemen op: de componenten rekenen immers zo snel dat de data lang op de ingangen van de registers staat alvorens ze worden ingeladen. Wanneer men echter een processor implementeert, wil men een hoge kloksnelheid die zo weinig mogelijk tijd de data onbenut laat. Ook bij hoge frequenties blijft er echter sprake van ruis. In dat geval kan de ruis het verschil maken tussen de correcte data die aan de ingang van een register staat, of oude of tijdelijke data.
 \paragraph{}
 In dergelijke gevallen zal men opteren voor een kristal-oscillator. Een kristal-oscillator werk op basis van pi\"ezo-elektromagnetisme. De fysica achter dit proces valt buiten het bereik van deze cursus. Men kan echter stellen dat het een component is die op basis van een kwartskristal met een zeer vaste frequentie van weerstand varieert. De afwijkingen worden dan ook uitgedrukt in ``parts per billion (ppb)''.
+\section{Printed Circuit Board (PCB) Layout}
+In vakbladen zal men meestal naast de schakeling ook een ``printed circuit board (pcb) layout'' weergeven. Dit is een schematische weergave hoe men de schakeling compact kan realiseren op een printplaat. Een dergelijke afbeelding dient niet om de schakeling te analyseren, maar enkel om de schakeling zelf op een effici\"ente manier te realiseren. Een probleem met dergelijke plannen is dat men andere symbolen gebruikt om de componenten voor te stellen: meestal wordt de basisvorm van het relevante component weergegeven, bovendien dient men ook twee lagen weer te geven: de boven- en onderkant van de printplaat.
+\paragraph{}
+De meeste afbeeldingen lossen het probleem van de twee lagen op met behulp van kleur: in deze cursus zullen we de voorzijde afbeelden in het zwart en de achterzijde in het grijs. Het probleem met het toewijzen van componenten wordt meestal aangepakt door de componenten te labelen. Meestal wordt hierbij het type component (weerstand, condensator, ...) weergegeven, maar de meest relevante eenheid van het component. Zo zal bij een condensator de capaciteit in micro-Farad worden weergegeven.
+\paragraph{}
+Bij wijze van introductie toont \figref{pcb-components} een overzicht van de symbolische weergaven van enkele populaire componenten.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{pcb-rcy}{Condensator}
+\importtikzsubfigure{pcb-alf}{Diode}
+\importtikzsubfigure{pcb-led}{DIP-chip}
+\importtikzsubfigure{pcb-led}{Draad}
+\importtikzsubfigure{pcb-led}{Kristal-oscillator}
+\importtikzsubfigure{pcb-led}{LED}
+\importtikzsubfigure{pcb-led}{Schakelaar}
+\importtikzsubfigure{pcb-led}{Transistor}
+\importtikzsubfigure{pcb-led}{USB-verbinding}
+\importtikzsubfigure{pcb-acy}{Weerstand}
+\caption{PCB-weergave van populaire componenten.}
+\figlab{pcb-components}
+\end{figure}
+\paragraph{}
+Een PCB-layout kan ook digitaal worden ingevoerd. Bijvoorbeeld met \emph{gEDA} of \emph{Gerber}. Bovendien kan deze software op basis van de gegevens een lijst met specificaties maken waar gaten in de printplaat moeten worden geboord, waar de geleiders moeten worden aangebracht en welke componenten worden gebruikt en waar deze moeten worden aangebracht. Dit proces kan bovendien worden geautomatiseerd door relevante apparatuur aan te sturen. Dit ligt buiten het bereik van deze cursus.
 \section{Oproep aan de lezers}
 De auteur roept enthousiaste lezers op om projecten te delen zodat deze in deze cursus kunnen worden gepubliceerd als een hoofdstuk in dit deel. Men kan echter niet elk project als nuttig beschouwen. Ingediende projecten moeten aan enkele voorwaarden voldoen:
 \begin{enumerate}
