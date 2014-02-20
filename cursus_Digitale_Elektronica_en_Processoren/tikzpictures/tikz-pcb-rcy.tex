@@ -1,8 +1,3 @@
-\begin{tikzpicture}[scale=2.0]
-\def\sc{2.0}
-\node[pcbvia,scale=\sc] (VA) at (-0.75,-0.5) {};
-\node[pcbvia,scale=\sc] (VB) at (0.75,-0.5) {};
-\node[pcbrcyp,scale=\sc] (X) at (0,0) {};
-\pcbpintopin{VA}{X.pin0}
-\pcbpintopin{VB}{X.pin1}
+\begin{tikzpicture}
+\node[pcbrcyp,pcblabelupper=capacitor,pcblabel=1 nF,scale=2.0] (X) at (0,0) {};
 \end{tikzpicture}
