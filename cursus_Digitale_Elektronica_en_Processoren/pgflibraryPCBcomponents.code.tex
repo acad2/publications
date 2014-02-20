@@ -650,8 +650,11 @@
   \anchor{pinb}{\pgfutil@tempdimc=\wirelength\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc}
   \anchor{pin0}{\pgf@anchor@pcbwire@pina}
   \anchor{pin1}{\pgf@anchor@pcbwire@pinb}
+  \anchor{labelup}{\pgfutil@tempdimc=\labelmargin\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{labeldn}{\pgfutil@tempdimc=\labelmargin\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\labelmargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcblabelmargin}}}
   \saveddimen\wirelength{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbwirelength}}}
   \backgroundpath{
     \pgfseteorule
@@ -672,9 +675,8 @@
     \begingroup
     \tikzset{pcb/part labels} % Use font from this style
     \tikz@textfont
-    \pgfutil@tempdimd=\alfhalfthick
-    \centerpoint\advance\pgf@y by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdimb
-    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \pgf@anchor@pcbwire@labeldn\pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \pgf@anchor@pcbwire@labelup\pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabelupper}}}
     \endgroup
   }
 }
