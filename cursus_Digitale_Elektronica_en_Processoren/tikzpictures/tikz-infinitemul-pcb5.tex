@@ -1,7 +1,34 @@
 \begin{tikzpicture}
-\node[pcbvia] (VS) at (0,0) {};
-\node[pcbto92] (TO1) at (2,0) {};
-\node[pcbdip] (DIP) at (4,0) {};
-% \node[pcbr] (R) at (0,0) {};
-% \node[pcbtact] (T) at (0,-3) {};
+\node[pcbconnusb,pcblabel={USB}] (USB) at (-3,0) {};
+\foreach \i/\x in {0/0,1/5} {
+%Toggle switch
+\begin{scope}[xshift=\x cm]
+\node[pcbto92,pcblabel={2N3904},rotate=-180,anchor=basis] (NPN-\i) at (0,-1.5) {};%npn
+\node[pcbto92,pcblabel={2N3906},anchor=collector] (PNP-\i) at (0,1.5) {};%pnp
+\node[pcbvia] (VSS\i) at (-2,-2);
+\node[pcbvia] (VDD\i) at (-2,2);
+\node[pcbvia] (EXH\i) at (1,1.5);
+\node[pcbacy,pcblabel={100k},anchor=pin1] (R0\i) at (0,0) {};
+\node[pcbacy,pcblabel={20k},anchor=pin1] (R1\i) at (0,1.75) {};
+\node[pcbtact,pcblabel={U\i},anchor=pin1] (U\i) at ($0.25*(R0\i.pin0)+0.75*(R1\i.pin0)$) {};
+\begin{scope}[gray]
+\begin{pgfonlayer}{background}
+  \pcbspintopin{NPN-\i.basis}{R0\i.pin1}
+  \pcbspintopin{R0\i.pin1}{PNP-\i.collector}
+  \pcbspintopin{PNP-\i.basis}{NPN-\i.collector}
+  \pcbpintopin{VSS\i}{NPN-\i.emitter}
+  \pcbpintopin{R1\i.pin1}{PNP-\i.emitter}
+  \pcbspintopin{EXH\i}{PNP-\i.emitter}
+  \pcbspintopin{R0\i.pin0}{U\i.pin4}
+  \pcbspintopin{R1\i.pin0}{U\i.pin1}
+  \pcbpintopin{VDD\i}{R1\i.pin0}
+\end{pgfonlayer}
+\end{scope}
+\end{scope}}
+\begin{scope}[gray]
+\begin{pgfonlayer}{background}
+\pcbpintopin{USB.pin0}{VSS0}
+\pcbpintopin{VDD0}{USB.pin4}
+\end{pgfonlayer}
+\end{scope}
 \end{tikzpicture}

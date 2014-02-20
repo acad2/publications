@@ -3,6 +3,8 @@
 %%%
 %%% This library can be used to typeset pcb layouts.
 %%%
+%%% Kudos to the gEDA project for symbols and terminology
+%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -12,13 +14,36 @@
 % This file may be distributed and/or modified under the GNU General Public License.
 
 \pgfkeys{/pgf/.cd,
-	pcbdippins/.initial=14,
-	pcbdipdx/.initial=3 cm,
-	pcbdipwidth/.initial=4 cm,
-	pcbdipnudge/.initial=0.5 cm,
-	pcbcircleout/.initial=0.3 cm,
-	pcbcirclein/.initial=0.15 cm,
-	pcbcirclediff/.initial=1 cm
+  pcbpins/.initial=14,
+  pcbdipdx/.initial=0.3 in,
+  pcbdipwidth/.initial=0.4 in,
+  pcbdipheight/.initial=0.1 in,
+  pcbdipnudge/.initial=0.05 in,
+  pcbcircleout/.initial=0.03 in,
+  pcbcirclein/.initial=0.015 in,
+  pcbcirclediff/.initial=0.1 in,
+  pcbtactleft/.initial=0.03 in,
+  pcbtactright/.initial=0.02 in,
+  pcbouterradius/.initial=0.05 in,
+  pcbrcyradius/.initial=0.1 in,
+  pcbrcyrmargin/.initial=0.02 in,
+  pcbrcyrmarks/.initial=0.04 in,
+  pcbacyhalfwidth/.initial=0.00025 in,
+  pcbacyhalfthick/.initial=0.00008 in,
+  pcbacywire/.initial=0.00025 in,
+  pcbalfhalfwidth/.initial=0.00016 in,
+  pcbalfhalfthick/.initial=0.00016 in,
+  pcbalfwire/.initial=0.00033 in,
+  pcbledskew/.initial=0.01 in,
+  pcbusbdiffy/.initial=0.08 in,
+  pcbusbhalfheight/.initial=0.125 in,
+  pcbusbhalfwidth/.initial=0.24 in,
+  pcbusbhalfskewy/.initial=0.065 in,
+  pcbwirelength/.initial=0.3 in,
+  pcbindex/.initial=500,
+  pcblabelmargin/.initial=0.01 in,
+  pcblabel/.initial={},
+  pcblabelupper/.initial={}
 }
 \newdimen\pgfutil@tempdimc
 \newdimen\pgfutil@tempdimd
@@ -26,6 +51,14 @@
 \newdimen\pgfutil@tempdimf
 \newdimen\pgfutil@tempdimg
 \newdimen\pgfutil@tempdimh
+\newcount\pgfutil@tempcnta
+\newcount\pgfutil@tempcntb
+\newcount\pgfutil@tempcntc
+\newcount\pgfutil@tempcntd
+\newcount\pgfutil@tempcnte
+\newcount\pgfutil@tempcntf
+\newcount\pgfutil@tempcntg
+\newcount\pgfutil@tempcnth
 
 \pgfdeclareshape{pcbbase} {
   \savedanchor\centerpoint{
@@ -75,9 +108,16 @@
 
 \pgfdeclareshape{pcbto92} {
   \inheritsavedanchors[from=pcbbase]
+  \anchor{pina}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{pinb}{\centerpoint}
+  \anchor{pinc}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
   \anchor{pin0}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
   \anchor{pin1}{\centerpoint}
   \anchor{pin2}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
+  \anchor{collector}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{basis}{\centerpoint}
+  \anchor{base}{\centerpoint}
+  \anchor{emitter}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
@@ -96,176 +136,602 @@
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
     \centerpoint\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@xa by0.707\pgfutil@tempdimc\advance\pgf@ya by0.707\pgfutil@tempdimc
-    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpatharc{45}{-225}{\pgfutil@tempdimc and \pgfutil@tempdimc}\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpatharc{45}{-225}{\pgfutil@tempdimc and \pgfutil@tempdimc}\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpathclose
     \color{black}
     \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \centerpoint\advance\pgf@y by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimb
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \endgroup
   }
 }
 
 \pgfdeclareshape{pcbdip} {
   \inheritsavedanchors[from=pcbbase]
+  \savedmacro\halfpins{%
+    \pgfmathdivide{\pgfkeysvalueof{/pgf/pcbpins}}{2}
+    \let\halfpins\pgfmathresult
+  }
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
   \saveddimen\dipdx{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipdx}}}
+  \saveddimen\dipwidth{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipwidth}}}
+  \saveddimen\dipheight{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipheight}}}
+  \saveddimen\dipnudge{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipnudge}}}
   \backgroundpath{
     \pgfseteorule
     \pgfutil@tempdima=\circlein
     \pgfutil@tempdimb=\circleout
     \pgfutil@tempdimc=\circlediff
     \pgfutil@tempdimd=\dipdx
-    \pgfutil@tempdime=0 cm
+    \pgfutil@tempdime=0.5\pgfutil@tempdimc
     \pgfmathloop
-    \ifnum\pgfmathcounter>7
+    \ifnum\pgfmathcounter>\halfpins
     \else
-      \advance\pgfutil@tempdime by-\pgfutil@tempdimc
+      \advance\pgfutil@tempdime by -0.5\pgfutil@tempdimc
+      \repeatpgfmathloop
+    \fi
+    \pgfutil@tempdimf=\dipheight
+    \pgfutil@tempdimg=\dipwidth
+    \pgfutil@tempdimh=\dipnudge
+    \pgfmathloop
+    \ifnum\pgfmathcounter>\halfpins %pins
+    \else
       \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
       \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
       \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
       \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+      \advance\pgfutil@tempdime by\pgfutil@tempdimc
       \repeatpgfmathloop
     \fi
-%     \advance\pgfutil@tempdimb by-0.25\pgfutil@tempdima
     \color{gray}
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
-%       \centerpoint\advance\pgf@x by0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
-%       \pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-%       \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\halfheight
-%       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%       \centerpoint\advance\pgf@x by\halfwidth\advance\pgf@y by\pgfutil@tempdimb
-%       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%       \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\pgfutil@tempdimb
-%       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%       \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@y by\halfheight
-%       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%       \centerpoint\advance\pgf@x by-0.25\pgfutil@tempdima\advance\pgf@y by\halfheight
-%       \pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%       \pgfpatharc{-180}{0}{0.25\pgfutil@tempdima and 0.25\pgfutil@tempdima}
-%       \color{black}
-%       \pgfusepath{stroke}
+    \advance\pgfutil@tempdime by-\pgfutil@tempdimc
+    \advance\pgfutil@tempdime by0.5\pgfutil@tempdimf
+    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimg\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimh\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{-180}{0}{\pgfutil@tempdimh and \pgfutil@tempdimh}
+    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimg\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimg\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimg\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+    \color{black}
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \centerpoint
+    \pgftext[at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep,rotate=-90]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbtact} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{pin0}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdimb}
+  \anchor{pin1}{\pgfutil@tempdimb=\dipdx\centerpoint\centerpoint\advance\pgf@y by0.5\pgfutil@tempdimb}
+  \anchor{pin2}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdimb}
+  \anchor{pin3}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
+  \anchor{pin4}{\pgfutil@tempdimb=\dipdx\centerpoint\centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimb}
+  \anchor{pin5}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\dipdx{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipdx}}}
+  \saveddimen\dipnudge{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbdipnudge}}}
+  \saveddimen\tactleft{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbtactleft}}}
+  \saveddimen\tactright{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbtactright}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
+    \pgfutil@tempdimd=\dipdx
+    \pgfutil@tempdime=\tactleft
+    \pgfutil@tempdimf=\dipnudge
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\advance\pgf@x by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimf\advance\pgf@x by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{90}{-90}{\pgfutil@tempdimf and \pgfutil@tempdimf}
+    \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\advance\pgf@x by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfutil@tempdime=\tactright
+    \centerpoint\advance\pgf@x by1.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by1.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\advance\pgf@x by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by1.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\advance\pgf@x by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by1.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \color{black}
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\advance\pgf@y by-1.5\pgfutil@tempdimb
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \endgroup
   }
 }
 % 
-% \pgfdeclareshape{pcbr} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcircleout}}}
-%   \saveddimen\dpin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbdpin}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfutil@tempdimc=\dpin
-%     \centerpoint\advance\pgf@x by-\halfwidth\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-%     \centerpoint\advance\pgf@x by-\halfwidth\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-%     \centerpoint\advance\pgf@x by\halfwidth\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-%     \centerpoint\advance\pgf@x by\halfwidth\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-%     \color{gray}
-%     \pgfusepath{fill}
-%     \centerpoint\advance\pgf@x by-\halfwidth\advance\pgf@x by-0.1\pgfutil@tempdimc\advance\pgf@y by0.1\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@y by0.5\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by2.2\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@y by-0.5\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@y by-0.2\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@y by-0.5\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by-2.2\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@y by0.5\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \pgfpathclose
-%     \centerpoint\advance\pgf@x by-0.1\halfwidth\advance\pgf@x by1.1\pgfutil@tempdimc\advance\pgf@y by0.4\pgfutil@tempdimc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by1.8\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@y by-0.8\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \advance\pgf@x by-1.8\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
-%     \pgfpathclose
-%     \color{black}
-%     \pgfusepath{fill}
-%   }
-% }
-% 
-% \pgfdeclareshape{pcbtact} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbcircleout}}}
-%   \saveddimen\dpin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pcbdpin}}}
-%   \backgroundpath{
-%   }
-% }
-% 
-% \pgfdeclareshape{pcbcrystal} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-%     \color{gray}
-%     \pgfusepath{fill}
-%   }
-% }
-% 
-% \pgfdeclareshape{pcbelco} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-%     \color{gray}
-%     \pgfusepath{fill}
-%   }
-% }
-% 
-% \pgfdeclareshape{pcbsip} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-%     \color{gray}
-%     \pgfusepath{fill}
-%   }
-% }
-% 
-% \pgfdeclareshape{pcbzip} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-%     \color{gray}
-%     \pgfusepath{fill}
-%   }
-% }
-% 
-% \pgfdeclareshape{pcbjumber} {
-%   \inheritsavedanchors[from=pcbbase]
-%   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
-%   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
-%   \backgroundpath{
-%     \pgfseteorule
-%     \pgfutil@tempdima=\circlein
-%     \pgfutil@tempdimb=\circleout
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
-%     \pgfpathcircle{\centerpoint}{\pgfutil@tempdimb}
-%     \color{gray}
-%     \pgfusepath{fill}
-%   }
-% }
+\pgfdeclareshape{pcbhc49} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{pin0}{\centerpoint\advance\pgf@x by-\circlediff}
+  \anchor{pin1}{\centerpoint\advance\pgf@x by\circlediff}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\outerradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbouterradius}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
+    \pgfutil@tempdimd=\outerradius
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{90}{-90}{\pgfutil@tempdimd and \pgfutil@tempdimd}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{270}{90}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
+    \color{black}
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \centerpoint\advance\pgf@y by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdimb
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbsip} {
+  \inheritsavedanchors[from=pcbbase]
+  \savedmacro\pins{%
+    \pgfmathdivide{\pgfkeysvalueof{/pgf/pcbpins}}{1}
+    \let\pins\pgfmathresult
+  }
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\outerradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbouterradius}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
+    \pgfutil@tempdimd=\outerradius
+    \pgfutil@tempdime=0.5\pgfutil@tempdimc
+    \pgfmathloop
+    \ifnum\pgfmathcounter>\pins
+    \else
+      \advance\pgfutil@tempdime by -0.5\pgfutil@tempdimc
+      \repeatpgfmathloop
+    \fi
+    \pgfutil@tempdimf=\dipheight
+    \pgfutil@tempdimg=\dipwidth
+    \pgfutil@tempdimh=\dipnudge
+    \pgfmathloop
+    \ifnum\pgfmathcounter>\pins %pins
+    \else
+      \centerpoint\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+      \centerpoint\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+      \advance\pgfutil@tempdime by\pgfutil@tempdimc
+      \repeatpgfmathloop
+    \fi
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \advance\pgfutil@tempdime by-1.5\pgfutil@tempdimc
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfusepath{stroke}
+    \pgfsetlinewidth{2\pgflinewidth}
+  }
+  \beforebackgroundpath{
+    \advance\pgfutil@tempdime by0.5\pgfutil@tempdimc
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{180}{0}{\pgfutil@tempdimd and \pgfutil@tempdimd}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{0}{-180}{\pgfutil@tempdimd and \pgfutil@tempdimd}\pgfpathclose
+    \pgfusepath{stroke}
+  }
+}
+ 
+\pgfdeclareshape{pcbjumper} {
+  \inheritsavedanchors[from=pcbsip]
+  \inheritbackgroundpath[from=pcbsip]
+  \beforebackgroundpath{
+    \advance\pgfutil@tempdime by\pgfutil@tempdimc
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+    \pgfusepath{stroke}
+  }
+}
+
+\pgfdeclareshape{pcbzip} {
+  \inheritsavedanchors[from=pcbbase]
+  \savedmacro\pins{%
+    \pgfmathdivide{\pgfkeysvalueof{/pgf/pcbpins}}{1}
+    \let\pins\pgfmathresult
+  }
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\outerradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbouterradius}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgfutil@tempdimc=\circlediff
+    \pgfutil@tempdimd=\outerradius
+    \pgfutil@tempdime=-0.25\pgfutil@tempdimc
+    \pgfmathloop
+    \ifnum\pgfmathcounter>\pins
+    \else
+      \advance\pgfutil@tempdime by 0.25\pgfutil@tempdimc
+      \repeatpgfmathloop
+    \fi
+    \pgfmathloop
+    \ifnum\pgfmathcounter>\pins %pins
+    \else
+      \pgfutil@tempdimf = 0.5\pgfutil@tempdimc
+      \ifodd\pgfmathcounter
+	\pgfutil@tempdimf = -0.5\pgfutil@tempdimc
+      \fi
+      \centerpoint\advance\pgf@x by\pgfutil@tempdimf\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+      \centerpoint\advance\pgf@x by\pgfutil@tempdimf\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+      \advance\pgfutil@tempdime by-0.5\pgfutil@tempdimc
+      \repeatpgfmathloop
+    \fi
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \advance\pgfutil@tempdimd by0.5\pgfutil@tempdimc
+    \centerpoint\advance\pgf@y by-\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\advance\pgf@y by-\pgfutil@tempdimc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfusepath{stroke}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdimd\advance\pgf@y by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgfusepath{stroke}
+  }
+}
+
+\pgfdeclareshape{pcbrcy} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{pina}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc}
+  \anchor{pinb}{\pgfutil@tempdimc=\circlediff\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc}
+  \anchor{pin0}{\pgf@anchor@pcbrcy@pina}
+  \anchor{pin1}{\pgf@anchor@pcbrcy@pinb}
+  \anchor{labelup}{\pgfutil@tempdimc=\rcyradius\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{labeldn}{\pgfutil@tempdimc=\rcyradius\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\labelmargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcblabelmargin}}}
+  \saveddimen\rcyradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyradius}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgf@anchor@pcbrcy@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbrcy@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbrcy@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbrcy@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \pgfutil@tempdima=\rcyradius
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgfpathcircle{\centerpoint}{\pgfutil@tempdima}
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \pgf@anchor@pcbrcy@labeldn\pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \pgf@anchor@pcbrcy@labelup\pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabelupper}}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbrcyp} {
+  \inheritsavedanchors[from=pcbrcy]
+  \saveddimen\rcyradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyradius}}}
+  \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmargin}}}
+  \saveddimen\rcymarks{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmarks}}}
+  \inheritbackgroundpath[from=pcbrcy]
+  \beforebackgroundpath{
+    \color{black}
+    \pgfutil@tempdima=\rcyradius
+    \advance\pgfutil@tempdima by\rcymargin
+    \pgfutil@tempdimb=\rcymarks
+    \centerpoint\advance\pgf@x by\pgfutil@tempdima\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@x by\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdima\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by-0.5\pgfutil@tempdimb\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@x by-0.5\pgfutil@tempdimb\advance\pgf@y by0.5\pgfutil@tempdimb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfusepath{stroke}
+  }
+}
+
+\pgfdeclareshape{pcbacy} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{pina}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{pinb}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
+  \anchor{labelup}{\pgfutil@tempdimc=\acyhalfthick\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{labeldn}{\pgfutil@tempdimc=\acyhalfthick\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
+  \anchor{acylt}{\pgfutil@tempdimc=\acyhalfwidth\pgfutil@tempdimd=\acyhalfthick\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{acyrt}{\pgfutil@tempdimc=\acyhalfwidth\pgfutil@tempdimd=\acyhalfthick\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{acylb}{\pgfutil@tempdimc=\acyhalfwidth\pgfutil@tempdimd=\acyhalfthick\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{acyrb}{\pgfutil@tempdimc=\acyhalfwidth\pgfutil@tempdimd=\acyhalfthick\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{acyl}{\pgfutil@tempdimc=\acyhalfwidth\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{acyr}{\pgfutil@tempdimc=\acyhalfwidth\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
+  \anchor{pin0}{\pgf@anchor@pcbacy@pina}
+  \anchor{pin1}{\pgf@anchor@pcbacy@pinb}
+  \anchor{pinmarka}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\pgfutil@tempdimd=\circleout\advance\pgfutil@tempdimd by\rcymargin\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{pinmarkb}{\pgfutil@tempdimc=\acyhalfwidth\advance\pgfutil@tempdimc by\acywire\pgfutil@tempdimd=\circleout\advance\pgfutil@tempdimd by\rcymargin\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\labelmargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcblabelmargin}}}
+  \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmargin}}}
+  \saveddimen\acyhalfwidth{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfwidth}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \saveddimen\acyhalfthick{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacyhalfthick}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \saveddimen\acywire{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbacywire}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgf@anchor@pcbacy@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbacy@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbacy@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbacy@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgf@anchor@pcbacy@acyl\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pina\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@acyr\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfutil@tempdimd=\acyhalfthick
+    \pgf@anchor@pcbacy@acylt\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@acyrt\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@acyrb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@acylb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \pgf@anchor@pcbacy@labeldn\pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \pgf@anchor@pcbacy@labelup\pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabelupper}}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbacyp} {
+  \inheritsavedanchors[from=pcbacy]
+  \inheritanchor[from=pcbacy]{pin0}
+  \inheritanchor[from=pcbacy]{pin1}
+  \inheritanchor[from=pcbacy]{pinmarka}
+  \inheritanchor[from=pcbacy]{pinmarkb}
+  \saveddimen\rcymarks{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmarks}}}
+  \inheritbackgroundpath[from=pcbacy]
+  \beforebackgroundpath{
+    \color{black}
+    \pgfutil@tempdima=\rcymarks
+    \pgf@anchor@pcbacy@pinmarkb\advance\pgf@x by-0.5\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdima\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarkb\advance\pgf@x by0.5\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdima\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\advance\pgf@x by-0.5\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdima\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\advance\pgf@x by0.5\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdima\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbacy@pinmarka\advance\pgf@y by\pgfutil@tempdima\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfusepath{stroke}
+  }
+}
+
+\pgfdeclareshape{pcbled} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{pina}{\pgfutil@tempdimd=\circlediff\pgfutil@tempdimc=\ledskew\advance\pgfutil@tempdimc by 0.5\pgfutil@tempdimd\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{pinb}{\pgfutil@tempdimd=\circlediff\pgfutil@tempdimc=\ledskew\advance\pgfutil@tempdimc by -0.5\pgfutil@tempdimd\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{pin0}{\pgf@anchor@pcbled@pina}
+  \anchor{pin1}{\pgf@anchor@pcbled@pinb}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\ledskew{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbledskew}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgf@anchor@pcbled@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbled@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbled@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbled@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgfutil@tempdimc=\circlediff
+    \centerpoint\pgf@xa=\pgf@x\pgf@ya=\pgf@y\advance\pgf@xa by-0.707\pgfutil@tempdimc\advance\pgf@ya by-0.707\pgfutil@tempdimc
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpatharc{225}{-45}{\pgfutil@tempdimc and \pgfutil@tempdimc}\pgfpathlineto{\pgfpoint{\pgf@xa}{\pgf@ya}}\pgfpathclose
+    \color{black}
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \centerpoint\advance\pgf@y by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimb
+    \pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbalf} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{cina}{\centerpoint\advance\pgf@x by-\alfhalfwidth}
+  \anchor{cinb}{\centerpoint\advance\pgf@x by\alfhalfwidth}
+  \anchor{cinc}{\centerpoint\advance\pgf@x by-\alfhalfwidth\advance\pgf@y by-\alfhalfthick}
+  \anchor{cind}{\centerpoint\advance\pgf@x by-\alfhalfwidth\advance\pgf@y by\alfhalfthick}
+  \anchor{cine}{\centerpoint\advance\pgf@x by\alfhalfwidth\advance\pgf@y by-\alfhalfthick}
+  \anchor{cinf}{\centerpoint\advance\pgf@x by\alfhalfwidth\advance\pgf@y by\alfhalfthick}
+  \anchor{pina}{\pgfutil@tempdimc=\alfhalfwidth\advance\pgfutil@tempdimc by\alfwire\centerpoint\advance\pgf@x by-\pgfutil@tempdimc}
+  \anchor{pinb}{\pgfutil@tempdimc=\alfhalfwidth\advance\pgfutil@tempdimc by\alfwire\centerpoint\advance\pgf@x by\pgfutil@tempdimc}
+  \anchor{pin0}{\pgf@anchor@pcbalf@pina}
+  \anchor{pin1}{\pgf@anchor@pcbalf@pinb}
+  \anchor{labelup}{\pgfutil@tempdimc=\alfhalfthick\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{labeldn}{\pgfutil@tempdimc=\alfhalfthick\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
+  \anchor{pinmarka}{\pgfutil@tempdima=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\pgfutil@tempdimb=\circleout\advance\pgfutil@tempdimb by\rcymargin\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb}
+  \anchor{pinmarkb}{\pgfutil@tempdima=\acyhalfwidth\advance\pgfutil@tempdima by\acywire\pgfutil@tempdimb=\circleout\advance\pgfutil@tempdimb by\rcymargin\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by\pgfutil@tempdimb}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\labelmargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcblabelmargin}}}
+  \saveddimen\rcymargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbrcyrmargin}}}
+  \saveddimen\alfhalfwidth{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbalfhalfwidth}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \saveddimen\alfhalfthick{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbalfhalfthick}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \saveddimen\alfwire{\pgfmathmultiply{\pgfkeysvalueof{/pgf/pcbalfwire}}{\pgfkeysvalueof{/pgf/pcbindex}}\pgfmathsetlength{\pgf@x}{\pgfmathresult}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgf@anchor@pcbalf@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbalf@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbalf@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbalf@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgf@anchor@pcbalf@pina\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@cina\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@pinb\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@cinb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@cinc\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@cind\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@cina\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@cine\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbalf@cinf\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpathclose
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \pgf@anchor@pcbalf@labeldn\pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \pgf@anchor@pcbalf@labelup\pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabelupper}}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbwire} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{pina}{\pgfutil@tempdimc=\wirelength\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc}
+  \anchor{pinb}{\pgfutil@tempdimc=\wirelength\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc}
+  \anchor{pin0}{\pgf@anchor@pcbwire@pina}
+  \anchor{pin1}{\pgf@anchor@pcbwire@pinb}
+  \anchor{labelup}{\pgfutil@tempdimc=\labelmargin\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
+  \anchor{labeldn}{\pgfutil@tempdimc=\labelmargin\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\labelmargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcblabelmargin}}}
+  \saveddimen\wirelength{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbwirelength}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgf@anchor@pcbwire@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbwire@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbwire@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbwire@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgf@anchor@pcbwire@pina\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbwire@pinb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \pgf@anchor@pcbwire@labeldn\pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \pgf@anchor@pcbwire@labelup\pgftext[bottom,at={\pgfpoint{\pgf@x}{\pgf@y}}]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabelupper}}}
+    \endgroup
+  }
+}
+
+\pgfdeclareshape{pcbconnusb} {
+  \inheritsavedanchors[from=pcbbase]
+  \anchor{pina}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd}
+  \anchor{pinb}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd}
+  \anchor{pinc}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd}
+  \anchor{pind}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd}
+  \anchor{bara}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{barb}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{barc}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
+  \anchor{bard}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{pin0}{\pgf@anchor@pcbconnusb@pina}
+  \anchor{pin1}{\pgf@anchor@pcbconnusb@pinb}
+  \anchor{pin2}{\pgf@anchor@pcbconnusb@pinc}
+  \anchor{pin3}{\pgf@anchor@pcbconnusb@pind}
+  \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
+  \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
+  \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
+  \saveddimen\usbdiffy{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbdiffy}}}
+  \saveddimen\usbhalfw{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbhalfwidth}}}
+  \saveddimen\usbhalfh{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbhalfheight}}}
+  \backgroundpath{
+    \pgfseteorule
+    \pgfutil@tempdima=\circlein
+    \pgfutil@tempdimb=\circleout
+    \pgf@anchor@pcbconnusb@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbconnusb@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbconnusb@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbconnusb@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbconnusb@pinc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbconnusb@pinc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbconnusb@pind\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbconnusb@pind\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \color{gray}
+    \pgfusepath{fill}
+    \color{black}
+    \pgfsetlinewidth{2\pgflinewidth}
+    \pgf@anchor@pcbconnusb@bara\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbconnusb@barb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbconnusb@barc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgf@anchor@pcbconnusb@bard\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfusepath{stroke}
+    % Draw port labels
+    \begingroup
+    \tikzset{pcb/part labels} % Use font from this style
+    \tikz@textfont
+    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\advance\pgf@y by-1.5\pgfutil@tempdimb
+    \pgftext[top,at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \endgroup
+  }
+}

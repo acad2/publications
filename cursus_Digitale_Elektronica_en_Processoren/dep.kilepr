@@ -506,6 +506,41 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
+[document-settings,item:tikzpictures/tikz-pcb-acy.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-pcb-alf.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-pcb-led.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-pcb-rcy.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-pcb-wire.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
 [document-settings,item:tikzpictures/tikz-setResetLatch-nand.tex]
 Bookmarks=
 Encoding=UTF-8
@@ -649,13 +684,13 @@ order=5
 
 [item:chapter_circuits_schakelen.tex]
 archive=true
-column=766
+column=29
 encoding=UTF-8
 highlight=LaTeX
-line=105
+line=109
 mode=LaTeX
-open=false
-order=5
+open=true
+order=0
 
 [item:chapter_combinatorische_schakelingen.tex]
 archive=true
@@ -669,13 +704,13 @@ order=-1
 
 [item:chapter_experimenten.tex]
 archive=true
-column=33
+column=85
 encoding=UTF-8
 highlight=LaTeX
 line=75
 mode=LaTeX
 open=true
-order=0
+order=2
 
 [item:chapter_niet_programmeerbare_processoren.tex]
 archive=true
@@ -729,13 +764,13 @@ order=-1
 
 [item:commusoftScripts.sty]
 archive=true
-column=80
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=464
+line=961
 mode=LaTeX
-open=false
-order=1
+open=true
+order=6
 
 [item:cursus.tex]
 archive=true
@@ -799,30 +834,30 @@ order=-1
 
 [item:pgflibraryDEPcomponents.code.tex]
 archive=true
-column=20
+column=4
 encoding=UTF-8
 highlight=LaTeX
-line=2197
+line=2289
 mode=LaTeX
 open=false
-order=-1
+order=4
 
 [item:pgflibraryPCBcomponents.code.tex]
 archive=true
-column=43
+column=86
 encoding=UTF-8
 highlight=LaTeX
-line=234
+line=464
 mode=LaTeX
 open=true
-order=3
+order=4
 
 [item:pgflibraryWashing.code.tex]
 archive=true
-column=1
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=169
+line=13
 mode=LaTeX
 open=false
 order=-1
@@ -899,10 +934,10 @@ order=-1
 
 [item:pgflibraryshapes.gates.logic.US.code.tex]
 archive=true
-column=0
+column=35
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=179
 mode=LaTeX
 open=false
 order=-1
@@ -932,20 +967,20 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=1123
 mode=LaTeX
 open=false
 order=-1
 
 [item:pgflibraryshapes.multipart.code.tex]
 archive=true
-column=0
+column=2
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=156
 mode=LaTeX
 open=false
-order=-1
+order=4
 
 [item:pgflibrarytikzcircuits.code.tex]
 archive=true
@@ -1279,30 +1314,30 @@ order=3
 
 [item:tikzlibraryDEPcomponents.code.tex]
 archive=true
-column=12
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=38
+line=44
 mode=LaTeX
 open=false
-order=-1
+order=5
 
 [item:tikzlibraryPCBcomponents.code.tex]
 archive=true
 column=38
 encoding=UTF-8
 highlight=LaTeX
-line=18
+line=28
 mode=LaTeX
 open=true
-order=2
+order=1
 
 [item:tikzlibraryWashing.code.tex]
 archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=13
 mode=LaTeX
 open=false
 order=-1
@@ -2419,13 +2454,13 @@ order=2
 
 [item:tikzpictures/tikz-infinitemul-pcb5.tex]
 archive=true
-column=13
+column=16
 encoding=UTF-8
 highlight=LaTeX
-line=5
+line=31
 mode=LaTeX
 open=true
-order=1
+order=3
 
 [item:tikzpictures/tikz-instructionword-example.tex]
 archive=true
@@ -2977,6 +3012,56 @@ mode=
 open=false
 order=-1
 
+[item:tikzpictures/tikz-pcb-acy.tex]
+archive=true
+column=12
+encoding=UTF-8
+highlight=LaTeX
+line=1
+mode=LaTeX
+open=false
+order=-1
+
+[item:tikzpictures/tikz-pcb-alf.tex]
+archive=true
+column=17
+encoding=UTF-8
+highlight=LaTeX
+line=2
+mode=LaTeX
+open=false
+order=-1
+
+[item:tikzpictures/tikz-pcb-led.tex]
+archive=true
+column=17
+encoding=UTF-8
+highlight=LaTeX
+line=6
+mode=LaTeX
+open=true
+order=7
+
+[item:tikzpictures/tikz-pcb-rcy.tex]
+archive=true
+column=79
+encoding=UTF-8
+highlight=LaTeX
+line=1
+mode=LaTeX
+open=true
+order=8
+
+[item:tikzpictures/tikz-pcb-wire.tex]
+archive=true
+column=0
+encoding=UTF-8
+highlight=LaTeX
+line=0
+mode=LaTeX
+open=true
+order=9
+
 [item:tikzpictures/tikz-pinout-555.tex]
 archive=true
 column=4485205
@@ -3169,13 +3254,13 @@ order=-1
 
 [item:tikzpictures/tikz-toggleswitch-transistor.tex]
 archive=true
-column=17
+column=36
 encoding=UTF-8
 highlight=LaTeX
-line=24
+line=20
 mode=LaTeX
-open=false
-order=4
+open=true
+order=5
 
 [item:tikzpictures/tikz-twocomplement.tex]
 archive=true
@@ -3254,10 +3339,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:chapter_circuits_schakelen.tex]
-CursorColumn=766
-CursorLine=105
+CursorColumn=29
+CursorLine=109
 JumpList=
-ViMarks=.,105,655,[,105,655,],105,655
+ViMarks=.,109,28,[,109,25,],109,28
 
 [view-settings,view=0,item:chapter_combinatorische_schakelingen.tex]
 CursorColumn=0
@@ -3266,10 +3351,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:chapter_experimenten.tex]
-CursorColumn=33
+CursorColumn=85
 CursorLine=75
 JumpList=
-ViMarks=.,75,32,[,75,30,],75,32
+ViMarks=.,75,82,[,75,67,],75,82
 
 [view-settings,view=0,item:chapter_niet_programmeerbare_processoren.tex]
 CursorColumn=12
@@ -3302,10 +3387,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:commusoftScripts.sty]
-CursorColumn=80
-CursorLine=464
+CursorColumn=17
+CursorLine=961
 JumpList=
-ViMarks=.,464,79,[,464,69,],464,79
+ViMarks=.,961,16,[,961,16,],961,16
 
 [view-settings,view=0,item:cursus.tex]
 CursorColumn=19
@@ -3314,22 +3399,22 @@ JumpList=
 ViMarks=.,25,18,[,25,16,],25,18
 
 [view-settings,view=0,item:pgflibraryDEPcomponents.code.tex]
-CursorColumn=20
-CursorLine=2197
+CursorColumn=4
+CursorLine=2289
 JumpList=
-ViMarks=
+ViMarks=.,12,0,[,0,0,],-1,-1
 
 [view-settings,view=0,item:pgflibraryPCBcomponents.code.tex]
-CursorColumn=43
-CursorLine=234
+CursorColumn=86
+CursorLine=464
 JumpList=
-ViMarks=.,318,18,[,318,18,],318,18
+ViMarks=.,457,19,[,457,19,],457,19
 
 [view-settings,view=0,item:pgflibraryWashing.code.tex]
-CursorColumn=1
-CursorLine=169
+CursorColumn=0
+CursorLine=13
 JumpList=
-ViMarks=
+ViMarks=.,12,0,[,0,0,],-1,-1
 
 [view-settings,view=0,item:pgflibraryflowchart.code.tex]
 CursorColumn=0
@@ -3374,8 +3459,8 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:pgflibraryshapes.gates.logic.US.code.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=35
+CursorLine=179
 JumpList=
 ViMarks=.,0,0,[,0,0,],0,0
 
@@ -3393,13 +3478,13 @@ ViMarks=
 
 [view-settings,view=0,item:pgflibraryshapes.misc.code.tex]
 CursorColumn=0
-CursorLine=0
+CursorLine=1123
 JumpList=
 ViMarks=
 
 [view-settings,view=0,item:pgflibraryshapes.multipart.code.tex]
-CursorColumn=0
-CursorLine=0
+CursorColumn=2
+CursorLine=156
 JumpList=
 ViMarks=
 
@@ -3446,22 +3531,22 @@ JumpList=
 ViMarks=.,1,17,[,1,16,],1,31
 
 [view-settings,view=0,item:tikzlibraryDEPcomponents.code.tex]
-CursorColumn=12
-CursorLine=38
+CursorColumn=0
+CursorLine=44
 JumpList=
-ViMarks=
+ViMarks=.,3,77,[,3,70,],3,77
 
 [view-settings,view=0,item:tikzlibraryPCBcomponents.code.tex]
 CursorColumn=38
-CursorLine=18
+CursorLine=28
 JumpList=
-ViMarks=.,18,37,[,18,34,],18,37
+ViMarks=.,31,11,[,31,9,],31,11
 
 [view-settings,view=0,item:tikzlibraryWashing.code.tex]
 CursorColumn=0
-CursorLine=0
+CursorLine=13
 JumpList=
-ViMarks=
+ViMarks=.,3,85,[,3,78,],3,85
 
 [view-settings,view=0,item:tikzlibrarycircuits.code.tex]
 CursorColumn=0
@@ -3608,10 +3693,10 @@ JumpList=
 ViMarks=.,7,55,[,7,55,],7,55
 
 [view-settings,view=0,item:tikzpictures/tikz-infinitemul-pcb5.tex]
-CursorColumn=13
-CursorLine=5
+CursorColumn=16
+CursorLine=31
 JumpList=
-ViMarks=.,5,12,[,5,9,],5,12
+ViMarks=.,31,0,[,31,0,],31,15
 
 [view-settings,view=0,item:tikzpictures/tikz-ledtttmatrix.tex]
 CursorColumn=17
@@ -3637,6 +3722,36 @@ CursorLine=0
 JumpList=
 ViMarks=
 
+[view-settings,view=0,item:tikzpictures/tikz-pcb-acy.tex]
+CursorColumn=12
+CursorLine=1
+JumpList=
+ViMarks=.,1,12,[,1,12,],1,12
+
+[view-settings,view=0,item:tikzpictures/tikz-pcb-alf.tex]
+CursorColumn=17
+CursorLine=2
+JumpList=
+ViMarks=.,1,11,[,1,10,],1,11
+
+[view-settings,view=0,item:tikzpictures/tikz-pcb-led.tex]
+CursorColumn=17
+CursorLine=6
+JumpList=
+ViMarks=.,2,30,[,2,30,],2,30
+
+[view-settings,view=0,item:tikzpictures/tikz-pcb-rcy.tex]
+CursorColumn=79
+CursorLine=1
+JumpList=
+ViMarks=.,1,46,[,1,46,],1,46
+
+[view-settings,view=0,item:tikzpictures/tikz-pcb-wire.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+ViMarks=
+
 [view-settings,view=0,item:tikzpictures/tikz-setResetLatch-nand.tex]
 CursorColumn=0
 CursorLine=0
@@ -3644,8 +3759,8 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:tikzpictures/tikz-toggleswitch-transistor.tex]
-CursorColumn=17
-CursorLine=24
+CursorColumn=36
+CursorLine=20
 JumpList=
 ViMarks=.,0,16,[,0,16,],0,16
 

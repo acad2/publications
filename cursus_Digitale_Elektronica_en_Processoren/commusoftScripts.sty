@@ -958,3 +958,42 @@
 \draw[white,line width=0.08mm] ($(#1)-(0.0575,0.0575)$) -- ($(#1)+(0.0575,-0.0575)$);
 \draw[white,line width=0.08mm] ($(#1)+(0.0575,0.0575)$) -- ($(#1)-(0.0575,-0.0575)$);
 }
+
+\newcommand{\pcbspintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
+  \draw[{#1}] (#2) -- (#3);
+}
+%Begin Kudos
+%to Heiko Oberdiek for this script.
+\makeatletter
+\pgfmathdeclarefunction{sign}{1}{%
+  \begingroup
+    \ifdim#1pt>\z@
+      \def\pgfmathresult{1}%
+    \else
+      \ifdim#1pt=\z@
+        \def\pgfmathresult{0}%
+      \else
+        \def\pgfmathresult{-1}%
+      \fi
+    \fi
+    \pgfmath@smuggleone\pgfmathresult
+  \endgroup
+}
+\makeatother
+
+\newcommand{\pcbpintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
+  \draw[{#1}]
+    let \p1=($(#3)-(#2)$),
+        \n2={abs(\x1) - abs(\y1)},
+        \n3={(\n2 > 0) * sign(\x1) * \n2},
+        \n4={(\n2 < 0) * sign(\y1) * (-\n2)},
+        \p{m}=(\n{3}, \n{4})
+    in
+    (#2) -- ++(\p{m}) -- (#3);
+}
+%End Kudos
+\newcommand{\pcbbridge}[3][0.1 in]{%
+  \coordinate (TMP) at ($0.5*(#2)+0.5*(#3)+(0,#1)$);
+  \pcbpintopin[gray,line width=0.015 in,shorten >=0.0225 in]{TMP}{#2}
+  \pcbpintopin[gray,line width=0.015 in,shorten >=0.0225 in]{TMP}{#3}
+}
