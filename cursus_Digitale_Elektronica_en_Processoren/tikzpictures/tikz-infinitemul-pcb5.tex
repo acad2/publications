@@ -16,15 +16,28 @@
 %\node[pcbconnusb,pcblabel={USB}] (USB) at (-3,2.5) {};
 
 %Toggle switch
-\node[pcbto92,pcblabel={2N3904},anchor=collector] (NPN-0) at (0,0.5) {};%npn
-\node[pcbto92,pcblabel={2N3906},rotate=-180,anchor=basis] (PNP-0) at (0,-0.5) {};%pnp
+\node[pcbto92,pcblabel={2N3904},rotate=-180,anchor=basis] (NPN-0) at (0,-1.5) {};%npn
+\node[pcbto92,pcblabel={2N3906},anchor=collector] (PNP-0) at (0,1.5) {};%pnp
+\node[pcbvia] (VSS0) at (-2,-2);
+\node[pcbvia] (VDD0) at (-2,2);
+\node[pcbvia] (EXH0) at (1,1.5);
+\node[pcbacy,pcblabel={100k},anchor=pin1] (R0) at (0,0) {};
+\node[pcbacy,pcblabel={20k},anchor=pin1] (R1) at (0,1.75) {};
+\node[pcbtact,pcblabel={U0},anchor=pin1] (U0) at ($0.25*(R0.pin0)+0.75*(R1.pin0)$) {};
 
 \begin{scope}[gray]
 %\draw[step=1 in,black,thin] (-1,-1) grid (7,6);
 \begin{pgfonlayer}{background}
   %\pcbpintopin{NPN-0.pin0}{U0.pin0}
-  \pcbbridge{NPN-0.base}{PNP-0.collector}
-  \pcbbridge[0.2 in]{PNP-0.base}{NPN-0.collector}
+  \pcbspintopin{NPN-0.basis}{R0.pin1}
+  \pcbspintopin{R0.pin1}{PNP-0.collector}
+  \pcbspintopin{PNP-0.basis}{NPN-0.collector}
+  \pcbpintopin{VSS0}{NPN-0.emitter}
+  \pcbpintopin{R1.pin1}{PNP-0.emitter}
+  \pcbspintopin{EXH0}{PNP-0.emitter}
+  \pcbspintopin{R0.pin0}{U0.pin4}
+  \pcbspintopin{R1.pin0}{U0.pin1}
+  \pcbpintopin{VDD0}{R1.pin0}
 %   \pcbbridge{NPN-1.base}{PNP-1.collector}
 %   \pcbbridge[0.2 in]{PNP-1.base}{NPN-1.collector}
 %   \pcbpintopin{PNP-0.emitter}{R1.pin0}

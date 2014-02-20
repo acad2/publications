@@ -959,6 +959,9 @@
 \draw[white,line width=0.08mm] ($(#1)+(0.0575,0.0575)$) -- ($(#1)-(0.0575,-0.0575)$);
 }
 
+\newcommand{\pcbspintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
+  \draw[{#1}] (#2) -- (#3);
+}
 %Begin Kudos
 %to Heiko Oberdiek for this script.
 \makeatletter
