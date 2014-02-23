@@ -207,7 +207,7 @@
     \tikzset{pcb/part labels} % Use font from this style
     \tikz@textfont
     \centerpoint
-    \pgftext[at={\pgfpoint{\pgf@x}{\pgf@y}},x=\pgfshapeinnerxsep,rotate=-90]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
+    \pgftext[at={\pgfpoint{\pgf@x}{\pgf@y}},rotate=-90]{\raisebox{-0.75ex}{\pgfkeysvalueof{/pgf/pcblabel}}}
     \endgroup
   }
 }
@@ -693,10 +693,10 @@
   \anchor{pinb}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd}
   \anchor{pinc}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd}
   \anchor{pind}{\pgfutil@tempdimc=\circlediff\pgfutil@tempdimd=\usbdiffy\centerpoint\advance\pgf@x by0.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd}
-  \anchor{bara}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{bara}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=-\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \anchor{barb}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \anchor{barc}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
-  \anchor{bard}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{bard}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=-\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \anchor{fota}{\pgfutil@tempdime=\usbfootskip\pgf@anchor@pcbconnusb@bara\advance\pgf@y by-\pgfutil@tempdime}
   \anchor{fotb}{\pgfutil@tempdime=\usbfootskip\pgf@anchor@pcbconnusb@bard\advance\pgf@y by-\pgfutil@tempdime}
   \anchor{pin0}{\pgf@anchor@pcbconnusb@pina}
