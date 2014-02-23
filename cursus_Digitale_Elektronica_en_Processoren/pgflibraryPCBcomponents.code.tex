@@ -39,6 +39,8 @@
   pcbusbhalfheight/.initial=0.125 in,
   pcbusbhalfwidth/.initial=0.24 in,
   pcbusbhalfskewy/.initial=0.065 in,
+  pcbusbfootskip/.initial=0.09 in,
+  pcbusbfootradius/.initial=0.045 in,
   pcbwirelength/.initial=0.3 in,
   pcbindex/.initial=500,
   pcblabelmargin/.initial=0.01 in,
@@ -695,6 +697,8 @@
   \anchor{barb}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \anchor{barc}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimd}
   \anchor{bard}{\pgfutil@tempdimc=\usbhalfw\pgfutil@tempdimd=\usbhalfh\centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-\pgfutil@tempdimd}
+  \anchor{fota}{\pgfutil@tempdime=\usbfootskip\pgf@anchor@pcbconnusb@bara\advance\pgf@y by-\pgfutil@tempdime}
+  \anchor{fotb}{\pgfutil@tempdime=\usbfootskip\pgf@anchor@pcbconnusb@bard\advance\pgf@y by-\pgfutil@tempdime}
   \anchor{pin0}{\pgf@anchor@pcbconnusb@pina}
   \anchor{pin1}{\pgf@anchor@pcbconnusb@pinb}
   \anchor{pin2}{\pgf@anchor@pcbconnusb@pinc}
@@ -705,6 +709,8 @@
   \saveddimen\usbdiffy{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbdiffy}}}
   \saveddimen\usbhalfw{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbhalfwidth}}}
   \saveddimen\usbhalfh{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbhalfheight}}}
+  \saveddimen\usbfootskip{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbfootskip}}}
+  \saveddimen\usbfootradius{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbusbfootradius}}}
   \backgroundpath{
     \pgfseteorule
     \pgfutil@tempdima=\circlein
@@ -725,6 +731,9 @@
     \pgf@anchor@pcbconnusb@barb\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgf@anchor@pcbconnusb@barc\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \pgf@anchor@pcbconnusb@bard\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfutil@tempdima=\usbfootradius
+    \pgf@anchor@pcbconnusb@fota\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbconnusb@fotb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
     \pgfusepath{stroke}
     % Draw port labels
     \begingroup
