@@ -1,6 +1,6 @@
 \documentclass[titlepage]{book}
 
-\usepackage{fullpage,importsreferences,amsmath,amsthm,amsfonts}
+\usepackage{fullpage,importsreferences,brackets,amsmath,amsthm,amsfonts,tikz}
 
 \title{Optimization: Special Topics}
 \author{Frits Spieksma\and Edited by: Jo Devriendt \and Willem Van Onsem}
@@ -12,42 +12,29 @@
 \tableofcontents
 \chapter*{Preface}
 These notes are lecture notes used for the course ``Optimization: special topics''. Its subject is mainly combinatorial optimization with an emphasis on modeling issues and solution strategies. Its audience is students, more specifically: master students in engineering or management or economic programs.
+
 \paragraph{}
 The course assumes that the reader has had a first introduction to operations research and has some elementary knowledge of mathematical modeling, linear programming, and graph theory.
+
 \paragraph{}
 There are some excellent textbooks on combinatorial optimization. We mention Schrijver's trilogy: ``Combinatorial Optimization. Polyhedra and Efficiency'' \cite{schrijver-book}. Another example is: ``Combinatorial optimization'' by Cook, Cunningham, Pulleyblank, and Schrijver \cite{Cook:98}. Other related textbooks are: Nemhauser and Wolsey \cite{citeulike:2212037}, Wolsey \cite{wolseyip}.
+
 \paragraph{}
 Please notice that Chapter 3 is written by Prof. Yves Crama.
 
 \chapter{Formulations in combinatorial optimization}
-In this first chapter, we will give an informal notion of combinatorial optimization problems. The defining
-characteristic of a combinatorial optimization problem is that it has a finite number of feasible solutions.
-We now give formulations of a number of basic combinatorial optimization problems.
+In this first chapter, we will give an informal notion of combinatorial optimization problems. The defining characteristic of a combinatorial optimization problem is that it has a finite number of feasible solutions. We now give formulations of a number of basic combinatorial optimization problems.
 
 \section{Formulations of basic combinatorial optimization problems}
+Below, we present mathematical formulations of some well-known combinatorial optimization problems. Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a greedy algorithm, like the spanning tree problem. Other problems are notoriously hard to solve. This already shows that a formulation need not give insight into the problem's difficulty. Moreover, a problem may have several correct formulations. This leads us to a very important question: which formulations are good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here a solver's point of view. Thus, a formulation is better than another formulation when it leads to better solutions, or when it produces solutions faster.
 
-Below, we present mathematical formulations of some well-known combinatorial optimization problems.
-Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a greedy
-algorithm, like the spanning tree problem. Other problems are notoriously hard to solve. This already
-shows that a formulation need not give insight into the problem's difficulty. Moreover, a problem may
-have several correct formulations. This leads us to a very important question: which formulations are
-good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here
-a solver's point of view. Thus, a formulation is better than another formulation when it leads to better
-solutions, or when it produces solutions faster.
-
-Almost all formulations will use binary or integral variables. This shows that integer programming
-is closely related to (or, as a matter of fact, is itself a problem from the domain of) combinatorial
-optimization.
+\paragraph{}
+Almost all formulations will use binary or integral variables. This shows that integer programming is closely related to (or, as a matter of fact, is itself a problem from the domain of) combinatorial optimization.
 
 \subsection{The Matching Problem}
+The Matching Problem (also known as Edge Packing) is one of the fundamental problems in Combinatorial Optimization. It is described as follows. We are given an arbitrary graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a matching (or an edge packing) if each vertex of $V$ is incident to at most one edge of $E'$. In other words, $E'$ is a matching if no two edges of $E'$ have a vertex in common. The problem is to find a matching in G consisting of as many edges as possible (a maximum cardinality matching).
 
-The Matching Problem (also known as Edge Packing) is one of the fundamental problems in Combinatorial
-Optimization. It is described as follows. We are given an arbitrary graph G = (V, E). A subset of the
-edges E ′ ⊆ E is called a matching (or an edge packing) if each vertex of V is incident to at most one edge
-of E ′ . In other words, E ′ is a matching if no two edges of E ′ have a vertex in common. The problem is
-to find a matching in G consisting of as many edges as possible (a maximum cardinality matching).
-
-Figure 1.1: The red edges form a matching.
+\importtikzfigure{matching-red}{The red edges form a matching.}
 
 A matching is called maximum when no matching of larger cardinality exists. A matching is called
 maximal when it cannot be enlarged.
@@ -93,10 +80,10 @@ a straightforward manner: we put a “1” in xM when the corresponding edge is 
 put a “0” in the vector xM . Clearly, xM is a 0-1 vector, and obviously satisfies (1.3). Also, the solution
 vector xM corresponding to M satisfies the constraints (1.2) since at most one of the variables in the
 left-hand side has value 1. Thus, a matching M corresponds to a feasible solution of the integer program.
-Second, consider a subset of the edges E ′ that is NOT a matching. Then there is a vertex, say v, that
-is incident to at least two edges in E ′ . But then, at least two of the variables in the left-hand side of
-(1.2) have value 1 for this particular vertex. Thus, the vector corresponding to E ′ is not feasible in the
-formulation. Finally, we observe that the value of each set E ′ ⊆ E is equal to its number of edges, i.e.,
+Second, consider a subset of the edges E' that is NOT a matching. Then there is a vertex, say v, that
+is incident to at least two edges in E' . But then, at least two of the variables in the left-hand side of
+(1.2) have value 1 for this particular vertex. Thus, the vector corresponding to E' is not feasible in the
+formulation. Finally, we observe that the value of each set E' ⊆ E is equal to its number of edges, i.e.,
 
 %TODO
 
@@ -109,9 +96,9 @@ and the correctness of a formulation is evident.
 
 Another basic problem within the field of combinatorial optimization is the Independent Set problem
 (also known as Stable Set, or as Node Packing). It can be described as follows.
-Consider an arbitrary graph G = (V, E). A subset of the vertices V ′ ⊆ V is called an independent set
-(or a stable set, or a node packing) if each edge of E is incident to at most one vertex of V ′ . In other
-words, V ′ is an independent set if no two vertices of an edge are selected both. The problem is to find an
+Consider an arbitrary graph G = (V, E). A subset of the vertices V' ⊆ V is called an independent set
+(or a stable set, or a node packing) if each edge of E is incident to at most one vertex of V' . In other
+words, V' is an independent set if no two vertices of an edge are selected both. The problem is to find an
 independent set in G containing as many vertices as possible (a maximum cardinality independent set).
 The problem can be formulated as an integer program as follows. We define a 0-1 variable for each edge
 v ∈ V as follows:
@@ -126,8 +113,8 @@ Figure 1.2: A stable set.
 
 Spanning forest
 
-Consider an undirected graph G = (V, E). A subset of the edges E ′ ⊆ E is called a forest if the subgraph
-of G induced by E ′ is acyclic, see Figure 1.3 for an example. In case a forest consists of |V | − 1 edges it
+Consider an undirected graph G = (V, E). A subset of the edges E' ⊆ E is called a forest if the subgraph
+of G induced by E' is acyclic, see Figure 1.3 for an example. In case a forest consists of |V | − 1 edges it
 is called a tree. The problem is to find a maximum weight forest in G.
 The problem to find a maximum weight forest can be formulated as an integer program as follows. We
 define a 0-1 variable for each edge e ∈ E as follows:
@@ -138,15 +125,15 @@ Figure 1.3: The edges in red form a forest
 
 %TODO
 
-The constraints (1.8) limit the number of chosen edges with both endvertices in any given subset V ′ of
-the nodes to at most |V ′ | − 1. Since a cycle contains as many edges as vertices, the constraints (1.8)
-prevent the graph (V, E ′ ) from containing cycles.
+The constraints (1.8) limit the number of chosen edges with both endvertices in any given subset V' of
+the nodes to at most |V' | − 1. Since a cycle contains as many edges as vertices, the constraints (1.8)
+prevent the graph (V, E' ) from containing cycles.
 Notice that the number of subsets of V of size 2 or bigger is 2|V | −|V |−1. Thus, the number of constraints
 (1.8) is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size
 of the input, although the problem is trivially solvable by a greedy algorithm.
 The spanning tree problem is a variant of the spanning forest problem, where the set of feasible solutions is
 restricted to those acyclic subgraphs that are connected. It is well-known that for an acyclic subgraph the
-requirement of connectedness is equivalent to the requirement of having |V | − 1 edges, i.e., |E ′ | = |V | − 1.
+requirement of connectedness is equivalent to the requirement of having |V | − 1 edges, i.e., |E' | = |V | − 1.
 Thus, by adding the constraint
 
 e
@@ -274,17 +261,17 @@ the constraints (1.22).
 In this section we (informally) argue that each combinatorial optimization problem can be formulated
 as an integer program. In a combinatorial optimization problem a finite ground set E is given. To each
 element e ∈ E a weight we is attached. A family S of subsets of E is identified as the set of feasible
-solutions. This family depends on the particular problem. The weight of a set E ′ ⊆ E is the cumulative
-weight of its elements, i.e., w(E ′ ) =
+solutions. This family depends on the particular problem. The weight of a set E' ⊆ E is the cumulative
+weight of its elements, i.e., w(E' ) =
 
 %TODO
 
 we . The associated optimization problem is to find the
 
-maximum (or minimum) weight feasible solution E ′ ∈ S, i.e.,
-max {w(E ′ )}
+maximum (or minimum) weight feasible solution E' ∈ S, i.e.,
+max {w(E' )}
 
-E ′ ∈S
+E' ∈S
 
 The set of feasible solutions S is usually given implicitly. It is described by the properties of feasible
 solutions; it may be very large. For instance, in case of the matching problem, the ground set equals
@@ -306,12 +293,12 @@ path problem, which is highly intractable. Thus, in general, problems do not bec
 set of feasible solutions is reduced.
 To formulate a combinatorial optimization problem in mathematical terms, we introduce decision variables for all elements of the ground set E. Each decision variable denotes a choice, namely whether the
 corresponding element is chosen or not. So, a variable can have two values, which are usually taken from
-{0, 1}. A set E ′ ⊆ E can be described by a binary vector xE ′ = (xe )e∈E with n = |E| components as
+{0, 1}. A set E' ⊆ E can be described by a binary vector xE' = (xe )e∈E with n = |E| components as
 follows:
 
 %TODO
 
-if element e is in E ′ ;
+if element e is in E' ;
 otherwise.
 
 The finite set of vectors X ⊆ IRn corresponding to feasible solutions from S can then be described by
@@ -374,12 +361,12 @@ Consider the matching depicted in Figure 1.1. Is it maximal? Is it maximum?
 Exercise 3
 Consider the stable set depicted in Figure 1.2. Is it maximal? Is it maximum?
 Exercise 4
-Consider an undirected graph G = (V, E). A edge cover E ′ is a subset of the edges such that each node is
-incident to at least one edge in E ′ . Formulate the problem of finding a minimum cardinality edge cover
+Consider an undirected graph G = (V, E). A edge cover E' is a subset of the edges such that each node is
+incident to at least one edge in E' . Formulate the problem of finding a minimum cardinality edge cover
 as an integer linear program.
 Exercise 5
-Consider an undirected graph G = (V, E). A node cover V ′ is a subset of the nodes such that each edge
-is incident to at least one node in V ′ . Formulate the problem of finding a minimum cardinality node
+Consider an undirected graph G = (V, E). A node cover V' is a subset of the nodes such that each edge
+is incident to at least one node in V' . Formulate the problem of finding a minimum cardinality node
 cover as an integer linear program.
 Exercise 6
 A clique partitioning of an undirected, complete graph G is a partitioning of the vertices into subsets
