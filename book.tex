@@ -1,6 +1,7 @@
 \documentclass[titlepage]{book}
 
-\usepackage{fullpage,importsreferences,brackets,amsmath,amsthm,amsfonts,tikz}
+\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amsfonts,tikz}
+\usetikzlibrary{shapes}
 
 \title{Optimization: Special Topics}
 \author{Frits Spieksma\and Edited by: Jo Devriendt \and Willem Van Onsem}
@@ -36,11 +37,11 @@ The Matching Problem (also known as Edge Packing) is one of the fundamental prob
 
 \importtikzfigure{matching-red}{The red edges form a matching.}
 
-A matching is called maximum when no matching of larger cardinality exists. A matching is called
-maximal when it cannot be enlarged.
-The matching problem can be formulated as an integer program as follows, where we use the symbol
-δ(v) to denote the set of edges that are incident to vertex v ∈ V . For instance, in Figure 1.1, δ(7) =
-{{3, 7}, {4, 7}, {7, 8}}. We define a 0-1 variable for each edge e ∈ E as follows:
+\paragraph{}
+A matching is called maximum when no matching of larger cardinality exists. A matching is called maximal when it cannot be enlarged.
+
+\paragraph{}
+The matching problem can be formulated as an integer program as follows, where we use the symbol $\fun{\delta}{v}$ to denote the set of edges that are incident to vertex $v\in V$. For instance, in \figref{matching-red}, $\fun{\delta}{v}=\accl{\tupl{3,7},\tupl{4,7},\tupl{7,8}}$. We define a 0-1 variable for each edge $e\in E$ as follows:
 
 %TODO
 
