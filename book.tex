@@ -1,6 +1,6 @@
 \documentclass[titlepage]{book}
 
-\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amsfonts,tikz}
+\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amssymb,amsfonts,tikz}
 \usetikzlibrary{shapes}
 
 \title{Optimization: Special Topics}
@@ -27,12 +27,14 @@ Please notice that Chapter 3 is written by Prof. Yves Crama.
 In this first chapter, we will give an informal notion of combinatorial optimization problems. The defining characteristic of a combinatorial optimization problem is that it has a finite number of feasible solutions. We now give formulations of a number of basic combinatorial optimization problems.
 
 \section{Formulations of basic combinatorial optimization problems}
+\seclab{formulations}
 Below, we present mathematical formulations of some well-known combinatorial optimization problems. Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a greedy algorithm, like the spanning tree problem. Other problems are notoriously hard to solve. This already shows that a formulation need not give insight into the problem's difficulty. Moreover, a problem may have several correct formulations. This leads us to a very important question: which formulations are good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here a solver's point of view. Thus, a formulation is better than another formulation when it leads to better solutions, or when it produces solutions faster.
 
 \paragraph{}
 Almost all formulations will use binary or integral variables. This shows that integer programming is closely related to (or, as a matter of fact, is itself a problem from the domain of) combinatorial optimization.
 
 \subsection{The Matching Problem}
+\ssclab{matching}
 The Matching Problem (also known as Edge Packing) is one of the fundamental problems in Combinatorial Optimization. It is described as follows. We are given an arbitrary graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a matching (or an edge packing) if each vertex of $V$ is incident to at most one edge of $E'$. In other words, $E'$ is a matching if no two edges of $E'$ have a vertex in common. The problem is to find a matching in G consisting of as many edges as possible (a maximum cardinality matching).
 
 \importtikzfigure{matching-red}{The red edges form a matching.}
@@ -65,6 +67,7 @@ Let us illustrate this matter for the matching problem. Notice that there is a 1
 In general, it may not be trivial to prove the 1-1 correspondence of feasible solutions of a combinatorial problem to solutions of its formulation, i.e., solutions satisfying the constraints. For many problems, however, a correctness proof is omitted because the problem is an (extension of) a well-known problem, and the correctness of a formulation is evident.
 
 \subsection{The Independent Set Problem}
+\ssclab{independentset}
 Another basic problem within the field of combinatorial optimization is the Independent Set problem (also known as Stable Set, or as Node Packing). It can be described as follows.
 \paragraph{}
 Consider an arbitrary graph $G=\tupl{V,E}$. A subset of the vertices $V'\subseteq V$ is called an independent set (or a stable set, or a node packing) if each edge of $E$ is incident to at most one vertex of $V'$. In other words, $V'$ is an independent set if no two vertices of an edge are selected both. The problem is to find an independent set in $G$ containing as many vertices as possible (a maximum cardinality independent set). The problem can be formulated as an integer program as follows. We define a 0-1 variable for each edge $v\in V$ as follows:
@@ -81,6 +84,7 @@ And here is the integer program:
 \importtikzfigure{stableset-red}{A stable set.}
 
 \subsection{Spanning forest}
+\ssclab{spanningforest}
 Consider an undirected graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a forest if the subgraph of $G$ induced by $E'$ is acyclic, see \figref{forest-red} for an example. In case a forest consists of $\abs{V}-1$ edges it is called a tree. The problem is to find a maximum weight forest in $G$. The problem to find a maximum weight forest can be formulated as an integer program as follows. We define a 0-1 variable for each edge $e\in E$ as follows:
 \begin{equation}
 \semboolvar{x_e}{if edge $e$ is selected in the forest;}{otherwise.}
@@ -93,107 +97,71 @@ And here is the integer program:
 \end{eqnarray}
 
 \importtikzfigure{forest-red}{The edges in red form a forest.}
-
-%TODO
-
-The constraints (1.8) limit the number of chosen edges with both endvertices in any given subset V' of
-the nodes to at most |V' | − 1. Since a cycle contains as many edges as vertices, the constraints (1.8)
-prevent the graph (V, E' ) from containing cycles.
-Notice that the number of subsets of V of size 2 or bigger is 2|V | −|V |−1. Thus, the number of constraints
-(1.8) is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size
-of the input, although the problem is trivially solvable by a greedy algorithm.
-The spanning tree problem is a variant of the spanning forest problem, where the set of feasible solutions is
-restricted to those acyclic subgraphs that are connected. It is well-known that for an acyclic subgraph the
-requirement of connectedness is equivalent to the requirement of having |V | − 1 edges, i.e., |E' | = |V | − 1.
-Thus, by adding the constraint
-
-e
-
-xe = n − 1 to (1.7)-(1.9), a correct formulation of the minimum weight
-
-spanning tree problem arises.
+\paragraph{}The \eqncsref{forest-c1} limit the number of chosen edges with both endvertices in any given subset $V'$ of the nodes to at most $\abs{V'}-1$. Since a cycle contains as many edges as vertices, the \eqncsref{forest-c1} prevent the graph $\tupl{V,E'}$ from containing cycles.
+\paragraph{}
+Notice that the number of subsets of $V$ of size $2$ or bigger is $2^{\abs{V}}-\abs{V}-1$. Thus, the number of \eqnref{forest-c1} is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size of the input, although the problem is trivially solvable by a greedy algorithm.
+\paragraph{}
+The spanning tree problem is a variant of the spanning forest problem, where the set of feasible solutions is restricted to those acyclic subgraphs that are connected. It is well-known that for an acyclic subgraph the requirement of connectedness is equivalent to the requirement of having $\abs{V}-1$ edges, i.e., $\abs{E'}=\abs{V}-1$. Thus, by adding the constraint $\isumdomain[e]{E}{x_e}=n-1$ to \eqnnrefr{forest-c1}{forest-c2}, a correct formulation of the minimum weight spanning tree problem arises.
 
 \subsection{The Knapsack Problem}
+\ssclab{knapsack}
+We are given a set of $n$ items, each with a weight $a_j$ and a value $c_j$ for $\rangei[j]{1}{n}$. Feasible solutions are the subsets of the set of items with cumulative weight at most $b$. The objective is to find a feasible solution of maximum value. The problem formulation contains binary variables $x_j$ which indicate whether element $j$ with $\rangei[j]{1}{n}$ is in the knapsack:
 
-We are given a set of n items, each with a weight aj and a value cj for j = 1, . . . , n. Feasible solutions
-are the subsets of the set of items with cumulative weight at most b. The objective is to find a feasible
-solution of maximum value. The problem formulation contains binary variables xj which indicate whether
-element j with j = 1, . . . , n is in the knapsack:
-
-%TODO
+\begin{equation}
+\semboolvar{x_j}{if element $j$ is selected in the knapsack;}{otherwise.}
+\end{equation}
 
 And here is the integer program:
 
-%TODO
-
-In this text, we will come back extensively to the knapsack problem. There is a book devoted to this
-problem, see Kellerer et al. (5).
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[j]{1}{n}{c_j\cdot x_j}\eqnlab{knapsack-m}\\
+\mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot x_j}\leq b\eqnlab{knapsack-c1}\\
+&\forall\rangei[j]{1}{n}:x_j\in\accl{0,1}\eqnlab{knapsack-c2}
+\end{eqnarray}
+In this text, we will come back extensively to the knapsack problem. There is a book devoted to this problem, see Kellerer et al.\cite{KelPfePis04}.
 
 \section{Formulations and difficulty}
-
-Does the formulation of a problem tell us anything about the problem's difficulty? The answer is no,
-it doesn't. Consider for instance the matching problem (Section 1.1) and the stable set problem (Section 1.2). These problems look similar, since the roles of the edges and vertices are interchanged. However,
-there is a striking difference between them. The matching problem can be solved in polynomial time, but
-the node packing problem is NP-hard (see Chapter 3). In other words, whereas, for the matching problem, fast and efficient algorithms exist, and have been designed, no such algorithms have been found for
-the node packing problem. Indeed, this does not rule out the possibility that fast algorithms could exist
-for node packing, however, no one has ever found such an algorithm. In fact, it is widely suspected that
-such algorithms do not exist, but a proof of this hypothesis is lacking. All this boils down to the famous,
-1 million-dollar worth, P = NP question. In practice, this means that we can find an optimal solution
-
-to a matching problem on a graph with, say 10.000 nodes and 50.000 edges within seconds, while there
-is no algorithm known that would return an optimal solution with one hour for the stable set instance
-on the same graph. Therefore: a formulation does not give an indication of the solvability of a problem.
-Also, the number of variables and/or constraints is no clue concerning the difficulty of a problem. For
-instance, the “natural” formulation of the minimum spanning tree problem (see Section 1.1.3) has an
-exponential number of constraints, while the problem is easily solvable by a greedy algorithm.
+\ssclab{difficulty}
+Does the formulation of a problem tell us anything about the problem's difficulty? The answer is no, it doesn't. Consider for instance the matching problem (\sscref{matching}) and the stable set problem (\sscref{stableset}). These problems look similar, since the roles of the edges and vertices are interchanged. However, there is a striking difference between them. The matching problem can be solved in polynomial time, but the node packing problem is NP-hard (see \chpref{complexity}). In other words, whereas, for the matching problem, fast and efficient algorithms exist, and have been designed, no such algorithms have been found for the node packing problem. Indeed, this does not rule out the possibility that fast algorithms could exist for node packing, however, no one has ever found such an algorithm. In fact, it is widely suspected that such algorithms do not exist, but a proof of this hypothesis is lacking. All this boils down to the famous, 1 million-dollar worth, P = NP question. In practice, this means that we can find an optimal solution to a matching problem on a graph with, say 10.000 nodes and 50.000 edges within seconds, while there is no algorithm known that would return an optimal solution with one hour for the stable set instance on the same graph. Therefore: a formulation does not give an indication of the solvability of a problem. Also, the number of variables and/or constraints is no clue concerning the difficulty of a problem. For instance, the ``natural'' formulation of the minimum spanning tree problem (see \sscref{spanningforest}) has an exponential number of constraints, while the problem is easily solvable by a greedy algorithm.
 
 \section{Multiple formulations of a combinatorial optimization problem}
 
 \subsection{Traveling Salesman Problem}
+Probably the most well-known problem in Combinatorial Optimization is the Traveling Salesman Problem (TSP). The TSP is the prototype combinatorial optimization problem. No other problem has received as much attention as the TSP, and no other problem has captured the imagination as an easy-to-describe, yet hard-to-solve problem. A description of the problem is as follows. Given is a set of $n$ ``cities'' and a distance $c_{i,j}$ between each pair of them. The goal is to find a tour of minimum length, that is to start in some city, visit each other city once, and to return to the city where the tour was started. More formally, given an $n\times n$ matrix $C=c_{i,j}$, find a permutation $\pi$ of $\accl{1,2,\ldots,n}$ such that $c_{\fun{\pi}{n},\fun{\pi}{1}}+\isumieqb[i]{1}{n-1}{c_{\fun{\pi}{i},\fun{\pi}{i+1}}}$ is minimum.
+Different formulations of the TSP exist. Here is a conventional one, using binary variables $x_{i,j}$ indicating whether city $j$ is visited directly after city $i$:
 
-Probably the most well-known problem in Combinatorial Optimization is the Traveling Salesman Problem
-(TSP). The TSP is the prototype combinatorial optimization problem. No other problem has received as
-much attention as the TSP, and no other problem has captured the imagination as an easy-to-describe,
-yet hard-to-solve problem. A description of the problem is as follows. Given is a set of n “cities” and a
-distance ci,j between each pair of them. The goal is to find a tour of minimum length, that is to start in
-some city, visit each other city once, and to return to the city where the tour was started. More formally,
-given an n×n matrix C = cij , find a permutation π of {1, 2, . . . , n} such that
+\begin{eqnarray}
+\mbox{minimize}&\sumieqb[i]{1}{n}{\sumieqb[j]{1}{n}{c_{i,j}\cdot x_{i,j}}}\eqnlab{tsp-m}\\
+\mbox{subject to}&\forall\rangei[j]{1}{n}:\sumieqb[i]{1}{n}{x_{i,j}}=1\eqnlab{tsp-c1}\\
+&\forall\rangei[i]{1}{n}:\sumieqb[j]{1}{n}{x_{i,j}}=1\eqnlab{tsp-c2}\\
+&\forall S\subsetneq V:2\leq\abs{S}:\sumdomain[i]{S}{\sumdomain[j]{S}{x_{i,j}}}\leq\abs{S}-1\eqnlab{tsp-c3}\\
+&\forall\rangei[i,j]{1}{n}:x_{i,j}\in\accl{0,1}\eqnlab{tsp-c4}
+\end{eqnarray}
 
-n−1
-i=1 cπ(i),π(i+1) +cπ(n),π(1)
+\paragraph{}
+\eqncsref{tsp-c3} are called the subtour elimination constraints. An equivalent way of writing them is:
+\begin{equation}
+\forall S\subsetneq V:\abs{S}\geq 2:\sumdomain[i]{S}{\sumndomain[j]{S}{x_{i,j}}}\geq 1
+\end{equation}
 
-is minimum.
-Different formulations of the TSP exist. Here is a conventional one, using binary variables xij indicating
-whether city j is visited directly after city i:
+\paragraph{}
+Notice that this formulation has a polynomial number of variables ($n^2$), and an exponential number of constraints (\bigoh{2^n}). The latter fact might be considered a disadvantage of formulation \eqnnrefr{tsp-m}{tsp-c4}.
 
-%TODO
+\paragraph{}
+There is, however, an alternative for this formulation which uses additional real variables $u_i$ , one such variable for each city $i$. The interpretation of this variable is the position of city $i$ in the tour, while putting the position of city $1$ first. Next, by replacing \eqncsref{tsp-c3} by the following constraints:
 
-Constraints (1.16) are called the subtour elimination constraints. An equivalent way of writing them is:
-xij ≥ 1 for all nonempty S ⊂ V.
-i∈S j ∈S
-/
+\begin{eqnarray}
+\forall \rangei[i,j]{2}{n}:i\neq j:u_i-u_j+n\cdot x_{i,j}\leq n-1\eqnlab{mtz-c1}\\
+u_1=1\eqnlab{mtz-c2}
+\end{eqnarray}
 
-Notice that this formulation has a polynomial number of variables (n2 ), and an exponential number of
-constraints (O(2n )). The latter fact might be considered a disadvantage of formulation (1.13) - (1.17).
-There is, however, an alternative for this formulation which uses additional real variables ui , one such
-variable for each city i. The interpretation of this variable is the position of city i in the tour, while
-putting the position of city 1 first. Next, by replacing constraints (1.16) by the following constraints:
+we arrive at a formulation that is called the Miller-Tucker-Zemlin (MTZ) formulation of the TSP. It is an interesting exercise to verify the correctness of the MTZ-formulation. More concrete: why is it that \eqnnref{mtz-c1} exclude subtours? The answer lies in noticing that: any solution satisfying \eqnnref{tsp-c1}, \eqnnref{tsp-c2}, and \eqnnref{tsp-c4} consists of a collection of subtours (or a feasible solution, that is, a single tour). In case there are subtours, then there is a subtour that does not contain city 1. Let us now, for each pair of consecutive cities $i$ and $j$ in this subtour, sum the corresponding inequalities \eqnnref{mtz-c1}. The $u$-variables will cancel out, and the resulting lefthand side will be larger than the resulting righthand side, which means that this subtour will be forbidden by \eqnnref{mtz-c1}. Thus, any subtour not containing city 1 will be forbidden, and hence, the only possible solution is a single tour.
 
-%TODO
+\paragraph{}
+There is more than one book devoted to the TSP. We mention: Applegate et al. \cite{Applegate.2006} and Lawler et al. \cite{Lawler85}.
 
-we arrive at a formulation that is called the Miller-Tucker-Zemlin (MTZ) formulation of the TSP. It is
-an interesting exercise to verify the correctness of the MTZ-formulation. More concrete: why is it that
-(1.18) exclude subtours? The answer lies in noticing that (i) any solution satisfying (1.14), (1.15), and
-(1.17) consists of a collection of subtours (or a feasible solution, that is, a single tour). In case there are
-subtours, then there is a subtour that does not contain city 1. Let us now, for each pair of consecutive
-cities i and j in this subtour, sum the corresponding inequalities (1.18). The u-variables will cancel out,
-and the resulting lefthand side will be larger than the resulting righthand side, which means that this
-subtour will be forbidden by (1.18). Thus, any subtour not containing city 1 will be forbidden, and hence,
-the only possible solution is a single tour.
-There is more than one book devoted to the TSP. We mention: Applegate et al. (1) and Lawler et al. (6).
-We will end this section with a problem for which we have two natural formulations. Both formulations
-have the same sets of variables, but they have different sets of constraints. Later we will see different
-formulations of problems where the sets of variables differ.
+\paragraph{}
+We will end this section with a problem for which we have two natural formulations. Both formulations have the same sets of variables, but they have different sets of constraints. Later we will see different formulations of problems where the sets of variables differ.
 
 \subsection{Uncapacitated Facility Location}
 

@@ -102,14 +102,18 @@
 \end{tabular}}
 
 %Sum, integrals and other default expressions
+\newcommand{\rangei}[3][i]{\ensuremath{#1=#2,\ldots,#3}}
+
 \newcommand{\limto}[2][x]{\ensuremath{\displaystyle\lim_{#1\rightarrow #2}}}
 \newcommand{\intdomain}[3][x]{\ensuremath{\displaystyle\int_{#2}{#3}\ \diffd #1}}
 \newcommand{\sumdomain}[3][x]{\ensuremath{\displaystyle\sum_{{#1}\in{#2}}{#3}}}
+\newcommand{\sumndomain}[3][x]{\ensuremath{\displaystyle\sum_{{#1}\notin{#2}}{#3}}}
 \newcommand{\sumi}[2][i]{\ensuremath{\displaystyle\sum_{#1}{#2}}}
 \newcommand{\sumieqb}[4][i]{\ensuremath{\displaystyle\sum_{{#1}={#2}}^{#3}{#4}}}
 
 \newcommand{\ilimto}[2][x]{\ensuremath{\lim_{#1\rightarrow #2}}}
 \newcommand{\iintdomain}[3][x]{\ensuremath{\int_{#2}{#3}\ \diffd #1}}
 \newcommand{\isumdomain}[3][x]{\ensuremath{\sum_{{#1}\in{#2}}{#3}}}
+\newcommand{\isumndomain}[3][x]{\ensuremath{\sum_{{#1}\notin{#2}}{#3}}}
 \newcommand{\isumi}[2][i]{\ensuremath{\sum_{#1}{#2}}}
 \newcommand{\isumieqb}[4][i]{\ensuremath{\sum_{{#1}={#2}}^{#3}{#4}}}
