@@ -42,87 +42,57 @@ A matching is called maximum when no matching of larger cardinality exists. A ma
 
 \paragraph{}
 The matching problem can be formulated as an integer program as follows, where we use the symbol $\fun{\delta}{v}$ to denote the set of edges that are incident to vertex $v\in V$. For instance, in \figref{matching-red}, $\fun{\delta}{v}=\accl{\tupl{3,7},\tupl{4,7},\tupl{7,8}}$. We define a 0-1 variable for each edge $e\in E$ as follows:
-
-%TODO
-
-if edge e is selected in the matching;
-otherwise.
-
+\begin{equation}
+\semboolvar{x_e}{if edge $e$ is selected in the matching;}{otherwise.}
+\end{equation}
 And here is the integer program:
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[e]{E}{x_e}\eqnlab{matching-m}\\
+\mbox{subject to}&\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1\eqnlab{matching-c1}\\
+&\forall e\in E:x_e\in\accl{0,1}\eqnlab{matching-c2}
+\end{eqnarray}
 
-%TODO
+\paragraph{}
+The weighted matching problem is a generalization of the cardinality matching problem above by assuming that there is a given weight function w defined on the edges. Then, the objective is to find a maximum weight matching, and the objective is changed accordingly to $\max\isumdomain[e]{E}{w_e\cdot x_e}$ (Obviously, it is a generalization, since the cardinality matching problem arises when $w_e$ for each $e\in E$). In the perfect matching problem the set of feasible solutions is restricted to perfect matchings. These are matchings such that each vertex is incident to precisely one edge in the matching; then, constraints \eqnref{matching-c1} become equalities. Notice that a perfect matching may not exist (consider e.g. a triangle), whereas there is always a feasible solution to \eqnref{matching-m}-\eqnref{matching-c2}.
 
-The weighted matching problem is a generalization of the cardinality matching problem above by assuming that there is a given weight function w defined on the edges. Then, the objective is to find a
-maximum weight matching, and the objective is changed accordingly to max
+\paragraph{}
+We emphasize that we distinguish between, on the one hand, the problem itself, and, on the other hand, its formulation as an integer program. Indeed, these two are not the same! In fact, in some cases it is appropriate to show the correctness of a formulation. Such an argument is usually based on a correspondence between feasible solutions to the problem, and vectors of decision variables satisfying the constraints.
 
-%TODO
+\paragraph{}
+Let us illustrate this matter for the matching problem. Notice that there is a 1-1 correspondence between subsets of the set of edges $E$ and the 0-1 vectors defined by the variables, which are indexed by the edges. To prove that this formulation is correct we must show that there is a 1-1 correspondence between the subsets of the edges that define matchings and the feasible solutions of the above formulation. Moreover, we must show that the matching and its corresponding vector have the same value. This can be done as follows. First, consider an arbitrary matching $M$ in a graph. By definition, this implies that each node $v\in V$ of the graph is incident with at most one edge of $M$ . Let us now construct a solution vector $\vec{x}_M$ in a straightforward manner: we put a ``1'' in $\vec{x}_M$ when the corresponding edge is in $M$, and otherwise we put a ``0'' in the vector $\vec{x}_M$. Clearly, $\vec{x}_M$ is a 0-1 vector, and obviously satisfies \eqnref{matching-c2}. Also, the solution vector $\vec{x}_M$ corresponding to $M$ satisfies the constraints \eqnref{matching-c1} since at most one of the variables in the left-hand side has value 1. Thus, a matching $M$ corresponds to a feasible solution of the integer program. Second, consider a subset of the edges $E'$ that is \textbf{not} a matching. Then there is a vertex, say $v$, that is incident to at least two edges in $E'$. But then, at least two of the variables in the left-hand side of \eqnref{matching-c1} have value 1 for this particular vertex. Thus, the vector corresponding to $E'$ is not feasible in the formulation. Finally, we observe that the value of each set $E'\subseteq E$ is equal to its number of edges, i.e., $\abs{E'}=\isumdomain[e]{E'}{1}=\isumdomain[e]{E}{x_e}$.
 
-we xe . 
-
-(Obviously, it is a generalization, since the cardinality matching problem arises when we = 1 for each e ∈ E). In
-the perfect matching problem the set of feasible solutions is restricted to perfect matchings. These are
-matchings such that each vertex is incident to precisely one edge in the matching; then, constraints (1.2)
-become equalities. Notice that a perfect matching may not exist (consider e.g. a triangle), whereas there
-is always a feasible solution to (1.1)-(1.3). %TODO:REF
-We emphasize that we distinguish between, on the one hand, the problem itself, and, on the other hand,
-its formulation as an integer program. Indeed, these two are not the same! In fact, in some cases
-it is appropriate to show the correctness of a formulation. Such an argument is usually based on a
-correspondence between feasible solutions to the problem, and vectors of decision variables satisfying the
-constraints.
-Let us illustrate this matter for the matching problem. Notice that there is a 1-1 correspondence between
-subsets of the set of edges E and the 0-1 vectors defined by the variables, which are indexed by the edges.
-To prove that this formulation is correct we must show that there is a 1-1 correspondence between the
-subsets of the edges that define matchings and the feasible solutions of the above formulation. Moreover,
-we must show that the matching and its corresponding vector have the same value. This can be done as
-follows. First, consider an arbitrary matching M in a graph. By definition, this implies that each node
-v ∈ V of the graph is incident with at most one edge of M . Let us now construct a solution vector xM in
-a straightforward manner: we put a “1” in xM when the corresponding edge is in M , and otherwise we
-
-put a “0” in the vector xM . Clearly, xM is a 0-1 vector, and obviously satisfies (1.3). Also, the solution
-vector xM corresponding to M satisfies the constraints (1.2) since at most one of the variables in the
-left-hand side has value 1. Thus, a matching M corresponds to a feasible solution of the integer program.
-Second, consider a subset of the edges E' that is NOT a matching. Then there is a vertex, say v, that
-is incident to at least two edges in E' . But then, at least two of the variables in the left-hand side of
-(1.2) have value 1 for this particular vertex. Thus, the vector corresponding to E' is not feasible in the
-formulation. Finally, we observe that the value of each set E' ⊆ E is equal to its number of edges, i.e.,
-
-%TODO
-
-In general, it may not be trivial to prove the 1-1 correspondence of feasible solutions of a combinatorial
-problem to solutions of its formulation, i.e., solutions satisfying the constraints. For many problems,
-however, a correctness proof is omitted because the problem is an (extension of) a well-known problem,
-and the correctness of a formulation is evident.
+\paragraph{}
+In general, it may not be trivial to prove the 1-1 correspondence of feasible solutions of a combinatorial problem to solutions of its formulation, i.e., solutions satisfying the constraints. For many problems, however, a correctness proof is omitted because the problem is an (extension of) a well-known problem, and the correctness of a formulation is evident.
 
 \subsection{The Independent Set Problem}
-
-Another basic problem within the field of combinatorial optimization is the Independent Set problem
-(also known as Stable Set, or as Node Packing). It can be described as follows.
-Consider an arbitrary graph G = (V, E). A subset of the vertices V' ⊆ V is called an independent set
-(or a stable set, or a node packing) if each edge of E is incident to at most one vertex of V' . In other
-words, V' is an independent set if no two vertices of an edge are selected both. The problem is to find an
-independent set in G containing as many vertices as possible (a maximum cardinality independent set).
-The problem can be formulated as an integer program as follows. We define a 0-1 variable for each edge
-v ∈ V as follows:
-
+Another basic problem within the field of combinatorial optimization is the Independent Set problem (also known as Stable Set, or as Node Packing). It can be described as follows.
+\paragraph{}
+Consider an arbitrary graph $G=\tupl{V,E}$. A subset of the vertices $V'\subseteq V$ is called an independent set (or a stable set, or a node packing) if each edge of $E$ is incident to at most one vertex of $V'$. In other words, $V'$ is an independent set if no two vertices of an edge are selected both. The problem is to find an independent set in $G$ containing as many vertices as possible (a maximum cardinality independent set). The problem can be formulated as an integer program as follows. We define a 0-1 variable for each edge $v\in V$ as follows:
+\begin{equation}
+\semboolvar{x_v}{if vertex $v$ is selected in the independent set;}{otherwise.}
+\end{equation}
 And here is the integer program:
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[v]{V}{x_v}\eqnlab{stableset-m}\\
+\mbox{subject to}&\forall\tupl{v_1,v_2}\in E:x_{v_1}+x_{v_2}\leq 1\eqnlab{stableset-c1}\\
+&\forall v\in V:x_v\in\accl{0,1}\eqnlab{stableset-c2}
+\end{eqnarray}
 
-%TODO
+\importtikzfigure{stableset-red}{A stable set.}
 
-Figure 1.2: A stable set.
+\subsection{Spanning forest}
+Consider an undirected graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a forest if the subgraph of $G$ induced by $E'$ is acyclic, see \figref{forest-red} for an example. In case a forest consists of $\abs{V}-1$ edges it is called a tree. The problem is to find a maximum weight forest in $G$. The problem to find a maximum weight forest can be formulated as an integer program as follows. We define a 0-1 variable for each edge $e\in E$ as follows:
+\begin{equation}
+\semboolvar{x_e}{if edge $e$ is selected in the forest;}{otherwise.}
+\end{equation}
+And here is the integer program:
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[e]{E}{w_e\cdot x_e}\eqnlab{forest-m}\\
+\mbox{subject to}&\forall V'\subseteq V:2\leq\abs{V'}\leq\abs{V}:\sumdomain[e]{\fun{\delta}{v_1}\cap\fun{\delta}{v_2},v_1,v_2\in V}{x_e}\leq\abs{V'}-1\eqnlab{forest-c1}\\
+&\forall e\in E:x_e\in\accl{0,1}\eqnlab{forest-c2}
+\end{eqnarray}
 
-%TODO
-
-Spanning forest
-
-Consider an undirected graph G = (V, E). A subset of the edges E' ⊆ E is called a forest if the subgraph
-of G induced by E' is acyclic, see Figure 1.3 for an example. In case a forest consists of |V | − 1 edges it
-is called a tree. The problem is to find a maximum weight forest in G.
-The problem to find a maximum weight forest can be formulated as an integer program as follows. We
-define a 0-1 variable for each edge e ∈ E as follows:
-
-%TODO
-
-Figure 1.3: The edges in red form a forest
+\importtikzfigure{forest-red}{The edges in red form a forest.}
 
 %TODO
 

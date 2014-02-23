@@ -27,6 +27,7 @@
 \newcommand{\bigomega}[1]{\fun{\Omega}{#1}}
 \newcommand{\smallomega}[1]{\fun{\omega}{#1}}
 \newcommand{\bigtheta}[1]{\fun{\Theta}{#1}}
+\newcommand{\semboolvar}[3]{\ensuremath{#1=\acclguard{1&\mbox{#2}\\0&\mbox{#3}}}}
 
 \newcommand{\AAA}{\ensuremath{\mathbb{A}}}
 \newcommand{\BBB}{\ensuremath{\mathbb{B}}}
@@ -99,3 +100,16 @@
 #2\\\midrule
 #3\\\bottomrule
 \end{tabular}}
+
+%Sum, integrals and other default expressions
+\newcommand{\limto}[2][x]{\ensuremath{\displaystyle\lim_{#1\rightarrow #2}}}
+\newcommand{\intdomain}[3][x]{\ensuremath{\displaystyle\int_{#2}{#3}\ \diffd #1}}
+\newcommand{\sumdomain}[3][x]{\ensuremath{\displaystyle\sum_{{#1}\in{#2}}{#3}}}
+\newcommand{\sumi}[2][i]{\ensuremath{\displaystyle\sum_{#1}{#2}}}
+\newcommand{\sumieqb}[4][i]{\ensuremath{\displaystyle\sum_{{#1}={#2}}^{#3}{#4}}}
+
+\newcommand{\ilimto}[2][x]{\ensuremath{\lim_{#1\rightarrow #2}}}
+\newcommand{\iintdomain}[3][x]{\ensuremath{\int_{#2}{#3}\ \diffd #1}}
+\newcommand{\isumdomain}[3][x]{\ensuremath{\sum_{{#1}\in{#2}}{#3}}}
+\newcommand{\isumi}[2][i]{\ensuremath{\sum_{#1}{#2}}}
+\newcommand{\isumieqb}[4][i]{\ensuremath{\sum_{{#1}={#2}}^{#3}{#4}}}
