@@ -237,12 +237,12 @@
   \anchor{pind}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
   \anchor{pine}{\pgfutil@tempdimb=\dipdx\centerpoint\centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimb}
   \anchor{pinf}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
-  \anchor{pin0}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdimb}
-  \anchor{pin1}{\pgfutil@tempdimb=\dipdx\centerpoint\centerpoint\advance\pgf@y by0.5\pgfutil@tempdimb}
-  \anchor{pin2}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by0.5\pgfutil@tempdimb}
-  \anchor{pin3}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by-\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
-  \anchor{pin4}{\pgfutil@tempdimb=\dipdx\centerpoint\centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimb}
-  \anchor{pin5}{\pgfutil@tempdima=\circlediff\pgfutil@tempdimb=\dipdx\centerpoint\advance\pgf@x by\pgfutil@tempdima\advance\pgf@y by-0.5\pgfutil@tempdimb}
+  \anchor{pin0}{\pgf@anchor@pcbtact@pina}
+  \anchor{pin1}{\pgf@anchor@pcbtact@pinb}
+  \anchor{pin2}{\pgf@anchor@pcbtact@pinc}
+  \anchor{pin3}{\pgf@anchor@pcbtact@pind}
+  \anchor{pin4}{\pgf@anchor@pcbtact@pine}
+  \anchor{pin5}{\pgf@anchor@pcbtact@pinf}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
@@ -258,18 +258,18 @@
     \pgfutil@tempdimd=\dipdx
     \pgfutil@tempdime=\tactleft
     \pgfutil@tempdimf=\dipnudge
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by-\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-    \centerpoint\advance\pgf@x by\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbtact@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbtact@pina\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbtact@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbtact@pinb\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbtact@pinc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbtact@pinc\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbtact@pind\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbtact@pind\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbtact@pine\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbtact@pine\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+    \pgf@anchor@pcbtact@pinf\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+    \pgf@anchor@pcbtact@pinf\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
     \color{gray}
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
