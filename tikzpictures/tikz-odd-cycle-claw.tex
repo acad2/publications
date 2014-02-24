@@ -1,13 +1,10 @@
-\begin{tikzpicture}[yscale=-1,scale=2]
-\foreach \i/\a in {0} {
-  \node[draw=black,circle] (N01) at (0,0) {1};
+\begin{tikzpicture}[scale=2]
+\node[draw=black,circle] (N06) at (0,0) {$6$};
+\foreach \i/\a in {3/90,4/162,5/234,1/306,2/18} {
+  \node[draw=black,circle] (N0\i) at (\a:1) {$\i$};
+  \draw (N0\i) -- (N06);
 }
-\draw (N01) -- (N02);
-\draw (N01) -- (N03);
-\draw (N01) -- (N04);
-\draw (N02) -- (N03);
-\draw (N02) -- (N04);
-\draw (N03) -- (N04);
-\draw (N03) -- (N05);
-\draw (N04) -- (N05);
+\foreach \i/\j in {1/2,2/3,3/4,4/5,5/1} {
+  \draw (N0\i) -- (N0\j);
+}
 \end{tikzpicture}
