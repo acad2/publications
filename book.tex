@@ -420,6 +420,7 @@ If a matrix $A$ is TUM, then the polyhedron $P=\condset{\vec{x}\in\RRR^n}{A\cdot
 \paragraph{}
 Clearly, a TUM matrix consists only of entries $0,\pm 1$. In the following theorem we characterize two types of matrices that are totally unimodular.
 \begin{theorem}
+\thmlab{tum-matrix}
 Let $A$ be a matrix with entries in $\accl{-1, 0, 1}$ such that there are at most two nonzeros in each column. If there exists a partition of the rows of $A$ in two non-empty sets $R_1$ and $R_2$ such that
 \begin{enumerate}
  \item each column with two nonzero entries of the same sign, has one of its entries in $R_1$ and one in $R_2$,
@@ -453,6 +454,7 @@ The node-edge incidence matrix $A$ of a graph has rows corresponding with the no
 \end{enumerate}
 
 \begin{corollary}
+\collab{tum-graph}
 The node-edge incidence matrix of a digraph is TUM. The node-arc incidence matrix of a bipartite graph is TUM.
 \end{corollary}
 
@@ -694,9 +696,10 @@ In order to cope with these disadvantages we will develop methods for generating
 methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
 
 \section*{Exercises}
-Exercise 1
-Prove Corollary 2.3, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the
-node-edge incidence matrix of a bipartite graph is TUM. Hint: use Theorem 2.2
+\begin{exercise}
+Prove \colref{tum-graph}, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the
+node-edge incidence matrix of a bipartite graph is TUM. Hint: use \thmref{tum-matrix}.
+\end{exercise}
 Exercise 2
 A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring
 33
@@ -884,73 +887,12 @@ Chapter 1). Figure 2.9 shows an instance of that problem. Notice that solid line
 with weight +1, whereas dotted lines correspond to edges with weight −1. What is the value of the linear
 programming relaxation of the integer programming formulation corresponding to this instance? Can
 you find a violated inequality using integer rounding?
-35
 
-✉
- ❅
- 
-❅
- 
-❅
- 
-❅
- 
-❅
-✉
- 
-❅✉
+
 Figure 2.8: A triangle
 
-✁
-✁
-✁✉
-❍
-❍
-
-✁
-✁
-
-✁
-✁
-
-❍
-❍
-
-✁
-✁
-
-✉
-✁❆
-✁
-✁ ❆
-
-❆
-❆
-
-❍
-✟
-❍✉
-✟
-
-❆
-❆
-
-❆
-❆
-
-✟
-✟
-
-❆
-❆
-
-❆❆✉
-✟
-✟
 
 Figure 2.9: An instance of clique partitioning
-
-36
 
 \bibliographystyle{alpha}
 \bibliography{biblio}
