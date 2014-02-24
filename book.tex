@@ -368,30 +368,24 @@ The set of feasible solutions $X$ of a combinatorial optimization problem is usu
 We will give (partial) answers to both questions. In the following section we identify formulations for problems that have the property that the linear programming relaxation is tight, i.e., it describes $\funm{conv}{X}$ exactly. Then we describe a method, first illustrated using the stable set problem, that improves the linear programming relaxation by adding linear constraints (called valid inequalities) that make the formulation tighter. Finally, we discuss a systematic way of obtaining these inequalities.
 
 \section{Linear description of combinatorial problems}
-
+\seclab{lindesccomb}
 Consider the integer linear program
-max{cx | Ax = b, x ≥ 0, x ∈ {0, 1}},
-where A is an n×m matrix of integers and b is an n vector of integers. Suppose we solve the corresponding
-linear programming formulation. Of course, we would be quite fortuitous if the resulting values for the
-x-variables would be integral. However, in some special cases to be discussed next, one can guarantee
-that the resulting solution is indeed integral.
-When solving the linear programming formulation, we know from the simplex method that there is a
-regular n × n submatrix B of A such that x¯ = B −1 b is the optimum solution of the linear program.
-Denoting the columns of B by B∗,j j ∈ {1, . . . , n}, Cramer's rule gives an explicit description of the n
-basic variables xj j ∈ {1, . . . , n} corresponding to the columns of B:
+\begin{equation}
+\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\accl{0,1}^m},
+\end{equation}
+where $A$ is an $n\times m$ matrix of integers and $\vec{b}$ is an $n$-vector of integers. Suppose we solve the corresponding linear programming formulation. Of course, we would be quite fortuitous if the resulting values for the $\vec{x}$-variables would be integral. However, in some special cases to be discussed next, one can guarantee that the resulting solution is indeed integral.
 
-xj =
+\paragraph{}
+When solving the linear programming formulation, we know from the simplex method that there is a regular $n\times n$ submatrix $B$ of $A$ such that $\overline{x}=B^{-1}\cdot\vec{b}$ is the optimum solution of the linear program. Denoting the columns of $B$ by $B_{\star,j}$ $j\in\accl{1,\ldots,n}$, Cramer's rule gives an explicit description of the $n$ basic variables $x_j$ $j\in\accl{1,\ldots,n}$ corresponding to the columns of $B$:
 
-det(B∗,1 | · · · |B∗,j−1 |b|B∗,j+1 |B∗,n )
-.
-det(B)
+\begin{equation}
+x_j=\displaystyle\frac{\funm{det}{B_{\star,1}|B_{\star,2}|\ldots|B_{\star,j-1}|\vec{b}|B_{\star,j+1}|\ldots|B_{\star,n}}}{\funm{det}{B}}.
+\end{equation}
 
-The upper determinant is integral. If the determinant of B would be +1, then xj is certainly integral.
-We call a matrix B with that property unimodular (UM). Since the basis B may vary with the objective
-c and the right-hand side b, we would like to have a characterization of matrices A for which each n × n
-submatrix B is UM. Indeed, for such matrices, the polyhedron
-
-P = {x ∈ IRn | Ax = b, x ≥ 0}
+The upper determinant is integral. If the determinant of $B$ would be $\pm 1$, then $x_j$ is certainly integral. We call a matrix $B$ with that property unimodular (UM). Since the basis $B$ may vary with the objective $\vec{c}$ and the right-hand side $\vec{b}$, we would like to have a characterization of matrices $A$ for which each $n\times n$ submatrix $B$ is UM. Indeed, for such matrices, the polyhedron
+\begin{equation}
+P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}}
+\end{equation}
 
 has integral vertices.
 22
