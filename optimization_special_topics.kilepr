@@ -119,10 +119,10 @@ order=-1
 
 [item:book.tex]
 archive=true
-column=0
+column=16
 encoding=UTF-8
 highlight=LaTeX
-line=371
+line=765
 mode=LaTeX
 open=true
 order=0
@@ -139,7 +139,7 @@ order=1
 
 [item:importsreferences-en.sty]
 archive=true
-column=20
+column=56
 encoding=UTF-8
 highlight=LaTeX
 line=37
@@ -254,10 +254,10 @@ JumpList=
 ViMarks=.,0,0,[,0,0,],-1,-1
 
 [view-settings,view=0,item:book.tex]
-CursorColumn=0
-CursorLine=371
+CursorColumn=16
+CursorLine=765
 JumpList=
-ViMarks=.,695,8,[,695,8,],695,8
+ViMarks=.,765,0,[,764,0,],765,15
 
 [view-settings,view=0,item:brackets-en.sty]
 CursorColumn=70
@@ -266,10 +266,10 @@ JumpList=
 ViMarks=.,109,69,[,109,67,],109,69
 
 [view-settings,view=0,item:importsreferences-en.sty]
-CursorColumn=20
+CursorColumn=56
 CursorLine=37
 JumpList=
-ViMarks=.,37,20,[,37,20,],37,20
+ViMarks=.,37,56,[,37,56,],37,56
 
 [view-settings,view=0,item:tikzpictures/tikz-clique-graph.tex]
 CursorColumn=10

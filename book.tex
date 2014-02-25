@@ -697,17 +697,12 @@ methods are usually problem specific, but they alleviate, to some extent, the pr
 
 \section*{Exercises}
 \begin{exercise}
-Prove \colref{tum-graph}, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the
-node-edge incidence matrix of a bipartite graph is TUM. Hint: use \thmref{tum-matrix}.
+Prove \colref{tum-graph}, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the node-edge incidence matrix of a bipartite graph is TUM. Hint: use \thmref{tum-matrix}.
 \end{exercise}
-Exercise 2
-A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring
-33
-
-columns. Such a matrix is also called an interval matrix. Show that such matrices are TUM. Hints: use
-induction, plus the facts that (i) interchanging two rows does not change whether a matrix is TUM, and
-(ii) replacing row a by the difference of rows a and a′ also does not change whether a matrix is TUM.
-Exercise 3
+\begin{exercise}
+A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an interval matrix. Show that such matrices are TUM. Hints: use induction, plus the facts that (i) interchanging two rows does not change whether a matrix is TUM, and (ii) replacing row a by the difference of rows a and a′ also does not change whether a matrix is TUM.
+\end{exercise}
+\begin{exercise}
 Consider Exercise 8 of Chapter 1, and let us modify that problem by only considering vertical lines as
 potential stabbing lines. The resulting problem can be formulated as follows: given a set of intervals,
 find a minimum number of vertical lines stabbing each interval at least once.
@@ -715,141 +710,27 @@ find a minimum number of vertical lines stabbing each interval at least once.
 • Is the corresponding constraint matrix an interval matrix (see Exercise 2)?
 • How would you solve this problem?
 • Can you use the same approach for the rectangle stabbing problem?
-
-Exercise 4
+\end{exercise}
+\begin{exercise}
 Consider the problem formulated below, where in addition, the variables x1 and x2 need to be integral.
-max
 
-2 x1
-
-+
-
-x2
-
-4 x1
-
-+
-
-x2
-
-≤
-
-8
-
-x1
-
-+
-
-3 x2
-
-≤
-
-6
-
-≥
-
-0
-
-≥
-
-0
-
-x1
-x2
+%TODO
 
 Solving the linear program by the simplex method gives the following final dictionary.
 
-x1
-
-=
-
-18
-11
-
-−
-
-3
-11 x3
-
-+
-
-1
-11 x4
-
-x2
-
-=
-
-16
-11
-
-+
-
-1
-11 x3
-
-−
-
-4
-11 x4
-
-z
-
-=
-
-52
-11
-
-−
-
-5
-11 x3
-
-−
-
-2
-11 x4
-
-(2.8)
+%TODO
 
 Find two Gomory cuts for the problem where the variables x1 and x2 need to be integral. Next, rewrite
 each of these cuts in terms of solely x1 and x2 .
-34
-
-Exercise 5
+\end{exercise}
+\begin{exercise}
 Consider the following problem in integral variables x1 and x2 . How many cutting planes do you have to
 add to solve the problem for k = 2? For k = 4? For general k? Can you use integer rounding to generate
 a valid inequality? Hint: draw a picture.
-max
 
-x2
-x1
-
-−
-
-2k x2
-
-≥
-
-0
-
-2k x1
-
-+
-
-x2
-
-≤
-
-2k
-
-≥
-
-0
-
-x1
-Exercise 6
-
+%TODO
+\end{exercise}
+\begin{exercise}
 Let G = (V, E) be an undirected graph. A matching in G is represented by a vector x ∈ B |E| in the
 following way. For each edge e ∈ E we define
 
@@ -881,13 +762,14 @@ is a valid inequality for each S ⊆ V with 3 ≤ |S| ≤ |V | and |S| odd. (The
 odd-set constraints).
 b) Find, for the graph depicted below, a fractional solution violating the inequality (2.9) with S =
 {1, 2, 3}.
-Exercise 7
+\end{exercise}
+\begin{exercise}
 Consider the integer programming formulation of the clique partitioning problem (see Exercise 6 of
 Chapter 1). Figure 2.9 shows an instance of that problem. Notice that solid lines correspond to edges
 with weight +1, whereas dotted lines correspond to edges with weight −1. What is the value of the linear
 programming relaxation of the integer programming formulation corresponding to this instance? Can
 you find a violated inequality using integer rounding?
-
+\end{exercise}
 
 Figure 2.8: A triangle
 
