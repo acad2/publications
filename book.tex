@@ -1,7 +1,34 @@
 \documentclass[titlepage]{book}
 
-\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amssymb,amsfonts,tikz}
+\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amssymb,amsfonts,tikz,makeidx,glossaries,hyperref}
 \usetikzlibrary{shapes}
+
+\makeindex
+\makeglossary
+
+\newcommand{\concept}[2]{\newglossaryentry{#1}{name={#1}}\toindex{#1}}
+
+\makeatletter
+\newcommand\toindex{\@ifstar{\@dblarg{\@toindexs}}{\@toindex}}
+\def\@toindexs[#1]#2{\indexlayout{#2}\index{#1@#2}}
+\newcommand\@toindex[2][]{%
+  \if\relax\detokenize{#1}\relax
+    \indexlayout{#2}%
+    \begingroup
+    \@splitword#2\@nil%
+    \uppercase\expandafter{%
+      \expandafter\def\expandafter\@initial\expandafter{\@first}}%
+    \toks0=\expandafter{\@initial}%
+    \toks2=\expandafter{\@rest}%
+    \edef\x{\endgroup\noexpand\index{\the\toks0 \the\toks2 }}\x
+  \else
+    \indexlayout{#2}\index{#1}
+  \fi
+}
+\def\@splitword#1#2\@nil{\def\@first{#1}\def\@rest{#2}}
+\makeatother
+
+\newcommand{\indexlayout}[1]{\glslink{#1}{\emph{#1}}}
 
 \title{Optimization: Special Topics}
 \author{Frits Spieksma\and Edited by: Jo Devriendt \and Willem Van Onsem}
@@ -302,7 +329,7 @@ Consider an undirected graph $G=\tupl{V,E}$. A edge cover $E'$ is a subset of th
 Consider an undirected graph $G=\tupl{V,E}$. A node cover $V'$ is a subset of the nodes such that each edge is incident to at least one node in $V'$. Formulate the problem of finding a minimum cardinality node cover as an integer linear program.
 \end{exercise}
 \begin{exercise}
-A clique partitioning of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem. (Hint: use a variable for each edge).
+A \concept{clique partitioning}{} of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem. (Hint: use a variable for each edge).
 \end{exercise}
 \begin{exercise}
 Consider the TSP.
@@ -712,7 +739,7 @@ Use \thmref{tum-matrix}.
 \end{answer}
 \end{exercise}
 \begin{exercise}
-A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an interval matrix. Show that such matrices are TUM.
+A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an \concept{interval matrix}{}. Show that such matrices are TUM.
 \begin{hint}
 Use induction, plus the facts that:
 \begin{enumerate}
@@ -811,5 +838,9 @@ Figure 2.9: An instance of clique partitioning
 
 \bibliographystyle{alpha}
 \bibliography{biblio}
+\printindex
+\glsaddall
+\glossarystyle{listgroup}
+\printglossaries
 
 \end{document}
