@@ -16,6 +16,8 @@
 \theoremstyle{remark}
 \newtheorem{example}{Example}
 \newtheorem{application}{Application}
+\newtheorem{answer}{Answer}
+\newtheorem{hint}{Hint}
 
 \begin{document}
 \begin{titlepage}
@@ -32,9 +34,10 @@ The course assumes that the reader has had a first introduction to operations re
 There are some excellent textbooks on combinatorial optimization. We mention Schrijver's trilogy: ``Combinatorial Optimization. Polyhedra and Efficiency'' \cite{schrijver-book}. Another example is: ``Combinatorial optimization'' by Cook, Cunningham, Pulleyblank, and Schrijver \cite{Cook:98}. Other related textbooks are: Nemhauser and Wolsey \cite{citeulike:2212037}, Wolsey \cite{wolseyip}.
 
 \paragraph{}
-Please notice that Chapter 3 is written by Prof. Yves Crama.
+Please notice that \chpref{} is written by Prof. Yves Crama.
 
 \chapter{Formulations in combinatorial optimization}
+\chplab{formulations}
 In this first chapter, we will give an informal notion of combinatorial optimization problems. The defining characteristic of a combinatorial optimization problem is that it has a finite number of feasible solutions. We now give formulations of a number of basic combinatorial optimization problems.
 
 \section{Formulations of basic combinatorial optimization problems}
@@ -308,7 +311,7 @@ Consider the TSP.
  \item Which of the two formulations given in \sscref{tsp} is stronger?
 \end{itemize}
 \end{exercise}
-\begin{exercise}
+\begin{exercise}\exclab{rectanglestabbing}
 Given is a set of axis-aligned rectangles in the plane. Each of these rectangles needs to be stabbed, either by a horizontal line or by a vertical line. The problem is to find a set horizontal and vertical lines, stabbing each rectangle at least once, with minimum cardinality. We call this the rectangle stabbing problem. Formulate this problem as an integer linear programming problem. (Hint: first, give a formulation for the instance depicted in \figref{rectanglestabbing}).
 \end{exercise}
 \begin{exercise}
@@ -421,7 +424,7 @@ If a matrix $A$ is TUM, then the polyhedron $P=\condset{\vec{x}\in\RRR^n}{A\cdot
 Clearly, a TUM matrix consists only of entries $0,\pm 1$. In the following theorem we characterize two types of matrices that are totally unimodular.
 \begin{theorem}
 \thmlab{tum-matrix}
-Let $A$ be a matrix with entries in $\accl{-1, 0, 1}$ such that there are at most two nonzeros in each column. If there exists a partition of the rows of $A$ in two non-empty sets $R_1$ and $R_2$ such that
+Let $A$ be a matrix with entries in $\accl{-1, 0, 1}$ such that there are at most two nonzeros in each column. If there exists a partition of the rows of $A$ in two sets $R_1$ and $R_2$ such that
 \begin{enumerate}
  \item each column with two nonzero entries of the same sign, has one of its entries in $R_1$ and one in $R_2$,
  \item each column with two nonzero entries of different sign, has either both of its entries in $R_1$ or both of its entries in $R_2$,
@@ -696,21 +699,51 @@ In order to cope with these disadvantages we will develop methods for generating
 methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
 
 \section*{Exercises}
-\begin{exercise}
-Prove \colref{tum-graph}, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the node-edge incidence matrix of a bipartite graph is TUM. Hint: use \thmref{tum-matrix}.
+\begin{exercise}\exclab{interval-matrix}
+Prove \colref{tum-graph}, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the node-edge incidence matrix of a bipartite graph is TUM.
+\begin{hint}
+Use \thmref{tum-matrix}.
+\end{hint}
+\begin{answer}We solve this exercise in two parts:
+\begin{description}
+ \item [Node-arc incidence matrix] Since $A_{v,a}$ can only be $0$, $1$ or $-1$, matrix $A$ consists out of $\accl{-1,0,1}$. The columns of $A$ represent the arcs every arc has only one tail and one head and therefore there is one $1$ and one $-1$ in each column. We can assign all rows to one partition $R_1$ since it cannot occur that two elements in a column have the same sign, there is no constraint that a row should belong to a different partition.
+ \item [Node-edge incidence matrix] By definition of a node-edge incidence matrix, the matrix only contains ones and zeros. Since each edges are incident to exactly two nodes, each column has exactly two ones. A bipartite graph can be split in two set of nodes such that there are only edges between the vertices of two different sets. By assigning the rows corresponding to the vertices of the first set to the first partition and the rows corresponding to the vertices of the second set, every two rows that have both one in a column are in a different column.
+\end{description}
+\end{answer}
 \end{exercise}
 \begin{exercise}
-A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an interval matrix. Show that such matrices are TUM. Hints: use induction, plus the facts that (i) interchanging two rows does not change whether a matrix is TUM, and (ii) replacing row a by the difference of rows a and a′ also does not change whether a matrix is TUM.
+A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an interval matrix. Show that such matrices are TUM.
+\begin{hint}
+Use induction, plus the facts that:
+\begin{enumerate}
+ \item interchanging two rows does not change whether a matrix is TUM, and
+ \item replacing row $A_i$ by the difference of rows $A_i$ and $A_j$ also does not change whether a matrix is TUM.
+\end{enumerate}
+\end{hint}
+\begin{answer}
+%TODO: was niet helemaal mee.
+\end{answer}
 \end{exercise}
 \begin{exercise}
-Consider Exercise 8 of Chapter 1, and let us modify that problem by only considering vertical lines as
+Consider \excref{rectanglestabbing} of \chpref{formulations}, and let us modify that problem by only considering vertical lines as
 potential stabbing lines. The resulting problem can be formulated as follows: given a set of intervals,
 find a minimum number of vertical lines stabbing each interval at least once.
-• Give an IP-formulation of the resulting problem.
-• Is the corresponding constraint matrix an interval matrix (see Exercise 2)?
-• How would you solve this problem?
-• Can you use the same approach for the rectangle stabbing problem?
+\begin{enumerate}
+ \item Give an IP-formulation of the resulting problem.
+ \item Is the corresponding constraint matrix an interval matrix (see \excref{interval-matrix})?
+ \item How would you solve this problem?
+ \item Can you use the same approach for the rectangle stabbing problem?
+\end{enumerate}
 \end{exercise}
+\begin{answer}
+The IP-formulation is the following:
+\begin{eqnarray}
+\mbox{minimize}&\sumieqb[i]{1}{n}{y_i}\eqnlab{rsv-m}\\
+\mbox{subject to}&\forall I\in\calI:\sumdomain[i]{I}{x_{i}}\geq 1\eqnlab{rsv-c1}\\
+&\forall\rangei[i]{1}{n}:x_i\in\accl{0,1}\eqnlab{rsv-c2}
+\end{eqnarray}
+The corresponding matrix is TUM since it is an interval matrix. You can solve this problem using linear programming since the matrix is TUM and thus the variables are guaranteed to be integral. It is not possible to solve the rectangle stabbing problem since such matrix is not guaranteed to be TUM.
+\end{answer}
 \begin{exercise}
 Consider the problem formulated below, where in addition, the variables x1 and x2 need to be integral.
 
