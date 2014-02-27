@@ -1,2 +1,3 @@
 p 24: second definition should be A_{v,e} instead of A_{v,a}
 p 31: verrtices -> vertices
+p 35: x\in R^{|E|} naar x\in B^{|E|}?

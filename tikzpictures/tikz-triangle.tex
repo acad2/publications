@@ -1,0 +1,7 @@
+\begin{tikzpicture}[scale=2]
+\foreach \i/\x/\y in {0/0/0,1/1/1,2/2/0} {
+  \coordinate (N\i) at (\x,\y);
+  \fill (N\i) circle(0.05 cm);
+}
+\draw (N0) -- (N1) -- (N2) -- cycle;
+\end{tikzpicture}

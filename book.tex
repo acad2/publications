@@ -331,6 +331,7 @@ Consider an undirected graph $G=\tupl{V,E}$. A edge cover $E'$ is a subset of th
 Consider an undirected graph $G=\tupl{V,E}$. A node cover $V'$ is a subset of the nodes such that each edge is incident to at least one node in $V'$. Formulate the problem of finding a minimum cardinality node cover as an integer linear program.
 \end{exercise}
 \begin{exercise}
+\exclab{clique-partitioning}
 A \concept{clique partitioning} of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem. (Hint: use a variable for each edge).
 \end{exercise}
 \begin{exercise}
@@ -672,83 +673,83 @@ z&=&&&&&x_2
 \end{array}
 \end{equation}
 
+\paragraph{}
 Consider now the second equation of this last dictionair. We can rewrite it as follows:
 
-Since x3 , x4 ≥ 0, it follows from the latter equality that:
+\begin{equation}
+x_2+\tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4=\tfrac{3}{2}\eqnlab{cg-cut-eq2-ini}
+\end{equation}
 
-Moreover, since we know that the left-hand side of this expression is integral, we can safely round down
-the right-hand side, and obtain:
-1
-1
-x2 + ⌊ ⌋x3 + ⌊ ⌋x4 ≤ 1.
-4
-4
+\paragraph{}
+Since $x_3,x_4\geq 0$, it follows from the latter equality that:
+
+\begin{equation}
+x_2+\floor{\tfrac{1}{4}}\cdot x_3+\tfrac{1}{4}\cdot x_4\leq\floor{\tfrac{3}{2}}
+\end{equation}
+
+\paragraph{}
+Moreover, since we know that the left-hand side of this expression is integral, we can safely round down the right-hand side, and obtain:
+
+\begin{equation}
+x_2+\floor{\tfrac{1}{4}}\cdot x_3+\tfrac{1}{4}\leq\cdot x_4=1
+\end{equation}
+
 This is the same as writing
-x2 ≤ 1.
 
-(2.5)
+\begin{equation}
+x_2\leq 1\eqnlab{cg-cut-eq2-fin}
+\end{equation}
 
-We now continue our argument by subtracting inequality (2.5) from equality (2.4). This gives us:
-1
-1
-1
-x3 + x4 ≥ .
-4
-4
-2
-This is called a Gomory's cut. Substituting for x3 and x4 their defining equations (see the first simplex
-dictionair), we obtain, an equivalent inequality:
-x2 ≤ 1.
-Notice that the current fractional solution violates this inequality. Repeatedly adding such a Gomory's
-cut gives in the end an integral solution.
+\paragraph{}
+We now continue our argument by subtracting inequality \eqnnref{cg-cut-eq2-fin} from equality \eqnnref{cg-cut-eq2-ini}. This gives us:
 
-We now show that the procedure outlined above not only works for this particular example, but in fact
-works in general. We denote by B the set of basic variables, and use xB(i) to denote the basic variable
-corresponding to row i of the dictionair. Consider row i from the last dictionair:
-dij xj = di .
+\begin{equation}
+\tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4\geq\tfrac{1}{2}
+\end{equation}
 
-xB(i) +
-j ∈B
-/
+This is called a \concept{Gomory's cut}. Substituting for $x_3$ and $x_4$ their defining equations (see the first simplex dictionair), we obtain, an equivalent inequality:
 
-(2.6)
+\begin{equation}
+x_2\leq 1.
+\end{equation}
+\end{example}
 
-Since xj ≥ 0 for all j, it follows that
-⌊dij ⌋xj ≤ di .
+\begin{note}
+Notice that the current fractional solution violates this inequality. Repeatedly adding such a Gomory's cut gives in the end an integral solution.
+\end{note}
 
-xB(i) +
-j ∈B
-/
+\paragraph{}
+We now show that the procedure outlined above not only works for this particular example, but in fact works in general. We denote by $B$ the set of basic variables, and use $x_{B_i}$ to denote the basic variable corresponding to row $i$ of the dictionair. Consider row $i$ from the last dictionair:
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{d_{i,j}\cdot x_j}=d_i.\eqnlab{gc-theory1}
+\end{equation}
+
+Since $x_j\geq 0$ for all $j$, it follows that 
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{\floor{d_{i,j}}\cdot x_j}=d_i.
+\end{equation}
 
 Next, due to integrality of the left-hand side, we can round down the right-hand side, and obtain:
-⌊dij ⌋xj ≤ ⌊di ⌋.
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{\floor{d_{i,j}}\cdot x_j}=\floor{d_i}.\eqnlab{gc-theory2}
+\end{equation}
 
-xB(i) +
+When we define $f_{i,j}=d_{i,j}-\floor{d_{i,j}}$, and $f_i=d_i−\floor{d_i}$, and when we subtract \eqnnref{gc-theory2} from \eqnnref{gc-theory1}, we get Gomory's cut:
+\begin{equation}
+\sumndomain[j]{B}{f_{i,j}\cdot x_j}=f_i.
+\end{equation}
 
-(2.7)
+\begin{note}
+Notice that when $d_i$ is not integral, then $f_i>0$, and hence Gomory's cut is violated by the current solution (which, of course, has $x_j=0$ for all $j\notin B$).
+\end{note}
 
-j ∈B
-/
-
-When we define fij = dij − ⌊dij ⌋, and fi = di − ⌊di ⌋, and when we subtract (2.7) from (2.6), we get
-Gomory's cut:
-fij xj ≥ fi .
-j ∈B
-/
-
-Notice that when di is not integral, then fi > 0, and hence Gomory's cut is violated by the current
-solution (which, of course, has xj = 0 for all j ∈
-/ B).
-Unfortunately, there are some disadvantages to Gomory's method.
-
-(a) The number of additional constraints is usually large. Moreover, Gomory's method does not always
-yield the best constraints possible.
-(b) The additional constraints contain a lot of non-zero elements, in general. Therefore problems may
-arise with respect to the numerical stability of the simplex method.
-
-In order to cope with these disadvantages we will develop methods for generating better constraints. Such
-methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
-\end{example}
+\paragraph{}
+Unfortunately, there are some disadvantages to Gomory's method:
+\begin{enumerate}
+ \item The number of additional constraints is usually large. Moreover, Gomory's method does not always yield the best constraints possible.
+ \item The additional constraints contain a lot of non-zero elements, in general. Therefore problems may arise with respect to the numerical stability of the simplex method.
+\end{enumerate}
+In order to cope with these disadvantages we will develop methods for generating better constraints. Such methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
 
 \section*{Exercises}
 \begin{exercise}\exclab{interval-matrix}
@@ -835,69 +836,71 @@ The IP-formulation is the following:
 The corresponding matrix is TUM since it is an interval matrix. You can solve this problem using linear programming since the matrix is TUM and thus the variables are guaranteed to be integral. It is not possible to solve the rectangle stabbing problem since such matrix is not guaranteed to be TUM.
 \end{answer}
 \begin{exercise}
-Consider the problem formulated below, where in addition, the variables x1 and x2 need to be integral.
+Consider the problem formulated below, where in addition, the variables $x_1$ and $x_2$ need to be integral.
 
-%TODO
-
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&2\cdot x_1&+&x_2\\
+\mbox{subject to}&4\cdot x_1&+&x_2&\leq&8\\
+&-3\cdot x_1&+&3\cdot x_2&\leq&6\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
 Solving the linear program by the simplex method gives the following final dictionary.
-
-%TODO
-
-Find two Gomory cuts for the problem where the variables x1 and x2 need to be integral. Next, rewrite
-each of these cuts in terms of solely x1 and x2 .
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_1&=&\tfrac{18}{11}&-&\tfrac{3}{11}\cdot x_3&+&\tfrac{1}{11}\cdot x_4\\
+x_2&=&\tfrac{16}{11}&+&\tfrac{1}{11}\cdot x_3&-&\tfrac{4}{11}\cdot x_4\\\hline
+z&=&\tfrac{52}{11}&-&\tfrac{5}{11}\cdot x_3&-&\tfrac{2}{11}\cdot x_4
+\end{array}
+\end{equation}
+\paragraph{}
+Find two Gomory cuts for the problem where the variables $x_1$ and $x_2$ need to be integral. Next, rewrite each of these cuts in terms of solely $x_1$ and $x_2$.
 \end{exercise}
 \begin{exercise}
-Consider the following problem in integral variables x1 and x2 . How many cutting planes do you have to
-add to solve the problem for k = 2? For k = 4? For general k? Can you use integer rounding to generate
-a valid inequality? Hint: draw a picture.
-
-%TODO
+Consider the following problem in integral variables $x_1$ and $x_2$. How many cutting planes do you have to add to solve the problem for $k=2$? For $k=4$? For general $k$? Can you use integer rounding to generate a valid inequality?
+\begin{hint}
+Draw a picture.
+\end{hint}
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&&&x_2\\
+\mbox{subject to}&x_1&-&2\cdot k\cdot x_2&\geq&0\\
+&2\cdot k\cdot x_1&+&x_2&\leq&2\cdot k\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
 \end{exercise}
 \begin{exercise}
-Let G = (V, E) be an undirected graph. A matching in G is represented by a vector x ∈ B |E| in the
-following way. For each edge e ∈ E we define
-
- 1 if edge e in the matching,
-xe =
- 0 otherwise.
+Let $G=\tupl{V,E}$ be an undirected graph. A matching in $G$ is represented by a vector $\vec{x}\in\BoolSet^{\abs{E}}$ in the following way. For each edge $e\in E$ we define
+
+\begin{equation}
+\semboolvar{x_e}{if edge $e$ is selected in the matching;}{otherwise.}
+\end{equation}
 
 The set of matchings is now given by
 
-M = {x ∈ R|E| |
+\begin{equation}
+M=\condset{\vec{x}\in\BoolSet^{|E|}}{\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1\wedge\forall e\in E:x_e\in\accl{0,1}}.
+\end{equation}
 
-xe ≤ 1 (v ∈ V ), xe ∈ {0, 1} (e ∈ E)}.
-e∈δ(v)
-
-a) Derive with integer rounding that
-xe ≤
-e:e={i,j}
-
-with
-
-i,j∈S
-
-|S| − 1
-2
-
-(2.9)
-
-is a valid inequality for each S ⊆ V with 3 ≤ |S| ≤ |V | and |S| odd. (These inequalities are called
-odd-set constraints).
-b) Find, for the graph depicted below, a fractional solution violating the inequality (2.9) with S =
-{1, 2, 3}.
+\begin{enumerate}
+ \item Derive with integer rounding that
+\begin{equation}
+\sumdomain[e=\tupl{v_1,v_2}]{E:v_1,v_2\in S}{x_e}\leq\displaystyle\frac{\abs{S}-1}{2}
+\eqnlab{matching-introunding}
+\end{equation}
+is a valid inequality for each $S\subseteq V$ with $3\leq\abs{S}\leq\abs{V}$ and $\abs{S}$ odd. (These inequalities are called \concept{odd-set constraints}).
+ \item Find, for the graph depicted in \figref{triangle}, a fractional solution violating the inequality \eqnref{matching-introunding} with $S=\accl{1,2,3}$.
+\end{enumerate}
+\importtikzfigure{triangle}{A triangle.}
 \end{exercise}
 \begin{exercise}
-Consider the integer programming formulation of the clique partitioning problem (see Exercise 6 of
-Chapter 1). Figure 2.9 shows an instance of that problem. Notice that solid lines correspond to edges
-with weight +1, whereas dotted lines correspond to edges with weight −1. What is the value of the linear
-programming relaxation of the integer programming formulation corresponding to this instance? Can
-you find a violated inequality using integer rounding?
+Consider the integer programming formulation of the clique partitioning problem (see \excref{clique-partitioning} of \chpref{formulations}). \figref{cliquepartition-integer} shows an instance of that problem. Notice that solid lines correspond to edges with weight $+1$, whereas dotted lines correspond to edges with weight $-1$. What is the value of the linear programming relaxation of the integer programming formulation corresponding to this instance? Can you find a violated inequality using integer rounding?
+\importtikzfigure{cliquepartition-integer}{An instance of clique partitioning.}
 \end{exercise}
-
-Figure 2.8: A triangle
-
-
-Figure 2.9: An instance of clique partitioning
 
 \bibliographystyle{alpha}
 \bibliography{biblio}
