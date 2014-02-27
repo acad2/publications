@@ -584,9 +584,9 @@ The node packing graph defined by the variables and constraints consists of the 
 There is a clique consisting of the vertices corresponding to $x_3$, $y_3$ and $y_2$. Thus, $x_3+y_3+y_2\leq 1$. Since $x_3+y_3=1$ this gives $y_2=0$ and $x_2=1$. Notice that the vector $\tupl{x_1,x_2,x_3}=\tupl{1,\frac{1}{2},\frac{1}{2}}$ satisfies the original linear programming relaxation, but is cut off by the generated clique constraint.
 \end{example}
 
-\section{Gomory-Chv\'atal rounding}
+\section{Gomory-Chv\`atal rounding}
 \seclab{gomorychvatal}
-A general method for finding valid inequalities that really cut off a part from the linear programming relaxation is \concept{Gomory-Chv\'atal rounding}.
+A general method for finding valid inequalities that really cut off a part from the linear programming relaxation is \concept{Gomory-Chv\`atal rounding}.
 
 \paragraph{}
 Suppose we have the following description of a set of points
@@ -601,7 +601,7 @@ Then, for any vector $\vec{u}\geq\vec{0}$, the following constraint is valid:
 \end{equation}
 
 \paragraph{}
-By the nonnegativity of x we have that ⌊uA⌋x ≤ ub, and from the integrality of x it follows that the left hand side is integral, and therefore we are allowed to round down the right hand side. By adding these constraints for all nonnegative vectors u, we get the polyhedron $P^1=\condset{\vec{x}\in\RRR^n}{\vec{x}\geq\vec{0}\wedge\forall \vec{u}\in\RRR^n:\vec{u}\geq\vec{0}\rightarrow\floor{\vec{u}\cdot\vec{A}}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}}$ which is really smaller than $P$. The problem is that there are infinitely many constraints from which only few are necessary. Moreover, the resulting polyhedron $P^1$ may still contain fractional vertices. Then the process of rounding can be repeated. Chv\'atal showed that this process gives the convex hull of all integral vectors in $P$ after a finite number of times. The number of times that these cuts must be added is called the \concept{Chv\'atal-rank}.
+By the nonnegativity of x we have that ⌊uA⌋x ≤ ub, and from the integrality of x it follows that the left hand side is integral, and therefore we are allowed to round down the right hand side. By adding these constraints for all nonnegative vectors u, we get the polyhedron $P^1=\condset{\vec{x}\in\RRR^n}{\vec{x}\geq\vec{0}\wedge\forall \vec{u}\in\RRR^n:\vec{u}\geq\vec{0}\Rightarrow\floor{\vec{u}\cdot\vec{A}}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}}$ which is really smaller than $P$. The problem is that there are infinitely many constraints from which only few are necessary. Moreover, the resulting polyhedron $P^1$ may still contain fractional vertices. Then the process of rounding can be repeated. Chv\`atal showed that this process gives the convex hull of all integral vectors in $P$ after a finite number of times. The number of times that these cuts must be added is called the \concept{Chv\`atal-rank}.
 
 \paragraph{}
 \begin{example}
@@ -625,8 +625,8 @@ The feasible region of the LP-relaxation of this integer program is depicted in 
 Consider now the nonnegative vector $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. Using $\vec{u}$, we can construct the following linear combination of the given constraints:
 \begin{equation}
 \begin{array}{rcrcrcrcr}
-\frac{5}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
-\frac{1}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline\\
+\tfrac{5}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\tfrac{1}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline\\
 &&x_1&+&x_2&\leq&\floor{\frac{30}{12}}&=&2
 \end{array}
 \end{equation}
@@ -635,9 +635,9 @@ Consider now the nonnegative vector $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. 
 Another possibility is to set $\vec{u}=\tupl{\frac{1}{12},\frac{5}{12}}$. The resulting constraint can be found as follows:
 \begin{equation}
 \begin{array}{rcrcrcrcr}
-\frac{1}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
-\frac{5}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline\\
-&&-x_1&+&x_2&\leq&\floor{\frac{6}{12}}&=&0
+\tfrac{1}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\tfrac{5}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline
+&&-x_1&+&x_2&\leq&\floor{\tfrac{6}{12}}&=&0
 \end{array}
 \end{equation}
 
@@ -651,9 +651,26 @@ When both additional restrictions are added to the original constraints, a polyt
 A main question is of course: how to get hold of a ``right'' $\vec{u}$? That is, a $\vec{u}$ such that the resulting inequality cuts away fractional extreme points without eliminating integral extreme vertices? A constructive method has been designed by Gomory.
 
 \begin{example}
-We continue our example described above to illustrate the idea. When we solve the LP-relaxation of the formulation given in the example with the simplex-method (see e.g. Chv`atal (2)), we start with the following dictionair:
+We continue our example described above to illustrate the idea. When we solve the LP-relaxation of the formulation given in the example with the simplex-method (see e.g. Chv\`atal\cite{Chvatal/83/Linear}), we start with the following dictionair:
 
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_3&=&6&-&3\cdot x_1&-&2\cdot x_2\\
+x_4&=&&&3\cdot x_1&-&2\cdot x_2\\\hline
+z&=&&&&&x_2
+\end{array}
+\end{equation}
+
+\paragraph{}
 After performing two iterations, we find the following, final, dictionair:
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_1&=&6&-&3\cdot x_1&-&2\cdot x_2\\
+x_2&=&&&3\cdot x_1&-&2\cdot x_2\\\hline
+z&=&&&&&x_2
+\end{array}
+\end{equation}
 
 Consider now the second equation of this last dictionair. We can rewrite it as follows:
 
