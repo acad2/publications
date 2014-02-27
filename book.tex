@@ -748,7 +748,45 @@ Use induction, plus the facts that:
 \end{enumerate}
 \end{hint}
 \begin{answer}
-%TODO: was niet helemaal mee.
+\footnote{Note: this answer does not actually use induction.}
+Firstly, we remark that each square submatrix of an interval matrix again is an interval matrix. So to prove that each interval matrix is TUM, it is sufficient to prove that each square interval matrix is unimodular. Secondly, given a square interval matrix $M$, if $det(M)=0$, then $M$ is unimodular.\\
+What is left to prove, is that each $n$-by-$n$ interval matrix $M$ for which $det(M)\neq 0$ is unimodular, which means it has a determinant of $+1$ or $-1$. We will do this by showing that we can transform $M$ into an identity matrix with the row operations defined above.\\
+The first step in this proof is to define for each row $i \in 1..n$ the variables $s_i$ and $e_i$, denoting respectively the column where the interval of $1$'s starts and ends. For instance, the following interval matrix has three rows, where $s_1=1$, $s_2=1$, $s_3=2$, $e_1=3$, $e_2=2$, $e_3=3$:
+\begin{equation}
+\label{unimodular_interval}
+\brak{\begin{array}{ccc}
+1&1&1\\
+1&1&0\\
+0&1&1
+\end{array}}
+\end{equation}
+Now, whenever two rows $i$ and $j$ have $s_i=s_j$ or $e_i=e_j$, we subtract the row with the fewest $1$'s from the row with the most $1$'s. This transformation preserves both the consecutive ones property and the unimodular property, so we end up with a new interval matrix $M'$ with the same unimodular property\footnote{This transformation can change the sign of the determinant though.}, but with less $1$'s. For example, matrix \ref{unimodular_interval} can be transformed into
+\begin{equation}
+\brak{\begin{array}{ccc}
+0&0&1\\
+1&1&0\\
+0&1&1
+\end{array}}
+\end{equation}
+by noting that $s_1=s_2$, and subsequently subtracting the row $2$ from the row $1$.\\
+If we now continue to apply this row operation until no two rows have the same start value or end value, we end up with a matrix containing exactly one $1$ in each row, never in the same column.\footnote{Note that no empty rows or columns can be derived, since we could assume the determinant was non-zero.} One way to understand this, is by noting that the $n$ $s_i$'s of the final matrix must all be different, and since they can only take the values $1..n$ (being the colomn numbers), each column is associated to exactly one $s_i$. The same argument can be made for the $e_i$'s. Now, since no $e_i$ can be smaller than its corresponding $s_i$, $e_i=s_i$ for all $i \in 1..n$. Continuing the example yields \ref{unimodular_interval_2} after subtracting row $1$ from row $3$ and then row $3$ from row $2$:
+\begin{equation}
+\label{unimodular_interval_2}
+\brak{\begin{array}{ccc}
+0&0&1\\
+1&0&0\\
+0&1&0
+\end{array}}
+\end{equation}
+Such a matrix can after some row-swap operations be transformed into the identity, e.g.:
+\begin{equation}
+\brak{\begin{array}{ccc}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{array}}
+\end{equation}
+And since the identity is unimodular, and since we only used unimodularity preserving row operations, $M$ must be unimodular, which concludes the proof.
 \end{answer}
 \end{exercise}
 \begin{exercise}
