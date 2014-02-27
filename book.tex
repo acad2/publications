@@ -6,7 +6,7 @@
 \makeindex
 \makeglossary
 
-\newcommand{\concept}[2]{\newglossaryentry{#1}{name={#1}}\toindex{#1}}
+\newcommand{\concept}[2]{\toindex{#1}}
 
 \makeatletter
 \newcommand\toindex{\@ifstar{\@dblarg{\@toindexs}}{\@toindex}}
@@ -28,7 +28,7 @@
 \def\@splitword#1#2\@nil{\def\@first{#1}\def\@rest{#2}}
 \makeatother
 
-\newcommand{\indexlayout}[1]{\glslink{#1}{\emph{#1}}}
+\newcommand{\indexlayout}[1]{\emph{#1}}
 
 \title{Optimization: Special Topics}
 \author{Frits Spieksma\and Edited by: Jo Devriendt \and Willem Van Onsem}
