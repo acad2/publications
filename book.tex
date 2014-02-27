@@ -46,6 +46,7 @@
 \newtheorem{application}{Application}
 \newtheorem{answer}{Answer}
 \newtheorem{hint}{Hint}
+\newtheorem{note}{Note}
 
 \begin{document}
 \begin{titlepage}
@@ -486,7 +487,7 @@ The node-edge incidence matrix $A$ of a graph has rows corresponding with the no
 
 \begin{corollary}
 \collab{tum-graph}
-The node-edge incidence matrix of a digraph is TUM. The node-arc incidence matrix of a bipartite graph is TUM.
+The node-arc incidence matrix of a digraph is TUM. The node-edge incidence matrix of a bipartite graph is TUM.
 \end{corollary}
 
 \paragraph{}
@@ -585,7 +586,7 @@ There is a clique consisting of the vertices corresponding to $x_3$, $y_3$ and $
 
 \section{Gomory-Chv\'atal rounding}
 \seclab{gomorychvatal}
-A general method for finding valid inequalities that really cut off a part from the linear programming relaxation is Gomory-Chv\'atal rounding.
+A general method for finding valid inequalities that really cut off a part from the linear programming relaxation is \concept{Gomory-Chv\'atal rounding}.
 
 \paragraph{}
 Suppose we have the following description of a set of points
@@ -600,52 +601,57 @@ Then, for any vector $\vec{u}\geq\vec{0}$, the following constraint is valid:
 \end{equation}
 
 \paragraph{}
-By the nonnegativity of x we have that ⌊uA⌋x ≤ ub, and from the integrality of x it follows that
-the left hand side is integral, and therefore we are allowed to round down the right hand side. By
-29
+By the nonnegativity of x we have that ⌊uA⌋x ≤ ub, and from the integrality of x it follows that the left hand side is integral, and therefore we are allowed to round down the right hand side. By adding these constraints for all nonnegative vectors u, we get the polyhedron $P^1=\condset{\vec{x}\in\RRR^n}{\vec{x}\geq\vec{0}\wedge\forall \vec{u}\in\RRR^n:\vec{u}\geq\vec{0}\rightarrow\floor{\vec{u}\cdot\vec{A}}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}}$ which is really smaller than $P$. The problem is that there are infinitely many constraints from which only few are necessary. Moreover, the resulting polyhedron $P^1$ may still contain fractional vertices. Then the process of rounding can be repeated. Chv\'atal showed that this process gives the convex hull of all integral vectors in $P$ after a finite number of times. The number of times that these cuts must be added is called the \concept{Chv\'atal-rank}.
 
-adding these constraints for all nonnegative vectors u, we get the polyhedron P 1 = {x ∈ IRn | x ≥
-0; for all u ≥ 0 ⌊uA⌋x ≤ ⌊ub⌋} which is really smaller than P . The problem is that there are infinitely
-many constraints from which only few are necessary. Moreover, the resulting polyhedron P 1 may still
-contain fractional vertices. Then the process of rounding can be repeated. Chv´atal showed that this
-process gives the convex hull of all integral vectors in P after a finite number of times. The number of
-times that these cuts must be added is called the Chv´atal-rank.
-Example Consider the following integer program:
+\paragraph{}
+\begin{example}
+Consider the following integer program:
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&&&x_2\\
+\mbox{subject to}&3\cdot x_1&+&2\cdot x_2&\leq&6\\
+&-3\cdot x_1&+&2\cdot x_2&\leq&0\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
 
-%TODO
-
-The feasible region of the LP-relaxation of this integer program is depicted in Figure 2.6.
-
-
-Figure 2.6: Feasible region of LP-relaxation
-
-Consider now the nonnegative vector u = ( 12
-
-1
-12 ).
-
-Using u, we can construct the following linear
-
-combination of the given constraints:
-
-Another possibility is to set u = ( 12
-
-5
-12 ).
-
-The resulting constraint can be found as follows:
+\paragraph{}
+The feasible region of the LP-relaxation of this integer program is depicted in \figref{feasibleregion-gc}.
 
 
-When both additional restrictions are added to the original constraints, a polytope with integral vertices
-arises. Thus, when these constraints are added to the linear program, the problem can be solved with
-the simplex method.
+\importtikzfigure{feasibleregion-gc}{Feasible region of LP-relaxation.}
 
-Figure 2.7: New polyhedron with additional constraints
+Consider now the nonnegative vector $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. Using $\vec{u}$, we can construct the following linear combination of the given constraints:
+\begin{equation}
+\begin{array}{rcrcrcrcr}
+\frac{5}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\frac{1}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline\\
+&&x_1&+&x_2&\leq&\floor{\frac{30}{12}}&=&2
+\end{array}
+\end{equation}
 
-A main question is of course: how to get hold of a “right” u? That is, a u such that the resulting inequality cuts away fractional extreme points without eliminating integral extreme verrtices? A constructive
-method has been designed by Gomory. We continue our example described above to illustrate the idea.
-When we solve the LP-relaxation of the formulation given in the example with the simplex-method (see
-e.g. Chv`atal (2)), we start with the following dictionair:
+\paragraph{}
+Another possibility is to set $\vec{u}=\tupl{\frac{1}{12},\frac{5}{12}}$. The resulting constraint can be found as follows:
+\begin{equation}
+\begin{array}{rcrcrcrcr}
+\frac{1}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\frac{5}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline\\
+&&-x_1&+&x_2&\leq&\floor{\frac{6}{12}}&=&0
+\end{array}
+\end{equation}
+
+\paragraph{}
+When both additional restrictions are added to the original constraints, a polytope depicted in \figref{feasibleregion-gc-mod} with integral vertices arises. Thus, when these constraints are added to the linear program, the problem can be solved with the simplex method.
+
+\importtikzfigure{feasibleregion-gc-mod}{New polyhedron with additional constraints.}
+\end{example}
+
+\paragraph{}
+A main question is of course: how to get hold of a ``right'' $\vec{u}$? That is, a $\vec{u}$ such that the resulting inequality cuts away fractional extreme points without eliminating integral extreme vertices? A constructive method has been designed by Gomory.
+
+\begin{example}
+We continue our example described above to illustrate the idea. When we solve the LP-relaxation of the formulation given in the example with the simplex-method (see e.g. Chv`atal (2)), we start with the following dictionair:
 
 After performing two iterations, we find the following, final, dictionair:
 
@@ -725,6 +731,7 @@ arise with respect to the numerical stability of the simplex method.
 
 In order to cope with these disadvantages we will develop methods for generating better constraints. Such
 methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
+\end{example}
 
 \section*{Exercises}
 \begin{exercise}\exclab{interval-matrix}
