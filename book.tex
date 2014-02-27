@@ -6,14 +6,17 @@
 \makeindex
 \makeglossary
 
-\newcommand{\concept}[2]{\toindex{#1}}
+\newcommand{\conceptsee}[2]{\toindex{#1}\indexlayout{#1}}
+\newcommand{\concept}[1]{\toindex{#1}\indexlayout{#1}}
+
+\newcommand{\indexlayout}[1]{\emph{#1}}
 
 \makeatletter
 \newcommand\toindex{\@ifstar{\@dblarg{\@toindexs}}{\@toindex}}
-\def\@toindexs[#1]#2{\indexlayout{#2}\index{#1@#2}}
+\def\@toindexs[#1]#2{\index{#1@#2}}
 \newcommand\@toindex[2][]{%
   \if\relax\detokenize{#1}\relax
-    \indexlayout{#2}%
+    %
     \begingroup
     \@splitword#2\@nil%
     \uppercase\expandafter{%
@@ -22,16 +25,14 @@
     \toks2=\expandafter{\@rest}%
     \edef\x{\endgroup\noexpand\index{\the\toks0 \the\toks2 }}\x
   \else
-    \indexlayout{#2}\index{#1}
+    \index{#1}
   \fi
 }
 \def\@splitword#1#2\@nil{\def\@first{#1}\def\@rest{#2}}
 \makeatother
 
-\newcommand{\indexlayout}[1]{\emph{#1}}
-
 \title{Optimization: Special Topics}
-\author{Frits Spieksma\and Edited by: Jo Devriendt \and Willem Van Onsem}
+\author{Frits Spieksma\\ \\Edited by:\\Jo Devriendt\\Willem Van Onsem}
 \date{February, 2013\\Edited: February 2014}
 
 \theoremstyle{plain}
@@ -61,7 +62,7 @@ The course assumes that the reader has had a first introduction to operations re
 There are some excellent textbooks on combinatorial optimization. We mention Schrijver's trilogy: ``Combinatorial Optimization. Polyhedra and Efficiency'' \cite{schrijver-book}. Another example is: ``Combinatorial optimization'' by Cook, Cunningham, Pulleyblank, and Schrijver \cite{Cook:98}. Other related textbooks are: Nemhauser and Wolsey \cite{citeulike:2212037}, Wolsey \cite{wolseyip}.
 
 \paragraph{}
-Please notice that \chpref{} is written by Prof. Yves Crama.
+Please notice that \chpref{complexity} is written by Prof. Yves Crama.
 
 \chapter{Formulations in combinatorial optimization}
 \chplab{formulations}
@@ -72,11 +73,11 @@ In this first chapter, we will give an informal notion of combinatorial optimiza
 Below, we present mathematical formulations of some well-known combinatorial optimization problems. Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a greedy algorithm, like the spanning tree problem. Other problems are notoriously hard to solve. This already shows that a formulation need not give insight into the problem's difficulty. Moreover, a problem may have several correct formulations. This leads us to a very important question: which formulations are good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here a solver's point of view. Thus, a formulation is better than another formulation when it leads to better solutions, or when it produces solutions faster.
 
 \paragraph{}
-Almost all formulations will use binary or integral variables. This shows that integer programming is closely related to (or, as a matter of fact, is itself a problem from the domain of) combinatorial optimization.
+Almost all formulations will use binary or integral variables. This shows that \concept{integer programming} is closely related to (or, as a matter of fact, is itself a problem from the domain of) combinatorial optimization.
 
 \subsection{The Matching Problem}
 \ssclab{matching}
-The Matching Problem (also known as Edge Packing) is one of the fundamental problems in Combinatorial Optimization. It is described as follows. We are given an arbitrary graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a matching (or an edge packing) if each vertex of $V$ is incident to at most one edge of $E'$. In other words, $E'$ is a matching if no two edges of $E'$ have a vertex in common. The problem is to find a matching in G consisting of as many edges as possible (a maximum cardinality matching).
+The \concept{Matching Problem} (also known as the \conceptsee{Edge packing problem}{Matching problem}) is one of the fundamental problems in Combinatorial Optimization. It is described as follows. We are given an arbitrary graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a \concept{matching} (or an \concept{edge packing}) if each vertex of $V$ is incident to at most one edge of $E'$. In other words, $E'$ is a matching if no two edges of $E'$ have a vertex in common. The problem is to find a matching in $G$ consisting of as many edges as possible (a maximum cardinality matching).
 
 \importtikzfigure{matching-red}{The red edges form a matching.}
 
@@ -96,7 +97,7 @@ And here is the integer program:
 \end{eqnarray}
 
 \paragraph{}
-The weighted matching problem is a generalization of the cardinality matching problem above by assuming that there is a given weight function w defined on the edges. Then, the objective is to find a maximum weight matching, and the objective is changed accordingly to $\max\isumdomain[e]{E}{w_e\cdot x_e}$ (Obviously, it is a generalization, since the cardinality matching problem arises when $w_e$ for each $e\in E$). In the perfect matching problem the set of feasible solutions is restricted to perfect matchings. These are matchings such that each vertex is incident to precisely one edge in the matching; then, constraints \eqnref{matching-c1} become equalities. Notice that a perfect matching may not exist (consider e.g. a triangle), whereas there is always a feasible solution to \eqnref{matching-m}-\eqnref{matching-c2}.
+The \concept{weighted matching problem} is a generalization of the cardinality matching problem above by assuming that there is a given weight function w defined on the edges. Then, the objective is to find a maximum weight matching, and the objective is changed accordingly to $\max\isumdomain[e]{E}{w_e\cdot x_e}$ (Obviously, it is a generalization, since the cardinality matching problem arises when $w_e$ for each $e\in E$). In the perfect matching problem the set of feasible solutions is restricted to perfect matchings. These are matchings such that each vertex is incident to precisely one edge in the matching; then, constraints \eqnref{matching-c1} become equalities. Notice that a perfect matching may not exist (consider e.g. a triangle), whereas there is always a feasible solution to \eqnref{matching-m}-\eqnref{matching-c2}.
 
 \paragraph{}
 We emphasize that we distinguish between, on the one hand, the problem itself, and, on the other hand, its formulation as an integer program. Indeed, these two are not the same! In fact, in some cases it is appropriate to show the correctness of a formulation. Such an argument is usually based on a correspondence between feasible solutions to the problem, and vectors of decision variables satisfying the constraints.
@@ -329,7 +330,7 @@ Consider an undirected graph $G=\tupl{V,E}$. A edge cover $E'$ is a subset of th
 Consider an undirected graph $G=\tupl{V,E}$. A node cover $V'$ is a subset of the nodes such that each edge is incident to at least one node in $V'$. Formulate the problem of finding a minimum cardinality node cover as an integer linear program.
 \end{exercise}
 \begin{exercise}
-A \concept{clique partitioning}{} of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem. (Hint: use a variable for each edge).
+A \concept{clique partitioning} of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem. (Hint: use a variable for each edge).
 \end{exercise}
 \begin{exercise}
 Consider the TSP.
@@ -739,7 +740,7 @@ Use \thmref{tum-matrix}.
 \end{answer}
 \end{exercise}
 \begin{exercise}
-A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an \concept{interval matrix}{}. Show that such matrices are TUM.
+A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an \concept{interval matrix}. Show that such matrices are TUM.
 \begin{hint}
 Use induction, plus the facts that:
 \begin{enumerate}
