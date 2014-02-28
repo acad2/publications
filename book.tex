@@ -902,147 +902,82 @@ Consider the integer programming formulation of the clique partitioning problem 
 \importtikzfigure{cliquepartition-integer}{An instance of clique partitioning.}
 \end{exercise}
 
-A glimpse at computational
-complexity (Yves Crama)
-In order to fully appreciate the field of combinatorial optimization, it is necessary to understand, at least
-at an intuitive level, some of the basic concepts of computational complexity. This part of theoretical
-computer science deals with fundamental, but extremely deep questions like: “what tasks can be carried
-out by a computer?”, or “how much time does a given computational task require?”
-In this chapter, we attempt to introduce some elements of computational complexity, in a very informal
-and hand-waving way.
+\chapter{A glimpse at computational complexity (Yves Crama)}
+\chplab{complexity}
+In order to fully appreciate the field of combinatorial optimization, it is necessary to understand, at least at an intuitive level, some of the basic concepts of computational complexity. This part of theoretical computer science deals with fundamental, but extremely deep questions like: ``what tasks can be carried out by a computer?'', or ``how much time does a given computational task require?''. In this chapter, we attempt to introduce some elements of computational complexity, in a very informal and hand-waving way.
 
-3.1
+\section{Computational performance criteria}
+What do we expect from an algorithm for a combinatorial optimization problem? Well, an obvious answer would be that this algorithm should always return an optimal solution of the problem. Is it the only game in town? Certainly not. We might also want it to be fast or efficient. Combining these two expectations is a crucial thing. Of course, the time required to solve a problem increases with the size of this problem,  where the size can be measured by the amount of data needed to describe a particular instance of theproblem.
 
-Computational performance criteria
+\begin{example}
+Let us take a look at an example. Suppose that we want to solve a 0-1 linear programming problem involving $n$ variables $x_j\in\accl{0,1}$, $j=1,\ldots,n$. We can certainly find an optimal solution by listing all possible vectors $\tupl{x_1,x_2,\ldots,x_n}$, checking for each of them whether it is feasible or not, computing the value of the objective function for each such feasible solution, and, finally, retaining the best solution found in the process. If we decide to go that way, then we must consider $2^n$ vectors. For $n=50$, that means $2^{50}\approx 10^{15}=1'000'000'000'000'000$ vectors! If our algorithm is able to enumerate one million ($1'000'000$) solutions per second, the whole procedure takes $10^9$ seconds, or about $30$ years. And for $n=60$, the enumeration of the $2^{60}$ solutions would take about $30'000$ years !!
 
-What do we expect from an algorithm for a combinatorial optimization problem? Well, an obvious answer
-would be that this algorithm should always return an optimal solution of the problem. Is it the only game
-in town? Certainly not. We might also want it to be fast or efficient. Combining these two expectations
-is a crucial thing. Of course, the time required to solve a problem increases with the size of this problem,
-where the size can be measured by the amount of data needed to describe a particular instance of the
-problem.
-37
+\paragraph{}
+Notice that adding $10$ variables to the problem increases the computing time by a multiplicative factor of $2^{10}\approx1'000$. So, with $n=80$ variables (a rather modest problem size), the same algorithm would run for $30$ billion years, which is about twice the age of the universe. Not really efficient, by any practical standards...
+\end{example}
 
-Let us take a look at an example. Suppose that we want to solve a 0-1 linear programming problem
-involving n variables xj ∈ {0, 1}, j = 1, . . . , n. We can certainly find an optimal solution by listing all
-possible vectors (x1 , x2 , . . . , xn ), checking for each of them whether it is feasible or not, computing the
-value of the objective function for each such feasible solution, and, finally, retaining the best solution
-found in the process. If we decide to go that way, then we must consider 2n vectors. For n = 50, that
-means 250 ≈ 1015 = 1, 000, 000, 000, 000, 000 vectors! If our algorithm is able to enumerate one million
-(1,000,000) solutions per second, the whole procedure takes 109 seconds, or about 30 years. And for
-n = 60, the enumeration of the 260 solutions would take about 30000 years !!
-Notice that adding 10 variables to the problem increases the computing time by a multiplicative factor
-of 210 ≈ 1000. So, with n = 80 variables (a rather modest problem size), the same algorithm would run
-for 30 billion years, which is about twice the age of the universe. Not really efficient, by any practical
-standards...
-Let us look at this issue from another vantage point. Consider the well-known Moore's law: Gordon
-Moore, co-founder of the chips giant Intel, prophetized in 1965 that the number of transistors per square
-inch on integrated circuits would double every 18 months per year starting from 1962, the year the
-integrated circuit was invented (see the original paper for more details). In other words, your PC processor
-works twice faster every year and a half, meaning that its speed is multiplied by 100 in 10 years.1 So, if
-you were able to enumerate 2n solutions in one hour in 1993, you can enumerate 100 ∗ 2n < 2n+7 solutions
-in 2003. This great increase in computing speed thus allows you to “gain” only 7 variables in 10 years !!
-Conclusion: exhaustive enumeration is not feasible in practice for large-scale (or even medium-scale)
-combinatorial optimization problems. Furthermore, we should not count on technical progress alone to
-improve the situation in any significant way. Only algorithmic, or mathematical, advances can help in
-this respect.
-So, how much progress can we expect on the theoretical front? Before we provide a tentative answer to
-this question, let us try to formulate more precisely some of the notions that have just been sketched.
+\paragraph{}
+Let us look at this issue from another vantage point. Consider the well-known Moore's law: Gordon Moore, co-founder of the chips giant Intel, prophetized in 1965 that the number of transistors per square inch on integrated circuits would double every 18 months per year starting from 1962, the year the integrated circuit was invented (see the original paper for more details). In other words, your PC processor works twice faster every year and a half, meaning that its speed is multiplied by $100$ in $10$ years\footnote{This rate has slowed down since Moore made his claim. It is now generally admitted that the number of transistors doubles every two years.}. So, if you were able to enumerate $2^n$ solutions in one hour in 1993, you can enumerate $100\cdot2^n<2{n+7}$ solutions in 2003. This great increase in computing speed thus allows you to ``gain'' only $7$ variables in 10 years!! Conclusion: exhaustive enumeration is not feasible in practice for large-scale (or even medium-scale) combinatorial optimization problems. Furthermore, we should not count on technical progress alone to improve the situation in any significant way. Only algorithmic, or mathematical, advances can help in this respect.
 
-1 This
+\paragraph{}
+So, how much progress can we expect on the theoretical front? Before we provide a tentative answer to this question, let us try to formulate more precisely some of the notions that have just been sketched.
 
-rate has slowed down since Moore made his claim. It is now generally admitted that the number of transistors
+\section{Problems and problem instances}
+Formally speaking, a (computational) \concept{problem} is a generic question whose formulation includes a number of undetermined parameters. Here are some simple examples.
 
-doubles every two years.
+\begin{description}
+ \item[Matrix addition problem] The parameters are $n$, $A$ and $B$ where $n\in\NNN$, and $A$ and $B$ are two $n\times n$ matrices. Question: what is the value of $A+B$?
+ \item[Shortest path problem] The parameters are a graph $G=\tupl{V,E}$, two vertices $s,t\in V$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a shortest path from $s$ to $t$.
+ \item[Traveling salesman problem] The parameters are a graph $G=\tupl{V,E}$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a shortest traveling salesman tour in $G$.
+\end{description}
 
-38
+\paragraph{}
+An \concept{instance} of a problem $P$ arises when the values of all undetermined parameters of $P$ are specified (or, more intuitively, by specifying the input file that contains the numerical data). So, a problem can also be viewed as a collection of instances. Notice that an instance admits an answer, but a problem does not (try to give the answer of the matrix addition problem above!). We will use the symbol $I$ for an instance.
 
-3.2
+\paragraph{}
+An \concept{algorithm} for a problem $P$ is a step-by-step procedure that describes how to compute a solution for every instance $I$ of $P$. To compare the efficiency of different algorithms for a same problem $P$ , we can determine the time required by each algorithm to solve an instance of $P$. Notice that this obviously depends on the particular instance which is to be solved, but also on the speed of the computer, on the skills of the programmer, etc. Therefore, we need again to define this notion in more formal way.
 
-Problems and problem instances
+\paragraph{}
+The \concept{size of an instance} $I$, denoted by $\fun{s}{I}$, is the number of bits needed to represent $I$. It is determined both by the number of parameters and by their magnitude. (Intuitively, this can be viewed as the size of the input file of a computer program which solves $I$.)
 
-Formally speaking, a (computational) problem is a generic question whose formulation includes a number
-of undetermined parameters. Here are some simple examples.
+\paragraph{}
+The \concept{running time} of an algorithm $A$ on an instance $I$, denoted $\fun{t_A}{I}$, is the number of elementary operations (additions, multiplications, comparisons,...) performed by $A$ when it runs on the instance $I$. Determining the running time of an algorithm for each particular instance $I$ is not an easy task. However, it is often easier to estimate the running time as a function of the size of the instance.
 
-1. Matrix addition problem: The parameters are n, A and B where n ∈ N , and A and B are two n × n
-matrices. Question: what is the value of A + B ?
-2. Shortest path problem: The parameters are a graph G = (V, E), two vertices s, t ∈ V , and the
-length ℓ(e) ≥ 0 of every edge e ∈ E. Question: find a shortest path from s to t.
-3. Travelling salesman problem: The parameters are a graph G = (V, E), and the length ℓ(e) ≥ 0 of
-every edge e ∈ E. Question: find a shortest travelling salesman tour in G.
-
-An instance of a problem P arises when the values of all undetermined parameters of P are specified (or,
-more intuitively, by specifying the input file that contains the numerical data). So, a problem can also
-be viewed as a collection of instances. Notice that an instance admits an answer, but a problem does not
-(try to give the answer of the matrix addition problem above!). We will use the symbol I for an instance.
-An algorithm for a problem P is a step-by-step procedure that describes how to compute a solution for
-every instance I of P . To compare the efficiency of different algorithms for a same problem P , we can
-determine the time required by each algorithm to solve an instance of P . Notice that this obviously
-depends on the particular instance which is to be solved, but also on the speed of the computer, on the
-skills of the programmer, etc. Therefore, we need again to define this notion in more formal way.
-The size of an instance I, denoted by s(I), is the number of bits needed to represent I. It is determined
-both by the number of parameters and by their magnitude. (Intuitively, this can be viewed as the size
-of the input file of a computer program which solves I.)
-The running time of an algorithm A on an instance I, denoted tA (I), is the number of elementary
-operations (additions, multiplications, comparisons,...) performed by A when it runs on the instance I.
-Determining the running time of an algorithm for each particular instance I is not an easy task. However,
-it is often easier to estimate the running time as a function of the size of the instance.
+\paragraph{}
 Consider again the examples defined above.
-39
+\begin{description}
+ \item[Matrix addition problem] Instance size: $\approx n^2$.
+ \begin{enumerate}
+  \item Naive addition: $\approx n^2$ (additions). We denote this by $\bigoh{n^2}$, meaning that the running time grows at most like $n^2$.
+ \end{enumerate}
+ \item[Shortest path problem] Instance size: $\bigoh{n^2}$ where $n=\abs{V}$.
+ \begin{enumerate}
+  \item Enumerate all possible paths between $s$ and $t$. There could be exponentially many paths, leading to $\bigoh{2^n}$.
+  \item \concept{Dijkstra's algorithm}: $\bigoh{n^2}$ operations.
+ \end{enumerate}
+ \item[Traveling salesman problem] Instance size: $\bigoh{n^2}$ where $n=\abs{V}$.
+ \begin{enumerate}
+  \item Enumerate all possible tours: $\bigoh{n!}$.
+ \end{enumerate}
+\end{description}
 
-1. Matrix addition problem:
-Instance size: ≈ 2n2 .
-Algorithm: any naive addition algorithm.
-Running time: ≈ n2 (additions). We denote this by O(n2 ), meaning that the running time grows
-at most like n2 .
-2. Shortest path problem:
-Instance size: O(n2 ) where n = |V |.
-Algorithm 1: enumerate all possible paths between s and t.
-Running time of Algorithm 1: there could be exponentially many paths, leading to O(2n ).
-Algorithm 2: Dijkstra's algorithm.
-Running time: O(n2 ) operations.
-3. Travelling salesman problem:
-Instance size: O(n2 ) where n = |V |.
-Algorithm: enumerate all possible tours.
-Running time: O(n!).
+\paragraph{}
+Notice that, in all these examples, we chose to ignore the size of a number, that is, we did not take into account the number of bits needed to store some number. In view of these examples, we are led to the following concept: the complexity of an algorithm $A$ for a problem $P$ is the function 
+\begin{equation}
+\fun{f_A}{n}=\max\condset{\fun{t_A}{I}}{\mbox{$I$ is an instance of $P$ with size $\fun{s}{I}=n$}}.
+\end{equation}
+This is sometimes called the ``worst-case complexity'' of $A$: indeed, the definition focuses on the worst-case running time of $A$ on an instance of size $n$, rather than on its average running.
 
-Notice that, in all these examples, we chose to ignore the size of a number, that is, we did not take into
-account the number of bits needed to store some number.
-In view of these examples, we are led to the following concept: the complexity of an algorithm A for a
-problem P is the function
-FA (n) = max{tA (I) | I is an instance of P with size s(I) = n}.
+\section{Easy and hard problems}
 
-(3.1)
-
-This is sometimes called the “worst-case complexity” of A: indeed, the definition focuses on the worst-case
-running time of A on an instance of size n, rather than on its average running.
-
-3.3
-
-Easy and hard problems
-
-Figure 3.1 represents different types of complexity behaviors for algorithms.
-The algorithm A is polynomial if FA (n) is a polynomial (or is bounded by a polynomial) in n and
-40
-
-F(n)
-
-F(n)
-
-n
-
-n
-
-(a)
-
-(b)
 
 Figure 3.1: (a) Linear: F (n) = an + b;
 
 (b) Exponential: F (n) = a 2n
 
-exponential if FA (n) grows faster than any polynomial process in n. Intuitively, we can probably accept
-the idea that a polynomial algorithm is more efficient than an exponential one.
+Figure 3.1 represents different types of complexity behaviors for algorithms. The algorithm $A$ is polynomial if $\fun{F_A}{n}$ is a polynomial (or is bounded by a polynomial) in $n$ and exponential if $\fun{F_A}{n}$ grows faster than any polynomial process in $n$. Intuitively, we can probably accept the idea that a polynomial algorithm is more efficient than an exponential one.
+
+\paragraph{}
 For instance, the obvious algorithms for the addition and or the multiplication of matrices are polynomial.
 So is the Gaussian elimination algorithm for the solution of systems of linear equations. On the other
 hand, the simplex method (or at least, some variants of it) for linear programming problems is known to
@@ -1461,7 +1396,7 @@ and
 
 for all i ∈ C :
 
-j∈C\{i}
+j∈C{i}
 
 aj ≤ b.
 
@@ -4324,9 +4259,9 @@ A polyhedral interpretation of the dual is stated in the next theorem.
 
 n
 n
-| A2 x ≤ b2 }}
-| A1 x ≤ b1 } ∩ conv{x ∈ Z+
-Theorem 7.5 zCSD = max{cx| x ∈ conv{x ∈ Z+
+| A2 x ≤ b2 
+| A1 x ≤ b1  ∩ convx ∈ Z+
+Theorem 7.5 zCSD = maxcx| x ∈ convx ∈ Z+
 
 and zCSD ≤ zLD .
 
@@ -4335,9 +4270,9 @@ The technique is useful when
 
 n
 n
-| A1 x ≤ b1 }, so for some objective functions c we obtain
-| A1 x ≤ b1 } ⊂ {x ∈ R+
-• conv{x ∈ Z+
+| A1 x ≤ b1 , so for some objective functions c we obtain
+| A1 x ≤ b1  ⊂ x ∈ R+
+• convx ∈ Z+
 
 zCSD < zLD .
 • The sets of constraints Ai x ≤ bi are simple to deal with separately; that is, the difficulty is caused
