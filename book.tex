@@ -7,7 +7,8 @@
 \makeglossary
 
 \newcommand{\conceptsee}[2]{\toindex{#1}\indexlayout{#1}}
-\newcommand{\concept}[1]{\toindex{#1}\indexlayout{#1}}
+\newcommand{\concept}[2][]{\ifthenelse{\equal{#1}{}}{\toindex{#2}\indexlayout{#2}}{\toindex{#1}\indexlayout{#2}}}
+\newcommand{\concepts}[1]{\concept[#1]{#1s}}
 
 \newcommand{\indexlayout}[1]{\emph{#1}}
 
@@ -56,7 +57,7 @@
 \end{titlepage}
 \tableofcontents
 \chapter*{Preface}
-These notes are lecture notes used for the course ``Optimization: special topics''. Its subject is mainly combinatorial optimization with an emphasis on modeling issues and solution strategies. Its audience is students, more specifically: master students in engineering or management or economic programs.
+These notes are lecture notes used for the course ``Optimization: special topics''. Its subject is mainly \concept{combinatorial optimization} with an emphasis on modeling issues and solution strategies. Its audience is students, more specifically: master students in engineering or management or economic programs.
 
 \paragraph{}
 The course assumes that the reader has had a first introduction to operations research and has some elementary knowledge of mathematical modeling, linear programming, and graph theory.
@@ -69,26 +70,26 @@ Please notice that \chpref{complexity} is written by Prof. Yves Crama.
 
 \chapter{Formulations in combinatorial optimization}
 \chplab{formulations}
-In this first chapter, we will give an informal notion of combinatorial optimization problems. The defining characteristic of a combinatorial optimization problem is that it has a finite number of feasible solutions. We now give formulations of a number of basic combinatorial optimization problems.
+In this first chapter, we will give an informal notion of \concept{combinatorial optimization} problems. The defining characteristic of a combinatorial optimization problem is that it has a finite number of feasible solutions. We now give formulations of a number of basic combinatorial optimization problems.
 
 \section{Formulations of basic combinatorial optimization problems}
 \seclab{formulations}
-Below, we present mathematical formulations of some well-known combinatorial optimization problems. Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a greedy algorithm, like the spanning tree problem. Other problems are notoriously hard to solve. This already shows that a formulation need not give insight into the problem's difficulty. Moreover, a problem may have several correct formulations. This leads us to a very important question: which formulations are good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here a solver's point of view. Thus, a formulation is better than another formulation when it leads to better solutions, or when it produces solutions faster.
+Below, we present mathematical formulations of some well-known combinatorial optimization problems. Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a \concept{greedy algorithm}, like the \concept{spanning tree} problem. Other problems are notoriously hard to solve. This already shows that a formulation need not give insight into the problem's difficulty. Moreover, a problem may have several correct formulations. This leads us to a very important question: which formulations are good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here a solver's point of view. Thus, a formulation is better than another formulation when it leads to better solutions, or when it produces solutions faster.
 
 \paragraph{}
-Almost all formulations will use binary or integral variables. This shows that \concept{integer programming} is closely related to (or, as a matter of fact, is itself a problem from the domain of) combinatorial optimization.
+Almost all formulations will use \concept[binary variable]{binary} or \concepts{integral variable}. This shows that \concept{integer programming} is closely related to (or, as a matter of fact, is itself a problem from the domain of) combinatorial optimization.
 
 \subsection{The Matching Problem}
 \ssclab{matching}
-The \concept{Matching Problem} (also known as the \conceptsee{Edge packing problem}{Matching problem}) is one of the fundamental problems in Combinatorial Optimization. It is described as follows. We are given an arbitrary graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a \concept{matching} (or an \concept{edge packing}) if each vertex of $V$ is incident to at most one edge of $E'$. In other words, $E'$ is a matching if no two edges of $E'$ have a vertex in common. The problem is to find a matching in $G$ consisting of as many edges as possible (a maximum cardinality matching).
+The \concept{Matching} problem (also known as the \conceptsee{Edge packing}{Matching} problem) is one of the fundamental problems in Combinatorial Optimization. It is described as follows. We are given an arbitrary graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a \concept{matching} (or an \concept{edge packing}) if each vertex of $V$ is incident to at most one edge of $E'$. In other words, $E'$ is a matching if no two edges of $E'$ have a vertex in common. The problem is to find a matching in $G$ consisting of as many edges as possible (a maximum cardinality matching).
 
 \importtikzfigure{matching-red}{The red edges form a matching.}
 
 \paragraph{}
-A matching is called maximum when no matching of larger cardinality exists. A matching is called maximal when it cannot be enlarged.
+A matching is called \concept[maximum solution]{maximum} when no matching of larger cardinality exists. A matching is called \concept[maximal solution]{maximal} when it cannot be enlarged.
 
 \paragraph{}
-The matching problem can be formulated as an integer program as follows, where we use the symbol $\fun{\delta}{v}$ to denote the set of edges that are incident to vertex $v\in V$. For instance, in \figref{matching-red}, $\fun{\delta}{v}=\accl{\tupl{3,7},\tupl{4,7},\tupl{7,8}}$. We define a 0-1 variable for each edge $e\in E$ as follows:
+The matching problem can be formulated as an integer program as follows, where we use the symbol $\fun{\delta}{v}$ to denote the set of edges that are incident to vertex $v\in V$. For instance, in \figref{matching-red}, $\fun{\delta}{v}=\accl{\tupl{3,7},\tupl{4,7},\tupl{7,8}}$. We define a \concept{0-1 variable} for each edge $e\in E$ as follows:
 \begin{equation}
 \semboolvar{x_e}{if edge $e$ is selected in the matching;}{otherwise.}
 \end{equation}
@@ -100,20 +101,20 @@ And here is the integer program:
 \end{eqnarray}
 
 \paragraph{}
-The \concept{weighted matching problem} is a generalization of the cardinality matching problem above by assuming that there is a given weight function w defined on the edges. Then, the objective is to find a maximum weight matching, and the objective is changed accordingly to $\max\isumdomain[e]{E}{w_e\cdot x_e}$ (Obviously, it is a generalization, since the cardinality matching problem arises when $w_e$ for each $e\in E$). In the perfect matching problem the set of feasible solutions is restricted to perfect matchings. These are matchings such that each vertex is incident to precisely one edge in the matching; then, constraints \eqnref{matching-c1} become equalities. Notice that a perfect matching may not exist (consider e.g. a triangle), whereas there is always a feasible solution to \eqnref{matching-m}-\eqnref{matching-c2}.
+The \concept{weighted matching} problem is a generalization of the cardinality matching problem above by assuming that there is a given weight function $w$ defined on the edges. Then, the objective is to find a maximum weight matching, and the objective is changed accordingly to $\max\isumdomain[e]{E}{w_e\cdot x_e}$ (Obviously, it is a generalization, since the cardinality matching problem arises when $w_e$ for each $e\in E$). In the \concept{perfect matching} problem the set of feasible solutions is restricted to perfect matchings. These are matchings such that each vertex is incident to precisely one edge in the matching; then, constraints \eqnref{matching-c1} become equalities. Notice that a perfect matching may not exist (consider e.g. a triangle), whereas there is always a feasible solution to \eqnref{matching-m}-\eqnref{matching-c2}.
 
 \paragraph{}
-We emphasize that we distinguish between, on the one hand, the problem itself, and, on the other hand, its formulation as an integer program. Indeed, these two are not the same! In fact, in some cases it is appropriate to show the correctness of a formulation. Such an argument is usually based on a correspondence between feasible solutions to the problem, and vectors of decision variables satisfying the constraints.
+We emphasize that we distinguish between, on the one hand, the problem itself, and, on the other hand, its formulation as an \concept{integer program}. Indeed, these two are not the same! In fact, in some cases it is appropriate to show the correctness of a formulation. Such an argument is usually based on a correspondence between feasible solutions to the problem, and vectors of decision variables satisfying the constraints.
 
 \paragraph{}
-Let us illustrate this matter for the matching problem. Notice that there is a 1-1 correspondence between subsets of the set of edges $E$ and the 0-1 vectors defined by the variables, which are indexed by the edges. To prove that this formulation is correct we must show that there is a 1-1 correspondence between the subsets of the edges that define matchings and the feasible solutions of the above formulation. Moreover, we must show that the matching and its corresponding vector have the same value. This can be done as follows. First, consider an arbitrary matching $M$ in a graph. By definition, this implies that each node $v\in V$ of the graph is incident with at most one edge of $M$ . Let us now construct a solution vector $\vec{x}_M$ in a straightforward manner: we put a ``1'' in $\vec{x}_M$ when the corresponding edge is in $M$, and otherwise we put a ``0'' in the vector $\vec{x}_M$. Clearly, $\vec{x}_M$ is a 0-1 vector, and obviously satisfies \eqnref{matching-c2}. Also, the solution vector $\vec{x}_M$ corresponding to $M$ satisfies the constraints \eqnref{matching-c1} since at most one of the variables in the left-hand side has value 1. Thus, a matching $M$ corresponds to a feasible solution of the integer program. Second, consider a subset of the edges $E'$ that is \textbf{not} a matching. Then there is a vertex, say $v$, that is incident to at least two edges in $E'$. But then, at least two of the variables in the left-hand side of \eqnref{matching-c1} have value 1 for this particular vertex. Thus, the vector corresponding to $E'$ is not feasible in the formulation. Finally, we observe that the value of each set $E'\subseteq E$ is equal to its number of edges, i.e., $\abs{E'}=\isumdomain[e]{E'}{1}=\isumdomain[e]{E}{x_e}$.
+Let us illustrate this matter for the matching problem. Notice that there is a 1-1 correspondence between subsets of the set of edges $E$ and the 0-1 vectors defined by the variables, which are indexed by the edges. To prove that this formulation is correct we must show that there is a 1-1 correspondence between the subsets of the edges that define matchings and the feasible solutions of the above formulation. Moreover, we must show that the matching and its corresponding vector have the same value. This can be done as follows. First, consider an arbitrary matching $M$ in a graph. By definition, this implies that each node $v\in V$ of the graph is incident with at most one edge of $M$ . Let us now construct a solution vector $\vec{x}_M$ in a straightforward manner: we put a ``$1$'' in $\vec{x}_M$ when the corresponding edge is in $M$, and otherwise we put a ``$0$'' in the vector $\vec{x}_M$. Clearly, $\vec{x}_M$ is a \concept{0-1 vector}, and obviously satisfies \eqnref{matching-c2}. Also, the solution vector $\vec{x}_M$ corresponding to $M$ satisfies the constraints \eqnref{matching-c1} since at most one of the variables in the left-hand side has value $1$. Thus, a matching $M$ corresponds to a feasible solution of the integer program. Second, consider a subset of the edges $E'$ that is \textbf{not} a matching. Then there is a vertex, say $v$, that is incident to at least two edges in $E'$. But then, at least two of the variables in the left-hand side of \eqnref{matching-c1} have value $1$ for this particular vertex. Thus, the vector corresponding to $E'$ is not feasible in the formulation. Finally, we observe that the value of each set $E'\subseteq E$ is equal to its number of edges, i.e., $\abs{E'}=\isumdomain[e]{E'}{1}=\isumdomain[e]{E}{x_e}$.
 
 \paragraph{}
 In general, it may not be trivial to prove the 1-1 correspondence of feasible solutions of a combinatorial problem to solutions of its formulation, i.e., solutions satisfying the constraints. For many problems, however, a correctness proof is omitted because the problem is an (extension of) a well-known problem, and the correctness of a formulation is evident.
 
 \subsection{The Independent Set Problem}
 \ssclab{independentset}
-Another basic problem within the field of combinatorial optimization is the Independent Set problem (also known as Stable Set, or as Node Packing). It can be described as follows.
+Another basic problem within the field of combinatorial optimization is the \concept{Independent set} problem (also known as \conceptsee{Stable set}{independent set}, or as \conceptsee{Node packing}{Independent set}). It can be described as follows.
 \paragraph{}
 Consider an arbitrary graph $G=\tupl{V,E}$. A subset of the vertices $V'\subseteq V$ is called an independent set (or a stable set, or a node packing) if each edge of $E$ is incident to at most one vertex of $V'$. In other words, $V'$ is an independent set if no two vertices of an edge are selected both. The problem is to find an independent set in $G$ containing as many vertices as possible (a maximum cardinality independent set). The problem can be formulated as an integer program as follows. We define a 0-1 variable for each edge $v\in V$ as follows:
 \begin{equation}
@@ -130,7 +131,7 @@ And here is the integer program:
 
 \subsection{Spanning forest}
 \ssclab{spanningforest}
-Consider an undirected graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a forest if the subgraph of $G$ induced by $E'$ is acyclic, see \figref{forest-red} for an example. In case a forest consists of $\abs{V}-1$ edges it is called a tree. The problem is to find a maximum weight forest in $G$. The problem to find a maximum weight forest can be formulated as an integer program as follows. We define a 0-1 variable for each edge $e\in E$ as follows:
+Consider an undirected graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a \concept{forest} if the subgraph of $G$ induced by $E'$ is acyclic, see \figref{forest-red} for an example. In case a forest consists of $\abs{V}-1$ edges it is called a \concept{tree}. The problem is to find a \concept{maximum weight forest} in $G$. The problem to find a maximum weight forest can be formulated as an integer program as follows. We define a 0-1 variable for each edge $e\in E$ as follows:
 \begin{equation}
 \semboolvar{x_e}{if edge $e$ is selected in the forest;}{otherwise.}
 \end{equation}
@@ -144,9 +145,9 @@ And here is the integer program:
 \importtikzfigure{forest-red}{The edges in red form a forest.}
 \paragraph{}The \eqncsref{forest-c1} limit the number of chosen edges with both endvertices in any given subset $V'$ of the nodes to at most $\abs{V'}-1$. Since a cycle contains as many edges as vertices, the \eqncsref{forest-c1} prevent the graph $\tupl{V,E'}$ from containing cycles.
 \paragraph{}
-Notice that the number of subsets of $V$ of size $2$ or bigger is $2^{\abs{V}}-\abs{V}-1$. Thus, the number of \eqnref{forest-c1} is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size of the input, although the problem is trivially solvable by a greedy algorithm.
+Notice that the number of subsets of $V$ of size $2$ or bigger is $2^{\abs{V}}-\abs{V}-1$. Thus, the number of \eqnref{forest-c1} is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size of the input, although the problem is trivially solvable by a \concept{greedy algorithm}.
 \paragraph{}
-The spanning tree problem is a variant of the spanning forest problem, where the set of feasible solutions is restricted to those acyclic subgraphs that are connected. It is well-known that for an acyclic subgraph the requirement of connectedness is equivalent to the requirement of having $\abs{V}-1$ edges, i.e., $\abs{E'}=\abs{V}-1$. Thus, by adding the constraint $\isumdomain[e]{E}{x_e}=n-1$ to \eqnnrefr{forest-c1}{forest-c2}, a correct formulation of the minimum weight spanning tree problem arises.
+The \concept{spanning tree} problem is a variant of the \concept{spanning forest} problem, where the set of feasible solutions is restricted to those acyclic subgraphs that are connected. It is well-known that for an acyclic subgraph the requirement of connectedness is equivalent to the requirement of having $\abs{V}-1$ edges, i.e., $\abs{E'}=\abs{V}-1$. Thus, by adding the constraint $\isumdomain[e]{E}{x_e}=n-1$ to \eqnnrefr{forest-c1}{forest-c2}, a correct formulation of the \concept{minimum weight spanning tree} problem arises.
 
 \subsection{The Knapsack Problem}
 \ssclab{knapsack}
@@ -163,18 +164,18 @@ And here is the integer program:
 \mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot x_j}\leq b\eqnlab{knapsack-c1}\\
 &\forall\rangei[j]{1}{n}:x_j\in\accl{0,1}\eqnlab{knapsack-c2}
 \end{eqnarray}
-In this text, we will come back extensively to the knapsack problem. There is a book devoted to this problem, see Kellerer et al.\cite{KelPfePis04}.
+In this text, we will come back extensively to the \concept{knapsack} problem. There is a book devoted to this problem, see Kellerer et al.\cite{KelPfePis04}.
 
 \section{Formulations and difficulty}
 \ssclab{difficulty}
-Does the formulation of a problem tell us anything about the problem's difficulty? The answer is no, it doesn't. Consider for instance the matching problem (\sscref{matching}) and the stable set problem (\sscref{stableset}). These problems look similar, since the roles of the edges and vertices are interchanged. However, there is a striking difference between them. The matching problem can be solved in polynomial time, but the node packing problem is NP-hard (see \chpref{complexity}). In other words, whereas, for the matching problem, fast and efficient algorithms exist, and have been designed, no such algorithms have been found for the node packing problem. Indeed, this does not rule out the possibility that fast algorithms could exist for node packing, however, no one has ever found such an algorithm. In fact, it is widely suspected that such algorithms do not exist, but a proof of this hypothesis is lacking. All this boils down to the famous, 1 million-dollar worth, P = NP question. In practice, this means that we can find an optimal solution to a matching problem on a graph with, say 10.000 nodes and 50.000 edges within seconds, while there is no algorithm known that would return an optimal solution with one hour for the stable set instance on the same graph. Therefore: a formulation does not give an indication of the solvability of a problem. Also, the number of variables and/or constraints is no clue concerning the difficulty of a problem. For instance, the ``natural'' formulation of the minimum spanning tree problem (see \sscref{spanningforest}) has an exponential number of constraints, while the problem is easily solvable by a greedy algorithm.
+Does the formulation of a problem tell us anything about the problem's difficulty? The answer is no, it doesn't. Consider for instance the \concept{matching} problem (\sscref{matching}) and the \concept{stable set} problem (\sscref{stableset}). These problems look similar, since the roles of the edges and vertices are interchanged. However, there is a striking difference between them. The matching problem can be solved in polynomial time, but the node packing problem is NP-hard (see \chpref{complexity}). In other words, whereas, for the matching problem, fast and efficient algorithms exist, and have been designed, no such algorithms have been found for the node packing problem. Indeed, this does not rule out the possibility that fast algorithms could exist for node packing, however, no one has ever found such an algorithm. In fact, it is widely suspected that such algorithms do not exist, but a proof of this hypothesis is lacking. All this boils down to the famous, 1 million-dollar worth, P=NP question. In practice, this means that we can find an optimal solution to a matching problem on a graph with, say 10.000 nodes and 50.000 edges within seconds, while there is no algorithm known that would return an optimal solution with one hour for the stable set instance on the same graph. Therefore: a formulation does not give an indication of the solvability of a problem. Also, the number of variables and/or constraints is no clue concerning the difficulty of a problem. For instance, the ``natural'' formulation of the \concept{minimum spanning tree} problem (see \sscref{spanningforest}) has an exponential number of constraints, while the problem is easily solvable by a \concept{greedy algorithm}.
 
 \section{Multiple formulations of a combinatorial optimization problem}
 \seclab{multipleformulations}
 
 \subsection{Traveling Salesman Problem}
 \ssclab{tsp}
-Probably the most well-known problem in Combinatorial Optimization is the Traveling Salesman Problem (TSP). The TSP is the prototype combinatorial optimization problem. No other problem has received as much attention as the TSP, and no other problem has captured the imagination as an easy-to-describe, yet hard-to-solve problem. A description of the problem is as follows. Given is a set of $n$ ``cities'' and a distance $c_{i,j}$ between each pair of them. The goal is to find a tour of minimum length, that is to start in some city, visit each other city once, and to return to the city where the tour was started. More formally, given an $n\times n$ matrix $C=c_{i,j}$, find a permutation $\pi$ of $\accl{1,2,\ldots,n}$ such that $c_{\fun{\pi}{n},\fun{\pi}{1}}+\isumieqb[i]{1}{n-1}{c_{\fun{\pi}{i},\fun{\pi}{i+1}}}$ is minimum.
+Probably the most well-known problem in Combinatorial Optimization is the \concept{Traveling salesman} problem (TSP). The TSP is the prototype combinatorial optimization problem. No other problem has received as much attention as the TSP, and no other problem has captured the imagination as an easy-to-describe, yet hard-to-solve problem. A description of the problem is as follows. Given is a set of $n$ ``cities'' and a distance $c_{i,j}$ between each pair of them. The goal is to find a tour of minimum length, that is to start in some city, visit each other city once, and to return to the city where the tour was started. More formally, given an $n\times n$ matrix $C=c_{i,j}$, find a permutation $\pi$ of $\accl{1,2,\ldots,n}$ such that $c_{\fun{\pi}{n},\fun{\pi}{1}}+\isumieqb[i]{1}{n-1}{c_{\fun{\pi}{i},\fun{\pi}{i+1}}}$ is minimum.
 Different formulations of the TSP exist. Here is a conventional one, using binary variables $x_{i,j}$ indicating whether city $j$ is visited directly after city $i$:
 
 \begin{eqnarray}
@@ -186,7 +187,7 @@ Different formulations of the TSP exist. Here is a conventional one, using binar
 \end{eqnarray}
 
 \paragraph{}
-\eqncsref{tsp-c3} are called the subtour elimination constraints. An equivalent way of writing them is:
+\eqncsref{tsp-c3} are called the \concept{subtour elimination constraints}. An equivalent way of writing them is:
 \begin{equation}
 \forall S\subsetneq V:\abs{S}\geq 2:\sumdomain[i]{S}{\sumndomain[j]{S}{x_{i,j}}}\geq 1
 \end{equation}
@@ -202,7 +203,7 @@ There is, however, an alternative for this formulation which uses additional rea
 u_1=1\eqnlab{mtz-c2}
 \end{eqnarray}
 
-we arrive at a formulation that is called the Miller-Tucker-Zemlin (MTZ) formulation of the TSP. It is an interesting exercise to verify the correctness of the MTZ-formulation. More concrete: why is it that \eqnnref{mtz-c1} exclude subtours? The answer lies in noticing that: any solution satisfying \eqnnref{tsp-c1}, \eqnnref{tsp-c2}, and \eqnnref{tsp-c4} consists of a collection of subtours (or a feasible solution, that is, a single tour). In case there are subtours, then there is a subtour that does not contain city 1. Let us now, for each pair of consecutive cities $i$ and $j$ in this subtour, sum the corresponding inequalities \eqnnref{mtz-c1}. The $u$-variables will cancel out, and the resulting lefthand side will be larger than the resulting righthand side, which means that this subtour will be forbidden by \eqnnref{mtz-c1}. Thus, any subtour not containing city 1 will be forbidden, and hence, the only possible solution is a single tour.
+we arrive at a formulation that is called the \concept{Miller-Tucker-Zemlin (MTZ) formulation} of the TSP. It is an interesting exercise to verify the correctness of the MTZ-formulation. More concrete: why is it that \eqnnref{mtz-c1} exclude subtours? The answer lies in noticing that: any solution satisfying \eqnnref{tsp-c1}, \eqnnref{tsp-c2}, and \eqnnref{tsp-c4} consists of a collection of subtours (or a feasible solution, that is, a single tour). In case there are subtours, then there is a subtour that does not contain city 1. Let us now, for each pair of consecutive cities $i$ and $j$ in this subtour, sum the corresponding inequalities \eqnnref{mtz-c1}. The $u$-variables will cancel out, and the resulting lefthand side will be larger than the resulting righthand side, which means that this subtour will be forbidden by \eqnnref{mtz-c1}. Thus, any subtour not containing city 1 will be forbidden, and hence, the only possible solution is a single tour.
 
 \paragraph{}
 There is more than one book devoted to the TSP. We mention: Applegate et al. \cite{Applegate.2006} and Lawler et al. \cite{Lawler85}.
@@ -240,12 +241,12 @@ In the second formulation, each of the \eqncsref{ufl-ca2} is disaggregated into 
 &\forall i\in M,j\in N:x_{i,j},y_i\in\accl{0,1}\eqnlab{ufl-cb3}
 \end{eqnarray}
 
-Which of these formulations is preferable is not a matter of comparing the number of constraints or variables. In fact, as will be shown in the sequel, large formulations with many constraints and/or variables are usually better from a solver's point of view. This depends on the techniques that are used to solve the problem. Since these techniques very often rely heavily on linear programming, the quality of the formulation depends almost always on the accuracy of the linear programming relaxation, i.e., the problem which results when the integrality constraints are removed. For the uncapacitated facility location problem formulation (UFL2) is better than (UFL1), since the constraints \eqncsref{ufl-cb2} imply the constraints \eqncsref{ufl-ca2}.
+Which of these formulations is preferable is not a matter of comparing the number of constraints or variables. In fact, as will be shown in the sequel, large formulations with many constraints and/or variables are usually better from a solver's point of view. This depends on the techniques that are used to solve the problem. Since these techniques very often rely heavily on linear programming, the quality of the formulation depends almost always on the accuracy of the linear programming relaxation, i.e., the problem which results when the integrality constraints are removed. For the \concept{uncapacitated facility location} problem formulation (UFL2) is better than (UFL1), since the constraints \eqncsref{ufl-cb2} imply the constraints \eqncsref{ufl-ca2}.
 
 \section{Combinatorial Optimization: a general formulation}
 \seclab{generalform}
 In this section we (informally) argue that each combinatorial optimization problem can be formulated as an integer program. In a combinatorial optimization problem a finite ground set $E$ is given. To each
-element $e\in E$ a weight we is attached. A family $\calS$ of subsets of $E$ is identified as the set of feasible solutions. This family depends on the particular problem. The weight of a set $E'\subseteq E$ is the cumulative weight of its elements, i.e., $\fun{w}{E'}=\isumdomain[e]{E'}{w_e}$. The associated optimization problem is to find the maximum (or minimum) weight feasible solution E' ∈ S, i.e.,
+element $e\in E$ a weight we is attached. A family $\calS$ of subsets of $E$ is identified as the set of feasible solutions. This family depends on the particular problem. The weight of a set $E'\subseteq E$ is the cumulative weight of its elements, i.e., $\fun{w}{E'}=\isumdomain[e]{E'}{w_e}$. The associated optimization problem is to find the maximum (or minimum) weight feasible solution $E'\in S$, i.e.,
 
 \begin{equation}
 \displaystyle\max_{E'\in\calS}\accl{\fun{w}{E'}}
@@ -255,22 +256,22 @@ element $e\in E$ a weight we is attached. A family $\calS$ of subsets of $E$ is 
 The set of feasible solutions $\calS$ is usually given implicitly. It is described by the properties of feasible solutions; it may be very large. For instance, in case of the matching problem, the ground set equals the set of edges, and the set $\calS$ is the collection of edge-sets that are matchings.In case of the knapsack problem, the ground set equals the set of items, and the set $\calS$ equals the collection of item-sets that can be put together in the knapsack.
 
 \paragraph{}
-Many examples of problems that fit in the above formulation are found in graph theory (\secref{formulations}). Among them are well-known problems like the shortest path problem, the minimum spanning tree problem, and the traveling salesman problem. The shortest path problem is defined as follows. In a graph $G=\tupl{V,E}$ the feasible solutions are the subsets of the edges that form paths between two specified vertices $s$ and $t$. Among the paths between $s$ and $t$ we want to find the one with a minimum number of edges, or if a length function is given on the edges, we want to find a path of minimum total length. In the minimum spanning tree problem a graph $G=\tupl{V,E}$ is given together with a weight function on the edges. A feasible solution is a set of edges that forms a tree. Among the trees we want to find one with minimum weight. This problem is easily solvable by a greedy algorithm, as is well known. However, if we restrict the set of feasible solutions to trees that form paths, the problem becomes the Hamiltonian path problem, which is highly intractable. Thus, in general, problems do not become simpler when the set of feasible solutions is reduced.
+Many examples of problems that fit in the above formulation are found in graph theory (\secref{formulations}). Among them are well-known problems like the shortest path problem, the minimum spanning tree problem, and the traveling salesman problem. The shortest path problem is defined as follows. In a graph $G=\tupl{V,E}$ the feasible solutions are the subsets of the edges that form paths between two specified vertices $s$ and $t$. Among the paths between $s$ and $t$ we want to find the one with a minimum number of edges, or if a length function is given on the edges, we want to find a path of minimum total length. In the \concept{minimum spanning tree} problem a graph $G=\tupl{V,E}$ is given together with a weight function on the edges. A feasible solution is a set of edges that forms a tree. Among the trees we want to find one with minimum weight. This problem is easily solvable by a greedy algorithm, as is well known. However, if we restrict the set of feasible solutions to trees that form paths, the problem becomes the \concept{Hamiltonian path} problem, which is highly intractable. Thus, in general, problems do not become simpler when the set of feasible solutions is reduced.
 
 \paragraph{}
-To formulate a combinatorial optimization problem in mathematical terms, we introduce decision variables for all elements of the ground set $E$. Each decision variable denotes a choice, namely whether the corresponding element is chosen or not. So, a variable can have two values, which are usually taken from $\accl{0,1}$. A set $E'\subseteq E$ can be described by a binary vector $\vec{x}_{E'}=\brak{x_e}_{e\in E}$ with $n=\abs{E}$ components as follows:
+To formulate a combinatorial optimization problem in mathematical terms, we introduce \concepts{decision variable} for all elements of the ground set $E$. Each decision variable denotes a choice, namely whether the corresponding element is chosen or not. So, a variable can have two values, which are usually taken from $\accl{0,1}$. A set $E'\subseteq E$ can be described by a binary vector $\vec{x}_{E'}=\brak{x_e}_{e\in E}$ with $n=\abs{E}$ components as follows:
 
 \begin{equation}
 \semboolvar{x_e}{if element $e$ is in $E'$;}{otherwise.}
 \end{equation}
 
 \paragraph{}
-The finite set of vectors $X\subseteq\RRR^n$ corresponding to feasible solutions from $\calS$ can then be described by means of constraints. In many cases, these constraints are linear and involve binary variables. The objective function $\vec{w}$ is usually a linear function of the components of $\vec{x}\in X$. The problem is then
+The finite set of vectors $X\subseteq\RRR^n$ corresponding to feasible solutions from $\calS$ can then be described by means of \concepts{constraint}. In many cases, these constraints are \concept[linear constraint]{linear} and involve binary variables. The objective function $\vec{w}$ is usually a linear function of the components of $\vec{x}\in X$. The problem is then
 
 \begin{equation}
 \max\condset{\vec{w}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge \vec{x}\in\accl{0,1}^n}
 \end{equation}
-where $A$ and $\vec{b}$ depend on the problem at hand. This type of formulation is often called an Integer (or Binary) Linear Program, (ILP).
+where $A$ and $\vec{b}$ depend on the problem at hand. This type of formulation is often called an \concept[Integer linear programming]{Integer (or Binary) Linear Program}, (ILP).
 
 \section{General Combinatorial Optimization Problems}
 \seclab{generalcombinatorial}
@@ -289,7 +290,7 @@ the restrictions of a problem. In abstracto, any relation on the variables that 
 The objective of a problem can be any function of the variables, thus it is not restricted to linear functions.
 
 \paragraph{}
-The above observations lead to the following abstract formulation of optimization problems. We distinguish between the real variables, denoted by the vector $\vec{x}$, and the integral variables, denoted by the
+The above observations lead to the following \concept{abstract formulation of optimization problems}. We distinguish between the real variables, denoted by the vector $\vec{x}$, and the integral variables, denoted by the
 vector $\vec{y}$. A formulation of a combinatorial optimization problem contains the following items:
 \begin{itemize}
  \item a vector of $n$ real decision variables:
@@ -311,10 +312,10 @@ vector $\vec{y}$. A formulation of a combinatorial optimization problem contains
 \end{itemize}
 
 \paragraph{}
-The set of feasible solutions consists of vectors $\tupl{\vec{x},\vec{y}}$ that satisfy all the constraints. Each variable has a domain $D$, usually the set of real numbers $\RRR$, or the set of integer $\ZZZ$. The solution space of the problem is the Cartesian product of the domains of the variables, i.e., $\RRR^n\times\ZZZ^m$.
+The set of \concepts{feasible solution} consists of vectors $\tupl{\vec{x},\vec{y}}$ that satisfy all the constraints. Each variable has a domain $D$, usually the set of real numbers $\RRR$, or the set of integer $\ZZZ$. The solution space of the problem is the Cartesian product of the domains of the variables, i.e., $\RRR^n\times\ZZZ^m$.
 
 \paragraph{}
-For many solution techniques, especially the ones that we are going to discuss, it is of eminent importance to restrict the domains of the variables as much as possible. Some constraints imply lower and upper bounds on the value of a variable, directly or indirectly. For instance, binary variables have an explicit lower and upper bound. If this is the case, we usually take this into account in the problem formulation explicitly, i.e., if a real variable $x_i$ has a lower bound $l_i$ and an upper bound $u_i$ , then we describe its domain as $\fbrk{l_i,u_i}$; if $y_j$ is an integral variable, with a lower bound $l_j$ and an upper bound $u_j$ , then we describe its domain as $\accl{l_j,\ldots,u_j}$.
+For many solution techniques, especially the ones that we are going to discuss, it is of eminent importance to restrict the domains of the variables as much as possible. Some constraints imply \concept[lower bound]{lower} and \concepts{upper bound} on the value of a variable, directly or indirectly. For instance, binary variables have an explicit lower and upper bound. If this is the case, we usually take this into account in the problem formulation explicitly, i.e., if a real variable $x_i$ has a lower bound $l_i$ and an upper bound $u_i$ , then we describe its domain as $\fbrk{l_i,u_i}$; if $y_j$ is an integral variable, with a lower bound $l_j$ and an upper bound $u_j$ , then we describe its domain as $\accl{l_j,\ldots,u_j}$.
 
 \section*{Exercises}
 \begin{exercise}
@@ -327,24 +328,30 @@ Consider the matching depicted in \figref{matching-red}. Is it maximal? Is it ma
 Consider the stable set depicted in \figref{stableset-red}. Is it maximal? Is it maximum?
 \end{exercise}
 \begin{exercise}
-Consider an undirected graph $G=\tupl{V,E}$. A edge cover $E'$ is a subset of the edges such that each node is incident to at least one edge in $E'$. Formulate the problem of finding a minimum cardinality edge cover as an integer linear program.
+Consider an undirected graph $G=\tupl{V,E}$. An \concept{edge cover} $E'$ is a subset of the edges such that each node is incident to at least one edge in $E'$. Formulate the problem of finding a minimum cardinality edge cover as an integer linear program.
 \end{exercise}
 \begin{exercise}
-Consider an undirected graph $G=\tupl{V,E}$. A node cover $V'$ is a subset of the nodes such that each edge is incident to at least one node in $V'$. Formulate the problem of finding a minimum cardinality node cover as an integer linear program.
+Consider an undirected graph $G=\tupl{V,E}$. A \concept{node cover} $V'$ is a subset of the nodes such that each edge is incident to at least one node in $V'$. Formulate the problem of finding a minimum cardinality node cover as an integer linear program.
 \end{exercise}
 \begin{exercise}
 \exclab{clique-partitioning}
-A \concept{clique partitioning} of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem. (Hint: use a variable for each edge).
+A \concept{clique partitioning} of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem.
+\begin{hint}
+Use a variable for each edge.
+\end{hint}
 \end{exercise}
 \begin{exercise}
 Consider the TSP.
 \begin{itemize}
- \item When the distance matrix C is known to be symmetric, can you simplify formulation \eqnnrefr{tsp-m}{tsp-c4} by ``merging'' \eqncsref{tsp-c1} and \eqnnref{tsp-c2}?
+ \item When the distance matrix $C$ is known to be symmetric, can you simplify formulation \eqnnrefr{tsp-m}{tsp-c4} by ``merging'' \eqncsref{tsp-c1} and \eqnnref{tsp-c2}?
  \item Which of the two formulations given in \sscref{tsp} is stronger?
 \end{itemize}
 \end{exercise}
 \begin{exercise}\exclab{rectanglestabbing}
-Given is a set of axis-aligned rectangles in the plane. Each of these rectangles needs to be stabbed, either by a horizontal line or by a vertical line. The problem is to find a set horizontal and vertical lines, stabbing each rectangle at least once, with minimum cardinality. We call this the rectangle stabbing problem. Formulate this problem as an integer linear programming problem. (Hint: first, give a formulation for the instance depicted in \figref{rectanglestabbing}).
+Given is a set of axis-aligned rectangles in the plane. Each of these rectangles needs to be stabbed, either by a horizontal line or by a vertical line. The problem is to find a set horizontal and vertical lines, stabbing each rectangle at least once, with minimum cardinality. We call this the \concept{rectangle stabbing} problem. Formulate this problem as an integer linear programming problem.
+\begin{hint}
+First, give a formulation for the instance depicted in \figref{rectanglestabbing}).
+\end{hint}
 \end{exercise}
 \begin{exercise}
 Given an instance of the rectangle stabbing problem as depicted in \figref{rectanglestabbing}, what fractional solution is the optimal linear programming relaxation (of the integer program that you just wrote down) for this instance?
@@ -1094,7 +1101,6 @@ The total length of this tour is $\funm{val}{x^H}=4+3+2+9+5+3=26$. On the other 
 
 \paragraph{}
 In order to compute lower bounds for combinatorial optimization problems, a simple but powerful principle can often be used: when a constraint of a minimization problem $P$ is relaxed (i.e., when the constraint is either removed or replaced by a weaker one), then the optimal value of the resulting ``relaxed'' problem provides a lower bound on the optimal value of $P$. This principle will be illustrated on the examples below.
-
 \section{Exercises}
 \begin{exercise}
 \exclab{ch3ex1}
