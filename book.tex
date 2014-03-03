@@ -38,9 +38,11 @@
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{exercise}{Exercise}[chapter]
-\newtheorem{definition}{Definition}[chapter]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
 \theoremstyle{remark}
 \newtheorem{example}{Example}
 \newtheorem{application}{Application}
@@ -970,91 +972,77 @@ This is sometimes called the ``worst-case complexity'' of $A$: indeed, the defin
 
 \section{Easy and hard problems}
 
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{cpx-lin}{Linear: $\fun{F}{n}=a\cdot n+b$.}
+\importtikzsubfigure{cpx-exp}{exponential: $\fun{F}{n}=a\cdot 2^n$.}
+\caption{Different types of complexity behavior.}
+\figlab{cpx}
+\end{figure}
 
-Figure 3.1: (a) Linear: F (n) = an + b;
-
-(b) Exponential: F (n) = a 2n
-
-Figure 3.1 represents different types of complexity behaviors for algorithms. The algorithm $A$ is polynomial if $\fun{F_A}{n}$ is a polynomial (or is bounded by a polynomial) in $n$ and exponential if $\fun{F_A}{n}$ grows faster than any polynomial process in $n$. Intuitively, we can probably accept the idea that a polynomial algorithm is more efficient than an exponential one.
+\figref{cpx} represents different types of complexity behaviors for algorithms. The algorithm $A$ is polynomial if $\fun{F_A}{n}$ is a polynomial (or is bounded by a polynomial) in $n$ and exponential if $\fun{F_A}{n}$ grows faster than any polynomial process in $n$. Intuitively, we can probably accept the idea that a polynomial algorithm is more efficient than an exponential one.
 
 \paragraph{}
-For instance, the obvious algorithms for the addition and or the multiplication of matrices are polynomial.
-So is the Gaussian elimination algorithm for the solution of systems of linear equations. On the other
-hand, the simplex method (or at least, some variants of it) for linear programming problems is known to
-be exponential2 while interior point methods are polynomial. This clearly illustrates the emphasis on the
-“worst-case” running time which was already underlined above: indeed, in an average sense, the simplex
-algorithm is an efficient method.
-The complete enumeration approach for shortest path, matching, stable set or travelling salesman problems is exponential, since all these problems have an exponential number of feasible solutions. But
-polynomial algorithms exist for the shortest path problem and the matching problem.
-For stable set, the travelling salesman problem, or for 0-1 integer programming problems, by contrast,
-only exponential algorithms are known. In fact, it is widely suspected that there does not exist any
-polynomial algorithm for these problems. This is a typical feature of so-called NP-hard problems which
-we define (very informally again) as follows.
-2 Klee
+For instance, the obvious algorithms for the addition and or the multiplication of matrices are polynomial. So is the Gaussian elimination algorithm for the solution of systems of linear equations. On the other hand, the simplex method (or at least, some variants of it) for linear programming problems is known to be exponential\footnote{Klee and Minty provide instances I of the LP problem such that $\fun{t_{\mbox{\tiny simplex}}}{I}\geq 2^{\fun{s}{I}}$.} while interior point methods are polynomial. This clearly illustrates the emphasis on the ``worst-case'' running time which was already underlined above: indeed, in an average sense, the simplex algorithm is an efficient method.
 
-and Minty provide instances I of the LP problem such that tsimplex (I) ≥ 2s(I)
+\paragraph{}
+The complete enumeration approach for shortest path, matching, stable set or traveling salesman problems is exponential, since all these problems have an exponential number of feasible solutions. But polynomial algorithms exist for the shortest path problem and the matching problem.
 
-41
+\paragraph{}
+For stable set, the traveling salesman problem, or for 0-1 integer programming problems, by contrast, only exponential algorithms are known. In fact, it is widely suspected that there does not exist any polynomial algorithm for these problems. This is a typical feature of so-called \concept{NP-hard} problems which we define (very informally again) as follows.
 
-Definition 3.3.1 A problem P is N P -hard if it is as least as difficult as the 0-1 linear programming
-problem, in the sense that any algorithm for P can be used to solve the 0-1 LP problem with a polynomial
-increase in running time.
+\begin{definition}[NP-hard]
+A problem $P$ is NP-hard if it is as least as difficult as the 0-1 linear programming problem, in the sense that any algorithm for $P$ can be used to solve the 0-1 LP problem with a polynomial increase in running time.
+\end{definition}
 
-The next claim has resisted all proof attempts (and there have been many) since the early 70's, but the
-vast majority of computer scientists and operations researchers believe that it holds true.
+\paragraph{}
+The next claim has resisted all proof attempts (and there have been many) since the early 70's, but the vast majority of computer scientists and operations researchers believe that it holds true.
 
-P = N P conjecture. If a problem is N P -hard, then it cannot be solved by a polynomial algorithm.
+\begin{conjecture}[$P\neq NP$]
+If a problem is N P -hard, then it cannot be solved by a polynomial algorithm.
+\end{conjecture}
 
-The P = N P conjecture, if true, expresses a deep and fundamental fact of complexity theory. Its
-implications are of enormous importance for the development of algorithms in operations research and
-related areas. Indeed, a large number of combinatorial optimization problems turn out to be N P -hard,
-and hence difficult to solve.
+\paragraph{}
+The $P\neq NP$ conjecture, if true, expresses a deep and fundamental fact of complexity theory. Its implications are of enormous importance for the development of algorithms in operations research and related areas. Indeed, a large number of combinatorial optimization problems turn out to be NP-hard, and hence difficult to solve.
 
-Proposition 3.3.1 The following problems are N P -hard:
-• travelling salesman;
-• stable set;
-• graph coloring;
-• knapsack;
-• assembly line balancing;
-• three-dimensional assignment;
-• facility location;
-• jobshop scheduling;
-• several hundred other CO problems.
+\begin{proposition}
+\prplab{nphard-problems}
+The following problems are NP-hard:
+\begin{enumerate}
+ \item \concept{traveling salesman};
+ \item \concept{stable set};
+ \item \concept{graph coloring};
+ \item \concept{knapsack};
+ \item \concept{assembly line balancing};
+ \item \concept{three-dimensional assignment};
+ \item \concept{facility location};
+ \item \concept{jobshop scheduling};
+ \item several hundred other combinatorial optimization problems.
+\end{enumerate}
+\end{proposition}
 
-It is quite remarkable that most of the problems in the above list can in fact be formulated as special
-cases of the 0-1 LP problem. This is obvious, in particular, for the knapsack problem, but it is also true
-42
+It is quite remarkable that most of the problems in the above list can in fact be formulated as special cases of the 0-1 LP problem. This is obvious, in particular, for the knapsack problem, but it is also true (though less obvious) for graph equipartitioning, or for the traveling salesman problem, or for graph coloring, etc. Thus, the actual meaning of \prpref{nphard-problems} is that all these NP-hard problems are somehow equivalent, in the sense that an efficient algorithm for any of them would immediately provide an efficient algorithm for all of them.
 
-(though less obvious) for graph equipartitioning, or for the travelling salesman problem, or for graph
-coloring, etc. Thus, the actual meaning of Proposition 3.3.1 is that all these NP-hard problems are
-somehow equivalent, in the sense that an efficient algorithm for any of them would immediately provide
-an efficient algorithm for all of them.
-From a practical point of view, however, some N P -hard problems turn out to be more difficult than
-others. For instance, the knapsack problem is quite easy to solve as compared with the general 0-1 LP
-problems. Nevertheless, N P -hard problems seem to be intrinsically tougher than linear systems, LP
-problems or shortest path problems.
-As a consequence, for the solution of such difficult (or “apparently” difficult) problems, heuristic algorithms are often used in practice.
-In addition, of course, not all combinatorial optimization problems are NP-hard. Minimal spanning trees,
-min-cost flow, linear optimization are prime examples where polynomial-time algorithms suffice to find
-an optimal solution.
+\paragraph{}
+From a practical point of view, however, some N P -hard problems turn out to be more difficult than others. For instance, the knapsack problem is quite easy to solve as compared with the general 0-1 LP problems. Nevertheless, NP-hard problems seem to be intrinsically tougher than linear systems, LP problems or shortest path problems. As a consequence, for the solution of such difficult (or ``apparently difficult'') problems, heuristic algorithms are often used in practice. In addition, of course, not all combinatorial optimization problems are NP-hard. \concept{Minimal spanning tree}, \concept{min-cost flow}, \concept{linear optimization} are prime examples where polynomial-time algorithms suffice to find an optimal solution.
 
-Definition 3.3.2 A heuristic for an optimization problem P is an algorithm which is based on intuitively
-appealing principles, but which does not guarantee to provide an optimal solution of P .
+\paragraph{}
+\begin{definition}[Heuristic]
+A \concept{heuristic} for an optimization problem $P$ is an algorithm which is based on intuitively appealing principles, but which does not guarantee to provide an optimal solution of $P$.
+\end{definition}
 
-So, when running on a particular CO problem, a heuristic could for instance
-– return an optimal solution of the problem, or
-– return a suboptimal solution, or
-– return an infeasible solution, or
-– fail to return any solution at all,
-– etc.
-This very broad definition of a heuristic may seem rather amazing at first sight. It raises again the
-question of the criteria which can be applied to analyze the performance of a particular heuristic. We
-mention here two criteria which will be of particular concern in this course.
-43
+So, when running on a particular combinatorial optimization problem, a heuristic could for instance:
+\begin{enumerate}
+ \item return an optimal solution of the problem; or
+ \item return a suboptimal solution; or
+ \item return an infeasible solution; or
+ \item fail to return any solution at all;
+ \item etc.
+\end{enumerate}
+This very broad definition of a heuristic may seem rather amazing at first sight. It raises again the question of the criteria which can be applied to analyze the performance of a particular heuristic. We mention here two criteria which will be of particular concern in this course.
 
-3.3.1
-
-Computational complexity
+\subsection{Computational complexity}
+\ssclab{ccpx}
 
 Generally speaking, we want heuristics to be fast , at least when compared with the highly exponential
 running times mentioned above. In fact, the main reason for giving up optimality is that we want the
@@ -1062,9 +1050,8 @@ heuristic to compute quickly a reasonably good solution. Thus, the basic trade-o
 reads
 SOLUTION QUALITY vs. RUNNING TIME
 
-3.3.2
-
-Quality of approximation
+\subsection{Quality of approximation}
+\ssclab{qoa}
 
 The solution returned by the heuristic should provide a good approximation of the optimal solution. To
 understand how to measure this, let xH be the solution computed by heuristic H for a particular instance
@@ -1199,35 +1186,38 @@ provides a lower bound on the optimal value of P . This principle will be illust
 below.
 45
 
-Exercises
-Exercise 1. Consider again the travelling salesman problem. For every vertex v ∈ V , select the shortest
-edge ev incident to v. Show that
-
-v∈V
-
-ℓ(ev ) is a lower bound on the length of the optimal tour.
-
-Compute this lower bound for the numerical example in Section 3.3.2. Can you improve this lower bound
-by taking into account the two shortest edges incident to every vertex v? What bound do you obtain for
-the numerical example?
-Exercise 2. Consider the following problem: you want to save n electronic files with respective sizes
-s1 , s2 , . . . , sn ≥ 0 on the smallest possible number of storing devices (say, floppy disks) with capacity C.
-This problem is known under the name of bin packing problem, and it is NP-hard. Can you compute a
-lower bound on its optimal value?
-Exercise 3. Show that the optimal value of the linear programming problem
-min cx
-
-subject to Ax ≤ b, 0 ≤ xj ≤ 1 (j = 1, 2, . . . , n)
-
-provides a lower bound on the optimal value of the 0-1 LP problem
-min cx subject to Ax ≤ b, xj ∈ {0, 1} (j = 1, 2, . . . , n).
-
-Exercise 4. Show that the lower bounds obtained in Exercises 1-3 can all be viewed as optimal solutions
-of a relaxation of the original problem.
-Exercise 5. Consider the Hamiltonian Cycle problem (HC). Given a graph G = (V, E), does G contain
-a Hamiltonian cycle, i.e., a cycle visiting each node exactly once? Show that the Traveling Salesman
-Problem is at least as hard as HC.
-Exercise 6. Consider Partition. Given are n integers s1 , s2 , . . . , sn , does there exist a set S ⊆ {1, 2, . . . , n}
+\section{Exercises}
+\begin{exercise}
+Consider again the traveling salesman problem. For every vertex $v\in V$, select the shortest edge $e_v$ incident to $v$. Show that $\isumdomain[v]{V}{\fun{l}{e_v}}$ is a lower bound on the length of the optimal tour.
+\paragraph{}
+Compute this lower bound for the numerical example in \sscref{ccpx}. Can you improve this lower bound by taking into account the two shortest edges incident to every vertex $v$? What bound do you obtain for the numerical example?
+\end{exercise}
+\begin{exercise}
+Consider the following problem: you want to save $n$ electronic files with respective sizes $s_1,s_2,\ldots,s_n\geq 0$ on the smallest possible number of storing devices (say, floppy disks) with capacity $C$.
+This problem is known under the name of \concept{bin packing problem}, and it is NP-hard. Can you compute a lower bound on its optimal value?
+\end{exercise}
+\begin{exercise}
+Show that the optimal value of the \concept{linear programming} problem
+\begin{eqnarray}
+\mbox{minimize}&\vec{c}\cdot\vec{x}\\
+\mbox{subject to}&A\cdot\vec{x}\leq\vec{b}\\
+&\forall j\in1,2,\ldots,n:0\leq x_j\leq 1
+\end{eqnarray}
+provides a lower bound on the optimal value of the \concept{0-1 linear programming} problem
+\begin{eqnarray}
+\mbox{minimize}&\vec{c}\cdot\vec{x}\\
+\mbox{subject to}&A\cdot\vec{x}\leq\vec{b}\\
+&\forall j\in1,2,\ldots,n:x_j\in\accl{0,1}
+\end{eqnarray}
+\end{exercise}
+\begin{exercise}
+Show that the lower bounds obtained in Exercises 1-3 can all be viewed as optimal solutions of a relaxation of the original problem.
+\end{exercise}
+\begin{exercise}
+Consider the \concept{Hamiltonian cycle} problem (HC). Given a graph $G=\tupl{V,E}$, does $G$ contain a Hamiltonian cycle, i.e., a cycle visiting each node exactly once? Show that the \concept{Traveling salesman} Problem is at least as hard as the Hamiltonian cycle problem.
+\end{exercise}
+\begin{exercise}
+Consider Partition. Given are n integers s1 , s2 , . . . , sn , does there exist a set S ⊆ {1, 2, . . . , n}
 such that
 
 i∈S
@@ -1238,15 +1228,12 @@ i∈S
 /
 
 si ? Show that Knapsack is at least as hard as Partition.
+\end{exercise}
+\begin{exercise}
+Show that \concept{min-cost flow} is at least as hard as \concept{shortest path}.
+\end{exercise}
 
-Exercise 7. Show that min-cost flow is at least as hard as shortest path.
-
-46
-
-Chapter 4
-
-Separation and lifting: towards a
-cutting-plane algorithm
+\chapter{Separation and lifting: towards a cutting-plane algorithm}
 In this chapter we show how valid inequalities can be used to develop cutting plane algorithms. A key
 issue in any cutting-plane algorithm is separation. We illustrate how the separation problem for specific classes of valid inequalities can be solved, by considering the cover inequalities for the knapsack
 problem (section 4.1), and the subtour elimination inequalities for the traveling salesman problem (section 4.2). Lifting is about strengthening valid inequalities; we apply this concept to the cover inequalities
