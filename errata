@@ -3,4 +3,4 @@ p 31: verrtices -> vertices
 p 35: x\in R^{|E|} naar x\in B^{|E|}?
 p 38: the claim that the *speed* doubles every two years is false. From a theoretical point of view, the speed can only increase with sqrt(2) each year if the number of transistors double.
 p 39: travelling -> traveling (same error through the entire chapter)
-p 43: The statement about NP-hard is wrong. This statement is correct for NP-complete problems. NP-hard problems however are a superset where this property doesn't hold.
+p 43: The statement about NP-hard is wrong. This statement is correct for NP-complete problems. NP-hard problems however are a superset where this property doesn't hold.'
