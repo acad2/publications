@@ -38,9 +38,11 @@
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
 \theoremstyle{definition}
 \newtheorem{exercise}{Exercise}[chapter]
-\newtheorem{definition}{Definition}[chapter]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
 \theoremstyle{remark}
 \newtheorem{example}{Example}
 \newtheorem{application}{Application}
@@ -908,6 +910,3360 @@ is a valid inequality for each $S\subseteq V$ with $3\leq\abs{S}\leq\abs{V}$ and
 Consider the integer programming formulation of the clique partitioning problem (see \excref{clique-partitioning} of \chpref{formulations}). \figref{cliquepartition-integer} shows an instance of that problem. Notice that solid lines correspond to edges with weight $+1$, whereas dotted lines correspond to edges with weight $-1$. What is the value of the linear programming relaxation of the integer programming formulation corresponding to this instance? Can you find a violated inequality using integer rounding?
 \importtikzfigure{cliquepartition-integer}{An instance of clique partitioning.}
 \end{exercise}
+
+\chapter{A glimpse at computational complexity (Yves Crama)}
+\chplab{complexity}
+In order to fully appreciate the field of combinatorial optimization, it is necessary to understand, at least at an intuitive level, some of the basic concepts of computational complexity. This part of theoretical computer science deals with fundamental, but extremely deep questions like: ``what tasks can be carried out by a computer?'', or ``how much time does a given computational task require?''. In this chapter, we attempt to introduce some elements of computational complexity, in a very informal and hand-waving way.
+
+\section{Computational performance criteria}
+What do we expect from an algorithm for a combinatorial optimization problem? Well, an obvious answer would be that this algorithm should always return an optimal solution of the problem. Is it the only game in town? Certainly not. We might also want it to be fast or efficient. Combining these two expectations is a crucial thing. Of course, the time required to solve a problem increases with the size of this problem,  where the size can be measured by the amount of data needed to describe a particular instance of theproblem.
+
+\begin{example}
+Let us take a look at an example. Suppose that we want to solve a 0-1 linear programming problem involving $n$ variables $x_j\in\accl{0,1}$, $j=1,\ldots,n$. We can certainly find an optimal solution by listing all possible vectors $\tupl{x_1,x_2,\ldots,x_n}$, checking for each of them whether it is feasible or not, computing the value of the objective function for each such feasible solution, and, finally, retaining the best solution found in the process. If we decide to go that way, then we must consider $2^n$ vectors. For $n=50$, that means $2^{50}\approx 10^{15}=1'000'000'000'000'000$ vectors! If our algorithm is able to enumerate one million ($1'000'000$) solutions per second, the whole procedure takes $10^9$ seconds, or about $30$ years. And for $n=60$, the enumeration of the $2^{60}$ solutions would take about $30'000$ years !!
+
+\paragraph{}
+Notice that adding $10$ variables to the problem increases the computing time by a multiplicative factor of $2^{10}\approx1'000$. So, with $n=80$ variables (a rather modest problem size), the same algorithm would run for $30$ billion years, which is about twice the age of the universe. Not really efficient, by any practical standards...
+\end{example}
+
+\paragraph{}
+Let us look at this issue from another vantage point. Consider the well-known Moore's law: Gordon Moore, co-founder of the chips giant Intel, prophetized in 1965 that the number of transistors per square inch on integrated circuits would double every 18 months per year starting from 1962, the year the integrated circuit was invented (see the original paper for more details). In other words, your PC processor works twice faster every year and a half, meaning that its speed is multiplied by $100$ in $10$ years\footnote{This rate has slowed down since Moore made his claim. It is now generally admitted that the number of transistors doubles every two years.}. So, if you were able to enumerate $2^n$ solutions in one hour in 1993, you can enumerate $100\cdot2^n<2{n+7}$ solutions in 2003. This great increase in computing speed thus allows you to ``gain'' only $7$ variables in 10 years!! Conclusion: exhaustive enumeration is not feasible in practice for large-scale (or even medium-scale) combinatorial optimization problems. Furthermore, we should not count on technical progress alone to improve the situation in any significant way. Only algorithmic, or mathematical, advances can help in this respect.
+
+\paragraph{}
+So, how much progress can we expect on the theoretical front? Before we provide a tentative answer to this question, let us try to formulate more precisely some of the notions that have just been sketched.
+
+\section{Problems and problem instances}
+Formally speaking, a (computational) \concept{problem} is a generic question whose formulation includes a number of undetermined parameters. Here are some simple examples.
+
+\begin{description}
+ \item[Matrix addition problem] The parameters are $n$, $A$ and $B$ where $n\in\NNN$, and $A$ and $B$ are two $n\times n$ matrices. Question: what is the value of $A+B$?
+ \item[Shortest path problem] The parameters are a graph $G=\tupl{V,E}$, two vertices $s,t\in V$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a shortest path from $s$ to $t$.
+ \item[Traveling salesman problem] The parameters are a graph $G=\tupl{V,E}$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a shortest traveling salesman tour in $G$.
+\end{description}
+
+\paragraph{}
+An \concept{instance} of a problem $P$ arises when the values of all undetermined parameters of $P$ are specified (or, more intuitively, by specifying the input file that contains the numerical data). So, a problem can also be viewed as a collection of instances. Notice that an instance admits an answer, but a problem does not (try to give the answer of the matrix addition problem above!). We will use the symbol $I$ for an instance.
+
+\paragraph{}
+An \concept{algorithm} for a problem $P$ is a step-by-step procedure that describes how to compute a solution for every instance $I$ of $P$. To compare the efficiency of different algorithms for a same problem $P$ , we can determine the time required by each algorithm to solve an instance of $P$. Notice that this obviously depends on the particular instance which is to be solved, but also on the speed of the computer, on the skills of the programmer, etc. Therefore, we need again to define this notion in more formal way.
+
+\paragraph{}
+The \concept{size of an instance} $I$, denoted by $\fun{s}{I}$, is the number of bits needed to represent $I$. It is determined both by the number of parameters and by their magnitude. (Intuitively, this can be viewed as the size of the input file of a computer program which solves $I$.)
+
+\paragraph{}
+The \concept{running time} of an algorithm $A$ on an instance $I$, denoted $\fun{t_A}{I}$, is the number of elementary operations (additions, multiplications, comparisons,...) performed by $A$ when it runs on the instance $I$. Determining the running time of an algorithm for each particular instance $I$ is not an easy task. However, it is often easier to estimate the running time as a function of the size of the instance.
+
+\paragraph{}
+Consider again the examples defined above.
+\begin{description}
+ \item[Matrix addition problem] Instance size: $\approx n^2$.
+ \begin{enumerate}
+  \item Naive addition: $\approx n^2$ (additions). We denote this by $\bigoh{n^2}$, meaning that the running time grows at most like $n^2$.
+ \end{enumerate}
+ \item[Shortest path problem] Instance size: $\bigoh{n^2}$ where $n=\abs{V}$.
+ \begin{enumerate}
+  \item Enumerate all possible paths between $s$ and $t$. There could be exponentially many paths, leading to $\bigoh{2^n}$.
+  \item \concept{Dijkstra's algorithm}: $\bigoh{n^2}$ operations.
+ \end{enumerate}
+ \item[Traveling salesman problem] Instance size: $\bigoh{n^2}$ where $n=\abs{V}$.
+ \begin{enumerate}
+  \item Enumerate all possible tours: $\bigoh{n!}$.
+ \end{enumerate}
+\end{description}
+
+\paragraph{}
+Notice that, in all these examples, we chose to ignore the size of a number, that is, we did not take into account the number of bits needed to store some number. In view of these examples, we are led to the following concept: the complexity of an algorithm $A$ for a problem $P$ is the function 
+\begin{equation}
+\fun{f_A}{n}=\max\condset{\fun{t_A}{I}}{\mbox{$I$ is an instance of $P$ with size $\fun{s}{I}=n$}}.
+\end{equation}
+This is sometimes called the ``worst-case complexity'' of $A$: indeed, the definition focuses on the worst-case running time of $A$ on an instance of size $n$, rather than on its average running.
+
+\section{Easy and hard problems}
+
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{cpx-lin}{Linear: $\fun{F}{n}=a\cdot n+b$.}
+\importtikzsubfigure{cpx-exp}{exponential: $\fun{F}{n}=a\cdot 2^n$.}
+\caption{Different types of complexity behavior.}
+\figlab{cpx}
+\end{figure}
+
+\figref{cpx} represents different types of complexity behaviors for algorithms. The algorithm $A$ is polynomial if $\fun{F_A}{n}$ is a polynomial (or is bounded by a polynomial) in $n$ and exponential if $\fun{F_A}{n}$ grows faster than any polynomial process in $n$. Intuitively, we can probably accept the idea that a polynomial algorithm is more efficient than an exponential one.
+
+\paragraph{}
+For instance, the obvious algorithms for the addition and or the multiplication of matrices are polynomial. So is the Gaussian elimination algorithm for the solution of systems of linear equations. On the other hand, the simplex method (or at least, some variants of it) for linear programming problems is known to be exponential\footnote{Klee and Minty provide instances I of the LP problem such that $\fun{t_{\mbox{\tiny simplex}}}{I}\geq 2^{\fun{s}{I}}$.} while interior point methods are polynomial. This clearly illustrates the emphasis on the ``worst-case'' running time which was already underlined above: indeed, in an average sense, the simplex algorithm is an efficient method.
+
+\paragraph{}
+The complete enumeration approach for shortest path, matching, stable set or traveling salesman problems is exponential, since all these problems have an exponential number of feasible solutions. But polynomial algorithms exist for the shortest path problem and the matching problem.
+
+\paragraph{}
+For stable set, the traveling salesman problem, or for 0-1 integer programming problems, by contrast, only exponential algorithms are known. In fact, it is widely suspected that there does not exist any polynomial algorithm for these problems. This is a typical feature of so-called \concept{NP-hard} problems which we define (very informally again) as follows.
+
+\begin{definition}[NP-hard]
+A problem $P$ is NP-hard if it is as least as difficult as the 0-1 linear programming problem, in the sense that any algorithm for $P$ can be used to solve the 0-1 LP problem with a polynomial increase in running time.
+\end{definition}
+
+\paragraph{}
+The next claim has resisted all proof attempts (and there have been many) since the early 70's, but the vast majority of computer scientists and operations researchers believe that it holds true.
+
+\begin{conjecture}[$P\neq NP$]
+If a problem is N P -hard, then it cannot be solved by a polynomial algorithm.
+\end{conjecture}
+
+\paragraph{}
+The $P\neq NP$ conjecture, if true, expresses a deep and fundamental fact of complexity theory. Its implications are of enormous importance for the development of algorithms in operations research and related areas. Indeed, a large number of combinatorial optimization problems turn out to be NP-hard, and hence difficult to solve.
+
+\begin{proposition}
+\prplab{nphard-problems}
+The following problems are NP-hard:
+\begin{enumerate}
+ \item \concept{traveling salesman};
+ \item \concept{stable set};
+ \item \concept{graph coloring};
+ \item \concept{knapsack};
+ \item \concept{assembly line balancing};
+ \item \concept{three-dimensional assignment};
+ \item \concept{facility location};
+ \item \concept{jobshop scheduling};
+ \item several hundred other combinatorial optimization problems.
+\end{enumerate}
+\end{proposition}
+
+It is quite remarkable that most of the problems in the above list can in fact be formulated as special cases of the 0-1 LP problem. This is obvious, in particular, for the knapsack problem, but it is also true (though less obvious) for graph equipartitioning, or for the traveling salesman problem, or for graph coloring, etc. Thus, the actual meaning of \prpref{nphard-problems} is that all these NP-hard problems are somehow equivalent, in the sense that an efficient algorithm for any of them would immediately provide an efficient algorithm for all of them.
+
+\paragraph{}
+From a practical point of view, however, some N P -hard problems turn out to be more difficult than others. For instance, the knapsack problem is quite easy to solve as compared with the general 0-1 LP problems. Nevertheless, NP-hard problems seem to be intrinsically tougher than linear systems, LP problems or shortest path problems. As a consequence, for the solution of such difficult (or ``apparently difficult'') problems, heuristic algorithms are often used in practice. In addition, of course, not all combinatorial optimization problems are NP-hard. \concept{Minimal spanning tree}, \concept{min-cost flow}, \concept{linear optimization} are prime examples where polynomial-time algorithms suffice to find an optimal solution.
+
+\paragraph{}
+\begin{definition}[Heuristic]
+A \concept{heuristic} for an optimization problem $P$ is an algorithm which is based on intuitively appealing principles, but which does not guarantee to provide an optimal solution of $P$.
+\end{definition}
+
+So, when running on a particular combinatorial optimization problem, a heuristic could for instance:
+\begin{enumerate}
+ \item return an optimal solution of the problem; or
+ \item return a suboptimal solution; or
+ \item return an infeasible solution; or
+ \item fail to return any solution at all;
+ \item etc.
+\end{enumerate}
+This very broad definition of a heuristic may seem rather amazing at first sight. It raises again the question of the criteria which can be applied to analyze the performance of a particular heuristic. We mention here two criteria which will be of particular concern in this course.
+
+\subsection{Computational complexity}
+\ssclab{ccpx}
+Generally speaking, we want heuristics to be fast, at least when compared with the highly exponential running times mentioned above. In fact, the main reason for giving up optimality is that we want the heuristic to compute quickly a reasonably good solution. Thus, the basic trade-off that we want to achieve reads
+\begin{quote}
+Solution quality versus running time
+\end{quote}
+
+\subsection{Quality of approximation}
+\ssclab{qoa}
+The solution returned by the heuristic should provide a good approximation of the optimal solution. To understand how to measure this, let $x^H$ be the solution computed by heuristic $H$ for a particular instance and let $x^{\star}$ be an optimal solution for this instance. Also, $\funm{val}{x^H}$ denotes the value of the solution found by the heuristic, and $\funm{val}{x^{\star}}$ denotes the optimum solution value. Then
+\begin{equation}
+\fun{E}{x^H}=\displaystyle\frac{\funm{val}{x^H}-\funm{val}{x^{\star}}}{\funm{val}{x^{\star}}}\geq 0
+\end{equation}
+provides a relative error measure: the closer it is to $0$, the better the solution $x^H$. Notice that we assume that we are dealing with a minimization problem.
+
+\paragraph{}
+In general, however, $\funm{val}{x^{\star}}$ is unknown. So, suppose now that we know how to compute a \concept{lower bound} on $\funm{val}{x^{\star}}$, i.e. a number $v^-$ such that $v^-\leq\funm{val}{x^{\star}}$ (this is often much easier to compute than $\funm{val}{x^{\star}}$). Define
+\begin{equation}
+\fun{E^-}{x^H}=\displaystyle\frac{\funm{val}{x^H}-v^-}{v^-}
+\end{equation}
+Then we have
+\begin{equation}
+\fun{E}{x^H}=\displaystyle\frac{\funm{val}{x^H}}{\funm{val}{x^{\star}}}-1\leq\displaystyle\frac{\funm{val}{x^H}}{v^-}-1=\fun{E^-}{x^H}
+\end{equation}
+which means that $\fun{E^-}{x^H}$ overestimates the relative error $\fun{E}{x^H}$. So, if $\fun{E^-}{x^H}$ is small, we can certainly be happy with the quality of the solution provided by $H$.
+\begin{note}
+Notice also that if the lower bound $v^-$ is reasonably close to $\funm{val}{x^{\star}}$, then $\fun{E^-}{x^H}$ actually provides a good estimate of the error.
+\end{note}
+
+\paragraph{}
+\begin{example}
+For example, consider the traveling salesman instance described by the (symmetric) distance matrix $L$, where $l_{i,j}$ represents the distance from $i$ to $j$, with $i,j\in\accl{1,2,\ldots,6}$:
+\begin{equation}
+L=\mtrx{cccccc}{
+0&4&7&2&6&3\\
+4&0&3&5&5&7\\
+7&3&0&2&6&5\\
+2&5&2&0&9&8\\
+6&5&6&9&0&5\\
+3&7&5&8&5&0
+}
+\end{equation}
+
+
+Assume now that a heuristic returns the tour $x^H=\tupl{1,2,3,4,5,6}$ (displayed in \figref{heuristic-tsp-ex}).
+
+\importtikzfigure{heuristic-tsp-ex}{A feasible tour.}
+
+The total length of this tour is $\funm{val}{x^H}=4+3+2+9+5+3=26$. On the other hand, an obvious lower bound on the optimal tour length is given by the sum of the $6$ shortest distances in $6$. Thus $v^−=2+2+3+3+4+5=19$, and, consequently, $\fun{E^-}{x^H}=\tfrac{26-19}{19}\approx 0.37$. We can therefore conclude that $x^H$ is at most $37\%$ longer than the optimal tour.
+\end{example}
+
+\paragraph{}
+In order to compute lower bounds for combinatorial optimization problems, a simple but powerful principle can often be used: when a constraint of a minimization problem $P$ is relaxed (i.e., when the constraint is either removed or replaced by a weaker one), then the optimal value of the resulting ``relaxed'' problem provides a lower bound on the optimal value of $P$. This principle will be illustrated on the examples below.
+
+\section{Exercises}
+\begin{exercise}
+\exclab{ch3ex1}
+Consider again the traveling salesman problem. For every vertex $v\in V$, select the shortest edge $e_v$ incident to $v$. Show that $\isumdomain[v]{V}{\fun{l}{e_v}}$ is a lower bound on the length of the optimal tour.
+\paragraph{}
+Compute this lower bound for the numerical example in \sscref{ccpx}. Can you improve this lower bound by taking into account the two shortest edges incident to every vertex $v$? What bound do you obtain for the numerical example?
+\end{exercise}
+\begin{exercise}
+\exclab{ch3ex2}
+Consider the following problem: you want to save $n$ electronic files with respective sizes $s_1,s_2,\ldots,s_n\geq 0$ on the smallest possible number of storing devices (say, floppy disks) with capacity $C$.
+This problem is known under the name of \concept{bin packing problem}, and it is NP-hard. Can you compute a lower bound on its optimal value?
+\end{exercise}
+\begin{exercise}
+\exclab{ch3ex3}
+Show that the optimal value of the \concept{linear programming} problem
+\begin{eqnarray}
+\mbox{minimize}&\vec{c}\cdot\vec{x}\\
+\mbox{subject to}&A\cdot\vec{x}\leq\vec{b}\\
+&\forall j\in1,2,\ldots,n:0\leq x_j\leq 1
+\end{eqnarray}
+provides a lower bound on the optimal value of the \concept{0-1 linear programming} problem
+\begin{eqnarray}
+\mbox{minimize}&\vec{c}\cdot\vec{x}\\
+\mbox{subject to}&A\cdot\vec{x}\leq\vec{b}\\
+&\forall j\in1,2,\ldots,n:x_j\in\accl{0,1}
+\end{eqnarray}
+\end{exercise}
+\begin{exercise}
+Show that the lower bounds obtained in \excrefr{ch3ex1}{ch3ex2} can all be viewed as optimal solutions of a relaxation of the original problem.
+\end{exercise}
+\begin{exercise}
+Consider the \concept{Hamiltonian cycle} problem (HC). Given a graph $G=\tupl{V,E}$, does $G$ contain a Hamiltonian cycle, i.e., a cycle visiting each node exactly once? Show that the \concept{Traveling salesman} Problem is at least as hard as the Hamiltonian cycle problem.
+\end{exercise}
+\begin{exercise}
+Consider the \concept{Partition} problem. Given are $n$ integers $s_1,s_2,\ldots,s_n$, does there exist a set $S\subseteq{1,2,\ldots,n}$ such that $\isumdomain[i]{S}{s_i}=\isumndomain[i]{S}{s_i}$? Show that the \concept{Knapsack} problem is at least as hard as Partition.
+\end{exercise}
+\begin{exercise}
+Show that \concept{min-cost flow} is at least as hard as \concept{shortest path}.
+\end{exercise}
+
+\chapter{Separation and lifting: towards a cutting-plane algorithm}
+In this chapter we show how valid inequalities can be used to develop cutting plane algorithms. A key
+issue in any cutting-plane algorithm is separation. We illustrate how the separation problem for specific classes of valid inequalities can be solved, by considering the cover inequalities for the knapsack
+problem (section 4.1), and the subtour elimination inequalities for the traveling salesman problem (section 4.2). Lifting is about strengthening valid inequalities; we apply this concept to the cover inequalities
+in section 4.3.
+
+4.1
+
+Separation for the knapsack problem
+
+Although one could argue that the knapsack problem is a very specific problem featuring only a single
+constraint, one should realize that any integer programming formulation can be seen as an optimization
+problem with many knapsack constraints. Thus, valid inequalities that we can derive from a knapsack
+constraint are important since such an inequality can be relevant for any integer program.
+We restate the knapsack problem (see (1.10)-(1.12) in Chapter 1).
+47
+
+n
+
+(Knapsack)
+
+cj xj
+
+(4.1)
+
+aj xj ≤ b
+
+(4.2)
+
+max
+j=1
+n
+
+s.t.
+j=1
+
+xj ∈ {0, 1}
+
+for all j = 1, 2, . . . , n.
+
+(4.3)
+
+We assume, without loss of generality, that the parameters a1 , a2 , . . . , an , and b satisfy the following
+conditions:
+
+• selecting any single item is a feasible solution, or: aj ≤ b for each j, and
+• selecting all n items is not a feasible solution, or:
+
+n
+j=1
+
+aj > b.
+
+Notice that these conditions can be checked easily. In the sequel we will also assume (unless explicitly
+stated otherwise) that the items in the instance of the knapsack problem are sorted according to decreasing
+weights aj , that is, a1 ≥ a2 ≥ . . . ≥ an . In the following section, we will derive a set of valid inequalities
+for the knapsack problem and we will use them to sketch a solution approach for the knapsack problem.
+
+4.1.1
+
+Separation of cover inequalities
+
+Example Consider the following linear programming relaxation of an instance of the knapsack problem.
+max
+
+206x1
+
++
+
+180x2
+
++
+
+176x3
+
++ 170x4
+
++ 146x5
+
++
+
+110x6
+
+83x1
+
++
+
+75x2
+
++
+
+70x3
+
++
+
++
+
++
+
+45x6
+
+0≤
+
+xj
+
+68x4
+
+59x5
+
+≤
+
+170
+
+≤ 1 j = 1, 2, 3, 4, 5, 6.
+
+32
+A solution of the linear programming relaxation of this instance is x∗ = (0, 0, 1, 1, 59
+, 0). We can conclude
+
+from this LP-solution that items 3, 4, and 5 cannot simultaneously be part of a knapsack-solution. Hence,
+x3 = x4 = x5 = 1 is impossible. Therefore, the following constraint is a valid inequality:
+x3 + x4 + x5 ≤ 2.
+In fact, this constraint is a violated valid inequality, that is, the given solution x∗ violates this inequality.
+48
+
+In general, for a subset C ⊆ {1, . . . , n} of the items with the property that
+
+j∈C
+
+aj > b, we have the
+
+following valid inequality:
+xj ≤ |C| − 1.
+j∈C
+
+Such an inequality is called a cover-inequality. The set C is called a cover. More precisely, any set of
+items whose total weight exceeds b is a cover with respect to this constraint. Thus, as an aside, earlier in
+this section, we in fact assumed that {1, 2, . . . , n} is a cover. The inequality above is clearly valid: any
+feasible solution to the knapsack problem cannot select all items from C when C is a cover. A minimal
+cover is a cover with the property that the removal of any element makes the total weight of the remaining
+elements drop to b or less. In other words: C is a minimal cover if
+
+j∈C
+
+aj > b
+
+and
+
+for all i ∈ C :
+
+j∈C{i}
+
+aj ≤ b.
+
+The problem we now face is to find, given some point x∗ ∈ IRn , a cover inequality for the knapsack
+problem that is not satisfied by the given point. More formally, the separation problem for the cover
+inequalities is:
+Given x∗ ∈ IRn , find a cover C such that
+
+j∈C
+
+x∗j > |C| − 1, or establish that no such cover exists.
+
+Such an inequality is called a violated cover inequality. In general, the separation problem is hard for hard
+problems. However, if we restrict the search of a violated inequality to a subset of the valid inequalities,
+the separation problem restricted to this subset of inequalities, may be easier to solve. We will restrict
+ourselves here to the separation of the cover inequalities for the knapsack problem.
+The separation problem for the cover inequalities is now restated as follows. Let the point x∗ ∈ IRn be
+given. Is there a cover-inequality that is violated by x∗ ? In mathematical terms this problem can be
+described as follows.
+Given x∗ : Is there a C ⊆ {1, 2, . . . , n} with
+x∗j
+
+>
+
+|C| − 1 and
+
+(4.4)
+
+aj
+
+>
+
+b?
+
+(4.5)
+
+j∈C
+
+j∈C
+
+To solve this problem we introduce binary variables zj (1 ≤ j ≤ n). Define, for j = 1, 2, . . . , n:
+49
+
+zj
+
+
+ 1
+=
+ 0
+
+if j is chosen in the cover C;
+otherwise.
+
+These variables will determine which elements are present in the cover. The solution z to be found should
+satisfy the following conditions.
+
+
+
+n
+j=1
+
+x∗j zj > 
+
+n
+j=1
+
+
+
+zj  − 1
+
+(4.6)
+
+Clearly, this inequality follows from reformulating (4.4) by taking the newly defined z-variables into
+account (notice that, by definition, |C| =
+
+n
+j=1 zj ).
+
+Let us rewrite inequality (4.6) by bringing all terms
+
+with z-variables to the left hand side:
+n
+
+(1 − x∗j )zj < 1.
+j=1
+
+Consider now inequality (4.5). When we plug in the z-variables into this inequality, the following inequality results:
+
+n
+
+aj zj ≥ b + 1.
+j=1
+
+Summarizing all conditions, we can formulate the separation problem for the cover inequalities as the
+following minimization problem.
+
+n
+
+min η =
+j=1
+
+(1 − x∗j )zj
+
+(4.7)
+
+n
+
+aj z j ≥ b + 1
+
+s.t.
+
+(4.8)
+
+j=1
+
+zj ∈ {0, 1}
+
+for all j = 1, 2, . . . , n.
+
+(4.9)
+
+Suppose that we are able to solve (4.7)-(4.9). Then, if η < 1, a cover inequality violated by x∗ has been
+found. If, on the other hand, η ≥ 1, then we haven't found a cover inequality violated by x∗ (and for good
+reason: none exists!). Although the separation problem for cover inequalities, i.e., solving (4.7)-(4.9), is
+50
+
+NP-hard in general, the problem can become fairly easy for a given instance. This is due to the fact
+that there are usually only few fractional values in the solution x∗ . Indeed, items whose corresponding
+x∗ -variables equal 1 can always be added to the cover; this follows from observing that objective function
+(4.7) will not increase when selecting such an item in the cover. Also, items whose corresponding x∗ variables equal 0 can be safely excluded from the cover, since selecting such an item will result in η ≥ 1.
+In other words: if x∗j = 1 then zj = 1, and if x∗j = 0 then zj = 0. We illustrate this with the next
+example.
+Example
+79x1 + 53x2 + 53x3 + 47x4 + 45x5 ≤ 178
+A fractional solution for this example: x∗ = (1, 1, 46
+53 , 0, 0). To find a violated cover we have to solve the
+problem (verify this!):
+
+min
+s.t.
+
+η=
+
+7
+53 z3
+
++ z4 + z5
+
+(4.10)
+
+79z1 + 53z2 + 53z3 + 47z4 + 45z5 ≥ 179
+zj ∈ {0, 1}
+
+(4.11)
+for all j ∈ {1, . . . , 5}
+
+(4.12)
+
+As argued above, if x∗j = 1, then zj = 1 as well (since the the coefficient of zj in (4.10) equals zero). And,
+since we are only interested in finding violated cover inequalities, x∗j = 0 implies zj = 0 (since zj = 1
+gives η ≥ 1). Now, observe that the solution (z1 , z2 , z3 , z4 , z5 ) = (1, 1, 1, 0, 0) is feasible in (4.11)-(4.12),
+and has objective function value less than 1. Thus, we have identified a violated cover inequality:
+x1 + x2 + x3 ≤ 2.
+
+In the following iterations of a cutting-plane algorithm, the number of fractional variables may increase
+since the number of constraints increases. Therefore, identifying violated inequalities may become more
+complicated in forthcoming steps.
+Consider the following example.
+51
+
+max
+
+77x1 + 6x2 + 3x3 + 6x4 + 33x5 + 13x6 + 110x7 + 21x8 + 47x9
+
+s.t. 774x1 + 76x2 + 22x3 + 42x4 + 21x5 + 760x6 + 818x7 + 62x8 + 785x9 ≤ 1500
+67x1 + 27x2 + 794x3 + 53x4 + 234x5 + 32x6 + 797x7 + 97x8 + 435x9 ≤ 1500
+0 ≤ xi ≤ 1 for all i.
+
+In the following table we see how the linear programming solution and its value develop after adding
+violated cover inequalities. In the first table we give the solutions that are generated in the iterations.
+In the second table the violated cover inequalities are given. Notice that we can derive cover inequalities
+from both constraints.
+
+Iteration
+
+x1
+
+x2
+
+1
+
+.71
+
+2
+
+x3
+
+x4
+
+x5
+
+.35
+
+1
+
+1
+.63
+
+3
+4
+
+1
+
+.35
+
+1
+
+Iteration
+
+x6
+
+x7
+
+x8
+
+x9
+
+zLP
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+.61
+
+204.8
+
+1
+
+1
+
+.37
+
+1
+
+.63
+
+177.1
+
+1
+
+1
+
+1
+
+1
+
+225.7
+
+176.0
+
+Cover wrt constraint 1
+
+Cover wrt constraint 2
+
+1
+
+x1 + x7 ≤ 1
+
+x3 + x7 ≤ 1
+
+2
+
+x7 + x9 ≤ 1
+
+3
+
+x1 + x7 + x9 ≤ 1
+
+Notice that the inequality x1 + x7 + x9 ≤ 1 is not a cover inequality. Indeed, although {1, 7, 9} is a
+cover with respect to the first inequality, the right-hand side does not equal |C| − 1. This inequality is a
+so-called extended cover inequality. The extended cover inequalities are the subject of section 4.3.
+From the first table one can see that the number of fractional variables is small compared to the total
+number of variables. Thus, the separation problem for the cover inequalities is fairly easy here. In
+general, the number of fractional variables is bounded by the number of constraints of the problem at
+hand. Although this number may increase, the number of fractional variables tends to remain limited.
+This observation is true for many problems.
+52
+
+4.2
+
+Separation for the traveling salesman problem
+
+Consider the following formulation of the symmetric traveling salesman problem, which uses a binary
+variable xe indicating whether edge e is selected or not.
+
+e ce xe
+
+minimize
+subject to
+
+(4.13)
+
+e∈δ(v)
+
+xe = 2
+
+e∈δ(S)
+
+xe ≥ 2
+
+xe ∈ {0, 1}
+
+for all v ∈ V
+for all S ⊂ V, |S| ≥ 2
+for all e.
+
+(4.14)
+(4.15)
+(4.16)
+
+Obviously, constraints (4.14) ensure that each node must be incident to two edges; these constraints are
+referred to as degree constraints. Constraints (4.15) state that, for each nodeset S ⊂ V , there at least two
+edges with one endpoint in S and one endpoint not in S. These constraints are the subtour elimination
+constraints.
+When we replace the integrality constraints (4.16) by 0 ≤ xe ≤ 1, we have created a linear program that
+we refer to as the subtour LP. Clearly, solving this subtour LP gives a lower bound to the optimal value
+of the TSP instance. Notice however, that this subtour LP contains exponentially many constraints. We
+will show how to solve the separation problem for the subtour elimination constraints efficiently, i.e., in
+polynomial time. This implies that we can optimize over the subtour LP in polynomial time (despite the
+exponential number of constraints).
+So, let us assume we are given a vector x∗e , found, for instance, by optimizing (4.13) over the constraints
+(4.14) and 0 ≤ xe ≤ 1. The question now is: does there exist a violated subtour elimination constraint?
+In other words, is there a set S ⊂ V such that the left-hand side of (4.15) is less than 2? To answer this
+question we build a network G consisting of nodes, edges, and a capacity for each edge as follows. There
+is a node in G for each city in the TSP-instance, and there is an edge in the network for each e with
+x∗e > 0. The capacity of this edge equals x∗e .
+Proposition 4.2.1 The value of a minimum cut in G is less than 2 if and only if there exists a violated
+subtour elimination constraint.
+53
+
+We leave it to the reader to verify this proposition. Concluding, by solving a minimum cut problem we
+solve the separation problem for the subtour elimination constraints.
+
+4.3
+
+Lifting: extended cover inequalities
+
+Consider the example in Section 4.1. From the first constraint we could have obtained the valid inequality
+x1 + x6 + x7 + x9 ≤ 1
+. Indeed, since the coefficients of x1 , x6 , x7 and x9 are each larger than 750, no two of these variables
+can both equal 1. Thus, this inequality is valid, and in fact, it is stronger that the corresponding cover
+inequalities. Addition of this particular inequality to the linear programming relaxation would have
+given the integral solution immediately. Unfortunately, this inequality is not part of the class of cover
+inequalities. But we can derive it from a cover inequality with a technique called lifting.
+Example Let S be the set of feasible solutions of the problem in the previous section. Consider the inequality x1 +x7 ≤ 1. This inequality is valid in the set of solutions restricted to the items {1, 2, 3, 4, 5, 7, 8},
+i.e., it is valid for the set S ∩ {x ∈ IB 9 |x6 = x9 = 0}. We will now derive an inequality
+x1 + αx6 + x7 ≤ 1
+where α is chosen such that this inequality is valid for S ∩ {x ∈ IB 9 |x9 = 0}. In order to do so, we have
+to evaluate two situations.
+x6 = 0:
+
+in this case the inequality remains valid trivially.
+
+x6 = 1:
+
+in this case each of the items 1 and 7 can not be taken into the knapsack because constraint 1
+would be violated. Therefore, taking α = 1 maintains validity of the constraint.
+
+This process can be repeated for item 9. It will lead to the inequality
+x1 + x6 + x7 + x9 ≤ 1.
+Notice that the resulting inequality is not a cover inequality (there are four variables on the lefthand side,
+whereas the righthand side does not equal 3). This inequality belongs to the class of so-called extended
+cover inequalities.
+54
+
+Recall that we have assumed that the items are indexed according to decreasing weight. Consider a
+minimal cover C = {j1 , . . . , jk }. Then the corresponding extended cover E(C) is defined as
+E(C) = {1, . . . , j1 − 1} ∪ C.
+Thus, each item that is heavier than the heaviest item in the cover C is added in order to construct the
+set of items E(C). We claim:
+Theorem 4.1
+
+j∈E(C)
+
+xj ≤ |C| − 1 is a valid inequality for the knapsack problem.
+
+The derivation of an extended cover inequality from a cover inequality can be seen as a special case
+of a process called lifting. Given some valid inequality (say, a cover inequality) lifting refers to raising
+coefficients of variables in this inequality in order to obtain a stronger, yet valid, new inequality (the
+extended cover inequality). Indeed, the coefficients of variables x1 , x2 , . . . , xj1 −1 have value 0 in the cover
+inequality, and have been raised to value 1 in the extended cover inequality. This principle, however, can
+be applied in a more general way. In fact, lifting is a technique that can be used in many problems to
+strengthen known classes of valid inequalities. The following theorems can be used repeatedly for this
+purpose. In the theorems stated below, we assume that x is a n-dimensional {0, 1} vector, and that S
+denotes the set of feasible x-vectors.
+Theorem 4.2 Suppose that
+Then αx1 +
+
+n
+j=2
+
+n
+j=2
+
+πj xj ≤ π0 is valid for each x ∈ S with x1 = 0.
+
+πj xj ≤ π0 is valid for each x ∈ S as long as α ≤ π0 − maxx∈S|x1 =1
+
+Theorem 4.3 Suppose that
+Then βx1 +
+
+n
+j=2
+
+n
+j=2
+
+n
+j=2
+
+πj xj .
+
+πj xj ≤ π0 is valid for each x ∈ S with x1 = 1.
+
+πj xj ≤ π0 +β is a valid inequality for each x ∈ S as long as β ≥ maxx∈S|x1 =0
+
+n
+j=2
+
+πj xj −
+
+π0 .
+Notice that applying Theorem 4.2 does not change the righthand side, whereas applying Theorem 4.3
+may change the righthand side. In the remainder of this section we give an example in which the two
+theorems above are applied repeatedly.
+Example Consider the knapsack constraint
+3x1 + x2 + x3 + x4 + x5 ≤ 4.
+55
+
+(4.17)
+
+As before, let S be the set of (binary) feasible solutions of this constraint. Suppose that we fix the values
+of the first three variables as follows:
+x1 = 1, x2 = x3 = 0.
+Plugging in these values in (4.17) reduces the inequality to x4 + x5 ≤ 1. Thus x4 + x5 ≤ 1 is valid for
+each x ∈ S with x1 = 1, x2 = x3 = 0.
+We now lift variable x3 by applying Theorem 4.2. This gives (using α3 as coefficient for x3 ): find a
+maximal α3 such that α3 x3 + x4 + x5 ≤ 1 is valid for each in x ∈ S with x1 = 1, x2 = 0, x3 = 1. This is
+equivalent to determining a maximal α3 such that
+α3 ≤ 1 −
+
+max
+
+x∈S|x1 =1,x2 =0,x3 =1
+
+x4 + x5 .
+
+It follows that α3 = 1. In other words, we can conclude that x3 + x4 + x5 ≤ 1 is valid for all x ∈ S with
+x1 = 1, x2 = 0.
+We now proceed by lifting variable x1 using Theorem 4.3. This gives (using β1 as coefficient for x1 ): find
+a minimal β1 such that β1 x1 + x3 + x4 + x5 ≤ 1 + β1 is valid for each x ∈ S with x1 = x2 = 0. This is
+equivalent to determining a minimal β1 such that
+β1 ≥
+
+(x3 + x4 + x5 ) − 1.
+
+max
+
+x∈S|x1 =x2 =0
+
+It follows that β1 = 2. Thus, we conclude that 2x1 + x3 + x4 + x5 ≤ 3 is valid for all x ∈ S with x2 = 0.
+Finally, we lift variable x2 using Theorem 4.2. This gives (using α2 as coefficient for x2 ): find a maximal
+α2 such that 2x1 + α2 x2 + x3 + x4 + x5 ≤ 3 is valid for each x ∈ S with x2 = 1. This is equivalent to
+determining a maximal α2 such that
+α2 ≤ 3 −
+
+max
+
+x∈S|x2 =1
+
+2x1 + x3 + x4 + x5 .
+
+It follows that α2 = 0. We arrive at the conclusion that the resulting inequality
+2x1 + x3 + x4 + x5 ≤ 3
+
+(4.18)
+
+is a valid inequality for each x ∈ S. Notice that we have derived a new inequality (4.18) that is stronger
+than the original one (4.17). As an example, consider the solution x = ( 13 , 0, 1, 1, 1), and observe that
+this particular solution is cut off by (4.18), while it is not violated by (4.17).
+56
+
+Here we have lifted the variables x1 , x2 and x3 in the sequence x3 , x1 , x2 . It is interesting to notice that
+different sequences may yield different inequalities. For instance, the sequence x3 , x1 , x2 produces another
+inequality. Thus, the order of lifting influences the final inequality we get, see Exercise 4.
+
+4.4
+
+Applications
+
+Knapsack constraints are embedded in many structured problems. Two obvious examples are the multiknapsack problem and the generalized assignment problem. We will give their respective formulations
+below.
+The multi-knapsack problem
+
+n
+
+cj xj
+
+(M KP ) max
+
+(4.19)
+
+j=1
+n
+
+aij xj ≤ bi
+
+s.t.
+
+for all i = 1, 2, . . . , m
+
+(4.20)
+
+for all j = 1, 2, . . . , n
+
+(4.21)
+
+j=1
+
+xj ∈ {0, 1}
+
+The generalized assignment problem
+
+m
+
+n
+
+cij xij
+
+(GAP ) max
+
+(4.22)
+
+i=1 j=1
+n
+
+s.t.
+
+aij xij ≤ bi
+
+for all i = 1, 2, . . . , m
+
+(4.23)
+
+for all j = 1, 2, . . . , m
+
+(4.24)
+
+for all i = 1, 2, . . . , m, for all j = 1, 2, . . . , n.
+
+(4.25)
+
+j=1
+m
+
+xij ≤ 1
+i=1
+
+xij ∈ {0, 1}
+
+57
+
+Exercises
+Exercise 1
+Find all inequalities, induced by minimal covers, of the following knapsack inequality:
+79x1 + 53x2 + 53x3 + 45x4 + 45x5 ≤ 178.
+Can you find an extended cover inequality?
+Exercise 2
+Consider the following knapsack problem.
+max
+
+3x1 + 2x2 + x3
+
+s.t.
+
+4x1 + 3x2 + 2x3 ≤ 6
+x1 , x2 , x3 ∈ {0, 1}
+
+Solve this problem with a cutting-plane algorithm.
+Exercise 3
+It is clear that one can use the simplex-method to find the linear programming relaxation of the knapsack
+problem as formulated by (1.10)-(1.12). However, we claim that there is a much easier way:
+Sort the items such that
+c1
+c2
+cn
+≥
+≥ ... ≥
+,
+a1
+a2
+an
+and next fill the knapsack with items 1, 2, . . . , k − 1, until item k can only be fractionally added to the
+knapsack. In other words, we claim that the following solution is an optimal linear programming solution
+to the knapsack problem.
+
+
+
+1
+
+
+k−1
+xj =
+(b − j=1 aj )/ak
+
+
+
+ 0
+
+for all j = 1, 2, . . . , k − 1
+if j = k
+for all j = k + 1, . . . , n.
+
+Can you prove this?
+
+Apply this to the example in Section 4.1.
+Exercise 4
+58
+
+Consider the example in Section 4.3. What inequality results if the variables are lifted in the sequence
+x2 , x1 , x3 ? And what inequality results when using x1 , x2 , x3 as lifting sequence?
+
+59
+
+60
+
+Chapter 5
+
+Column generation and
+branch-and-price
+In this chapter we describe a technique that is used for solving linear programs with a huge number of
+variables, namely column generation (see Section 5.1). The use of this technique within an enumerative
+framework is next discussed in Section 5.2. We illustrate these issues on the cutting stock problem (bin
+packing) and the crew scheduling problem.
+
+5.1
+
+Column generation
+
+In this section we show how column generation procedures can work. We emphasize that column generation is a technique for solving (large) linear programming problems. The main idea is (i) to work in
+iterations, and deal, at all times during the course of the method, with only a limited number of variables,
+and (ii) to verify optimality of the outcome of each iteration using complementary slackness. In Subsection 5.1.1 we show how this method can be applied to the cutting stock problem, and in Subsection 5.1.2,
+we show how it works for a crew scheduling problem.
+61
+
+5.1.1
+
+The cutting stock problem
+
+We start by illustrating this on the cutting stock problem. This problem can be described as follows.
+Given are n item types; there is a demand of di items for type i, and each item of type i has size wi ,
+i = 1, 2, . . . , n. Let the total number of items be denoted by D =
+
+i
+
+di . Given are a (large enough)
+
+number of rolls of size L. The problem is to fulfill demand exactly, using a minimum number of rolls. A
+straightforward formulation is as follows, where we use, with i = 1, . . . , D,j = 1, 2, . . . binary variables
+
+ 1 if item i is cut from roll j,
+xij =
+ 0 otherwise,
+
+and
+
+
+ 1
+yj =
+ 0
+
+The formulation is now:
+
+(CS-1) min
+s.t.
+
+if roll j is used,
+otherwise.
+
+j=1
+D
+i=1
+
+yj
+
+wi xij ≤ Lyj
+
+j=1
+
+xij = 1
+
+(5.1)
+for j = 1, 2, . . .
+
+(5.2)
+
+for i = 1, 2, . . . , D
+
+(5.3)
+
+xj ∈ {0, 1}, yj ∈ {0, 1} for all i, j.
+
+(5.4)
+
+There are a number of reasons why this formulation is not suited for solving large instances of the cutting
+stock problem. First of all, the linear programming bound is very weak, since the solution xij =
+
+1
+D
+
+is
+
+feasible to the linear programming relaxation (verify that this leads to a linear programming solution
+with value (
+
+wi /L)). Secondly, symmetry of solutions (the rolls are interchangeable) will also affect the
+
+performance of a branch-and-bound algorithm based on this formulation. Therefore, another formulation
+based on another concept is welcome. Instead of focusing on individual items, let us focus on a possible
+way to cut a roll. More precisely, we refer to a possible way of cutting a roll as a pattern. Obviously,
+given the input described above, we could, in principle enumerate all possible patterns. Then, we could
+write down the following formulation that uses an integral variable zj for the number of times a roll is
+cut according to pattern j = 1, 2, . . .:
+62
+
+(CS-2) min
+s.t.
+
+j=1 zj
+j=1
+
+aij zj = di
+
+zj integral
+
+(5.5)
+for i = 1, . . . , n
+
+(5.6)
+
+for all j.
+
+(5.7)
+
+Notice that aij denotes the number of times that an item of type i is used in pattern j; this is a known
+number. Now although this formulation does not suffer from the disadvantages mentioned above, there
+is a disadvantage to the current formulation: the number of variables. Indeed, this number can be
+astronomically high.
+Let us therefore first focus on solving the linear programming relaxation of formulation (CS-2). How to
+overcome the obstacle posed by the number of variables? The crucial idea of column generation is based
+on the observation that in an optimal solution of the linear programming relaxation of (CS-2), only very
+few of these variables will have a value different from 0. Indeed, the theory of the simplex-algorithm
+tells us that if there is an optimal solution, this solution will consist of n basic variables that may have
+a non-zero value, while all other variables will be non-basic and have value 0.
+How to make use of this observation? Of course, we do not know a priori which variables are basic in an
+optimal solution and which variables are not. However, given a feasible basic solution, we can determine
+(using complementary slackness and duality) whether it is optimal, and if not, which variable should
+be included in the basis to improve the current solution. This idea suggests an iterative procedure for
+solving the LP-relaxation of (CS-2) as follows:
+
+Step 0: Start with a subset of the variables (that contains a feasible solution). All other variables have
+implicitly the value 0. This is called the restricted master problem.
+Step 1: Solve the LP-relaxation, and arrive at a feasible primal solution.
+Step 2: Question: does there exist a variable (a pattern) with negative reduced costs? That is, does there
+exist a variable that should enter the basis? This question is called the pricing problem. If no, the
+current LP-solution is optimal, and we STOP, else
+Step 3: Identify that variable and add it to the current set of variables. Go to Step 1.
+63
+
+At first sight, there may be no reason why this would be more efficient than solving the linear program
+with all variables. Indeed, the crux of this approach lies in solving the pricing problem: if explicitly
+determining the reduced cost of each individual variable by enumeration was the only way to solve the
+pricing problem, we would not have gained much. However, in a lot of cases, solving the pricing problem
+can be done very efficiently, for instance by solving a shortest path problem, or by solving a knapsack
+problem. Then, column generation is a very efficient way of solving the master problem. Let us proceed
+by illustrating this idea on the cutting stock problem.
+Consider a column in the matrix A of the second cutting stock formulation, and let us denote this
+column by a. It describes a pattern, that is, the entries of that column equal the multiplicity of each
+item type in that pattern. Of course, for a column a = (a1 , a2 , . . . , an ) of A to be a feasible pattern it
+must be true that
+
+i
+
+wi ai ≤ L. But the converse is true as well, that is, any n nonnegative integers
+
+(a1 , a2 , . . . , an ) that satisfy
+
+i
+
+wi ai ≤ L is a feasible pattern. Let us denote pattern j by nonnegative
+
+integers (a1j , a2j , . . . , anj ).
+Now suppose we are given a primal solution z = (z1 , z2 , . . .), and we are also given the values of the dual
+variables (u1 , u2 , . . . , un ) associated to the constraints (5.6). How to determine whether z is an optimal
+solution to the LP-relaxation of (CS-2)? Let us consider the constraints of the dual of the LP-relaxation
+of (CS-2). We know that these constraints are of the form:
+
+i
+
+ui aij ≤ 1 for each possible pattern j
+
+(verify this!). Thus, if the current u-values satisfy all these constraints (i.e., for each pattern j), we have
+an optimal LP-solution. Or, alternatively formulated, we are looking for a pattern (a1 , a2 , . . . , an ) such
+that
+
+i
+
+wi ai ≤ L and
+
+i
+
+ui ai > 1. If we can find such a pattern, we know that the current LP-solution
+
+is not optimal, and hence we add this pattern to the current set of columns and start a new iteration.
+Otherwise, if we cannot find such a pattern, the current LP-solution is optimal. Summarizing, the pricing
+problem boils down to solving the following problem:
+
+max
+s.t.
+
+u i ai
+
+(5.8)
+
+wi ai ≤ L
+
+(5.9)
+
+i
+i
+
+ai integer
+
+for all i.
+
+(5.10)
+
+This problem is (a variant of) the well-known knapsack problem (which, in spite of its NP-hardness, can
+be solved in reasonable computing times for very large instances, see Chapter 4). Concluding, the pricing
+64
+
+problem can be solved relatively fast, and hence the LP-relaxation of (CS-2) can be solved fast as well.
+
+5.1.2
+
+The hierarchical crew scheduling problem
+
+In this subsection we illustrate the column generation technique on the hierarchical crew scheduling
+problem. This problem can be described as follows. Given are m crews who have to perform n tasks.
+For each crew t a cost-rate rt is known, t = 1, . . . , m. Each task is characterized by a starting time si
+and a processing time pi . Each task i has to start at si and must be carried out nonpreemptively by
+some crew until si + pi . Also, a distance dij for every pair of tasks i and j is given. Finally, the crews are
+hierarchically ordered in the following way: for each job a 'maximal' crew is given such that each crew
+with an index higher than the index of the maximal crew is not capable of performing that job; all other
+crews are capable of performing that job. The cost of a crew is the product of its cost rate rt and the
+distance traveled by that crew. The problem is to find an assignment of tasks to crews against minimal
+costs.
+Example Here is an instance with 2 crews and 3 jobs:
+m = 2, n = 3, r1 = 3, r2 = 1, s1 = 20, s2 = 40, s3 = 60, p1 = p2 = p3 = 0,
+job 1 can only be carried out by crew 1, jobs 2 and 3 can be carried out by each of the two crews and
+with distances dij as in Figure 5.1.
+ 
+10 
+ 
+  16
+❦
+0
+❅
+❅
+9
+❅
+❅
+
+2❦
+❅
+❅ 12
+❅ ✎☞
+❅ ❦
+1
+✍✌
+ 
+16  12
+ 
+ 
+❦
+3
+
+Figure 5.1: The distances
+One (of the 2) optimal solution(s) for this instance can be described as follows. Starting at time 0, crew
+1 travels to job 1, waits 4 time units, performs the job, travels to job 3, waits 28 time units, performs it
+and returns to the depot. Distance traveled is 37, so its costs are 111. Crew 2 simply travels to job 2,
+performs it and returns for a total cost of 20. Thus, the value of an optimal solution to this instance is
+131.
+65
+
+We model the hierarchical crew scheduling problem as a problem on a weighted, directed graph G = (V, A)
+as follows. Construct a vertex for each task i = 1, . . . , n and let V = {1, . . . , n} ∪ {s, f }. The vertices s
+and f can be regarded as the source and sink of the graph G. There is an arc from vertex i to j in A if
+si + pi + dij ≤ sj for all i, j ∈ V \ {s, f }. Further, there is an arc {s, i} and {i, f } in A for all i ∈ V \ {s, f }.
+Finally, there is a cost vector ctij associated to each arc {i, j} ∈ A. We compute this vector as follows:
+
+ r ·d
+if crew t is able to do jobs i and j,
+t
+ij
+ctij =
+(5.11)
+ M
+otherwise, for all t, for all {i, j} ∈ A,
+
+where M is a large number.
+
+Consider now the following formulation using the following parameters:
+• R = the set of paths in G from s to f ,
+for i = 1, . . . , n, r ∈ R :
+• δir
+for t = 1, . . . , m, r ∈ R :
+
+
+ 1 if vertex i is in path r, and
+=
+ 0 otherwise
+
+• ctr = cost incurred when crew t takes path r, (observe that, for a given r, t, we can easily compute
+this quantity using (5.11); notice that if a path r contains a vertex that cannot be served by crew t, we
+set the corresponding ctr to a large number),
+and using, for t = 1, . . . , m, r ∈ R, the decision variables
+
+ 1 if crew t takes path r,
+ytr =
+ 0 otherwise.
+m
+
+ctr ytr
+
+(CGHCSPm) minimize
+t=1 r∈R
+m
+
+δir ytr = 1 for i = 1, . . . , n;
+
+such that
+
+(5.12)
+
+t=1 r∈R
+
+ytr ≤ 1
+
+for t = 1, . . . , m;
+
+(5.13)
+
+for t = 1, . . . , m, r ∈ R.
+
+(5.14)
+
+r∈R
+
+ytr ∈ {0, 1}
+
+Constraints (5.12) state that each vertex must occur once in a selected path, inequalities (5.13) express
+that a crew can do at most one path and constraints (5.14) are the integrality constraints. The LPrelaxation of this model is found by replacing constraints (5.14) by ytr ≥ 0 for all t, r.
+66
+
+Given a feasible basis for some LP the question determining whether this basis is an optimal one is: do
+there exist variables with negative reduced costs? Using dual variables ui attached to constraints (5.12)
+and dual variables et to constraints (5.13) we can deduce the following expression for the reduced costs
+of variable ytr :
+
+n
+
+δir ui − et .
+
+ctr −
+i=1
+
+Thus, given some LP-solution and its associated dual variables the pricing problem boils down to the
+following question:
+
+n
+
+δir ui − et < 0?
+
+Price: ∃ t, r ∈ R such that ctr −
+i=1
+
+This question can be answered as follows:
+Lemma: Problem Price can be solved by solving m shortest path problems on a directed acyclic graph.
+Proof: We claim that for a fixed t, Price boils down to a shortest path problem which implies the lemma.
+This can be seen as follows: consider the graph corresponding to the instance and consider only those
+nodes that can be visited by crew t. Observe that no cycles occur in this network. Modify the existing
+arc costs ctij by setting hij := ctij − uj for all {i, j} ∈ A. Observe that the cost of a path P in this network
+with respect to costs hij from s to f equals:
+
+{i,j}∈P
+
+hij =
+
+t
+{i,j}∈P (cij
+
+− uj ) = ctr −
+
+i δir ui .
+
+If this
+
+expression is smaller than et , there is a profitable column (path) for crew t, otherwise not.
+✷
+
+This shows that the pricing problem, and hence the associated LP-relaxation, can be solved efficiently.
+
+5.2
+
+Branch-and-price
+
+Of course, it is nice that one can solve a linear program with (exponentially) many variables efficiently
+using column generation. However, this leaves us with a potentially fractional solution. We are interested
+in integral solutions. Can we embed column generation within an enumerative framework so that we are
+guaranteed to find an integral optimum? In this section we describe such an approach.
+Let us consider the example of the hierarchical crew scheduling problem. A simple idea would be to
+argue as follows: given a fractional solution, pick a variable with a fractional value. We know that
+in an optimal solution this variable will have either value 0 or value 1. Create two subproblems, one
+67
+
+subproblem in which that variable equals 1, and another subproblem where this variable is constrained to
+be 0. Unfortunately, this idea is too simple. Setting a variable to 1 in the crew scheduling context poses
+no problem: indeed the problem becomes smaller since we postulate that, in this branch this crew t takes
+path r. However, setting a variable to 0 causes a difficulty: how can we guarantee that when we solve
+the pricing problem this specific variable does NOT come out as the variable to be added? One might
+think: OK let us find the shortest path, and if it corresponds to this variable, find the second shortest
+path. But that idea is bound to cause difficulties when we have a branching tree that can have many
+levels.
+We need another partitioning of the solution space. Instead of branching by setting a variable to 1 versus
+setting it to 0, we need a branching rule that does not destroy the efficient solvability of the pricing
+problem. For the hierarchical crew scheduling problem, an example of such a rule is as follows: Here
+we propose a branching rule that leaves the structure of the problem intact, allowing for the efficient
+solvability of the pricing problem throughout the search tree.
+Suppose that y is a fractional feasible LP-solution, and let us call a path r from s to f a fractional path
+(with respect to y) if there exists a t with 0 < ytr < 1. We claim that y has the following property: there
+exist two vertices i and j (that differ from source and sink) that lie consecutively on a fractional path
+such that the sum of all ytr such that r contains arc {i, j} is greater than 0 and smaller than 1. Let us
+formally phrase this claim in the following lemma:
+Lemma: If y is fractional, there exist two nodes i, j ∈ V \ {s, f }, {i, j} ∈ A with
+is contained in r ytr < 1.
+Proof: Observe that if y is fractional there are at least two different fractional paths. Now, consider the
+0<
+
+t
+
+r:{i,j}
+
+first node in each fractional path. If this set of nodes has cardinality more than 1, the claim is easily seen
+to be true. So assume that each fractional path has the same first node. However, then we can repeat
+this argument replacing the sink s by this first node. Since there must be at least two fractional paths,
+a pair i, j as described in the lemma must exist.
+✷
+
+Thus, by this Lemma, when y is fractional there exist nodes i and j (that differ from source and sink)
+that are connected by an arc whose sum of fractional values lies between 0 and 1. Now, in an optimal
+solution either these nodes are visited consecutively, or they are not. More specifically, given a fractional
+68
+
+solution we identify two nodes i and j having the property described above. Then we branch as follows.
+In one branch we modify G into G1 by deleting all arcs {i, p} for p = j and all arcs {p, j} for p = i. Thus,
+in any feasible solution there is a path that contains arc {i, j}. In the other branch we modify G into G2
+by simply deleting arc {i, j}. In this case it is obvious that no feasible solution has a path with arc {i, j}
+in it. Notice that the current solution is excluded by this rule. Let us illustrate this branching rule on
+the example.
+Example (continued): Consider the instance described in the example. The graph corresponding to
+this instance is depicted in Figure 5.2.
+❦
+✯2
+✟✟
+✒
+ 
+❅
+✟✟  
+❅
+✟
+ 
+❅
+✟✟ ✎☞
+✟
+ 
+❘ ❦
+❅
+✲
+s❦ ✲ 1❦
+f
+✍✌
+❍
+❍❍
+❅
+✒
+ 
+ 
+❍
+❅
+❍❍ ❅
+ 
+❍❍
+❘❄
+❅
+ 
+❥
+3❦
+Figure 5.2: The graph G
+An optimal solution to the LP-relaxation of (5.12)-(5.14) for this instance is described by y2,s−2−3−f =
+y1,s−1−2−f = y1,s−1−3−f = 12 , and all other variables 0. Now, let 1,2 be a pair of nodes that we branch
+on. The resulting graphs G1 and G2 are depicted in Figure 5.3:
+❦
+2❦
+✯2
+✟
+✟
+✒ ❅
+ 
+❅
+ 
+✟✟
+❅
+❅
+✟
+ 
+✟
+❅
+❅
+✟
+✎☞
+✎☞
+ 
+❘❦
+❅
+❘❦
+❅
+✟
+✲
+s❦ ✲ 1❦
+s❦ ✲ 1❦
+f
+f
+✍✌
+✍✌
+❍
+❍
+❅
+✒
+ 
+✒
+ 
+❍❍
+❍❍
+ 
+ 
+❍❍
+❍❍ ❅
+ 
+ 
+❍❍
+❍❍❅
+❄
+❘❦
+❅
+ 
+ 
+❥ 3❄
+❍
+❍
+❥
+❦
+3
+Figure 5.3: The graphs G1 (left) and G2 (right)
+Notice that in G1 the arcs {s, 2}, {1, 3} and {1, f } have been deleted. When solving the LP-relaxation
+corresponding to G1 we find an integral solution with value 132. G2 is constructed by deleting arc {1, 2}.
+In this branch we also find an integral solution with value 131, which is therefore optimal.
+Concluding, we have found a branching rule for the hierarchical crew scheduling problem that preserves
+69
+
+the structure of the original problem. In this way, the efficient solvability of the pricing problem remains
+intact throughout the nodes in the branching tree. In general, this is the challenge when devising
+branching rules for integer programming problems whose LP-relaxation is solved by column generation.
+
+Exercises
+Exercise 1
+Consider the following problem occurring in combinatorial auctions. Given are m items, and n bidders.
+Each bidder j, 1 ≤ j ≤ n, specifies a (nonnegative) bid bj (S) for subsets of the items S ⊆ {1, 2, . . . , m}.
+(Notice that the value of a bid that a bidder specifies for a pair of items need not be the same as the sum
+of the valuations for the two individual items; this is, in fact, the defining property of a combinatorial
+auction). Clearly, each item can be allocated to at most one bidder, and each bidder receives at most
+one set of items.
+(i) Give an integer programming formulation for this problem that maximizes the total auction revenue.
+(ii) How many variables are there?
+(iii) What is the dual of the linear programming relaxation of your formulation?
+Exercise 2
+Consider the following problem occurring in production management. Given are N jobs which have to be
+processed by a single machine. Each job needs some (prespecified) tools to be processed; in total there
+are M tools available. The machine can hold at most C tools simultaneously (and of course, each job
+does not need more than C tools). We call a subset of the jobs a feasible group if these jobs together
+require at most C tools. The job grouping problem consists in finding a minimum number of feasible
+groups such that each job is contained in at least one group.
+(i) Formulate this problem as an integer programming problem.
+(ii) Describe a column generation approach for this problem.
+Exercise 3
+Consider the following problem occurring in routing applications. Given are n + 1 locations, among
+70
+
+which a depot, and distances d between each pair of locations. The depot harbors K vehicles that serve
+the locations. No vehicle can serve more than C locations. The problem is to select K paths (one for
+each vehicle), each starting at the depot, such that each location is in exactly one path. The goal is to
+minimize the total length of the K paths.
+(i) Formulate
+ this problem as a ‘traditional' integer program using variables
+ 1 if vehicle k travels from location i to location j
+xijk =
+ 0 otherwise
+
+(ii) Formulate this problem as an integer programming problem using a formulation that involves
+exponentially many variables.
+(iii) Discuss how a column generation approach for this formulation would work.
+
+71
+
+72
+
+Chapter 6
+
+Approximation algorithms
+6.1
+
+Introduction
+
+Instances of combinatorial optimization problems cannot always be solved to optimality within a reasonable amount of computing time. Indeed, some combinatorial problems are so-called NP-hard (e.g.
+knapsack, stable set, node cover) which implies that the best-known algorithms that guarantee an optimal solution have an enumerative character (like the branch-and-price approach).
+This chapter deals with approximation algorithms. These are algorithms that return a feasible solution
+fast (i.e. within polynomial time), but sacrifice the guarantee of optimality. Thus, whereas branch-andprice algorithms always output an optimum solution at the expense of potentially enormous computing
+times, approximation algorithms form a dual approach to solving combinatorial optimization problems.
+An approximation algorithm guarantees a fast solution, but not necessarily an optimal one. Of course,
+one still wants an approximation algorithm to produce solutions that have a value that does not differ
+too much from the optimum value. In order to be able to judge approximation algorithms, the concept
+of worst case analysis is discussed in Section 6.2. Further, we present approximation algorithms for two
+specific problems, namely node cover (Section 6.3) and the TSP (Section 6.4).
+73
+
+6.2
+
+Worst case analysis
+
+The worst case ratio (WCR) of an algorithm A for a minimization problem P is defined as follows. Given
+an instance I of problem P , let the value of the solution generated by algorithm A be A(I), and let the
+optimum value be denoted by OPT(I); we will sometimes simply write OPT, and ignore the “(I)”-part.
+The ratio
+R(I) =
+
+A(I)
+OP T (I)
+
+is a measure of the quality of the solution found. (Notice that other measure are certainly possible as
+well!). Now, the smallest upper bound on R(I), measured over all instances I of P is called the worst
+case ratio (WCR) of algorithm A, i.e.,
+A(I)
+.
+OP T (I)
+
+W CR(A) = supI
+
+Notice that this ratio is at least 1. For a maximization problem P we define a similar quality measure as
+follows.
+W CR(A) = infI
+
+A(I)
+.
+OP T (I)
+
+This ratio is at most 1 (and not smaller than 0). How can one find the WCR of a certain algorithm?
+Almost always this amounts to applying a problem specific analysis. In such an analysis two things must
+be argued:
+• one has to argue that for all instances I of P it is true that
+• there exists an instance I of P for which the ratio
+
+A(I)
+OP T (I)
+
+A(I)
+OP T (I)
+
+≤ R, and that
+
+is equal (or arbitrarily close) to R.
+
+Then one can conclude that W CR(A) = R. Notice that the WCR depends on the algorithm, thus different
+algorithms for the same problem can yield different WCRs (as we shall see in this chapter). Of course, one
+could ask the question: how well can we approximate a certain problem when using only polynomial time
+algorithms. More formal, let P OLY T IM E(P ) = {A| A is a polynomial time algorithm for P }, then one
+is interested in something that can be formulated as:
+infA∈P OLY T IME(P ) W CR(A).
+This is certainly a valid question, and in recent years a number of results in this direction have been
+obtained; however, we will not go into this issue.
+74
+
+6.3
+
+Node Cover
+
+Recall that given a graph G = (V, E), a node cover is a subset of the vertices W ⊆ V with the property
+that each edge in E is incident to at least one vertex in W . The objective in this problem is to find
+a node cover with a minimum number of nodes. This problem is NP-hard. Let us now describe two
+approximation algorithms for node cover.
+
+Algorithm 1 (Input: a graph G = (V, E); output: a node cover W )
+W = ∅, E ′ := E
+while E ′ = ∅
+do
+Choose a node v ∈ V with largest degree;
+W := W ∪ {v};
+Update E ′ , that is remove from E ′ all edges incident to v;
+od
+Algorithm 2 (Input: a graph G = (V, E); output: a node cover W )
+W = ∅, E ′ := E
+while E ′ = ∅
+do
+Choose an arbitrary edge in E ′ ;
+W := W ∪ {v, w};
+Update E ′ , that is remove from E ′ all edges incident to v or w;
+od
+Algorithm 1 is a greedy type of algorithm. At first glance it seems to be better than Algorithm 2, as it uses
+at least part of the structure of the graph. And indeed, in instances arising from practical applications,
+it turns out that Algorithm 1 outperforms Algorithm 2 with respect to the number of nodes in the cover
+found. However, as we are about to discover, the WCR of Algorithm 2 is much better than the WCR of
+Algorithm 1.
+Consider the following instance depicted in Figure 6.1.
+75
+
+C
+
+①
+
+B
+
+①
+①
+①
+①
+①
+✟
+✑
+✑
+ 
+✁
+❅
+✁
+ 
+ 
+❆
+✁❆
+✟
+✑
+✑
+ ✁
+❆❅
+✁ ❆
+✑ 
+✑  ✁ ✟
+❆   ✁ ✑   ✁✟✟
+✑ 
+❆❅ ✁
+✁✑✑  
+❆ ✁❅  ❆ ✁✑✑  ✟✟
+✟
+✁  
+❆✁ ✟
+  ✑
+  ✑
+❆✁ ❅
+✑✁✟❆✟
+ ✑✑✁  
+✁ ❆  ✑❅
+✟
+✁  ❆✑✟ ✁❅ ❆✑ ✁  
+✑✟  ✑
+❅❆ ✁ 
+✁ 
+✑
+✟✟ ❆ ✁✑
+✁ 
+❆①
+✑
+❅
+✁
+✑
+✟
+ 
+ 
+❆①
+✁
+①
+
+A
+
+①
+
+①
+
+①
+
+①
+
+Figure 6.1: An instance for node cover.
+
+What is the optimum? It is not hard to figure out that one needs at least 5 nodes for a node cover in
+the instance above, and moreover, that taking all nodes from layer B indeed constitutes a feasible node
+cover. Thus, this is an optimum solution. Let us now apply algorithm 1 to this instance and let us break
+ties by choosing nodes in the lowest possible layer first (that is nodes of layer A enjoy priority over nodes
+in layer B which enjoy priority over nodes in layer C). What happens? Algorithm 1 selects first the nodes
+from layer A and then the nodes from layer B concluding with a node cover consisting of 8 nodes. Even
+worse, we can generalize this instance as follows: let the number of nodes in layer B be n, then there
+are also n nodes in layer C and there are at most n − 1 nodes in the bottom layer. Again, each node in
+layer A is connected to each node in layer B and a node in layer C is connected only to its “companion
+node” directly beneath it. Thus the optimum node cover consists of all nodes in layer B with optimal
+value n, whereas Algorithm 1 will find a solution consisting of all nodes of layer A and B, with a value
+equal to almost twice the optimum value. What can we deduce from this example concerning the WCR
+of Algorithm 1? Well, we can only say that it is at least 2. One cannot conclude that the WCR equals 2
+since there may exist instances on which Algorithm 1 fares even worse.
+And these examples exist. Consider Figure 6.2.
+In this instance we see that the optimum node cover still consists of all middle nodes (i.e. value 6),
+whereas the node cover constructed by Algorithm 1 will consist of all nodes in the two bottom layers (i.e.
+a solution with value 13). From this instance alone we can conclude that the WCR of Algorithm 1 must
+76
+
+C
+
+①
+
+B
+
+①
+①
+①
+①
+①
+①
+❛
+❍
+❛❛ ✁❍
+❛❛ ✁❛
+◗
+◗
+✑
+◗
+❆
+❅
+❅
+✁
+❆
+❆
+ 
+ 
+❍
+◗
+◗
+✑
+◗ ❛ ✁ ❅❅❍
+❛❛
+❍  ❆❅ ◗  ❅✑ ✁ ❆
+✁ ❆ ◗
+◗ ❛❛ ❍❍
+❍❍❆ ❅
+❛❆❛  ◗
+❆
+❛
+❅❛✁ ❍
+ ◗ ✑❅ ✁
+◗
+✁
+❛
+❍
+❍
+◗
+✑
+◗
+❛ ❆❍ ❛◗
+❆
+✁❅
+❆ ❍❅
+ 
+✁
+❛
+◗
+◗
+✑
+◗ ✁❅ ❛ 
+❍
+❍
+❍ ◗
+✁ ❅ ❆
+❆❛❛❅
+✑
+◗
+  ❛◗
+  ❛❆❛❛❍
+✁ ❅
+✁
+❍ ◗ ❅ ❆
+❍
+✑ ❆◗ ❛❅
+ ◗❅ ❆  ❛
+✁ ◗
+✁
+◗
+◗ ❛✁❍
+✑❛❍
+❍
+❛❍
+❛
+❛❍
+❅ ❆
+❛
+✁❅
+❆❍
+◗❅ ❆✑
+✁  
+✁
+❛◗
+❛◗
+❍
+❍
+◗
+✑
+◗
+❛◗
+❍
+✁❍
+❆ ❛
+ 
+✁ 
+✁
+❛❅
+❛❅
+◗
+◗
+✑❅
+◗❆
+❍❆
+❍
+❍
+❍
+❆①
+❛
+◗
+❛① ❛❅
+◗
+❆✁① ❛❅
+❆①
+✑
+◗
+❅
+ 
+ 
+✁①
+✁
+①
+①
+
+A
+
+①
+
+①
+
+①
+
+①
+
+①
+
+Figure 6.2: Another instance for node cover.
+be worse than 2.1666. However, by generalizing this instance an even more dramatic statement can be
+made:
+Theorem 6.1 For each r ≥ 0, there exist instances I of node cover such that A(I) ≥ r · OP T (I)
+In other words, the WCR of Algorithm 1 is unbounded; it is impossible to find a constant R such that
+A(I)
+OP T (I)
+
+≤ R. Let us motivate this theorem by generalizing the instance in Figure 6.2. The structure of
+
+this instance is as follows. In case of 6 middle nodes we do the following: partition the nodes from B into
+3 pairs and join the nodes in each pair with a node from layer A. Then we partition the nodes in layer
+B into two triples, and again join all nodes in a triple with a new node from layer A. Repeat this for
+quadruples and quintuples, and so on, possibly leaving out some nodes from layer B, and always adding
+a new node in layer A. Then, when applying Algorithm 1, there is always a node from the bottom layer
+with highest degree, consequently Algorithm 1 will find a node cover consisting of L(n) + n nodes, where
+L(n) is the number of nodes in layer A. How large is L(n)? Observe that L(n) =
+
+n−1
+j=2 ⌊n/j⌋.
+
+We leave
+
+the exact proof of Theorem 6.1 as an exercise.
+What about Algorithm 2? It is easy to establish a lower bound of 2 on the WCR. Indeed, when simply
+taking a graph consisting of 2n vertices and n edges forming a perfect matching, one observes that n is
+the value of a minimum node cover, whereas Algorithm 2 selects all 2n nodes. However, it turns out that
+this is the worst that can happen for Algorithm 2:
+77
+
+Theorem 6.2 W CR(Algorithm2) = 2.
+The argument is as follows. Of course, any node cover must cover all edges chosen by Algorithm 2.
+However, these edges do not have a node in common, and therefore each edge must be covered by a
+different node in any node cover. Thus no node cover can be smaller than half the size of the node cover
+found by Algorithm 2. Together with the example sketched above Theorem 6.2 now follows.
+
+6.4
+
+The Traveling Salesman Problem (TSP)
+
+In a sense the TSP is a harder problem to solve than node cover. This follows from the well known fact
+that, unless P=NP, no polynomial time algorithm for the TSP exists that has a bounded WCR (which
+contrasts with Algorithm 2 in the previous section).
+What we can do is to restrict our instances. Recall that the input to the TSP is a distance matrix D. In
+the sequel we restrict ourselves to instances for which the distances satisfy the triangle inequality, that is,
+we have that dik ≤ dij + djk for all i, j, k. Observe that many practical problems satisfy this restriction.
+Indeed, TSP instances coming from actual “travel settings” are quite likely to obey the triangle inequality.
+The double tree algorithm (DT).
+Algorithm DT consists of four phases. In the first three phases, we construct an Euler-cycle that we
+convert into a Hamilton circuit in Phase 4.
+Phase 1. Construct a minimum spanning tree with respect to the distance function d.
+Phase 2. Double all edges in the tree. Notice that the resulting graph is Eulerian.
+Phase 3. Determine an Euler cycle in the Eulerian graph determined in Phase 2. Since the Eulerian
+graph is connected (it contains the minimum spanning tree as a subgraph), the cycle contains each vertex
+at least once.
+
+Phase 4. Convert the Euler cycle into a Hamilton cycle by applying shortcuts, i.e., replace a pair of
+consecutive edges {i, j} and {j, k} in the Euler cycle by {i, k}. We are only allowed to do this if j appears
+somewhere else in the Euler cycle.
+Example Consider the following 7-city TSP instance.
+78
+
+1
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+1
+
+2
+
+2
+
+3
+
+4
+
+5
+
+1
+
+1
+
+3
+
+3
+
+4
+
+2
+
+3
+
+2
+
+3
+
+1
+
+2
+
+3
+
+1
+
+4
+
+2
+3
+4
+5
+
+1
+
+6
+7
+3 ✉
+
+3 ✉
+2 ✉
+
+4
+✉
+
+5
+✉
+
+6
+✉
+
+7
+✉
+
+2 ✉
+
+4
+✉
+
+5
+✉
+
+6
+✉
+
+7
+✉
+
+1 ✉
+
+1 ✉
+
+Figure 6.3: Phases 1 and 2.
+The Euler-cycle generated in phase 3 is 1232456765421.
+The operation described in Phase 4 can be performed on any cycle. Its effect is that a new cycle is
+constructed with one edge less; in this cycle, there is one vertex that is visited one time less in comparison
+with the previous cycle. Due to the assumption that the length function satisfies the triangle inequality,
+it follows that applying a shortcut does not increase the length of the cycle. Let us formally record this
+observation in a lemma.
+Lemma 6.3 Let G = (V, E) be a complete graph, and let d : E → R+ be a distance function on the
+edges, which satisfies the triangle inequality. Let C be a cycle in this graph with total length d(C). If C ′
+is a cycle constructed from C by applying shortcuts, then we have that the total length of C ′ is no more
+than d(C).
+Let us now be more specific concerning Phase 4. We apply a shortcut on each second appearance of a
+vertex j. Therefore, each vertex remains in the cycle at least once. After the shortcut has been applied
+to all second appearances of the vertices, the cycle contains each vertex exactly once, that is, we have
+constructed a Hamilton cycle.
+79
+
+3 ✉
+2 ✉
+
+4
+✉
+
+5
+✉
+
+6
+✉
+
+3 ✉
+❅
+❅
+❅ 4
+❅✉
+2 ✉
+
+7
+✉
+
+1 ✉
+
+3 ✉
+❅
+❅
+❅ 4
+❅✉
+2 ✉
+
+5
+✉
+
+6
+✉
+
+7
+✉
+
+5
+✉
+
+6
+✉
+
+7
+✉
+
+1 ✉
+
+5
+✉
+
+Figure 6.4: Phase 4: replacing 324 by 34
+3 ✉
+❅
+❅
+❅ 4
+6
+7
+✉
+✉
+❅✉
+2 ✉
+
+1 ✉
+
+1 ✉
+Figure 6.5: Phase 4: further replacements
+
+We now show that Algorithm DT will never produce a solution with length more than twice the length
+of an optimal solution. In other words:
+Theorem 6.4 W CR(DT ) ≤ 2.
+Given an instance I, let OPT(I) denote the length of an optimal tour, and let zDT (I) denote the length
+of the tour constructed by algorithm DT. Finally, let zT (I) denote the length of a minimum spanning
+tree. We first prove that zT (I) ≤ OPT(I) for all instances I; we then complete the proof by showing
+that zDT (I) ≤ 2 · zT (I).
+1. Consider any optimal tour. If we delete an arbitrary edge from it, then we obtain a . . . spanning tree.
+By definition, the length of a spanning tree does not exceed the length of a minimal spanning tree,
+and hence, we know that its length amounts to at least zT . Concluding, we have that zT ≤ OPT.
+2. The total length of the edges in the Eulerian graph that is constructed by doubling the minimum
+spanning tree is equal to 2 · zT . From Lemma 6.3, it follows that the length zDT of the Hamiltonian
+circuit that is obtained by applying shortcuts, amounts to no more than the length of the Eulerian
+cycle, which is equal to 2 · zT .
+80
+
+Combining both results, we get zDT ≤ 2 · zT ≤ 2 · OPT.
+The tree-matching algorithm (TM).
+From the analysis above, it follows that, if we want to improve our worst-case ratio, then we can try to
+decrease the length of the Eulerian cycle. In the sequel we will do so. This means that we use the same
+structure of algorithm DT. In fact, Phases 1, 3, and 4 in Algorithm TM are identical to the corresponding
+phases in Algorithm DT. Thus, we only change the phase in which the Eulerian Cycle is constructed.
+Recall that a graph is Eulerian if and only if it is connected, and each vertex has even degree. It seems
+obvious to start with a minimum spanning tree to make sure that the graph is connected. The only
+problem left is to take care of the vertices with odd degree, which we denote by V0 ; notice that the
+number of vertices with odd degree is even. We see that we can get even degree in each of these vertices
+by adding a perfect matching on these vertices V0 (see Chapter 1 for the definition of a perfect matching).
+This is exactly what happens in phase 2 of algorithm TM, where we will compute a minimum weight
+perfect matching M on the vertices in V0 .
+Consider the example again. The initial minimum spanning tree contains 4 vertices of odd degree, namely
+1, 2, 3, and 7. The minimum weight perfect matching of these vertices consists of the edges {1, 2} and
+{3, 7}. Thus, we get the following extension of the minimum spanning tree.
+3 ✉
+2 ✉
+
+4
+✉
+
+5
+✉
+
+6
+✉
+
+✉❳
+3 ❳
+❳❳❳
+❳❳
+❳❳❳
+❳❳❳
+4
+5
+6 ❳❳ 7
+❳✉
+✉
+✉
+✉
+✉
+2
+
+7
+✉
+
+1 ✉
+
+1 ✉
+Figure 6.6: Phases 2 of algorithm TM.
+
+An Euler-cycle in this graph is 123765421, where 2 is the only vertex that appears more than once, and
+therefore we remove one of its occurrences.
+This small change with respect to algorithm DT results in a better worst-case behaviour. For any instance
+of the TSP (satisfying the triangle-inequality), algorithm TM constructs a tour with length no more than
+3
+2
+
+times the length of an optimal tour. To prove this, it suffices to show that the length zM of the
+
+matching M is no more than
+
+1
+2
+
+times OPT. Namely, then zT M ≤ zT + zM ≤ OPT + 12 · OPT =
+81
+
+3
+2
+
+· OPT.
+
+❳❳❳
+3 ✉
+❳❳
+❳❳❳
+❳❳
+❳❳❳
+4
+5
+6 ❳❳ 7
+✉
+✉
+✉
+✉
+❳✉
+2
+
+✉
+3 ❳
+❳❳❳
+❳❳
+❳❳❳
+❳❳❳
+4
+5
+6❳❳❳ 7
+✉
+✉
+✉
+❳✉
+2 ✉
+ 
+ 
+ 
+✉
+1  
+
+1 ✉
+
+Figure 6.7: Replacing 421 by 41.
+The proof makes use of a shrinking argument. Consider any optimal tour with value OPT. Apply
+shortcuts such that only the vertices in V0 remain in the cycle; this yields a cycle C on the vertices in
+V0 with length no more than OPT. C can be partitioned into two perfect matchings M1 and M2 on V0
+by ‘walking' along the circuit and putting the first edge in M1 , the second edge in M2 , the third edge in
+M1 , etc. Notice that the cycle contains an even number of edges, because |V0 | is even.
+Since M1 and M2 are perfect matchings on V0 , we have that d(M ) ≤ d(M1 ) and d(M ) ≤ d(M2 ). Hence,
+we have that 2 × d(M ) ≤ d(M1 ) + d(M2 ) = d(C) ≤ OPT, which was to be proved.
+Notice that for both algorithms, our analysis of the worst-case ratio depends heavily on the assumption
+that the triangle inequality holds. It can be shown that, in case the triangle inequality fails to hold, the
+worst-case ratio is unbounded (as could be inferred from the beginning of this section).
+
+Exercises
+Exercise 1
+Prove Theorem 6.1.
+Exercise 2
+Consider the following greedy algorithm for the knapsack problem. Sort the objects by decreasing ratio
+of profit and size, and reindex the items such that the order of objects is 1, 2, . . . , n. Next, greedily pick
+objects in this order while ensuring that the capacity of the knapsack is not exceeded.
+• Show that this method can behave arbitrarily bad,
+• Modify this method by identifying the smallest k such that the total size of the first k objects
+82
+
+exceeds the capacity. Next, find the best of the following two solutions: {1, 2, . . . , k − 1} and {k}.
+Show that this algorithm is a 2-approximation.
+
+Exercise 3
+Consider the node packing problem. What can you tell about the WCR of each of the following two
+algorithms?
+Algorithm 1 (Input: a graph G = (V, E); output: a node packing W )
+W = ∅, G′ = (V ′ , E ′ ) := G
+while V ′ = ∅
+do
+Choose a node v ∈ V ′ with smallest degree;
+W := W ∪ {v};
+Update G′ , that is V ′ := V ′ \ {v} and remove from E ′ all edges incident to v;
+od
+Algorithm 2 (Input: a graph G = (V, E); output: a node packing W )
+W = ∅, G′ = (V ′ , E ′ ) := G
+while E ′ = ∅
+do
+Choose an arbitrary edge {v,w} in E ′ ;
+W := W ∪ {v};
+Update G′ , that is V ′ := V ′ \ {v, w} and remove from E ′ all edges incident to v or w;
+od
+Exercise 4
+Consider the matching problem. What can you tell about the WCR of the following greedy algorithm
+for matching?
+Algorithm (Input: a graph G = (V, E); output: a matching M )
+M = ∅, G′ = (V ′ , E ′ ) := G
+while E ′ = ∅
+do
+Choose an arbitrary edge {v, w} ∈ E ′ ;
+83
+
+M := M ∪ {v, w};
+Update G′ , that is V ′ := V ′ \ {v, w} and remove from E ′ all edges incident to v or w;
+od
+Exercise 5
+An edge coloring of a graph is a coloring of the edges such that no two edges connected to the same
+vertex have the same color. The edge coloring problem is to minimize the number of colors used to color
+a graph. The greedy algorithm for edge coloring colors edge after edge. When coloring an edge it will
+first consider colors that are already in use before assigning a new color. What can you say concerning
+the WCR of this algorithm?
+Exercise 6
+Can you find instances of the TSP which imply that (together with Theorem 6.4) that WCR(DT)= 2?
+Exercise 7
+A TSP instance is called geometric if each of the cities can be represented by a point in the plane, i.e.
+each city lies at coordinates (xi , yi ), i = 1, . . . , n. What do the result in the previous exercise tell you
+about WCR(DT) for the geometric TSP?
+
+84
+
+Chapter 7
+
+Lagrangian Relaxation
+In this chapter we study a concept called Lagrangian relaxation. The formulation of many practical
+combinatorial optimization problems contains several sets of constraints. Lagrangian relaxation exploits
+this property by disregarding one or more sets of constraints. It turns out that this relaxation allows
+one to obtain lower bounds (upper bounds) for difficult minimization (maximization) problems. In
+Section 7.1 we introduce some terminology, Section 7.2 presents some basic results, in Section 7.3 we
+describe an application, and Section 7.4 concludes this chapter by presenting two ways of strengthening
+the Lagrangian dual.
+
+7.1
+
+Terminology
+
+Consider an integer program
+
+n
+zIP = max {cx| x ∈ S}, where S = {x ∈ Z+
+| Ax ≤ b},
+
+85
+
+which can be rewritten as problem (IP):
+zIP =
+
+max
+
+cx
+
+s.t.
+
+A1 x ≤ b1 (complicating constraints)
+A2 x ≤ b2 (nice constraints)
+n
+x ∈ Z+
+.
+
+(Notice that the superscripts do NOT refer to powers). We are going to assume that A2 x ≤ b2 are
+m − m1 “nice constraints”, say those of an assignment or a network problem. By simply dropping the
+m1 complicating constraints A1 x ≤ b1 , we obtain a relaxation of problem (IP) that is obviously easier to
+solve than problem (IP) itself. There are many problems for which the constraints can be partitioned in
+this way. An example will be given in Section 7.4.
+The idea of dropping constraints can be embedded in a more general framework called Lagrangian relaxation. It is convenient to consider a generalization of problem (IP) called IP(Q), which we formulate as
+follows:
+
+zIP = max
+s.t.
+
+cx
+A1 x ≤ b1
+x ∈ Q.
+
+n
+| A2 x ≤
+However, when we are discussing results that are specific to IP, it is assumed that Q = {x ∈ Z+
+
+b2 } = ∅. Of course, the problem obtained from IP(Q) by dropping the complicating constraints A1 x ≤ b1
+m1
+is much easier to solve than IP(Q). Now, for any λ ∈ R+
+, consider the problem LR(λ):
+
+zLR (λ) = max {z(λ, x)| x ∈ Q}, where z(λ, x) = cx + λ(b1 − A1 x).
+The problem LR(λ) is called the Lagrangian relaxation of IP(Q) with respect to A1 x ≤ b1 . This terminology is used because the vector λ plays a role in LR(λ) similar to the role of Lagrange multipliers in
+constrained optimization problems. By our choice, LR(λ) does not contain the complicating constraints.
+86
+
+Instead we have included these constraints in the objective function with the “penalty” term λ(b1 − A1 x).
+Since λ ≥ 0, violations of A1 x ≤ b1 make the penalty term negative, and thus, intuitively speaking, for
+suitably large values of λ, one would expect that A1 x ≤ b1 will be satisfied.
+Let us formally state the relation between zIP and zLR (λ):
+
+Theorem 7.1 zLR (λ) ≥ zIP for all λ ≥ 0.
+
+Proof: If x is feasible in IP(Q), then x ∈ Q and hence x is feasible for LR(λ). Also, z(λ, x) = cx + λ(b1 −
+A1 x) ≥ cx for all x feasible in IP(Q) since A1 x ≤ b1 and λ ≥ 0.
+✷
+
+Obviously, one is interested in the least upper bound from the infinite family of relaxations {LR(λ)}λ≥0 ,
+denoted here by zLR (λ∗ ), where λ∗ is an optimal solution to the problem called LD:
+
+zLD = min
+
+λ≥0 zLR (λ).
+
+Problem LD is called the Lagrangian dual of IP(Q) with respect to the constraints A1 x ≤ b1 .
+
+7.2
+
+Some results
+
+In this section we illustrate the terminology introduced in the previous section with the following example
+and use this example to derive some results.
+Example: Consider the following problem.
+87
+
+max 7x1 + 2x2
+
+(7.1)
+
+s.t. − x1 + 2x2
+
+≤
+
+4
+
+(7.2)
+
+6x1 + x2
+
+≤
+
+24
+
+(7.3)
+
+−2x1 − 2x2
+
+≤
+
+−7
+
+(7.4)
+
+−x1
+
+≤
+
+−2
+
+(7.5)
+
+x2
+
+≤
+
+4
+
+(7.6)
+
+x
+
+∈
+
+2
+Z+
+.
+
+(7.7)
+
+2
+Let Q = {x ∈ Z+
+| x satisfies (7.3), (7.4), (7.5) and (7.6)}. The Lagrangian relaxation (see Section 7.1)
+
+with respect to −x1 + 2x2 ≤ 4 is:
+
+zLR (λ)
+
+x∈Q [7x1
+
++ 2x2 + λ(4 + x1 − 2x2 )]
+
+=
+
+max
+
+=
+
+max (7 + λ)x1 + (2 − 2λ)x2 + 4λ
+s.t. 6x1 + x2 ≤ 24
+−2x1 − 2x2 ≤ −7
+−x1 ≤ −2
+x2 ≤ 4
+2
+x ∈ Z+
+.
+
+Notice that Q is a finite set of points, which can be written as follows (see Figure 7.1):
+
+{x1 , x2 , x3 , x4 , x5 , x6 , x7 , x8 } = {(2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (3, 4), (4, 0)}.
+
+The example suggests at least two different viewpoints. The first one is to see z(λ, x) = (c − λA1 )x + λb1
+as a linear function of x for fixed λ. It then follows that zLR (λ) can be determined by solving the linear
+program
+88
+
+zLR (λ) = max {z(λ, x)| x ∈ conv(Q)}.
+
+In this example,
+
+2
+conv(Q) = {x ∈ R+
+| − x1 ≤ −2, x2 ≤ 4, −x1 − x2 ≤ −4, 4x1 + x2 ≤ 16}.
+
+In Figure 7.1, solid lines indicate the original constraints, the dots correspond to the feasible integral
+vertices, and the dashed lines correspond to constraints describing conv(Q).
+
+x2
+4
+
+s
+
+3
+
+s
+
+2
+1
+1
+
+s ❊
+❊
+❈ ❊
+s
+
+❊
+❈❊
+
+s
+s ❊
+❅
+❈❊
+❅
+❊
+❅
+❅ ❅
+❊
+❅s
+❈❊
+❅
+❅ ❊
+❅❅
+❅ ❈❊s
+2
+3
+4
+
+x1
+
+Figure 7.1: The region
+Thus, computing zLR (λ) for λ = 0 and λ = 1 gives:
+
+zLR (0) =
+
+max {7x1 + 2x2 )| x ∈ conv(Q)} = z(0, x7 ) = 29,
+
+zLR (1) =
+
+max {8x1 + 4)| x ∈ conv(Q)} = z(1, x8 ) = 36.
+
+As one increases λ from 0, zLR (λ) first decreases until λ =
+89
+
+1
+9
+
+and then it increases. In general we obtain
+
+zLR (λ)
+
+=
+
+z(λ, x7 ) = 29 − λ for 0 ≤ λ ≤
+
+zLR (λ)
+
+=
+
+z(λ, x8 ) = 28 + 8λ for λ ≥
+
+1
+,
+9
+
+1
+.
+9
+
+Hence, we can deduce that zLD = zLR ( 91 ) = z( 19 , x7 ) = z( 91 , x8 ) = 28 98 and λ∗ =
+
+1
+9.
+
+Notice that, for
+
+λ = 91 , x7 as well as x8 are optimal with respect to the constraints determining conv(Q), and hence the
+objective function - which equals 7 91 x1 +
+
+16
+9 x2
+
+for λ =
+
+1
+9
+
+- must be parallel to 4x1 + x2 ≤ 16. All these
+
+calculations can be seen in Figure 7.1.
+The second viewpoint is to consider zLR (λ) to be determined by maximization over a set of discrete
+points, that is,
+zLR (λ) = maxxi ∈Q z(λ, xi ).
+Observe here that for a fixed xi , z(λ, xi ) = cxi + λ(b1 − A1 xi ) is a linear function of λ. See Figure 7.2,
+where we have drawn the linear functions z(λ, xi ) for xi ∈ Q.
+z(λ, xi )
+
+(4)
+✱
+✱
+(8)
+36
+✱
+✱
+ 
+ 
+✱
+ 
+(5)
+ 
+✱
+✟✟
+ 
+✱
+✟
+ 
+✟
+ 
+✱
+ 
+✟✟
+ 
+✱
+ 
+✱ ✟✟
+ 
+ 
+30
+✱
+✭✭✭(6)
+✟✟
+ 
+ 
+✟ ✭✭✭✭✭✭
+ 
+❤
+✱
+❤❤
+❤❤❤
+✟
+✭✭
+❤✭
+✟
+✭
+ 
+❤✱
+❤✭
+✭
+❤❤❤
+✟
+✭✭✟
+✱
+✭
+❤❤❤❤
+✭
+✭
+✟
+❤❤❤❤
+✟✱✱
+❤(7)
+✟✟✱
+✟
+✱
+24 ✱
+✏✏(1)
+✱
+✏✏
+✏
+✏✏
+
+✏✏
+
+✏
+
+✏✏
+(2)
+✏
+✏
+
+✏
+✏
+
+✏
+
+✏✏
+
+18 ✏
+λ
+1
+2 
+ (3)
+
+Figure 7.2: The lines: (1) 18 + 2λ; (2) 20; (3) 22 - 2λ; (4) 23 + 5λ; (5) 25 + 3λ; (6) 27 + λ; (7) 29 - λ;
+(8) 28 + 8λ;
+90
+
+In Figure 7.2 one can read the values of zLR (λ) for any value of λ. We see that zLR (λ) is piecewise linear
+and convex (the heavy lines in Figure 7.2) and that zLD = 28 98 . Formally, one solves the linear program
+
+zLR (λ) = min {w| w ≥ z(λ, xi ) for i = 1, . . . , 8},
+
+which shows that zLR (λ) is the maximum of a finite number of linear functions and is therefore piecewise
+linear and convex.
+We now study how the solution of the Lagrangian dual relates to the solution of the original problem
+IP(Q). Returning to Figure 7.1, notice that when λ = 1/9 we obtain
+
+28
+
+8
+9
+
+1
+1
+= z( , x7 ) = z( , x8 )
+9
+9
+1 8 7 1 8
+= z( , x + x )
+9 9
+9
+1
+1 8
+= z( , (3, 4) + (4, 0))
+9 9
+9
+1 28 32
+1
+28 32
+= z( , ( , ) = z( , x∗ ) with x∗ = ( , )
+9 9 9
+9
+9 9
+1
+∗
+∗
+∗
+= cx + (4 + x1 − 2x2 )
+9
+∗
+= cx .
+
+In other words, by taking a convex combination of points in Q (in this example x7 and x8 ), we obtain a
+point x∗ in conv(Q) satisfying the complicating constraint, for which cx∗ = zLD . This shows that for the
+example we get zLD = max {cx| A1 x ≤ b1 , x ∈ conv(Q)}. And in fact this holds in general as witnessed
+by the following theorem which we state without proof.
+
+Theorem 7.2
+zLD = max {cx| A1 x ≤ b1 , x ∈ conv(Q)}.
+
+An interesting question is of course: how good is the bound zLD ? In general, the difference between
+zLD and zIP (called the duality gap) depends on the sizes of conv(S) (which determines zIP ), conv(Q) ∩
+91
+
+{x| A1 x ≤ b1 } (which determines zLD ) and the objective coefficients c. A duality gap of 0 can be
+characterized as follows.
+
+Theorem 7.3 zLD = zIP for all c if and only if
+n
+n
+conv{Q ∩ {x ∈ R+
+| A1 x ≤ b1 }} = conv(Q) ∩ {x ∈ R+
+| A1 x ≤ b1 }.
+
+Another interesting difference is the difference between zLD and the value of the LP-relaxation, denoted
+n
+by zLP . Notice that this only makes sense when Q = {x ∈ Z+
+| A2 x ≤ b2 }. We can characterize the case
+
+where zLP = zLD .
+
+n
+Theorem 7.4 zLD = zLP for all c if all the extreme points of {x ∈ R+
+| A2 x ≤ b2 } are integral.
+
+It is easily verified that the conditions mentioned in the two previous theorems are not fulfilled by our
+2
+example. Indeed, we have 28 = zIP < zLD = 28 98 < zLP = 30 11
+. (Check this !).
+
+In fact, a more natural choice of complicating constraints in our example would lead to different results
+2
+2
+for zLD . If we set Q = {x ∈ Z+
+| − x1 ≤ −2, x2 ≤ 4}, we find that {x ∈ R+
+| − x1 ≤ −2, x2 ≤ 4} only has
+
+integral extreme points so that by our latest theorem, this Lagrangian relaxation would terminate with
+2
+.
+zLD = zLP = 30 11
+
+Summarizing, we have
+
+n
+n
+conv(S) ⊆ conv(Q) ∩ {x ∈ R+
+| A1 x ≤ b1 } ⊆ {x ∈ R+
+| Ax ≤ b}.
+
+This implies that zIP ≤ zLD ≤ zLP . But because some faces of the respective polyhedra can coincide,
+we may obtain zIP = zLD or zLD = zLP for a particular c even if the conditions of the two previous
+theorems do not hold. Below, we give at table indicating the possibilities using four different objective
+functions c1 , c2 , c3 and c4 .
+92
+
+Objective functions
+
+objective values
+
+c1
+
+zIP = zLD = zLP
+
+2
+
+zIP < zLD = zLP
+
+c3
+
+zIP < zLD < zLP
+
+4
+
+zIP = zLD < zLP
+
+c
+
+c
+
+7.3
+
+An application
+
+Suppose there is a set of n jobs to be assigned to a set of n workers, with N = {1, . . . , n}. Suppose
+further that
+• cij is the value of assigning worker i to job j,
+• tij is the cost of training worker i to do job j, and
+• there is a training budget of b units.
+We wish to maximize the total value of the assignment subject to the budget constraint, that is
+
+max
+
+cij
+
+xij
+
+(7.8)
+
+xij
+
+=
+
+1 for i ∈ N
+
+(7.9)
+
+xij
+
+=
+
+1 for j ∈ N
+
+(7.10)
+
+tij xij
+
+≤
+
+b
+
+(7.11)
+
+x
+
+∈
+
+{0, 1}.
+
+(7.12)
+
+i∈N j∈N
+
+j∈N
+
+i∈N
+
+j∈N i∈N
+
+If we wish to use Lagrangian relaxation there are different options to consider. Notice that in each of
+the following four options the relaxed problem LR(λ) is considerably easier to solve than the original
+problem.
+1
+1. Lagrangian relaxation with respect to (7.11). Then LR1 (λ), λ ∈ R+
+is an assignment problem with
+
+objective function
+93
+
+(cij − λtij )xij .
+
+λb +
+i∈N j∈N
+
+2. Lagrangian relaxation with respect to (7.9) and (7.10). Then LR2 (u, v), u ∈ Rn , v ∈ Rn is a
+knapsack problem with objective function
+
+ui +
+i∈N
+
+(cij − ui − vj )xij .
+
+vj +
+j∈N
+
+i∈N j∈N
+
+3. Lagrangian relaxation with respect to (7.9) or (7.10), say (7.9). Then LR3 (u), u ∈ Rn is a knapsack
+problem with so-called generalized upper bound constraints and with objective function
+
+(cij − ui )xij .
+
+ui +
+i∈N
+
+i∈N j∈N
+
+4. Lagrangian relaxation with respect to (7.9) or (7.10) and (7.11), say (7.9) and (7.11). Only gener1
+with objective function
+alized upper bound constraints remain. Thus, LR4 (u, λ), u ∈ Rn , λ ∈ R+
+
+λb +
+
+(cij − ui − λtij )xij ,
+
+ui +
+i∈N
+
+i∈N j∈N
+
+which is trivial to solve. (For each j, an i is chosen to maximize cij −ui −λtij , and the corresponding
+xij is set to 1).
+
+In choosing a relaxation there are two major questions to consider: how strong is the lower bound zLD
+and how difficult to solve is the Lagrangian dual (LD)? Let us here only consider the bounds.
+When Q is a set of assignment constraints or a set of generalized upper bound constraints, we have that
+4
+1
+= zLP . Since
+= zLD
+zLD
+
+94
+
+2
+
+Q3 = {x ∈ {0, 1}n |
+
+xij = 1 for j ∈ N,
+i∈N
+
+tij xij ≤ b}
+i∈N j∈N
+
+2
+
+⊂ Q2 = {x ∈ {0, 1}n |
+
+tij xij ≤ b}
+i∈N j∈N
+
+2
+
+n
+and conv(Q2 ) ⊂ {x ∈ R+
+|
+
+tij xij ≤ b, xij ≤ 1 for i, j ∈ N },
+i∈N j∈N
+
+we have
+3
+2
+1
+4
+zIP ≤ zLD
+≤ zLD
+≤ zLD
+= zLD
+= zLP ,
+
+and each of the inequalities is strict for some objective function.
+
+7.4
+
+Strengthening the Lagrangian dual
+
+We now consider two ways of strengthening the Lagrangian dual of problem IP. The first approach yields
+a dual whose optimal value equals
+n
+n
+max{cx| x ∈ conv(x ∈ Z+
+| A1 x ≤ b1 ) ∩ conv(x ∈ Z+
+| A2 x ≤ b2 )}.
+
+This dual is obtained by applying Lagrangian duality to a reformulation of IP, which is called RIP:
+zIP = max cx1
+A1 x1
+
+≤ b1
+
+A2 x2
+
+≤ b2
+
+x1 − x2
+
+= 0
+
+x1
+
+∈
+
+n
+Z+
+
+x2
+
+∈
+
+n
+Z+
+.
+
+95
+
+Taking now x1 − x2 = 0 as complicating constraints, we obtain the Lagrangian dual of RIP:
+zCSD = minu {max{(c
+
+−
+
+u)x1 + ux2 }}
+
+A1 x1
+
+≤
+
+b1
+
+A2 x2
+
+≤
+
+b2
+
+x1
+
+∈
+
+n
+Z+
+
+x2
+
+∈
+
+n
+Z+
+
+= minc1 +c2 =c {
+
+max
+
+c1 x1 + max c2 x2 }
+
+A1 x1
+
+≤
+
+b1
+
+A2 x2
+
+≤
+
+b2
+
+x1
+
+∈
+
+n
+Z+
+
+x2
+
+∈
+
+n
+Z+
+,
+
+where u = c2 .
+A polyhedral interpretation of the dual is stated in the next theorem.
+
+n
+n
+| A2 x ≤ b2 
+| A1 x ≤ b1  ∩ convx ∈ Z+
+Theorem 7.5 zCSD = maxcx| x ∈ convx ∈ Z+
+
+and zCSD ≤ zLD .
+
+The technique described is referred to here with CS since this technique has been called cost splitting.
+The technique is useful when
+
+n
+n
+| A1 x ≤ b1 , so for some objective functions c we obtain
+| A1 x ≤ b1  ⊂ x ∈ R+
+• convx ∈ Z+
+
+zCSD < zLD .
+• The sets of constraints Ai x ≤ bi are simple to deal with separately; that is, the difficulty is caused
+by their interaction.
+
+In our example, we could take A1 x ≤ b1 to be constraint set (7.9) and (7.11) and take A2 x ≤ b2 to be
+3
+with the inequality strict for some objective
+constraint sets (7.10) and (7.11). This yields zCSD ≤ zLD
+
+functions c.
+96
+
+Another approach that domiantes the Lagrangian dual is the “surrogate” dual. Starting from IP(Q),
+m1
+with weights λ ∈ R+
+for the complicating constraints, consider the following problem called SD(λ).
+
+zSD (λ) = max{cx| λA1 x ≤ λb1 , x ∈ Q}.
+
+The problem SD(λ) is called the surrogate relaxation of IP(Q) with respect to A1 x ≤ b1 . SD(λ) contains
+n
+a single complicating constraint. For instance when Q = Z+
+the surrogate relaxation is a knapsack
+
+problem. The surrogate dual of IP(Q) is the problem denoted by SD.
+
+zSD = min
+
+λ≥0 zSD (λ).
+
+Although the surrogate dual can be used computationally, it does not have such nice theoretical properties
+as the Lagrangian dual.
+
+Exercises
+Exercise 1
+Consider the following problem.
+max 2x1 + 5x2
+4x1 + x2
+
+≤
+
+28
+
+x1 + 4x2
+
+≤
+
+27
+
+x1 − 5x2
+
+≤
+
+1
+
+x
+
+∈
+
+2
+Z+
+.
+
+(i) Show that if any two constraints are dualized, the value of the Lagrangian dual equals the value of
+the LP-relaxation.
+(ii) Find an objective function for which (i) is false.
+97
+
+(iii) Show that if any single constraint is dualized, the value of the Lagrangian dual is an improvement
+compared to the value of the LP-relaxation.
+(iv) Apply cost-splitting to get a better Lagrangian dual.
+
+Exercise 2
+Construct two Lagrangian duals for the generalized assignment problem and discuss their merits.
+
+max
+s.t.
+
+j cij xij
+
+i
+j
+
+xij ≤ 1 for i ∈ M
+
+i li xij
+
+≤ bj for j ∈ N
+2
+
+x ∈ {0, 1}n .
+
+\appendix
+\chapter{Mathematics and Notation}
 
 \bibliographystyle{alpha}
 \bibliography{biblio}
