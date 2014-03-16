@@ -2,12 +2,10 @@
 \usepackage[dutch]{babel}
 \usepackage{../SharedData/brackets,../SharedData/Haskelllogo}
 \usepackage[pdftitle={Poster Automaten en Berekenbaarheid},pdfauthor={Willem Van Onsem},pdfsubject={Berekenbaarheid},pdfkeywords={Turing, Reguliere Expressie, Automaten, Berekenbaarheid}]{hyperref}
-\definecolor{backg}{rgb}{0.99,0.96,0.9}
 \definecolor{redback}{rgb}{1,0.88,0.85}
 \definecolor{greenback}{rgb}{0.9,0.98,0.85}
 \definecolor{blueback}{rgb}{0.9,0.88,0.95}
 \definecolor{orangeback}{rgb}{1.0,0.93,0.85}
-\pagecolor{backg}
 \newcommand{\ssfunc}[1]{\ensuremath{#1:\left\{0,1\right\}^*\rightarrow\left\{0,1\right\}^*}}
 \newcommand{\NNfunc}[1]{\ensuremath{#1:\NNN\rightarrow\NNN}}
 \newcommand{\slang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^*}}
@@ -35,11 +33,12 @@
 \newcounter{tmpA}
 \newcounter{tmpB}
 
-\newenvironment{twoitemize}{\begin{multicols}{2}\begin{itemize}}{\end{itemize}\end{multicols}}
+\title{Automaten en Berekenbaarheid}
+\suptitle{Samenvatting van}
+\author{W.~Van~Onsem\\KU~Leuven\\Departement~Computerwetenschappen\\Declaratieve~Talen~en~Artifici\"ele~Intelligentie~(DTAI)}
+\disclaimer{\textbf{Disclaimer}: Er is geen garantie dat de volledige inhoud gedekt wordt of correct wordt voorgesteld.}
 
-\begin{document}
-\begin{center}
-\begin{tikzpicture}[infl/.style={dashed},special/.style={snake},decoration={brace,amplitude=20}]
+\begin{theposter}
 \def\dma{5 mm};
 \def\mid{594.5 mm};
 \def\dyl{100.0 mm};
@@ -53,11 +52,6 @@
 \def\dywq{275.0 mm};
 \def\dywu{220.0 mm};
 \def\dywh{183.3 mm};
-\node[scale=4] (TITLE) at (\mid,0) {\Huge{\textsc{Automaten en Berekenbaarheid}}};
-\node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{Samenvatting van}}};
-\node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{../SharedData/sedes.pdf}};
-\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{8 cm}{W.~Van~Onsem\\KU~Leuven\\Departement~Computerwetenschappen\\Declaratieve~Talen~en~Artifici\"ele~Intelligentie~(DTAI)}};\node[anchor=west] (DISCLAIM) at ($(AUTHOR.east)+(1 cm,0)$) {\parbox{8 cm}{\textbf{Disclaimer}: Er is geen garantie dat de volledige inhoud gedekt wordt of correct wordt voorgesteld.}};
-\node[anchor=east] (BAR) at ($(TITLE.west)+(-1 cm,0)$) {\includegraphics{bar.eps}};
 \begin{scope}[yshift=-3*\dylm]
 \begin{pgfonlayer}{background}
 
@@ -131,6 +125,4 @@
   }
   \end{scope}
 }
-\end{tikzpicture}
-\end{center}
-\end{document}
+\end{theposter}
