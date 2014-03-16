@@ -1,6 +1,10 @@
-\ProvidesPackage{preziposters}
-\RequirePackage{color,amsfonts,tikz,amssymb,graphicx,enumitem,xparse,ifthen,epstopdf}
+\ProvidesClass{preziposters}
+\LoadClassWithOptions{article}
+
+\RequirePackage[a0paper,landscape,margin=1cm,centering]{geometry}
+\RequirePackage{color,amsfonts,tikz,amssymb,graphicx,enumitem,xparse,ifthen,epstopdf,multicol,tablists,catchfile,varwidth}
 \usetikzlibrary{fit,patterns,snakes,calc,decorations,decorations.text,positioning,decorations.pathreplacing,matrix,arrows,automata}
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{classes}

@@ -1,10 +1,6 @@
-\documentclass{article}
-\usepackage[a0paper,landscape,margin=1cm,centering]{geometry}
+\documentclass{../SharedData/preziposters}
 \usepackage[dutch]{babel}
-\usepackage{../SharedData/preziposters}
-\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \usepackage{../SharedData/brackets,../SharedData/Haskelllogo}
-\usepackage{multicol,tablists}
 \usepackage[pdftitle={Poster Automaten en Berekenbaarheid},pdfauthor={Willem Van Onsem},pdfsubject={Berekenbaarheid},pdfkeywords={Turing, Reguliere Expressie, Automaten, Berekenbaarheid}]{hyperref}
 \definecolor{backg}{rgb}{0.99,0.96,0.9}
 \definecolor{redback}{rgb}{1,0.88,0.85}
@@ -12,7 +8,6 @@
 \definecolor{blueback}{rgb}{0.9,0.88,0.95}
 \definecolor{orangeback}{rgb}{1.0,0.93,0.85}
 \pagecolor{backg}
-\usepackage{catchfile,varwidth}
 \newcommand{\ssfunc}[1]{\ensuremath{#1:\left\{0,1\right\}^*\rightarrow\left\{0,1\right\}^*}}
 \newcommand{\NNfunc}[1]{\ensuremath{#1:\NNN\rightarrow\NNN}}
 \newcommand{\slang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^*}}
