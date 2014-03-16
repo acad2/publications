@@ -30,7 +30,7 @@
 	\begin{document}
 	\begin{center}
 	\begin{tikzpicture}[infl/.style={dashed},special/.style={snake},decoration={brace,amplitude=20}]
-	\def\midx{594.5 mm}
+	\def\midx{594.5 mm};
 	\node[scale=4] (TITLE) at (\midx,0) {\Huge{\textsc{\@title}}};
 	\node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{\thesuptitle}}};
 	\node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{\thelogo}};
