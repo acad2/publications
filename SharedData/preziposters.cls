@@ -1,6 +1,10 @@
-\ProvidesPackage{preziposters}
-\RequirePackage{color,amsfonts,tikz,amssymb,graphicx,enumitem,xparse,ifthen,epstopdf}
+\ProvidesClass{preziposters}
+\LoadClassWithOptions{article}
+
+\RequirePackage[a0paper,landscape,margin=1cm,centering]{geometry}
+\RequirePackage{color,amsfonts,tikz,amssymb,graphicx,enumitem,xparse,ifthen,epstopdf,multicol,tablists,catchfile,varwidth}
 \usetikzlibrary{fit,patterns,snakes,calc,decorations,decorations.text,positioning,decorations.pathreplacing,matrix,arrows,automata}
+\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
 \pgfdeclarelayer{background}
 \pgfdeclarelayer{classes}
@@ -8,6 +12,36 @@
 
 \newcounter{postersTmpA}
 \newcounter{postersTmpB}
+
+\newcommand{\thesuptitle}{}
+\newcommand{\thelogo}{../SharedData/sedes.pdf}
+\newcommand{\thedisclaimer}{}
+\newcommand{\thebarcode}{\includegraphics{bar.eps}}
+\newcommand{\suptitle}[1]{\renewcommand{\thesuptitle}{#1}}
+\newcommand{\logo}[1]{\renewcommand{\thesuplogo}{#1}}
+\newcommand{\barcode}[1]{\renewcommand{\thebarcode}{#1}}
+\newcommand{\disclaimer}[1]{\renewcommand{\thedisclaimer}{#1}}
+
+\definecolor{backg}{rgb}{0.99,0.96,0.9}
+
+\newenvironment{twoitemize}{\begin{multicols}{2}\begin{itemize}}{\end{itemize}\end{multicols}}
+\newenvironment{theposter}{
+	\pagecolor{backg}
+	\begin{document}
+	\begin{center}
+	\begin{tikzpicture}[infl/.style={dashed},special/.style={snake},decoration={brace,amplitude=20}]
+	\def\midx{594.5 mm};
+	\node[scale=4] (TITLE) at (\midx,0) {\Huge{\textsc{\@title}}};
+	\node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{\thesuptitle}}};
+	\node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{\thelogo}};
+	\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{8 cm}{\@author}};
+	\node[anchor=west] (DISCLAIM) at ($(AUTHOR.east)+(1 cm,0)$) {\parbox{8 cm}{\thedisclaimer}};
+	\node[anchor=east] (BAR) at ($(TITLE.west)+(-1 cm,0)$) {\thebarcode};
+}{
+	\end{tikzpicture}
+	\end{center}
+	\end{document}
+}
 
 \DeclareDocumentCommand{\defgroup}{ O{5mm} O{0mm} O{0mm} O{} m m m m m}{\begin{scope}[xshift=#2,yshift=#3]\filldraw[#8!40!backg,draw=black,very thick,rounded corners] (0.5*#1,0.5*#1) rectangle ++(#5-#1,#6-#1);\draw (0.5*#1,#6-0.5*#1) node[anchor=north west]{\Huge{\bf #7}};\coordinate (#9) at (0.5*#1,#6-0.5*#1);\coordinate (#9-LT) at (0.5*#1,#6-0.5*#1);\coordinate (#9-RT) at (#5-0.5*#1,#6-0.5*#1);\coordinate (#9-LB) at (0.5*#1,0.5*#1);\coordinate (#9-RB) at (#5-0.5*#1,0.5*#1);\coordinate (ROW-#9-B) at (0,0.5*#1);\coordinate (ROW-#9-T) at (0,#6-0.5*#1);\coordinate (COL-#9-L) at (0.5*#1,0);\coordinate (COL-#9-R) at (#5-0.5*#1,0);\end{scope}\begin{scope}[shift={(#9-RB)}]\node[anchor=south east] (TURLOG) {\resizebox{!}{4 cm}{#4}};\end{scope}}
 \DeclareDocumentCommand{\grpholow}{ O{0.5} O{2.00} O{1.00} m m m}{\draw [decorate,line width=3pt] ($(COL-#5)+(-0.5*#1,-#1)$) -- ($(COL-#4)+(0.5*#1,-#1)$);\draw ($0.5*(COL-#4)+0.5*(COL-#5)+(0,-#2)$) node[scale=#3] {\Huge{\bf #6}};}
