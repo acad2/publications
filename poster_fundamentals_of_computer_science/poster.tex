@@ -1,6 +1,6 @@
 \documentclass{../SharedData/preziposters}
-\usepackage[dutch]{babel}
-\usepackage{../SharedData/brackets,../SharedData/Haskelllogo}
+\usepackage{../SharedData/brackets}
+\usepackage[pdftitle={Poster Fundamentals of Computer Science},pdfauthor={Willem Van Onsem},pdfsubject={Computability},pdfkeywords={Turing, Regular Expression, Automaton, Computability}]{hyperref}
 \title{Fundamentals of Computer Science}
 \author{W.~Van~Onsem\\KU~Leuven\\Departement~of~Computer~Science~(DTAI)}
 \suptitle{Summary}
@@ -15,6 +15,7 @@
 
 \def\dma{5 mm};
 \def\mid{594.5 mm};
+
 \def\dyl{100.0 mm};
 \def\dylm{5.0 mm};
 \def\dylma{105.0 mm};
@@ -27,11 +28,22 @@
 \def\dywu{220.0 mm};
 \def\dywh{183.3 mm};
 
+\def\dyh{856.0 mm};
+\def\dyc{190.0 mm};
+
 \begin{scope}[yshift=-3*\dylm]
 \begin{pgfonlayer}{background}
 
-\defgroup[\dma][0][-\dylhma][Foo]{\dyw}{0.6*\dyl}{Bar}{orange}{FooBar}
+\defgroup[\dma][0][-\dyc][]{\dyw}{\dyc}{Automata and Formal Languages}{red}{AUTOMATA}
+\defgroup[\dma][0][-2*\dyc][]{\dyw}{\dyc}{Computability Theory}{orange}{COMPUTAB}
+\defgroup[\dma][0][-3*\dyc][]{\dyw}{\dyc}{Graph Theory}{yellow}{GRAPHTHE}
+\defgroup[\dma][0][-4*\dyc][]{\dyw}{\dyc}{Complexity Theory}{green}{COMPLEXI}
 
 \end{pgfonlayer}
+
+\CatchFileDef{\tempa}{defs.tex}{}
+  \edef\tempb{\unexpanded{\foreach \l/\o/\x/\y/\twid/\xa/\xb/\xc in }{\unexpanded\expandafter{\tempa}}}
+  \tempb {\titleminibox[(\o)][\l][\x][\y][\twid]{\xa}{\xb}{\xc}}
+
 \end{scope}
 \end{theposter}

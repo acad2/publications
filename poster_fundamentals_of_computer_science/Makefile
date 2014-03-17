@@ -3,7 +3,7 @@ all : *.tex Makefile ../SharedData/*.sty ../SharedData/*.cls
 	make clean
 poster.pdf : *.tex Makefile ../SharedData/*.sty ../SharedData/*.cls
 	qrencode -o "bar.eps" -l H -t EPS "http://goo.gl/iIltNY"
-	pdflatex --shell-escape --interaction nonstopmode poster.tex >/dev/null 2>/dev/null
+	pdflatex --shell-escape --interaction nonstopmode poster.tex
 diagnostic :
 	pdflatex --shell-escape poster.tex
 upload : *.tex Makefile ../SharedData/*.sty
