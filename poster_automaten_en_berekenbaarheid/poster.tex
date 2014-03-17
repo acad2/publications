@@ -95,19 +95,24 @@
   \edef\tempb{\unexpanded{\foreach \f/\fa/\fb/\fc/\fd/\fe/\ff in }{\unexpanded\expandafter{\tempa}}}
   \tempb {\begin{scope}[shift={(\f-C-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc{\fa}{\fb}{\fc}{\fd}{\fe}{\ff}\end{scope}}
 
-\begin{scope}[shift={(LEGEND-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc[testlang]{TURING}{CTXSE}{CTXFR}{REGEX}{TURING}{CTXSE}\end{scope}
-\begin{scope}[shift={(LEGEND-LB)},xshift=5.5 cm,yshift=2.25 cm]\colorlegend{Turing-beslisbaar/red,Context-senstief/purple,Contextvrij/blue,Regulier/green}\end{scope}
+\begin{scope}[shift={(LEGEND-LB)},xshift=4 cm,yshift=1.5 cm]\innerc[testlang]{TURING}{CTXSE}{CTXFR}{REGEX}{TURING}{CTXSE}\end{scope}
+\begin{scope}[shift={(LEGEND-LB)},xshift=8.5 cm,yshift=2.25 cm]\colorlegend[L2]{Turing-beslisbaar/red,Context-senstief/purple,Contextvrij/blue,Regulier/green}\end{scope}
 
-\foreach \x/\t in {1/Doorsnede,2/Unie,3/Complement,4/Concatenatie,5/Omkeren,6/Kleene-ster} {
+\foreach \x/\t in {3/Complement,4/Concatenatie,5/Omkeren} {
   \draw[<-,thick] (testlang-S\x) -- ++(1.25,0) node[anchor=west]{\t};
 }
+\foreach \x/\t in {1/Doorsnede,2/Unie,6/Kleene-ster} {
+  \draw[<-,thick] (testlang-S\x) -- ++(-1.25,0) node[anchor=east]{\t};
+}
+
+\groupbox{(testlang-S1) (L2)}{Interne operatie?}
 
 \input{grps.tex}
 
 \end{scope}
 \begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
 \comput[testlang][2.00]{$L$}{2}
-\begin{scope}[xshift=-3 cm,yshift=-0.25 cm]\colorlegend{ja/green,nee/red}\end{scope}
+\begin{scope}[xshift=-3 cm,yshift=-0.25 cm]\colorlegend[L1]{ja/green,nee/red}\end{scope}
 \draw[<-,thick] (testlang-L) -- ++(-1.25,0) node[anchor=east]{Taal};
 \draw[<-,thick] (testlang-S1) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
 \draw[<-,thick] (testlang-S2) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
