@@ -95,23 +95,29 @@
   \edef\tempb{\unexpanded{\foreach \f/\fa/\fb/\fc/\fd/\fe/\ff in }{\unexpanded\expandafter{\tempa}}}
   \tempb {\begin{scope}[shift={(\f-C-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc{\fa}{\fb}{\fc}{\fd}{\fe}{\ff}\end{scope}}
 
-\begin{scope}[shift={(LEGEND-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc[testlang]{TURING}{CTXSE}{CTXFR}{REGEX}{TURING}{CTXSE}\end{scope}
-\begin{scope}[shift={(LEGEND-LB)},xshift=5.5 cm,yshift=2.25 cm]\colorlegend{Turing-beslisbaar/red,Context-senstief/purple,Contextvrij/blue,Regulier/green}\end{scope}
+\begin{scope}[shift={(LEGEND-LB)},xshift=4 cm,yshift=1.5 cm]\innerc[testlang]{TURING}{CTXSE}{CTXFR}{REGEX}{TURING}{CTXSE}\coordinate (L2L) at (-1.5,0);\coordinate (L2R) at (1.5,0);\end{scope}
+\begin{scope}[shift={(LEGEND-LB)},xshift=8.5 cm,yshift=2.25 cm]\colorlegend[L2]{Turing-beslisbaar/red/a,Context-senstief/purple/b,Contextvrij/blue/c,Regulier/green/d}\end{scope}
 
-\foreach \x/\t in {1/Doorsnede,2/Unie,3/Complement,4/Concatenatie,5/Omkeren,6/Kleene-ster} {
-  \draw[<-,thick] (testlang-S\x) -- ++(1.25,0) node[anchor=west]{\t};
+\foreach \x/\t in {3/Complement,4/Concatenatie,5/Omkeren} {
+  \draw[<-,thick] (testlang-S\x) -- (testlang-S\x -| L2R) node[anchor=west] (LX\x) {\t};
 }
+\foreach \x/\t in {1/Doorsnede,2/Unie,6/Kleene-ster} {
+  \draw[<-,thick] (testlang-S\x) -- (testlang-S\x -| L2L) node[anchor=east] (LX\x) {\t};
+}
+
+\groupbox{(testlang-S1) (L2-a) (L2-b) (L2-c) (L2-d) (LX1) (LX2) (LX3) (LX4) (LX5) (LX6)}{Interne operatie?}
 
 \input{grps.tex}
 
 \end{scope}
 \begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
 \comput[testlang][2.00]{$L$}{2}
-\begin{scope}[xshift=-3 cm,yshift=-0.25 cm]\colorlegend{ja/green,nee/red}\end{scope}
-\draw[<-,thick] (testlang-L) -- ++(-1.25,0) node[anchor=east]{Taal};
-\draw[<-,thick] (testlang-S1) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
-\draw[<-,thick] (testlang-S2) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
+\begin{scope}[xshift=-3 cm,yshift=-0.25 cm]\colorlegend[L1]{ja/green/a,nee/red/b}\end{scope}
+\draw[<-,thick] (testlang-L) -- ++(-1.25,0) node[anchor=east] (LY1) {Taal};
+\draw[<-,thick] (testlang-S1) -- ++(-1.25,0) node[anchor=east] (LY2) {Herkenbaar};
+\draw[<-,thick] (testlang-S2) -- ++(1.25,0) node[anchor=west] (LY3) {Co-herkenbaar};
 \end{scope}
+\groupbox{(testlang) (L1-a) (L1-b) (LY1) (LY2) (LY3)}{Beslisbaar?}
 \foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3}, CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1}, CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/1,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/1,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {
   \begin{scope}[shift={(\c-RT)},xshift=-7.5 cm,yshift=-2.5 cm]
   \setcounter{tmpA}{0}
