@@ -1,5 +1,23 @@
 \ProvidesPackage{brackets}
-\RequirePackage{amsfonts,amsmath,booktabs}
+\RequirePackage{amsfonts,amsmath,booktabs,tikz}
+\usetikzlibrary{calc}
+
+\makeatletter
+\pgfmathdeclarefunction{sign}{1}{%
+  \begingroup
+    \ifdim#1pt>\z@
+      \def\pgfmathresult{1}%
+    \else
+      \ifdim#1pt=\z@
+        \def\pgfmathresult{0}%
+      \else
+        \def\pgfmathresult{-1}%
+      \fi
+    \fi
+    \pgfmath@smuggleone\pgfmathresult
+  \endgroup
+}
+\makeatother
 
 \newcommand{\brak}[1]{\ensuremath{\left( #1 \right)}}
 \newcommand{\tupl}[1]{\ensuremath{\left\langle #1 \right\rangle}}

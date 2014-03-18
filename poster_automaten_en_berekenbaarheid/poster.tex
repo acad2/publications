@@ -1,18 +1,11 @@
-\documentclass{article}
-\usepackage[a0paper,landscape,margin=1cm,centering]{geometry}
+\documentclass{../SharedData/preziposters}
 \usepackage[dutch]{babel}
-\usepackage{../SharedData/preziposters}
-\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 \usepackage{../SharedData/brackets,../SharedData/Haskelllogo}
-\usepackage{multicol,tablists}
 \usepackage[pdftitle={Poster Automaten en Berekenbaarheid},pdfauthor={Willem Van Onsem},pdfsubject={Berekenbaarheid},pdfkeywords={Turing, Reguliere Expressie, Automaten, Berekenbaarheid}]{hyperref}
-\definecolor{backg}{rgb}{0.99,0.96,0.9}
 \definecolor{redback}{rgb}{1,0.88,0.85}
 \definecolor{greenback}{rgb}{0.9,0.98,0.85}
 \definecolor{blueback}{rgb}{0.9,0.88,0.95}
 \definecolor{orangeback}{rgb}{1.0,0.93,0.85}
-\pagecolor{backg}
-\usepackage{catchfile,varwidth}
 \newcommand{\ssfunc}[1]{\ensuremath{#1:\left\{0,1\right\}^*\rightarrow\left\{0,1\right\}^*}}
 \newcommand{\NNfunc}[1]{\ensuremath{#1:\NNN\rightarrow\NNN}}
 \newcommand{\slang}[1]{\ensuremath{#1\subseteq\left\{0,1\right\}^*}}
@@ -40,11 +33,12 @@
 \newcounter{tmpA}
 \newcounter{tmpB}
 
-\newenvironment{twoitemize}{\begin{multicols}{2}\begin{itemize}}{\end{itemize}\end{multicols}}
+\title{Automaten en Berekenbaarheid}
+\suptitle{Samenvatting van}
+\author{W.~Van~Onsem\\KU~Leuven\\Departement~Computerwetenschappen\\Declaratieve~Talen~en~Artifici\"ele~Intelligentie~(DTAI)}
+\disclaimer{\textbf{Disclaimer}: Er is geen garantie dat de volledige inhoud gedekt wordt of correct wordt voorgesteld.}
 
-\begin{document}
-\begin{center}
-\begin{tikzpicture}[infl/.style={dashed},special/.style={snake},decoration={brace,amplitude=20}]
+\begin{theposter}
 \def\dma{5 mm};
 \def\mid{594.5 mm};
 \def\dyl{100.0 mm};
@@ -58,11 +52,6 @@
 \def\dywq{275.0 mm};
 \def\dywu{220.0 mm};
 \def\dywh{183.3 mm};
-\node[scale=4] (TITLE) at (\mid,0) {\Huge{\textsc{Automaten en Berekenbaarheid}}};
-\node[scale=4,anchor=south west] (SUPTITLE) at (TITLE.north west) {\large{\textsc{Samenvatting van}}};
-\node[anchor=west,scale=0.02] (SEDES) at (TITLE.east) {\includegraphics{../SharedData/sedes.pdf}};
-\node[anchor=west] (AUTHOR) at ($(SEDES.east)+(1 cm,0)$) {\parbox{8 cm}{W.~Van~Onsem\\KU~Leuven\\Departement~Computerwetenschappen\\Declaratieve~Talen~en~Artifici\"ele~Intelligentie~(DTAI)}};\node[anchor=west] (DISCLAIM) at ($(AUTHOR.east)+(1 cm,0)$) {\parbox{8 cm}{\textbf{Disclaimer}: Er is geen garantie dat de volledige inhoud gedekt wordt of correct wordt voorgesteld.}};
-\node[anchor=east] (BAR) at ($(TITLE.west)+(-1 cm,0)$) {\includegraphics{bar.eps}};
 \begin{scope}[yshift=-3*\dylm]
 \begin{pgfonlayer}{background}
 
@@ -106,23 +95,29 @@
   \edef\tempb{\unexpanded{\foreach \f/\fa/\fb/\fc/\fd/\fe/\ff in }{\unexpanded\expandafter{\tempa}}}
   \tempb {\begin{scope}[shift={(\f-C-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc{\fa}{\fb}{\fc}{\fd}{\fe}{\ff}\end{scope}}
 
-\begin{scope}[shift={(LEGEND-LB)},xshift=1.5 cm,yshift=1.5 cm]\innerc[testlang]{TURING}{CTXSE}{CTXFR}{REGEX}{TURING}{CTXSE}\end{scope}
-\begin{scope}[shift={(LEGEND-LB)},xshift=5.5 cm,yshift=2.25 cm]\colorlegend{Turing-beslisbaar/red,Context-senstief/purple,Contextvrij/blue,Regulier/green}\end{scope}
+\begin{scope}[shift={(LEGEND-LB)},xshift=4 cm,yshift=1.5 cm]\innerc[testlang]{TURING}{CTXSE}{CTXFR}{REGEX}{TURING}{CTXSE}\coordinate (L2L) at (-1.5,0);\coordinate (L2R) at (1.5,0);\end{scope}
+\begin{scope}[shift={(LEGEND-LB)},xshift=8.5 cm,yshift=2.25 cm]\colorlegend[L2]{Turing-beslisbaar/red/a,Context-senstief/purple/b,Contextvrij/blue/c,Regulier/green/d}\end{scope}
 
-\foreach \x/\t in {1/Doorsnede,2/Unie,3/Complement,4/Concatenatie,5/Omkeren,6/Kleene-ster} {
-  \draw[<-,thick] (testlang-S\x) -- ++(1.25,0) node[anchor=west]{\t};
+\foreach \x/\t in {3/Complement,4/Concatenatie,5/Omkeren} {
+  \draw[<-,thick] (testlang-S\x) -- (testlang-S\x -| L2R) node[anchor=west] (LX\x) {\t};
 }
+\foreach \x/\t in {1/Doorsnede,2/Unie,6/Kleene-ster} {
+  \draw[<-,thick] (testlang-S\x) -- (testlang-S\x -| L2L) node[anchor=east] (LX\x) {\t};
+}
+
+\groupbox{(testlang-S1) (L2-a) (L2-b) (L2-c) (L2-d) (LX1) (LX2) (LX3) (LX4) (LX5) (LX6)}{Inwendige operator?}
 
 \input{grps.tex}
 
 \end{scope}
 \begin{scope}[shift={(PROB)},xshift=29 cm,yshift=-7.5 cm]
 \comput[testlang][2.00]{$L$}{2}
-\begin{scope}[xshift=-3 cm,yshift=-0.25 cm]\colorlegend{ja/green,nee/red}\end{scope}
-\draw[<-,thick] (testlang-L) -- ++(-1.25,0) node[anchor=east]{Taal};
-\draw[<-,thick] (testlang-S1) -- ++(-1.25,0) node[anchor=east]{Herkenbaar};
-\draw[<-,thick] (testlang-S2) -- ++(1.25,0) node[anchor=west]{Co-herkenbaar};
+\begin{scope}[xshift=-3 cm,yshift=-0.25 cm]\colorlegend[L1]{ja/green/a,nee/red/b}\end{scope}
+\draw[<-,thick] (testlang-L) -- ++(-1.25,0) node[anchor=east] (LY1) {Taal};
+\draw[<-,thick] (testlang-S1) -- ++(-1.25,0) node[anchor=east] (LY2) {Herkenbaar};
+\draw[<-,thick] (testlang-S2) -- ++(1.25,0) node[anchor=west] (LY3) {Co-herkenbaar};
 \end{scope}
+\groupbox{(testlang) (L1-a) (L1-b) (LY1) (LY2) (LY3)}{Beslisbaar?}
 \foreach \c/\sb/\co in {REGEX/RE/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/3,Es/2.00/3,Regular/0.90/3,All/1.70/3}, CTXFR/CFG/{A/2.00/3,H/2.00/3,E/2.00/3,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1}, CTXSE/CSG/{A/2.00/3,H/2.00/3,E/2.00/1,Eq/2.00/1,Es/2.00/3,Regular/0.90/0,All/1.70/1},TURING/TM/{A/2.00/2,H/2.00/2,E/2.00/1,Eq/2.00/0,Es/2.00/2,Regular/0.90/0,All/1.70/0}} {
   \begin{scope}[shift={(\c-RT)},xshift=-7.5 cm,yshift=-2.5 cm]
   \setcounter{tmpA}{0}
@@ -136,6 +131,4 @@
   }
   \end{scope}
 }
-\end{tikzpicture}
-\end{center}
-\end{document}
+\end{theposter}
