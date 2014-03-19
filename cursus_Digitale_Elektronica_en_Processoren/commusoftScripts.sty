@@ -294,6 +294,7 @@
 \end{scope}
 }
 
+%Implementation of a combinatorial circuit
 \newcommand{\combinGate}[7]{
 \def\dx{0.35}
 \def\dy{0.7}
@@ -349,6 +350,7 @@
 \end{scope}
 }
 
+%Implementation of an asynchronous sequential circuit
 \newcommand{\asyncGate}[6]{
 \def\dx{0.35}
 \def\dl{0.125}
@@ -401,6 +403,68 @@
 }
 \end{scope}
 }
+
+%Implementation of a synchronous sequential circuit
+\newcommand{\syncGate}[8]{
+\def\dx{0.35}
+\def\dl{0.125}
+\def\dy{0.7}
+\def\ny{0.5}%We are the knights who say Ni!
+\def\noy{0.25}
+\def\sc{0.65}
+\begin{scope}[xshift=#1 cm, yshift=#2 cm]
+\setcounter{tmpC}{0}
+\foreach \l/\t in {#4} {
+  \coordinate (V\l) at (\dx*\arabic{tmpC},0);
+  \draw[anchor=north] (V\l) node {\t};
+  \draw (V\l) -- (V\l |- 0,#3 cm);
+  \addtocounter{tmpC}{1}
+}
+\addtocounter{tmpC}{1}
+\setcounter{tmpD}{0}
+\setcounter{tmpF}{1}
+\foreach \l/\i/\k/\t in {#5} {
+  \addtocounter{tmpF}{1}
+}
+\foreach \l/\i/\k/\t in {#5} {
+  \addtocounter{tmpD}{1}
+  \node[\t,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF});
+  \setcounter{tmpE}{1}
+  \foreach\v in \k {
+    \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
+    \pdot{A\l.input \arabic{tmpE} -| V\v}
+    \addtocounter{tmpE}{1}
+  }
+}
+\addtocounter{tmpC}{1}
+\coordinate (OutCol) at (\dx*\arabic{tmpC}+2*\dx+\dl*\arabic{tmpF},0);
+\foreach \l/\i/\ni/\nj in {#6} {
+  \addtocounter{tmpF}{-1}
+  \setcounter{tmpE}{\nj}
+  \addtocounter{tmpE}{-\ni}
+  \addtocounter{tmpE}{1}
+  \coordinate (TMP) at ($0.5*(A\ni.output)+0.5*(A\nj.output)$);
+  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0);
+  \foreach \nk in {\ni,...,\nj} {
+    \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
+    \addtocounter{tmpE}{-1}
+  }
+}
+\setcounter{tmpF}{0}
+\foreach \l/\t/\i/\o/\qi/\sca in {#7} {
+  \addtocounter{tmpF}{1}
+}
+\addtocounter{tmpC}{1}
+\foreach \l/\t/\i/\o/\qi/\sca in {#7} {
+  \addtocounter{tmpF}{-1}
+  \node[\t,anchor=\o,scale=\sca] (FF\l) at (\i.output -| \dx*\arabic{tmpC}+2*\dx,0) {};
+  \draw (\i.output) -- (FF\l.\o);
+  \draw (FF\l.Q) -| (\dx*\arabic{tmpC}+4*\dx+\dl*\arabic{tmpF},#3+\dl*\arabic{tmpF}) -| (V\qi |- 0,#3);
+}
+\foreach \i/\t in {#8} {
+  \draw (\i.output) -- (\i.output -| \dx*\arabic{tmpC}+3*\dx,0) node[anchor=west]{\t};
+}
+\end{scope}}
 
 %Timebehav
 %arg0	X	the x-offset of the time behavior.
@@ -893,4 +957,43 @@
 \newcommand{\buscross}[1]{
 \draw[white,line width=0.08mm] ($(#1)-(0.0575,0.0575)$) -- ($(#1)+(0.0575,-0.0575)$);
 \draw[white,line width=0.08mm] ($(#1)+(0.0575,0.0575)$) -- ($(#1)-(0.0575,-0.0575)$);
+}
+
+\newcommand{\pcbspintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
+  \draw[{#1}] (#2) -- (#3);
+}
+%Begin Kudos
+%to Heiko Oberdiek for this script.
+\makeatletter
+\pgfmathdeclarefunction{sign}{1}{%
+  \begingroup
+    \ifdim#1pt>\z@
+      \def\pgfmathresult{1}%
+    \else
+      \ifdim#1pt=\z@
+        \def\pgfmathresult{0}%
+      \else
+        \def\pgfmathresult{-1}%
+      \fi
+    \fi
+    \pgfmath@smuggleone\pgfmathresult
+  \endgroup
+}
+\makeatother
+
+\newcommand{\pcbpintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
+  \draw[{#1}]
+    let \p1=($(#3)-(#2)$),
+        \n2={abs(\x1) - abs(\y1)},
+        \n3={(\n2 > 0) * sign(\x1) * \n2},
+        \n4={(\n2 < 0) * sign(\y1) * (-\n2)},
+        \p{m}=(\n{3}, \n{4})
+    in
+    (#2) -- ++(\p{m}) -- (#3);
+}
+%End Kudos
+\newcommand{\pcbbridge}[3][0.1 in]{%
+  \coordinate (TMP) at ($0.5*(#2)+0.5*(#3)+(0,#1)$);
+  \pcbpintopin[gray,line width=0.015 in,shorten >=0.0225 in]{TMP}{#2}
+  \pcbpintopin[gray,line width=0.015 in,shorten >=0.0225 in]{TMP}{#3}
 }

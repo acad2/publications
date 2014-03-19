@@ -5,6 +5,76 @@
 In dit hoofdstuk beschrijven we enkele experimenten die we kunnen uitvoeren om praktische en nuttige digitale schakelingen te realiseren voor dagelijks gebruik.
 \end{chapterintro}
 \minitoc[n]
+\section{Oneindig vermenigvuldigen}
+\'E\'en van de voordeling van delen en vermenigvuldigen met constanten, is dat de overdracht of het lenen ook beperkt is. Wanneer we een binair getal bijvoorbeeld vermenigvuldigen met $3$, kan de carry nooit groter worden dan $4$. Wanneer we dit veralgemenen naar een vermenigvuldiging in het binair stelsel met $n$, kan de overdracht nooit groter worden dan $2\cdot n-1$. We kunnen dit uitbuiten om een sequenti\"ele vermenigvuldiger te maken die over bit-stromen met oneindige lengte werkt. We realiseren dus een schakeling waar als invoer een stroom aan bits en het bijbehorende kloksignaal binnenkomt, en als uitvoer een andere stroom bits geklokt volgens hetzelfde kloksignaal maar waarbij de bits het $k$-voud voorstellen van de inkomende bitstroom. We werken volgen big-endian encodering: de eerste bit die in de schakeling binnenkomt is altijd de minst significante.
+\subsection{Benodigdheden}
+Dit hangt grotendeels af van de constante $k$ waarmee we willen vermenigvuldigen. Voor een constante $k=5$ zijn de benodigdheden de volgende:
+\begin{enumerate}
+ \item $2$ leds;
+ \item $3$ npn-transistoren;
+ \item $1$ pnp-transistoren;
+ \item $2$ drukschakelaars.
+\end{enumerate}
+Samen kosten deze componenten (zonder gereedschap, printplaten en soldeersel) ongeveer $\mbox{\euro}\ ??.??$\footnote{Gebaseerd op prijzen bij Conrad.}.
+\subsection{Model}
+In de inleiding hebben we de werking van het component niet gespecificeerd. Dit zullen we in deze sectie doen. Wanneer een getal bit-na-bit wordt ingelezen in het circuit, dient het circuit dit getal de vermenigvuldigen. We kunnen echter de eigenschap uitbuiten dat de overdracht die bij de vermenigvuldiging optreedt, altijd eindig zal zijn. Bij voorbeeld zullen we een vermenigvuldiging met $k=5$ modelleren.
+\paragraph{}
+\importtikzfigure{infinitemul-carry5}{Een toestandsdiagram voor $k=5$.}
+De machine begint in een toestand waar er geen overdracht is, formeler $c=0$. Dit is de toestand $q_0$ op \figref{infinitemul-carry5}. Wanneer er nu een $0$ binnenkomt, is het resultaat logischerwijs $0$ en blijft de overdracht ook op $0$ staan. We trekken dus een lus vanuit $q_0$ met boog $0/0$. Wanneer er echter een $1$ op de invoer wordt aangelegd, dan weten we dat de uitvoer-bit ook $1$ moet worden, en dat we vanaf dat moment met overdracht $c=4$ moeten rekening houden. Nu hebben we alle invoer voor $q_0$ gemodelleerd, maar $q_4$ dienen we verder in te vullen. In het algemeen geldt de regel voor een vermenigvuldiging van $k$ dat we een boog van $q_i$ naar $q_j$ trekken met label $b_i/b_o$ zodat:
+\begin{eqnarray}
+b_i\in\accl{0,1}\\
+r=\displaystyle\frac{i}{2}+k\cdot b_i\\
+b_o=r\mod 2\\
+j=r-b_o
+\end{eqnarray}
+Voor $q_4$ betekent dit dus dat we een boog $0/0$ naar $q_2$ trekken en een boog $1/1$ naar $q_6$. We dienen vervolgens ook bogen uit deze toestanden te trekken en dit tot er geen nieuwe toestanden meer opduiken. We bekomen vervolgens een diagram zoals op \figref{infinitemul-carry5}. We kunnen dit voor iedere $k$ doen.
+\subsubsection{Implementatie-specificaties}
+\paragraph{Reset}
+Getallen hebben altijd een eindig aantal cijfers en bijgevolg ook een eindig aantal bits. We willen de schakeling dan ook niet noodzakelijk gebruiken om een product uit te rekenen over een oneindige sequentie bits. Maar wel op een snelle manier getallen van willekeurige lengte vermenigvuldigen. We dienen echter aan het circuit duidelijk te maken dat we een nieuw getal willen vermenigvuldigen. We kunnen dit op twee manieren doen:
+\begin{enumerate}
+ \item We lezen de resterende bits uit door telkens $0$ op de ingang aan te leggen tot het circuit zich terug in toestand $q_0$ bevindt, dit duurt hoogstens $\fun{\log_2}{n}+1$ stappen. Dit is ook in principe de correcte methode omdat het resultaat van een vermenigvuldiging nu eenmaal een getal met meer bits kan opleveren. Een nadeel is echter wanneer we dit circuit in een processor zouden gebruiken, waarbij de registers een beperkt aantal bits hebben, we meestal ge\"interesseerd zijn in de $n$ minst significante bits\footnote{Analoog met de overloop bij bijvoorbeeld een optelling.}, en we dus klokflanken ``verspillen''.
+ \item We voorzien een reset-ingang die de schakeling terug in de grondtoestand brengt. De meest significante bits gaan verloren.
+\end{enumerate}
+In dit voorbeeld kiezen we voor de eerste variant. Dit houdt immers ook het circuit eenvoudig en goedkoop.
+\paragraph{In- en Uitvoer}
+Normaal kunnen we een dergelijk circuit gebruiken in bijvoorbeeld een processor, of kunnen we het in een ethernet-kaart implementeren wanneer data moet worden aangepast. Wanneer we echter de schakeling op zichzelf willen implementeren, dienen we deze te kunnen testen. Bijgevolg zullen we ook invoer-uitvoer voorzien. Communicatie tussen mens en modules wordt meestal gerealiseerd met behulp van leds en schakelaars. Om duidelijk te maken welk signaal we zelf zullen aanleggen zullen we ook leds aan de ingang gebruiken. Een probleem die zich soms stelt is dat er een groot aantal bits aan de invoer kunnen worden aangelegd, en het dus niet eenvoudig is om met drukschakelaars een bepaalde configuratie aan te leggen. In dat geval kunnen we gebruik maken van een tuimelschakelaar. Een tuimelschakelaar kan worden aangekocht, maar ook ge\"implementeerd met behulp van een drukschakelaar, twee weerstanden, een pnp- en npn-transistor. Een dergelijke implementatie staat beschreven in \figref{toggleswitch-transistor}.
+\importtikzfigure{toggleswitch-transistor}{Implementatie van een tuimelschakelaar.}
+\subsection{Realisatie}
+\subsubsection{Toestanden en soorten schakeling}
+In de vorige subsectie hebben we besproken hoe we een diagram kunnen opstellen voor de overdracht. Dit diagram is precies het diagram voor de Mealy-machine om onze schakeling te realiseren. We kunnen het diagram dus rechtstreeks gebruiken om een toestandstabel op te stellen zoals in \tblref{infinitemul-state5}.
+\importtabulartable{infinitemul-state5}{Toestandstabel van de oneindige vermenigvuldiger.}
+\subsubsection{Toestandscodering}
+We dienen nu enkel nog een codering te bedenken om de verschillende toestanden op te slaan. Een logische manier kan zijn om $q_i$ op te slaan als het binaire equivalent van $i/2$. Dit biedt bovendien in dit geval vrij mooie overgangen: bij twee overgangen verandert er geen bit, bij vijf overgangen slechts \'e\'en bit, \'e\'en overgang brengt twee veranderingen teweeg en \'e\'en overgang drie. We kunnen echter $q_8$ ook encoderen als $111$. Dit zorgt ervoor dat er geen overgangen met drie bits meer zijn. Dit is natuurlijk heuristisch: er is geen echte garantie dat dit effectief tot een goedkopere implementatie zal leiden, al wordt het wel verondersteld. De coderingstabel wordt dan zoals voorgesteld als in \tblref{infinitemul-code5}
+\importtabulartable{infinitemul-code5}{Coderingstabel van de oneindige vermenigvuldiger.}
+\subsubsection{Type flipflop}
+Het is niet echt duidelijk welk type flipflop hier nodig is. We zullen de schakeling met een D-flipflop implementeren.
+\importtabulartable{infinitemul-combine5}{De oneindige vermenigvuldiger.}
+Wanneer we D-flipflops gebruiken bekomen dienen we combinatorische schakelingen te implementeren zoals op \tblref{ininitemul-combine5} een grafische voorstelling met behulp van Karnaugh-kaarten staat op \figref{infinitemul-karnaugh5}.
+\importtikzfigure{infinitemul-karnaugh5}{Karnaugh-kaarten voor de oneindige vermenigvuldiger.}
+\subsubsection{Implementatie}
+Tot slot dienen we enkel nog de schakeling te implementeren. Het logische circuit staat om dit te realiseren staat op \figref{infinitemul-impl5}.
+\importtikzfigure{infinitemul-impl5}{Mogelijke implementatie voor de oneindige vermenigvuldiger.}
+In de praktijk worden poorten meestal niet per eenheid verkocht: het is goedkoper om vier poorten op \'e\'en chip te zetten dan vier afzonderlijke chips te produceren. Bijgevolg dienen we nog een keuze te maken hoe we deze schakeling realiseren.
+\paragraph{}
+Wanneer we naar de schakeling op \figref{infinitemul-impl5} kijken, kunnen we de verschillende types poorten tellen:
+\begin{enumerate}
+ \item $3\times$ NOT poort;%
+ \item $2\times$ 2-NOR poorten;
+ \item $1\times$ 3-NOR poort;
+ \item $4\times$ 2-NAND poorten;%
+ \item $2\times$ 3-NAND poorten; en%
+ \item $3\times$ D-flipflops.%
+\end{enumerate}
+Op chipniveau zullen we daarom werken met volgende poorten:
+\begin{enumerate}
+ \item $1\times$ 7400 ($4\times$ 2-NAND poorten), DIP14, ongeveer $\mbox{\euro}\ 00.14$ per stuk;
+ \item $1\times$ 7404 ($6\times$ NOT-poorten), DIP14, ongeveer $\mbox{\euro}\ 00.17$ per stuk;
+ \item $1\times$ 7410 ($3\times$ 3-NAND poorten), DIP14, ongeveer $\mbox{\euro}\ 00.32$ per stuk;
+ \item $1\times$ 7427 ($3\times$ 3-NOR poorten), DIP14, ongeveer $\mbox{\euro}\ 00.32$ per stuk; en
+ \item $2\times$ 7474 ($2\times$ D-flipflops), DIP14, ongeveer $\mbox{\euro}\ 00.14$ per stuk;
+\end{enumerate}
+Hieruit kunnen we dan een printplaat samenstellen zoals op \figref{infinitemul-pcb5}.
+\importtikzfigure{infinitemul-pcb5}{Printplaat-ontwerp voor de oneindige vermenigvuldiger.}
 \section{Fietslicht}
 Men kan vandaag fietslichten kopen met verschillende knippermodes. Bij wijze van experiment zullen we een knipperlicht implementeren gebaseerd op een ledlamp van \emph{Hema}.
 \paragraph{}
@@ -19,7 +89,7 @@ Volgende componenten heeft men nodig om deze schakeling te implementeren:
  \item $1$ drukschakelaar.
  \item $1$ europrintplaat.
 \end{itemize}
-Alle componenten zijn verkrijgbaar bij Conrad. De richtprijs is ongeveer $\mbox{\euro}\ ??.??$
+Alle componenten zijn verkrijgbaar bij Conrad. De richtprijs is ongeveer $\mbox{\euro}\ ??.??$.
 \subsection{Implementatie-specificaties}
 In deze subsectie bespreken we hoe we de schakeling zullen implementeren. Dit betekent dat we onder meer de in- en uitvoer vastleggen.
 \paragraph{In- en Uitvoer}
@@ -28,12 +98,12 @@ Naast de drie leds van het fietslicht is er geen uitvoer: we gaan er immers vanu
 \paragraph{Toestanden en soort schakeling}
 We dienen ook te beslissen wat soort schakeling we zullen implementeren. Vermits het aantal toestanden en de mogelijkheden nogal beperkt is, is het implementeren van een processor niet nodig: we kunnen deze schakeling met een eenvoudige sequenti\"ele schakeling realiseren.
 \paragraph{}
-Verder dienen we te beslissen of we een synchrone of asynchrone schakeling zullen bouwen. Er speelt natuurlijk een tijdsaspect: we willen niet dat we meteen in de volgende toestand geraken wanneer een led aan of uitgaat. Anders is het verschil tussen knipperen en aan moeilijk te zien. We kunnen echter ook het kloksignaal als een ingangsignaal beschouwen. Dit laatste pleit voor een asynchrone schakeling: er is sprake van twee soorten ingangen: de schakelaar van het fietslicht die aangeeft dat we een volgende toestand willen kiezen, en het kloksignaal die wanneer het opkomt betekent dat we de bij links-rechts en knipperen leds aan of uit moeten zetten. Een asynchrone schakeling is echter moeilijker te implementeren. Wanneer we voor een synchrone schakeling opteren zal de gebruiker wanneer hij de schakelaar induwt moeten wachten tot het volgende kloksignaal voor de volgende stand van het fietslicht wordt ge\"activeerd. Het tijdverlies valt echter goed mee en is meestal niet levensbedreigend. In dit boek kiezen we daarom voor een synchrone schakeling.
+Verder dienen we te beslissen of we een synchrone of asynchrone schakeling zullen bouwen. Er speelt natuurlijk een tijdsaspect: we willen niet dat we meteen in de volgende toestand geraken wanneer een led aan of uitgaat. Anders is het verschil tussen knipperen en aan moeilijk te zien. We kunnen echter ook het kloksignaal als een ingangsignaal beschouwen. Dit laatste pleit voor een asynchrone schakeling: er is sprake van twee soorten ingangen: de schakelaar van het fietslicht die aangeeft dat we een volgende toestand willen kiezen, en het kloksignaal die wanneer het opkomt betekent dat we de bij links-rechts en knipperen leds aan of uit moeten zetten. Een asynchrone schakeling is echter moeilijker te implementeren. Wanneer we voor een synchrone schakeling opteren zal de gebruiker wanneer hij de schakelaar induwt moeten wachten tot het volgende kloksignaal voor de volgende stand van het fietslicht wordt geactiveerd. Het tijdverlies valt echter goed mee en is meestal niet levensbedreigend. In dit boek kiezen we daarom voor een synchrone schakeling.
 \paragraph{}
 Verder rest ons nog het aangeven van de verschillende toestand en wat we doen wanneer een gebruiker de schakelaar indrukt. In principe zijn hier drie mogelijkheden. Iedere keer wanneer de gebruiker de schakelaar indrukt, dan komen we in de begintoestand van de stand. We kunnen ervoor opteren terecht te komen in een toestand die bijvoorbeeld globaal bepaald is: wanneer er $k$ ticks geweest zijn komen we in de $k\mod n$-de toestand terecht, met $n$ het aantal toestanden van die stand. Een laatste optie is dat het niet uitmaakt, zolang we maar in een toestand terechtkomen die geldig is voor die stand. We opteren in deze cursus voor de eerste optie, dit is ook zo bij het echte fietslicht van \emph{Hema}.
 \subsection{Realisatie}
 \subsubsection{Toestandstabel}
-Op basis van de specificaties zullen we een toestandstabel opstellen. De uitgangsignalen van de sequenti\"ele schakeling zijn drie bits: voor elke led betekent $1$ dat de overeenkomstige led zal branden, in het geval van $0$ brandt de led natuurlijk niet. Verder voorzien we \'e\'en ingangsignaal: dit signaal is $1$ wanneer de gebruiker de schakelaar indrukt. In het geval de schakelaar niet ingedrukt is, is het signaal $0$. Dit levert ons de toestandstabel op zoals \tblref{bicycle-state0}.
+Op basis van de specificaties zullen we een toestandstabel opstellen. De uitgangssignalen van de sequenti\"ele schakeling zijn drie bits: voor elke led betekent $1$ dat de overeenkomstige led zal branden, in het geval van $0$ brandt de led natuurlijk niet. Verder voorzien we \'e\'en ingangssignaal: dit signaal is $1$ wanneer de gebruiker de schakelaar indrukt. In het geval de schakelaar niet ingedrukt is, is het signaal $0$. Dit levert ons de toestandstabel op zoals \tblref{bicycle-state0}.
 \importtabulartable{bicycle-state0}{Toestandstabel van het fietslicht.}
 In de tabel hebben we de toestanden geannoteerd met de stand in subscript ($0$ uit, $1$ links-rechts, $2$ knipperen, $3$ aan). In stand $2$ moest de frequentie gehalveerd worden. Dit hebben we opgelost door vier toestanden te voorzien: twee wanneer alle leds uit zijn, en twee wanneer alle leds branden. Op die manier kost het twee klokflanken vooraleer de leds veranderen.
 \subsubsection{Toestandscodering}

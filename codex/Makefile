@@ -1,6 +1,9 @@
-codex.pdf : *.tex
-	pdflatex --interaction nonstopmode codex.tex > /dev/null 2> /dev/null
-	songidx titleidx.sxd titleidx.sbx > /dev/null 2> /dev/null
-	pdflatex --interaction nonstopmode codex.tex > /dev/null 2> /dev/null
-	songidx titleidx.sxd titleidx.sbx > /dev/null 2> /dev/null
-	pdflatex --interaction nonstopmode codex.tex > /dev/null 2> /dev/null
+all : *.tex
+	make diagnostic > /dev/null 2> /dev/null
+
+diagnostic : *.tex
+	pdflatex --interaction nonstopmode codex.tex
+	songidx titleidx.sxd titleidx.sbx
+	pdflatex --interaction nonstopmode codex.tex
+	songidx titleidx.sxd titleidx.sbx
+	pdflatex --interaction nonstopmode codex.tex

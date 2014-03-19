@@ -33,6 +33,7 @@
 *.pdf
 *.backup
 *~
+*-
 *.*~*
 *.mtc*
 *.codes
@@ -78,3 +79,4 @@
 *.sxc
 *.sbx
 *.sxd
+*.sbx

@@ -1,0 +1,25 @@
+\scalebox{0.85}{\begin{circuitikz}
+\def\dx{3};
+\def\dy{3};
+\def\dh{0.125};
+\def\dxy{1.2};
+\def\scnpn{1};
+\def\scr{1};
+\coordinate (SL) at (0,\dy);
+\coordinate (DL) at (0,-\dy);
+\coordinate (OL) at (0,0.5*\dy);
+\coordinate (IM) at (-\dx,0);
+\coordinate (OM) at (\dx,0);
+\coordinate (KM) at (-0.5*\dx,0);
+\node[pnp,scale=-\scnpn,yscale=-1,l=2N3906] (pnp) at (0,0) {};
+\node[npn,scale=\scnpn,l=2N3904] (npn) at (0.5*\dx,-0.5*\dy) {};
+\draw (npn.collector) |- (pnp.base);
+\draw (pnp.collector) |- (npn.base);
+\draw (KM |- SL) to[push button] (KM |- npn.base) to[R,sloped,l=$100\mbox{k}$,scale=\scr] (pnp.collector |- npn.base);
+\draw (OL) -- (OM |- OL) node[anchor=west]{output};
+\pdot[0.8mm]{OL};
+\pdot[0.8mm]{pnp.emitter |- npn.base};
+\draw (SL) to [R,sloped,l=$20\mbox{k}$,scale=\scr] (OL) -- (pnp.emitter);
+\draw (SL) -- (IM |- SL) node[anchor=east]{$V_{DD}$};
+\draw (npn.emitter) -- (npn.emitter |- DL) -- (IM |- DL) node[anchor=east]{$V_{SS}$};
+\end{circuitikz}}

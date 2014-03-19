@@ -1,0 +1,13 @@
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,semithick]
+\node[initial,state] (Q0) {$q_0$};
+\node[state,right=of Q0] (Q4) {$q_4$};
+\node[state,below=of Q4] (Q2) {$q_2$};
+\node[state,right=of Q2] (Q6) {$q_6$};
+\node[state,right=of Q4] (Q8) {$q_8$};
+\foreach \x/\i/\o in {0/0/0,8/1/1} {
+  \path (Q\x) edge [loop above] node {$\i/\o$} (Q\x);
+}
+\foreach \x/\i/\o/\y/\e/\a in {0/1/1/4//above, 2/0/1/0//above,2/1/0/6/bend left/below, 4/0/0/2//above,4/1/1/6//above, 6/0/1/2/bend left/below,6/1/0/8//below, 8/0/0/4//above} {
+  \path (Q\x) edge[\e] node[sloped,\a] {$\i/\o$} (Q\y);
+}
+\end{tikzpicture}
