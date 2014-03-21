@@ -1,30 +1,56 @@
-\documentclass[a4paper,8pt]{article}
-\title{Codex}
-\author{Willem Van Onsem}
-\usepackage{songs}
+\documentclass[b5paper,8pt,landscape]{article}
+\usepackage[dutch]{babel}
+\usepackage[lyric]{songs}
+\usepackage[cm]{fullpage}
+\title{Den Rooden Codex}
+\author{W. Van Onsem}
 \songcolumns{2}
 \renewcommand{\lyricfont}{\small}
-%\renewcommand{\spenalty}{\vvpenalty}
-%\renewcommand{\lastcolglue}{0pt}
-%\renewcommand{\colbotglue}{0pt plus .5\textheight minus 0pt}
 \songpos{0}
 \indexeson
 \newindex{titleidx}{titleidx}
 \begin{document}
 \maketitle
 \showindex{Overzicht van de Liederen}{titleidx}
+\songsection{Studentenliederen}
 \begin{songs}{titleidx}
-
 \input{codex-iovivat}
+\input{codex-pintjedrinken}
 \input{codex-dielore}
 \input{codex-jucheidi}
 \input{codex-thesislied}
+\input{codex-wijzullendoorgaan}
+\end{songs}
+\songsection{Nederlands en Dialect}
+\begin{songs}{titleidx}
+\input{codex-toveren}
+\input{codex-dezoonvanmeneerpastoor}
+\input{codex-borgeriborgerhoutborgerocco}
+\end{songs}
+\songsection{Engels-Iers-Amerikaans}
+\begin{songs}{titleidx}
 \input{codex-mybonnie}
-\input{codex-auclairdelalune}
 \input{codex-yankeedoodledandy}
 \input{codex-wildrover}
 \input{codex-lochlomon}
-
+\input{codex-mastermcgrath}
+\input{codex-scarboroughfair}
+\input{codex-indublinsfaircity}
+\input{codex-larkinthemorning}
+\input{codex-asoldierssong}
+\input{codex-clementine}
+\input{codex-drunkensailor}
+\end{songs}
+\songsection{Frans}
+\begin{songs}{titleidx}
+\input{codex-auclairdelalune}
+\end{songs}
+\songsection{Militaire liederen}
+\begin{songs}{titleidx}
+\input{codex-bellaciao}
+\input{codex-naeroostland}
+\input{codex-katjusha}
+\input{codex-vput}
 \end{songs}
 
 \end{document}

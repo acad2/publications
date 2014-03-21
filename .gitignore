@@ -76,4 +76,7 @@
 *.swp
 *.bak
 *.kate-swp
+*.sxc
+*.sbx
+*.sxd
 *.sbx
