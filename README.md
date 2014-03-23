@@ -60,8 +60,10 @@ Special thanks to (in alphabetical order):
  - **Christophe Van Ginneken**: for fixing some typos regarding the *course Digitale Elektronica en Processoren*.
  - **Heiko Oberdiek**: for a script enabling more convenient pcb layout typesetting.
  - **Ingmar Dasseville**: for several bug reports, fixing typos and advice during the development of several publications.
+ - **Jonas Vanthornhout**: for several bug reports, fixing typos and advice during the development of several publications.
  - **Katie Pauwelyn**: for several bug reports regarding several publications.
  - **Lynn Houthuys**: for several bug reports regarding the *course Digitale Elektronica en Processoren*.
+ - **Piet-Jan Vuylsteke**: for bug reports regarding the *course Artificiële Intelligentie*
  - **Ruben Lapauw**: for several bug reports regarding several publications.
 
 License
