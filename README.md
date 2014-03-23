@@ -4,49 +4,49 @@ publications
 A repository for the LaTeX code and LaTeX generator written for several publications.
 
 Finished publications are published on
-- Scribd (http://www.scribd.com/WillemVanOnsem)
-- 4Shared (http://www.4shared.com/u/rPjCz-aM/Van_Onsem_Willem.html)
+- [Scribd](http://www.scribd.com/WillemVanOnsem)
+- [4Shared](http://www.4shared.com/u/rPjCz-aM/Van_Onsem_Willem.html)
 
 List of finished publications
 -----------------------------
 
 Posters:
 
- - *Automaten en Berekenbaarheid* (dutch) <https://github.com/KommuSoft/publications/tree/master/poster_automaten_en_berekenbaarheid>
- - *Design Patterns* (dutch) <https://github.com/KommuSoft/publications/tree/master/poster_design_patterns>
+ - [*Automaten en Berekenbaarheid* (dutch)](https://github.com/KommuSoft/publications/tree/master/poster_automaten_en_berekenbaarheid)
+ - [*Design Patterns* (dutch)](https://github.com/KommuSoft/publications/tree/master/poster_design_patterns)
 
 Courses:
 
- - *Artificiële Intelligentie* (dutch) <https://github.com/KommuSoft/publications/tree/master/cursus_Artificiele_Intelligentie>
+ - [*Artificiële Intelligentie* (dutch)](https://github.com/KommuSoft/publications/tree/master/cursus_Artificiele_Intelligentie)
 
 Glossaries:
 
- - *Comparative Programming Languages* <https://github.com/KommuSoft/publications/tree/master/glossary_comparative_programming_languages>
- - *Psychologie van de Waarneming* (dutch) <https://github.com/KommuSoft/publications/tree/master/glossary_psychologie_van_de_waarneming>
+ - [*Comparative Programming Languages*](https://github.com/KommuSoft/publications/tree/master/glossary_comparative_programming_languages)
+ - [*Psychologie van de Waarneming* (dutch)](https://github.com/KommuSoft/publications/tree/master/glossary_psychologie_van_de_waarneming)
 
 Work in progress
 ----------------
 
 Posters:
 
- - *Computer Netwerken* (dutch) <https://github.com/KommuSoft/publications/tree/master/poster_computer_netwerken>
- - *Fundamentals of Computer Science* <https://github.com/KommuSoft/publications/tree/master/poster_fundamentals_of_computer_science>
+ - [*Computer Netwerken* (dutch)](https://github.com/KommuSoft/publications/tree/master/poster_computer_netwerken)
+ - [*Fundamentals of Computer Science*](https://github.com/KommuSoft/publications/tree/master/poster_fundamentals_of_computer_science)
 
 Courses:
 
- - *Digital Elektronica en Processoren* (dutch) <https://github.com/KommuSoft/publications/tree/master/cursus_Digitale_Elektronica_en_Processoren>
- - *Logica in de Informatica* (dutch) <https://github.com/KommuSoft/publications/tree/master/cursus_Logica_in_de_Informatica>
+ - [*Digital Elektronica en Processoren* (dutch)](https://github.com/KommuSoft/publications/tree/master/cursus_Digitale_Elektronica_en_Processoren)
+ - [*Logica in de Informatica* (dutch)](https://github.com/KommuSoft/publications/tree/master/cursus_Logica_in_de_Informatica)
 
 Glossaries:
 
- - *Computational Logic* <https://github.com/KommuSoft/publications/tree/master/computation_logic_definitions>
- - *Definitions and Theorems in Computer Science* <https://github.com/KommuSoft/publications/tree/master/definitions_and_theorems_in_computer_science>
- - *Knowledge Representation* <https://github.com/KommuSoft/publications/tree/master/knowledgerepresentation>
- - *Natural Language Processing* <https://github.com/KommuSoft/publications/tree/master/naturallanguageprocessing>
+ - [*Computational Logic*](https://github.com/KommuSoft/publications/tree/master/computation_logic_definitions)
+ - [*Definitions and Theorems in Computer Science*](https://github.com/KommuSoft/publications/tree/master/definitions_and_theorems_in_computer_science)
+ - [*Knowledge Representation*](https://github.com/KommuSoft/publications/tree/master/knowledgerepresentation)
+ - [*Natural Language Processing*](https://github.com/KommuSoft/publications/tree/master/naturallanguageprocessing)
 
 Other:
 
- - *Codex* <https://github.com/KommuSoft/publications/tree/master/codex>
+ - [*Codex*](https://github.com/KommuSoft/publications/tree/master/codex)
 
 Finished of course is a relative term: if issues are reported, new versions will be published. One can thus state that even finished publications are somehow still work in progress.
 
