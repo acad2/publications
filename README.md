@@ -66,6 +66,10 @@ Special thanks to (in alphabetical order):
  - **Piet-Jan Vuylsteke**: for bug reports regarding the *course Artificiële Intelligentie*
  - **Ruben Lapauw**: for several bug reports regarding several publications.
 
+Research?
+---------
+This repository is not dedicated to research papers published in scientific journals or at conferences. Therefore a private git repository is used. We hope to one day make this repository public.
+
 License
 -------
 
