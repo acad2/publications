@@ -80,3 +80,5 @@
 *.sbx
 *.sxd
 *.sbx
+*.thm
+*.mx*
