@@ -22,7 +22,7 @@ Courses:
 Glossaries:
 
  - [*Comparative Programming Languages*](https://github.com/KommuSoft/publications/tree/master/glossary_comparative_programming_languages)
- - [*Psychologie van de Waarneming* (dutch)](https://github.com/KommuSoft/publications/tree/master/glossary_psychologie_van_de_waarneming)
+ - [*Perception and Sensation*](https://github.com/KommuSoft/publications/tree/master/glossary_psychologie_van_de_waarneming)
 
 Work in progress
 ----------------
