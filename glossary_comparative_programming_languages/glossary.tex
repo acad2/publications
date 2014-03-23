@@ -1,12 +1,13 @@
-\documentclass{article}
+\documentclass[twocolumn]{article}
 \title{Comparative Programming Languages: Glossary}
 \author{Willem Van Onsem\\\url{https://github.com/KommuSoft/publications}}
 \date{January 28, 2013}
 \usepackage[hidelinks,pdfborder=0 0 0,pdfpagelabels,plainpages=false,linktocpage=false,pdfcreator={LaTeX}]{hyperref}
 \usepackage{catchfile,tikz,ifthen}
-\usepackage[nonumberlist,seeautonumberlist,acronym]{glossaries}
+\usepackage[toc,nonumberlist,nopostdot]{glossaries}
 \usepackage[cm]{fullpage}
 \makeglossaries
+\glossarystyle{listgroup}
 \newcommand{\gae}[3][]{\ifthenelse{\equal{#1}{}}{\newglossaryentry{#2}{name={#2},description={#3}}}{\newglossaryentry{#1}{name={#2},description={#3}}}}
 \newcommand{\gso}[2]{\newglossaryentry{#2}{name={#2},description={\textit{see }\gls{#1}}}}
 \begin{document}
