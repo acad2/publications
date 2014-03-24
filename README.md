@@ -48,7 +48,7 @@ Other:
 
  - [*Codex*](https://github.com/KommuSoft/publications/tree/master/codex)
 
-Finished of course is a relative term: if issues are reported, new versions will be published. One can thus state that even finished publications are somehow still work in progress.
+Finished is of course is a relative term: if issues are reported, new versions will be published. One can thus state that even finished publications are somehow still work in progress. Finished however means that the publication contains all the intended content and has somehow been reviewed.
 
 Thanks
 ------
