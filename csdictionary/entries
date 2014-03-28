@@ -1,9 +1,9 @@
-20130927a/Lexer/Tokenizer/An algorithm that takes as input a stream of characters or bytes and calculates a stream of {tokens|Token}. The input is thus grouped into fundamental units of a language. A lexer is used as a first stage in a compiler to process code described in a formal language or expressions in natural language processing.
-20130928a/Regular expression//An expression describing a regular language. A regular language consist out of four elements: characters, concatenation, union and Kleene-star.
-20130928b/Language//A set of strings. Languages can sometimes be described by {regular expression}s, {context-free grammar}s, {context-sensitive grammar}s or a program executed on a {Turing machine}. However {Rice theorem} states that most languages are undecidable.
-20130928c/Finite State Machine/Finite State Automaton/A finite state machine is a tuple $\tupl{S,}$
-20130928d/
-20130928e/
-20130928f/
-20130928g/
-20130928h/
+Lexer/Tokenizer/An algorithm that takes as input a stream of characters or bytes and calculates a stream of {tokens|Token}. The input is thus grouped into fundamental units of a language. A lexer is used as a first stage in a compiler to process code described in a formal language or expressions in natural language processing.
+Regular expression//An expression describing a regular language. A regular language consist out of four elements: characters, concatenation, union and Kleene-star.
+Language//A set of strings. Languages can sometimes be described by {regular expression}s, {context-free grammar}s, {context-sensitive grammar}s or a program executed on a {Turing machine}. However {Rice theorem} states that most languages are undecidable.
+Finite State Machine/Finite State Automaton/A finite state machine is a tuple $\tupl{S,}$
+Compiler//Originally a compiler was a program that "compiled" subroutimes into a program. Since 1954, due to [Grace Hopper], the meaning of a compiler shifted to that of an "algebraic compiler". A program that translates code written in a convenient programming language into machine language.
+Nondeterministic Finite Automaton/NFA/A NFA is a tuple $\tupl{Q,\Sigma,q_0,F,\delta}$ with $Q$ a finite set of states, $\Sigma$ a finite {alphabet} of characters, $q_0\in Q$ a start state, $F\subseteq Q$ a set of accepting states and $\funsig{\delta}{Q\times\Sigma}{\powset{Q}}$ a transition function. An NFA accepts a string $s=s_1s_2s_3\ldots s_n\in\Sigma^{\star}$ if there exists a sequence of states $q_{s_1},q_{s_2},\ldots,q_{s_n}$ such that:\begin{enumerate}\item $q_{s_0}=q_0$;\item $q_{s_n}\in F$; and\item $\forall q_{s_i},q_{s_{i+1}}:q_{s_{i+1}}\in\fun{\delta}{q_{s_i},s_i}$.\end{enumerate}
+/
+/
+/
