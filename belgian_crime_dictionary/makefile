@@ -4,4 +4,4 @@ records.pdf: all.tex records.tex makefile biblio.bib
 	make clean
 
 clean:
-	rm -f *.aux *.out *.pdf *.log *.bbl *.blg *~ *.texp
+	rm -f *.aux *.out *.log *.bbl *.blg *~ *.texp
