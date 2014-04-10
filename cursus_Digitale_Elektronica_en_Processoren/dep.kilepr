@@ -709,13 +709,13 @@ order=-1
 
 [item:chapter_basis_digitaal_ontwerp.tex]
 archive=true
-column=1
+column=193
 encoding=UTF-8
 highlight=LaTeX
-line=440
+line=790
 mode=LaTeX
 open=true
-order=1
+order=0
 
 [item:chapter_circuits_schakelen.tex]
 archive=true
@@ -814,7 +814,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=25
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:dep.kilepr]
@@ -3418,10 +3418,10 @@ JumpList=
 ViMarks=.,53,136,[,53,120,],53,136
 
 [view-settings,view=0,item:chapter_basis_digitaal_ontwerp.tex]
-CursorColumn=1
-CursorLine=440
+CursorColumn=193
+CursorLine=790
 JumpList=
-ViMarks=.,1229,719,[,1229,719,],1229,726
+ViMarks=.,790,192,[,790,177,],790,192
 
 [view-settings,view=0,item:chapter_circuits_schakelen.tex]
 CursorColumn=28
