@@ -2,7 +2,7 @@
 \label{ch:basis}
 \chapterquote{Eva werd niet als een soort accessoire van Adam geschapen, maar Adam was het eerste ontwerp voor Eva.}{Jeanne Moreau, Frans actrice (1928-)}
 \begin{chapterintro}
-Zoals de naam van deze cursus reeds doet vermoeden werken we met digitale schakelingen, digitale schakelingen onderscheiden zich van de traditionele analoge signalen omdat ze slechts een beperkt aantal waarden kunnen aannemen. In de praktijk werken we bijna uitsluitend met \termen{binaire signalen}. Deze waarden hoeven niet noodzakelijk een verschil in spanning aan te duiden. Sterker nog, het gebruik van elektronica is zelfs niet verplicht. Zo zouden we ook een verschil in stroomsterkte, druk, reflectie,... als parameter kunnen nemen. Het komt er enkel op aan om twee waarden te defini\"eren die we symbolisch zullen voorstellen als 0 en 1. Indien we echter meer dan twee verschillende waarden nodig hebben, kunnen we dit probleem oplossen door een aantal binaire waarden te groeperen. In dit eerste hoofdstuk zullen we een beperkte set aan basisoperaties op deze binaire signalen introduceren: de NOT, AND en OR. We formaliseren deze operaties in de booleaanse algebra. Ook bespreken we een methode om een booleaanse functie te synthetiseren. Tot slot bespreken we het verloop van een digitaal ontwerp en introduceren we een taal om hardware mee te beschrijven: VHDL.
+Zoals de naam van deze cursus reeds doet vermoeden werken we met digitale schakelingen, digitale schakelingen onderscheiden zich van de traditionele analoge schakelingen omdat ze slechts een beperkt aantal waarden kunnen aannemen. In de praktijk werken we bijna uitsluitend met \termen{binaire signalen}. Deze waarden hoeven niet noodzakelijk een verschil in spanning aan te duiden. Sterker nog, het gebruik van elektronica is zelfs niet verplicht. Zo zouden we ook een verschil in stroomsterkte, druk, reflectie,... als parameter kunnen nemen. Het komt er enkel op aan om twee waarden te defini\"eren die we symbolisch zullen voorstellen als 0 en 1. Indien we echter meer dan twee verschillende waarden nodig hebben, kunnen we dit probleem oplossen door een aantal binaire waarden te groeperen. In dit eerste hoofdstuk zullen we een beperkte set aan basisoperaties op deze binaire signalen introduceren: de NOT, AND en OR. We formaliseren deze operaties in de booleaanse algebra. Ook bespreken we een methode om een booleaanse functie te synthetiseren. Tot slot bespreken we het verloop van een digitaal ontwerp en introduceren we een taal om hardware mee te beschrijven: VHDL.
 \end{chapterintro}
 \minitoc[n]
 \section{Logische schakelingen}
@@ -13,7 +13,7 @@ Als basisschakelingen definieert men meestal de \termen{NOT}, \termen{AND} en \t
 \subsection{Logische schakelingen in huis}
 We beschouwen een schakeling zoals op figuur \ref{fig:switchLight}.
 \importtikzfigure{switchLight}{Basis van het lamp-model.}
-Zoals we zien zal indien we de schakelaar $x$ indrukken, het lichtje branden. Indien we vervolgens de schakelaar loslaten zien we bijgevolg dat het lampje opnieuw dooft. We formaliseren dit door te schrijven:
+Zoals we zien zal indien we de schakelaar $x$ indrukken, het lichtje branden. Indien we vervolgens de schakelaar loslaten zien we dat het lampje opnieuw dooft. We formaliseren dit door te schrijven:
 \begin{equation}
 L=x
 \end{equation}
@@ -385,7 +385,7 @@ Deze schakelingen kunnen we dan vervolgens in ons lamp-model omzetten zoals op f
 \figlab{switchLightXor}
 \end{figure}
 \subsection{Waarheidstabellen}
-Uiteraard kunnen we alle schakelingen voorstellen met het lamp-model. Toch is het niet echt praktisch, we gaan dus op zoek naar andere manieren om de logische formules te berekenen, en ook eenvoudig voor te stellen. Een makkelijke manier om logische schakelingen te berekenen is met behulp van \termen{waarheidstabellen}. Een waarheidstabel is een tabel waarbij we alle variabelen voorstellen, en vervolgens met eventuele tussenstappen de uiteindelijke bewerking berekenen. Hierbij maken we gebruik van waarheidstabellen die we reeds kennen. Namelijk de waarheidstabellen van de basisfuncties. Indien we $n$ variabelen beschouwen betekent dit dus dat onze tabel $2^n$ rijen telt. Immers kan elke variabele ofwel 0 ofwel 1 zijn. Bovendien is het aantal functies met $n$ variabelen beperkt tot $2^{2^n}$. Dit zegt echter het aantal implementaties. In tabel \ref{tbl:truthTablesBasicGates} geven we de waarheidstabellen van de basisoperaties weer.
+Uiteraard kunnen we alle schakelingen voorstellen met het lamp-model. Toch is het niet echt praktisch, we gaan dus op zoek naar andere manieren om de logische formules te berekenen, en ook eenvoudig voor te stellen. Een makkelijke manier om logische schakelingen te berekenen is met behulp van \termen{waarheidstabellen}. Een waarheidstabel is een tabel waarbij we alle variabelen voorstellen, en vervolgens met eventuele tussenstappen de uiteindelijke bewerking berekenen. Hierbij maken we gebruik van waarheidstabellen die we reeds kennen: de waarheidstabellen van de basisfuncties. Indien we $n$ variabelen beschouwen betekent dit dus dat onze tabel $2^n$ rijen telt. Immers kan elke variabele ofwel 0 ofwel 1 zijn. Bovendien is het aantal functies met $n$ variabelen beperkt tot $2^{2^n}$. Dit zegt echter niet over het aantal mogelijke implementaties. In \tblref{truthTablesBasicGates} geven we de waarheidstabellen van de basisoperaties weer.
 \begin{table}[htb]
 \centering
 \subtable[Not]{
@@ -414,7 +414,7 @@ $x$&$y$&$x+y$\\\hline
 \label{tbl:truthTablesBasicGates}
 \end{table}
 \paragraph{}
-We kunnen vervolgens aan de hand van deze waarheidstabellen de werking van een XOR-bewerking bestuderen. We dienen eenvoudigweg basisoperaties toe te passen op deelresultaten om zo uiteindelijk het finale gedrag van de bewerking te kennen zoals in tabel \ref{tbl:truthTableXOR}. Indien twee implementaties voor iedere rij dezelfde uitvoer genereren, zijn de implementaties equivalent, en beschrijven ze dezelfde functies. Equivalente implementaties zijn nuttig om een schakeling effici\"enter te maken. We gaan immers op zoek naar een equivalente implementatie die minder kost of sneller werkt.
+We kunnen vervolgens aan de hand van deze waarheidstabellen de werking van een XOR-bewerking bestuderen. We dienen eenvoudigweg basisoperaties toe te passen op deelresultaten om zo uiteindelijk het finale gedrag van de bewerking te kennen zoals in \tblref{truthTableXOR}. Indien twee implementaties voor iedere rij dezelfde uitvoer genereren, zijn de implementaties equivalent, en beschrijven ze dezelfde functies. Equivalente implementaties zijn nuttig om een schakeling effici\"enter te maken. We gaan immers op zoek naar een equivalente implementatie die minder kost of sneller werkt.
 \begin{table}[htb]
 \centering
 \begin{tabular}{cc|ccccc|c}
@@ -536,7 +536,7 @@ Complexe poorten die in de loop der tijd een eigen symbool kregen zijn onder mee
 \caption{Complexe poorten.}
 \figlab{complexGates}
 \end{figure}
-De waarheidstabellen van deze complexe poorten staat in subsectie \ref{ss:appendixComplexePoorten}. De reden dat NAND en NOR poorten populair zijn komt hoofdzakelijk omdat het universele poorten zijn. Dat betekent dat iedere basispoort kan ge\"implementeerd worden met behulp van NAND of NOR poorten. In tabel \ref{tbl:nandNorUniversal} staan deze implementaties. Bovendien is het realiseren van NAND en NOR poorten in de meeste technologie\"en goedkoper dan het bouwen van AND en OR poorten.
+De waarheidstabellen van deze complexe poorten staan in subsectie \sscref{appendixComplexePoorten}. De reden dat NAND en NOR poorten populair zijn komt hoofdzakelijk omdat het universele poorten zijn. Dat betekent dat iedere basispoort kan ge\"implementeerd worden met behulp van NAND of NOR poorten. In \tblref{nandNorUniversal} staan deze implementaties. Bovendien is het realiseren van NAND en NOR poorten in de meeste technologie\"en goedkoper dan het bouwen van AND en OR poorten.
 \begin{table}[htb]
 \centering
 \begin{tabular}{c|c|c|c}
@@ -655,7 +655,7 @@ met NOR&
 \subsection{Logische schakelingen}
 De vorige subsectie toonde al dat we met deze poorten netwerken kunnen bouwen. Deze netwerken worden \termen{logische schakelingen} genoemd. Deze schakelingen implementeren dan uiteindelijk de functionaliteiten waarvoor we een digitaal circuit ontwerpen. We kunnen logische schakelingen beschrijven doormiddel van een schema zoals we dat tot nu toe altijd gedaan hebben. Een andere techniek is echter op basis van een taal: VHDL\footnote{VHDL: VHSIC Hardware Design Language; VHSIC: Very High Speed Integrated Circuit.}. Deze taal komt onder meer aan bod in sectie \ref{s:vhdl}, en verder in de verdere hoofdstukken van deze cursus.
 \paragraph{Optimaliseren}
-Een belangrijk probleem met schakelingen is het vinden van een optimale implementatie voor een bepaald probleem. Sommige schakelingen zijn immers equivalent. Bijgevolg zoeken we voor een probleem uit de set van equivalente schakelingen naar de schakeling die ons het meeste voordeel oplevert. Hiervoor zijn enkele parameters belangrijk: kostprijs en verwerkingskracht. We proberen de kostprijs immers te minimaliseren. De kostprijs is eenvoudig te berekenen met volgende formule:
+Een belangrijk probleem met schakelingen is het vinden van een optimale implementatie voor een bepaalde functie. Sommige schakelingen zijn immers equivalent. Bijgevolg zoeken we voor een probleem uit de set van equivalente schakelingen naar de schakeling die ons het meeste voordeel oplevert. Hiervoor zijn enkele parameters belangrijk: kostprijs en verwerkingskracht. We proberen de kostprijs immers te minimaliseren. De kostprijs is eenvoudig te berekenen met volgende formule:
 \begin{equation}
 \mbox{Kostprijs}=\mbox{\#poortingangen}+\mbox{\#poortuitgangen}-\mbox{\#inverters}
 \label{eqn:kosten}
@@ -666,7 +666,7 @@ De verwerkingskracht wordt bepaald door het concept van de zwakste schakel. Kete
 \begin{equation}
 \mbox{Minimale vertraging}\propto\mbox{\#poortingangen}%=?
 \end{equation}
-\paragraph{Tijdsgedrag}In de vorige paragraaf hadden we het reeds over performantie. Snelle systemen worden echter vaak beperkt door het tijdsgedrag van logische schakelingen. Wiskundig gezien levert een verandering aan de ingang immers altijd onmiddellijk een correct signaal aan de uitgang. Maar zoals we reeds gesteld hebben, heeft een poort een zekere tijd nodig om te veranderen. Dit lijkt slechts een detail. Een nadelig effect hiervan is echter dat er overgangsverschijnselen kunnen ontstaan. In de eerste plaats omdat een waarde afhangt van twee ketens van poorten. En het veranderde ingangssignaal propageert zich sneller door de ene dan door de andere keten. Aan de andere kant ook omdat men nu eenmaal niet iedere poort uniform kan aanmaken. Tussen twee (dezelfde) poorten kunnen toch kleine tijdsverschillen optreden. In dat geval spreken we van een \termen{glitch}. Figuur \ref{fig:timeBehaviorGlitchExample} toont een scenario van veranderende poorten in een logische schakeling met een  glitch.
+\paragraph{Tijdsgedrag}In de vorige paragraaf hadden we het reeds over performantie. Snelle systemen worden echter vaak beperkt door het tijdsgedrag van logische schakelingen. Wiskundig gezien levert een verandering aan de ingang immers altijd onmiddellijk een correct signaal aan de uitgang. Maar zoals we reeds gesteld hebben, heeft een poort een zekere tijd nodig om de verandering aan de ingang door te rekenen. Dit lijkt slechts een detail. Een nadelig effect hiervan is echter dat er overgangsverschijnselen kunnen ontstaan. In de eerste plaats omdat een waarde afhangt van twee ketens van poorten. En het veranderde ingangssignaal propageert zich sneller door de ene dan door de andere keten. Aan de andere kant ook omdat men nu eenmaal niet iedere poort uniform kan aanmaken. Tussen twee (dezelfde) poorten kunnen toch kleine tijdsverschillen optreden. In dat geval spreken we van een \termen{glitch}. Figuur \ref{fig:timeBehaviorGlitchExample} toont een scenario van veranderende signalen in een logische schakeling met een glitch.
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}[circuit logic US]
@@ -715,7 +715,7 @@ De verwerkingskracht wordt bepaald door het concept van de zwakste schakel. Kete
 De tak van de wiskunde die zich bezighoud met logische bewerkingen is de \termen{booleaanse algebra}. Deze algebra rekent uitsluitend met de twee logische waarden $\left\{0,1\right\}$ en drie logische operatoren: de ons reeds bekende NOT ($'$), AND ($\cdot$) en OR ($+$). Deze operaties hebben elk een specifieke prioriteit zodat men met een minimum aan haakjes toch een complexe expressie kan beschrijven. Zo heeft de NOT prioriteit op de AND die prioriteit heeft op de OR.\footnote{Een ezelsbruggetje om dit te onthouden is het woord NANO: \underline{N}ot \underline{AN}d \underline{O}r.}
 \subsection{Theorema's en eigenschappen}
 \label{ss:theoremasPropertiesBooleanAlgebra}
-De booleaanse algebra maakt gebruik van theorema's om de operatoren te evalueren. Zo worden de resultaten van logische operatoren zonder variabelen gedefinieerd zoals we dat ook met een waarheidstabel kunnen doen. Deze definities staan in tabel \ref{tbl:booleanAlgebraNone}.
+De booleaanse algebra maakt gebruik van theorema's om de operatoren te evalueren. Zo worden de resultaten van logische operatoren zonder variabelen gedefinieerd zoals we dat ook met een waarheidstabel kunnen doen. Deze definities staan in \tblref{booleanAlgebraNone}.
 \begin{table}[htb]
 \centering
 \begin{tabular}{ll}
@@ -727,7 +727,7 @@ $0'=1$&$1'=0$
 \caption{Booleaanse algebra zonder variabelen.}
 \label{tbl:booleanAlgebraNone}
 \end{table}
-In de booleaanse algebra wordt ook met variabelen gerekend. Op die manier kan men vaak expressies manipuleren en optimaliseren. Indien we slechts \'e\'en variabele beschouwen gelden regels weergegeven in tabel \ref{tbl:booleanAlgebraSingle}.
+In de booleaanse algebra wordt ook met variabelen gerekend. Op die manier kan men vaak expressies manipuleren en optimaliseren. Indien we slechts \'e\'en variabele beschouwen gelden regels weergegeven in \tblref{booleanAlgebraSingle}.
 \begin{table}[htb]
 \centering
 \begin{tabular}{ll}
@@ -740,7 +740,7 @@ $(x')'=x$&\\
 \caption{Booleaanse algebra met \'e\'en variabele.}
 \label{tbl:booleanAlgebraSingle}
 \end{table}
-Tot slot werden ook regels gedefinieerd voor meerdere variabelen. Deze regels kunnen onder meer het aantal variabelen reduceren evenals het aantal operatoren, of tot alternatieve implementaties leiden die mogelijk sneller werken. Een opsomming van deze wetten staan in tabel \ref{tbl:booleanAlgebraMultiple}.
+Tot slot werden ook regels gedefinieerd voor meerdere variabelen. Deze regels kunnen onder meer het aantal variabelen reduceren evenals het aantal operatoren, of tot alternatieve implementaties leiden die mogelijk sneller werken. Een opsomming van deze wetten staan in \tblref{booleanAlgebraMultiple}.
 \begin{table}[htb]
 \centering
 \begin{tabular}{ll}
@@ -758,7 +758,7 @@ $(x\cdot y)'=x'+y'$&$(x+y)'=x'\cdot y'$
 \caption{Booleaanse algebra met meerdere variabelen.}
 \label{tbl:booleanAlgebraMultiple}
 \end{table}
-\paragraph{Dualiteit}Een opmerkelijke eigenschap bij booleaanse algebra is de dualiteit. Indien we bij een van de wetten uit tabel \ref{tbl:booleanAlgebraNone}, \ref{tbl:booleanAlgebraSingle} of \ref{tbl:booleanAlgebraMultiple}. De OR operaties door AND operaties vervangen en vice-versa, en de 1 door 0 vervangen en vice-versa, bekomen we eenvoudigweg een andere wet uit deze tabellen. Deze eigenschap noemen we de \termen{dualiteit} van de booleaanse algebra. Bovendien geldt ook dat slechts de helft van de gestelde wetten vereist is. Het andere deel kan met de wetten van De Morgan afgeleid worden.
+\paragraph{Dualiteit}Een opmerkelijke eigenschap bij booleaanse algebra is de dualiteit. Indien we bij een van de wetten uit \tblref{booleanAlgebraNone}, \ref{tbl:booleanAlgebraSingle} of \ref{tbl:booleanAlgebraMultiple}. De OR operaties door AND operaties vervangen en vice-versa, en de 1 door 0 vervangen en vice-versa, bekomen we eenvoudigweg een andere wet uit deze tabellen. Deze eigenschap noemen we de \termen{dualiteit} van de booleaanse algebra. Bovendien geldt ook dat slechts de helft van de gestelde wetten vereist is. Het andere deel kan met de wetten van De Morgan afgeleid worden.
 \paragraph{Verschil met de gewone algebra}Omdat ook de booleaanse algebra een optelling en vermenigvuldiging lijkt te defini\"eren en er bovendien ook analogie\"en te trekken zijn, lijkt het soms dat booleaanse algebra niet verschilt van de standaard algebra. Toch zijn er enkele opmerkelijke verschillen. Zo bestaat er geen verschil of deling in de booleaanse algebra. Verder voldoet in de booleaanse algebra volgend stelsel voor iedere $y$:
 \begin{equation}
 \left\{\begin{array}{l}
@@ -769,7 +769,7 @@ y\cdot y=y
 Terwijl in de standaard algebra er geen enkele $y$ is waarvoor dit geldt. Tot slot is bij standaard algebra de optelling ook niet distributief tegenover de vermenigvuldiging, zo is $5+2\cdot4\neq(5+2)\cdot(5+4)$.
 \section{Synthese met logische poorten}
 \label{s:synthese}
-Nu we weten hoe logische schakelingen werken, en hoe we deze door middel van de booleaanse algebra kunnen uitwerken, wordt het tijd om zelf schakelingen te bouwen. Dit doen we vertrekkend vanuit een waarheidstabel. Soms is het makkelijk om een functie af te leiden uit deze waarheidstabellen. Maar indien het aantal variabelen groot wordt of de functie complex is, wordt het vinden van een functie moeilijk. In deze cursus stellen we dan ook enkele algemene technieken voor om uit een waarheidstabel een logische functie te genereren. In sectie \ref{s:minimalisatie} zullen we bovendien enkele methodes beschrijven om deze logische functies te optimaliseren. Doorheen deze sectie zullen we een logische functie genereren voor de waarheidtabel in tabel \ref{tbl:truthTableExample}.
+Nu we weten hoe logische schakelingen werken, en hoe we deze door middel van de booleaanse algebra kunnen uitwerken, wordt het tijd om zelf schakelingen te bouwen. Dit doen we vertrekkend vanuit een waarheidstabel. Soms is het makkelijk om een functie af te leiden uit deze waarheidstabellen. Maar indien het aantal variabelen groot wordt of de functie complex is, wordt het vinden van een functie moeilijk. In deze cursus stellen we dan ook enkele algemene technieken voor om uit een waarheidstabel een logische functie te genereren. In sectie \ref{s:minimalisatie} zullen we bovendien enkele methodes beschrijven om deze logische functies te optimaliseren. Doorheen deze sectie zullen we een logische functie genereren voor de waarheidtabel in \tblref{truthTableExample}.
 \begin{table}[htb]
 \centering
 \begin{tabular}{ccc|c}
@@ -1053,7 +1053,7 @@ De Standaard Vorm is gegarandeerd de meest minimale vorm voor schakelingen met t
 \figlab{alternativeStandardForm}
 \end{figure}
 \subsection{Realisaties met NAND en NOR}
-Zoals reeds kort vermeld in subsectie \ref{ss:logischePoorten} zijn NAND en NOR poorten erg populair bij heel wat implementaties. Dit komt omdat ze alle basispoorten kunnen emuleren zoals blijkt uit tabel \ref{tbl:nandNorUniversal} op pagina \pageref{tbl:nandNorUniversal}. Bovendien is hun kostprijs lager dan een AND of OR poort\footnote{Denk aan de formule van de kostprijs: het aantal inverters wordt afgetrokken van de kostprijs.}. NAND en NOR poorten blijken bovendien ook makkelijk implementeerbaar als substituut voor AND en OR poorten in standaard vorm. Figuur \ref{fig:standardizationNandNor} toont hoe we ons voorbeeld in standaardvorm verder kunnen optimaliseren. In stap 1 inverteren we de min- en max-termen door van een AND en OR respectievelijk een NAND en NOR te maken. We behouden echter de functie door inverters aan de ingangen van het tweede niveau toe te voegen. Immers is tweemaal inverteren niets anders dan dezelfde waarde behouden. Door vervolgens de wetten van De Morgan toe te passen in stap 2, resulteert dit in een circuit die alleen gebruik maakt van NAND en NOR poorten. Bovendien geldt dat een circuit ge\"implementeerd met NAND en NOR poorten altijd zowel goedkoper en sneller is dan zijn canonisch equivalent.
+Zoals reeds kort vermeld in subsectie \ref{ss:logischePoorten} zijn NAND en NOR poorten erg populair bij heel wat implementaties. Dit komt omdat ze alle basispoorten kunnen emuleren zoals blijkt uit \tblref{nandNorUniversal} op pagina \pageref{tbl:nandNorUniversal}. Bovendien is hun kostprijs lager dan een AND of OR poort\footnote{Denk aan de formule van de kostprijs: het aantal inverters wordt afgetrokken van de kostprijs.}. NAND en NOR poorten blijken bovendien ook makkelijk implementeerbaar als substituut voor AND en OR poorten in standaard vorm. Figuur \ref{fig:standardizationNandNor} toont hoe we ons voorbeeld in standaardvorm verder kunnen optimaliseren. In stap 1 inverteren we de min- en max-termen door van een AND en OR respectievelijk een NAND en NOR te maken. We behouden echter de functie door inverters aan de ingangen van het tweede niveau toe te voegen. Immers is tweemaal inverteren niets anders dan dezelfde waarde behouden. Door vervolgens de wetten van De Morgan toe te passen in stap 2, resulteert dit in een circuit die alleen gebruik maakt van NAND en NOR poorten. Bovendien geldt dat een circuit ge\"implementeerd met NAND en NOR poorten altijd zowel goedkoper en sneller is dan zijn canonisch equivalent.
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}[circuit logic US]
