@@ -769,7 +769,7 @@ y\cdot y=y
 Terwijl in de standaard algebra er geen enkele $y$ is waarvoor dit geldt. Tot slot is bij standaard algebra de optelling ook niet distributief tegenover de vermenigvuldiging, zo is $5+2\cdot4\neq(5+2)\cdot(5+4)$.
 \section{Synthese met logische poorten}
 \label{s:synthese}
-Nu we weten hoe logische schakelingen werken, en hoe we deze door middel van de booleaanse algebra kunnen uitwerken, wordt het tijd om zelf schakelingen te bouwen. Dit doen we vertrekkend vanuit een waarheidstabel. Soms is het makkelijk om een functie af te leiden uit deze waarheidstabellen. Maar indien het aantal variabelen groot wordt of de functie complex is, wordt het vinden van een functie moeilijk. In deze cursus stellen we dan ook enkele algemene technieken voor om uit een waarheidstabel een logische functie te genereren. In sectie \ref{s:minimalisatie} zullen we bovendien enkele methodes beschrijven om deze logische functies te optimaliseren. Doorheen deze sectie zullen we een logische functie genereren voor de waarheidtabel in \tblref{truthTableExample}.
+Nu we weten hoe logische schakelingen werken, en hoe we deze door middel van de booleaanse algebra kunnen uitwerken, wordt het tijd om zelf schakelingen te bouwen. Dit doen we vertrekkend vanuit een waarheidstabel. Soms is het makkelijk om een implementatie af te leiden uit deze waarheidstabellen. Maar indien het aantal variabelen groot wordt of de functie complex is, wordt het vinden van een implementatie moeilijk. In deze cursus stellen we dan ook enkele algemene technieken voor om uit een waarheidstabel een logische functie te genereren. In sectie \ref{s:minimalisatie} zullen we bovendien enkele methodes beschrijven om deze logische implementaties te optimaliseren. Doorheen deze sectie zullen we een logische functie genereren voor de waarheidstabel in \tblref{truthTableExample}.
 \begin{table}[htb]
 \centering
 \begin{tabular}{ccc|c}
@@ -788,8 +788,8 @@ $x$&$y$&$z$&$f$\\\hline
 \end{table}
 In de waarheidstabel zien we uitsluitend 0 en 1 staan. In sectie \ref{par:dontcare} zullen we echter kennis maken met een derde toestand: de \termen{don't care}.
 \subsection{SOP \& POS}
-\termen{Sum-of-Products (SOP)} en \termen{Product-of-Sums (POS)} zijn twee technieken die op een machinale manier uit een waarheidstabel een logische functie genereren. Ze maken gebruik van \termen{mintermen} en \termen{maxtermen}.
-\paragraph{Sum-of-Products} De Sum-of-Products maakt gebruik van mintermen. Een minterm is een logische functie die slechts waar is voor \'e\'en gegeven rij in een waarheidtabel. Dit bekomen we door het booleaans product te nemen van alle variabelen. Indien de variabelen negatief zijn wordt de negatie in het product verwerkt. De minterm van rij $i$ noteren we als $m_i$. De Sum-of-Products methode neemt de booleaanse som van \termen{1-mintermen}. Een 1-minterm is een minterm die waar is bij een rij waarbij $f$ ook waar is. \tblref{truthTableExampleMinTerms} toont voor iedere rij de minterm. Wanneer $f$ waar is, wordt ook de 1-minterm ingevuld. Vervolgens bepalen we de som van alle 1-mintermen.
+\termen{Sum-of-Products (SOP)} en \termen{Product-of-Sums (POS)} zijn twee technieken die op een machinale manier uit een waarheidstabel een logische functie genereren. Ze maken respectievelijk gebruik van \termen{mintermen} en \termen{maxtermen}.
+\paragraph{Sum-of-Products} De Sum-of-Products maakt gebruik van mintermen. Een minterm is een logische functie die slechts waar is voor \'e\'en gegeven rij in een waarheidstabel. Dit bekomen we door het booleaans product te nemen van alle variabelen. Indien de variabelen negatief zijn wordt de negatie in het product verwerkt. De minterm van rij $i$ noteren we als $m_i$. De Sum-of-Products methode neemt de booleaanse som van \termen{1-mintermen}. Een 1-minterm is een minterm die waar is bij een rij waarbij $f$ ook waar is. \tblref{truthTableExampleMinTerms} toont voor iedere rij de minterm. Wanneer $f$ waar is, wordt ook de 1-minterm ingevuld. Vervolgens bepalen we de som van alle 1-mintermen.
 \begin{table}[htb]
 \begin{center}
 \begin{tabular}{m{0.65\textwidth}|m{0.35\textwidth}}
@@ -841,7 +841,7 @@ $x$&$y$&$z$&minterm&$f$&1-minterm\\\hline
 \end{tabular}\\
 SOP: $f=m_1+m_4+m_5+m_6=x'\cdot y'\cdot z+x\cdot y'\cdot z'+x\cdot y'\cdot z+x\cdot y\cdot z'$
 \end{center}
-\caption{Som-of-Products methode toegepast op het voorbeeld.}
+\caption{Sum-of-Products methode toegepast op het voorbeeld.}
 \label{tbl:truthTableExampleMinTerms}
 \end{table}
 \paragraph{Product-of-Sums} Analoog maakt de Product-of-Sums gebruik van maxtermen. Zoals de naam reeds doet vermoeden is een maxterm een logische functie die altijd waar is behalve voor \'e\'en rij in de waarheidstabel. Indien we de maxterm voor een bepaalde term willen genereren dienen we de booleaanse optelling van de negatie van de variabelen te nemen. We noteren een maxterm voor rij $i$ met $M_i$. De Product-of-Sums methode neemt analoog het booleaanse product van de \termen{0-maxtermen}. Een 0-maxterm is analoog een maxterm wanneer $f$ onwaar is. \tblref{truthTableExampleMaxTerms} toont voor iedere rij de maxterm. Wanneer $f$ onwaar is, wordt ook de 0-maxterm ingevuld. Vervolgens bepalen we het product van alle 0-maxtermen.
