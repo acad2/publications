@@ -19,6 +19,10 @@ Courses:
 
  - [*Artificiële Intelligentie* (dutch)](https://github.com/KommuSoft/publications/tree/master/cursus_Artificiele_Intelligentie)
 
+Resumes:
+
+ - [*Toepassingen van de Meetkunde in de Informatica (dutch)*](https://github.com/KommuSoft/publications/tree/master/samenvatting_Toepassingen_van_de_Meetkunde_in_de_Informatica)
+
 Glossaries:
 
  - [*Comparative Programming Languages*](https://github.com/KommuSoft/publications/tree/master/glossary_comparative_programming_languages)
