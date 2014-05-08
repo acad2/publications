@@ -1,0 +1,551 @@
+\chapter{From linear to integer optimization}
+\chplab{lintointopt}
+
+\section{Two equivalent definitions of a polyhedron}
+\seclab{defpolyhed}
+
+Consider the feasible region depicted in \figref{polyhedron}. How to describe this object mathematically?
+
+\importtikzfigure{polyhedron}{A feasible region.}
+
+Here is one way: we can view the feasible region as the intersection of as a number of halfspaces, each halfspace defined by a linear inequality. For instance, in the case of the figure above, we can write
+\begin{equation}
+\accl{\tupl{x_1,x_2}\in\RRR^2: -x_1+5\cdot x_2\leq 20 \wedge 2\cdot x_1+x_2\leq 6\wedge 6\cdot x_1-x_2\leq 10\wedge x_1\geq 0\wedge x_2\geq 0}.
+\end{equation}
+So we need five inequalities to precisely describe the feasible region.
+
+\paragraph{}
+An alternative is to focus on the extreme vertices of the feasible region in \figref{polyhedron}. Indeed, we can alternatively write
+\begin{equation}
+\accl{\tupl{x_1,x_2}\in\funma{conv}{\tupl{0,0},\tupl{0,4},\tupl{\frac{10}{11},\frac{46}{11}},\tupl{2,2},\tupl{\frac{5}{3},0}}}.
+\end{equation}
+
+\paragraph{}
+The first approach can be seen as the linear programming approach; here, we simply list all the inequalities that jointly define the feasible region. The second approach can be seen as the integer programming approach; then, we list the extreme vertices of the region, and define the feasible region as anything that is in the convex hull of these given vertices. The two approaches are equivalent: anything that can be written using inequalities, can be written as the convex hull of a number of points, and vice versa. Let us now take a more general point of view. Thus, a polyhedron $P$ can be defined in two equivalent ways. First, as the set of points in $\RRR^n$ that satisfy a finite set of linear constraints, i.e.,
+\begin{equation}
+P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq b}.
+\end{equation}
+
+\paragraph{}
+Second, $P$ can be defined as the set of points in $\RRR^n$ that are convex combinations of points of a finite set $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$ plus nonnegative combinations of points of a finite set $Y=\accl{\vec{y}_1,\vec{y}_2,\ldots,\vec{y}_L}$, i.e.,
+\begin{equation}
+P=\funm{conv}{X}+\funm{cone}{Y}
+\end{equation}
+where
+\begin{equation}
+\funm{conv}{X}=\condset{\sumieqb[k]{1}{K}{\alpha_k\cdot\vec{x}_k}}{\forall k:\alpha_k\in\RRR^+\wedge\sumieqb[k]{1}{K}{\alpha_k}=1}
+\end{equation}
+and
+\begin{equation}
+\funm{cone}{X}=\condset{\sumieqb[l]{1}{L}{\beta_l\cdot\vec{x}_l}}{\forall l:\alpha_l\in\RRR^+}
+\end{equation}
+
+\paragraph{}
+The representation theorem of Farkas, Minkowski, and Weyl (see e.g. Nemhauser and Wolsey\cite{citeulike:2212037}) proves that both definitions of a polyhedron are equivalent. Moreover, if we have a description of $P$ in one form, then we know that there is a description in the other form.
+
+\paragraph{}
+In the sequel, we will consider only polyhedra which are subsets of the positive orthant in $\RRR^n$ , i.e., $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. This guarantees, if $P$ is not empty, the existence of extreme points. If $X$ and $Y$ are minimal, then $X$ contains the extreme points, and $Y$ contains the extreme rays of $P$. A polytope is a bounded polyhedron, i.e., $Y=\emptyset$ and $\funm{cone}{Y}=\accl{\vec{0}}$. With a few exceptions, we will only consider polytopes in the sequel. In fact, most of the polytopes that we consider lie in the $n$-dimensional unit cube $\BBB^n=\condset{\vec{x}\in\RRR^n}{\vec{0}\leq\vec{x}\leq\vec{1}}$.
+
+\paragraph{}
+The way the representation theorem is used in combinatorial optimization is different from the way it is used in linear programming. In linear programming we are given a set of feasible solutions by means of a system of linear constraints $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. The representation theorem is used to show that the optimization problem $\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has an extreme point that is optimum. In combinatorial optimization we are given, implicitly, a description of a finite set of feasible solutions $\calS$. The set $\calS$ is usually described as the set of subsets of a certain ground set $E$, where these subsets satisfy certain properties. The elements from $\calS$ are described by vectors $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$. The representation theorem is used to conclude that $\funm{conv}{X}$ can be described by linear constraints, i.e., $\funm{conv}{X}=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ for some matrix $A$ and some vector $\vec{b}$. The main goal of this chapter is to find a way to obtain this set of linear constraints.
+
+\paragraph{}
+The set of feasible solutions $X$ of a combinatorial optimization problem is usually described through a formulation with linear restrictions and integrality constraints on the variables, i.e., $X=\condset{x\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\ZZZ^n}$. Notice that the formulation of $X$ as an Integer Linear Program is not unique. The linear programming relaxation of this formulation, denoted by $\funm{LPR}{A,\vec{b}}$, is $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. Clearly, $\funm{conv}{X}$ is a subset of $\funm{LPR}{A,\vec{b}}$. A first question is: how well does the linear programming relaxation of a formulation describe the convex hull of $X$? This gives a criterion to decide on which formulation is best for a certain problem. In general we choose the formulation that defines the smallest polyhedron containing $\funm{conv}{X}$. A second question is: how can we find constraints that improve the linear programming relaxation? Then, we are looking for constraints that are satisfied by all feasible solutions in $X$, but that cut off part of the polyhedron defined by the relaxation.
+
+\paragraph{}
+We will give (partial) answers to both questions. In the following section we identify formulations for problems that have the property that the linear programming relaxation is tight, i.e., it describes $\funm{conv}{X}$ exactly. Then we describe a method, first illustrated using the stable set problem, that improves the linear programming relaxation by adding linear constraints (called valid inequalities) that make the formulation tighter. Finally, we discuss a systematic way of obtaining these inequalities.
+
+\section{Linear description of combinatorial problems}
+\seclab{lindesccomb}
+Consider the integer linear program
+\begin{equation}
+\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\accl{0,1}^m},
+\end{equation}
+where $A$ is an $n\times m$ matrix of integers and $\vec{b}$ is an $n$-vector of integers. Suppose we solve the corresponding linear programming formulation. Of course, we would be quite fortuitous if the resulting values for the $\vec{x}$-variables would be integral. However, in some special cases to be discussed next, one can guarantee that the resulting solution is indeed integral.
+
+\paragraph{}
+When solving the linear programming formulation, we know from the simplex method that there is a regular $n\times n$ submatrix $B$ of $A$ such that $\overline{x}=B^{-1}\cdot\vec{b}$ is the optimum solution of the linear program. Denoting the columns of $B$ by $B_{\star,j}$ $j\in\accl{1,\ldots,n}$, Cramer's rule gives an explicit description of the $n$ basic variables $x_j$ $j\in\accl{1,\ldots,n}$ corresponding to the columns of $B$:
+
+\begin{equation}
+x_j=\displaystyle\frac{\funm{det}{B_{\star,1}|B_{\star,2}|\ldots|B_{\star,j-1}|\vec{b}|B_{\star,j+1}|\ldots|B_{\star,n}}}{\funm{det}{B}}.
+\end{equation}
+
+The upper determinant is integral. If the determinant of $B$ would be $\pm 1$, then $x_j$ is certainly integral. We call a matrix $B$ with that property unimodular (UM). Since the basis $B$ may vary with the objective $\vec{c}$ and the right-hand side $\vec{b}$, we would like to have a characterization of matrices $A$ for which each $n\times n$ submatrix $B$ is UM. Indeed, for such matrices, the polyhedron
+\begin{equation}
+P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}}
+\end{equation}
+has integral vertices.
+
+\paragraph{}
+Next, consider the integer linear program
+\begin{equation}
+\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\accl{0,1}}.
+\end{equation}
+To put the associated linear programming problem in the form above we introduce a slack-vector $\vec{y}$ and we reformulate it as
+\begin{equation}
+\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}+\vec{y}\leq\vec{b}\wedge\vec{x},\vec{y}\geq\vec{0}}.
+\end{equation}
+To obtain a similar result on the integrality of $\vec{x}$ (and $\vec{y}$), we can demand that each $n\times n$ submatrix of the matrix ($A|I$) be unimodular. This, however, is equivalent to stating that all regular square submatrices (not only those with $n$ rows and columns) of the matrix $A$ have a determinant $\pm 1$. Matrices with this property are called totally unimodular (TUM), see the next definition.
+
+\begin{definition}[Totally unimodular matrix]
+A matrix $A$ is called \emph{totally unimodular} if each square submatrix of $A$ has determinant equal to $-1$, $0$, or $+1$.
+\end{definition}
+
+\paragraph{}
+We have the following important theorem for TUM matrices.
+
+\begin{theorem}
+If a matrix $A$ is TUM, then the polyhedron $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has integral vertices.
+\end{theorem}
+
+\paragraph{}
+Clearly, a TUM matrix consists only of entries $0,\pm 1$. In the following theorem we characterize two types of matrices that are totally unimodular.
+\begin{theorem}
+\thmlab{tum-matrix}
+Let $A$ be a matrix with entries in $\accl{-1, 0, 1}$ such that there are at most two nonzeros in each column. If there exists a partition of the rows of $A$ in two sets $R_1$ and $R_2$ such that
+\begin{enumerate}
+ \item each column with two nonzero entries of the same sign, has one of its entries in $R_1$ and one in $R_2$,
+ \item each column with two nonzero entries of different sign, has either both of its entries in $R_1$ or both of its entries in $R_2$,
+\end{enumerate}
+then the matrix $A$ is TUM.
+\begin{proof}
+We use induction on the size of the submatrices. Each submatrix of size $1\times 1$ is trivially TUM. Let $C$ be a submatrix of size $k\times k$. We consider three cases.
+\begin{enumerate}
+ \item If $C$ has a column with no nonzeros it is singular;
+ \item if $C$ has a column with at most one nonzero, its determinant can be expanded along that column, and total unimodularity follows from the induction hypothesis;
+ \item finally, if $C$ has only columns with two nonzeroes, we split its rows in the subsets with the property described above. Adding up the rows in each subset results in two identical row vectors, which implies that the matrix is singular.
+\end{enumerate}
+\end{proof}
+\end{theorem}
+
+\paragraph{}
+There are two important classes of matrices that satisfy the conditions of the above theorem, and therefore are TUM. The node-arc incidence matrix $A$ of a directed graph (digraph) has rows corresponding with
+the nodes and columns corresponding with the arcs. The entry $A_{v,a}$ can obtain three possible values:
+\begin{enumerate}
+ \item $A_{v,a}=-1$ if vertex $v$ is the tail of arc $a$.
+ \item $A_{v,a}=1$ if vertex $v$ is the head of arc $a$.
+ \item $A_{v,a}=0$ if vertex $v$ and arc $a$ are not incident.
+\end{enumerate}
+
+\paragraph{}
+The node-edge incidence matrix $A$ of a graph has rows corresponding with the nodes and columns corresponding with the edges. The entry $A_{v,e}$ can obtain two possible values:
+\begin{enumerate}
+ \item $A_{v,e}=1$ if vertex $v$ and edge $e$ are incident.
+ \item $A_{v,e}=0$ if vertex $v$ and edge $e$ are not incident.
+\end{enumerate}
+
+\begin{corollary}
+\collab{tum-graph}
+The node-arc incidence matrix of a digraph is TUM. The node-edge incidence matrix of a bipartite graph is TUM.
+\end{corollary}
+
+\paragraph{}
+This implies that many optimization problems on (di)graphs can be solved with linear programming. Among them are the shortest path problem, the max-flow problem, the min-cost flow problem, and the matching problem on bipartite graphs. Finally, we will show by an example that general node-edge incidence matrices need not be TUM. Consider the complete graph on three vertices $K_3$. Its node edge
+incidence matrix is:
+\begin{equation}
+\brak{\begin{array}{ccc}
+1&1&0\\
+1&0&1\\
+0&1&1
+\end{array}}
+\end{equation}
+The determinant of this matrix is $-2$. Now let us compare the ILP formulation of the maximum cardinality matching problem with its linear programming relaxation on this graph. A maximum matching consists of one edge, and thus has value $1$. The LP-relaxation has an optimum value of $1.5$, since each of the three variables can obtain the value $0.5$, without violating any of the linear constraints.
+
+\section{Valid inequalities}
+\seclab{validineq}
+Consider the stable set problem. Given is an arbitrary graph $G=\tupl{V,E}$. The feasible solutions are the stable sets in $G$. These solutions are represented by binary $n$-vectors, where the components correspond to the vertices. The integer linear programming formulation is the following, see also \eqnnrefr{stableset-m}{stableset-c2}.
+
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[v]{V}{x_v}\eqnlab{stablesetr-m}\\
+\mbox{subject to}&\forall\tupl{v_1,v_2}\in E:x_{v_1}+x_{v_2}\leq 1\eqnlab{stablesetr-c1}\\
+&\forall v\in V:x_v\in\accl{0,1}\eqnlab{stablesetr-c2}
+\end{eqnarray}
+
+The stable set polytope $\funm{conv}{\mbox{SS}}$ is the convex hull of the feasible solutions of the above formulation, i.e., the set of vectors corresponding to stable sets. We will derive two classes of so-called valid inequalities, the clique inequalities and the odd-cycle inequalities. These valid inequalities will allow us to improve the solution found by the linear programming relaxation.
+
+\begin{example}
+Consider the following graph depicted in \figref{clique-graph} on five vertices. The nodes 3, 4 and 5 form a clique, i.e., a subset of the vertices that induces a complete graph. At most one of these nodes can be present in a stable set. In other words, each feasible solution must satisfy the inequality $x_3+x_4+x_5\leq 1$. Thus, when solving the linear programming relaxation, one could add this constraint to the formulation, thereby making the constraints $x_3+x_4\leq 1$, $x_3+x_5\leq 1$ and $x_4+x_5\leq 1$ obsolete.
+
+\importtikzfigure{clique-graph}{Graph with cliques.}
+
+\paragraph{}
+Notice that the inequality $x_3+x_4+x_5\leq 1$ can be derived from the constraints in the formulation by rounding in the following way.
+
+\begin{equation}
+\begin{array}{rcrcrcc}
+x_3&+&x_4&&&\leq&1\\
+&&x_4&+&x_5&\leq&1\\
+x_3&+&&&x_5&\leq&1\\\hline
+2\cdot x_3&+&2\cdot x_4&&2\cdot x_5&\leq&3
+\end{array}
+\end{equation}
+This gives $x_3+x_4+x_5\leq 1$. This way we can get $3$-cliques from $2$-cliques. The clique of the nodes $1$, $2$, $3$ and $4$ can not be derived by rounding constraints of the formulation. However, we can derive them from the constraints generated by the four $3$-cliques contained in $\accl{1,2,3,4}$.
+\end{example}
+\begin{example}
+Consider the following graph depicted in \figref{odd-cycle}: It is a cycle consisting of five vertices. The following inequality is valid. At most two nodes of the cycle can be in a packing.
+\begin{equation}
+x_1+x_2+x_3+x_4+x_5\leq 2
+\end{equation}
+In general, for a cycle $C$ with an odd number of vertices in a graph $G$, the inequality $\isumdomain[v]{C}{x_v\leq\floor{\frac{1}{2}\abs{C}}}$ valid. Unfortunately, adding such a constraint does not guarantee that the resulting solution is necessarily integral, as the graph depicted in \figref{odd-cycle-claw} shows.
+
+\importtikzfigure{odd-cycle}{Odd cycle.}
+
+\importtikzfigure{odd-cycle-claw}{Odd cycle with 5-claw.}
+
+\paragraph{}
+In this graph the solution $x=\tupl{\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{1}{5}}$ satisfies all the constraints that we have found for the stable set problem. However, the cumulative sum of the variables is larger than two, and the number of nodes in a packing in this graph is at most two. Therefore, we still do not have a description of $\funm{conv}{\mbox{SS}}$ for this graph. We will now strengthen the odd cycle inequality generated by the vertices $1$, $2$, $3$, $4$ and $5$. To do so, we look at the following inequality and we try to find a value for $\alpha$ as high as possible, such that the inequality maintains its validity.
+\begin{equation}
+x_1+x_2+x_3+x_4+x_5+\alpha\cdot x_6\leq 2
+\end{equation}
+If $x_6=0$, then the inequality reduces to the odd cycle inequality and is valid for any value of $\alpha$. If $x_6=1$, then node $6$ is in the packing. But this implies that nodes connected to $6$ can not be in the packing. Thus, $x_1=x_2=x_3=x_4=x_5=0$, and the inequality is valid for all $\alpha\leq 2$. Concluding, the inequality remains valid for $\alpha=2$.
+\end{example}
+\begin{application}[Generalized node packing]
+In structured problems with many inequalities one can sometimes derive so-called implications, i.e., if one variable has value 1 that implies that some other variable should have value 0. Such implications can lead to strong inequalities based on node packing inequalities which tighten a formulation. This technique is often used as a preprocessing step in solving huge integer linear programming problems.
+\end{application}
+\begin{example}
+Three binary variables $x_1$, $x_2$ and $x_3$ satisfy the following relations.
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+&&-3\cdot x_2&-&2\cdot x_3&\leq&-2\\
+-4\cdot x_1&-&3\cdot x_2&-&3\cdot x_3&\leq&-6\\
+2\cdot x_1&-&2\cdot x_2&+&6\cdot x_3&\leq&5
+\end{array}
+\end{equation}
+
+\paragraph{}
+By using the complementing variables $y_1=1-x_1$, $y_2=1-x_2$ and $y_3=1-x_3$, this system can be reformulated into a system consisting of knapsack constraints, as follows.
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+&&3\cdot y_2&+&2\cdot y_3&\leq&3\\
+4\cdot y_1&+&3\cdot y_2&+&3\cdot y_3&\leq&4\\
+2\cdot x_1&+&2\cdot y_2&+&6\cdot x_3&\leq&7
+\end{array}
+\end{equation}
+
+\paragraph{}
+The node packing graph defined by the variables and constraints consists of the following vertices and edges. There are two nodes for each variable, one representing the variable $x_i$ and the other its complement $y_i$ . Two nodes are connected by an edge if the corresponding pair of variables sums up to a value of at most $1$. In this example the edges are $\tupl{x_i,y_i}$ ($i=1,2,3$); $\tupl{y_i,y_j}$ ($1\leq i < j \leq 3$) (second constraint); $\tupl{x1,x3}$ (third constraint); $\tupl{y2,x3}$ (third constraint).
+
+\importtikzfigure{gennodepacking}{Generalized Node Packing graph.}
+
+\paragraph{}
+There is a clique consisting of the vertices corresponding to $x_3$, $y_3$ and $y_2$. Thus, $x_3+y_3+y_2\leq 1$. Since $x_3+y_3=1$ this gives $y_2=0$ and $x_2=1$. Notice that the vector $\tupl{x_1,x_2,x_3}=\tupl{1,\frac{1}{2},\frac{1}{2}}$ satisfies the original linear programming relaxation, but is cut off by the generated clique constraint.
+\end{example}
+
+\section{Gomory-Chv\`atal rounding}
+\seclab{gomorychvatal}
+A general method for finding valid inequalities that really cut off a part from the linear programming relaxation is \concept{Gomory-Chv\`atal rounding}.
+
+\paragraph{}
+Suppose we have the following description of a set of points
+\begin{equation}
+X=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\mbox{ integral}}
+\end{equation}
+
+\paragraph{}
+Then, for any vector $\vec{u}\geq\vec{0}$, the following constraint is valid:
+\begin{equation}
+\floor{\vec{u}\cdot A}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}
+\end{equation}
+
+\paragraph{}
+By the nonnegativity of x we have that ⌊uA⌋x ≤ ub, and from the integrality of x it follows that the left hand side is integral, and therefore we are allowed to round down the right hand side. By adding these constraints for all nonnegative vectors u, we get the polyhedron $P^1=\condset{\vec{x}\in\RRR^n}{\vec{x}\geq\vec{0}\wedge\forall \vec{u}\in\RRR^n:\vec{u}\geq\vec{0}\Rightarrow\floor{\vec{u}\cdot\vec{A}}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}}$ which is really smaller than $P$. The problem is that there are infinitely many constraints from which only few are necessary. Moreover, the resulting polyhedron $P^1$ may still contain fractional vertices. Then the process of rounding can be repeated. Chv\`atal showed that this process gives the convex hull of all integral vectors in $P$ after a finite number of times. The number of times that these cuts must be added is called the \concept{Chv\`atal-rank}.
+
+\paragraph{}
+\begin{example}
+Consider the following integer program:
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&&&x_2\\
+\mbox{subject to}&3\cdot x_1&+&2\cdot x_2&\leq&6\\
+&-3\cdot x_1&+&2\cdot x_2&\leq&0\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
+
+\paragraph{}
+The feasible region of the LP-relaxation of this integer program is depicted in \figref{feasibleregion-gc}.
+
+
+\importtikzfigure{feasibleregion-gc}{Feasible region of LP-relaxation.}
+
+Consider now the nonnegative vector $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. Using $\vec{u}$, we can construct the following linear combination of the given constraints:
+\begin{equation}
+\begin{array}{rcrcrcrcr}
+\tfrac{5}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\tfrac{1}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline\\
+&&x_1&+&x_2&\leq&\floor{\frac{30}{12}}&=&2
+\end{array}
+\end{equation}
+
+\paragraph{}
+Another possibility is to set $\vec{u}=\tupl{\frac{1}{12},\frac{5}{12}}$. The resulting constraint can be found as follows:
+\begin{equation}
+\begin{array}{rcrcrcrcr}
+\tfrac{1}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\tfrac{5}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline
+&&-x_1&+&x_2&\leq&\floor{\tfrac{6}{12}}&=&0
+\end{array}
+\end{equation}
+
+\paragraph{}
+When both additional restrictions are added to the original constraints, a polytope depicted in \figref{feasibleregion-gc-mod} with integral vertices arises. Thus, when these constraints are added to the linear program, the problem can be solved with the simplex method.
+
+\importtikzfigure{feasibleregion-gc-mod}{New polyhedron with additional constraints.}
+\end{example}
+
+\paragraph{}
+A main question is of course: how to get hold of a ``right'' $\vec{u}$? That is, a $\vec{u}$ such that the resulting inequality cuts away fractional extreme points without eliminating integral extreme vertices? A constructive method has been designed by Gomory.
+
+\begin{example}
+We continue our example described above to illustrate the idea. When we solve the LP-relaxation of the formulation given in the example with the simplex-method (see e.g. Chv\`atal\cite{Chvatal/83/Linear}), we start with the following dictionair:
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_3&=&6&-&3\cdot x_1&-&2\cdot x_2\\
+x_4&=&&&3\cdot x_1&-&2\cdot x_2\\\hline
+z&=&&&&&x_2
+\end{array}
+\end{equation}
+
+\paragraph{}
+After performing two iterations, we find the following, final, dictionair:
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_1&=&6&-&3\cdot x_1&-&2\cdot x_2\\
+x_2&=&&&3\cdot x_1&-&2\cdot x_2\\\hline
+z&=&&&&&x_2
+\end{array}
+\end{equation}
+
+\paragraph{}
+Consider now the second equation of this last dictionair. We can rewrite it as follows:
+
+\begin{equation}
+x_2+\tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4=\tfrac{3}{2}\eqnlab{cg-cut-eq2-ini}
+\end{equation}
+
+\paragraph{}
+Since $x_3,x_4\geq 0$, it follows from the latter equality that:
+
+\begin{equation}
+x_2+\floor{\tfrac{1}{4}}\cdot x_3+\tfrac{1}{4}\cdot x_4\leq\floor{\tfrac{3}{2}}
+\end{equation}
+
+\paragraph{}
+Moreover, since we know that the left-hand side of this expression is integral, we can safely round down the right-hand side, and obtain:
+
+\begin{equation}
+x_2+\floor{\tfrac{1}{4}}\cdot x_3+\tfrac{1}{4}\leq\cdot x_4=1
+\end{equation}
+
+This is the same as writing
+
+\begin{equation}
+x_2\leq 1\eqnlab{cg-cut-eq2-fin}
+\end{equation}
+
+\paragraph{}
+We now continue our argument by subtracting inequality \eqnnref{cg-cut-eq2-fin} from equality \eqnnref{cg-cut-eq2-ini}. This gives us:
+
+\begin{equation}
+\tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4\geq\tfrac{1}{2}
+\end{equation}
+
+This is called a \concept{Gomory's cut}. Substituting for $x_3$ and $x_4$ their defining equations (see the first simplex dictionair), we obtain, an equivalent inequality:
+
+\begin{equation}
+x_2\leq 1.
+\end{equation}
+\end{example}
+
+\begin{note}
+Notice that the current fractional solution violates this inequality. Repeatedly adding such a Gomory's cut gives in the end an integral solution.
+\end{note}
+
+\paragraph{}
+We now show that the procedure outlined above not only works for this particular example, but in fact works in general. We denote by $B$ the set of basic variables, and use $x_{B_i}$ to denote the basic variable corresponding to row $i$ of the dictionair. Consider row $i$ from the last dictionair:
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{d_{i,j}\cdot x_j}=d_i.\eqnlab{gc-theory1}
+\end{equation}
+
+Since $x_j\geq 0$ for all $j$, it follows that 
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{\floor{d_{i,j}}\cdot x_j}=d_i.
+\end{equation}
+
+Next, due to integrality of the left-hand side, we can round down the right-hand side, and obtain:
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{\floor{d_{i,j}}\cdot x_j}=\floor{d_i}.\eqnlab{gc-theory2}
+\end{equation}
+
+When we define $f_{i,j}=d_{i,j}-\floor{d_{i,j}}$, and $f_i=d_i−\floor{d_i}$, and when we subtract \eqnnref{gc-theory2} from \eqnnref{gc-theory1}, we get Gomory's cut:
+\begin{equation}
+\sumndomain[j]{B}{f_{i,j}\cdot x_j}=f_i.
+\end{equation}
+
+\begin{note}
+Notice that when $d_i$ is not integral, then $f_i>0$, and hence Gomory's cut is violated by the current solution (which, of course, has $x_j=0$ for all $j\notin B$).
+\end{note}
+
+\paragraph{}
+Unfortunately, there are some disadvantages to Gomory's method:
+\begin{enumerate}
+ \item The number of additional constraints is usually large. Moreover, Gomory's method does not always yield the best constraints possible.
+ \item The additional constraints contain a lot of non-zero elements, in general. Therefore problems may arise with respect to the numerical stability of the simplex method.
+\end{enumerate}
+In order to cope with these disadvantages we will develop methods for generating better constraints. Such methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
+
+\section*{Exercises}
+\begin{exercise}\exclab{interval-matrix}
+Prove \colref{tum-graph}, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the node-edge incidence matrix of a bipartite graph is TUM.
+\begin{hint}
+Use \thmref{tum-matrix}.
+\end{hint}
+\begin{answer}We solve this exercise in two parts:
+\begin{description}
+ \item [Node-arc incidence matrix] Since $A_{v,a}$ can only be $0$, $1$ or $-1$, matrix $A$ consists out of $\accl{-1,0,1}$. The columns of $A$ represent the arcs every arc has only one tail and one head and therefore there is one $1$ and one $-1$ in each column. We can assign all rows to one partition $R_1$ since it cannot occur that two elements in a column have the same sign, there is no constraint that a row should belong to a different partition.
+ \item [Node-edge incidence matrix] By definition of a node-edge incidence matrix, the matrix only contains ones and zeros. Since each edges are incident to exactly two nodes, each column has exactly two ones. A bipartite graph can be split in two set of nodes such that there are only edges between the vertices of two different sets. By assigning the rows corresponding to the vertices of the first set to the first partition and the rows corresponding to the vertices of the second set, every two rows that have both one in a column are in a different column.
+\end{description}
+\end{answer}
+\end{exercise}
+\begin{exercise}
+A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an \concept{interval matrix}. Show that such matrices are TUM.
+\begin{hint}
+Use induction, plus the facts that:
+\begin{enumerate}
+ \item interchanging two rows does not change whether a matrix is TUM, and
+ \item replacing row $A_i$ by the difference of rows $A_i$ and $A_j$ also does not change whether a matrix is TUM.
+\end{enumerate}
+\end{hint}
+\begin{answer}
+\footnote{Note: this answer does not actually use induction.}
+Firstly, we remark that each square submatrix of an interval matrix again is an interval matrix. So to prove that each interval matrix is TUM, it is sufficient to prove that each square interval matrix is unimodular. Secondly, given a square interval matrix $M$, if $det(M)=0$, then $M$ is unimodular.\\
+What is left to prove, is that each $n$-by-$n$ interval matrix $M$ for which $det(M)\neq 0$ is unimodular, which means it has a determinant of $+1$ or $-1$. We will do this by showing that we can transform $M$ into an identity matrix with the row operations defined above.\\
+The first step in this proof is to define for each row $i \in 1..n$ the variables $s_i$ and $e_i$, denoting respectively the column where the interval of $1$'s starts and ends. For instance, the following interval matrix has three rows, where $s_1=1$, $s_2=1$, $s_3=2$, $e_1=3$, $e_2=2$, $e_3=3$:
+\begin{equation}
+\label{unimodular_interval}
+\brak{\begin{array}{ccc}
+1&1&1\\
+1&1&0\\
+0&1&1
+\end{array}}
+\end{equation}
+Now, whenever two rows $i$ and $j$ have $s_i=s_j$ or $e_i=e_j$, we subtract the row with the fewest $1$'s from the row with the most $1$'s. This transformation preserves both the consecutive ones property and the unimodular property, so we end up with a new interval matrix $M'$ with the same unimodular property\footnote{This transformation can change the sign of the determinant though.}, but with less $1$'s. For example, matrix \ref{unimodular_interval} can be transformed into
+\begin{equation}
+\brak{\begin{array}{ccc}
+0&0&1\\
+1&1&0\\
+0&1&1
+\end{array}}
+\end{equation}
+by noting that $s_1=s_2$, and subsequently subtracting the row $2$ from the row $1$.\\
+If we now continue to apply this row operation until no two rows have the same start value or end value, we end up with a matrix containing exactly one $1$ in each row, never in the same column.\footnote{Note that no empty rows or columns can be derived, since we could assume the determinant was non-zero.} One way to understand this, is by noting that the $n$ $s_i$'s of the final matrix must all be different, and since they can only take the values $1..n$ (being the colomn numbers), each column is associated to exactly one $s_i$. The same argument can be made for the $e_i$'s. Now, since no $e_i$ can be smaller than its corresponding $s_i$, $e_i=s_i$ for all $i \in 1..n$. Continuing the example yields \ref{unimodular_interval_2} after subtracting row $1$ from row $3$ and then row $3$ from row $2$:
+\begin{equation}
+\label{unimodular_interval_2}
+\brak{\begin{array}{ccc}
+0&0&1\\
+1&0&0\\
+0&1&0
+\end{array}}
+\end{equation}
+Such a matrix can after some row-swap operations be transformed into the identity, e.g.:
+\begin{equation}
+\brak{\begin{array}{ccc}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{array}}
+\end{equation}
+And since the identity is unimodular, and since we only used unimodularity preserving row operations, $M$ must be unimodular, which concludes the proof.
+\end{answer}
+\end{exercise}
+\begin{exercise}
+Consider \excref{rectanglestabbing} of \chpref{formulations}, and let us modify that problem by only considering vertical lines as
+potential stabbing lines. The resulting problem can be formulated as follows: given a set of intervals,
+find a minimum number of vertical lines stabbing each interval at least once.
+\begin{enumerate}
+ \item Give an IP-formulation of the resulting problem.
+ \item Is the corresponding constraint matrix an interval matrix (see \excref{interval-matrix})?
+ \item How would you solve this problem?
+ \item Can you use the same approach for the rectangle stabbing problem?
+\end{enumerate}
+\end{exercise}
+\begin{answer}
+The IP-formulation is the following:
+\begin{eqnarray}
+\mbox{minimize}&\sumieqb[i]{1}{n}{y_i}\eqnlab{rsv-m}\\
+\mbox{subject to}&\forall I\in\calI:\sumdomain[i]{I}{x_{i}}\geq 1\eqnlab{rsv-c1}\\
+&\forall\rangei[i]{1}{n}:x_i\in\accl{0,1}\eqnlab{rsv-c2}
+\end{eqnarray}
+The corresponding matrix is TUM since it is an interval matrix. You can solve this problem using linear programming since the matrix is TUM and thus the variables are guaranteed to be integral. It is not possible to solve the rectangle stabbing problem since such matrix is not guaranteed to be TUM.
+\end{answer}
+\begin{exercise}
+Consider the problem formulated below, where in addition, the variables $x_1$ and $x_2$ need to be integral.
+
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&2\cdot x_1&+&x_2\\
+\mbox{subject to}&4\cdot x_1&+&x_2&\leq&8\\
+&-3\cdot x_1&+&3\cdot x_2&\leq&6\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
+Solving the linear program by the simplex method gives the following final dictionary.
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_1&=&\tfrac{18}{11}&-&\tfrac{3}{11}\cdot x_3&+&\tfrac{1}{11}\cdot x_4\\
+x_2&=&\tfrac{16}{11}&+&\tfrac{1}{11}\cdot x_3&-&\tfrac{4}{11}\cdot x_4\\\hline
+z&=&\tfrac{52}{11}&-&\tfrac{5}{11}\cdot x_3&-&\tfrac{2}{11}\cdot x_4
+\end{array}
+\end{equation}
+\paragraph{}
+Find two Gomory cuts for the problem where the variables $x_1$ and $x_2$ need to be integral. Next, rewrite each of these cuts in terms of solely $x_1$ and $x_2$.
+\end{exercise}
+\begin{exercise}
+Consider the following problem in integral variables $x_1$ and $x_2$. How many cutting planes do you have to add to solve the problem for $k=2$? For $k=4$? For general $k$? Can you use integer rounding to generate a valid inequality?
+\begin{hint}
+Draw a picture.
+\end{hint}
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&&&x_2\\
+\mbox{subject to}&x_1&-&2\cdot k\cdot x_2&\geq&0\\
+&2\cdot k\cdot x_1&+&x_2&\leq&2\cdot k\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
+\end{exercise}
+\begin{exercise}
+Let $G=\tupl{V,E}$ be an undirected graph. A matching in $G$ is represented by a vector $\vec{x}\in\BoolSet^{\abs{E}}$ in the following way. For each edge $e\in E$ we define
+
+\begin{equation}
+\semboolvar{x_e}{if edge $e$ is selected in the matching;}{otherwise.}
+\end{equation}
+
+The set of matchings is now given by
+
+\begin{equation}
+M=\condset{\vec{x}\in\BoolSet^{|E|}}{\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1\wedge\forall e\in E:x_e\in\accl{0,1}}.
+\end{equation}
+
+\begin{enumerate}
+ \item Derive with integer rounding that
+\begin{equation}
+\sumdomain[e=\tupl{v_1,v_2}]{E:v_1,v_2\in S}{x_e}\leq\displaystyle\frac{\abs{S}-1}{2}
+\eqnlab{matching-introunding}
+\end{equation}
+is a valid inequality for each $S\subseteq V$ with $3\leq\abs{S}\leq\abs{V}$ and $\abs{S}$ odd. (These inequalities are called \concept{odd-set constraints}).
+ \item Find, for the graph depicted in \figref{triangle}, a fractional solution violating the inequality \eqnref{matching-introunding} with $S=\accl{1,2,3}$.
+\end{enumerate}
+\importtikzfigure{triangle}{A triangle.}
+\end{exercise}
+\begin{exercise}
+Consider the integer programming formulation of the clique partitioning problem (see \excref{clique-partitioning} of \chpref{formulations}). \figref{cliquepartition-integer} shows an instance of that problem. Notice that solid lines correspond to edges with weight $+1$, whereas dotted lines correspond to edges with weight $-1$. What is the value of the linear programming relaxation of the integer programming formulation corresponding to this instance? Can you find a violated inequality using integer rounding?
+\importtikzfigure{cliquepartition-integer}{An instance of clique partitioning.}
+\end{exercise}

@@ -1,0 +1,790 @@
+\chapter{Separation and lifting: towards a cutting-plane algorithm}
+In this chapter we show how valid inequalities can be used to develop cutting plane algorithms. A key issue in any cutting-plane algorithm is separation. We illustrate how the separation problem for specific classes of valid inequalities can be solved, by considering the cover inequalities for the knapsack problem (\secref{knapsack}), and the subtour elimination inequalities for the traveling salesman problem (\secref{salesman}). Lifting is about strengthening valid inequalities; we apply this concept to the cover inequalities in \secref{coverineq}.
+
+\section{Separation for the knapsack problem}
+\seclab{knapsack}
+Although one could argue that the knapsack problem is a very specific problem featuring only a single
+constraint, one should realize that any integer programming formulation can be seen as an optimization
+problem with many knapsack constraints. Thus, valid inequalities that we can derive from a knapsack
+constraint are important since such an inequality can be relevant for any integer program.
+We restate the knapsack problem (see (1.10)-(1.12) in Chapter 1).
+47
+
+n
+
+(Knapsack)
+
+cj xj
+
+(4.1)
+
+aj xj ≤ b
+
+(4.2)
+
+max
+j=1
+n
+
+s.t.
+j=1
+
+xj ∈ {0, 1}
+
+for all j = 1, 2, . . . , n.
+
+(4.3)
+
+We assume, without loss of generality, that the parameters a1 , a2 , . . . , an , and b satisfy the following
+conditions:
+
+• selecting any single item is a feasible solution, or: aj ≤ b for each j, and
+• selecting all n items is not a feasible solution, or:
+
+n
+j=1
+
+aj > b.
+
+Notice that these conditions can be checked easily. In the sequel we will also assume (unless explicitly
+stated otherwise) that the items in the instance of the knapsack problem are sorted according to decreasing
+weights aj , that is, a1 ≥ a2 ≥ . . . ≥ an . In the following section, we will derive a set of valid inequalities
+for the knapsack problem and we will use them to sketch a solution approach for the knapsack problem.
+
+4.1.1
+
+Separation of cover inequalities
+
+Example Consider the following linear programming relaxation of an instance of the knapsack problem.
+max
+
+206x1
+
++
+
+180x2
+
++
+
+176x3
+
++ 170x4
+
++ 146x5
+
++
+
+110x6
+
+83x1
+
++
+
+75x2
+
++
+
+70x3
+
++
+
++
+
++
+
+45x6
+
+0≤
+
+xj
+
+68x4
+
+59x5
+
+≤
+
+170
+
+≤ 1 j = 1, 2, 3, 4, 5, 6.
+
+32
+A solution of the linear programming relaxation of this instance is x∗ = (0, 0, 1, 1, 59
+, 0). We can conclude
+
+from this LP-solution that items 3, 4, and 5 cannot simultaneously be part of a knapsack-solution. Hence,
+x3 = x4 = x5 = 1 is impossible. Therefore, the following constraint is a valid inequality:
+x3 + x4 + x5 ≤ 2.
+In fact, this constraint is a violated valid inequality, that is, the given solution x∗ violates this inequality.
+48
+
+In general, for a subset C ⊆ {1, . . . , n} of the items with the property that
+
+j∈C
+
+aj > b, we have the
+
+following valid inequality:
+xj ≤ |C| − 1.
+j∈C
+
+Such an inequality is called a cover-inequality. The set C is called a cover. More precisely, any set of
+items whose total weight exceeds b is a cover with respect to this constraint. Thus, as an aside, earlier in
+this section, we in fact assumed that {1, 2, . . . , n} is a cover. The inequality above is clearly valid: any
+feasible solution to the knapsack problem cannot select all items from C when C is a cover. A minimal
+cover is a cover with the property that the removal of any element makes the total weight of the remaining
+elements drop to b or less. In other words: C is a minimal cover if
+
+j∈C
+
+aj > b
+
+and
+
+for all i ∈ C :
+
+j∈C{i}
+
+aj ≤ b.
+
+The problem we now face is to find, given some point x∗ ∈ IRn , a cover inequality for the knapsack
+problem that is not satisfied by the given point. More formally, the separation problem for the cover
+inequalities is:
+Given x∗ ∈ IRn , find a cover C such that
+
+j∈C
+
+x∗j > |C| − 1, or establish that no such cover exists.
+
+Such an inequality is called a violated cover inequality. In general, the separation problem is hard for hard
+problems. However, if we restrict the search of a violated inequality to a subset of the valid inequalities,
+the separation problem restricted to this subset of inequalities, may be easier to solve. We will restrict
+ourselves here to the separation of the cover inequalities for the knapsack problem.
+The separation problem for the cover inequalities is now restated as follows. Let the point x∗ ∈ IRn be
+given. Is there a cover-inequality that is violated by x∗ ? In mathematical terms this problem can be
+described as follows.
+Given x∗ : Is there a C ⊆ {1, 2, . . . , n} with
+x∗j
+
+>
+
+|C| − 1 and
+
+(4.4)
+
+aj
+
+>
+
+b?
+
+(4.5)
+
+j∈C
+
+j∈C
+
+To solve this problem we introduce binary variables zj (1 ≤ j ≤ n). Define, for j = 1, 2, . . . , n:
+49
+
+zj
+
+
+ 1
+=
+ 0
+
+if j is chosen in the cover C;
+otherwise.
+
+These variables will determine which elements are present in the cover. The solution z to be found should
+satisfy the following conditions.
+
+
+
+n
+j=1
+
+x∗j zj > 
+
+n
+j=1
+
+
+
+zj  − 1
+
+(4.6)
+
+Clearly, this inequality follows from reformulating (4.4) by taking the newly defined z-variables into
+account (notice that, by definition, |C| =
+
+n
+j=1 zj ).
+
+Let us rewrite inequality (4.6) by bringing all terms
+
+with z-variables to the left hand side:
+n
+
+(1 − x∗j )zj < 1.
+j=1
+
+Consider now inequality (4.5). When we plug in the z-variables into this inequality, the following inequality results:
+
+n
+
+aj zj ≥ b + 1.
+j=1
+
+Summarizing all conditions, we can formulate the separation problem for the cover inequalities as the
+following minimization problem.
+
+n
+
+min η =
+j=1
+
+(1 − x∗j )zj
+
+(4.7)
+
+n
+
+aj z j ≥ b + 1
+
+s.t.
+
+(4.8)
+
+j=1
+
+zj ∈ {0, 1}
+
+for all j = 1, 2, . . . , n.
+
+(4.9)
+
+Suppose that we are able to solve (4.7)-(4.9). Then, if η < 1, a cover inequality violated by x∗ has been
+found. If, on the other hand, η ≥ 1, then we haven't found a cover inequality violated by x∗ (and for good
+reason: none exists!). Although the separation problem for cover inequalities, i.e., solving (4.7)-(4.9), is
+50
+
+NP-hard in general, the problem can become fairly easy for a given instance. This is due to the fact
+that there are usually only few fractional values in the solution x∗ . Indeed, items whose corresponding
+x∗ -variables equal 1 can always be added to the cover; this follows from observing that objective function
+(4.7) will not increase when selecting such an item in the cover. Also, items whose corresponding x∗ variables equal 0 can be safely excluded from the cover, since selecting such an item will result in η ≥ 1.
+In other words: if x∗j = 1 then zj = 1, and if x∗j = 0 then zj = 0. We illustrate this with the next
+example.
+Example
+79x1 + 53x2 + 53x3 + 47x4 + 45x5 ≤ 178
+A fractional solution for this example: x∗ = (1, 1, 46
+53 , 0, 0). To find a violated cover we have to solve the
+problem (verify this!):
+
+min
+s.t.
+
+η=
+
+7
+53 z3
+
++ z4 + z5
+
+(4.10)
+
+79z1 + 53z2 + 53z3 + 47z4 + 45z5 ≥ 179
+zj ∈ {0, 1}
+
+(4.11)
+for all j ∈ {1, . . . , 5}
+
+(4.12)
+
+As argued above, if x∗j = 1, then zj = 1 as well (since the the coefficient of zj in (4.10) equals zero). And,
+since we are only interested in finding violated cover inequalities, x∗j = 0 implies zj = 0 (since zj = 1
+gives η ≥ 1). Now, observe that the solution (z1 , z2 , z3 , z4 , z5 ) = (1, 1, 1, 0, 0) is feasible in (4.11)-(4.12),
+and has objective function value less than 1. Thus, we have identified a violated cover inequality:
+x1 + x2 + x3 ≤ 2.
+
+In the following iterations of a cutting-plane algorithm, the number of fractional variables may increase
+since the number of constraints increases. Therefore, identifying violated inequalities may become more
+complicated in forthcoming steps.
+Consider the following example.
+51
+
+max
+
+77x1 + 6x2 + 3x3 + 6x4 + 33x5 + 13x6 + 110x7 + 21x8 + 47x9
+
+s.t. 774x1 + 76x2 + 22x3 + 42x4 + 21x5 + 760x6 + 818x7 + 62x8 + 785x9 ≤ 1500
+67x1 + 27x2 + 794x3 + 53x4 + 234x5 + 32x6 + 797x7 + 97x8 + 435x9 ≤ 1500
+0 ≤ xi ≤ 1 for all i.
+
+In the following table we see how the linear programming solution and its value develop after adding
+violated cover inequalities. In the first table we give the solutions that are generated in the iterations.
+In the second table the violated cover inequalities are given. Notice that we can derive cover inequalities
+from both constraints.
+
+Iteration
+
+x1
+
+x2
+
+1
+
+.71
+
+2
+
+x3
+
+x4
+
+x5
+
+.35
+
+1
+
+1
+.63
+
+3
+4
+
+1
+
+.35
+
+1
+
+Iteration
+
+x6
+
+x7
+
+x8
+
+x9
+
+zLP
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+.61
+
+204.8
+
+1
+
+1
+
+.37
+
+1
+
+.63
+
+177.1
+
+1
+
+1
+
+1
+
+1
+
+225.7
+
+176.0
+
+Cover wrt constraint 1
+
+Cover wrt constraint 2
+
+1
+
+x1 + x7 ≤ 1
+
+x3 + x7 ≤ 1
+
+2
+
+x7 + x9 ≤ 1
+
+3
+
+x1 + x7 + x9 ≤ 1
+
+Notice that the inequality x1 + x7 + x9 ≤ 1 is not a cover inequality. Indeed, although {1, 7, 9} is a
+cover with respect to the first inequality, the right-hand side does not equal |C| − 1. This inequality is a
+so-called extended cover inequality. The extended cover inequalities are the subject of section 4.3.
+From the first table one can see that the number of fractional variables is small compared to the total
+number of variables. Thus, the separation problem for the cover inequalities is fairly easy here. In
+general, the number of fractional variables is bounded by the number of constraints of the problem at
+hand. Although this number may increase, the number of fractional variables tends to remain limited.
+This observation is true for many problems.
+52
+
+4.2
+
+Separation for the traveling salesman problem
+
+Consider the following formulation of the symmetric traveling salesman problem, which uses a binary
+variable xe indicating whether edge e is selected or not.
+
+e ce xe
+
+minimize
+subject to
+
+(4.13)
+
+e∈δ(v)
+
+xe = 2
+
+e∈δ(S)
+
+xe ≥ 2
+
+xe ∈ {0, 1}
+
+for all v ∈ V
+for all S ⊂ V, |S| ≥ 2
+for all e.
+
+(4.14)
+(4.15)
+(4.16)
+
+Obviously, constraints (4.14) ensure that each node must be incident to two edges; these constraints are
+referred to as degree constraints. Constraints (4.15) state that, for each nodeset S ⊂ V , there at least two
+edges with one endpoint in S and one endpoint not in S. These constraints are the subtour elimination
+constraints.
+When we replace the integrality constraints (4.16) by 0 ≤ xe ≤ 1, we have created a linear program that
+we refer to as the subtour LP. Clearly, solving this subtour LP gives a lower bound to the optimal value
+of the TSP instance. Notice however, that this subtour LP contains exponentially many constraints. We
+will show how to solve the separation problem for the subtour elimination constraints efficiently, i.e., in
+polynomial time. This implies that we can optimize over the subtour LP in polynomial time (despite the
+exponential number of constraints).
+So, let us assume we are given a vector x∗e , found, for instance, by optimizing (4.13) over the constraints
+(4.14) and 0 ≤ xe ≤ 1. The question now is: does there exist a violated subtour elimination constraint?
+In other words, is there a set S ⊂ V such that the left-hand side of (4.15) is less than 2? To answer this
+question we build a network G consisting of nodes, edges, and a capacity for each edge as follows. There
+is a node in G for each city in the TSP-instance, and there is an edge in the network for each e with
+x∗e > 0. The capacity of this edge equals x∗e .
+Proposition 4.2.1 The value of a minimum cut in G is less than 2 if and only if there exists a violated
+subtour elimination constraint.
+53
+
+We leave it to the reader to verify this proposition. Concluding, by solving a minimum cut problem we
+solve the separation problem for the subtour elimination constraints.
+
+4.3
+
+Lifting: extended cover inequalities
+
+Consider the example in Section 4.1. From the first constraint we could have obtained the valid inequality
+x1 + x6 + x7 + x9 ≤ 1
+. Indeed, since the coefficients of x1 , x6 , x7 and x9 are each larger than 750, no two of these variables
+can both equal 1. Thus, this inequality is valid, and in fact, it is stronger that the corresponding cover
+inequalities. Addition of this particular inequality to the linear programming relaxation would have
+given the integral solution immediately. Unfortunately, this inequality is not part of the class of cover
+inequalities. But we can derive it from a cover inequality with a technique called lifting.
+Example Let S be the set of feasible solutions of the problem in the previous section. Consider the inequality x1 +x7 ≤ 1. This inequality is valid in the set of solutions restricted to the items {1, 2, 3, 4, 5, 7, 8},
+i.e., it is valid for the set S ∩ {x ∈ IB 9 |x6 = x9 = 0}. We will now derive an inequality
+x1 + αx6 + x7 ≤ 1
+where α is chosen such that this inequality is valid for S ∩ {x ∈ IB 9 |x9 = 0}. In order to do so, we have
+to evaluate two situations.
+x6 = 0:
+
+in this case the inequality remains valid trivially.
+
+x6 = 1:
+
+in this case each of the items 1 and 7 can not be taken into the knapsack because constraint 1
+would be violated. Therefore, taking α = 1 maintains validity of the constraint.
+
+This process can be repeated for item 9. It will lead to the inequality
+x1 + x6 + x7 + x9 ≤ 1.
+Notice that the resulting inequality is not a cover inequality (there are four variables on the lefthand side,
+whereas the righthand side does not equal 3). This inequality belongs to the class of so-called extended
+cover inequalities.
+54
+
+Recall that we have assumed that the items are indexed according to decreasing weight. Consider a
+minimal cover C = {j1 , . . . , jk }. Then the corresponding extended cover E(C) is defined as
+E(C) = {1, . . . , j1 − 1} ∪ C.
+Thus, each item that is heavier than the heaviest item in the cover C is added in order to construct the
+set of items E(C). We claim:
+Theorem 4.1
+
+j∈E(C)
+
+xj ≤ |C| − 1 is a valid inequality for the knapsack problem.
+
+The derivation of an extended cover inequality from a cover inequality can be seen as a special case
+of a process called lifting. Given some valid inequality (say, a cover inequality) lifting refers to raising
+coefficients of variables in this inequality in order to obtain a stronger, yet valid, new inequality (the
+extended cover inequality). Indeed, the coefficients of variables x1 , x2 , . . . , xj1 −1 have value 0 in the cover
+inequality, and have been raised to value 1 in the extended cover inequality. This principle, however, can
+be applied in a more general way. In fact, lifting is a technique that can be used in many problems to
+strengthen known classes of valid inequalities. The following theorems can be used repeatedly for this
+purpose. In the theorems stated below, we assume that x is a n-dimensional {0, 1} vector, and that S
+denotes the set of feasible x-vectors.
+Theorem 4.2 Suppose that
+Then αx1 +
+
+n
+j=2
+
+n
+j=2
+
+πj xj ≤ π0 is valid for each x ∈ S with x1 = 0.
+
+πj xj ≤ π0 is valid for each x ∈ S as long as α ≤ π0 − maxx∈S|x1 =1
+
+Theorem 4.3 Suppose that
+Then βx1 +
+
+n
+j=2
+
+n
+j=2
+
+n
+j=2
+
+πj xj .
+
+πj xj ≤ π0 is valid for each x ∈ S with x1 = 1.
+
+πj xj ≤ π0 +β is a valid inequality for each x ∈ S as long as β ≥ maxx∈S|x1 =0
+
+n
+j=2
+
+πj xj −
+
+π0 .
+Notice that applying Theorem 4.2 does not change the righthand side, whereas applying Theorem 4.3
+may change the righthand side. In the remainder of this section we give an example in which the two
+theorems above are applied repeatedly.
+Example Consider the knapsack constraint
+3x1 + x2 + x3 + x4 + x5 ≤ 4.
+55
+
+(4.17)
+
+As before, let S be the set of (binary) feasible solutions of this constraint. Suppose that we fix the values
+of the first three variables as follows:
+x1 = 1, x2 = x3 = 0.
+Plugging in these values in (4.17) reduces the inequality to x4 + x5 ≤ 1. Thus x4 + x5 ≤ 1 is valid for
+each x ∈ S with x1 = 1, x2 = x3 = 0.
+We now lift variable x3 by applying Theorem 4.2. This gives (using α3 as coefficient for x3 ): find a
+maximal α3 such that α3 x3 + x4 + x5 ≤ 1 is valid for each in x ∈ S with x1 = 1, x2 = 0, x3 = 1. This is
+equivalent to determining a maximal α3 such that
+α3 ≤ 1 −
+
+max
+
+x∈S|x1 =1,x2 =0,x3 =1
+
+x4 + x5 .
+
+It follows that α3 = 1. In other words, we can conclude that x3 + x4 + x5 ≤ 1 is valid for all x ∈ S with
+x1 = 1, x2 = 0.
+We now proceed by lifting variable x1 using Theorem 4.3. This gives (using β1 as coefficient for x1 ): find
+a minimal β1 such that β1 x1 + x3 + x4 + x5 ≤ 1 + β1 is valid for each x ∈ S with x1 = x2 = 0. This is
+equivalent to determining a minimal β1 such that
+β1 ≥
+
+(x3 + x4 + x5 ) − 1.
+
+max
+
+x∈S|x1 =x2 =0
+
+It follows that β1 = 2. Thus, we conclude that 2x1 + x3 + x4 + x5 ≤ 3 is valid for all x ∈ S with x2 = 0.
+Finally, we lift variable x2 using Theorem 4.2. This gives (using α2 as coefficient for x2 ): find a maximal
+α2 such that 2x1 + α2 x2 + x3 + x4 + x5 ≤ 3 is valid for each x ∈ S with x2 = 1. This is equivalent to
+determining a maximal α2 such that
+α2 ≤ 3 −
+
+max
+
+x∈S|x2 =1
+
+2x1 + x3 + x4 + x5 .
+
+It follows that α2 = 0. We arrive at the conclusion that the resulting inequality
+2x1 + x3 + x4 + x5 ≤ 3
+
+(4.18)
+
+is a valid inequality for each x ∈ S. Notice that we have derived a new inequality (4.18) that is stronger
+than the original one (4.17). As an example, consider the solution x = ( 13 , 0, 1, 1, 1), and observe that
+this particular solution is cut off by (4.18), while it is not violated by (4.17).
+56
+
+Here we have lifted the variables x1 , x2 and x3 in the sequence x3 , x1 , x2 . It is interesting to notice that
+different sequences may yield different inequalities. For instance, the sequence x3 , x1 , x2 produces another
+inequality. Thus, the order of lifting influences the final inequality we get, see Exercise 4.
+
+4.4
+
+Applications
+
+Knapsack constraints are embedded in many structured problems. Two obvious examples are the multiknapsack problem and the generalized assignment problem. We will give their respective formulations
+below.
+The multi-knapsack problem
+
+n
+
+cj xj
+
+(M KP ) max
+
+(4.19)
+
+j=1
+n
+
+aij xj ≤ bi
+
+s.t.
+
+for all i = 1, 2, . . . , m
+
+(4.20)
+
+for all j = 1, 2, . . . , n
+
+(4.21)
+
+j=1
+
+xj ∈ {0, 1}
+
+The generalized assignment problem
+
+m
+
+n
+
+cij xij
+
+(GAP ) max
+
+(4.22)
+
+i=1 j=1
+n
+
+s.t.
+
+aij xij ≤ bi
+
+for all i = 1, 2, . . . , m
+
+(4.23)
+
+for all j = 1, 2, . . . , m
+
+(4.24)
+
+for all i = 1, 2, . . . , m, for all j = 1, 2, . . . , n.
+
+(4.25)
+
+j=1
+m
+
+xij ≤ 1
+i=1
+
+xij ∈ {0, 1}
+
+57
+
+Exercises
+Exercise 1
+Find all inequalities, induced by minimal covers, of the following knapsack inequality:
+79x1 + 53x2 + 53x3 + 45x4 + 45x5 ≤ 178.
+Can you find an extended cover inequality?
+Exercise 2
+Consider the following knapsack problem.
+max
+
+3x1 + 2x2 + x3
+
+s.t.
+
+4x1 + 3x2 + 2x3 ≤ 6
+x1 , x2 , x3 ∈ {0, 1}
+
+Solve this problem with a cutting-plane algorithm.
+Exercise 3
+It is clear that one can use the simplex-method to find the linear programming relaxation of the knapsack
+problem as formulated by (1.10)-(1.12). However, we claim that there is a much easier way:
+Sort the items such that
+c1
+c2
+cn
+≥
+≥ ... ≥
+,
+a1
+a2
+an
+and next fill the knapsack with items 1, 2, . . . , k − 1, until item k can only be fractionally added to the
+knapsack. In other words, we claim that the following solution is an optimal linear programming solution
+to the knapsack problem.
+
+
+
+1
+
+
+k−1
+xj =
+(b − j=1 aj )/ak
+
+
+
+ 0
+
+for all j = 1, 2, . . . , k − 1
+if j = k
+for all j = k + 1, . . . , n.
+
+Can you prove this?
+
+Apply this to the example in Section 4.1.
+Exercise 4
+58
+
+Consider the example in Section 4.3. What inequality results if the variables are lifted in the sequence
+x2 , x1 , x3 ? And what inequality results when using x1 , x2 , x3 as lifting sequence?
+
+59
