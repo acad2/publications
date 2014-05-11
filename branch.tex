@@ -76,7 +76,7 @@ In this subsection we illustrate the \concept{column generation} technique on th
 problem}. This problem can be described as follows.
 
 \begin{definition}[hierarchical crew scheduling problem]
-Given are $m$ crews who have to perform $n$ tasks. For each crew $t$ a cost-rate $r_t$ is known, $t=1,2,\ldots,m$. Each task is characterized by a starting time $s_i$ and a processing time $p_i$. Each task $i$ has to start at $s_i$ and must be carried out \concept{nonpreemptively} by some crew until $s_i+p_i$. Also, a distance $d_{ij}$ for every pair of tasks $i$ and $j$ is given. Finally, the crews are hierarchically ordered in the following way: for each job a 'maximal' crew is given such that each crew with an index higher than the index of the maximal crew is not capable of performing that job; all other crews are capable of performing that job. The cost of a crew is the product of its cost rate $r_t$ and the distance traveled by that crew. The problem is to find an assignment of tasks to crews against minimal costs.
+Given are $m$ crews who have to perform $n$ tasks. For each \concept{crew} $t$ a \concept{cost-rate} $r_t$ is known, $t=1,2,\ldots,m$. Each \concept{task} is characterized by a \concept{starting time} $s_i$ and a \concept{processing time} $p_i$. Each task $i$ has to start at $s_i$ and must be carried out \concept{nonpreemptively} by some crew until $s_i+p_i$. Also, a \concept{distance} $d_{ij}$ for every pair of tasks $i$ and $j$ is given. Finally, the crews are \concept{hierarchically ordered} in the following way: for each job a 'maximal' crew is given such that each crew with an index higher than the index of the maximal crew is not capable of performing that job; all other crews are capable of performing that job. The cost of a crew is the product of its cost rate $r_t$ and the distance traveled by that crew. The problem is to find an assignment of tasks to crews against minimal costs.
 \end{definition}
 
 \begin{example}
@@ -88,44 +88,34 @@ job $1$ can only be carried out by crew $1$, jobs $2$ and $3$ can be carried out
 \importtikzfigure{hcsp-distances}{The distance of the hierarchical crew scheduling problem example.}
 \end{example}
 
-One (of the 2) optimal solution(s) for this instance can be described as follows. Starting at time 0, crew
-1 travels to job 1, waits 4 time units, performs the job, travels to job 3, waits 28 time units, performs it
-and returns to the depot. Distance traveled is 37, so its costs are 111. Crew 2 simply travels to job 2,
-performs it and returns for a total cost of 20. Thus, the value of an optimal solution to this instance is
-131.
-65
+\paragraph{}
+One (of the~$2$) optimal solution(s) for this instance can be described as follows. Starting at time~$0$, crew~$1$ travels to job~$1$, waits~$4$ time units, performs the job, travels to job~$3$, waits~$28$ time units, performs it and returns to the depot. Distance traveled is~$37$, so its costs are~$111$. Crew~$2$ simply travels to job~$2$, performs it and returns for a total cost of~$20$. Thus, the value of an optimal solution to this instance is~$131$.
 
-We model the hierarchical crew scheduling problem as a problem on a weighted, directed graph G = (V, A)
-as follows. Construct a vertex for each task i = 1, . . . , n and let V = {1, . . . , n} ∪ {s, f }. The vertices s
-and f can be regarded as the source and sink of the graph G. There is an arc from vertex i to j in A if
-si + pi + dij ≤ sj for all i, j ∈ V \ {s, f }. Further, there is an arc {s, i} and {i, f } in A for all i ∈ V \ {s, f }.
-Finally, there is a cost vector ctij associated to each arc {i, j} ∈ A. We compute this vector as follows:
-
- r ·d
-if crew t is able to do jobs i and j,
-t
-ij
-ctij =
-(5.11)
- M
-otherwise, for all t, for all {i, j} ∈ A,
+\paragraph{}
+We model the \concept{hierarchical crew scheduling problem} as a problem on a \concept{weighted, directed graph} $G=\tupl{V,A}$ as follows. Construct a \concept{vertex} for each task $i=1,\ldots,n$ and let $V=\accl{1,\ldots,n}\cup\accl{s,f}$. The vertices $s$ and $f$ can be regarded as the \concept{source} and \concept{sink} of the \concept{graph} $G$. There is an \concept{arc} from \concept{vertex} $i$ to $j$ in $A$ if $s_i+p_i+d_{ij}\leq s_j$ for all $i,j\in V\setminus\accl{s,f}$. Further, there is an \concept{arc} $\tupl{s,i}$ and $\tupl{i,f}$ in $A$ for all $i\in V\setminus\accl{s,f}$. Finally, there is a cost vector $c_{ij}^t$ associated to each \concept{arc} $\tupl{i,j}\in A$. We compute this \concept{vector} as follows:
 
-where M is a large number.
+\begin{equation}
+\semvalvar{c_{ij}^t}{r_t\cdot d_{ij}}{if crew $t$ is able to do jobs $i$ and $j$,}{M}{otherwise, for all $t$, for all $\tupl{i,j}\in A$}
+\end{equation}
 
+where $M$ is a large number.
+
+\paragraph{}
 Consider now the following formulation using the following parameters:
-• R = the set of paths in G from s to f ,
-for i = 1, . . . , n, r ∈ R :
-• δir
-for t = 1, . . . , m, r ∈ R :
+\begin{itemize}
+ \item R is the set of paths in $G$ from $s$ to $f$,
+for $i=1,2,\ldots,n$, $r\in R$:
 
-
- 1 if vertex i is in path r, and
-=
- 0 otherwise
+\begin{equation}
+\semboolvar{\delta_{ir}}{if vertex $i$ is in path $r$, and}{otherwise}
+\end{equation}
+
+for $t=1,2,\ldots,n$, $r\in R$:
 
 • ctr = cost incurred when crew t takes path r, (observe that, for a given r, t, we can easily compute
 this quantity using (5.11); notice that if a path r contains a vertex that cannot be served by crew t, we
 set the corresponding ctr to a large number),
+\end{itemize}
 and using, for t = 1, . . . , m, r ∈ R, the decision variables
 
  1 if crew t takes path r,

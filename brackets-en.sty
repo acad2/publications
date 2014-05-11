@@ -28,7 +28,8 @@
 \newcommand{\bigomega}[1]{\fun{\Omega}{#1}}
 \newcommand{\smallomega}[1]{\fun{\omega}{#1}}
 \newcommand{\bigtheta}[1]{\fun{\Theta}{#1}}
-\newcommand{\semboolvar}[3]{\ensuremath{#1=\acclguard{1&\mbox{#2}\\0&\mbox{#3}}}}
+\newcommand{\semvalvar}[5]{\ensuremath{#1=\acclguard{#2&\mbox{#3}\\#4&\mbox{#5}}}}
+\newcommand{\semboolvar}[3]{\semvalvar{#1}{1}{#2}{0}{#3}}
 
 \newcommand{\AAA}{\ensuremath{\mathbb{A}}}
 \newcommand{\BBB}{\ensuremath{\mathbb{B}}}
