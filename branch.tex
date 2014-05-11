@@ -76,15 +76,7 @@ In this subsection we illustrate the \concept{column generation} technique on th
 problem}. This problem can be described as follows.
 
 \begin{definition}[hierarchical crew scheduling problem]
-Given are m crews who have to perform n tasks.
-For each crew t a cost-rate rt is known, t = 1, . . . , m. Each task is characterized by a starting time si
-and a processing time pi . Each task i has to start at si and must be carried out nonpreemptively by
-some crew until si + pi . Also, a distance dij for every pair of tasks i and j is given. Finally, the crews are
-hierarchically ordered in the following way: for each job a 'maximal' crew is given such that each crew
-with an index higher than the index of the maximal crew is not capable of performing that job; all other
-crews are capable of performing that job. The cost of a crew is the product of its cost rate rt and the
-distance traveled by that crew. The problem is to find an assignment of tasks to crews against minimal
-costs.
+Given are $m$ crews who have to perform $n$ tasks. For each crew $t$ a cost-rate $r_t$ is known, $t=1,2,\ldots,m$. Each task is characterized by a starting time $s_i$ and a processing time $p_i$. Each task $i$ has to start at $s_i$ and must be carried out \concept{nonpreemptively} by some crew until $s_i+p_i$. Also, a distance $d_{ij}$ for every pair of tasks $i$ and $j$ is given. Finally, the crews are hierarchically ordered in the following way: for each job a 'maximal' crew is given such that each crew with an index higher than the index of the maximal crew is not capable of performing that job; all other crews are capable of performing that job. The cost of a crew is the product of its cost rate $r_t$ and the distance traveled by that crew. The problem is to find an assignment of tasks to crews against minimal costs.
 \end{definition}
 
 \begin{example}
