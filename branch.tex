@@ -1,0 +1,597 @@
+\chapter{Column generation and branch-and-price}
+
+In this chapter we describe a technique that is used for solving linear programs with a huge number of
+variables, namely column generation (see Section 5.1). The use of this technique within an enumerative
+framework is next discussed in Section 5.2. We illustrate these issues on the cutting stock problem (bin
+packing) and the crew scheduling problem.
+
+5.1
+
+Column generation
+
+In this section we show how column generation procedures can work. We emphasize that column generation is a technique for solving (large) linear programming problems. The main idea is (i) to work in
+iterations, and deal, at all times during the course of the method, with only a limited number of variables,
+and (ii) to verify optimality of the outcome of each iteration using complementary slackness. In Subsection 5.1.1 we show how this method can be applied to the cutting stock problem, and in Subsection 5.1.2,
+we show how it works for a crew scheduling problem.
+61
+
+5.1.1
+
+The cutting stock problem
+
+We start by illustrating this on the cutting stock problem. This problem can be described as follows.
+Given are n item types; there is a demand of di items for type i, and each item of type i has size wi ,
+i = 1, 2, . . . , n. Let the total number of items be denoted by D =
+
+i
+
+di . Given are a (large enough)
+
+number of rolls of size L. The problem is to fulfill demand exactly, using a minimum number of rolls. A
+straightforward formulation is as follows, where we use, with i = 1, . . . , D,j = 1, 2, . . . binary variables
+
+ 1 if item i is cut from roll j,
+xij =
+ 0 otherwise,
+
+and
+
+
+ 1
+yj =
+ 0
+
+The formulation is now:
+
+(CS-1) min
+s.t.
+
+if roll j is used,
+otherwise.
+
+j=1
+D
+i=1
+
+yj
+
+wi xij ≤ Lyj
+
+j=1
+
+xij = 1
+
+(5.1)
+for j = 1, 2, . . .
+
+(5.2)
+
+for i = 1, 2, . . . , D
+
+(5.3)
+
+xj ∈ {0, 1}, yj ∈ {0, 1} for all i, j.
+
+(5.4)
+
+There are a number of reasons why this formulation is not suited for solving large instances of the cutting
+stock problem. First of all, the linear programming bound is very weak, since the solution xij =
+
+1
+D
+
+is
+
+feasible to the linear programming relaxation (verify that this leads to a linear programming solution
+with value (
+
+wi /L)). Secondly, symmetry of solutions (the rolls are interchangeable) will also affect the
+
+performance of a branch-and-bound algorithm based on this formulation. Therefore, another formulation
+based on another concept is welcome. Instead of focusing on individual items, let us focus on a possible
+way to cut a roll. More precisely, we refer to a possible way of cutting a roll as a pattern. Obviously,
+given the input described above, we could, in principle enumerate all possible patterns. Then, we could
+write down the following formulation that uses an integral variable zj for the number of times a roll is
+cut according to pattern j = 1, 2, . . .:
+62
+
+(CS-2) min
+s.t.
+
+j=1 zj
+j=1
+
+aij zj = di
+
+zj integral
+
+(5.5)
+for i = 1, . . . , n
+
+(5.6)
+
+for all j.
+
+(5.7)
+
+Notice that aij denotes the number of times that an item of type i is used in pattern j; this is a known
+number. Now although this formulation does not suffer from the disadvantages mentioned above, there
+is a disadvantage to the current formulation: the number of variables. Indeed, this number can be
+astronomically high.
+Let us therefore first focus on solving the linear programming relaxation of formulation (CS-2). How to
+overcome the obstacle posed by the number of variables? The crucial idea of column generation is based
+on the observation that in an optimal solution of the linear programming relaxation of (CS-2), only very
+few of these variables will have a value different from 0. Indeed, the theory of the simplex-algorithm
+tells us that if there is an optimal solution, this solution will consist of n basic variables that may have
+a non-zero value, while all other variables will be non-basic and have value 0.
+How to make use of this observation? Of course, we do not know a priori which variables are basic in an
+optimal solution and which variables are not. However, given a feasible basic solution, we can determine
+(using complementary slackness and duality) whether it is optimal, and if not, which variable should
+be included in the basis to improve the current solution. This idea suggests an iterative procedure for
+solving the LP-relaxation of (CS-2) as follows:
+
+Step 0: Start with a subset of the variables (that contains a feasible solution). All other variables have
+implicitly the value 0. This is called the restricted master problem.
+Step 1: Solve the LP-relaxation, and arrive at a feasible primal solution.
+Step 2: Question: does there exist a variable (a pattern) with negative reduced costs? That is, does there
+exist a variable that should enter the basis? This question is called the pricing problem. If no, the
+current LP-solution is optimal, and we STOP, else
+Step 3: Identify that variable and add it to the current set of variables. Go to Step 1.
+63
+
+At first sight, there may be no reason why this would be more efficient than solving the linear program
+with all variables. Indeed, the crux of this approach lies in solving the pricing problem: if explicitly
+determining the reduced cost of each individual variable by enumeration was the only way to solve the
+pricing problem, we would not have gained much. However, in a lot of cases, solving the pricing problem
+can be done very efficiently, for instance by solving a shortest path problem, or by solving a knapsack
+problem. Then, column generation is a very efficient way of solving the master problem. Let us proceed
+by illustrating this idea on the cutting stock problem.
+Consider a column in the matrix A of the second cutting stock formulation, and let us denote this
+column by a. It describes a pattern, that is, the entries of that column equal the multiplicity of each
+item type in that pattern. Of course, for a column a = (a1 , a2 , . . . , an ) of A to be a feasible pattern it
+must be true that
+
+i
+
+wi ai ≤ L. But the converse is true as well, that is, any n nonnegative integers
+
+(a1 , a2 , . . . , an ) that satisfy
+
+i
+
+wi ai ≤ L is a feasible pattern. Let us denote pattern j by nonnegative
+
+integers (a1j , a2j , . . . , anj ).
+Now suppose we are given a primal solution z = (z1 , z2 , . . .), and we are also given the values of the dual
+variables (u1 , u2 , . . . , un ) associated to the constraints (5.6). How to determine whether z is an optimal
+solution to the LP-relaxation of (CS-2)? Let us consider the constraints of the dual of the LP-relaxation
+of (CS-2). We know that these constraints are of the form:
+
+i
+
+ui aij ≤ 1 for each possible pattern j
+
+(verify this!). Thus, if the current u-values satisfy all these constraints (i.e., for each pattern j), we have
+an optimal LP-solution. Or, alternatively formulated, we are looking for a pattern (a1 , a2 , . . . , an ) such
+that
+
+i
+
+wi ai ≤ L and
+
+i
+
+ui ai > 1. If we can find such a pattern, we know that the current LP-solution
+
+is not optimal, and hence we add this pattern to the current set of columns and start a new iteration.
+Otherwise, if we cannot find such a pattern, the current LP-solution is optimal. Summarizing, the pricing
+problem boils down to solving the following problem:
+
+max
+s.t.
+
+u i ai
+
+(5.8)
+
+wi ai ≤ L
+
+(5.9)
+
+i
+i
+
+ai integer
+
+for all i.
+
+(5.10)
+
+This problem is (a variant of) the well-known knapsack problem (which, in spite of its NP-hardness, can
+be solved in reasonable computing times for very large instances, see Chapter 4). Concluding, the pricing
+64
+
+problem can be solved relatively fast, and hence the LP-relaxation of (CS-2) can be solved fast as well.
+
+5.1.2
+
+The hierarchical crew scheduling problem
+
+In this subsection we illustrate the column generation technique on the hierarchical crew scheduling
+problem. This problem can be described as follows. Given are m crews who have to perform n tasks.
+For each crew t a cost-rate rt is known, t = 1, . . . , m. Each task is characterized by a starting time si
+and a processing time pi . Each task i has to start at si and must be carried out nonpreemptively by
+some crew until si + pi . Also, a distance dij for every pair of tasks i and j is given. Finally, the crews are
+hierarchically ordered in the following way: for each job a 'maximal' crew is given such that each crew
+with an index higher than the index of the maximal crew is not capable of performing that job; all other
+crews are capable of performing that job. The cost of a crew is the product of its cost rate rt and the
+distance traveled by that crew. The problem is to find an assignment of tasks to crews against minimal
+costs.
+Example Here is an instance with 2 crews and 3 jobs:
+m = 2, n = 3, r1 = 3, r2 = 1, s1 = 20, s2 = 40, s3 = 60, p1 = p2 = p3 = 0,
+job 1 can only be carried out by crew 1, jobs 2 and 3 can be carried out by each of the two crews and
+with distances dij as in Figure 5.1.
+ 
+10 
+ 
+  16
+❦
+0
+❅
+❅
+9
+❅
+❅
+
+2❦
+❅
+❅ 12
+❅ ✎☞
+❅ ❦
+1
+✍✌
+ 
+16  12
+ 
+ 
+❦
+3
+
+Figure 5.1: The distances
+One (of the 2) optimal solution(s) for this instance can be described as follows. Starting at time 0, crew
+1 travels to job 1, waits 4 time units, performs the job, travels to job 3, waits 28 time units, performs it
+and returns to the depot. Distance traveled is 37, so its costs are 111. Crew 2 simply travels to job 2,
+performs it and returns for a total cost of 20. Thus, the value of an optimal solution to this instance is
+131.
+65
+
+We model the hierarchical crew scheduling problem as a problem on a weighted, directed graph G = (V, A)
+as follows. Construct a vertex for each task i = 1, . . . , n and let V = {1, . . . , n} ∪ {s, f }. The vertices s
+and f can be regarded as the source and sink of the graph G. There is an arc from vertex i to j in A if
+si + pi + dij ≤ sj for all i, j ∈ V \ {s, f }. Further, there is an arc {s, i} and {i, f } in A for all i ∈ V \ {s, f }.
+Finally, there is a cost vector ctij associated to each arc {i, j} ∈ A. We compute this vector as follows:
+
+ r ·d
+if crew t is able to do jobs i and j,
+t
+ij
+ctij =
+(5.11)
+ M
+otherwise, for all t, for all {i, j} ∈ A,
+
+where M is a large number.
+
+Consider now the following formulation using the following parameters:
+• R = the set of paths in G from s to f ,
+for i = 1, . . . , n, r ∈ R :
+• δir
+for t = 1, . . . , m, r ∈ R :
+
+
+ 1 if vertex i is in path r, and
+=
+ 0 otherwise
+
+• ctr = cost incurred when crew t takes path r, (observe that, for a given r, t, we can easily compute
+this quantity using (5.11); notice that if a path r contains a vertex that cannot be served by crew t, we
+set the corresponding ctr to a large number),
+and using, for t = 1, . . . , m, r ∈ R, the decision variables
+
+ 1 if crew t takes path r,
+ytr =
+ 0 otherwise.
+m
+
+ctr ytr
+
+(CGHCSPm) minimize
+t=1 r∈R
+m
+
+δir ytr = 1 for i = 1, . . . , n;
+
+such that
+
+(5.12)
+
+t=1 r∈R
+
+ytr ≤ 1
+
+for t = 1, . . . , m;
+
+(5.13)
+
+for t = 1, . . . , m, r ∈ R.
+
+(5.14)
+
+r∈R
+
+ytr ∈ {0, 1}
+
+Constraints (5.12) state that each vertex must occur once in a selected path, inequalities (5.13) express
+that a crew can do at most one path and constraints (5.14) are the integrality constraints. The LPrelaxation of this model is found by replacing constraints (5.14) by ytr ≥ 0 for all t, r.
+66
+
+Given a feasible basis for some LP the question determining whether this basis is an optimal one is: do
+there exist variables with negative reduced costs? Using dual variables ui attached to constraints (5.12)
+and dual variables et to constraints (5.13) we can deduce the following expression for the reduced costs
+of variable ytr :
+
+n
+
+δir ui − et .
+
+ctr −
+i=1
+
+Thus, given some LP-solution and its associated dual variables the pricing problem boils down to the
+following question:
+
+n
+
+δir ui − et < 0?
+
+Price: ∃ t, r ∈ R such that ctr −
+i=1
+
+This question can be answered as follows:
+Lemma: Problem Price can be solved by solving m shortest path problems on a directed acyclic graph.
+Proof: We claim that for a fixed t, Price boils down to a shortest path problem which implies the lemma.
+This can be seen as follows: consider the graph corresponding to the instance and consider only those
+nodes that can be visited by crew t. Observe that no cycles occur in this network. Modify the existing
+arc costs ctij by setting hij := ctij − uj for all {i, j} ∈ A. Observe that the cost of a path P in this network
+with respect to costs hij from s to f equals:
+
+{i,j}∈P
+
+hij =
+
+t
+{i,j}∈P (cij
+
+− uj ) = ctr −
+
+i δir ui .
+
+If this
+
+expression is smaller than et , there is a profitable column (path) for crew t, otherwise not.
+✷
+
+This shows that the pricing problem, and hence the associated LP-relaxation, can be solved efficiently.
+
+5.2
+
+Branch-and-price
+
+Of course, it is nice that one can solve a linear program with (exponentially) many variables efficiently
+using column generation. However, this leaves us with a potentially fractional solution. We are interested
+in integral solutions. Can we embed column generation within an enumerative framework so that we are
+guaranteed to find an integral optimum? In this section we describe such an approach.
+Let us consider the example of the hierarchical crew scheduling problem. A simple idea would be to
+argue as follows: given a fractional solution, pick a variable with a fractional value. We know that
+in an optimal solution this variable will have either value 0 or value 1. Create two subproblems, one
+67
+
+subproblem in which that variable equals 1, and another subproblem where this variable is constrained to
+be 0. Unfortunately, this idea is too simple. Setting a variable to 1 in the crew scheduling context poses
+no problem: indeed the problem becomes smaller since we postulate that, in this branch this crew t takes
+path r. However, setting a variable to 0 causes a difficulty: how can we guarantee that when we solve
+the pricing problem this specific variable does NOT come out as the variable to be added? One might
+think: OK let us find the shortest path, and if it corresponds to this variable, find the second shortest
+path. But that idea is bound to cause difficulties when we have a branching tree that can have many
+levels.
+We need another partitioning of the solution space. Instead of branching by setting a variable to 1 versus
+setting it to 0, we need a branching rule that does not destroy the efficient solvability of the pricing
+problem. For the hierarchical crew scheduling problem, an example of such a rule is as follows: Here
+we propose a branching rule that leaves the structure of the problem intact, allowing for the efficient
+solvability of the pricing problem throughout the search tree.
+Suppose that y is a fractional feasible LP-solution, and let us call a path r from s to f a fractional path
+(with respect to y) if there exists a t with 0 < ytr < 1. We claim that y has the following property: there
+exist two vertices i and j (that differ from source and sink) that lie consecutively on a fractional path
+such that the sum of all ytr such that r contains arc {i, j} is greater than 0 and smaller than 1. Let us
+formally phrase this claim in the following lemma:
+Lemma: If y is fractional, there exist two nodes i, j ∈ V \ {s, f }, {i, j} ∈ A with
+is contained in r ytr < 1.
+Proof: Observe that if y is fractional there are at least two different fractional paths. Now, consider the
+0<
+
+t
+
+r:{i,j}
+
+first node in each fractional path. If this set of nodes has cardinality more than 1, the claim is easily seen
+to be true. So assume that each fractional path has the same first node. However, then we can repeat
+this argument replacing the sink s by this first node. Since there must be at least two fractional paths,
+a pair i, j as described in the lemma must exist.
+✷
+
+Thus, by this Lemma, when y is fractional there exist nodes i and j (that differ from source and sink)
+that are connected by an arc whose sum of fractional values lies between 0 and 1. Now, in an optimal
+solution either these nodes are visited consecutively, or they are not. More specifically, given a fractional
+68
+
+solution we identify two nodes i and j having the property described above. Then we branch as follows.
+In one branch we modify G into G1 by deleting all arcs {i, p} for p = j and all arcs {p, j} for p = i. Thus,
+in any feasible solution there is a path that contains arc {i, j}. In the other branch we modify G into G2
+by simply deleting arc {i, j}. In this case it is obvious that no feasible solution has a path with arc {i, j}
+in it. Notice that the current solution is excluded by this rule. Let us illustrate this branching rule on
+the example.
+Example (continued): Consider the instance described in the example. The graph corresponding to
+this instance is depicted in Figure 5.2.
+❦
+✯2
+✟✟
+✒
+ 
+❅
+✟✟  
+❅
+✟
+ 
+❅
+✟✟ ✎☞
+✟
+ 
+❘ ❦
+❅
+✲
+s❦ ✲ 1❦
+f
+✍✌
+❍
+❍❍
+❅
+✒
+ 
+ 
+❍
+❅
+❍❍ ❅
+ 
+❍❍
+❘❄
+❅
+ 
+❥
+3❦
+Figure 5.2: The graph G
+An optimal solution to the LP-relaxation of (5.12)-(5.14) for this instance is described by y2,s−2−3−f =
+y1,s−1−2−f = y1,s−1−3−f = 12 , and all other variables 0. Now, let 1,2 be a pair of nodes that we branch
+on. The resulting graphs G1 and G2 are depicted in Figure 5.3:
+❦
+2❦
+✯2
+✟
+✟
+✒ ❅
+ 
+❅
+ 
+✟✟
+❅
+❅
+✟
+ 
+✟
+❅
+❅
+✟
+✎☞
+✎☞
+ 
+❘❦
+❅
+❘❦
+❅
+✟
+✲
+s❦ ✲ 1❦
+s❦ ✲ 1❦
+f
+f
+✍✌
+✍✌
+❍
+❍
+❅
+✒
+ 
+✒
+ 
+❍❍
+❍❍
+ 
+ 
+❍❍
+❍❍ ❅
+ 
+ 
+❍❍
+❍❍❅
+❄
+❘❦
+❅
+ 
+ 
+❥ 3❄
+❍
+❍
+❥
+❦
+3
+Figure 5.3: The graphs G1 (left) and G2 (right)
+Notice that in G1 the arcs {s, 2}, {1, 3} and {1, f } have been deleted. When solving the LP-relaxation
+corresponding to G1 we find an integral solution with value 132. G2 is constructed by deleting arc {1, 2}.
+In this branch we also find an integral solution with value 131, which is therefore optimal.
+Concluding, we have found a branching rule for the hierarchical crew scheduling problem that preserves
+69
+
+the structure of the original problem. In this way, the efficient solvability of the pricing problem remains
+intact throughout the nodes in the branching tree. In general, this is the challenge when devising
+branching rules for integer programming problems whose LP-relaxation is solved by column generation.
+
+Exercises
+Exercise 1
+Consider the following problem occurring in combinatorial auctions. Given are m items, and n bidders.
+Each bidder j, 1 ≤ j ≤ n, specifies a (nonnegative) bid bj (S) for subsets of the items S ⊆ {1, 2, . . . , m}.
+(Notice that the value of a bid that a bidder specifies for a pair of items need not be the same as the sum
+of the valuations for the two individual items; this is, in fact, the defining property of a combinatorial
+auction). Clearly, each item can be allocated to at most one bidder, and each bidder receives at most
+one set of items.
+(i) Give an integer programming formulation for this problem that maximizes the total auction revenue.
+(ii) How many variables are there?
+(iii) What is the dual of the linear programming relaxation of your formulation?
+Exercise 2
+Consider the following problem occurring in production management. Given are N jobs which have to be
+processed by a single machine. Each job needs some (prespecified) tools to be processed; in total there
+are M tools available. The machine can hold at most C tools simultaneously (and of course, each job
+does not need more than C tools). We call a subset of the jobs a feasible group if these jobs together
+require at most C tools. The job grouping problem consists in finding a minimum number of feasible
+groups such that each job is contained in at least one group.
+(i) Formulate this problem as an integer programming problem.
+(ii) Describe a column generation approach for this problem.
+Exercise 3
+Consider the following problem occurring in routing applications. Given are n + 1 locations, among
+70
+
+which a depot, and distances d between each pair of locations. The depot harbors K vehicles that serve
+the locations. No vehicle can serve more than C locations. The problem is to select K paths (one for
+each vehicle), each starting at the depot, such that each location is in exactly one path. The goal is to
+minimize the total length of the K paths.
+(i) Formulate
+ this problem as a ‘traditional' integer program using variables
+ 1 if vehicle k travels from location i to location j
+xijk =
+ 0 otherwise
+
+(ii) Formulate this problem as an integer programming problem using a formulation that involves
+exponentially many variables.
+(iii) Discuss how a column generation approach for this formulation would work.
+
+71
+
+72

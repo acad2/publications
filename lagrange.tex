@@ -1,0 +1,919 @@
+Lagrangian Relaxation
+In this chapter we study a concept called Lagrangian relaxation. The formulation of many practical
+combinatorial optimization problems contains several sets of constraints. Lagrangian relaxation exploits
+this property by disregarding one or more sets of constraints. It turns out that this relaxation allows
+one to obtain lower bounds (upper bounds) for difficult minimization (maximization) problems. In
+Section 7.1 we introduce some terminology, Section 7.2 presents some basic results, in Section 7.3 we
+describe an application, and Section 7.4 concludes this chapter by presenting two ways of strengthening
+the Lagrangian dual.
+
+7.1
+
+Terminology
+
+Consider an integer program
+
+n
+zIP = max {cx| x ∈ S}, where S = {x ∈ Z+
+| Ax ≤ b},
+
+85
+
+which can be rewritten as problem (IP):
+zIP =
+
+max
+
+cx
+
+s.t.
+
+A1 x ≤ b1 (complicating constraints)
+A2 x ≤ b2 (nice constraints)
+n
+x ∈ Z+
+.
+
+(Notice that the superscripts do NOT refer to powers). We are going to assume that A2 x ≤ b2 are
+m − m1 “nice constraints”, say those of an assignment or a network problem. By simply dropping the
+m1 complicating constraints A1 x ≤ b1 , we obtain a relaxation of problem (IP) that is obviously easier to
+solve than problem (IP) itself. There are many problems for which the constraints can be partitioned in
+this way. An example will be given in Section 7.4.
+The idea of dropping constraints can be embedded in a more general framework called Lagrangian relaxation. It is convenient to consider a generalization of problem (IP) called IP(Q), which we formulate as
+follows:
+
+zIP = max
+s.t.
+
+cx
+A1 x ≤ b1
+x ∈ Q.
+
+n
+| A2 x ≤
+However, when we are discussing results that are specific to IP, it is assumed that Q = {x ∈ Z+
+
+b2 } = ∅. Of course, the problem obtained from IP(Q) by dropping the complicating constraints A1 x ≤ b1
+m1
+is much easier to solve than IP(Q). Now, for any λ ∈ R+
+, consider the problem LR(λ):
+
+zLR (λ) = max {z(λ, x)| x ∈ Q}, where z(λ, x) = cx + λ(b1 − A1 x).
+The problem LR(λ) is called the Lagrangian relaxation of IP(Q) with respect to A1 x ≤ b1 . This terminology is used because the vector λ plays a role in LR(λ) similar to the role of Lagrange multipliers in
+constrained optimization problems. By our choice, LR(λ) does not contain the complicating constraints.
+86
+
+Instead we have included these constraints in the objective function with the “penalty” term λ(b1 − A1 x).
+Since λ ≥ 0, violations of A1 x ≤ b1 make the penalty term negative, and thus, intuitively speaking, for
+suitably large values of λ, one would expect that A1 x ≤ b1 will be satisfied.
+Let us formally state the relation between zIP and zLR (λ):
+
+Theorem 7.1 zLR (λ) ≥ zIP for all λ ≥ 0.
+
+Proof: If x is feasible in IP(Q), then x ∈ Q and hence x is feasible for LR(λ). Also, z(λ, x) = cx + λ(b1 −
+A1 x) ≥ cx for all x feasible in IP(Q) since A1 x ≤ b1 and λ ≥ 0.
+✷
+
+Obviously, one is interested in the least upper bound from the infinite family of relaxations {LR(λ)}λ≥0 ,
+denoted here by zLR (λ∗ ), where λ∗ is an optimal solution to the problem called LD:
+
+zLD = min
+
+λ≥0 zLR (λ).
+
+Problem LD is called the Lagrangian dual of IP(Q) with respect to the constraints A1 x ≤ b1 .
+
+7.2
+
+Some results
+
+In this section we illustrate the terminology introduced in the previous section with the following example
+and use this example to derive some results.
+Example: Consider the following problem.
+87
+
+max 7x1 + 2x2
+
+(7.1)
+
+s.t. − x1 + 2x2
+
+≤
+
+4
+
+(7.2)
+
+6x1 + x2
+
+≤
+
+24
+
+(7.3)
+
+−2x1 − 2x2
+
+≤
+
+−7
+
+(7.4)
+
+−x1
+
+≤
+
+−2
+
+(7.5)
+
+x2
+
+≤
+
+4
+
+(7.6)
+
+x
+
+∈
+
+2
+Z+
+.
+
+(7.7)
+
+2
+Let Q = {x ∈ Z+
+| x satisfies (7.3), (7.4), (7.5) and (7.6)}. The Lagrangian relaxation (see Section 7.1)
+
+with respect to −x1 + 2x2 ≤ 4 is:
+
+zLR (λ)
+
+x∈Q [7x1
+
++ 2x2 + λ(4 + x1 − 2x2 )]
+
+=
+
+max
+
+=
+
+max (7 + λ)x1 + (2 − 2λ)x2 + 4λ
+s.t. 6x1 + x2 ≤ 24
+−2x1 − 2x2 ≤ −7
+−x1 ≤ −2
+x2 ≤ 4
+2
+x ∈ Z+
+.
+
+Notice that Q is a finite set of points, which can be written as follows (see Figure 7.1):
+
+{x1 , x2 , x3 , x4 , x5 , x6 , x7 , x8 } = {(2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (3, 4), (4, 0)}.
+
+The example suggests at least two different viewpoints. The first one is to see z(λ, x) = (c − λA1 )x + λb1
+as a linear function of x for fixed λ. It then follows that zLR (λ) can be determined by solving the linear
+program
+88
+
+zLR (λ) = max {z(λ, x)| x ∈ conv(Q)}.
+
+In this example,
+
+2
+conv(Q) = {x ∈ R+
+| − x1 ≤ −2, x2 ≤ 4, −x1 − x2 ≤ −4, 4x1 + x2 ≤ 16}.
+
+In Figure 7.1, solid lines indicate the original constraints, the dots correspond to the feasible integral
+vertices, and the dashed lines correspond to constraints describing conv(Q).
+
+x2
+4
+
+s
+
+3
+
+s
+
+2
+1
+1
+
+s ❊
+❊
+❈ ❊
+s
+
+❊
+❈❊
+
+s
+s ❊
+❅
+❈❊
+❅
+❊
+❅
+❅ ❅
+❊
+❅s
+❈❊
+❅
+❅ ❊
+❅❅
+❅ ❈❊s
+2
+3
+4
+
+x1
+
+Figure 7.1: The region
+Thus, computing zLR (λ) for λ = 0 and λ = 1 gives:
+
+zLR (0) =
+
+max {7x1 + 2x2 )| x ∈ conv(Q)} = z(0, x7 ) = 29,
+
+zLR (1) =
+
+max {8x1 + 4)| x ∈ conv(Q)} = z(1, x8 ) = 36.
+
+As one increases λ from 0, zLR (λ) first decreases until λ =
+89
+
+1
+9
+
+and then it increases. In general we obtain
+
+zLR (λ)
+
+=
+
+z(λ, x7 ) = 29 − λ for 0 ≤ λ ≤
+
+zLR (λ)
+
+=
+
+z(λ, x8 ) = 28 + 8λ for λ ≥
+
+1
+,
+9
+
+1
+.
+9
+
+Hence, we can deduce that zLD = zLR ( 91 ) = z( 19 , x7 ) = z( 91 , x8 ) = 28 98 and λ∗ =
+
+1
+9.
+
+Notice that, for
+
+λ = 91 , x7 as well as x8 are optimal with respect to the constraints determining conv(Q), and hence the
+objective function - which equals 7 91 x1 +
+
+16
+9 x2
+
+for λ =
+
+1
+9
+
+- must be parallel to 4x1 + x2 ≤ 16. All these
+
+calculations can be seen in Figure 7.1.
+The second viewpoint is to consider zLR (λ) to be determined by maximization over a set of discrete
+points, that is,
+zLR (λ) = maxxi ∈Q z(λ, xi ).
+Observe here that for a fixed xi , z(λ, xi ) = cxi + λ(b1 − A1 xi ) is a linear function of λ. See Figure 7.2,
+where we have drawn the linear functions z(λ, xi ) for xi ∈ Q.
+z(λ, xi )
+
+(4)
+✱
+✱
+(8)
+36
+✱
+✱
+ 
+ 
+✱
+ 
+(5)
+ 
+✱
+✟✟
+ 
+✱
+✟
+ 
+✟
+ 
+✱
+ 
+✟✟
+ 
+✱
+ 
+✱ ✟✟
+ 
+ 
+30
+✱
+✭✭✭(6)
+✟✟
+ 
+ 
+✟ ✭✭✭✭✭✭
+ 
+❤
+✱
+❤❤
+❤❤❤
+✟
+✭✭
+❤✭
+✟
+✭
+ 
+❤✱
+❤✭
+✭
+❤❤❤
+✟
+✭✭✟
+✱
+✭
+❤❤❤❤
+✭
+✭
+✟
+❤❤❤❤
+✟✱✱
+❤(7)
+✟✟✱
+✟
+✱
+24 ✱
+✏✏(1)
+✱
+✏✏
+✏
+✏✏
+
+✏✏
+
+✏
+
+✏✏
+(2)
+✏
+✏
+
+✏
+✏
+
+✏
+
+✏✏
+
+18 ✏
+λ
+1
+2 
+ (3)
+
+Figure 7.2: The lines: (1) 18 + 2λ; (2) 20; (3) 22 - 2λ; (4) 23 + 5λ; (5) 25 + 3λ; (6) 27 + λ; (7) 29 - λ;
+(8) 28 + 8λ;
+90
+
+In Figure 7.2 one can read the values of zLR (λ) for any value of λ. We see that zLR (λ) is piecewise linear
+and convex (the heavy lines in Figure 7.2) and that zLD = 28 98 . Formally, one solves the linear program
+
+zLR (λ) = min {w| w ≥ z(λ, xi ) for i = 1, . . . , 8},
+
+which shows that zLR (λ) is the maximum of a finite number of linear functions and is therefore piecewise
+linear and convex.
+We now study how the solution of the Lagrangian dual relates to the solution of the original problem
+IP(Q). Returning to Figure 7.1, notice that when λ = 1/9 we obtain
+
+28
+
+8
+9
+
+1
+1
+= z( , x7 ) = z( , x8 )
+9
+9
+1 8 7 1 8
+= z( , x + x )
+9 9
+9
+1
+1 8
+= z( , (3, 4) + (4, 0))
+9 9
+9
+1 28 32
+1
+28 32
+= z( , ( , ) = z( , x∗ ) with x∗ = ( , )
+9 9 9
+9
+9 9
+1
+∗
+∗
+∗
+= cx + (4 + x1 − 2x2 )
+9
+∗
+= cx .
+
+In other words, by taking a convex combination of points in Q (in this example x7 and x8 ), we obtain a
+point x∗ in conv(Q) satisfying the complicating constraint, for which cx∗ = zLD . This shows that for the
+example we get zLD = max {cx| A1 x ≤ b1 , x ∈ conv(Q)}. And in fact this holds in general as witnessed
+by the following theorem which we state without proof.
+
+Theorem 7.2
+zLD = max {cx| A1 x ≤ b1 , x ∈ conv(Q)}.
+
+An interesting question is of course: how good is the bound zLD ? In general, the difference between
+zLD and zIP (called the duality gap) depends on the sizes of conv(S) (which determines zIP ), conv(Q) ∩
+91
+
+{x| A1 x ≤ b1 } (which determines zLD ) and the objective coefficients c. A duality gap of 0 can be
+characterized as follows.
+
+Theorem 7.3 zLD = zIP for all c if and only if
+n
+n
+conv{Q ∩ {x ∈ R+
+| A1 x ≤ b1 }} = conv(Q) ∩ {x ∈ R+
+| A1 x ≤ b1 }.
+
+Another interesting difference is the difference between zLD and the value of the LP-relaxation, denoted
+n
+by zLP . Notice that this only makes sense when Q = {x ∈ Z+
+| A2 x ≤ b2 }. We can characterize the case
+
+where zLP = zLD .
+
+n
+Theorem 7.4 zLD = zLP for all c if all the extreme points of {x ∈ R+
+| A2 x ≤ b2 } are integral.
+
+It is easily verified that the conditions mentioned in the two previous theorems are not fulfilled by our
+2
+example. Indeed, we have 28 = zIP < zLD = 28 98 < zLP = 30 11
+. (Check this !).
+
+In fact, a more natural choice of complicating constraints in our example would lead to different results
+2
+2
+for zLD . If we set Q = {x ∈ Z+
+| − x1 ≤ −2, x2 ≤ 4}, we find that {x ∈ R+
+| − x1 ≤ −2, x2 ≤ 4} only has
+
+integral extreme points so that by our latest theorem, this Lagrangian relaxation would terminate with
+2
+.
+zLD = zLP = 30 11
+
+Summarizing, we have
+
+n
+n
+conv(S) ⊆ conv(Q) ∩ {x ∈ R+
+| A1 x ≤ b1 } ⊆ {x ∈ R+
+| Ax ≤ b}.
+
+This implies that zIP ≤ zLD ≤ zLP . But because some faces of the respective polyhedra can coincide,
+we may obtain zIP = zLD or zLD = zLP for a particular c even if the conditions of the two previous
+theorems do not hold. Below, we give at table indicating the possibilities using four different objective
+functions c1 , c2 , c3 and c4 .
+92
+
+Objective functions
+
+objective values
+
+c1
+
+zIP = zLD = zLP
+
+2
+
+zIP < zLD = zLP
+
+c3
+
+zIP < zLD < zLP
+
+4
+
+zIP = zLD < zLP
+
+c
+
+c
+
+7.3
+
+An application
+
+Suppose there is a set of n jobs to be assigned to a set of n workers, with N = {1, . . . , n}. Suppose
+further that
+• cij is the value of assigning worker i to job j,
+• tij is the cost of training worker i to do job j, and
+• there is a training budget of b units.
+We wish to maximize the total value of the assignment subject to the budget constraint, that is
+
+max
+
+cij
+
+xij
+
+(7.8)
+
+xij
+
+=
+
+1 for i ∈ N
+
+(7.9)
+
+xij
+
+=
+
+1 for j ∈ N
+
+(7.10)
+
+tij xij
+
+≤
+
+b
+
+(7.11)
+
+x
+
+∈
+
+{0, 1}.
+
+(7.12)
+
+i∈N j∈N
+
+j∈N
+
+i∈N
+
+j∈N i∈N
+
+If we wish to use Lagrangian relaxation there are different options to consider. Notice that in each of
+the following four options the relaxed problem LR(λ) is considerably easier to solve than the original
+problem.
+1
+1. Lagrangian relaxation with respect to (7.11). Then LR1 (λ), λ ∈ R+
+is an assignment problem with
+
+objective function
+93
+
+(cij − λtij )xij .
+
+λb +
+i∈N j∈N
+
+2. Lagrangian relaxation with respect to (7.9) and (7.10). Then LR2 (u, v), u ∈ Rn , v ∈ Rn is a
+knapsack problem with objective function
+
+ui +
+i∈N
+
+(cij − ui − vj )xij .
+
+vj +
+j∈N
+
+i∈N j∈N
+
+3. Lagrangian relaxation with respect to (7.9) or (7.10), say (7.9). Then LR3 (u), u ∈ Rn is a knapsack
+problem with so-called generalized upper bound constraints and with objective function
+
+(cij − ui )xij .
+
+ui +
+i∈N
+
+i∈N j∈N
+
+4. Lagrangian relaxation with respect to (7.9) or (7.10) and (7.11), say (7.9) and (7.11). Only gener1
+with objective function
+alized upper bound constraints remain. Thus, LR4 (u, λ), u ∈ Rn , λ ∈ R+
+
+λb +
+
+(cij − ui − λtij )xij ,
+
+ui +
+i∈N
+
+i∈N j∈N
+
+which is trivial to solve. (For each j, an i is chosen to maximize cij −ui −λtij , and the corresponding
+xij is set to 1).
+
+In choosing a relaxation there are two major questions to consider: how strong is the lower bound zLD
+and how difficult to solve is the Lagrangian dual (LD)? Let us here only consider the bounds.
+When Q is a set of assignment constraints or a set of generalized upper bound constraints, we have that
+4
+1
+= zLP . Since
+= zLD
+zLD
+
+94
+
+2
+
+Q3 = {x ∈ {0, 1}n |
+
+xij = 1 for j ∈ N,
+i∈N
+
+tij xij ≤ b}
+i∈N j∈N
+
+2
+
+⊂ Q2 = {x ∈ {0, 1}n |
+
+tij xij ≤ b}
+i∈N j∈N
+
+2
+
+n
+and conv(Q2 ) ⊂ {x ∈ R+
+|
+
+tij xij ≤ b, xij ≤ 1 for i, j ∈ N },
+i∈N j∈N
+
+we have
+3
+2
+1
+4
+zIP ≤ zLD
+≤ zLD
+≤ zLD
+= zLD
+= zLP ,
+
+and each of the inequalities is strict for some objective function.
+
+7.4
+
+Strengthening the Lagrangian dual
+
+We now consider two ways of strengthening the Lagrangian dual of problem IP. The first approach yields
+a dual whose optimal value equals
+n
+n
+max{cx| x ∈ conv(x ∈ Z+
+| A1 x ≤ b1 ) ∩ conv(x ∈ Z+
+| A2 x ≤ b2 )}.
+
+This dual is obtained by applying Lagrangian duality to a reformulation of IP, which is called RIP:
+zIP = max cx1
+A1 x1
+
+≤ b1
+
+A2 x2
+
+≤ b2
+
+x1 − x2
+
+= 0
+
+x1
+
+∈
+
+n
+Z+
+
+x2
+
+∈
+
+n
+Z+
+.
+
+95
+
+Taking now x1 − x2 = 0 as complicating constraints, we obtain the Lagrangian dual of RIP:
+zCSD = minu {max{(c
+
+−
+
+u)x1 + ux2 }}
+
+A1 x1
+
+≤
+
+b1
+
+A2 x2
+
+≤
+
+b2
+
+x1
+
+∈
+
+n
+Z+
+
+x2
+
+∈
+
+n
+Z+
+
+= minc1 +c2 =c {
+
+max
+
+c1 x1 + max c2 x2 }
+
+A1 x1
+
+≤
+
+b1
+
+A2 x2
+
+≤
+
+b2
+
+x1
+
+∈
+
+n
+Z+
+
+x2
+
+∈
+
+n
+Z+
+,
+
+where u = c2 .
+A polyhedral interpretation of the dual is stated in the next theorem.
+
+n
+n
+| A2 x ≤ b2 
+| A1 x ≤ b1  ∩ convx ∈ Z+
+Theorem 7.5 zCSD = maxcx| x ∈ convx ∈ Z+
+
+and zCSD ≤ zLD .
+
+The technique described is referred to here with CS since this technique has been called cost splitting.
+The technique is useful when
+
+n
+n
+| A1 x ≤ b1 , so for some objective functions c we obtain
+| A1 x ≤ b1  ⊂ x ∈ R+
+• convx ∈ Z+
+
+zCSD < zLD .
+• The sets of constraints Ai x ≤ bi are simple to deal with separately; that is, the difficulty is caused
+by their interaction.
+
+In our example, we could take A1 x ≤ b1 to be constraint set (7.9) and (7.11) and take A2 x ≤ b2 to be
+3
+with the inequality strict for some objective
+constraint sets (7.10) and (7.11). This yields zCSD ≤ zLD
+
+functions c.
+96
+
+Another approach that domiantes the Lagrangian dual is the “surrogate” dual. Starting from IP(Q),
+m1
+with weights λ ∈ R+
+for the complicating constraints, consider the following problem called SD(λ).
+
+zSD (λ) = max{cx| λA1 x ≤ λb1 , x ∈ Q}.
+
+The problem SD(λ) is called the surrogate relaxation of IP(Q) with respect to A1 x ≤ b1 . SD(λ) contains
+n
+a single complicating constraint. For instance when Q = Z+
+the surrogate relaxation is a knapsack
+
+problem. The surrogate dual of IP(Q) is the problem denoted by SD.
+
+zSD = min
+
+λ≥0 zSD (λ).
+
+Although the surrogate dual can be used computationally, it does not have such nice theoretical properties
+as the Lagrangian dual.
+
+Exercises
+Exercise 1
+Consider the following problem.
+max 2x1 + 5x2
+4x1 + x2
+
+≤
+
+28
+
+x1 + 4x2
+
+≤
+
+27
+
+x1 − 5x2
+
+≤
+
+1
+
+x
+
+∈
+
+2
+Z+
+.
+
+(i) Show that if any two constraints are dualized, the value of the Lagrangian dual equals the value of
+the LP-relaxation.
+(ii) Find an objective function for which (i) is false.
+97
+
+(iii) Show that if any single constraint is dualized, the value of the Lagrangian dual is an improvement
+compared to the value of the LP-relaxation.
+(iv) Apply cost-splitting to get a better Lagrangian dual.
+
+Exercise 2
+Construct two Lagrangian duals for the generalized assignment problem and discuss their merits.
+
+max
+s.t.
+
+j cij xij
+
+i
+j
+
+xij ≤ 1 for i ∈ M
+
+i li xij
+
+≤ bj for j ∈ N
+2
+
+x ∈ {0, 1}n .
