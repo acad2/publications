@@ -1,99 +1,41 @@
 \chapter{Column generation and branch-and-price}
 
-In this chapter we describe a technique that is used for solving linear programs with a huge number of
-variables, namely column generation (see Section 5.1). The use of this technique within an enumerative
-framework is next discussed in Section 5.2. We illustrate these issues on the cutting stock problem (bin
-packing) and the crew scheduling problem.
+In this chapter we describe a technique that is used for solving linear programs with a huge number of variables, namely \concept{column generation} (see \secref{columngen}). The use of this technique within an \concept{enumerative framework} is next discussed in \secref{branchprice}. We illustrate these issues on the \concept{cutting stock problem} (\concept{bin packing}) and the \concept{crew scheduling problem}.
 
-5.1
+\section{Column generation}
+\seclab{columngen}
 
-Column generation
+In this section we show how column generation procedures can work. We emphasize that column generation is a technique for solving (large) linear programming problems. The main idea is \begin{inlineenumerate}\item to work in iterations, and deal, at all times during the course of the method, with only a limited number of variables, and \item to \concept{verify optimality} of the outcome of each iteration using \concept{complementary slackness}\end{inlineenumerate}. In \sscref{cuttingstock} we show how this method can be applied to the \concept{cutting stock problem}, and in \sscref{crewscheduling}, we show how it works for a crew scheduling problem.
 
-In this section we show how column generation procedures can work. We emphasize that column generation is a technique for solving (large) linear programming problems. The main idea is (i) to work in
-iterations, and deal, at all times during the course of the method, with only a limited number of variables,
-and (ii) to verify optimality of the outcome of each iteration using complementary slackness. In Subsection 5.1.1 we show how this method can be applied to the cutting stock problem, and in Subsection 5.1.2,
-we show how it works for a crew scheduling problem.
-61
+\subsection{The cutting stock problem}
+\ssclab{cuttingstock}
 
-5.1.1
+We start by illustrating this on the \concept{cutting stock problem}. This problem can be described as follows.
+\begin{definition}[Cutting stock problem]
+Given are $n$ item types; there is a demand of $d_i$ items for type $i$, and each item of type $i$ has size $w_i$, $i=1,2,\ldots,n$. Let the total number of items be denoted by $D=\sum_i d_i$. Given are a (large enough) number of rolls of size $L$. The problem is to fulfill demand exactly, using a minimum number of rolls.
+\end{definition}
 
-The cutting stock problem
-
-We start by illustrating this on the cutting stock problem. This problem can be described as follows.
-Given are n item types; there is a demand of di items for type i, and each item of type i has size wi ,
-i = 1, 2, . . . , n. Let the total number of items be denoted by D =
-
-i
-
-di . Given are a (large enough)
-
-number of rolls of size L. The problem is to fulfill demand exactly, using a minimum number of rolls. A
-straightforward formulation is as follows, where we use, with i = 1, . . . , D,j = 1, 2, . . . binary variables
-
- 1 if item i is cut from roll j,
-xij =
- 0 otherwise,
-
+\paragraph{}
+A straightforward formulation is as follows, where we use, with $i=1,\ldots,D$, $j=1,2,\ldots$. binary variables:
+\begin{equation}
+\semboolvar{x_{ij}}{if item $i$ is cut from roll $j$;}{otherwise.}
+\end{equation}
 and
-
-
- 1
-yj =
- 0
-
+\begin{equation}
+\semboolvar{y_j}{if roll $j$ is used;}{otherwise.}
+\end{equation}
+\paragraph{}
 The formulation is now:
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[j]{1}{\infty}{y_j}\eqnlab{cutting-m}\\
+\mbox{subject to}&\forall j\in\accl{1,2,\ldots}:\sumieqb[i]{1}{D}{w_i\cdot x_{ij}}\leq L\cdot y_j\eqnlab{cutting-c1}\\
+&\forall i\in\accl{1,2,\ldots,D}:\sumieqb[j]{1}{\infty}{x_{ij}}=1\eqnlab{cutting-c2}\\
+&\forall i\in\accl{1,2,\ldots,D},j\in\accl{1,2,\ldots}:x_{ij}\in\accl{0,1}\eqnlab{cutting-c3}\\
+&\forall j\in\accl{1,2,\ldots}:y_j\in\accl{0,1}\eqnlab{cutting-c4}
+\end{eqnarray}
 
-(CS-1) min
-s.t.
-
-if roll j is used,
-otherwise.
-
-j=1
-D
-i=1
-
-yj
-
-wi xij ≤ Lyj
-
-j=1
-
-xij = 1
-
-(5.1)
-for j = 1, 2, . . .
-
-(5.2)
-
-for i = 1, 2, . . . , D
-
-(5.3)
-
-xj ∈ {0, 1}, yj ∈ {0, 1} for all i, j.
-
-(5.4)
-
-There are a number of reasons why this formulation is not suited for solving large instances of the cutting
-stock problem. First of all, the linear programming bound is very weak, since the solution xij =
-
-1
-D
-
-is
-
-feasible to the linear programming relaxation (verify that this leads to a linear programming solution
-with value (
-
-wi /L)). Secondly, symmetry of solutions (the rolls are interchangeable) will also affect the
-
-performance of a branch-and-bound algorithm based on this formulation. Therefore, another formulation
-based on another concept is welcome. Instead of focusing on individual items, let us focus on a possible
-way to cut a roll. More precisely, we refer to a possible way of cutting a roll as a pattern. Obviously,
-given the input described above, we could, in principle enumerate all possible patterns. Then, we could
-write down the following formulation that uses an integral variable zj for the number of times a roll is
-cut according to pattern j = 1, 2, . . .:
-62
+\paragraph{}
+There are a number of reasons why this formulation is not suited for solving large instances of the \concept{cutting stock problem}. First of all, the linear programming bound is very weak, since the solution $x_{ij}=\dfrac{1}{D}$ is feasible to the linear programming relaxation (verify that this leads to a linear programming solution with value ($\sumieqb[i]{1}{\infty}{w_i/L}$)). Secondly, symmetry of solutions (the rolls are interchangeable) will also affect the performance of a \concept{branch-and-bound algorithm} based on this formulation. Therefore, another formulation based on another concept is welcome. Instead of focusing on individual items, let us focus on a possible way to cut a roll. More precisely, we refer to a possible way of cutting a roll as a \concept{pattern}. Obviously, given the input described above, we could, in principle enumerate all possible patterns. Then, we could write down the following formulation that uses an integral variable $z_j$ for the number of times a roll is cut according to \concept{pattern} $j=1,2,\ldots$:
 
 (CS-2) min
 s.t.
@@ -213,9 +155,8 @@ be solved in reasonable computing times for very large instances, see Chapter 4)
 
 problem can be solved relatively fast, and hence the LP-relaxation of (CS-2) can be solved fast as well.
 
-5.1.2
-
-The hierarchical crew scheduling problem
+\subsection{The hierarchical crew scheduling problem}
+\ssclab{crewscheduling}
 
 In this subsection we illustrate the column generation technique on the hierarchical crew scheduling
 problem. This problem can be described as follows. Given are m crews who have to perform n tasks.
@@ -383,9 +324,8 @@ expression is smaller than et , there is a profitable column (path) for crew t, 
 
 This shows that the pricing problem, and hence the associated LP-relaxation, can be solved efficiently.
 
-5.2
-
-Branch-and-price
+\section{Branch-and-price}
+\seclab{branchprice}
 
 Of course, it is nice that one can solve a linear program with (exponentially) many variables efficiently
 using column generation. However, this leaves us with a potentially fractional solution. We are interested
