@@ -1,6 +1,6 @@
 \documentclass[titlepage]{book}
 
-\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amssymb,amsfonts,tikz,makeidx,glossaries,hyperref}
+\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amssymb,amsfonts,tikz,makeidx,glossaries,hyperref,enumitem}
 \usetikzlibrary{shapes}
 
 \makeindex
@@ -33,6 +33,7 @@
 \makeatother
 
 \newenvironment{inlineenumerate}{\begin{enumerate}}{\end{enumerate}}
+\newenvironment{stepenum}{\begin{enumerate}[label=\bfseries Step \arabic*:,ref=\arabic*]}{\end{enumerate}}
 
 \title{Optimization: Special Topics}
 \author{Frits Spieksma\\ \\Edited by:\\Jo Devriendt\\Willem Van Onsem}

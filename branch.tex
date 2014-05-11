@@ -37,123 +37,37 @@ The formulation is now:
 \paragraph{}
 There are a number of reasons why this formulation is not suited for solving large instances of the \concept{cutting stock problem}. First of all, the linear programming bound is very weak, since the solution $x_{ij}=\dfrac{1}{D}$ is feasible to the linear programming relaxation (verify that this leads to a linear programming solution with value ($\sumieqb[i]{1}{\infty}{w_i/L}$)). Secondly, symmetry of solutions (the rolls are interchangeable) will also affect the performance of a \concept{branch-and-bound algorithm} based on this formulation. Therefore, another formulation based on another concept is welcome. Instead of focusing on individual items, let us focus on a possible way to cut a roll. More precisely, we refer to a possible way of cutting a roll as a \concept{pattern}. Obviously, given the input described above, we could, in principle enumerate all possible patterns. Then, we could write down the following formulation that uses an integral variable $z_j$ for the number of times a roll is cut according to \concept{pattern} $j=1,2,\ldots$:
 
-(CS-2) min
-s.t.
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[j]{1}{\infty}{z_j}\eqnlab{cuttingb-m}\\
+\mbox{subject to}&\forall i\in\accl{1,2,\ldots,n}:\sumieqb[j]{1}{\infty}{a_{ij}\cdot z_j}=d_i\eqnlab{cuttingb-c1}\\
+&\forall j\in\accl{1,2,\ldots}:z_j\in\NNN\eqnlab{cuttingb-c2}
+\end{eqnarray}
 
-j=1 zj
-j=1
+Notice that $a_ij$ denotes the number of times that an item of type $i$ is used in pattern $j$; this is a known number. Now although this formulation does not suffer from the disadvantages mentioned above, there is a disadvantage to the current formulation: the number of variables. Indeed, this number can be astronomically high.
 
-aij zj = di
+\paragraph{}
+Let us therefore first focus on solving the linear programming relaxation of formulation \eqnnrefr{cuttingb-m}{cuttingb-c2}. How to overcome the obstacle posed by the number of variables? The crucial idea of column generation is based on the observation that in an optimal solution of the linear programming relaxation of \eqnnrefr{cuttingb-m}{cuttingb-c2}, only very few of these variables will have a value different from $0$. Indeed, the theory of the simplex-algorithm tells us that if there is an optimal solution, this solution will consist of $n$ basic variables that may have a non-zero value, while all other variables will be non-basic and have value $0$. How to make use of this observation? Of course, we do not know a priori which variables are basic in an optimal solution and which variables are not. However, given a feasible basic solution, we can determine (using complementary slackness and duality) whether it is optimal, and if not, which variable should be included in the basis to improve the current solution. This idea suggests an iterative procedure for solving the LP-relaxation of \eqnnrefr{cuttingb-m}{cuttingb-c2} as follows:
 
-zj integral
+\begin{stepenum}
+ \item \stplab{colgen-a}Start with a subset of the variables (that contains a feasible solution). All other variables have implicitly the value $0$. This is called the \concept{restricted master problem}.
+ \item \stplab{colgen-b}Solve the LP-relaxation, and arrive at a \concept{feasible primal solution}.
+ \item \stplab{colgen-c}Question: does there exist a variable (a pattern) with \concept{negative reduced costs}? That is, does there exist a variable that should enter the basis? This question is called the \concept{pricing problem}. If no, the current LP-solution is optimal, and we STOP, else
+ \item \stplab{colgen-d}Identify that variable and add it to the current set of variables. Go to \stpref{colgen-a}.
+\end{stepenum}
 
-(5.5)
-for i = 1, . . . , n
+\paragraph{}
+At first sight, there may be no reason why this would be more efficient than solving the linear program with all variables. Indeed, the crux of this approach lies in solving the \concept{pricing problem}: if explicitly determining the \concept{reduced cost} of each individual variable by enumeration was the only way to solve the pricing problem, we would not have gained much. However, in a lot of cases, solving the \concept{pricing problem} can be done very efficiently, for instance by solving a \concept{shortest path problem}, or by solving a \concept{knapsack problem}. Then, \concept{column generation} is a very efficient way of solving the master problem. Let us proceed by illustrating this idea on the \concept{cutting stock problem}. Consider a column in the matrix $A$ of the second cutting stock formulation, and let us denote this column by $\vec{a}$. It describes a \concept{pattern}, that is, the entries of that column equal the \concept{multiplicity} of each item type in that \concept{pattern}. Of course, for a column $\vec{a}=\tupl{a_1,a_2,\ldots,a_n}$ of $A$ to be a \concept{feasible pattern} it must be true that $\sumieqb[i]{1}{\infty}w_i\cdot a_i\leq L$. But the converse is true as well, that is, any $n$ nonnegative integers $\tupl{a_1,a_2,\ldots,a_n}$ that satisfy $\sumieqb[i]{1}{\infty}w_i\cdot a_i\leq L$ is a \concept{feasible pattern}. Let us denote pattern $j$ by nonnegative integers $\tupl{a_{1j},a_{2j},\ldots,a_{nj}}$.
 
-(5.6)
+\paragraph{}
+Now suppose we are given a \concept{primal solution} $\vec{z}=\tupl{z_1,z_2,\ldots}$, and we are also given the values of the \concept{dual variables} $\tupl{u_1,u_2,\ldots,u_n}$ associated to the constraints \eqnnref{cuttingb-c1}. How to determine whether $\vec{z}$ is an \concept{optimal solution} to the LP-relaxation of \eqnnrefr{cuttingb-m}{cuttingb-c2}? Let us consider the constraints of the dual of the LP-relaxation of \eqnnrefr{cuttingb-m}{cuttingb-c2}. We know that these constraints are of the form: $\sumieqb[i]{1}{\infty}u_i\cdot a_ij\leq1$ for each \concept{possible pattern} $j$ (verify this!). Thus, if the current $\vec{u}$-values satisfy all these constraints (i.e., for each \concept{pattern} $j$), we have an \concept{optimal LP-solution}. Or, alternatively formulated, we are looking for a \concept{pattern} $\tupl{a_1,a_2,\ldots,a_n}$ such that $\sumieqb[i]{1}{\infty}w_i\cdot a_i\leq L$ and $\sumieqb[i]{1}{\infty}u_i\cdot a_i>1$. If we can find such a \concept{pattern}, we know that the current LP-solution is not optimal, and hence we add this \concept{pattern} to the current set of columns and start a new iteration. Otherwise, if we cannot find such a \concept{pattern}, the current LP-solution is optimal. Summarizing, the \concept{pricing problem} boils down to solving the following problem:
 
-for all j.
+\begin{eqnarray}
+\mbox{maximize}&\sum_[i]{u_i\cdot a_i}\eqnlab{pricing-m}\\
+\mbox{subject to}&\sum_[i]{w_i\cdot a_i}\leq L\eqnlab{pricing-c1}\\
+&\forall i:a_i\in\NNN\eqnlab{pricing-c2}
+\end{eqnarray}
 
-(5.7)
-
-Notice that aij denotes the number of times that an item of type i is used in pattern j; this is a known
-number. Now although this formulation does not suffer from the disadvantages mentioned above, there
-is a disadvantage to the current formulation: the number of variables. Indeed, this number can be
-astronomically high.
-Let us therefore first focus on solving the linear programming relaxation of formulation (CS-2). How to
-overcome the obstacle posed by the number of variables? The crucial idea of column generation is based
-on the observation that in an optimal solution of the linear programming relaxation of (CS-2), only very
-few of these variables will have a value different from 0. Indeed, the theory of the simplex-algorithm
-tells us that if there is an optimal solution, this solution will consist of n basic variables that may have
-a non-zero value, while all other variables will be non-basic and have value 0.
-How to make use of this observation? Of course, we do not know a priori which variables are basic in an
-optimal solution and which variables are not. However, given a feasible basic solution, we can determine
-(using complementary slackness and duality) whether it is optimal, and if not, which variable should
-be included in the basis to improve the current solution. This idea suggests an iterative procedure for
-solving the LP-relaxation of (CS-2) as follows:
-
-Step 0: Start with a subset of the variables (that contains a feasible solution). All other variables have
-implicitly the value 0. This is called the restricted master problem.
-Step 1: Solve the LP-relaxation, and arrive at a feasible primal solution.
-Step 2: Question: does there exist a variable (a pattern) with negative reduced costs? That is, does there
-exist a variable that should enter the basis? This question is called the pricing problem. If no, the
-current LP-solution is optimal, and we STOP, else
-Step 3: Identify that variable and add it to the current set of variables. Go to Step 1.
-63
-
-At first sight, there may be no reason why this would be more efficient than solving the linear program
-with all variables. Indeed, the crux of this approach lies in solving the pricing problem: if explicitly
-determining the reduced cost of each individual variable by enumeration was the only way to solve the
-pricing problem, we would not have gained much. However, in a lot of cases, solving the pricing problem
-can be done very efficiently, for instance by solving a shortest path problem, or by solving a knapsack
-problem. Then, column generation is a very efficient way of solving the master problem. Let us proceed
-by illustrating this idea on the cutting stock problem.
-Consider a column in the matrix A of the second cutting stock formulation, and let us denote this
-column by a. It describes a pattern, that is, the entries of that column equal the multiplicity of each
-item type in that pattern. Of course, for a column a = (a1 , a2 , . . . , an ) of A to be a feasible pattern it
-must be true that
-
-i
-
-wi ai ≤ L. But the converse is true as well, that is, any n nonnegative integers
-
-(a1 , a2 , . . . , an ) that satisfy
-
-i
-
-wi ai ≤ L is a feasible pattern. Let us denote pattern j by nonnegative
-
-integers (a1j , a2j , . . . , anj ).
-Now suppose we are given a primal solution z = (z1 , z2 , . . .), and we are also given the values of the dual
-variables (u1 , u2 , . . . , un ) associated to the constraints (5.6). How to determine whether z is an optimal
-solution to the LP-relaxation of (CS-2)? Let us consider the constraints of the dual of the LP-relaxation
-of (CS-2). We know that these constraints are of the form:
-
-i
-
-ui aij ≤ 1 for each possible pattern j
-
-(verify this!). Thus, if the current u-values satisfy all these constraints (i.e., for each pattern j), we have
-an optimal LP-solution. Or, alternatively formulated, we are looking for a pattern (a1 , a2 , . . . , an ) such
-that
-
-i
-
-wi ai ≤ L and
-
-i
-
-ui ai > 1. If we can find such a pattern, we know that the current LP-solution
-
-is not optimal, and hence we add this pattern to the current set of columns and start a new iteration.
-Otherwise, if we cannot find such a pattern, the current LP-solution is optimal. Summarizing, the pricing
-problem boils down to solving the following problem:
-
-max
-s.t.
-
-u i ai
-
-(5.8)
-
-wi ai ≤ L
-
-(5.9)
-
-i
-i
-
-ai integer
-
-for all i.
-
-(5.10)
-
-This problem is (a variant of) the well-known knapsack problem (which, in spite of its NP-hardness, can
-be solved in reasonable computing times for very large instances, see Chapter 4). Concluding, the pricing
-64
-
-problem can be solved relatively fast, and hence the LP-relaxation of (CS-2) can be solved fast as well.
+This problem is (a variant of) the well-known \concept{knapsack problem} (which, in spite of its \concept[NP-hard]{NP-hardness}, can be solved in reasonable computing times for very large instances, see \chpref{lifting}). Concluding, the \concept{pricing problem} can be solved relatively fast, and hence the LP-relaxation of \eqnnrefr{cuttingb-m}{cuttingb-c2} can be solved fast as well.
 
 \subsection{The hierarchical crew scheduling problem}
 \ssclab{crewscheduling}
