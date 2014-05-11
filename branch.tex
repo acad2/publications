@@ -72,8 +72,11 @@ This problem is (a variant of) the well-known \concept{knapsack problem} (which,
 \subsection{The hierarchical crew scheduling problem}
 \ssclab{crewscheduling}
 
-In this subsection we illustrate the column generation technique on the hierarchical crew scheduling
-problem. This problem can be described as follows. Given are m crews who have to perform n tasks.
+In this subsection we illustrate the \concept{column generation} technique on the \concept{hierarchical crew scheduling
+problem}. This problem can be described as follows.
+
+\begin{definition}[hierarchical crew scheduling problem]
+Given are m crews who have to perform n tasks.
 For each crew t a cost-rate rt is known, t = 1, . . . , m. Each task is characterized by a starting time si
 and a processing time pi . Each task i has to start at si and must be carried out nonpreemptively by
 some crew until si + pi . Also, a distance dij for every pair of tasks i and j is given. Finally, the crews are
@@ -82,11 +85,14 @@ with an index higher than the index of the maximal crew is not capable of perfor
 crews are capable of performing that job. The cost of a crew is the product of its cost rate rt and the
 distance traveled by that crew. The problem is to find an assignment of tasks to crews against minimal
 costs.
-Example Here is an instance with 2 crews and 3 jobs:
+\end{definition}
+
+\begin{example}
+Here is an instance with 2 crews and 3 jobs:
 m = 2, n = 3, r1 = 3, r2 = 1, s1 = 20, s2 = 40, s3 = 60, p1 = p2 = p3 = 0,
 job 1 can only be carried out by crew 1, jobs 2 and 3 can be carried out by each of the two crews and
 with distances dij as in Figure 5.1.
- 
+\end{example}
 10 
  
   16
