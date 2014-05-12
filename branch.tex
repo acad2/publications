@@ -96,6 +96,7 @@ We model the \concept{hierarchical crew scheduling problem} as a problem on a \c
 
 \begin{equation}
 \semvalvar{c_{ij}^t}{r_t\cdot d_{ij}}{if crew $t$ is able to do jobs $i$ and $j$,}{M}{otherwise, for all $t$, for all $\tupl{i,j}\in A$}
+\eqnlab{semcijt}
 \end{equation}
 
 where $M$ is a large number.
@@ -110,98 +111,45 @@ for $i=1,2,\ldots,n$, $r\in R$:
 \semboolvar{\delta_{ir}}{if vertex $i$ is in path $r$, and}{otherwise}
 \end{equation}
 
-for $t=1,2,\ldots,n$, $r\in R$:
+ \item for $t=1,2,\ldots,n$, $r\in R$, $c_{tr}$ is the cost incurred when crew $t$ takes path $r$, (observe that, for a given $r$, $t$, we can easily compute this quantity using \eqnref{semcijt}; notice that if a path $r$ contains a vertex that cannot be served by crew $t$, we set the corresponding $c_{tr}$ to a large number), and using, for $t=1,\ldots,m$, $r\in R$, the decision variables
+ 
+\begin{equation}
+\semboolvar{y_{tr}}{if crew $t$ takes path $r$, and}{otherwise}
+\end{equation}
 
-• ctr = cost incurred when crew t takes path r, (observe that, for a given r, t, we can easily compute
-this quantity using (5.11); notice that if a path r contains a vertex that cannot be served by crew t, we
-set the corresponding ctr to a large number),
 \end{itemize}
-and using, for t = 1, . . . , m, r ∈ R, the decision variables
-
- 1 if crew t takes path r,
-ytr =
- 0 otherwise.
-m
+We now introduce a new formulation based on the introduced variables:
 
-ctr ytr
+\begin{eqnarray}
+\mbox{minimize}&\sumieqb[t]{1}{m}{\sumdomain[r]{R}{c_{tr}\cdot y_{tr}}}\eqnlab{cghcsp-m}\\
+\mbox{subject to}&\forall i\in\accl{1,2,\ldots,n}:\sumieqb[t]{1}{m}{\sumdomain[r]{R}{\delta_{ir}\cdot y_{tr}}}=1\eqnlab{cghcsp-c1}\\
+&\forall t\in\accl{1,2,\ldots,m}:\sumdomain[r]{R}{y_{tr}}\leq1\eqnlab{cghcsp-c2}\\
+&\forall t\in\accl{1,2,\ldots,m},r\in R:y_{tr}\in\accl{0,1}\eqnlab{cghcsp-c3}
+\end{eqnarray}
 
-(CGHCSPm) minimize
-t=1 r∈R
-m
+Constraints \eqnnref{cghcsp-c1} state that each vertex must occur once in a selected path, inequalities \eqnnref{cghcsp-c2} express that a crew can do at most one path and constraints \eqnref{cghcsp-c3} are the \concept{integrality constraints}. The LP relaxation of this model is found by replacing constraints \eqnref{cghcsp-c3} by $y_{tr}\geq0$ for all $t,r$.
 
-δir ytr = 1 for i = 1, . . . , n;
+\paragraph{}
+Given a \concept{feasible basis} for some LP the question determining whether this basis is an optimal one is: do there exist variables with negative \concept{reduced costs}? Using \concept{dual variables} $u_i$ attached to constraints \eqnnref{cghcsp-c1} and \concept{dual variables} $e_t$ to constraints \eqnnref{cghcsp-c2} we can deduce the following expression for the reduced costs of variable $y_{tr}$:
 
-such that
+\begin{equation}
+c_{tr}-\sumieqb[i]{1}{n}{\delta_{ir}\cdot u_i-e_t}
+\end{equation}
 
-(5.12)
+Thus, given some LP-solution and its associated \concept{dual variables} the \concept{pricing problem} boils down to the following question:
 
-t=1 r∈R
-
-ytr ≤ 1
-
-for t = 1, . . . , m;
-
-(5.13)
-
-for t = 1, . . . , m, r ∈ R.
-
-(5.14)
-
-r∈R
-
-ytr ∈ {0, 1}
-
-Constraints (5.12) state that each vertex must occur once in a selected path, inequalities (5.13) express
-that a crew can do at most one path and constraints (5.14) are the integrality constraints. The LPrelaxation of this model is found by replacing constraints (5.14) by ytr ≥ 0 for all t, r.
-66
-
-Given a feasible basis for some LP the question determining whether this basis is an optimal one is: do
-there exist variables with negative reduced costs? Using dual variables ui attached to constraints (5.12)
-and dual variables et to constraints (5.13) we can deduce the following expression for the reduced costs
-of variable ytr :
-
-n
-
-δir ui − et .
-
-ctr −
-i=1
-
-Thus, given some LP-solution and its associated dual variables the pricing problem boils down to the
-following question:
-
-n
-
-δir ui − et < 0?
-
-Price: ∃ t, r ∈ R such that ctr −
-i=1
+\begin{equation}
+\exists t,r\in R:c_{tr}-\sumieqb[i]{1}{n}{\delta_{ir}\cdot u_i-e_t}<0
+\end{equation}
 
 This question can be answered as follows:
-Lemma: Problem Price can be solved by solving m shortest path problems on a directed acyclic graph.
-Proof: We claim that for a fixed t, Price boils down to a shortest path problem which implies the lemma.
-This can be seen as follows: consider the graph corresponding to the instance and consider only those
-nodes that can be visited by crew t. Observe that no cycles occur in this network. Modify the existing
-arc costs ctij by setting hij := ctij − uj for all {i, j} ∈ A. Observe that the cost of a path P in this network
-with respect to costs hij from s to f equals:
-
-{i,j}∈P
-
-hij =
-
-t
-{i,j}∈P (cij
-
-− uj ) = ctr −
-
-i δir ui .
-
-If this
-
-expression is smaller than et , there is a profitable column (path) for crew t, otherwise not.
-✷
-
-This shows that the pricing problem, and hence the associated LP-relaxation, can be solved efficiently.
+\begin{lemma}
+The \concept{price problem} can be solved by solving $m$ \concepts{shortest path problem} on a \concept{directed acyclic graph}.
+\begin{proof}
+We claim that for a fixed $t$, the \concept{price problem} boils down to a \concept{shortest path problem} which implies the lemma. This can be seen as follows: consider the \concept{graph} corresponding to the instance and consider only those nodes that can be visited by crew $t$. Observe that no \concepts{cycle} occur in this network. Modify the existing \concepts{arc cost} $c_{ij}^t$ by setting $h_{ij}:=c_{ij}^t-u_j$ for all $\tupl{i,j}\in A$. Observe that the cost of a path $P$ in this network with respect to costs $h_{ij}$ from $s$ to $f$ equals: $\sumdomain[\tupl{i,j}]{P}{h_{ij}}=\sumdomain[\tupl{i,j}]{P}{c_{ij}^t-u_j}=c_{tr}-\sum_i{\delta_{ir}\cdot u_i}$. If this expression is smaller than $e_t$, there is a \concept{profitable column} (\concept[profitable path]{path}) for crew $t$, otherwise not.
+\end{proof}
+\end{lemma}
+This shows that the \concept{pricing problem}, and hence the associated \concept{LP-relaxation}, can be solved efficiently.
 
 \section{Branch-and-price}
 \seclab{branchprice}
