@@ -154,36 +154,22 @@ This shows that the \concept{pricing problem}, and hence the associated \concept
 \section{Branch-and-price}
 \seclab{branchprice}
 
-Of course, it is nice that one can solve a linear program with (exponentially) many variables efficiently
-using column generation. However, this leaves us with a potentially fractional solution. We are interested
-in integral solutions. Can we embed column generation within an enumerative framework so that we are
-guaranteed to find an integral optimum? In this section we describe such an approach.
-Let us consider the example of the hierarchical crew scheduling problem. A simple idea would be to
-argue as follows: given a fractional solution, pick a variable with a fractional value. We know that
-in an optimal solution this variable will have either value 0 or value 1. Create two subproblems, one
-67
+Of course, it is nice that one can solve a \concept{linear program} with (exponentially) many variables efficiently using \concept{column generation}. However, this leaves us with a potentially \concept{fractional solution}. We are interested in \concepts{integral solution}. Can we embed \concept{column generation} within an \concept{enumerative framework} so that we are guaranteed to find an \concept{integral optimum}? In this section we describe such an approach.
 
-subproblem in which that variable equals 1, and another subproblem where this variable is constrained to
-be 0. Unfortunately, this idea is too simple. Setting a variable to 1 in the crew scheduling context poses
-no problem: indeed the problem becomes smaller since we postulate that, in this branch this crew t takes
-path r. However, setting a variable to 0 causes a difficulty: how can we guarantee that when we solve
-the pricing problem this specific variable does NOT come out as the variable to be added? One might
-think: OK let us find the shortest path, and if it corresponds to this variable, find the second shortest
-path. But that idea is bound to cause difficulties when we have a branching tree that can have many
-levels.
-We need another partitioning of the solution space. Instead of branching by setting a variable to 1 versus
-setting it to 0, we need a branching rule that does not destroy the efficient solvability of the pricing
-problem. For the hierarchical crew scheduling problem, an example of such a rule is as follows: Here
-we propose a branching rule that leaves the structure of the problem intact, allowing for the efficient
-solvability of the pricing problem throughout the search tree.
-Suppose that y is a fractional feasible LP-solution, and let us call a path r from s to f a fractional path
-(with respect to y) if there exists a t with 0 < ytr < 1. We claim that y has the following property: there
-exist two vertices i and j (that differ from source and sink) that lie consecutively on a fractional path
-such that the sum of all ytr such that r contains arc {i, j} is greater than 0 and smaller than 1. Let us
-formally phrase this claim in the following lemma:
-Lemma: If y is fractional, there exist two nodes i, j ∈ V \ {s, f }, {i, j} ∈ A with
-is contained in r ytr < 1.
-Proof: Observe that if y is fractional there are at least two different fractional paths. Now, consider the
+\paragraph{}
+Let us consider the example of the \concept{hierarchical crew scheduling problem}. A simple idea would be to argue as follows: given a \concept{fractional solution}, pick a variable with a fractional value. We know that in an \concept{optimal solution} this variable will have either value $0$ or value $1$. Create two subproblems, one subproblem in which that variable equals $1$, and another subproblem where this variable is constrained to be $0$. Unfortunately, this idea is too simple. Setting a variable to $1$ in the crew scheduling context poses no problem: indeed the problem becomes smaller since we postulate that, in this branch this crew $t$ takes path $r$. However, setting a variable to $0$ causes a difficulty: how can we guarantee that when we solve the \concept{pricing problem} this specific variable does \emph{not} come out as the variable to be added? One might think: ok let us find the \concept{shortest path}, and if it corresponds to this variable, find the second \concept{shortest path}. But that idea is bound to cause difficulties when we have a \concept{branching tree} that can have many \concepts{level}.
+
+\paragraph{}
+We need another partitioning of the solution space. Instead of branching by setting a variable to $1$ versus setting it to $0$, we need a \concept{branching rule} that does not destroy the \concept{efficient solvability} of the \concept{pricing problem}. For the \concept{hierarchical crew scheduling problem}, an example of such a rule is as follows: Here we propose a \concept{branching rule} that leaves the structure of the problem intact, allowing for the \concept{efficient solvability} of the \concept{pricing problem} throughout the search tree.
+
+\paragraph{}
+Suppose that $y$ is a fractional \concept{feasible LP-solution}, and let us call a \concept{path} $r$ from $s$ to $f$ a \concept{fractional path} (with respect to $y$) if there exists a $t$ with $0<y_{tr}<1$. We claim that $y$ has the following property: there exist two vertices $i$ and $j$ (that differ from \concept{source} and \concept{sink}) that lie consecutively on a \concept{fractional path} such that the sum of all $y_{tr}$ such that $r$ contains arc $\tupl{i,j}$ is greater than $0$ and smaller than $1$. Let us formally phrase this claim in the following lemma:
+
+\begin{lemma}
+If $y$ is fractional, there exist two nodes $i,j\in V\setminus\accl{s,f}$, $\tupl{i,j}\in A$ with $0<\sum_t{\sum_{r\in R,\tupl{i,j}\in r}y_{tr}}<1$.
+
+\begin{proof}
+Observe that if y is fractional there are at least two different fractional paths. Now, consider the
 0<
 
 t
@@ -194,7 +180,8 @@ first node in each fractional path. If this set of nodes has cardinality more th
 to be true. So assume that each fractional path has the same first node. However, then we can repeat
 this argument replacing the sink s by this first node. Since there must be at least two fractional paths,
 a pair i, j as described in the lemma must exist.
-✷
+\end{proof}
+\end{lemma}
 
 Thus, by this Lemma, when y is fractional there exist nodes i and j (that differ from source and sink)
 that are connected by an arc whose sum of fractional values lies between 0 and 1. Now, in an optimal
