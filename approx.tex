@@ -59,103 +59,10 @@ Recall that given a \concept{graph} $G=\tupl{V,E}$, a node cover is a \concept{s
 \importalgorithmicalgorithm{nodecover1}{First proposed approximating algorithm for the node cover problem.}
 \importalgorithmicalgorithm{nodecover2}{Second proposed approximating algorithm for the node cover problem.}
 
-Algorithm 1 (Input: a graph G = (V, E); output: a node cover W )
-W = ∅, E ′ := E
-while E ′ = ∅
-do
-Choose a node v ∈ V with largest degree;
-W := W ∪ {v};
-Update E ′ , that is remove from E ′ all edges incident to v;
-od
-Algorithm 2 (Input: a graph G = (V, E); output: a node cover W )
-W = ∅, E ′ := E
-while E ′ = ∅
-do
-Choose an arbitrary edge in E ′ ;
-W := W ∪ {v, w};
-Update E ′ , that is remove from E ′ all edges incident to v or w;
-od
-Algorithm 1 is a greedy type of algorithm. At first glance it seems to be better than Algorithm 2, as it uses
-at least part of the structure of the graph. And indeed, in instances arising from practical applications,
-it turns out that Algorithm 1 outperforms Algorithm 2 with respect to the number of nodes in the cover
-found. However, as we are about to discover, the WCR of Algorithm 2 is much better than the WCR of
-Algorithm 1.
-Consider the following instance depicted in Figure 6.1.
-75
+\algoref{nodecover1} is a \concept[Greedy algorithm]{greedy type of algorithm}. At first glance it seems to be better than \algoref{nodecover2}, as it uses at least part of the structure of the \concept{graph}. And indeed, in instances arising from practical applications, it turns out that \algoref{nodecover1} outperforms \algoref{nodecover2} with respect to the number of \concepts{node} in the \concept[node cover]{cover} found. However, as we are about to discover, the WCR of \algoref{nodecover2} is much better than the WCR of \algoref{nodecover1}.
 
-C
-
-①
-
-B
-
-①
-①
-①
-①
-①
-✟
-✑
-✑
- 
-✁
-❅
-✁
- 
- 
-❆
-✁❆
-✟
-✑
-✑
- ✁
-❆❅
-✁ ❆
-✑ 
-✑  ✁ ✟
-❆   ✁ ✑   ✁✟✟
-✑ 
-❆❅ ✁
-✁✑✑  
-❆ ✁❅  ❆ ✁✑✑  ✟✟
-✟
-✁  
-❆✁ ✟
-  ✑
-  ✑
-❆✁ ❅
-✑✁✟❆✟
- ✑✑✁  
-✁ ❆  ✑❅
-✟
-✁  ❆✑✟ ✁❅ ❆✑ ✁  
-✑✟  ✑
-❅❆ ✁ 
-✁ 
-✑
-✟✟ ❆ ✁✑
-✁ 
-❆①
-✑
-❅
-✁
-✑
-✟
- 
- 
-❆①
-✁
-①
-
-A
-
-①
-
-①
-
-①
-
-①
+\paragraph{}
+Consider the following instance depicted in \figref{nodecoverapproxexample}.
 
 Figure 6.1: An instance for node cover.
 

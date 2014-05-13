@@ -174,10 +174,10 @@ order=2
 
 [item:importsreferences-en.sty]
 archive=true
-column=15
+column=46
 encoding=UTF-8
 highlight=LaTeX
-line=18
+line=1
 mode=LaTeX
 open=true
 order=1
@@ -351,10 +351,10 @@ JumpList=
 ViMarks=.,31,56,[,31,56,],31,56
 
 [view-settings,view=0,item:importsreferences-en.sty]
-CursorColumn=15
-CursorLine=18
+CursorColumn=46
+CursorLine=1
 JumpList=
-ViMarks=.,62,34,[,62,32,],62,34
+ViMarks=.,1,16,[,1,16,],1,104
 
 [view-settings,view=0,item:tikzpictures/tikz-clique-graph.tex]
 CursorColumn=10
