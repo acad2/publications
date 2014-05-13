@@ -215,17 +215,13 @@ Consider the following problem occurring in \concept{production management}. Giv
 \end{exercise}
 
 \begin{exercise}
-Consider the following problem occurring in \concepts{routing application}. Given are n + 1 locations, among which a depot, and distances d between each pair of locations. The depot harbors K vehicles that serve
-the locations. No vehicle can serve more than C locations. The problem is to select K paths (one for
-each vehicle), each starting at the depot, such that each location is in exactly one path. The goal is to
-minimize the total length of the K paths.
-(i) Formulate
- this problem as a ‘traditional' integer program using variables
- 1 if vehicle k travels from location i to location j
-xijk =
- 0 otherwise
-
-(ii) Formulate this problem as an integer programming problem using a formulation that involves
-exponentially many variables.
-(iii) Discuss how a column generation approach for this formulation would work.
+Consider the following problem occurring in \concepts{routing application}. Given are $n+1$ \concept{location}, among which a \concept{depot}, and \concepts{distance} $d_{ij}$ between each pair of \concepts{location}. The \concept{depot} harbors $k$ \concepts{vehicle} that serve the \concepts{location}. No \concept{vehicle} can serve more than $c$ \concepts{location}. The problem is to select $k$ \concepts{path} (one for each \concept{vehicle}), each starting at the \concept{depot}, such that each \concept{location} is in exactly one \concept{path}. The goal is to minimize the total length of the $k$ \concepts{path}.
+\begin{enumerate}
+ \item Formulate this problem as a ‘traditional' \concept{integer program} using \concepts{variable}:
+ \begin{equation}
+  \semboolvar{x_{ijk}}{if vehicle $k$ travels from location $i$ to location $j$, and}{otherwise}
+ \end{equation}
+ \item Formulate this problem as an \concept{integer programming} problem using a formulation that involves exponentially many variables.
+ \item Discuss how a \concept{column generation} approach for this formulation would work.
+\end{enumerate}
 \end{exercise}
