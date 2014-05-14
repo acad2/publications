@@ -1,5 +1,5 @@
 \ProvidesPackage{importsreferences-en}
-\RequirePackage{tikz,subfigure,float,listings,animate,float,etoolbox,algorithmicx,algpseudocode,algorithm}
+\RequirePackage{tikz,subfigure,enumitem,float,listings,animate,float,etoolbox,algorithmicx,algpseudocode}
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
@@ -62,6 +62,14 @@
 \newcommand{\itmref}[1]{\genref{itm}{Item}{#1}}
 \newcommand{\stplab}[1]{\genlab{stp}{#1}}
 \newcommand{\stpref}[1]{\genref{stp}{Step}{#1}}
+\newcommand{\phslab}[1]{\genlab{phs}{#1}}
+\newcommand{\phsref}[1]{\genref{phs}{Phase}{#1}}
+
+
+
+\newenvironment{inlineenumerate}{\begin{enumerate}}{\end{enumerate}}
+\newenvironment{stepenum}{\begin{enumerate}[label=\bfseries Step \arabic*:,ref=\arabic*]}{\end{enumerate}}
+\newenvironment{phasenum}{\begin{enumerate}[label=\bfseries Phase \arabic*:,ref=\arabic*]}{\end{enumerate}}
 
 \newcommand{\importtikz}[1]{
 \input{tikzpictures/tikz-#1.tex}

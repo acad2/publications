@@ -103,127 +103,34 @@ The argument is as follows. Of course, any \concept{node cover} must cover all \
 
 \section{The Traveling Salesman Problem (TSP)}
 \seclab{tspapprox}
+In a sense the \concept{TSP} is a harder problem to solve than \concept{node cover}. This follows from the well known fact that, unless $\cclass{P}=\cclass{NP}$, no polynomial time algorithm for the TSP exists that has a bounded \concept{WCR} (which contrasts with \algoref{nodecover2} in \secref{nodecoverapprox}). What we can do is to restrict our instances. Recall that the input to the \concept{TSP} is a \concept{distance matrix} $D$. In the sequel we restrict ourselves to instances for which the distances satisfy the \concept{triangle inequality}.
 
-In a sense the TSP is a harder problem to solve than node cover. This follows from the well known fact
-that, unless P=NP, no polynomial time algorithm for the TSP exists that has a bounded WCR (which
-contrasts with Algorithm 2 in the previous section).
-What we can do is to restrict our instances. Recall that the input to the TSP is a distance matrix D. In
-the sequel we restrict ourselves to instances for which the distances satisfy the triangle inequality, that is,
-we have that dik ≤ dij + djk for all i, j, k. Observe that many practical problems satisfy this restriction.
-Indeed, TSP instances coming from actual “travel settings” are quite likely to obey the triangle inequality.
-The double tree algorithm (DT).
-Algorithm DT consists of four phases. In the first three phases, we construct an Euler-cycle that we
-convert into a Hamilton circuit in Phase 4.
-Phase 1. Construct a minimum spanning tree with respect to the distance function d.
-Phase 2. Double all edges in the tree. Notice that the resulting graph is Eulerian.
-Phase 3. Determine an Euler cycle in the Eulerian graph determined in Phase 2. Since the Eulerian
-graph is connected (it contains the minimum spanning tree as a subgraph), the cycle contains each vertex
-at least once.
+\begin{definition}[Triangle inequality]
+The \concept{triangle inequality} is a restriction on a distance metric $\delta:X\times X\rightarrow\RRR$ that states that for every three items $x_1,x_2,x_3\in X$, the distance $\fun{\delta}{x_1,x_3}$ is less than or equal to the sum of the distance from $x_1$ to $x_2$ and the distance from $x_2$ to $x_3$. More formally:
+\begin{equation}
+\forall x_1,x_2,x_3\in X:\fun{\delta}{x_1,x_3}\leq\fun{\delta}{x_1,x_2}+\fun{\delta}{x_2,x_3}
+\end{equation}
+\end{definition}
 
-Phase 4. Convert the Euler cycle into a Hamilton cycle by applying shortcuts, i.e., replace a pair of
-consecutive edges {i, j} and {j, k} in the Euler cycle by {i, k}. We are only allowed to do this if j appears
-somewhere else in the Euler cycle.
-Example Consider the following 7-city TSP instance.
-78
+Observe that many practical problems satisfy this restriction. Indeed, \concept{TSP} instances coming from actual ``\concept{travel settings}'' are quite likely to obey the \concept{triangle inequality}.
 
-1
-1
+\subsection{The double tree algorithm (DT)}
+\ssclab{doubletree}
 
-2
+The \concept{double tree algorithm} consists of four \concepts{phase}. In the first three \concepts{phase}, we construct an \concept{Eulerian cycle} that we convert into a \concept{Hamilton circuit} in \phsref{tsp-dt-d}:
 
-3
+\begin{phasenum}
+ \item \phslab{tsp-dt-a} Construct a \concept{minimum spanning tree} with respect to the \concept{distance function} $d$.
+ \item \phslab{tsp-dt-b} Double all \concepts{edge} in the \concept{tree}. Notice that the resulting graph is \concept[Eulerian graph]{Eulerian}.
+ \item \phslab{tsp-dt-c} Determine an \concept{Eulerian cycle} in the \concept{Eulerian graph} determined in \phsrf{tsp-dt-b}. Since the \concept{Eulerian graph} is \concept[connected graph]{connected} (it contains the \concept{minimum spanning tree} as a subgraph), the \concept{cycle} contains each \concept{vertex} at least once.
+ \item \phslab{tsp-dt-d} Convert the \concept{Eulerian cycle} into a \concept{Hamiltonian cycle} by applying \concept{shortcuts}, i.e., replace a pair of \concepts{consecutive edge} $\tupl{i,j}$ and $\tupl{j, k}$ in the \concept{Eulerian cycle} by $\tupl{i,k}$. We are only allowed to do this if $j$ appears somewhere else in the \concept{Eulerian cycle}.
+\end{phasenum}
 
-4
+\begin{example}
+Consider the following $7$-\concept{city} \concept{TSP} instance.
+\end{example}
 
-5
 
-6
-
-7
-
-1
-
-2
-
-2
-
-3
-
-4
-
-5
-
-1
-
-1
-
-3
-
-3
-
-4
-
-2
-
-3
-
-2
-
-3
-
-1
-
-2
-
-3
-
-1
-
-4
-
-2
-3
-4
-5
-
-1
-
-6
-7
-3 ✉
-
-3 ✉
-2 ✉
-
-4
-✉
-
-5
-✉
-
-6
-✉
-
-7
-✉
-
-2 ✉
-
-4
-✉
-
-5
-✉
-
-6
-✉
-
-7
-✉
-
-1 ✉
-
-1 ✉
 
 Figure 6.3: Phases 1 and 2.
 The Euler-cycle generated in phase 3 is 1232456765421.
@@ -240,77 +147,9 @@ Let us now be more specific concerning Phase 4. We apply a shortcut on each seco
 vertex j. Therefore, each vertex remains in the cycle at least once. After the shortcut has been applied
 to all second appearances of the vertices, the cycle contains each vertex exactly once, that is, we have
 constructed a Hamilton cycle.
-79
-
-3 ✉
-2 ✉
-
-4
-✉
-
-5
-✉
-
-6
-✉
-
-3 ✉
-❅
-❅
-❅ 4
-❅✉
-2 ✉
-
-7
-✉
-
-1 ✉
-
-3 ✉
-❅
-❅
-❅ 4
-❅✉
-2 ✉
-
-5
-✉
-
-6
-✉
-
-7
-✉
-
-5
-✉
-
-6
-✉
-
-7
-✉
-
-1 ✉
-
-5
-✉
 
 Figure 6.4: Phase 4: replacing 324 by 34
-3 ✉
-❅
-❅
-❅ 4
-6
-7
-✉
-✉
-❅✉
-2 ✉
 
-1 ✉
-
-1 ✉
 Figure 6.5: Phase 4: further replacements
 
 We now show that Algorithm DT will never produce a solution with length more than twice the length
@@ -327,10 +166,12 @@ and hence, we know that its length amounts to at least zT . Concluding, we have 
 spanning tree is equal to 2 · zT . From Lemma 6.3, it follows that the length zDT of the Hamiltonian
 circuit that is obtained by applying shortcuts, amounts to no more than the length of the Eulerian
 cycle, which is equal to 2 · zT .
-80
 
-Combining both results, we get zDT ≤ 2 · zT ≤ 2 · OPT.
-The tree-matching algorithm (TM).
+Combining both results, we get zDT ≤ 2 · zT ≤ 2 · OPT.
+
+\subsection{The tree-matching algorithm (TM)}
+\ssclab{treematching}
+
 From the analysis above, it follows that, if we want to improve our worst-case ratio, then we can try to
 decrease the length of the Eulerian cycle. In the sequel we will do so. This means that we use the same
 structure of algorithm DT. In fact, Phases 1, 3, and 4 in Algorithm TM are identical to the corresponding
@@ -345,40 +186,7 @@ perfect matching M on the vertices in V0 .
 Consider the example again. The initial minimum spanning tree contains 4 vertices of odd degree, namely
 1, 2, 3, and 7. The minimum weight perfect matching of these vertices consists of the edges {1, 2} and
 {3, 7}. Thus, we get the following extension of the minimum spanning tree.
-3 ✉
-2 ✉
 
-4
-✉
-
-5
-✉
-
-6
-✉
-
-✉❳
-3 ❳
-❳❳❳
-❳❳
-❳❳❳
-❳❳❳
-4
-5
-6 ❳❳ 7
-❳✉
-✉
-✉
-✉
-✉
-2
-
-7
-✉
-
-1 ✉
-
-1 ✉
 Figure 6.6: Phases 2 of algorithm TM.
 
 An Euler-cycle in this graph is 123765421, where 2 is the only vertex that appears more than once, and
@@ -403,45 +211,8 @@ times OPT. Namely, then zT M ≤ zT + zM ≤ OPT + 12 · OPT =
 
 · OPT.
 
-❳❳❳
-3 ✉
-❳❳
-❳❳❳
-❳❳
-❳❳❳
-4
-5
-6 ❳❳ 7
-✉
-✉
-✉
-✉
-❳✉
-2
-
-✉
-3 ❳
-❳❳❳
-❳❳
-❳❳❳
-❳❳❳
-4
-5
-6❳❳❳ 7
-✉
-✉
-✉
-❳✉
-2 ✉
- 
- 
- 
-✉
-1  
-
-1 ✉
-
 Figure 6.7: Replacing 421 by 41.
+
 The proof makes use of a shrinking argument. Consider any optimal tour with value OPT. Apply
 shortcuts such that only the vertices in V0 remain in the cycle; this yields a cycle C on the vertices in
 V0 with length no more than OPT. C can be partitioned into two perfect matchings M1 and M2 on V0
