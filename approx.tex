@@ -152,11 +152,12 @@ Let $G=\tupl{V,E}$ be a \concept{complete graph}, and let $\funsig{d}{E}{\RRR^+}
 \paragraph{}
 Let us now be more specific concerning \phsref{tsp-dt-d}. We apply a \concept{shortcut} on each second appearance of a \concept{vertex} $j$. Therefore, each \concept{vertex} remains in the \concept{cycle} at least once. After the \concept{shortcut} has been applied to all second appearances of the \concept[vertex]{vertices}, the \concept{cycle} contains each \concept{vertex} exactly once, that is, we have constructed a \concept{Hamiltonian cycle}.
 
-Figure 6.4: Phase 4: replacing 324 by 34
+\importtikzfigure{tsp-approx-ph4}{Phase $4$: replacing $3-2-4$ by $3-4$}
 
-Figure 6.5: Phase 4: further replacements
+\importtikzfigure{tsp-approx-ph5}{Phase $4$: further replacements}
 
-We now show that Algorithm DT will never produce a solution with length more than twice the length
+\paragraph{}
+We now show that the \concept{double tree algorithm} will never produce a solution with length more than twice the length
 of an optimal solution. In other words:
 Theorem 6.4 W CR(DT ) ≤ 2.
 Given an instance I, let OPT(I) denote the length of an optimal tour, and let zDT (I) denote the length
