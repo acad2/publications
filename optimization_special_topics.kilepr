@@ -154,30 +154,30 @@ order=-1
 
 [item:book.tex]
 archive=true
-column=33
+column=21
 encoding=UTF-8
 highlight=LaTeX
-line=48
+line=34
 mode=LaTeX
 open=true
 order=0
 
 [item:brackets-en.sty]
 archive=true
-column=19
+column=32
 encoding=UTF-8
 highlight=LaTeX
-line=23
+line=10
 mode=LaTeX
 open=true
 order=2
 
 [item:importsreferences-en.sty]
 archive=true
-column=46
+column=48
 encoding=UTF-8
 highlight=LaTeX
-line=1
+line=19
 mode=LaTeX
 open=true
 order=1
@@ -339,22 +339,22 @@ JumpList=
 ViMarks=.,0,0,[,0,0,],-1,-1
 
 [view-settings,view=0,item:book.tex]
-CursorColumn=33
-CursorLine=48
+CursorColumn=21
+CursorLine=34
 JumpList=
-ViMarks=.,48,32,[,48,28,],48,32
+ViMarks=.,32,12,[,32,12,],32,12
 
 [view-settings,view=0,item:brackets-en.sty]
-CursorColumn=19
-CursorLine=23
+CursorColumn=32
+CursorLine=10
 JumpList=
-ViMarks=.,23,18,[,23,18,],23,18
+ViMarks=.,33,18,[,33,12,],33,18
 
 [view-settings,view=0,item:importsreferences-en.sty]
-CursorColumn=46
-CursorLine=1
+CursorColumn=48
+CursorLine=19
 JumpList=
-ViMarks=.,1,16,[,1,16,],1,104
+ViMarks=.,1,91,[,1,90,],1,103
 
 [view-settings,view=0,item:tikzpictures/tikz-clique-graph.tex]
 CursorColumn=10
