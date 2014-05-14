@@ -157,16 +157,17 @@ Let us now be more specific concerning \phsref{tsp-dt-d}. We apply a \concept{sh
 \importtikzfigure{tsp-approx-ph5}{Phase $4$: further replacements}
 
 \paragraph{}
-We now show that the \concept{double tree algorithm} will never produce a solution with length more than twice the length
-of an optimal solution. In other words:
-Theorem 6.4 W CR(DT ) ≤ 2.
-Given an instance I, let OPT(I) denote the length of an optimal tour, and let zDT (I) denote the length
-of the tour constructed by algorithm DT. Finally, let zT (I) denote the length of a minimum spanning
-tree. We first prove that zT (I) ≤ OPT(I) for all instances I; we then complete the proof by showing
-that zDT (I) ≤ 2 · zT (I).
-1. Consider any optimal tour. If we delete an arbitrary edge from it, then we obtain a . . . spanning tree.
-By definition, the length of a spanning tree does not exceed the length of a minimal spanning tree,
-and hence, we know that its length amounts to at least zT . Concluding, we have that zT ≤ OPT.
+We now show that the \concept{double tree algorithm} will never produce a solution with length more than twice the length of an optimal solution. In other words:
+\begin{theorem}
+$\funm{wcr}{\mbox{double tree}}\leq2$.
+\end{theorem}
+
+Given an instance $I$, let $\funm{opt}{I}$ denote the length of an \concept{optimal tour}, and let $\fun{z_{dt}}{I}$ denote the length of the \concept{tour} constructed by \concept{double tree algorithm}. Finally, let $\funm{z_T}{I}$ denote the length of a \concept{minimum spanning tree}. We first prove that $\funm{z_T}{I}\leq\funm{opt}{I}$ for all instances $I$; 
+\begin{proof}Consider any \concept{optimal tour}. If we delete an arbitrary \concept{edge} from it, then we obtain a... \concept{spanning tree}. By definition, the \concept[length of a spanning tree]{length} of a \concept{spanning tree} does not exceed the \concept]{length of a minimal spanning tree,
+and hence, we know that its length amounts to at least zT . Concluding, we have that zT ≤ OPT.\end{proof}
+
+we then complete the proof by showing that zDT (I) ≤ 2 · zT (I).
+
 2. The total length of the edges in the Eulerian graph that is constructed by doubling the minimum
 spanning tree is equal to 2 · zT . From Lemma 6.3, it follows that the length zDT of the Hamiltonian
 circuit that is obtained by applying shortcuts, amounts to no more than the length of the Eulerian
