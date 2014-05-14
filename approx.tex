@@ -229,14 +229,7 @@ Consider the \concept{node packing problem}. What can you tell about the \concep
 
 \begin{exercise}
 Consider the \concept{matching problem}. What can you tell about the \concept{worst case ratio} of \algoref{matching1}?
-Algorithm (Input: a graph G = (V, E); output: a matching M )
-M = ∅, G′ = (V ′ , E ′ ) := G
-while E ′ = ∅
-do
-Choose an arbitrary edge {v, w} ∈ E ′ ;
-M := M ∪ {v, w};
-Update G′ , that is V ′ := V ′ \ {v, w} and remove from E ′ all edges incident to v or w;
-od
+\importalgorithmicalgorithm{matching1}{Proposed greedy algorithm for the matching problem.}
 \end{exercise}
 
 \begin{exercise}
