@@ -62,211 +62,44 @@ Recall that given a \concept{graph} $G=\tupl{V,E}$, a node cover is a \concept{s
 \algoref{nodecover1} is a \concept[Greedy algorithm]{greedy type of algorithm}. At first glance it seems to be better than \algoref{nodecover2}, as it uses at least part of the structure of the \concept{graph}. And indeed, in instances arising from practical applications, it turns out that \algoref{nodecover1} outperforms \algoref{nodecover2} with respect to the number of \concepts{node} in the \concept[node cover]{cover} found. However, as we are about to discover, the WCR of \algoref{nodecover2} is much better than the WCR of \algoref{nodecover1}.
 
 \paragraph{}
-Consider the following instance depicted in \figref{nodecoverapproxexample}.
+Consider the following instance depicted in \figref{nodecover-approx-example}.
 
-Figure 6.1: An instance for node cover.
+\importtikzfigure{nodecover-approx-example}{An instance for node cover.}
 
-What is the optimum? It is not hard to figure out that one needs at least 5 nodes for a node cover in
-the instance above, and moreover, that taking all nodes from layer B indeed constitutes a feasible node
-cover. Thus, this is an optimum solution. Let us now apply algorithm 1 to this instance and let us break
-ties by choosing nodes in the lowest possible layer first (that is nodes of layer A enjoy priority over nodes
-in layer B which enjoy priority over nodes in layer C). What happens? Algorithm 1 selects first the nodes
-from layer A and then the nodes from layer B concluding with a node cover consisting of 8 nodes. Even
-worse, we can generalize this instance as follows: let the number of nodes in layer B be n, then there
-are also n nodes in layer C and there are at most n − 1 nodes in the bottom layer. Again, each node in
-layer A is connected to each node in layer B and a node in layer C is connected only to its “companion
-node” directly beneath it. Thus the optimum node cover consists of all nodes in layer B with optimal
-value n, whereas Algorithm 1 will find a solution consisting of all nodes of layer A and B, with a value
-equal to almost twice the optimum value. What can we deduce from this example concerning the WCR
-of Algorithm 1? Well, we can only say that it is at least 2. One cannot conclude that the WCR equals 2
-since there may exist instances on which Algorithm 1 fares even worse.
-And these examples exist. Consider Figure 6.2.
-In this instance we see that the optimum node cover still consists of all middle nodes (i.e. value 6),
-whereas the node cover constructed by Algorithm 1 will consist of all nodes in the two bottom layers (i.e.
-a solution with value 13). From this instance alone we can conclude that the WCR of Algorithm 1 must
-76
+What is the \concept{optimum}? It is not hard to figure out that one needs at least $5$ nodes for a \concept{node cover} in the instance above, and moreover, that taking all nodes from layer $B$ indeed constitutes a \concept{feasible node cover}. Thus, this is an \concept{optimum solution}. Let us now apply \algoref{nodecover1} to this instance and let us break ties by choosing nodes in the lowest possible layer first (that is nodes of layer $A$ enjoy priority over nodes in layer $B$ which enjoy priority over nodes in layer $C$). What happens? \algoref{nodecover1} selects first the nodes from layer $A$ and then the nodes from layer $B$ concluding with a node cover consisting of $8$ nodes. Even worse, we can generalize this instance as follows: let the number of nodes in layer $B$ be $n$, then there are also $n$ nodes in layer $C$ and there are at most $n-1$ nodes in the bottom layer. Again, each node in layer $A$ is connected to each node in layer $B$ and a node in layer $C$ is connected only to its ``\concept{companion node}'' directly beneath it. Thus the \concept{optimum node cover} consists of all nodes in layer $B$ with optimal value $n$, whereas \algoref{nodecover1} will find a solution consisting of all nodes of layer $A$ and $B$, with a value equal to almost twice the optimum value. What can we deduce from this example concerning the \concept{worst case ratio} of \algoref{nodecover1}? Well, we can only say that it is at least $2$. One cannot conclude that the \concept{worst case ratio} equals $2$ since there may exist instances on which \algoref{nodecover1} fares even worse.
 
-C
+\paragraph{}
+Such examples exist. Consider \figref{nodecover-approx-exampld}. In this instance we see that the \concept{optimum node} cover still consists of all middle nodes (i.e. value $6$), whereas the \concept{node cover} constructed by \algoref{nodecover1} will consist of all nodes in the two bottom layers (i.e. a solution with value $13$). From this instance alone we can conclude that the worst case ratio of \algoref{nodecover1} must be worse than $2.1666$.
 
-①
+\importtikzfigure{nodecover-approx-exampld}{Another instance for node cover.}
 
-B
+\paragraph{}
+By generalizing this instance an even more dramatic statement can be made:
+\begin{theorem}
+\thmlab{wcr-nodecover-approx1}
+For each $r\geq 0$, there exist \concepts{instance} $I$ of \concept{node cover} such that $\fun{A}{I}\geq r\cdot\funm{opt}{I}$.
+\end{theorem}
+In other words, the \concept{worst case ratio} of \algoref{nodecover1} is \concept[unbounded worst case ratio]{unbounded}; it is impossible to find a constant $r$ such that
+\begin{equation}
+\displaystyle\frac{\fun{A}{I}}{\funm{opt}{I}}\leq r.
+\end{equation}
 
-①
-①
-①
-①
-①
-①
-❛
-❍
-❛❛ ✁❍
-❛❛ ✁❛
-◗
-◗
-✑
-◗
-❆
-❅
-❅
-✁
-❆
-❆
- 
- 
-❍
-◗
-◗
-✑
-◗ ❛ ✁ ❅❅❍
-❛❛
-❍  ❆❅ ◗  ❅✑ ✁ ❆
-✁ ❆ ◗
-◗ ❛❛ ❍❍
-❍❍❆ ❅
-❛❆❛  ◗
-❆
-❛
-❅❛✁ ❍
- ◗ ✑❅ ✁
-◗
-✁
-❛
-❍
-❍
-◗
-✑
-◗
-❛ ❆❍ ❛◗
-❆
-✁❅
-❆ ❍❅
- 
-✁
-❛
-◗
-◗
-✑
-◗ ✁❅ ❛ 
-❍
-❍
-❍ ◗
-✁ ❅ ❆
-❆❛❛❅
-✑
-◗
-  ❛◗
-  ❛❆❛❛❍
-✁ ❅
-✁
-❍ ◗ ❅ ❆
-❍
-✑ ❆◗ ❛❅
- ◗❅ ❆  ❛
-✁ ◗
-✁
-◗
-◗ ❛✁❍
-✑❛❍
-❍
-❛❍
-❛
-❛❍
-❅ ❆
-❛
-✁❅
-❆❍
-◗❅ ❆✑
-✁  
-✁
-❛◗
-❛◗
-❍
-❍
-◗
-✑
-◗
-❛◗
-❍
-✁❍
-❆ ❛
- 
-✁ 
-✁
-❛❅
-❛❅
-◗
-◗
-✑❅
-◗❆
-❍❆
-❍
-❍
-❍
-❆①
-❛
-◗
-❛① ❛❅
-◗
-❆✁① ❛❅
-❆①
-✑
-◗
-❅
- 
- 
-✁①
-✁
-①
-①
+\paragraph{}
+Let us motivate this theorem by generalizing the instance in \figref{nodecover-approx-exampld}. The structure of this instance is as follows. In case of $6$ middle nodes we do the following: \concept{partition} the nodes from $B$ into $3$ pairs and join the nodes in each pair with a node from layer $A$. Then we partition the nodes in layer $B$ into two triples, and again join all nodes in a triple with a new node from layer $A$. Repeat this for quadruples and quintuples, and so on, possibly leaving out some nodes from layer $B$, and always adding a new node in layer $A$. Then, when applying \algoref{nodecover1}, there is always a node from the bottom layer with highest degree, consequently \algoref{nodecover1} will find a \concept{node cover} consisting of $\fun{L}{n}+n$ \concepts{node}, where $\fun{L}{n}$ is the number of \concepts{node} in layer $A$. How large is $\fun{L}{n}$? Observe that
 
-A
+\begin{equation}
+\fun{L}{n}=\sumieqb[j]{2}{n-1}{\floor{\displaystyle\frac{n}{j}}}.
+\end{equation}
+We leave the exact proof of \thmref{wcr-nodecover-approx1} as an exercise.
 
-①
+What about \algoref{nodecover2}? It is easy to establish a \concept{lower bound} of $2$ on the \concept{worst case ratio}. Indeed, when simply taking a \concept{graph} consisting of $2\cdot n$ \concept[vertex]{vertices} and $n$ \concepts{edge} forming a \concept{perfect matching}, one observes that $n$ is the value of a \concept{minimum node cover}, whereas \algoref{nodecover2} selects all $2\cdot n$ nodes. However, it turns out that this is the worst that can happen for \algoref{nodecover2}:
 
-①
+\begin{theorem}
+\thmlab{wcr-nodecover-approx2}
+$\funm{wcr}{\algoref{nodecover1}}=2$.
+\end{theorem}
 
-①
-
-①
-
-①
-
-Figure 6.2: Another instance for node cover.
-be worse than 2.1666. However, by generalizing this instance an even more dramatic statement can be
-made:
-Theorem 6.1 For each r ≥ 0, there exist instances I of node cover such that A(I) ≥ r · OP T (I)
-In other words, the WCR of Algorithm 1 is unbounded; it is impossible to find a constant R such that
-A(I)
-OP T (I)
-
-≤ R. Let us motivate this theorem by generalizing the instance in Figure 6.2. The structure of
-
-this instance is as follows. In case of 6 middle nodes we do the following: partition the nodes from B into
-3 pairs and join the nodes in each pair with a node from layer A. Then we partition the nodes in layer
-B into two triples, and again join all nodes in a triple with a new node from layer A. Repeat this for
-quadruples and quintuples, and so on, possibly leaving out some nodes from layer B, and always adding
-a new node in layer A. Then, when applying Algorithm 1, there is always a node from the bottom layer
-with highest degree, consequently Algorithm 1 will find a node cover consisting of L(n) + n nodes, where
-L(n) is the number of nodes in layer A. How large is L(n)? Observe that L(n) =
-
-n−1
-j=2 ⌊n/j⌋.
-
-We leave
-
-the exact proof of Theorem 6.1 as an exercise.
-What about Algorithm 2? It is easy to establish a lower bound of 2 on the WCR. Indeed, when simply
-taking a graph consisting of 2n vertices and n edges forming a perfect matching, one observes that n is
-the value of a minimum node cover, whereas Algorithm 2 selects all 2n nodes. However, it turns out that
-this is the worst that can happen for Algorithm 2:
-77
-
-Theorem 6.2 W CR(Algorithm2) = 2.
-The argument is as follows. Of course, any node cover must cover all edges chosen by Algorithm 2.
-However, these edges do not have a node in common, and therefore each edge must be covered by a
-different node in any node cover. Thus no node cover can be smaller than half the size of the node cover
-found by Algorithm 2. Together with the example sketched above Theorem 6.2 now follows.
+The argument is as follows. Of course, any \concept{node cover} must cover all \concepts{edge} chosen by \algoref{nodecover2}. However, these \concepts{edge} do not have a \concept{node} in common, and therefore each \concept{edge} must be covered by a different node in any \concept{node cover}. Thus no \concept{node cover} can be smaller than half the size of the \concept{node cover} found by \algoref{nodecover2}. Together with the example sketched above \thmref{wcr-nodecover-approx2} now follows.
 
 \section{The Traveling Salesman Problem (TSP)}
 \seclab{tspapprox}

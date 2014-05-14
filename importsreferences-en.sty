@@ -34,8 +34,8 @@
 \newcommand{\collab}[1]{\genlab{col}{#1}}
 \newcommand{\colref}[1]{\genref{col}{Corollary}{#1}}
 \newcommand{\colrefpag}[1]{\genrefpag{col}{Corollary}{#1}}
-\newcommand{\thmlab}[1]{\genlab{col}{#1}}
-\newcommand{\thmref}[1]{\genref{col}{Theorem}{#1}}
+\newcommand{\thmlab}[1]{\genlab{thm}{#1}}
+\newcommand{\thmref}[1]{\genref{thm}{Theorem}{#1}}
 \newcommand{\thmrefpag}[1]{\genrefpag{col}{Theorem}{#1}}
 \newcommand{\exclab}[1]{\genlab{exc}{#1}}
 \newcommand{\excref}[1]{\genref{exc}{Exercise}{#1}}
@@ -55,6 +55,7 @@
 \newcommand{\eqnnref}[1]{(\ref{eqn:#1})}
 \newcommand{\eqnnrefr}[2]{(\ref{eqn:#1})-(\ref{eqn:#2})}
 \newcommand{\alglab}[1]{\genlab{alg}{#1}}
+\newcommand{\algoref}[1]{\genref{alg}{Algorithm}{#1}}
 \newcommand{\lstlab}[1]{\genlab{lst}{#1}}
 \newcommand{\lstref}[2][Listing]{\genref{lst}{#1}{#2}}
 \newcommand{\itmlab}[1]{\genlab{itm}{#1}}
@@ -97,6 +98,13 @@
 \newcommand{\importtabularsubtable}[2]{
 \subtable[#2]{\importabular{#1}}
 }
+
+\algnewcommand\algorithmicto{\textbf{to}}
+\algnewcommand\algorithmicwith{\textbf{with}}
+\newcommand{\Forrange}[4][1]{
+\ifthenelse{#1=1}
+{\For{\ensuremath{#2\gets#3\ \algorithmicto\ #4}}}
+{\For{\ensuremath{#2\gets#3\ \algorithmicto\ #4\ \algorithmicwith\ #1}}}}
 
 \newcommand{\importalgorithmicalgorithm}[2]{
 \begin{algorithm}[hbt]
