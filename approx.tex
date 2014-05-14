@@ -163,10 +163,8 @@ $\funm{wcr}{\mbox{double tree}}\leq2$.
 \end{theorem}
 
 Given an instance $I$, let $\funm{opt}{I}$ denote the length of an \concept{optimal tour}, and let $\fun{z_{dt}}{I}$ denote the length of the \concept{tour} constructed by \concept{double tree algorithm}. Finally, let $\funm{z_T}{I}$ denote the length of a \concept{minimum spanning tree}. We first prove that $\funm{z_T}{I}\leq\funm{opt}{I}$ for all instances $I$; 
-\begin{proof}Consider any \concept{optimal tour}. If we delete an arbitrary \concept{edge} from it, then we obtain a... \concept{spanning tree}. By definition, the \concept[length of a spanning tree]{length} of a \concept{spanning tree} does not exceed the \concept]{length of a minimal spanning tree,
-and hence, we know that its length amounts to at least zT . Concluding, we have that zT ≤ OPT.\end{proof}
-
-we then complete the proof by showing that zDT (I) ≤ 2 · zT (I).
+\begin{proof}Consider any \concept{optimal tour}. If we delete an arbitrary \concept{edge} from it, then we obtain a... \concept{spanning tree}. By definition, the \concept[length of a spanning tree]{length} of a \concept{spanning tree} does not exceed the \concept{length of a minimal spanning tree}, and hence, we know that its length amounts to at least $\fun{z_T}{I}$. Concluding, we have that $\fun{z_T}{I}\leq\funm{opt}{I}$.\end{proof}
+We then complete the proof by showing that zDT (I) ≤ 2 · zT (I):
 
 2. The total length of the edges in the Eulerian graph that is constructed by doubling the minimum
 spanning tree is equal to 2 · zT . From Lemma 6.3, it follows that the length zDT of the Hamiltonian
