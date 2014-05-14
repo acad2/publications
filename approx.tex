@@ -123,32 +123,34 @@ The \concept{double tree algorithm} consists of four \concepts{phase}. In the fi
  \item \phslab{tsp-dt-a} Construct a \concept{minimum spanning tree} with respect to the \concept{distance function} $d$.
  \item \phslab{tsp-dt-b} Double all \concepts{edge} in the \concept{tree}. Notice that the resulting graph is \concept[Eulerian graph]{Eulerian}.
  \item \phslab{tsp-dt-c} Determine an \concept{Eulerian cycle} in the \concept{Eulerian graph} determined in \phsrf{tsp-dt-b}. Since the \concept{Eulerian graph} is \concept[connected graph]{connected} (it contains the \concept{minimum spanning tree} as a subgraph), the \concept{cycle} contains each \concept{vertex} at least once.
- \item \phslab{tsp-dt-d} Convert the \concept{Eulerian cycle} into a \concept{Hamiltonian cycle} by applying \concept{shortcuts}, i.e., replace a pair of \concepts{consecutive edge} $\tupl{i,j}$ and $\tupl{j, k}$ in the \concept{Eulerian cycle} by $\tupl{i,k}$. We are only allowed to do this if $j$ appears somewhere else in the \concept{Eulerian cycle}.
+ \item \phslab{tsp-dt-d} Convert the \concept{Eulerian cycle} into a \concept{Hamiltonian cycle} by applying \concepts{shortcut}, i.e., replace a pair of \concepts{consecutive edge} $\tupl{i,j}$ and $\tupl{j, k}$ in the \concept{Eulerian cycle} by $\tupl{i,k}$. We are only allowed to do this if $j$ appears somewhere else in the \concept{Eulerian cycle}.
 \end{phasenum}
 
 \begin{example}
-Consider the $7$-\concept{city} \concept{TSP} instance depicted in \figref{tsp-approx-ph1}.
+Consider the $7$-\concept{city} \concept{TSP} instance depicted \tblref{tsp-approx-dst} and \figref{tsp-approx-ph1}.
 
+\importtabulartable{tsp-approx-dst}{The distance matrix of the Traveling Salesman Problem example.}
 
-Figure 6.3: Phases 1 and 2.
+\begin{figure}[hbt]
+\centering
+\importtikzsubfigure{tsp-approx-ph1}{Phase $1$.}
+\importtikzsubfigure{tsp-approx-ph2}{Phase $2$.}
+\caption{Phase $1$ and $2$ of the \concept{double tree algorithm}.}
+\end{figure}
 \end{example}
 
+\paragraph{}
+The \concept{Eulerian cycle} generated in \concept{phase} $3$ is $1-2-3-2-4-5-6-7-6-5-4-2-1$.
 
+\paragraph{}
+The operation described in \phsref{tsp-dt-d} can be performed on any \concept{cycle}. Its effect is that a new \concept{cycle} is constructed with one edge less; in this cycle, there is one \concept{vertex} that is visited one time less in comparison with the previous \concept{cycle}. Due to the assumption that the \concept{distance function} satisfies the \concept{triangle inequality}, it follows that applying a \concept{shortcut} does not increase the \concept[length of a cycle]{length of the cycle}. Let us formally record this observation in a lemma.
 
-The Euler-cycle generated in phase 3 is 1232456765421.
-The operation described in Phase 4 can be performed on any cycle. Its effect is that a new cycle is
-constructed with one edge less; in this cycle, there is one vertex that is visited one time less in comparison
-with the previous cycle. Due to the assumption that the length function satisfies the triangle inequality,
-it follows that applying a shortcut does not increase the length of the cycle. Let us formally record this
-observation in a lemma.
-Lemma 6.3 Let G = (V, E) be a complete graph, and let d : E → R+ be a distance function on the
-edges, which satisfies the triangle inequality. Let C be a cycle in this graph with total length d(C). If C ′
-is a cycle constructed from C by applying shortcuts, then we have that the total length of C ′ is no more
-than d(C).
-Let us now be more specific concerning Phase 4. We apply a shortcut on each second appearance of a
-vertex j. Therefore, each vertex remains in the cycle at least once. After the shortcut has been applied
-to all second appearances of the vertices, the cycle contains each vertex exactly once, that is, we have
-constructed a Hamilton cycle.
+\begin{lemma}
+Let $G=\tupl{V,E}$ be a \concept{complete graph}, and let $\funsig{d}{E}{\RRR^+}$ be a \concept{distance function} on the \concepts{edge}, which satisfies the \concept{triangle inequality}. Let $C$ be a \concept{cycle} in this \concept{graph} with total \concept[length of a cycle]{length} $\fun{d}{C}$. If $C'$ is a \concept{cycle} constructed from $C$ by applying \concepts{shortcut}, then we have that the total length of $C'$ is no more than $\fun{d}{C}$.
+\end{lemma}
+
+\paragraph{}
+Let us now be more specific concerning \phsref{tsp-dt-d}. We apply a \concept{shortcut} on each second appearance of a \concept{vertex} $j$. Therefore, each \concept{vertex} remains in the \concept{cycle} at least once. After the \concept{shortcut} has been applied to all second appearances of the \concept[vertex]{vertices}, the \concept{cycle} contains each \concept{vertex} exactly once, that is, we have constructed a \concept{Hamiltonian cycle}.
 
 Figure 6.4: Phase 4: replacing 324 by 34
 
