@@ -160,6 +160,7 @@ Let us now be more specific concerning \phsref{tsp-dt-d}. We apply a \concept{sh
 \paragraph{}
 We now show that the \concept{double tree algorithm} will never produce a solution with length more than twice the length of an optimal solution. In other words:
 \begin{theorem}
+\thmlab{wcrdtleq2}
 $\funm{wcr}{\mbox{double tree}}\leq2$.
 \end{theorem}
 
@@ -208,44 +209,26 @@ Notice that for both algorithms, our analysis of the \concept{worst case ratio} 
 
 \section*{Exercises}
 \begin{exercise}
-Prove Theorem 6.1.
+Prove \thmref{wcr-nodecover-approx1}.
 \end{exercise}
 
 \begin{exercise}
-Consider the following greedy algorithm for the knapsack problem. Sort the objects by decreasing ratio
-of profit and size, and reindex the items such that the order of objects is 1, 2, . . . , n. Next, greedily pick
-objects in this order while ensuring that the capacity of the knapsack is not exceeded.
-• Show that this method can behave arbitrarily bad,
-• Modify this method by identifying the smallest k such that the total size of the first k objects
-
-exceeds the capacity. Next, find the best of the following two solutions: {1, 2, . . . , k − 1} and {k}.
-Show that this algorithm is a 2-approximation.
+Consider the following \concept{greedy algorithm} for the \concept{knapsack problem}. Sort the \concepts{object} by decreasing ratio of \concept{profit} and \concept{size}, and \concept{reindex} the \concepts{item} such that the \concept{order} of \concepts{object} is $1,2,\ldots,n$. Next, greedily pick \concepts{object} in this order while ensuring that the \concept{capacity of the knapsack} is not exceeded.
+\begin{enumerate}
+ \item Show that this method can behave arbitrarily bad,
+ \item Modify this method by identifying the smallest $k$ such that the total size of the first $k$ \concepts{object} exceeds the capacity. Next, find the best of the following two solutions: $\accl{1,2,\ldots,k-1}$ and $\accl{k}$.
+Show that this algorithm is a \concept[$r$-approximation]{2-approximation}.
+\end{enumerate}
 \end{exercise}
 
 \begin{exercise}
-Consider the node packing problem. What can you tell about the WCR of each of the following two
-algorithms?
-Algorithm 1 (Input: a graph G = (V, E); output: a node packing W )
-W = ∅, G′ = (V ′ , E ′ ) := G
-while V ′ = ∅
-do
-Choose a node v ∈ V ′ with smallest degree;
-W := W ∪ {v};
-Update G′ , that is V ′ := V ′ \ {v} and remove from E ′ all edges incident to v;
-od
-Algorithm 2 (Input: a graph G = (V, E); output: a node packing W )
-W = ∅, G′ = (V ′ , E ′ ) := G
-while E ′ = ∅
-do
-Choose an arbitrary edge {v,w} in E ′ ;
-W := W ∪ {v};
-Update G′ , that is V ′ := V ′ \ {v, w} and remove from E ′ all edges incident to v or w;
-od
+Consider the \concept{node packing problem}. What can you tell about the \concept{worst case ratio} of \algoref{nodepacking1} and \algoref{nodepacking2}?
+\importalgorithmicalgorithm{nodepacking1}{First proposed algorithm for the node packing problem.}
+\importalgorithmicalgorithm{nodepacking2}{Second proposed algorithm for the node packing problem.}
 \end{exercise}
 
 \begin{exercise}
-Consider the matching problem. What can you tell about the WCR of the following greedy algorithm
-for matching?
+Consider the \concept{matching problem}. What can you tell about the \concept{worst case ratio} of \algoref{matching1}?
 Algorithm (Input: a graph G = (V, E); output: a matching M )
 M = ∅, G′ = (V ′ , E ′ ) := G
 while E ′ = ∅
@@ -257,19 +240,13 @@ od
 \end{exercise}
 
 \begin{exercise}
-An edge coloring of a graph is a coloring of the edges such that no two edges connected to the same
-vertex have the same color. The edge coloring problem is to minimize the number of colors used to color
-a graph. The greedy algorithm for edge coloring colors edge after edge. When coloring an edge it will
-first consider colors that are already in use before assigning a new color. What can you say concerning
-the WCR of this algorithm?
+An \concept{edge coloring} of a \concept{graph} is a coloring of the \concepts{edge} such that no two \concepts{edge} connected to the same \concept{vertex} have the same \concept{color}. The \concept{edge coloring problem} is to minimize the number of \concepts{color} used to color a \concept{graph}. The \concept{greedy algorithm} for \concept{edge coloring} colors \concept{edge} after \concept{edge}. When coloring an edge it will first consider \concepts{color} that are already in use before assigning a new \concept{color}. What can you say concerning the \concept{worst case ratio} of this \concept{algorithm}?
 \end{exercise}
 
 \begin{exercise}
-Can you find instances of the TSP which imply that (together with Theorem 6.4) that WCR(DT)= 2?
+Can you find instances of the \concept{TSP} which imply that (together with \thmref{wcrdtleq2}) that $\funm{wcr}{\mbox{double tree}}=2$?
 \end{exercise}
 
 \begin{exercise}
-A TSP instance is called geometric if each of the cities can be represented by a point in the plane, i.e.
-each city lies at coordinates (xi , yi ), i = 1, . . . , n. What do the result in the previous exercise tell you
-about WCR(DT) for the geometric TSP?
+A \concept{TSP} instance is called \concept{geometric} if each of the \concept[city]{cities} can be represented by a \concept{point} in the plane, i.e. each \concept{city} lies at \concepts{coordinate} $\tupl{x_i,y_i}$ for $i=1,2,\ldots,n$. What do the result in the previous exercise tell you about $\funm{wcr}{\mbox{dt}}$ for the \concept{geometric TSP}?
 \end{exercise}

@@ -1,0 +1,12 @@
+\Function{NodeCover1}{$V,E$}
+\State $M\gets\emptyset$
+\State $V'\gets V$
+\State $E'\gets E$
+\While{$E'\neq\emptyset$}
+\State $\tupl{v,w}\inr E'$
+\State $M\gets M\cup\accl{\tupl{v,w}}$
+\State $V'\gets V'\setminus\accl{v,w}$
+\State $E'\gets E'\setminus\brak{\fun{\delta}{v}\cup\fun{\delta}{w}}$
+\EndWhile
+\State \Return $W$
+\EndFunction
