@@ -1,6 +1,6 @@
 \chapter{Lagrangian Relaxation}
 \chplab{lagrange}
-In this chapter we study a concept called \concept{Lagrangian relaxation}. The formulation of many practical \concepts{combinatorial optimization problem} contains several sets of \concepts{constraint}. \concept{Lagrangian relaxation} exploits this property by disregarding one or more sets of \concepts{constraint}. It turns out that this \concept{relaxation} allows one to obtain \concepts{lower bound} (\concepts{upper bound}) for difficult minimization (maximization) problems. In \secref{lagrangeterminology} we introduce some terminology, \secref{lagrangeresult} presents some basic results, in \secref{lagrangeapplication} we describe an application, and \section{lagrangedual} concludes this chapter by presenting two ways of strengthening the \concept{Lagrangian dual}.
+In this chapter we study a concept called \concept{Lagrangian relaxation}. The formulation of many practical \concepts{combinatorial optimization problem} contains several sets of \concepts{constraint}. \concept{Lagrangian relaxation} exploits this property by disregarding one or more sets of \concepts{constraint}. It turns out that this \concept{relaxation} allows one to obtain \concepts{lower bound} (\concepts{upper bound}) for difficult minimization (maximization) problems. In \secref{lagrangeterminology} we introduce some terminology, \secref{lagrangeresult} presents some basic results, in \secref{lagrangeapplication} we describe an application, and \secref{lagrangedual} concludes this chapter by presenting two ways of strengthening the \concept{Lagrangian dual}.
 
 \section{Terminology}
 \seclab{lagrangeterminology}
@@ -32,42 +32,41 @@ The idea of dropping constraints can be embedded in a more general framework cal
 &\vec{x}\in Q\eqnlab{lagrageb-c2}
 \end{eqnarray}
 
-However, when we are discussing results that are specific to \concept{IP}, it is assumed that $Q=\condset{x\inZZZ^n}{\vec{x}\geq\vec{0}\wedge A_2\cdot\vec{x}=\vec{b}_2}\neq\emptyset$. Of course, the problem obtained from \concept{IP(Q)} by dropping the \concepts{complicating constraint}, $A_1\cdot\vec{x}\leq\vec{b}_1$ is much easier to solve than \concept{IP(Q)}. Now, for any $\lambda\in\brak{\RRR^+}^{m_1}$, consider the problem \concept{LR($\lambda$)}:
+However, when we are discussing results that are specific to \concept{IP}, it is assumed that $Q=\condset{x\inZZZ^n}{\vec{x}\geq\vec{0}\wedge A_2\cdot\vec{x}=\vec{b}_2}\neq\emptyset$. Of course, the problem obtained from \concept{IP(Q)} by dropping the \concepts{complicating constraint}, $A_1\cdot\vec{x}\leq\vec{b}_1$ is much easier to solve than \concept{IP(Q)}. Now, for any $\lambda\in\brak{\RRR^+}^{m_1}$, consider the problem \concept{LR($\vec{\lambda}$)}:
 
-zLR (λ) = max {z(λ, x)| x ∈ Q}, where z(λ, x) = cx + λ(b1 − A1 x).
-The problem LR(λ) is called the Lagrangian relaxation of IP(Q) with respect to A1 x ≤ b1 . This terminology is used because the vector λ plays a role in LR(λ) similar to the role of Lagrange multipliers in
-constrained optimization problems. By our choice, LR(λ) does not contain the complicating constraints.
-86
+\begin{equation}
+\fun{z_{lr}}{\vec{\lambda}}=\funcs{\max}{\fun{z}{\vec{\lambda},\vec{x}}}{x\in Q},\mbox{ where }\fun{z}{\vec{\lambda},\vec{x}}=\vec{c}\cdot\vec{x}+\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{x}}.
+\end{equation}
 
-Instead we have included these constraints in the objective function with the “penalty” term λ(b1 − A1 x).
-Since λ ≥ 0, violations of A1 x ≤ b1 make the penalty term negative, and thus, intuitively speaking, for
-suitably large values of λ, one would expect that A1 x ≤ b1 will be satisfied.
-Let us formally state the relation between zIP and zLR (λ):
+The problem \concept{LR($\vec{\lambda}$)} is called the \concept{Lagrangian relaxation} of \concept{IP(Q)} with respect to $A_1\cdot\vec{x}\leq\vec{b}_1$. This terminology is used because the vector $\lambda$ plays a role in \concept{LR($\vec{\lambda}$)} similar to the role of \concepts{Lagrange multiplier} in \concepts{constrained optimization problem}. By our choice, \concept{LR($\vec{\lambda}$)} does not contain the \concepts{complicating constraint}. Instead we have included these constraints in the \concept{objective function} with the ``\concept{penalty term}'' $\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{x}}$. Since $\vec{\lambda}\geq\vec{0}$, violations of $A_1\cdot\vec{x}\leq\vec{b_1}$ make the \concept{penalty term} negative, and thus, intuitively speaking, for suitably large values of $\vec{\lambda}$, one would expect that $A_1\cdot\vec{x}\leq\vec{b}_1$ will be satisfied.
 
-Theorem 7.1 zLR (λ) ≥ zIP for all λ ≥ 0.
+\paragraph{}
+Let us formally state the relation between $z_{ip}$ and $\fun{z_{lr}}{\vec{\lambda}}$:
+\begin{theorem}
+$\fun{z_{lr}}{\vec{\lambda}}\geq z_{ip}$ for all $\vec{\lambda}\geq\vec{0}$.
+\begin{proof}
+If $\vec{x}$ is feasible in \concept{IP(Q)}, then $\vec{x}\in Q$ and hence $\vec{x}$ is feasible for \concept{LR($\vec{\lambda}$)}. Also, $\fun{z}{\vec{\lambda},\vec{x}}=\vec{c}\cdot\vec{x}+\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{x}}\geq\vec{c}\cdot\vec{x}$ for all $\vec{x}$ feasible in \concept{IP(Q)} since $A_1\cdot\vec{x}\leq\vec{b}_1$ and $\vec{\lambda}\geq\vec{0}$.
+\end{proof}
+\end{theorem}
 
-Proof: If x is feasible in IP(Q), then x ∈ Q and hence x is feasible for LR(λ). Also, z(λ, x) = cx + λ(b1 −
-A1 x) ≥ cx for all x feasible in IP(Q) since A1 x ≤ b1 and λ ≥ 0.
-✷
+\paragraph{}
+Obviously, one is interested in the \concept{least upper bound} from the infinite family of \concept[lagrange relaxation]{relaxations} $\accl{\funm{LR}{\vec{\lambda}}}_{\vec{\lambda}\geq\vec{0}}$,
+denoted here by $\fun{z_{lr}}{\vec{\lambda}^{\star}}$, where $\vec{\lambda}^{\star}$ is an \concept{optimal solution} to the problem called \concept{LD}:
 
-Obviously, one is interested in the least upper bound from the infinite family of relaxations {LR(λ)}λ≥0 ,
-denoted here by zLR (λ∗ ), where λ∗ is an optimal solution to the problem called LD:
+\begin{equation}
+z_{ld}=\fun{\min_{\vec{\lambda}\geq\vec{0}}}{\fun{z_{lr}}{\vec{\lambda}}}.
+\end{equation}
 
-zLD = min
-
-λ≥0 zLR (λ).
-
-Problem LD is called the Lagrangian dual of IP(Q) with respect to the constraints A1 x ≤ b1 .
+Problem \concept{LD} is called the \concept{Lagrangian dual} of \concept{IP(Q)} with respect to the \concepts{constraint} $A_1\cdot\vec{x}\leq\vec{b_1}$.
 
 \section{Some results}
 \seclab{lagrangeresult}
+In this section we illustrate the terminology introduced in the previous section with the following example and use this example to derive some results.
 
-In this section we illustrate the terminology introduced in the previous section with the following example
-and use this example to derive some results.
-Example: Consider the following problem.
-87
+\begin{example}
+Consider the following problem.
 
-max 7x1 + 2x2
+max 7x1 + 2x2
 
 (7.1)
 
@@ -151,13 +150,13 @@ x ∈ Z+
 Notice that Q is a finite set of points, which can be written as follows (see Figure 7.1):
 
 {x1 , x2 , x3 , x4 , x5 , x6 , x7 , x8 } = {(2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (3, 4), (4, 0)}.
+\end{example}
 
 The example suggests at least two different viewpoints. The first one is to see z(λ, x) = (c − λA1 )x + λb1
 as a linear function of x for fixed λ. It then follows that zLR (λ) can be determined by solving the linear
 program
-88
 
-zLR (λ) = max {z(λ, x)| x ∈ conv(Q)}.
+zLR (λ) = max {z(λ, x)| x ∈ conv(Q)}.
 
 In this example,
 
