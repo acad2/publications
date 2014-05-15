@@ -76,30 +76,18 @@ Consider the following problem.
 &x_1,x_2\in\ZZZ^+				\eqnlab{lagragec-c6}
 \end{eqnarray}
 
-Let $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{\vec{x}\mbox{ satisfies \eqnnrefe{lagragec-c1,lagragec-c2,lagragec-c3,lagragec-c4,lagragec-c5,lagragec-c6}}}$. The \concept{Lagrangian relaxation} (see \secref{lagrangeterminology}) with respect to $-x_1+2\cdot x_2\leq 4$ is:
+Let $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{\vec{x}\mbox{ satisfies \eqnnrefe{lagragec-c1,lagragec-c2,lagragec-c3,lagragec-c4,lagragec-c5,lagragec-c6}}}$. The \concept{Lagrangian relaxation} (see \secref{lagrangeterminology}) with respect to $-x_1+2\cdot x_2\leq 4$ is: $\fun{z_{lt}}{\lambda}=\funf{\max_{x\in Q}}{7\cdot x_1+2\cdot x_2+\lambda\cdot\brak{4+x_1-2\cdot x_2}}$ or equivalently:
 
-zLR (λ)
+\begin{eqnarray}
+\mbox{maximize}&\brak{7+\lambda}\cdot x_1+\brak{2-2\cdot\lambda}\cdot x_2+4\cdot\lambda\eqnlab{lagraged-m}\\
+\mbox{subject to}&6\cdot x_1+x_2\leq24		\eqnlab{lagraged-c1}\\
+&-2\cdot x_1-2\cdot x_2\leq-7			\eqnlab{lagraged-c2}\\
+&-x_1\leq-2					\eqnlab{lagraged-c3}\\
+&x_2\leq4					\eqnlab{lagraged-c4}\\
+&x_1,x_2\in\ZZZ^+				\eqnlab{lagraged-c5}
+\end{eqnarray}
 
-x∈Q [7x1
-
-+ 2x2 + λ(4 + x1 − 2x2 )]
-
-=
-
-max
-
-=
-
-max (7 + λ)x1 + (2 − 2λ)x2 + 4λ
-s.t. 6x1 + x2 ≤ 24
-−2x1 − 2x2 ≤ −7
-−x1 ≤ −2
-x2 ≤ 4
-2
-x ∈ Z+
-.
-
-Notice that Q is a finite set of points, which can be written as follows (see Figure 7.1):
+Notice that $Q$ is a finite set of points, which can be written as follows (see Figure 7.1):
 
 {x1 , x2 , x3 , x4 , x5 , x6 , x7 , x8 } = {(2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (3, 4), (4, 0)}.
 \end{example}
@@ -119,49 +107,9 @@ conv(Q) = {x ∈ R+
 In Figure 7.1, solid lines indicate the original constraints, the dots correspond to the feasible integral
 vertices, and the dashed lines correspond to constraints describing conv(Q).
 
-x2
-4
-
-s
-
-3
-
-s
-
-2
-1
-1
-
-s ❊
-❊
-❈ ❊
-s
-
-❊
-❈❊
-
-s
-s ❊
-❅
-❈❊
-❅
-❊
-❅
-❅ ❅
-❊
-❅s
-❈❊
-❅
-❅ ❊
-❅❅
-❅ ❈❊s
-2
-3
-4
-
-x1
-
+\importtikzfigure{lagrange-region-ex}{The $Q$ region of the example.}
 Figure 7.1: The region
+
 Thus, computing zLR (λ) for λ = 0 and λ = 1 gives:
 
 zLR (0) =
