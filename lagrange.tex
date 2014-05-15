@@ -597,32 +597,14 @@ as the Lagrangian dual.
 \section*{Exercises}
 \begin{exercise}
 Consider the following problem.
-max 2x1 + 5x2
-4x1 + x2
 
-≤
-
-28
-
-x1 + 4x2
-
-≤
-
-27
-
-x1 − 5x2
-
-≤
-
-1
-
-x
-
-∈
-
-2
-Z+
-.
+\begin{eqnarray}
+\mbox{maximize}&2\cdot x_1+5\cdot x_2\eqnlab{ex71-m}\\
+\mbox{subject to}&4\cdot x_1+x_2\leq28\eqnlab{ex71-c1}\\
+&x_1+4\cdot x_2\leq27\eqnlab{ex71-c2}\\
+&x_1-5\cdot x_2\leq1\eqnlab{ex71-c3}\\
+&x_1,x_2\in\ZZZ^+\eqnlab{ex71-c4}
+\end{eqnarray}
 
 \begin{enumerate}
  \item \itmlab{ex-711} Show that if any two \concepts{constraint} are \concept[dual constraint]{dualized}, the value of the \concept{Lagrangian dual} equals the value of the \concept{LP-relaxation}.
@@ -635,20 +617,10 @@ Z+
 \begin{exercise}
 Construct two \concepts{Lagrangian dual} for the \concept{generalized assignment problem} and discuss their merits.
 
-max
-s.t.
-
-j cij xij
-
-i
-j
-
-xij ≤ 1 for i ∈ M
-
-i li xij
-
-≤ bj for j ∈ N
-2
-
-x ∈ {0, 1}n .
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[i]{M}{\sumdomain[j]{N}{c_{ij}\cdot x_{ij}}}\eqnlab{ex72-m}\\
+\mbox{subject to}&\forall i\in M:\sumdomain[j]{N}{x_{ij}}\leq 1\eqnlab{ex72-c1}\\
+&\forall j\in N:\sumdomain[i]{M}{l_i\cdot x_{ij}}\leq b_j\eqnlab{ex72-c2}\\
+&\forall i\in M,j\in N:x_{ij}\in\accl{0,1}\eqnlab{ex72-c3}
+\end{eqnarray}
 \end{exercise}
