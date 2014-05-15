@@ -1,63 +1,38 @@
 \chapter{Lagrangian Relaxation}
 \chplab{lagrange}
-In this chapter we study a concept called Lagrangian relaxation. The formulation of many practical
-combinatorial optimization problems contains several sets of constraints. Lagrangian relaxation exploits
-this property by disregarding one or more sets of constraints. It turns out that this relaxation allows
-one to obtain lower bounds (upper bounds) for difficult minimization (maximization) problems. In
-Section 7.1 we introduce some terminology, Section 7.2 presents some basic results, in Section 7.3 we
-describe an application, and Section 7.4 concludes this chapter by presenting two ways of strengthening
-the Lagrangian dual.
+In this chapter we study a concept called \concept{Lagrangian relaxation}. The formulation of many practical \concepts{combinatorial optimization problem} contains several sets of \concepts{constraint}. \concept{Lagrangian relaxation} exploits this property by disregarding one or more sets of \concepts{constraint}. It turns out that this \concept{relaxation} allows one to obtain \concepts{lower bound} (\concepts{upper bound}) for difficult minimization (maximization) problems. In \secref{lagrangeterminology} we introduce some terminology, \secref{lagrangeresult} presents some basic results, in \secref{lagrangeapplication} we describe an application, and \section{lagrangedual} concludes this chapter by presenting two ways of strengthening the \concept{Lagrangian dual}.
 
-7.1
+\section{Terminology}
+\seclab{lagrangeterminology}
 
-Terminology
+Consider an \concept{integer program}:
 
-Consider an integer program
+\begin{equation}
+z_{ip}=\funcs{\max}{\vec{c}\cdot\vec{x}}{x\in S},\mbox{ where }S=\condset{\vec{x}\in\ZZZ^n}{\vec{x}\geq\vec{0}\wedge A\cdot\vec{x}\leq\vec{b}},
+\end{equation}
 
-n
-zIP = max {cx| x ∈ S}, where S = {x ∈ Z+
-| Ax ≤ b},
+which can be rewritten as an \concept{integer problem} (IP):
 
-85
+\begin{eqnarray}
+\mbox{maximize}&z_{ip}=\vec{c}\cdot\vec{x}\eqnlab{lagragea-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}\leq\vec{b}_1\eqnlab{lagragea-c1}\\
+&A_2\cdot\vec{x}\leq\vec{b}_2\eqnlab{lagragea-c2}\\
+&\vec{x}\geq\vec{0}\eqnlab{lagragea-c3}\\
+&\vec{x}\in\ZZZ^n\eqnlab{lagragea-c4}
+\end{eqnarray}
 
-which can be rewritten as problem (IP):
-zIP =
+We are going to assume that $A_2\cdot\vec{x}\leq\vec{b}_2$ are $m-m_1$ ``\concepts{nice constraint}'', say those of an \concept[assignment problem]{assignment} or a \concept{network problem}. By simply dropping the $m_1$ ``\concepts{complicating constraint}'' $A_1\cdot\vec{x}\leq\vec{b}_1$, we obtain a \concept{relaxation} of the \concept{integer problem} (\concept{IP}) that is obviously easier to solve than the problem itself. There are many problems for which the constraints can be \concept[constraint partitioning]{partitioned} in this way. An example will be given in \secref{lagrangedual}.
 
-max
+\paragraph{}
+The idea of dropping constraints can be embedded in a more general framework called \concept{Lagrangian relaxation}. It is convenient to consider a generalization of problem (IP) called \concept{IP(Q)}, which we formulate as follows:
 
-cx
+\begin{eqnarray}
+\mbox{maximize}&z_{ip}=\vec{c}\cdot\vec{x}\eqnlab{lagrageb-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}\leq\vec{b}_1\eqnlab{lagrageb-c1}\\
+&\vec{x}\in Q\eqnlab{lagrageb-c2}
+\end{eqnarray}
 
-s.t.
-
-A1 x ≤ b1 (complicating constraints)
-A2 x ≤ b2 (nice constraints)
-n
-x ∈ Z+
-.
-
-(Notice that the superscripts do NOT refer to powers). We are going to assume that A2 x ≤ b2 are
-m − m1 “nice constraints”, say those of an assignment or a network problem. By simply dropping the
-m1 complicating constraints A1 x ≤ b1 , we obtain a relaxation of problem (IP) that is obviously easier to
-solve than problem (IP) itself. There are many problems for which the constraints can be partitioned in
-this way. An example will be given in Section 7.4.
-The idea of dropping constraints can be embedded in a more general framework called Lagrangian relaxation. It is convenient to consider a generalization of problem (IP) called IP(Q), which we formulate as
-follows:
-
-zIP = max
-s.t.
-
-cx
-A1 x ≤ b1
-x ∈ Q.
-
-n
-| A2 x ≤
-However, when we are discussing results that are specific to IP, it is assumed that Q = {x ∈ Z+
-
-b2 } = ∅. Of course, the problem obtained from IP(Q) by dropping the complicating constraints A1 x ≤ b1
-m1
-is much easier to solve than IP(Q). Now, for any λ ∈ R+
-, consider the problem LR(λ):
+However, when we are discussing results that are specific to \concept{IP}, it is assumed that $Q=\condset{x\inZZZ^n}{\vec{x}\geq\vec{0}\wedge A_2\cdot\vec{x}=\vec{b}_2}\neq\emptyset$. Of course, the problem obtained from \concept{IP(Q)} by dropping the \concepts{complicating constraint}, $A_1\cdot\vec{x}\leq\vec{b}_1$ is much easier to solve than \concept{IP(Q)}. Now, for any $\lambda\in\brak{\RRR^+}^{m_1}$, consider the problem \concept{LR($\lambda$)}:
 
 zLR (λ) = max {z(λ, x)| x ∈ Q}, where z(λ, x) = cx + λ(b1 − A1 x).
 The problem LR(λ) is called the Lagrangian relaxation of IP(Q) with respect to A1 x ≤ b1 . This terminology is used because the vector λ plays a role in LR(λ) similar to the role of Lagrange multipliers in
@@ -84,9 +59,8 @@ zLD = min
 
 Problem LD is called the Lagrangian dual of IP(Q) with respect to the constraints A1 x ≤ b1 .
 
-7.2
-
-Some results
+\section{Some results}
+\seclab{lagrangeresult}
 
 In this section we illustrate the terminology introduced in the previous section with the following example
 and use this example to derive some results.
@@ -535,9 +509,8 @@ c
 
 c
 
-7.3
-
-An application
+\section{An application}
+\seclab{lagrangeapplication}
 
 Suppose there is a set of n jobs to be assigned to a set of n workers, with N = {1, . . . , n}. Suppose
 further that
@@ -698,9 +671,8 @@ zIP ≤ zLD
 
 and each of the inequalities is strict for some objective function.
 
-7.4
-
-Strengthening the Lagrangian dual
+\section{Strengthening the Lagrangian dual}
+\seclab{lagrangedual}
 
 We now consider two ways of strengthening the Lagrangian dual of problem IP. The first approach yields
 a dual whose optimal value equals
@@ -860,7 +832,7 @@ zSD = min
 Although the surrogate dual can be used computationally, it does not have such nice theoretical properties
 as the Lagrangian dual.
 
-Exercises
+\section*{Exercises}
 Exercise 1
 Consider the following problem.
 max 2x1 + 5x2
