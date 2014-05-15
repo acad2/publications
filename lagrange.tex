@@ -138,73 +138,41 @@ Observe here that for a fixed $\vec{q}_i$ , $\fun{z}{\vec{\lambda},\vec{q}_i}=\v
 
 \importtikzfigure{lagrange-dual-ex}{The lines: (a) $18+2\cdot\lambda$; (b) $20$; (c) $22-2\cdot\lambda$; (d) $23-5\cdot\lambda$; (e) $25+3\cdot\lambda$; (f) $27+\lambda$; (g) $29-\lambda$; (h) $28+8\cdot\lambda$.}
 
-In Figure 7.2 one can read the values of zLR (λ) for any value of λ. We see that zLR (λ) is piecewise linear
-and convex (the heavy lines in Figure 7.2) and that zLD = 28 98 . Formally, one solves the linear program
+In \figref{lagrange-dual-ex} one can read the values of $\fun{z_{lr}}{\lambda}$ for any value of $\lambda$. We see that $\fun{z_{lr}}{\lambda}$ is concept{piecewise linear} and \concept{convex} (the heavy lines in \figref{lagrange-dual-ex}) and that $z_{ld}=\dfrac{260}{9}$. Formally, one solves the \concept{linear program}:
 
-zLR (λ) = min {w| w ≥ z(λ, xi ) for i = 1, . . . , 8},
+\begin{equation}
+\fun{z_{lr}}{\lambda}=\funcs{\min}{w}{w\geq\fun{z}{\lambda,q_i}\xfor i=1,2\ldots,8},
+\end{equation}
 
-which shows that zLR (λ) is the maximum of a finite number of linear functions and is therefore piecewise
-linear and convex.
-We now study how the solution of the Lagrangian dual relates to the solution of the original problem
-IP(Q). Returning to Figure 7.1, notice that when λ = 1/9 we obtain
+which shows that $\fun{z_{lr}}{\lambda}$ is the maximum of a finite number of \concepts{linear function} and is therefore \concept{piecewise linear} and \concept{convex}.
 
-28
+\paragraph{}
+We now study how the solution of the \concept{Lagrangian dual} relates to the \concept{solution} of the original problem \concept{IP(Q)}. Returning to \figref{lagrange-region-ex}, notice that when $\lambda=\dfrac{1}{9}$ we obtain:
 
-8
-9
+\begin{eqnarray}
+\dfrac{209}{9}&=&\fun{z}{\dfrac{1}{9},q_7}=\fun{z}{\dfrac{1}{9},q_8}\\
+&=&\fun{z}{\dfrac{1}{9},\dfrac{8}{9}\cdot q_7+\dfrac{1}{9}\cdot q_8}=\fun{z}{\dfrac{1}{9},\dfrac{8}{9}\cdot\tupl{3,4}+\dfrac{1}{9}\cdot\tupl{4,0}}\\
+&=&\fun{z}{\dfrac{1}{9},\tupl{\dfrac{28}{9},\dfrac{32}{9}}}=\fun{z}{\dfrac{1}{9},\vec{q}^{\star}}\xwhere \vec{q}^{\star}=\tupl{\dfrac{28}{9},\dfrac{32}{9}}\\
+&=&\vec{c}\cdot\vec{q}^{\star}+\dfrac{1}{9}\cdot\brak{4+u_1^{\star}-2\cdot u_2^{\star}}=\vec{c}\cdot\vec{q}^{\star}.
+\end{eqnarray}
 
-1
-1
-= z( , x7 ) = z( , x8 )
-9
-9
-1 8 7 1 8
-= z( , x + x )
-9 9
-9
-1
-1 8
-= z( , (3, 4) + (4, 0))
-9 9
-9
-1 28 32
-1
-28 32
-= z( , ( , ) = z( , x∗ ) with x∗ = ( , )
-9 9 9
-9
-9 9
-1
-∗
-∗
-∗
-= cx + (4 + x1 − 2x2 )
-9
-∗
-= cx .
+In other words, by taking a \concept{convex combination} of \concepts{point} in $Q$ (in this example $q_7$ and $q_8$), we obtain a \concept{point} $q^{\star}$ in $\funm{conv}{Q}$ satisfying the complicating \concept{constraint}, for which $\vec{c}\cdot\vec{q}^{\star}=z_{ld}$. This shows that for the example we get $z_{ld}=\funcs{\max}{\vec{c}\cdot\vec{x}}{A_1\cdot\vec{x}\leq\vec{b}_1\wedge\vec{x}\in\funm{conv}{Q}}$. And in fact this holds in general as witnessed by the following theorem which we state without proof.
 
-In other words, by taking a convex combination of points in Q (in this example x7 and x8 ), we obtain a
-point x∗ in conv(Q) satisfying the complicating constraint, for which cx∗ = zLD . This shows that for the
-example we get zLD = max {cx| A1 x ≤ b1 , x ∈ conv(Q)}. And in fact this holds in general as witnessed
-by the following theorem which we state without proof.
+\begin{theorem}
+$z_{ld}=\funcs{\max}{\vec{c}\cdot\vec{x}}{A_1\cdot\vec{x}\leq\vec{b}_1\wedge\vec{x}\in\funm{conv}{Q}}$.
+\end{theorem}
 
-Theorem 7.2
-zLD = max {cx| A1 x ≤ b1 , x ∈ conv(Q)}.
+\paragraph{}
+An interesting question is of course: how good is the bound $z_{ld}$? In general, the difference between $z_{ld}$ and $z_{ip}$ (called the \concept{duality gap}) depends on the sizes of $\funm{conv}{S}$ (which determines $z_{ip}$), $\funm{conv}{Q}\cap\condset{\vec{x}}{A_1\cdot\vec{x}\leq\vec{b}_1}$ (which determines $z_{ld}$) and the \concepts{objective coefficient} $\vec{c}$. A \concept{duality gap} of $0$ can be characterized as follows.
 
-An interesting question is of course: how good is the bound zLD ? In general, the difference between
-zLD and zIP (called the duality gap) depends on the sizes of conv(S) (which determines zIP ), conv(Q) ∩
-91
+\begin{theorem}
+$z_{ld}=z_{ip}$ for all $\vec{c}$ if and only if:
+\begin{equation}
+\funm{conv}{Q\cap\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}}=\funm{conv}{Q}\cap\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}.
+\end{equation}
+\end{theorem}
 
-{x| A1 x ≤ b1 } (which determines zLD ) and the objective coefficients c. A duality gap of 0 can be
-characterized as follows.
-
-Theorem 7.3 zLD = zIP for all c if and only if
-n
-n
-conv{Q ∩ {x ∈ R+
-| A1 x ≤ b1 }} = conv(Q) ∩ {x ∈ R+
-| A1 x ≤ b1 }.
-
+\paragraph{}
 Another interesting difference is the difference between zLD and the value of the LP-relaxation, denoted
 n
 by zLP . Notice that this only makes sense when Q = {x ∈ Z+
