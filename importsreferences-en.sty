@@ -59,6 +59,7 @@
 \newcommand{\eqncsrefr}[2]{Constraints~(\ref{eqn:#1})-(\ref{eqn:#2})}
 \newcommand{\eqnnref}[1]{(\ref{eqn:#1})}
 \newcommand{\eqnnrefr}[2]{(\ref{eqn:#1})-(\ref{eqn:#2})}
+\newcommand{\eqnnrefe}[1]{\setcounter{imprefA}{-1}\foreach\a in{#1}{\stepcounter{imprefA}}\foreach\a in{#1}{(\ref{eqn:\a})\ifthenelse{\value{imprefA}>0}{\ifthenelse{\value{imprefA}=1}{\ and\ }{,\ }\addtocounter{imprefA}{-1}}{}}}
 \newcommand{\alglab}[1]{\genlab{alg}{#1}}
 \newcommand{\algoref}[1]{\genref{alg}{Algorithm}{#1}}
 \newcommand{\lstlab}[1]{\genlab{lst}{#1}}

@@ -66,65 +66,17 @@ In this section we illustrate the terminology introduced in the previous section
 \begin{example}
 Consider the following problem.
 
-max 7x1 + 2x2
+\begin{eqnarray}
+\mbox{maximize}&7\cdot x_1+2\cdot x_2		\eqnlab{lagragec-m}\\
+\mbox{subject to}&-x_1+2\cdot x_2\leq4		\eqnlab{lagragec-c1}\\
+&6\cdot x_1+x_2\leq24				\eqnlab{lagragec-c2}\\
+&-2\cdot x_1-2\cdot x_2\leq-7			\eqnlab{lagragec-c3}\\
+&-x_1\leq-2					\eqnlab{lagragec-c4}\\
+&x_2\leq4					\eqnlab{lagragec-c5}\\
+&x_1,x_2\in\ZZZ^+				\eqnlab{lagragec-c6}
+\end{eqnarray}
 
-(7.1)
-
-s.t. − x1 + 2x2
-
-≤
-
-4
-
-(7.2)
-
-6x1 + x2
-
-≤
-
-24
-
-(7.3)
-
-−2x1 − 2x2
-
-≤
-
-−7
-
-(7.4)
-
-−x1
-
-≤
-
-−2
-
-(7.5)
-
-x2
-
-≤
-
-4
-
-(7.6)
-
-x
-
-∈
-
-2
-Z+
-.
-
-(7.7)
-
-2
-Let Q = {x ∈ Z+
-| x satisfies (7.3), (7.4), (7.5) and (7.6)}. The Lagrangian relaxation (see Section 7.1)
-
-with respect to −x1 + 2x2 ≤ 4 is:
+Let $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{\vec{x}\mbox{ satisfies \eqnnrefe{lagragec-c1,lagragec-c2,lagragec-c3,lagragec-c4,lagragec-c5,lagragec-c6}}}$. The \concept{Lagrangian relaxation} (see \secref{lagrangeterminology}) with respect to $-x_1+2\cdot x_2\leq 4$ is:
 
 zLR (λ)
 
