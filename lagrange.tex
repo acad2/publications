@@ -119,50 +119,15 @@ Thus, computing $\fun{z_{lr}}{\lambda}$ for $\lambda=0$ and $\lambda=1$ gives:
 
 As one increases $\lambda$ from $0$, $\fun{z_{lr}}{\lambda}$ first decreases until $\lambda=\dfrac{1}{9}$ and then it increases. In general we obtain
 
-zLR (λ)
 
-=
+\begin{equation}
+\fun{z_{lr}}{\lambda}=\acclguard{\fun{z}{\lambda,q_7}=29-\lambda&\xif0\leq\lambda\leq\dfrac{1}{9}\\\fun{z}{\lambda,q_8}=28+8\cdot\lambda&\xif\dfrac{1}{9}<\lambda\leq1}.
+\end{equation}
 
-z(λ, x7 ) = 29 − λ for 0 ≤ λ ≤
+Hence, we can deduce that $z_{ld}=\fun{z_{lr}}{\dfrac{1}{9}}=\fun{z}}{\dfrac{1}{9},q_7}=\fun{z}{\dfrac{1}{9},q_8}=\dfrac{260}{9}$ and $\lambda^{\star}=\dfrac{1}{9}$. Notice that, for $\lambda=\dfrac{1}{9}$, $q_7$ as well as $q_8$ are optimal with respect to the constraints determining $\funm{conv}{Q}$, and hence the \concept{objective function} - which equals $\dfrac{64}{9}\cdot x_1+\dfrac{16}{9}\cdot x_2$ - must be parallel to $4\cdot x_1+x_2\leq16$. All these calculations can be seen in \figref{lagrange-region-ex}.
 
-zLR (λ)
-
-=
-
-z(λ, x8 ) = 28 + 8λ for λ ≥
-
-1
-,
-9
-
-1
-.
-9
-
-Hence, we can deduce that zLD = zLR ( 91 ) = z( 19 , x7 ) = z( 91 , x8 ) = 28 98 and λ∗ =
-
-1
-9.
-
-Notice that, for
-
-λ = 91 , x7 as well as x8 are optimal with respect to the constraints determining conv(Q), and hence the
-objective function - which equals 7 91 x1 +
-
-16
-9 x2
-
-for λ =
-
-1
-9
-
-- must be parallel to 4x1 + x2 ≤ 16. All these
-
-calculations can be seen in Figure 7.1.
-The second viewpoint is to consider zLR (λ) to be determined by maximization over a set of discrete
-points, that is,
-zLR (λ) = maxxi ∈Q z(λ, xi ).
+\paragraph{}
+The second \concept{viewpoint} is to consider $\fun{z_{lr}}{\lambda}$ to be determined by \concept{maximization} over a set of \concepts{discrete point}, that is, zLR (λ) = maxxi ∈Q z(λ, xi ).
 Observe here that for a fixed xi , z(λ, xi ) = cxi + λ(b1 − A1 xi ) is a linear function of λ. See Figure 7.2,
 where we have drawn the linear functions z(λ, xi ) for xi ∈ Q.
 z(λ, xi )
