@@ -173,132 +173,51 @@ $z_{ld}=z_{ip}$ for all $\vec{c}$ if and only if:
 \end{theorem}
 
 \paragraph{}
-Another interesting difference is the difference between zLD and the value of the LP-relaxation, denoted
-n
-by zLP . Notice that this only makes sense when Q = {x ∈ Z+
-| A2 x ≤ b2 }. We can characterize the case
+Another interesting difference is the difference between $z_{ld}$ and the value of the \concept{LP-relaxation}, denoted by $z_{lp}$. Notice that this only makes sense when $Q=\accl{x\in\brak{\ZZZ^+}^n
+}{A_2\cdot\vec{x}\leq\vec{b}_2}$. We can characterize the case where $z_{lp}=z_{ld}$.
 
-where zLP = zLD .
+\begin{theorem}
+$z_{ld}=z_{lp}$ for all $\vec{c}$ if all the \concepts{extreme point} of $\condset{\vec{x}\in\brak{\RRR^+}^n}{A_2\cdot\vec{x}\leq\vec{b}_2}$ are \concept{integral}.
+\end{theorem}
 
-n
-Theorem 7.4 zLD = zLP for all c if all the extreme points of {x ∈ R+
-| A2 x ≤ b2 } are integral.
+It is easily verified that the conditions mentioned in the two previous theorems are not fulfilled by our example. Indeed, we have $28=z_{ip}<z_{ld}=\dfrac{209}{9}<z_{lp}=\dfrac{332}{11}$ (check this !).
 
-It is easily verified that the conditions mentioned in the two previous theorems are not fulfilled by our
-2
-example. Indeed, we have 28 = zIP < zLD = 28 98 < zLP = 30 11
-. (Check this !).
+\paragraph{}
+In fact, a more natural choice of \concepts{complicating constraint} in our example would lead to different results for $z_{ld}$. If we set $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{-x_1\leq-2\wedge x_2\leq4}$, we find that $\condset{\vec{x}\in\brak{\RRR^+}^2}{-x_1\leq-2\wedge x_2\leq4}$ only has \concepts{integral extreme point} so that by our latest theorem, this \concept{Lagrangian relaxation} would terminate with
+$z_{ld}=z_{lp}=\dfrac{332}{11}$
 
-In fact, a more natural choice of complicating constraints in our example would lead to different results
-2
-2
-for zLD . If we set Q = {x ∈ Z+
-| − x1 ≤ −2, x2 ≤ 4}, we find that {x ∈ R+
-| − x1 ≤ −2, x2 ≤ 4} only has
-
-integral extreme points so that by our latest theorem, this Lagrangian relaxation would terminate with
-2
-.
-zLD = zLP = 30 11
-
+\paragraph{}
 Summarizing, we have
+\begin{equation}
+\funm{conv}{S}\subseteq\funm{conv}{Q}\cap\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}\subseteq{\vec{x}\in\brak{\RRR^+}^n}{A\cdot\vec{x}\leq\vec{b}}.
+\end{equation}
 
-n
-n
-conv(S) ⊆ conv(Q) ∩ {x ∈ R+
-| A1 x ≤ b1 } ⊆ {x ∈ R+
-| Ax ≤ b}.
+This implies that $z_{ip}\leq z_{ld}\leq z_{lp}$. But because some faces of the respective \concept[polyhedron]{polyhedra} can \concept{coincide}, we may obtain $z_{ip}=z_{ld}$ or $z_{ld}=z_{lp}$ for a particular $c$ even if the conditions of the two previous theorems do not hold. In \tblref{lagrange-objectives} indicating the possibilities using four different \concepts{objective function} $c_1$, $c_2$, $c_3$ and $c_4$.
 
-This implies that zIP ≤ zLD ≤ zLP . But because some faces of the respective polyhedra can coincide,
-we may obtain zIP = zLD or zLD = zLP for a particular c even if the conditions of the two previous
-theorems do not hold. Below, we give at table indicating the possibilities using four different objective
-functions c1 , c2 , c3 and c4 .
-92
-
-Objective functions
-
-objective values
-
-c1
-
-zIP = zLD = zLP
-
-2
-
-zIP < zLD = zLP
-
-c3
-
-zIP < zLD < zLP
-
-4
-
-zIP = zLD < zLP
-
-c
-
-c
+\importtabulartable{lagrange-objectives}{Order of objective values.}
 
 \section{An application}
 \seclab{lagrangeapplication}
 
-Suppose there is a set of n jobs to be assigned to a set of n workers, with N = {1, . . . , n}. Suppose
-further that
-• cij is the value of assigning worker i to job j,
-• tij is the cost of training worker i to do job j, and
-• there is a training budget of b units.
-We wish to maximize the total value of the assignment subject to the budget constraint, that is
+Suppose there is a set of $n$ \concepts{job} to be assigned to a set of $n$ \concepts{worker}, with $N=\accl{1,2,\ldots,n}$. Suppose further that
 
-max
+\begin{enumerate}
+ \item $c_{ij}$ is the value of assigning \concept{worker} $i$ to \concept{job} $j$,
+ \item $t_{ij}$ is the cost of training \concept{worker} $i$ to do \concept{job} $j$; and
+ \item there is a \concept{training budget} of $b$ \concepts{unit} (this constraint is called the ``\concept{budget constraint}'').
+\end{enumerate}
 
-cij
+We wish to maximize the total value of the \concept{assignment} subject to the \concept{budget constraint}, that is
 
-xij
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[i]{N}{\sumdomain[j]{N}{c_{ij}\cdot x_{ij}}}\eqnlab{jobwork-m}\\
+\mbox{subject to}&\forall i\in N:\sumdomain[j]{N}{x_{ij}}=1\eqnlab{jobwork-c1}\\
+&\forall j\in N:\sumdomain[i]{M}{l_i\cdot x_{ij}}=1\eqnlab{jobwork-c2}\\
+&\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b\eqnlab{jobwork-c3}\\
+&\forall i\in N,j\in N:x_{ij}\in\accl{0,1}\eqnlab{jobwork-c4}
+\end{eqnarray}
 
-(7.8)
-
-xij
-
-=
-
-1 for i ∈ N
-
-(7.9)
-
-xij
-
-=
-
-1 for j ∈ N
-
-(7.10)
-
-tij xij
-
-≤
-
-b
-
-(7.11)
-
-x
-
-∈
-
-{0, 1}.
-
-(7.12)
-
-i∈N j∈N
-
-j∈N
-
-i∈N
-
-j∈N i∈N
-
-If we wish to use Lagrangian relaxation there are different options to consider. Notice that in each of
-the following four options the relaxed problem LR(λ) is considerably easier to solve than the original
+If we wish to use \concept{Lagrangian relaxation} there are different options to consider. Notice that in each of the following four options the relaxed problem LR(λ) is considerably easier to solve than the original
 problem.
 1
 1. Lagrangian relaxation with respect to (7.11). Then LR1 (λ), λ ∈ R+
