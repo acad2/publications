@@ -89,7 +89,7 @@ Let $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{\vec{x}\mbox{ satisfies \eqnnrefe{lag
 
 Notice that $Q$ is a finite set of points, which can be written as follows (see \figref{lagrange-region-ex}):
 \begin{equation}
-\tupl{q_1,q_2,q_3,q_4,q_5,q_6,q_7,q_8}=\tupl{\tupl{2,2},\tupl{2,3},\tupl{2,4},\tupl{3,1},\tupl{3,2},\tupl{3,3},\tupl{3,4},\tupl{4,0}}.
+\tupl{\vec{q}_1,\vec{q}_2,\vec{q}_3,\vec{q}_4,\vec{q}_5,\vec{q}_6,\vec{q}_7,\vec{q}_8}=\tupl{\tupl{2,2},\tupl{2,3},\tupl{2,4},\tupl{3,1},\tupl{3,2},\tupl{3,3},\tupl{3,4},\tupl{4,0}}.
 \end{equation}
 \end{example}
 
@@ -113,125 +113,32 @@ In \figref{lagrange-region-ex}, solid lines indicate the original constraints, t
 Thus, computing $\fun{z_{lr}}{\lambda}$ for $\lambda=0$ and $\lambda=1$ gives:
 
 \begin{eqnarray}
-\fun{z_{lr}}{0}=\funcs{\max}{7\cdot x_1+2\cdot x_2}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{0,q_7}=\fun{z}{0,\tupl{3,4}}=29\\
-\fun{z_{lr}}{0}=\funcs{\max}{8\cdot x_1+4}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{1,q_8}=\fun{z}{1,\tupl{4,0}}=36
+\fun{z_{lr}}{0}=\funcs{\max}{7\cdot x_1+2\cdot x_2}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{0,\vec{q}_7}=\fun{z}{0,\tupl{3,4}}=29\\
+\fun{z_{lr}}{0}=\funcs{\max}{8\cdot x_1+4}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{1,\vec{q}_8}=\fun{z}{1,\tupl{4,0}}=36
 \end{eqnarray}
 
 As one increases $\lambda$ from $0$, $\fun{z_{lr}}{\lambda}$ first decreases until $\lambda=\dfrac{1}{9}$ and then it increases. In general we obtain
 
 
 \begin{equation}
-\fun{z_{lr}}{\lambda}=\acclguard{\fun{z}{\lambda,q_7}=29-\lambda&\xif0\leq\lambda\leq\dfrac{1}{9}\\\fun{z}{\lambda,q_8}=28+8\cdot\lambda&\xif\dfrac{1}{9}<\lambda\leq1}.
+\fun{z_{lr}}{\lambda}=\acclguard{\fun{z}{\lambda,\vec{q}_7}=29-\lambda&\xif0\leq\lambda\leq\dfrac{1}{9}\\\fun{z}{\lambda,\vec{q}_8}=28+8\cdot\lambda&\xif\dfrac{1}{9}<\lambda\leq1}.
 \end{equation}
 
-Hence, we can deduce that $z_{ld}=\fun{z_{lr}}{\dfrac{1}{9}}=\fun{z}}{\dfrac{1}{9},q_7}=\fun{z}{\dfrac{1}{9},q_8}=\dfrac{260}{9}$ and $\lambda^{\star}=\dfrac{1}{9}$. Notice that, for $\lambda=\dfrac{1}{9}$, $q_7$ as well as $q_8$ are optimal with respect to the constraints determining $\funm{conv}{Q}$, and hence the \concept{objective function} - which equals $\dfrac{64}{9}\cdot x_1+\dfrac{16}{9}\cdot x_2$ - must be parallel to $4\cdot x_1+x_2\leq16$. All these calculations can be seen in \figref{lagrange-region-ex}.
+Hence, we can deduce that $z_{ld}=\fun{z_{lr}}{\dfrac{1}{9}}=\fun{z}{\dfrac{1}{9},\vec{q}_7}=\fun{z}{\dfrac{1}{9},\vec{q}_8}=\dfrac{260}{9}$ and $\lambda^{\star}=\dfrac{1}{9}$. Notice that, for $\lambda=\dfrac{1}{9}$, $\vec{q}_7$ as well as $\vec{q}_8$ are optimal with respect to the constraints determining $\funm{conv}{Q}$, and hence the \concept{objective function} - which equals $\dfrac{64}{9}\cdot x_1+\dfrac{16}{9}\cdot x_2$ - must be parallel to $4\cdot x_1+x_2\leq16$. All these calculations can be seen in \figref{lagrange-region-ex}.
 
 \paragraph{}
-The second \concept{viewpoint} is to consider $\fun{z_{lr}}{\lambda}$ to be determined by \concept{maximization} over a set of \concepts{discrete point}, that is, zLR (λ) = maxxi ∈Q z(λ, xi ).
-Observe here that for a fixed xi , z(λ, xi ) = cxi + λ(b1 − A1 xi ) is a linear function of λ. See Figure 7.2,
-where we have drawn the linear functions z(λ, xi ) for xi ∈ Q.
-z(λ, xi )
+The second \concept{viewpoint} is to consider $\fun{z_{lr}}{\vec{\lambda}}$ to be determined by \concept{maximization} over a set of \concepts{discrete point}, that is,
 
-(4)
-✱
-✱
-(8)
-36
-✱
-✱
- 
- 
-✱
- 
-(5)
- 
-✱
-✟✟
- 
-✱
-✟
- 
-✟
- 
-✱
- 
-✟✟
- 
-✱
- 
-✱ ✟✟
- 
- 
-30
-✱
-✭✭✭(6)
-✟✟
- 
- 
-✟ ✭✭✭✭✭✭
- 
-❤
-✱
-❤❤
-❤❤❤
-✟
-✭✭
-❤✭
-✟
-✭
- 
-❤✱
-❤✭
-✭
-❤❤❤
-✟
-✭✭✟
-✱
-✭
-❤❤❤❤
-✭
-✭
-✟
-❤❤❤❤
-✟✱✱
-❤(7)
-✟✟✱
-✟
-✱
-24 ✱
-✏✏(1)
-✱
-✏✏
-✏
-✏✏
-
-✏✏
-
-✏
-
-✏✏
-(2)
-✏
-✏
-
-✏
-✏
-
-✏
-
-✏✏
-
-18 ✏
-λ
-1
-2 
- (3)
-
-Figure 7.2: The lines: (1) 18 + 2λ; (2) 20; (3) 22 - 2λ; (4) 23 + 5λ; (5) 25 + 3λ; (6) 27 + λ; (7) 29 - λ;
-(8) 28 + 8λ;
-90
+\begin{equation}
+\fun{z_{lr}}{\vec{\lambda}}=\fun{\max_{\vec{q}_i\in Q}}{\fun{z}{\vec{\lambda},\vec{q}_i}}.
+\end{equation}
 
-In Figure 7.2 one can read the values of zLR (λ) for any value of λ. We see that zLR (λ) is piecewise linear
+Observe here that for a fixed $\vec{q}_i$ , $\fun{z}{\vec{\lambda},\vec{q}_i}=\vec{c}\cdot\vec{q}_i+\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{q}_i}$ is a \concept{linear function} of $\vec{\lambda}$. See \figref{lagrange-dual-ex}, where we have drawn the \concepts{linear function} $\fun{z}{\lambda,q_i}$ for $q_i\in Q$ for the leading example.
+
+
+\importtikzfigure{lagrange-dual-ex}{The lines: (a) 18 + 2λ; (b) 20; (c) 22 - 2λ; (d) 23 + 5λ; (e) 25 + 3λ; (f) 27 + λ; (g) 29 - λ; (h) 28 + 8λ.}
+
+In Figure 7.2 one can read the values of zLR (λ) for any value of λ. We see that zLR (λ) is piecewise linear
 and convex (the heavy lines in Figure 7.2) and that zLD = 28 98 . Formally, one solves the linear program
 
 zLR (λ) = min {w| w ≥ z(λ, xi ) for i = 1, . . . , 8},
@@ -688,7 +595,7 @@ Although the surrogate dual can be used computationally, it does not have such n
 as the Lagrangian dual.
 
 \section*{Exercises}
-Exercise 1
+\begin{exercise}
 Consider the following problem.
 max 2x1 + 5x2
 4x1 + x2
@@ -725,8 +632,9 @@ the LP-relaxation.
 (iii) Show that if any single constraint is dualized, the value of the Lagrangian dual is an improvement
 compared to the value of the LP-relaxation.
 (iv) Apply cost-splitting to get a better Lagrangian dual.
+\end{exercise}
 
-Exercise 2
+\begin{exercise}
 Construct two Lagrangian duals for the generalized assignment problem and discuss their merits.
 
 max
@@ -745,3 +653,4 @@ i li xij
 2
 
 x ∈ {0, 1}n .
+\end{exercise}
