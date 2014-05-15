@@ -87,46 +87,37 @@ Let $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{\vec{x}\mbox{ satisfies \eqnnrefe{lag
 &x_1,x_2\in\ZZZ^+				\eqnlab{lagraged-c5}
 \end{eqnarray}
 
-Notice that $Q$ is a finite set of points, which can be written as follows (see Figure 7.1):
-
-{x1 , x2 , x3 , x4 , x5 , x6 , x7 , x8 } = {(2, 2), (2, 3), (2, 4), (3, 1), (3, 2), (3, 3), (3, 4), (4, 0)}.
+Notice that $Q$ is a finite set of points, which can be written as follows (see \figref{lagrange-region-ex}):
+\begin{equation}
+\tupl{q_1,q_2,q_3,q_4,q_5,q_6,q_7,q_8}=\tupl{\tupl{2,2},\tupl{2,3},\tupl{2,4},\tupl{3,1},\tupl{3,2},\tupl{3,3},\tupl{3,4},\tupl{4,0}}.
+\end{equation}
 \end{example}
 
-The example suggests at least two different viewpoints. The first one is to see z(λ, x) = (c − λA1 )x + λb1
-as a linear function of x for fixed λ. It then follows that zLR (λ) can be determined by solving the linear
-program
+\importtikzfigure{lagrange-region-ex}{The $Q$ region of the Lagrange relaxation example.}
 
-zLR (λ) = max {z(λ, x)| x ∈ conv(Q)}.
+The example suggests at least two different \concepts{viewpoint}. The first one is to see $\fun{z}{\vec{\lambda},\vec{x}}=\brak{\vec{c}-\lambda\cdot A_1}\cdot\vec{x}+\vec{\lambda}\cdot\vec{b}_1$ as a \concept{linear function} of $\vec{x}$ for fixed $\vec{\lambda}$. It then follows that $\fun{z_{lr}}{\vec{\lambda}}$ can be determined by solving the \concept{linear program}.
+
+\begin{equation}
+\fun{z_{lr}}{\vec{\lambda}}=\funcs{\max}{\fun{z}{\vec{\lambda},\vec{x}}}{\vec{x}\in\funm{conv}{Q}}.
+\end{equation}
 
 In this example,
 
-2
-conv(Q) = {x ∈ R+
-| − x1 ≤ −2, x2 ≤ 4, −x1 − x2 ≤ −4, 4x1 + x2 ≤ 16}.
+\begin{equation}
+\funm{conv}{Q}=\condset{\vec{x}\in\brak{\RRR^+}^2}{-x_1\leq-2\wedge x_2\leq4\wedge-x_1-x_2\leq-4\wedge4\cdot x_1+x_2\leq16}.
+\end{equation}
 
-In Figure 7.1, solid lines indicate the original constraints, the dots correspond to the feasible integral
-vertices, and the dashed lines correspond to constraints describing conv(Q).
+In \figref{lagrange-region-ex}, solid lines indicate the original constraints, the dots correspond to the \concept[feasible integral vertex]{feasible integral vertices}, and the dashed lines correspond to constraints describing $\funm{conv}{Q}$.
 
-\importtikzfigure{lagrange-region-ex}{The $Q$ region of the example.}
-Figure 7.1: The region
+\paragraph{}
+Thus, computing $\fun{z_{lr}}{\lambda}$ for $\lambda=0$ and $\lambda=1$ gives:
 
-Thus, computing zLR (λ) for λ = 0 and λ = 1 gives:
+\begin{eqnarray}
+\fun{z_{lr}}{0}=\funcs{\max}{7\cdot x_1+2\cdot x_2}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{0,q_7}=\fun{z}{0,\tupl{3,4}}=29\\
+\fun{z_{lr}}{0}=\funcs{\max}{8\cdot x_1+4}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{1,q_8}=\fun{z}{1,\tupl{4,0}}=36
+\end{eqnarray}
 
-zLR (0) =
-
-max {7x1 + 2x2 )| x ∈ conv(Q)} = z(0, x7 ) = 29,
-
-zLR (1) =
-
-max {8x1 + 4)| x ∈ conv(Q)} = z(1, x8 ) = 36.
-
-As one increases λ from 0, zLR (λ) first decreases until λ =
-89
-
-1
-9
-
-and then it increases. In general we obtain
+As one increases $\lambda$ from $0$, $\fun{z_{lr}}{\lambda}$ first decreases until $\lambda=\dfrac{1}{9}$ and then it increases. In general we obtain
 
 zLR (λ)
 
