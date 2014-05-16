@@ -223,80 +223,45 @@ If we wish to use \concept{Lagrangian relaxation} there are different options to
  \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c3}. Then $\fun{\mbox{LR}_1}{\lambda}$, $\lambda\in\RRR^+$ is an \concept{assignment problem} with \concept{objective function}
  
  \begin{equation}
- \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \lambda\cdot b+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}}}.
  \end{equation}
 
  \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} and \eqnref{jobwork-c2}. Then $\fun{\mbox{LR}_2}{\vec{u},\vec{v}}$, $\vec{u},\vec{v}\in\RRR^n$ is a \concept{knapsack problem} with \concept{objective function}
 
  \begin{equation}
- \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \sumdomain[i]{N}{u_i}+\sumdomain[j]{N}{v_j}+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-u_i-v_j}\cdot x_{ij}}}.
  \end{equation}
 
  \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} or \eqnref{jobwork-c2}, say \eqnref{jobwork-c1}. Then $\fun{\mbox{LR}_3}{\vec{u}}$, $\vec{u}\in\RRR^n$ is a \concept{knapsack problem} with so-called \concepts{generalized upper bound constraint} and with \concept{objective function}
 
  \begin{equation}
- \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \sumdomain[i]{N}{u_i}+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-u_i}\cdot x_{ij}}}.
  \end{equation}
 
  \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} or \eqnref{jobwork-c2} and \eqnref{jobwork-c3}, say \eqnref{jobwork-c1} or \eqnref{jobwork-c3}. Only \concepts{generalized upper bound constraint} remain. Thus, $\fun{\mbox{LR}_4}{\vec{u},\lambda}$, $\vec{u}\in\RRR^n$, $\lambda\in\RRR^n$ with \concept{objective function}
 
  \begin{equation}
- \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \lambda\cdot b+\sumdomain[i]{N}{u_i}+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-u_i-\lambda\cdot t_{ij}}\cdot x_{ij}}}.
  \end{equation}
 
-which is \concept[trivial solution]{trivial to solve}. (For each j, an i is chosen to maximize cij −ui −λtij , and the corresponding
-xij is set to 1).
+which is \concept[trivial solution]{trivial to solve}. (For each $j$, an $i$ is chosen to maximize $c_{ij}-u_i-\lambda\cdot t_{ij}$, and the corresponding $x_{ij}$ is set to $1$).
 \end{optionenum}
 
-In choosing a \concept{relaxation} there are two major questions to consider: how strong is the lower bound zLD
-and how difficult to solve is the Lagrangian dual (LD)? Let us here only consider the bounds.
-When Q is a set of assignment constraints or a set of generalized upper bound constraints, we have that
-4
-1
-= zLP . Since
-= zLD
-zLD
+In choosing a \concept{relaxation} there are two major questions to consider: how strong is the \concept{lower bound} $z_{ld}$ and how difficult to solve is the \concept{Lagrangian dual} (LD)? Let us here only consider the \concept[lower bound]{bounds}. When $Q$ is a set of \concepts{assignment constraint} or a set of \concepts{generalized upper bound constraint}, we have that $z_{ld,1}=z_{ld,4}=z_{lp}$. Since
 
-94
-
-2
-
-Q3 = {x ∈ {0, 1}n |
-
-xij = 1 for j ∈ N,
-i∈N
-
-tij xij ≤ b}
-i∈N j∈N
-
-2
-
-⊂ Q2 = {x ∈ {0, 1}n |
-
-tij xij ≤ b}
-i∈N j∈N
-
-2
-
-n
-and conv(Q2 ) ⊂ {x ∈ R+
-|
-
-tij xij ≤ b, xij ≤ 1 for i, j ∈ N },
-i∈N j∈N
+\begin{eqnarray}
+Q_3&=&\condset{X\in\accl{0,1}^{n\times n}}{\forall j\in N:\sumdomain[i]{N}{x_{ij}}=1\xfor j\in N\wedge\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b}\\
+Q_3&\subsetneq&Q_2=\condset{X\in\accl{0,1}^{n\times n}}{\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b}\\
+\xand\funm{conv}{Q_2}&\subsetneq&\condset{X\in\brak{\RRR^+}^{n\times n}}{\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b\wedge\forall i,j\in N:x_{ij}\leq 1},
+\end{eqnarray}
 
 we have
-3
-2
-1
-4
-zIP ≤ zLD
-≤ zLD
-≤ zLD
-= zLD
-= zLP ,
 
-and each of the inequalities is strict for some objective function.
+\begin{equation}
+z_{ip}\leq z_{ld,3}\leq z_{ld,2}\leq z_{ld,1}=z_{ld,4}=z_{lp},
+\end{equation}
+
+and each of the \concept[inequality]{inequalities} is strict for some \concept{objective function}.
 
 \section{Strengthening the Lagrangian dual}
 \seclab{lagrangedual}
