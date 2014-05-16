@@ -266,15 +266,15 @@ and each of the \concept[inequality]{inequalities} is strict for some \concept{o
 \section{Strengthening the Lagrangian dual}
 \seclab{lagrangedual}
 
-We now consider two ways of strengthening the Lagrangian dual of problem IP. The first approach yields
-a dual whose optimal value equals
-n
-n
+We now consider two ways of strengthening the \concept{Lagrangian dual} of problem \concept{IP}. The first approach yields a \concept[lagrangian dual]{dual} whose \concept{optimal value} equals
+
+\begin{equation}
 max{cx| x ∈ conv(x ∈ Z+
 | A1 x ≤ b1 ) ∩ conv(x ∈ Z+
 | A2 x ≤ b2 )}.
+\end{equation}
 
-This dual is obtained by applying Lagrangian duality to a reformulation of IP, which is called RIP:
+This \concept[lagrangian dual]{dual} is obtained by applying \concept{Lagrangian duality} to a reformulation of \concept{IP}, which is called \concept{RIP}:
 zIP = max cx1
 A1 x1
 
@@ -303,9 +303,7 @@ n
 Z+
 .
 
-95
-
-Taking now x1 − x2 = 0 as complicating constraints, we obtain the Lagrangian dual of RIP:
+Taking now x1 − x2 = 0 as \concepts{complicating constraint}, we obtain the \concept{Lagrangian dual} of \concept{RIP}:
 zCSD = minu {max{(c
 
 −
@@ -372,18 +370,20 @@ Z+
 ,
 
 where u = c2 .
-A polyhedral interpretation of the dual is stated in the next theorem.
+A \concept[polyhedron]{polyhedral} interpretation of the \concept[lagrangian dual]{dual} is stated in the next theorem.
 
 n
 n
 | A2 x ≤ b2 
 | A1 x ≤ b1  ∩ convx ∈ Z+
-Theorem 7.5 zCSD = maxcx| x ∈ convx ∈ Z+
+
+\begin{theorem}
+zCSD = maxcx| x ∈ convx ∈ Z+
+\end{theorem}
 
 and zCSD ≤ zLD .
 
-The technique described is referred to here with CS since this technique has been called cost splitting.
-The technique is useful when
+The technique described is referred to here with \concept[cost splitting]{CS} since this technique has been called \concept{cost splitting}. The technique is useful when
 
 n
 n
@@ -392,37 +392,32 @@ n
 • convx ∈ Z+
 
 zCSD < zLD .
-• The sets of constraints Ai x ≤ bi are simple to deal with separately; that is, the difficulty is caused
-by their interaction.
+• The sets of \concepts{constraint} Ai x ≤ bi are simple to deal with separately; that is, the difficulty is caused
+by their \concept{interaction}.
 
-In our example, we could take A1 x ≤ b1 to be constraint set (7.9) and (7.11) and take A2 x ≤ b2 to be
+In our example, we could take A1 x ≤ b1 to be \concept{constraint} set (7.9) and (7.11) and take A2 x ≤ b2 to be
 3
-with the inequality strict for some objective
-constraint sets (7.10) and (7.11). This yields zCSD ≤ zLD
+with the \concept{inequality} strict for some \concept{objective constraint} sets (7.10) and (7.11). This yields zCSD ≤ zLD
 
 functions c.
-96
 
-Another approach that domiantes the Lagrangian dual is the “surrogate” dual. Starting from IP(Q),
+Another approach that domiantes the \concept{Lagrangian dual} is the ``\concept{surrogate dual}''. Starting from \concept{IP(Q)},
 m1
-with weights λ ∈ R+
-for the complicating constraints, consider the following problem called SD(λ).
+with \concepts{weight} λ ∈ R+
+for the \concepts{complicating constraint}, consider the following problem called \concept{SD(λ)}.
 
 zSD (λ) = max{cx| λA1 x ≤ λb1 , x ∈ Q}.
 
-The problem SD(λ) is called the surrogate relaxation of IP(Q) with respect to A1 x ≤ b1 . SD(λ) contains
+The problem \concept{SD(λ)} is called the \concept{surrogate relaxation} of \concept{IP(Q)} with respect to A1 x ≤ b1 . \concept{SD(λ)} contains
 n
-a single complicating constraint. For instance when Q = Z+
-the surrogate relaxation is a knapsack
-
-problem. The surrogate dual of IP(Q) is the problem denoted by SD.
+a single \concept{complicating constraint}. For instance when Q = Z+
+the \concept{surrogate relaxation} is a \concept{knapsack problem}. The \concept{surrogate dual} of \concept{IP(Q)} is the problem denoted by \concept{SD}.
 
 zSD = min
 
 λ≥0 zSD (λ).
 
-Although the surrogate dual can be used computationally, it does not have such nice theoretical properties
-as the Lagrangian dual.
+Although the \concept{surrogate dual} can be used computationally, it does not have such nice theoretical properties as the \concept{Lagrangian dual}.
 
 \section*{Exercises}
 \begin{exercise}
