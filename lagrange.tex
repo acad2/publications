@@ -269,9 +269,7 @@ and each of the \concept[inequality]{inequalities} is strict for some \concept{o
 We now consider two ways of strengthening the \concept{Lagrangian dual} of problem \concept{IP}. The first approach yields a \concept[lagrangian dual]{dual} whose \concept{optimal value} equals
 
 \begin{equation}
-max{cx| x ∈ conv(x ∈ Z+
-| A1 x ≤ b1 ) ∩ conv(x ∈ Z+
-| A2 x ≤ b2 )}.
+\funcs{\max}{\vec{c}\cdot\vec{x}}{\vec{x}\in\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_1\cdot\vec{y}\leq\vec{b}_1}\cap\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_2\cdot\vec{y}\leq\vec{b}_2}}.
 \end{equation}
 
 This \concept[lagrangian dual]{dual} is obtained by applying \concept{Lagrangian duality} to a reformulation of \concept{IP}, which is called \concept{RIP}:
