@@ -32,7 +32,7 @@ The idea of dropping constraints can be embedded in a more general framework cal
 &\vec{x}\in Q\eqnlab{lagrageb-c2}
 \end{eqnarray}
 
-However, when we are discussing results that are specific to \concept{IP}, it is assumed that $Q=\condset{x\inZZZ^n}{\vec{x}\geq\vec{0}\wedge A_2\cdot\vec{x}=\vec{b}_2}\neq\emptyset$. Of course, the problem obtained from \concept{IP(Q)} by dropping the \concepts{complicating constraint}, $A_1\cdot\vec{x}\leq\vec{b}_1$ is much easier to solve than \concept{IP(Q)}. Now, for any $\lambda\in\brak{\RRR^+}^{m_1}$, consider the problem \concept{LR($\vec{\lambda}$)}:
+However, when we are discussing results that are specific to \concept{IP}, it is assumed that $Q=\condset{x\in\ZZZ^n}{\vec{x}\geq\vec{0}\wedge A_2\cdot\vec{x}=\vec{b}_2}\neq\emptyset$. Of course, the problem obtained from \concept{IP(Q)} by dropping the \concepts{complicating constraint}, $A_1\cdot\vec{x}\leq\vec{b}_1$ is much easier to solve than \concept{IP(Q)}. Now, for any $\lambda\in\brak{\RRR^+}^{m_1}$, consider the problem \concept{LR($\vec{\lambda}$)}:
 
 \begin{equation}
 \fun{z_{lr}}{\vec{\lambda}}=\funcs{\max}{\fun{z}{\vec{\lambda},\vec{x}}}{x\in Q},\mbox{ where }\fun{z}{\vec{\lambda},\vec{x}}=\vec{c}\cdot\vec{x}+\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{x}}.
@@ -273,147 +273,64 @@ We now consider two ways of strengthening the \concept{Lagrangian dual} of probl
 \end{equation}
 
 This \concept[lagrangian dual]{dual} is obtained by applying \concept{Lagrangian duality} to a reformulation of \concept{IP}, which is called \concept{RIP}:
-zIP = max cx1
-A1 x1
 
-≤ b1
+\begin{eqnarray}
+\mbox{maximize}&z_{ip}=\vec{c}\cdot\vec{x}_1\eqnlab{rip-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}_1\leq\vec{b}_1\eqnlab{rip-c1}\\
+&A_2\cdot\vec{x}_2\leq\vec{b}_2\eqnlab{rip-c2}\\
+&\vec{x}_1-\vec{x}_2=\vec{0}\eqnlab{rip-c3}\\
+&\vec{x}_1,\vec{x_2}\in\in\brak{\ZZZ^+}^n\eqnlab{rip-c4}
+\end{eqnarray}
 
-A2 x2
+Taking now $\vec{x}_1-\vec{x}_2=\vec{0}$ as \concepts{complicating constraint}, we obtain the \concept{Lagrangian dual} of \concept{RIP}:
 
-≤ b2
+\begin{eqnarray}
+\mbox{maximize}&z_{csd}=\funa{\min_{\vec{u}}}{\funa{\max}{\brak{\vec{c}-\vec{u}\cdot\vec{x}_1+\vec{u}\cdot\vec{x}_2}}}\eqnlab{ripld-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}_1\leq\vec{b}_1\eqnlab{ripld-c1}\\
+&A_2\cdot\vec{x}_2\leq\vec{b}_2\eqnlab{ripld-c2}\\
+&\vec{x}_1,\vec{x_2}\in\in\brak{\ZZZ^+}^n\eqnlab{ripld-c3}
+\end{eqnarray}
 
-x1 − x2
+or
 
-= 0
+\begin{eqnarray}
+\mbox{maximize}&z_{csd}=\funa{\min_{\vec{c}_1,\vec{c}_2}}{\fun{\max}{\vec{c}_1\cdot\vec{x}_1}+\fun{\max}{\vec{c}_2\cdot\vec{x}_2}}\eqnlab{ripld-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}_1\leq\vec{b}_1\eqnlab{ripld-c1}\\
+&A_2\cdot\vec{x}_2\leq\vec{b}_2\eqnlab{ripld-c2}\\
+&\vec{x}_1,\vec{x_2}\in\in\brak{\ZZZ^+}^n\eqnlab{ripld-c3}
+\end{eqnarray}
 
-x1
+where $\vec{u}=\vec{c}_2$.
 
-∈
-
-n
-Z+
-
-x2
-
-∈
-
-n
-Z+
-.
-
-Taking now x1 − x2 = 0 as \concepts{complicating constraint}, we obtain the \concept{Lagrangian dual} of \concept{RIP}:
-zCSD = minu {max{(c
-
-−
-
-u)x1 + ux2 }}
-
-A1 x1
-
-≤
-
-b1
-
-A2 x2
-
-≤
-
-b2
-
-x1
-
-∈
-
-n
-Z+
-
-x2
-
-∈
-
-n
-Z+
-
-= minc1 +c2 =c {
-
-max
-
-c1 x1 + max c2 x2 }
-
-A1 x1
-
-≤
-
-b1
-
-A2 x2
-
-≤
-
-b2
-
-x1
-
-∈
-
-n
-Z+
-
-x2
-
-∈
-
-n
-Z+
-,
-
-where u = c2 .
+\paragraph{}
 A \concept[polyhedron]{polyhedral} interpretation of the \concept[lagrangian dual]{dual} is stated in the next theorem.
 
-n
-n
-| A2 x ≤ b2 
-| A1 x ≤ b1  ∩ convx ∈ Z+
-
 \begin{theorem}
-zCSD = maxcx| x ∈ convx ∈ Z+
+$z_{csd}=\funcs{\max}{\vec{c}\cdot\vec{x}}{\vec{x}\in\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_1\cdot\vec{y}\leq\vec{b}_1}\cap\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_2\cdot\vec{y}\leq\vec{b}_2}}$ and $z_{csd}\leq z_{ld}$.
 \end{theorem}
 
-and zCSD ≤ zLD .
 
 The technique described is referred to here with \concept[cost splitting]{CS} since this technique has been called \concept{cost splitting}. The technique is useful when
 
-n
-n
-| A1 x ≤ b1 , so for some objective functions c we obtain
-| A1 x ≤ b1  ⊂ x ∈ R+
-• convx ∈ Z+
+\begin{enumerate}
+ \item $\funmcs{conv}{\vec{x}\in\brak{\ZZZ^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}\subsetneq\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}$, so for some \concepts{objective function} $c$ we obtain $z_{csd}<z_{ld}$.
+ \item The sets of \concepts{constraint} $A_i\cdot\vec{x}\leq\vec{b}_i$ are simple to deal with separately; that is, the difficulty is caused by their \concept{interaction}.
+\end{enumerate}
 
-zCSD < zLD .
-• The sets of \concepts{constraint} Ai x ≤ bi are simple to deal with separately; that is, the difficulty is caused
-by their \concept{interaction}.
+In our example, we could take $A_1\cdot\vec{x}\leq\vec{b}_1$ to be \concept{constraint} set \eqnnref{jobwork-c1} and \eqnnref{jobwork-c3} and take $A_2\cdot\vec{x}\leq\vec{b}_2$ to be constraint sets \eqnnref{jobwork-c2} and \eqnnref{jobwork-c3}. This yields $z_{csd}\leq z_{ld,3}$ with the \concept{inequality} strict for some \concepts{objective function} $c$.
 
-In our example, we could take A1 x ≤ b1 to be \concept{constraint} set (7.9) and (7.11) and take A2 x ≤ b2 to be
-3
-with the \concept{inequality} strict for some \concept{objective constraint} sets (7.10) and (7.11). This yields zCSD ≤ zLD
+\paragraph{}
+Another approach that domiantes the \concept{Lagrangian dual} is the ``\concept{surrogate dual}''. Starting from \concept{IP($Q$)}, with \concepts{weight} $\vec{\lambda}\in\brak{\RRR^+}^{m_1}$ for the \concepts{complicating constraint}, consider the following problem called \concept{SD($\vec{\lambda}$)}.
 
-functions c.
+\begin{equation}
+\fun{z_{sd}}{\lambda}=\funcs{\max}{\vec{c}\cdot\vec{x}}{\vec{\lambda}\cdot A_1\cdot\vec{x}\leq\vec{\lambda}\cdot\vec{b}_1\wedge\vec{x}\in Q}.
+\end{equation}
 
-Another approach that domiantes the \concept{Lagrangian dual} is the ``\concept{surrogate dual}''. Starting from \concept{IP(Q)},
-m1
-with \concepts{weight} λ ∈ R+
-for the \concepts{complicating constraint}, consider the following problem called \concept{SD(λ)}.
+The problem \concept{SD($\vec{\lambda}$)} is called the \concept{surrogate relaxation} of \concept{IP($Q$)} with respect to $A_1\cdot\vec{x}\leq\vec{b}_1$. \concept{SD($\vec{\lambda}$)} contains a single \concept{complicating constraint}. For instance when $Q=\brak{\ZZZ^+}^n$ the \concept{surrogate relaxation} is a \concept{knapsack problem}. The \concept{surrogate dual} of \concept{IP($Q$)} is the problem denoted by \concept{SD}.
 
-zSD (λ) = max{cx| λA1 x ≤ λb1 , x ∈ Q}.
-
-The problem \concept{SD(λ)} is called the \concept{surrogate relaxation} of \concept{IP(Q)} with respect to A1 x ≤ b1 . \concept{SD(λ)} contains
-n
-a single \concept{complicating constraint}. For instance when Q = Z+
-the \concept{surrogate relaxation} is a \concept{knapsack problem}. The \concept{surrogate dual} of \concept{IP(Q)} is the problem denoted by \concept{SD}.
-
-zSD = min
-
-λ≥0 zSD (λ).
+\begin{equation}
+z_{sd}=\fun{\min_{\vec{\lambda}\geq\vec{0}}}{\fun{z_{sd}}{\vec{\lambda}}}.
+\end{equation}
 
 Although the \concept{surrogate dual} can be used computationally, it does not have such nice theoretical properties as the \concept{Lagrangian dual}.
 
