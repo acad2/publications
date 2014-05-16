@@ -217,60 +217,38 @@ We wish to maximize the total value of the \concept{assignment} subject to the \
 &\forall i\in N,j\in N:x_{ij}\in\accl{0,1}\eqnlab{jobwork-c4}
 \end{eqnarray}
 
-If we wish to use \concept{Lagrangian relaxation} there are different options to consider. Notice that in each of the following four options the relaxed problem LR(λ) is considerably easier to solve than the original
-problem.
-1
-1. Lagrangian relaxation with respect to (7.11). Then LR1 (λ), λ ∈ R+
-is an assignment problem with
+If we wish to use \concept{Lagrangian relaxation} there are different options to consider. Notice that in each of the following four options the relaxed problem \concept{LR($\lambda$)} is considerably easier to solve than the original problem.
 
-objective function
-93
+\begin{optionenum}
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c3}. Then $\fun{\mbox{LR}_1}{\lambda}$, $\lambda\in\RRR^+$ is an \concept{assignment problem} with \concept{objective function}
+ 
+ \begin{equation}
+ \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \end{equation}
 
-(cij − λtij )xij .
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} and \eqnref{jobwork-c2}. Then $\fun{\mbox{LR}_2}{\vec{u},\vec{v}}$, $\vec{u},\vec{v}\in\RRR^n$ is a \concept{knapsack problem} with \concept{objective function}
 
-λb +
-i∈N j∈N
+ \begin{equation}
+ \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \end{equation}
 
-2. Lagrangian relaxation with respect to (7.9) and (7.10). Then LR2 (u, v), u ∈ Rn , v ∈ Rn is a
-knapsack problem with objective function
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} or \eqnref{jobwork-c2}, say \eqnref{jobwork-c1}. Then $\fun{\mbox{LR}_3}{\vec{u}}$, $\vec{u}\in\RRR^n$ is a \concept{knapsack problem} with so-called \concepts{generalized upper bound constraint} and with \concept{objective function}
 
-ui +
-i∈N
+ \begin{equation}
+ \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \end{equation}
 
-(cij − ui − vj )xij .
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} or \eqnref{jobwork-c2} and \eqnref{jobwork-c3}, say \eqnref{jobwork-c1} or \eqnref{jobwork-c3}. Only \concepts{generalized upper bound constraint} remain. Thus, $\fun{\mbox{LR}_4}{\vec{u},\lambda}$, $\vec{u}\in\RRR^n$, $\lambda\in\RRR^n$ with \concept{objective function}
 
-vj +
-j∈N
+ \begin{equation}
+ \lambda\cdot b+\sumdomain[i]{N}{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}.
+ \end{equation}
 
-i∈N j∈N
-
-3. Lagrangian relaxation with respect to (7.9) or (7.10), say (7.9). Then LR3 (u), u ∈ Rn is a knapsack
-problem with so-called generalized upper bound constraints and with objective function
-
-(cij − ui )xij .
-
-ui +
-i∈N
-
-i∈N j∈N
-
-4. Lagrangian relaxation with respect to (7.9) or (7.10) and (7.11), say (7.9) and (7.11). Only gener1
-with objective function
-alized upper bound constraints remain. Thus, LR4 (u, λ), u ∈ Rn , λ ∈ R+
-
-λb +
-
-(cij − ui − λtij )xij ,
-
-ui +
-i∈N
-
-i∈N j∈N
-
-which is trivial to solve. (For each j, an i is chosen to maximize cij −ui −λtij , and the corresponding
+which is \concept[trivial solution]{trivial to solve}. (For each j, an i is chosen to maximize cij −ui −λtij , and the corresponding
 xij is set to 1).
+\end{optionenum}
 
-In choosing a relaxation there are two major questions to consider: how strong is the lower bound zLD
+In choosing a \concept{relaxation} there are two major questions to consider: how strong is the lower bound zLD
 and how difficult to solve is the Lagrangian dual (LD)? Let us here only consider the bounds.
 When Q is a set of assignment constraints or a set of generalized upper bound constraints, we have that
 4
