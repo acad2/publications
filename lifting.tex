@@ -1,14 +1,10 @@
 \chapter{Separation and lifting: towards a cutting-plane algorithm}
 \chplab{lifting}
-In this chapter we show how valid inequalities can be used to develop cutting plane algorithms. A key issue in any cutting-plane algorithm is separation. We illustrate how the separation problem for specific classes of valid inequalities can be solved, by considering the cover inequalities for the knapsack problem (\secref{knapsack}), and the subtour elimination inequalities for the traveling salesman problem (\secref{salesman}). Lifting is about strengthening valid inequalities; we apply this concept to the cover inequalities in \secref{coverineq}.
+In this chapter we show how \concept[valid inequality]{valid inequalities} can be used to develop \concepts{cutting plane algorithm}. A key issue in any \concept{cutting plane algorithm} is \concept{separation}. We illustrate how the \concept{separation problem} for specific classes of \concept[valid inequality]{valid inequalities} can be solved, by considering the \concept[cover inequality]{cover inequalities} for the \concept{knapsack problem} (\secref{knapsack}), and the \concept[subtour elimination inequality]{subtour elimination inequalities} for the \concept{traveling salesman problem} (\secref{salesman}). \concept{Lifting} is about strengthening \concept[valid inequality]{valid inequalities}; we apply this concept to the \concept[cover inequality]{cover inequalities} in \secref{coverineq}.
 
 \section{Separation for the knapsack problem}
 \seclab{knapsack}
-Although one could argue that the knapsack problem is a very specific problem featuring only a single
-constraint, one should realize that any integer programming formulation can be seen as an optimization
-problem with many knapsack constraints. Thus, valid inequalities that we can derive from a knapsack
-constraint are important since such an inequality can be relevant for any integer program.
-We restate the knapsack problem (see (1.10)-(1.12) in Chapter 1).
+Although one could argue that the \concept{knapsack problem} is a very specific problem featuring only a single \concept{constraint}, one should realize that any \concept{integer programming formulation} can be seen as an \concept{optimization problem} with many \concepts{knapsack constraint}. Thus, \concept[valid inequality]{valid inequalities} that we can derive from a \concept{knapsack constraint} are important since such an \concept{inequality} can be relevant for any \concept{integer program}. We restate the \concept{knapsack problem} (see (1.10)-(1.12) in \chpref{formulations}).
 47
 
 n
