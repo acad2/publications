@@ -123,6 +123,7 @@
   \anchor{emitter}{\pgf@anchor@pcbtont@pinc}
   \anchor{labelup}{\pgfutil@tempdimc=\circlediff\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by\pgfutil@tempdimc}
   \anchor{labeldn}{\pgfutil@tempdimc=\circlediff\advance\pgfutil@tempdimc by\labelmargin\centerpoint\advance\pgf@y by-\pgfutil@tempdimc}
+  \saveddimen\labelmargin{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcblabelmargin}}}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
   \saveddimen\circlediff{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclediff}}}
@@ -275,6 +276,7 @@
     \pgfsetlinewidth{2\pgflinewidth}
     \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\pgfpathmoveto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by0.5\pgfutil@tempdimd\advance\pgf@x by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
+    \pgfutil@tempdimf=\dipnudge
     \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by\pgfutil@tempdimf\advance\pgf@x by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}\pgfpatharc{90}{-90}{\pgfutil@tempdimf and \pgfutil@tempdimf}
     \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\advance\pgf@x by-\pgfutil@tempdime\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
     \centerpoint\advance\pgf@x by-1.5\pgfutil@tempdimc\advance\pgf@y by-0.5\pgfutil@tempdimd\pgfpathlineto{\pgfpoint{\pgf@x}{\pgf@y}}
