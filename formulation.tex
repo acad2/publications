@@ -130,7 +130,7 @@ Does the \concept{formulation} of a problem tell us anything about the problem's
 \ssclab{tsp}
 Probably the most well-known problem in \concept{combinatorial optimization} is the \concept{traveling salesman problem} (\concept{TSP}). The \concept{TSP} is the prototype \concept{combinatorial optimization problem}. No other problem has received as much attention as the \concept{TSP}, and no other problem has captured the imagination as an easy-to-describe, yet hard-to-solve problem. A description of the problem is as follows.
 
-\begin{definition}
+\begin{definition}[Traveling salesman problem]
 Given is a set of $n$ ``\concept[city]{cities}'' and a \concept{distance} $c_{i,j}$ between each pair of them. The goal is to find a \concept{tour} of \concept{minimum length}, that is to start in some \concept{city}, visit each other \concept{city} once, and to return to the \concept{city} where the \concept{tour} was started. More formally, given an $n\times n$ matrix $C=c_{i,j}$, find a permutation $\pi$ of $\accl{1,2,\ldots,n}$ such that $c_{\fun{\pi}{n},\fun{\pi}{1}}+\isumieqb[i]{1}{n-1}{c_{\fun{\pi}{i},\fun{\pi}{i+1}}}$ is minimum.
 \end{definition}
 

@@ -154,10 +154,10 @@ order=-1
 
 [item:book.tex]
 archive=true
-column=12
+column=55
 encoding=UTF-8
 highlight=LaTeX
-line=77
+line=36
 mode=LaTeX
 open=true
 order=0
@@ -339,10 +339,10 @@ JumpList=
 ViMarks=.,0,0,[,0,0,],-1,-1
 
 [view-settings,view=0,item:book.tex]
-CursorColumn=12
-CursorLine=77
+CursorColumn=55
+CursorLine=36
 JumpList=
-ViMarks=.,77,11,[,77,0,],77,11
+ViMarks=.,36,54,[,36,43,],36,54
 
 [view-settings,view=0,item:brackets-en.sty]
 CursorColumn=19
