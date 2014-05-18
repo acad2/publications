@@ -2,7 +2,7 @@
 \chplab{formulations}
 In this first chapter, we will give an informal notion of \concepts{combinatorial optimization problem}. The defining characteristic of a \concept{combinatorial optimization problem} is that it has a finite number of \concepts{feasible solution}. We now give \concepts{formulation} of a number of basic \concepts{combinatorial optimization problem}.
 
-\section{Formulations of basic combinatorial optimization problems}
+\section{Formulations of Basic Combinatorial Optimization Problems}
 \seclab{formulations}
 Below, we present mathematical formulations of some well-known \concepts{combinatorial optimization problem}. Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a \concept{greedy algorithm}, like the \concept{spanning tree} problem. Other problems are notoriously hard to solve. This already shows that a \concept{formulation} need not give insight into the problem's difficulty. Moreover, a problem may have several correct \concepts{formulation}. This leads us to a very important question: which \concepts{formulation} are good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here a \concept{solver}'s point of view. Thus, a \concept{formulation} is better than another \concept{formulation} when it leads to better \concepts{solution}, or when it produces \concepts{solution} faster.
 
@@ -49,12 +49,16 @@ In general, it may not be trivial to prove the 1-1 correspondence of \concepts{f
 \subsection{The Independent Set Problem}
 \ssclab{independentset}
 Another basic problem within the field of combinatorial optimization is the \concept{Independent set} problem (also known as \conceptsee{Stable set}{independent set}, or as \conceptsee{Node packing}{Independent set}). It can be described as follows.
-\paragraph{}
-Consider an arbitrary graph $G=\tupl{V,E}$. A subset of the vertices $V'\subseteq V$ is called an independent set (or a stable set, or a node packing) if each edge of $E$ is incident to at most one vertex of $V'$. In other words, $V'$ is an independent set if no two vertices of an edge are selected both. The problem is to find an independent set in $G$ containing as many vertices as possible (a maximum cardinality independent set). The problem can be formulated as an integer program as follows. We define a 0-1 variable for each edge $v\in V$ as follows:
+
+\begin{definition}[Independent set problem]
+Consider an arbitrary \concept{graph} $G=\tupl{V,E}$. A \concept{subset} of the \concept[vertex]{vertices} $V'\subseteq V$ is called an \concept{independent set} (or a \concept{stable set}, or a \concept{node packing}) if each \concept{edge} of $E$ is \concept{incident} to at most one \concept{vertex} of $V'$. In other words, $V'$ is an \concept{independent set} if no two \concept[vertex]{vertices} of an \concept{edge} are selected both. The problem is to find an \concept{independent set} in $G$ containing as many \concept[vertex]{vertices} as possible (a \concept{maximum cardinality independent set}).
+\end{definition}
+
+The problem can be formulated as an \concept{integer program} as follows. We define a 0-1 \concept{variable} for each \concept{vertex} $v\in V$ as follows:
 \begin{equation}
 \semboolvar{x_v}{if vertex $v$ is selected in the independent set;}{otherwise.}
 \end{equation}
-And here is the integer program:
+And here is the \concept{integer program}:
 \begin{eqnarray}
 \mbox{maximize}&\sumdomain[v]{V}{x_v}\eqnlab{stableset-m}\\
 \mbox{subject to}&\forall\tupl{v_1,v_2}\in E:x_{v_1}+x_{v_2}\leq 1\eqnlab{stableset-c1}\\
@@ -63,13 +67,20 @@ And here is the integer program:
 
 \importtikzfigure{stableset-red}{A stable set.}
 
-\subsection{Spanning forest}
+\subsection{The Spanning Forest Problem}
 \ssclab{spanningforest}
-Consider an undirected graph $G=\tupl{V,E}$. A subset of the edges $E'\subseteq E$ is called a \concept{forest} if the subgraph of $G$ induced by $E'$ is acyclic, see \figref{forest-red} for an example. In case a forest consists of $\abs{V}-1$ edges it is called a \concept{tree}. The problem is to find a \concept{maximum weight forest} in $G$. The problem to find a maximum weight forest can be formulated as an integer program as follows. We define a 0-1 variable for each edge $e\in E$ as follows:
+
+We start with a definition for the \concept{spanning forest problem}:
+
+\begin{definition}[Spanning forest problem]
+Consider an \concept{undirected graph} $G=\tupl{V,E}$. A \concept{subset} of the \concepts{edge} $E'\subseteq E$ is called a \concept{forest} if the \concept{subgraph} of $G$ induced by $E'$ is \concept[acyclic graph]{acyclic}, see \figref{forest-red} for an example. In case a \concept{forest} consists of $\abs{V}-1$ edges it is called a \concept{tree}. The problem is to find a \concept{maximum weight forest} in $G$.
+\end{definition}
+
+The problem to find a \concept{maximum weight forest} can be formulated as an \concept{integer program} as follows. We define a 0-1 \concept{variable} for each \concept{edge} $e\in E$ as follows:
 \begin{equation}
 \semboolvar{x_e}{if edge $e$ is selected in the forest;}{otherwise.}
 \end{equation}
-And here is the integer program:
+And here is the \concept{integer program}:
 \begin{eqnarray}
 \mbox{maximize}&\sumdomain[e]{E}{w_e\cdot x_e}\eqnlab{forest-m}\\
 \mbox{subject to}&\forall V'\subseteq V:2\leq\abs{V'}\leq\abs{V}:\sumdomain[e]{\fun{\delta}{v_1}\cap\fun{\delta}{v_2},v_1,v_2\in V}{x_e}\leq\abs{V'}-1\eqnlab{forest-c1}\\
@@ -77,28 +88,35 @@ And here is the integer program:
 \end{eqnarray}
 
 \importtikzfigure{forest-red}{The edges in red form a forest.}
-\paragraph{}The \eqncsref{forest-c1} limit the number of chosen edges with both endvertices in any given subset $V'$ of the nodes to at most $\abs{V'}-1$. Since a cycle contains as many edges as vertices, the \eqncsref{forest-c1} prevent the graph $\tupl{V,E'}$ from containing cycles.
+\paragraph{}The \eqncsref{forest-c1} limit the number of chosen \concepts{edge} with both \concept[endvertex]{endvertices} in any given \concept{subset} $V'$ of the \concepts{node} to at most $\abs{V'}-1$. Since a \concept{cycle} contains as many \concepts{edge} as \concepts{vertice}, the \eqncsref{forest-c1} prevent the graph $\tupl{V,E'}$ from containing \concepts{cycle}.
 \paragraph{}
-Notice that the number of subsets of $V$ of size $2$ or bigger is $2^{\abs{V}}-\abs{V}-1$. Thus, the number of \eqnref{forest-c1} is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size of the input, although the problem is trivially solvable by a \concept{greedy algorithm}.
+Notice that the number of \concepts{subset} of $V$ of size $2$ or bigger is $2^{\abs{V}}-\abs{V}-1$. Thus, the number of \eqnref{forest-c1} is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size of the input, although the problem is trivially solvable by a \concept{greedy algorithm}.
 \paragraph{}
-The \concept{spanning tree} problem is a variant of the \concept{spanning forest} problem, where the set of feasible solutions is restricted to those acyclic subgraphs that are connected. It is well-known that for an acyclic subgraph the requirement of connectedness is equivalent to the requirement of having $\abs{V}-1$ edges, i.e., $\abs{E'}=\abs{V}-1$. Thus, by adding the constraint $\isumdomain[e]{E}{x_e}=n-1$ to \eqnnrefr{forest-c1}{forest-c2}, a correct formulation of the \concept{minimum weight spanning tree} problem arises.
+The \concept{spanning tree} problem is a variant of the \concept{spanning forest} problem, where the set of feasible solutions is restricted to those \concept[acyclic graph]{acyclic subgraphs} that are \concept[connected graph]{connected}. It is well-known that for an \concept[acyclic graph]{acyclic subgraph} the requirement of \concept[connected graph]{connectedness} is equivalent to the requirement of having $\abs{V}-1$ \concepts{edge}, i.e., $\abs{E'}=\abs{V}-1$. Thus, by adding the constraint $\isumdomain[e]{E}{x_e}=n-1$ to \eqnnrefr{forest-c1}{forest-c2}, a correct \concept{formulation} of the \concept{minimum weight spanning tree} problem arises.
 
 \subsection{The Knapsack Problem}
 \ssclab{knapsack}
-We are given a set of $n$ items, each with a weight $a_j$ and a value $c_j$ for $\rangei[j]{1}{n}$. Feasible solutions are the subsets of the set of items with cumulative weight at most $b$. The objective is to find a feasible solution of maximum value. The problem formulation contains binary variables $x_j$ which indicate whether element $j$ with $\rangei[j]{1}{n}$ is in the knapsack:
+
+We start this section with the definition of the \concept{knapsack problem}:
+
+\begin{definition}[Knapsack problem]
+We are given a set of $n$ \concepts{item}, each with a \concept{weight} $a_j$ and a \concept{value} $c_j$ for $\rangei[j]{1}{n}$. \concepts{Feasible solution} are the \concepts{subset} of the set of \concepts{item} with \concept{cumulative weight} at most $b$. The objective is to find a \concept{feasible solution} of maximum value.
+\end{definition}
+
+The problem \concept{formulation} contains \concept{binary variable} $x_j$ which indicate whether \concept{item} $j$ with $\rangei[j]{1}{n}$ is in the \concept{knapsack}:
 
 \begin{equation}
-\semboolvar{x_j}{if element $j$ is selected in the knapsack;}{otherwise.}
+\semboolvar{x_j}{if item $j$ is selected in the knapsack;}{otherwise.}
 \end{equation}
 
-And here is the integer program:
+And here is the \concept{integer program}:
 
 \begin{eqnarray}
 \mbox{maximize}&\sumieqb[j]{1}{n}{c_j\cdot x_j}\eqnlab{knapsack-m}\\
 \mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot x_j}\leq b\eqnlab{knapsack-c1}\\
 &\forall\rangei[j]{1}{n}:x_j\in\accl{0,1}\eqnlab{knapsack-c2}
 \end{eqnarray}
-In this text, we will come back extensively to the \concept{knapsack} problem. There is a book devoted to this problem, see Kellerer et al.\cite{KelPfePis04}.
+In this text, we will come back extensively to the \concept{knapsack problem}. There is a book devoted to this problem, see Kellerer et al.\cite{KelPfePis04}.
 
 \section{Formulations and difficulty}
 \ssclab{difficulty}
