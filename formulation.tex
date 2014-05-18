@@ -207,35 +207,45 @@ In the second \concept{formulation}, each of the \eqncsref{ufl-ca2} is disaggreg
 
 Which of these \concepts{formulation} is preferable is not a matter of comparing the number of \concepts{constraint} or \concepts{variable}. In fact, as will be shown in the sequel, large \concepts{formulation} with many \concepts{constraint} and/or \concepts{variable} are usually better from a \concept{solver}'s point of view. This depends on the techniques that are used to solve the problem. Since these techniques very often rely heavily on \concept{linear programming}, the quality of the \concept{formulation} depends almost always on the accuracy of the \concept{linear programming relaxation}, i.e., the problem which results when the \concepts{integrality constraint} are removed. For the \concept{uncapacitated facility location} problem \concept{formulation} \eqnnrefr{ufl-mb}{ufl-cb3} is better than \eqnnrefr{ufl-ma}{ufl-ca3}, since the \concepts{constraint} \eqncsref{ufl-cb2} imply the \concepts{constraint} \eqncsref{ufl-ca2}.
 
-\section{Combinatorial Optimization: a general formulation}
+\section{Combinatorial Optimization: a General Formulation}
 \seclab{generalform}
-In this section we (informally) argue that each combinatorial optimization problem can be formulated as an integer program. In a combinatorial optimization problem a finite ground set $E$ is given. To each
-element $e\in E$ a weight we is attached. A family $\calS$ of subsets of $E$ is identified as the set of feasible solutions. This family depends on the particular problem. The weight of a set $E'\subseteq E$ is the cumulative weight of its elements, i.e., $\fun{w}{E'}=\isumdomain[e]{E'}{w_e}$. The associated optimization problem is to find the maximum (or minimum) weight feasible solution $E'\in S$, i.e.,
+In this section we (informally) argue that each \concept{combinatorial optimization problem} can be formulated as an \concept{integer program}. In a \concept{combinatorial optimization problem} a finite \concept{ground set} $E$ is given. To each \concept{element} $e\in E$ a \concept{weight} $w_e$ is attached. A family $\calS$ of subsets of $E$ is identified as the set of \concept{feasible solution}. This family depends on the \concept{particular problem}. The \concept{weight} of a set $E'\subseteq E$ is the \concept{cumulative weight} of its \concepts{element}, i.e., $\fun{w}{E'}=\isumdomain[e]{E'}{w_e}$. The associated \concept{optimization problem} is to find the \concept[maximum weight feasible solution]{maximum} (or \concept[minimum weight feasible solution]{minimum}) weight feasible solution $E'\in S$, i.e.,
 
 \begin{equation}
 \displaystyle\max_{E'\in\calS}\accl{\fun{w}{E'}}
 \end{equation}
 
 \paragraph{}
-The set of feasible solutions $\calS$ is usually given implicitly. It is described by the properties of feasible solutions; it may be very large. For instance, in case of the matching problem, the ground set equals the set of edges, and the set $\calS$ is the collection of edge-sets that are matchings.In case of the knapsack problem, the ground set equals the set of items, and the set $\calS$ equals the collection of item-sets that can be put together in the knapsack.
+The set of \concepts{feasible solution} $\calS$ is usually given implicitly. It is described by the properties of \concepts{feasible solution}; it may be very large. For instance, in case of the \concept{matching problem}, the \concept{ground set} equals the set of \concepts{edge}, and the set $\calS$ is the collection of edge-sets that are \concepts{matching}. In case of the \concept{knapsack problem}, the \concept{ground set} equals the set of items, and the set $\calS$ equals the collection of item-sets that can be put together in the \concept{knapsack}.
 
 \paragraph{}
-Many examples of problems that fit in the above formulation are found in graph theory (\secref{formulations}). Among them are well-known problems like the shortest path problem, the minimum spanning tree problem, and the traveling salesman problem. The shortest path problem is defined as follows. In a graph $G=\tupl{V,E}$ the feasible solutions are the subsets of the edges that form paths between two specified vertices $s$ and $t$. Among the paths between $s$ and $t$ we want to find the one with a minimum number of edges, or if a length function is given on the edges, we want to find a path of minimum total length. In the \concept{minimum spanning tree} problem a graph $G=\tupl{V,E}$ is given together with a weight function on the edges. A feasible solution is a set of edges that forms a tree. Among the trees we want to find one with minimum weight. This problem is easily solvable by a greedy algorithm, as is well known. However, if we restrict the set of feasible solutions to trees that form paths, the problem becomes the \concept{Hamiltonian path} problem, which is highly intractable. Thus, in general, problems do not become simpler when the set of feasible solutions is reduced.
+Many examples of problems that fit in the above formulation are found in \concept{graph theory} (\secref{formulations}). Among them are well-known problems like the \concept{shortest path problem}, the \concept{minimum spanning tree problem}, and the \concept{traveling salesman problem}. We define some graph theory problems below.
+
+\begin{definition}[Shortest path problem]
+In a \concept{graph} $G=\tupl{V,E}$ the \concepts{feasible solution} are the subsets of the \concepts{edge} that form \concepts{path} between two specified \concept[vertex]{vertices} $s$ and $t$. Among the \concepts{path} between $s$ and $t$ we want to find the one with a minimum number of \concepts{edge}, or if a \concept{length function} is given on the \concepts{edge}, we want to find a \concept{path} of \concept{minimum total length}.
+\end{definition}
+
+\begin{definition}[Minimum spanning tree problem]
+In the \concept{minimum spanning tree problem} a \concept{graph} $G=\tupl{V,E}$ is given together with a \concept{weight function} on the \concepts{edge}. A \concept{feasible solution} is a set of \concepts{edge} that forms a \concept{tree}. Among the \concepts{tree} we want to find one with \concept{minimum weight}. This problem is easily solvable by a \concept{greedy algorithm} like \concept{Prim's algorithm} or \concept{Kruskal's algorithm}.
+
+\begin{definition}[Hamiltonian path problem]
+If we restrict the \concept{minimum spanning tree problem} such that the set of \concepts{feasible solution} only contains \concepts{tree} that form \concepts{path}, the problem becomes the \concept{Hamiltonian path problem}, which is highly \concept{intractable}. Thus, in general, problems do not become simpler when the set of \concepts{feasible solution} is reduced.
+\end{definition}
 
 \paragraph{}
-To formulate a combinatorial optimization problem in mathematical terms, we introduce \concepts{decision variable} for all elements of the ground set $E$. Each decision variable denotes a choice, namely whether the corresponding element is chosen or not. So, a variable can have two values, which are usually taken from $\accl{0,1}$. A set $E'\subseteq E$ can be described by a binary vector $\vec{x}_{E'}=\brak{x_e}_{e\in E}$ with $n=\abs{E}$ components as follows:
+To formulate a \concept{combinatorial optimization problem} in mathematical terms, we introduce \concepts{decision variable} for all elements of the \concept{ground set} $E$. Each \concept{decision variable} denotes a choice, namely whether the corresponding element is chosen or not. So, a \concept{variable} can have two values, which are usually taken from $\accl{0,1}$. A set $E'\subseteq E$ can be described by a \concept{binary vector} $\vec{x}_{E'}=\brak{x_e}_{e\in E}$ with $n=\abs{E}$ components as follows:
 
 \begin{equation}
 \semboolvar{x_e}{if element $e$ is in $E'$;}{otherwise.}
 \end{equation}
 
 \paragraph{}
-The finite set of vectors $X\subseteq\RRR^n$ corresponding to feasible solutions from $\calS$ can then be described by means of \concepts{constraint}. In many cases, these constraints are \concept[linear constraint]{linear} and involve binary variables. The objective function $\vec{w}$ is usually a linear function of the components of $\vec{x}\in X$. The problem is then
+The finite set of \concepts{vector} $X\subseteq\RRR^n$ corresponding to \concepts{feasible solution} from $\calS$ can then be described by means of \concepts{constraint}. In many cases, these \concepts{constraint} are \concept[linear constraint]{linear} and involve \concepts{binary variable}. The \concept{objective function} $\vec{w}$ is usually a \concept{linear function} of the components of $\vec{x}\in X$. The problem is then
 
 \begin{equation}
 \max\condset{\vec{w}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge \vec{x}\in\accl{0,1}^n}
 \end{equation}
-where $A$ and $\vec{b}$ depend on the problem at hand. This type of formulation is often called an \concept[Integer linear programming]{Integer (or Binary) Linear Program}, (ILP).
+where $A$ and $\vec{b}$ depend on the problem at hand. This type of \concept{formulation} is often called an \concept[Integer linear programming]{Integer (or Binary) Linear Program}, (\concept{ILP}).
 
 \section{General Combinatorial Optimization Problems}
 \seclab{generalcombinatorial}
