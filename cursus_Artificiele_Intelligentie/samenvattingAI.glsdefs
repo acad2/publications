@@ -1,0 +1,510 @@
+\ifglsentryexists{state-space}{}%
+{%
+\gls@defglossaryentry{state-space}%
+{%
+name={state-space},%
+sort={state-space},%
+type={main},%
+first={state-space},%
+firstplural={state-spaces},%
+text={state-space},%
+plural={state-spaces},%
+description={De verzameling toestanden waarin een specifiek probleem zich kan bevinden. De toestanden dienen deterministisch en ondubbelzinnig uitgedrukt te worden.},%
+descriptionplural={De verzameling toestanden waarin een specifiek probleem zich kan bevinden. De toestanden dienen deterministisch en ondubbelzinnig uitgedrukt te worden.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{productieregels}{}%
+{%
+\gls@defglossaryentry{productieregels}%
+{%
+name={productieregels},%
+sort={productieregels},%
+type={main},%
+first={productieregels},%
+firstplural={productieregelss},%
+text={productieregels},%
+plural={productieregelss},%
+description={Een set van regels (functies) die beschrijven onder welke omstandigheden men van een toestand in een andere toestand kan overgaan.},%
+descriptionplural={Een set van regels (functies) die beschrijven onder welke omstandigheden men van een toestand in een andere toestand kan overgaan.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{begin sta(a)t(en)}{}%
+{%
+\gls@defglossaryentry{begin sta(a)t(en)}%
+{%
+name={begin sta(a)t(en)},%
+sort={begin sta(a)t(en)},%
+type={main},%
+first={begin sta(a)t(en)},%
+firstplural={begin sta(a)t(en)s},%
+text={begin sta(a)t(en)},%
+plural={begin sta(a)t(en)s},%
+description={Een set toestanden die het begin van een specifiek probleem markeren.},%
+descriptionplural={Een set toestanden die het begin van een specifiek probleem markeren.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{doel}{}%
+{%
+\gls@defglossaryentry{doel}%
+{%
+name={doel},%
+sort={doel},%
+type={main},%
+first={doel},%
+firstplural={doels},%
+text={doel},%
+plural={doels},%
+description={Een toestand van een specifiek probleem die we dienen te bereiken.},%
+descriptionplural={Een toestand van een specifiek probleem die we dienen te bereiken.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{voorwaarts redeneren}{}%
+{%
+\gls@defglossaryentry{voorwaarts redeneren}%
+{%
+name={voorwaarts redeneren},%
+sort={voorwaarts redeneren},%
+type={main},%
+first={voorwaarts redeneren},%
+firstplural={voorwaarts redenerens},%
+text={voorwaarts redeneren},%
+plural={voorwaarts redenerens},%
+description={Een strategie bij het zoeken door een state-space, waarbij we vanuit een begintoestand het doel proberen te bereiken.},%
+descriptionplural={Een strategie bij het zoeken door een state-space, waarbij we vanuit een begintoestand het doel proberen te bereiken.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{achterwaarts redeneren}{}%
+{%
+\gls@defglossaryentry{achterwaarts redeneren}%
+{%
+name={achterwaarts redeneren},%
+sort={achterwaarts redeneren},%
+type={main},%
+first={achterwaarts redeneren},%
+firstplural={achterwaarts redenerens},%
+text={achterwaarts redeneren},%
+plural={achterwaarts redenerens},%
+description={Een strategie bij het zoeken door een state-space, waarbij we vanuit het doel een begintoestand proberen te bereiken door productieregels omgekeerd toe te passen.},%
+descriptionplural={Een strategie bij het zoeken door een state-space, waarbij we vanuit het doel een begintoestand proberen te bereiken door productieregels omgekeerd toe te passen.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Branching factor}{}%
+{%
+\gls@defglossaryentry{Branching factor}%
+{%
+name={Branching factor},%
+sort={Branching factor},%
+type={main},%
+first={Branching factor},%
+firstplural={Branching factors},%
+text={Branching factor},%
+plural={Branching factors},%
+description={Het gemiddelde aantal toestanden die direct afgeleid kunnen worden uit een toestand.},%
+descriptionplural={Het gemiddelde aantal toestanden die direct afgeleid kunnen worden uit een toestand.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Middle-out reasoning}{}%
+{%
+\gls@defglossaryentry{Middle-out reasoning}%
+{%
+name={Middle-out reasoning},%
+sort={Middle-out reasoning},%
+type={main},%
+first={Middle-out reasoning},%
+firstplural={Middle-out reasonings},%
+text={Middle-out reasoning},%
+plural={Middle-out reasonings},%
+description={Een strategie bij het zoeken door een state-space, waarbij we vanuit een toestand zowel een begintoestand en doel trachtten te bereiken.},%
+descriptionplural={Een strategie bij het zoeken door een state-space, waarbij we vanuit een toestand zowel een begintoestand en doel trachtten te bereiken.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{basic search methods}{}%
+{%
+\gls@defglossaryentry{basic search methods}%
+{%
+name={basic search methods},%
+sort={basic search methods},%
+type={main},%
+first={basic search methods},%
+firstplural={basic search methodss},%
+text={basic search methods},%
+plural={basic search methodss},%
+description={Een set van zoekalgoritmen die we kunnen gebruiken om een oplossing te zoeken in een state-space.},%
+descriptionplural={Een set van zoekalgoritmen die we kunnen gebruiken om een oplossing te zoeken in een state-space.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Completeness}{}%
+{%
+\gls@defglossaryentry{Completeness}%
+{%
+name={Completeness},%
+sort={Completeness},%
+type={main},%
+first={Completeness},%
+firstplural={Completenesss},%
+text={Completeness},%
+plural={Completenesss},%
+description={Een eigenschap van een zoek algoritme. Indien een zoekalgoritme compleet is, vindt het altijd de oplossing indien er een oplossing voor het probleem bestaat.},%
+descriptionplural={Een eigenschap van een zoek algoritme. Indien een zoekalgoritme compleet is, vindt het altijd de oplossing indien er een oplossing voor het probleem bestaat.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Speed}{}%
+{%
+\gls@defglossaryentry{Speed}%
+{%
+name={Speed},%
+sort={Speed},%
+type={main},%
+first={Speed},%
+firstplural={Speeds},%
+text={Speed},%
+plural={Speeds},%
+description={Een eigenschap van een zoek algoritme. De snelheid is de worst-case tijdscomplexiteit van het zoekalgoritme.},%
+descriptionplural={Een eigenschap van een zoek algoritme. De snelheid is de worst-case tijdscomplexiteit van het zoekalgoritme.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Memory}{}%
+{%
+\gls@defglossaryentry{Memory}%
+{%
+name={Memory},%
+sort={Memory},%
+type={main},%
+first={Memory},%
+firstplural={Memorys},%
+text={Memory},%
+plural={Memorys},%
+description={Een eigenschap van een zoek algoritme. De snelheid is de worst-case geheugencomplexiteit van het zoekalgoritme.},%
+descriptionplural={Een eigenschap van een zoek algoritme. De snelheid is de worst-case geheugencomplexiteit van het zoekalgoritme.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Optimaliteit}{}%
+{%
+\gls@defglossaryentry{Optimaliteit}%
+{%
+name={Optimaliteit},%
+sort={Optimaliteit},%
+type={main},%
+first={Optimaliteit},%
+firstplural={Optimaliteits},%
+text={Optimaliteit},%
+plural={Optimaliteits},%
+description={Een eigenschap van een zoekalgoritme. Indien een zoekalgoritme optimaal is, vindt het altijd de optimale oplossing (optimaal volgens een zelfgekozen metriek).},%
+descriptionplural={Een eigenschap van een zoekalgoritme. Indien een zoekalgoritme optimaal is, vindt het altijd de optimale oplossing (optimaal volgens een zelfgekozen metriek).},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Blind Search Method}{}%
+{%
+\gls@defglossaryentry{Blind Search Method}%
+{%
+name={Blind Search Method},%
+sort={Blind Search Method},%
+type={main},%
+first={Blind Search Method},%
+firstplural={Blind Search Methods},%
+text={Blind Search Method},%
+plural={Blind Search Methods},%
+description={Een subset van de basic search methods waarbij we geen specifieke kennis over het probleem hebben.},%
+descriptionplural={Een subset van de basic search methods waarbij we geen specifieke kennis over het probleem hebben.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Depth-First Search}{}%
+{%
+\gls@defglossaryentry{Depth-First Search}%
+{%
+name={Depth-First Search},%
+sort={Depth-First Search},%
+type={main},%
+first={Depth-First Search},%
+firstplural={Depth-First Searchs},%
+text={Depth-First Search},%
+plural={Depth-First Searchs},%
+description={Een blind search algoritme die blijft productieregels op een toestand toepassen totdat we het doel gevonden hebben, of geen productieregels meer toe te passen zijn. In het laatste geval voeren we backtracking uit tot we terug bij een toestand zijn waar we een alternatieve productieregel kunnen volgen.},%
+descriptionplural={Een blind search algoritme die blijft productieregels op een toestand toepassen totdat we het doel gevonden hebben, of geen productieregels meer toe te passen zijn. In het laatste geval voeren we backtracking uit tot we terug bij een toestand zijn waar we een alternatieve productieregel kunnen volgen.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Chronological Backtracking}{}%
+{%
+\gls@defglossaryentry{Chronological Backtracking}%
+{%
+name={Chronological Backtracking},%
+sort={Chronological Backtracking},%
+type={main},%
+first={Chronological Backtracking},%
+firstplural={Chronological Backtrackings},%
+text={Chronological Backtracking},%
+plural={Chronological Backtrackings},%
+description={Een backtrackingsmechanisme waarbij we de laatst gekozen productieregels ongedaan maken totdat we een toestand tegenkomen waarbij we een nog niet onderzocht alternatief tegenkomen.},%
+descriptionplural={Een backtrackingsmechanisme waarbij we de laatst gekozen productieregels ongedaan maken totdat we een toestand tegenkomen waarbij we een nog niet onderzocht alternatief tegenkomen.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Loopdetectie}{}%
+{%
+\gls@defglossaryentry{Loopdetectie}%
+{%
+name={Loopdetectie},%
+sort={Loopdetectie},%
+type={main},%
+first={Loopdetectie},%
+firstplural={Loopdetecties},%
+text={Loopdetectie},%
+plural={Loopdetecties},%
+description={Een detectiemechanisme die detecteert dat we door een sequentie van productieregels, in een reeds bezochte toestand tegenkomen. In dat geval dienen we backtracking toe te passen.},%
+descriptionplural={Een detectiemechanisme die detecteert dat we door een sequentie van productieregels, in een reeds bezochte toestand tegenkomen. In dat geval dienen we backtracking toe te passen.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
