@@ -151,28 +151,34 @@ Different \concepts{formulation} of the \concept{TSP} exist. Here is a conventio
 \end{equation}
 
 \paragraph{}
-Notice that this formulation has a polynomial number of variables ($n^2$), and an exponential number of constraints (\bigoh{2^n}). The latter fact might be considered a disadvantage of formulation \eqnnrefr{tsp-m}{tsp-c4}.
+Notice that this formulation has a polynomial number of \concepts{variable} ($n^2$), and an exponential number of \concepts{constraint} (\bigoh{2^n}). The latter fact might be considered a disadvantage of \concept{formulation} \eqnnrefr{tsp-m}{tsp-c4}.
 
 \paragraph{}
-There is, however, an alternative for this formulation which uses additional real variables $u_i$ , one such variable for each city $i$. The interpretation of this variable is the position of city $i$ in the tour, while putting the position of city $1$ first. Next, by replacing \eqncsref{tsp-c3} by the following constraints:
+There is, however, an alternative for this formulation which uses additional \concepts{real variable} $u_i$ , one such \concept{variable} for each \concept{city} $i$. The interpretation of this \concept{variable} is the \concept{position} of \concept{city} $i$ in the \concept{tour}, while putting the \concept{position} of city $1$ first. Next, by replacing \eqncsref{tsp-c3} by the following constraints:
 
 \begin{eqnarray}
 \forall \rangei[i,j]{2}{n}:i\neq j:u_i-u_j+n\cdot x_{i,j}\leq n-1\eqnlab{mtz-c1}\\
 u_1=1\eqnlab{mtz-c2}
 \end{eqnarray}
 
-we arrive at a formulation that is called the \concept{Miller-Tucker-Zemlin (MTZ) formulation} of the TSP. It is an interesting exercise to verify the correctness of the MTZ-formulation. More concrete: why is it that \eqnnref{mtz-c1} exclude subtours? The answer lies in noticing that: any solution satisfying \eqnnref{tsp-c1}, \eqnnref{tsp-c2}, and \eqnnref{tsp-c4} consists of a collection of subtours (or a feasible solution, that is, a single tour). In case there are subtours, then there is a subtour that does not contain city 1. Let us now, for each pair of consecutive cities $i$ and $j$ in this subtour, sum the corresponding inequalities \eqnnref{mtz-c1}. The $u$-variables will cancel out, and the resulting lefthand side will be larger than the resulting righthand side, which means that this subtour will be forbidden by \eqnnref{mtz-c1}. Thus, any subtour not containing city 1 will be forbidden, and hence, the only possible solution is a single tour.
+we arrive at a formulation that is called the \concept{Miller-Tucker-Zemlin (MTZ) formulation} of the TSP. It is an interesting exercise to verify the \concept{correctness} of the \concept{MTZ-formulation}. More concrete: why is it that \eqnnref{mtz-c1} exclude \concepts{subtour}? The answer lies in noticing that: any solution satisfying \eqnnref{tsp-c1}, \eqnnref{tsp-c2}, and \eqnnref{tsp-c4} consists of a collection of \concepts{subtour} (or a \concept{feasible solution}, that is, a single \concept{tour}). In case there are \concepts{subtour}, then there is a \concept{subtour} that does not contain \concept{city} $1$. Let us now, for each pair of consecutive \concept[city]{cities} $i$ and $j$ in this \concept{subtour}, sum the corresponding \concept[inequality]{inequalities} \eqnnref{mtz-c1}. The $u$-variables will cancel out, and the resulting lefthand side will be larger than the resulting righthand side, which means that this \concept{subtour} will be forbidden by \eqnnref{mtz-c1}. Thus, any \concept{subtour} not containing city $1$ will be forbidden, and hence, the only possible solution is a single \concept{tour}.
 
 \paragraph{}
-There is more than one book devoted to the TSP. We mention: Applegate et al. \cite{Applegate.2006} and Lawler et al. \cite{Lawler85}.
+There is more than one book devoted to the TSP. We mention \emph{Applegate et al.}\cite{Applegate.2006} and \emph{Lawler et al.}\cite{Lawler85}.
 
 \paragraph{}
-We will end this section with a problem for which we have two natural formulations. Both formulations have the same sets of variables, but they have different sets of constraints. Later we will see different formulations of problems where the sets of variables differ.
+We will end this section with a problem for which we have two natural \concepts{formulation}. Both \concepts{formulation} have the same sets of \concepts{variable}, but they have different sets of \concepts{constraint}. Later we will see different \concepts{formulation} of problems where the sets of \concepts{variable} differ.
 
-\subsection{Uncapacitated Facility Location}
+\subsection{The Uncapacitated Facility Location Problem}
 \ssclab{facilitylocation}
 
-We are given a set of $m$ facilities and $n$ clients. Let us call the set of facilities $M\equiv\accl{1,2,\ldots,m}$, and let us call the set of clients $N\equiv\accl{1,2,\ldots,n}$. Each of the facilities can (but need not be) be opened to serve clients. Each client must be served by a facility. The cost for opening facility $i$ is $f_i$, $i\in M$; the cost for serving client $j$ by facility $i$ is $c_{i,j}$, $i\in M$, $j\in N$. This problem can be formulated in two ways with the following sets of variables, defined for each $i\in M$, $j\in N$:
+We start with defining the \concept{Uncapacitated facility location problem}:
+
+\begin{definition}[Uncapacitated facility location problem]
+We are given a set of $m$ \concept[facility]{facilities} and $n$ \concepts{client}. Let us call the set of \concept[facility]{facilities} $M\equiv\accl{1,2,\ldots,m}$, and let us call the set of \concepts{client} $N\equiv\accl{1,2,\ldots,n}$. Each of the \concept[facility]{facilities} can (but does not need to be) be opened to serve \concepts{client}. Each \concept{client} must be served by a \concept{facility}. The \concept{cost} for opening \concept{facility} $i$ is $f_i$, $i\in M$; the cost for serving \concept{client} $j$ by \concept{facility} $i$ is $c_{i,j}$, $i\in M$, $j\in N$. The aim is to minimize the total costs, but serve every \concept{client}.
+\end{definition}
+
+This problem can be formulated in two ways with the following sets of \concepts{variable}, defined for each $i\in M$, $j\in N$:
 
 \begin{eqnarray}
 \semboolvar{x_{i,j}}{if facility $j$ serves client $j$;}{otherwise.}\\
@@ -180,7 +186,7 @@ We are given a set of $m$ facilities and $n$ clients. Let us call the set of fac
 \end{eqnarray}
 
 \paragraph{}
-The first formulation makes use of the fact that there is an upper bound on the number of clients that are served by a facility, namely the total number of clients $n$.
+The first \concept{formulation} makes use of the fact that there is an \concept{upper bound} on the number of \concepts{client} that are served by a \concept{facility}, namely the total number of \concepts{client} $n$.
 
 \begin{eqnarray}
 \mbox{minimize}&\sumdomain[i]{M}{\brak{f_i\cdot y_i+\sumdomain[j]{N}{c_{i,j}\cdot x_{i,j}}}}\eqnlab{ufl-ma}\\
@@ -190,7 +196,7 @@ The first formulation makes use of the fact that there is an upper bound on the 
 \end{eqnarray}
 
 \paragraph{}
-In the second formulation, each of the \eqncsref{ufl-ca2} is disaggregated into n new constraints, leading to constraints \eqncsref{ufl-cb2}.
+In the second \concept{formulation}, each of the \eqncsref{ufl-ca2} is disaggregated into $n$ new \concepts{constraint}, leading to \concepts{constraint} \eqncsref{ufl-cb2}.
 
 \begin{eqnarray}
 \mbox{minimize}&\sumdomain[i]{M}{\brak{f_i\cdot y_i+\sumdomain[j]{N}{c_{i,j}\cdot x_{i,j}}}}\eqnlab{ufl-mb}\\
@@ -199,7 +205,7 @@ In the second formulation, each of the \eqncsref{ufl-ca2} is disaggregated into 
 &\forall i\in M,j\in N:x_{i,j},y_i\in\accl{0,1}\eqnlab{ufl-cb3}
 \end{eqnarray}
 
-Which of these formulations is preferable is not a matter of comparing the number of constraints or variables. In fact, as will be shown in the sequel, large formulations with many constraints and/or variables are usually better from a solver's point of view. This depends on the techniques that are used to solve the problem. Since these techniques very often rely heavily on linear programming, the quality of the formulation depends almost always on the accuracy of the linear programming relaxation, i.e., the problem which results when the integrality constraints are removed. For the \concept{uncapacitated facility location} problem formulation (UFL2) is better than (UFL1), since the constraints \eqncsref{ufl-cb2} imply the constraints \eqncsref{ufl-ca2}.
+Which of these \concepts{formulation} is preferable is not a matter of comparing the number of \concepts{constraint} or \concepts{variable}. In fact, as will be shown in the sequel, large \concepts{formulation} with many \concepts{constraint} and/or \concepts{variable} are usually better from a \concept{solver}'s point of view. This depends on the techniques that are used to solve the problem. Since these techniques very often rely heavily on \concept{linear programming}, the quality of the \concept{formulation} depends almost always on the accuracy of the \concept{linear programming relaxation}, i.e., the problem which results when the \concepts{integrality constraint} are removed. For the \concept{uncapacitated facility location} problem \concept{formulation} \eqnnrefr{ufl-mb}{ufl-cb3} is better than \eqnnrefr{ufl-ma}{ufl-ca3}, since the \concepts{constraint} \eqncsref{ufl-cb2} imply the \concepts{constraint} \eqncsref{ufl-ca2}.
 
 \section{Combinatorial Optimization: a general formulation}
 \seclab{generalform}
