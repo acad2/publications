@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=chapter_basis_digitaal_ontwerp.tex
+lastDocument=pgflibraryPCBcomponents.code.tex
 masterDocument=
 name=dep
 pkg_extIsRegExp=false
@@ -709,23 +709,23 @@ order=-1
 
 [item:chapter_basis_digitaal_ontwerp.tex]
 archive=true
-column=36
+column=31
 encoding=UTF-8
 highlight=LaTeX
-line=1340
+line=1333
 mode=LaTeX
 open=true
 order=0
 
 [item:chapter_circuits_schakelen.tex]
 archive=true
-column=28
+column=54
 encoding=UTF-8
 highlight=LaTeX
-line=114
+line=103
 mode=LaTeX
-open=false
-order=0
+open=true
+order=1
 
 [item:chapter_combinatorische_schakelingen.tex]
 archive=true
@@ -869,23 +869,23 @@ order=-1
 
 [item:pgflibraryDEPcomponents.code.tex]
 archive=true
-column=4
+column=22
 encoding=UTF-8
 highlight=LaTeX
-line=2289
+line=1316
 mode=LaTeX
 open=false
 order=4
 
 [item:pgflibraryPCBcomponents.code.tex]
 archive=true
-column=116
+column=183
 encoding=UTF-8
 highlight=LaTeX
-line=233
+line=279
 mode=LaTeX
-open=false
-order=0
+open=true
+order=3
 
 [item:pgflibraryWashing.code.tex]
 archive=true
@@ -3114,8 +3114,8 @@ encoding=UTF-8
 highlight=LaTeX
 line=2
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=2
 
 [item:tikzpictures/tikz-pcb-to92.tex]
 archive=true
@@ -3418,16 +3418,16 @@ JumpList=
 ViMarks=.,53,136,[,53,120,],53,136
 
 [view-settings,view=0,item:chapter_basis_digitaal_ontwerp.tex]
-CursorColumn=36
-CursorLine=1340
+CursorColumn=31
+CursorLine=1333
 JumpList=
 ViMarks=.,1370,66,[,1370,66,],1370,66
 
 [view-settings,view=0,item:chapter_circuits_schakelen.tex]
-CursorColumn=28
-CursorLine=114
+CursorColumn=54
+CursorLine=103
 JumpList=
-ViMarks=.,114,27,[,114,25,],114,27
+ViMarks=.,115,39,[,115,39,],115,39
 
 [view-settings,view=0,item:chapter_combinatorische_schakelingen.tex]
 CursorColumn=0
@@ -3484,16 +3484,16 @@ JumpList=
 ViMarks=.,25,18,[,25,16,],25,18
 
 [view-settings,view=0,item:pgflibraryDEPcomponents.code.tex]
-CursorColumn=4
-CursorLine=2289
+CursorColumn=22
+CursorLine=1316
 JumpList=
 ViMarks=.,12,0,[,0,0,],-1,-1
 
 [view-settings,view=0,item:pgflibraryPCBcomponents.code.tex]
-CursorColumn=116
-CursorLine=233
+CursorColumn=183
+CursorLine=279
 JumpList=
-ViMarks=.,233,115,[,233,115,],233,115
+ViMarks=.,279,182,[,279,180,],279,182
 
 [view-settings,view=0,item:pgflibraryWashing.code.tex]
 CursorColumn=0
