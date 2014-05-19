@@ -4,30 +4,30 @@
 \section{Two equivalent definitions of a polyhedron}
 \seclab{defpolyhed}
 
-Consider the feasible region depicted in \figref{polyhedron}. How to describe this object mathematically?
+Consider the \concept{feasible region} depicted in \figref{polyhedron}. How to describe this object mathematically?
 
 \importtikzfigure{polyhedron}{A feasible region.}
 
-Here is one way: we can view the feasible region as the intersection of as a number of halfspaces, each halfspace defined by a linear inequality. For instance, in the case of the figure above, we can write
+Here is one way: we can view the \concept{feasible region} as the \concept{intersection} of as a number of \concepts{halfspace}, each \concept{halfspace} defined by a \concept{linear inequality}. For instance, in the case of the figure above, we can write
 \begin{equation}
 \accl{\tupl{x_1,x_2}\in\RRR^2: -x_1+5\cdot x_2\leq 20 \wedge 2\cdot x_1+x_2\leq 6\wedge 6\cdot x_1-x_2\leq 10\wedge x_1\geq 0\wedge x_2\geq 0}.
 \end{equation}
-So we need five inequalities to precisely describe the feasible region.
+So we need five \concept[inequality]{inequalities} to precisely describe the \concept{feasible region}.
 
 \paragraph{}
-An alternative is to focus on the extreme vertices of the feasible region in \figref{polyhedron}. Indeed, we can alternatively write
+An alternative is to focus on the \concept[extreme vertex]{extreme vertices} of the \concept{feasible region} in \figref{polyhedron}. Indeed, we can alternatively write
 \begin{equation}
 \accl{\tupl{x_1,x_2}\in\funma{conv}{\tupl{0,0},\tupl{0,4},\tupl{\frac{10}{11},\frac{46}{11}},\tupl{2,2},\tupl{\frac{5}{3},0}}}.
 \end{equation}
 
 \paragraph{}
-The first approach can be seen as the linear programming approach; here, we simply list all the inequalities that jointly define the feasible region. The second approach can be seen as the integer programming approach; then, we list the extreme vertices of the region, and define the feasible region as anything that is in the convex hull of these given vertices. The two approaches are equivalent: anything that can be written using inequalities, can be written as the convex hull of a number of points, and vice versa. Let us now take a more general point of view. Thus, a polyhedron $P$ can be defined in two equivalent ways. First, as the set of points in $\RRR^n$ that satisfy a finite set of linear constraints, i.e.,
+The first approach can be seen as the \concept{linear programming} approach; here, we simply list all the \concept[inequality]{inequalities} that jointly define the \concept{feasible region}. The second approach can be seen as the \concept{integer programming} approach; then, we list the \concept{extreme vertices} of the \concept[feasible region]{region}, and define the \concept{feasible region} as anything that is in the \concept{convex hull} of these given vertices. The two approaches are equivalent: anything that can be written using \concept[inequality]{inequalities}, can be written as the \concept{convex hull} of a number of \concepts{point}, and vice versa. Let us now take a more general point of view. Thus, a \concept{polyhedron} $P$ can be defined in two equivalent ways. First, as the set of points in $\RRR^n$ that satisfy a finite set of \concepts{linear constraint}, i.e.,
 \begin{equation}
 P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq b}.
 \end{equation}
 
 \paragraph{}
-Second, $P$ can be defined as the set of points in $\RRR^n$ that are convex combinations of points of a finite set $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$ plus nonnegative combinations of points of a finite set $Y=\accl{\vec{y}_1,\vec{y}_2,\ldots,\vec{y}_L}$, i.e.,
+Second, $P$ can be defined as the set of \concepts{point} in $\RRR^n$ that are \concepts{convex combination} of \concepts{point} of a finite set $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$ plus \concepts{nonnegative combination} of \concepts{point} of a finite set $Y=\accl{\vec{y}_1,\vec{y}_2,\ldots,\vec{y}_L}$, i.e.,
 \begin{equation}
 P=\funm{conv}{X}+\funm{cone}{Y}
 \end{equation}
@@ -41,10 +41,10 @@ and
 \end{equation}
 
 \paragraph{}
-The representation theorem of Farkas, Minkowski, and Weyl (see e.g. Nemhauser and Wolsey\cite{citeulike:2212037}) proves that both definitions of a polyhedron are equivalent. Moreover, if we have a description of $P$ in one form, then we know that there is a description in the other form.
+The \concept{representation theorem of Farkas, Minkowski, and Weyl} (see e.g. \emph{Nemhauser and Wolsey}\cite{citeulike:2212037}) proves that both definitions of a \concept{polyhedron} are equivalent. Moreover, if we have a description of $P$ in one form, then we know that there is a description in the other form.
 
 \paragraph{}
-In the sequel, we will consider only polyhedra which are subsets of the positive orthant in $\RRR^n$ , i.e., $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. This guarantees, if $P$ is not empty, the existence of extreme points. If $X$ and $Y$ are minimal, then $X$ contains the extreme points, and $Y$ contains the extreme rays of $P$. A polytope is a bounded polyhedron, i.e., $Y=\emptyset$ and $\funm{cone}{Y}=\accl{\vec{0}}$. With a few exceptions, we will only consider polytopes in the sequel. In fact, most of the polytopes that we consider lie in the $n$-dimensional unit cube $\BBB^n=\condset{\vec{x}\in\RRR^n}{\vec{0}\leq\vec{x}\leq\vec{1}}$.
+In the sequel, we will consider only \concept[polyhedron]{polyhedra} which are subsets of the positive orthant in $\RRR^n$ , i.e., $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. This guarantees, if $P$ is not empty, the existence of extreme points. If $X$ and $Y$ are minimal, then $X$ contains the extreme points, and $Y$ contains the extreme rays of $P$. A polytope is a bounded polyhedron, i.e., $Y=\emptyset$ and $\funm{cone}{Y}=\accl{\vec{0}}$. With a few exceptions, we will only consider polytopes in the sequel. In fact, most of the polytopes that we consider lie in the $n$-dimensional unit cube $\BBB^n=\condset{\vec{x}\in\RRR^n}{\vec{0}\leq\vec{x}\leq\vec{1}}$.
 
 \paragraph{}
 The way the representation theorem is used in combinatorial optimization is different from the way it is used in linear programming. In linear programming we are given a set of feasible solutions by means of a system of linear constraints $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. The representation theorem is used to show that the optimization problem $\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has an extreme point that is optimum. In combinatorial optimization we are given, implicitly, a description of a finite set of feasible solutions $\calS$. The set $\calS$ is usually described as the set of subsets of a certain ground set $E$, where these subsets satisfy certain properties. The elements from $\calS$ are described by vectors $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$. The representation theorem is used to conclude that $\funm{conv}{X}$ can be described by linear constraints, i.e., $\funm{conv}{X}=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ for some matrix $A$ and some vector $\vec{b}$. The main goal of this chapter is to find a way to obtain this set of linear constraints.
