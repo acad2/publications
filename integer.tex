@@ -411,17 +411,17 @@ Use \thmref{tum-matrix}.
 \end{answer}
 \end{exercise}
 \begin{exercise}
-A 0-1 matrix has the consecutive ones property if each row has its entries with value 1 in neighboring columns. Such a matrix is also called an \concept{interval matrix}. Show that such matrices are TUM.
+A 0-1 \concept{matrix} has the consecutive ones property if each \concept{row} has its entries with value $1$ in neighboring \concepts{column}. Such a \concept{matrix} is also called an \concept{interval matrix}. Show that such \concept[matrix]{matrices} are \concept{TUM}.
 \begin{hint}
-Use induction, plus the facts that:
+Use \concept{induction}, plus the facts that:
 \begin{enumerate}
- \item interchanging two rows does not change whether a matrix is TUM, and
- \item replacing row $A_i$ by the difference of rows $A_i$ and $A_j$ also does not change whether a matrix is TUM.
+ \item interchanging two \concepts{row} does not change whether a \concept{matrix} is \concept{TUM}, and
+ \item replacing \concept{row} $A_i$ by the difference of \concepts{row} $A_i$ and $A_j$ also does not change whether a \concept{matrix} is \concept{TUM}.
 \end{enumerate}
 \end{hint}
 \begin{answer}
 \footnote{Note: this answer does not actually use induction.}
-Firstly, we remark that each square submatrix of an interval matrix again is an interval matrix. So to prove that each interval matrix is TUM, it is sufficient to prove that each square interval matrix is unimodular. Secondly, given a square interval matrix $M$, if $det(M)=0$, then $M$ is unimodular.\\
+Firstly, we remark that each \concept[square matrix]{square} submatrix of an \concept{interval matrix} again is an \concept{interval matrix}. So to prove that each \concept{interval matrix} is \concept{TUM}, it is sufficient to prove that each \concept[square matrix]{square} \concept{interval matrix} is \concept{unimodular}. Secondly, given a \concept[square matrix]{square} \concept{interval matrix} $M$, if $det(M)=0$, then $M$ is \concept{unimodular}.\\
 What is left to prove, is that each $n$-by-$n$ interval matrix $M$ for which $det(M)\neq 0$ is unimodular, which means it has a determinant of $+1$ or $-1$. We will do this by showing that we can transform $M$ into an identity matrix with the row operations defined above.\\
 The first step in this proof is to define for each row $i \in 1..n$ the variables $s_i$ and $e_i$, denoting respectively the column where the interval of $1$'s starts and ends. For instance, the following interval matrix has three rows, where $s_1=1$, $s_2=1$, $s_3=2$, $e_1=3$, $e_2=2$, $e_3=3$:
 \begin{equation}
