@@ -41,79 +41,79 @@ and
 \end{equation}
 
 \paragraph{}
-The \concept{representation theorem of Farkas, Minkowski, and Weyl} (see e.g. \emph{Nemhauser and Wolsey}\cite{citeulike:2212037}) proves that both definitions of a \concept{polyhedron} are equivalent. Moreover, if we have a description of $P$ in one form, then we know that there is a description in the other form.
+The \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem of Farkas, Minkowski, and Weyl} (see e.g. \emph{Nemhauser and Wolsey}\cite{citeulike:2212037}) proves that both definitions of a \concept{polyhedron} are equivalent. Moreover, if we have a description of $P$ in one form, then we know that there is a description in the other form.
 
 \paragraph{}
-In the sequel, we will consider only \concept[polyhedron]{polyhedra} which are subsets of the \concept{positive orthant} in $\RRR^n$ , i.e., $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. This guarantees, if $P$ is not \concept{empty}, the existence of \concepts{extreme point}. If $X$ and $Y$ are minimal, then $X$ contains the \concepts{extreme point}, and $Y$ contains the \concepts{extreme ray} of $P$. A \concept{polytope} is a \concept{bounded polyhedron}, i.e., $Y=\emptyset$ and $\funm{cone}{Y}=\accl{\vec{0}}$. With a few exceptions, we will only consider \concepts{polytope} in the sequel. In fact, most of the \concepts{polytope} that we consider lie in the $n$-dimensional unit cube $\BBB^n=\condset{\vec{x}\in\RRR^n}{\vec{0}\leq\vec{x}\leq\vec{1}}$.
+In the sequel, we will consider only \concept[polyhedron]{polyhedra} which are subsets of the \concept{positive orthant} in $\RRR^n$ , i.e., $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. This guarantees, if $P$ is not \concept{empty}, the existence of \concepts{extreme point}. If $X$ and $Y$ are minimal, then $X$ contains the \concepts{extreme point}, and $Y$ contains the \concepts{extreme ray} of $P$. A \concept{polytope} is a \concept{bounded polyhedron}, i.e., $Y=\emptyset$ and $\funm{cone}{Y}=\accl{\vec{0}}$. With a few exceptions, we will only consider \concepts{polytope} in the sequel. In fact, most of the \concepts{polytope} that we consider lie in the $n$-dimensional \concept{unit cube} $\BBB^n=\condset{\vec{x}\in\RRR^n}{\vec{0}\leq\vec{x}\leq\vec{1}}$.
 
 \paragraph{}
-The way the representation theorem is used in \concept{combinatorial optimization} is different from the way it is used in \concept{linear programming}. In \concept{linear programming} we are given a set of \concepts{feasible solution} by means of a system of \concepts{linear constraint} $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. The representation theorem is used to show that the \concept{optimization problem} $\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has an \concept{extreme point} that is the \concept{optimum}. In \concept{combinatorial optimization} we are given, implicitly, a description of a finite set of \concepts{feasible solution} $\calS$. The set $\calS$ is usually described as the set of subsets of a certain \concept{ground set} $E$, where these subsets satisfy certain properties. The elements from $\calS$ are described by \concepts{vector} $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$. The representation theorem is used to conclude that $\funm{conv}{X}$ can be described by \concepts{linear constraint}, i.e., $\funm{conv}{X}=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ for some \concept{matrix} $A$ and some \concept{vector} $\vec{b}$. The main goal of this chapter is to find a way to obtain this set of \concepts{linear constraint}.
+The way the \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem} is used in \concept{combinatorial optimization} is different from the way it is used in \concept{linear programming}. In \concept{linear programming} we are given a set of \concepts{feasible solution} by means of a system of \concepts{linear constraint} $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. The \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem} is used to show that the \concept{optimization problem} $\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has an \concept{extreme point} that is the \concept{optimum}. In \concept{combinatorial optimization} we are given, implicitly, a description of a finite set of \concepts{feasible solution} $\calS$. The set $\calS$ is usually described as the set of subsets of a certain \concept{ground set} $E$, where these subsets satisfy certain properties. The elements from $\calS$ are described by \concepts{vector} $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$. The \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem} is used to conclude that $\funm{conv}{X}$ can be described by \concepts{linear constraint}, i.e., $\funm{conv}{X}=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ for some \concept{matrix} $A$ and some \concept{vector} $\vec{b}$. The main goal of this chapter is to find a way to obtain this set of \concepts{linear constraint}.
 
 \paragraph{}
-The set of feasible solutions $X$ of a combinatorial optimization problem is usually described through a formulation with linear restrictions and integrality constraints on the variables, i.e., $X=\condset{x\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\ZZZ^n}$. Notice that the formulation of $X$ as an Integer Linear Program is not unique. The linear programming relaxation of this formulation, denoted by $\funm{LPR}{A,\vec{b}}$, is $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. Clearly, $\funm{conv}{X}$ is a subset of $\funm{LPR}{A,\vec{b}}$. A first question is: how well does the linear programming relaxation of a formulation describe the convex hull of $X$? This gives a criterion to decide on which formulation is best for a certain problem. In general we choose the formulation that defines the smallest polyhedron containing $\funm{conv}{X}$. A second question is: how can we find constraints that improve the linear programming relaxation? Then, we are looking for constraints that are satisfied by all feasible solutions in $X$, but that cut off part of the polyhedron defined by the relaxation.
+The set of \concepts{feasible solution} $X$ of a \concept{combinatorial optimization problem} is usually described through a \concept{formulation} with \concepts{linear restriction} and \concepts{integrality constraint} on the \concepts{variable}, i.e., $X=\condset{x\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\ZZZ^n}$. Notice that the \concept{formulation} of $X$ as an \concept{integer linear program} is not unique. The \concept{linear programming relaxation} of this \concept{formulation}, denoted by $\funm{LPR}{A,\vec{b}}$, is $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. Clearly, $\funm{conv}{X}$ is a subset of $\funm{LPR}{A,\vec{b}}$. A first question is: how well does the \concept{linear programming relaxation} of a \concept{formulation} describe the \concept{convex hull} of $X$? This gives a criterion to decide on which \concept{formulation} is best for a certain problem. In general we choose the \concept{formulation} that defines the smallest \concept{polyhedron} containing $\funm{conv}{X}$. A second question is: how can we find \concepts{constraint} that improve the \concept{linear programming relaxation}? Then, we are looking for \concepts{constraint} that are satisfied by all \concepts{feasible solution} in $X$, but that \concept{cut off part} of the \concept{polyhedron} defined by the \concept[linear programming relaxation]{relaxation}.
 
 \paragraph{}
-We will give (partial) answers to both questions. In the following section we identify formulations for problems that have the property that the linear programming relaxation is tight, i.e., it describes $\funm{conv}{X}$ exactly. Then we describe a method, first illustrated using the stable set problem, that improves the linear programming relaxation by adding linear constraints (called valid inequalities) that make the formulation tighter. Finally, we discuss a systematic way of obtaining these inequalities.
+We will give (partial) answers to both questions. In the following section we identify \concepts{formulation} for problems that have the property that the \concept{linear programming relaxation} is tight, i.e., it describes $\funm{conv}{X}$ exactly. Then we describe a method, first illustrated using the \concept{stable set problem}, that improves the \concept{linear programming relaxation} by adding \concepts{linear constraint} (called \concept[valid inequality]{valid inequalities}) that make the \concept{formulation} tighter. Finally, we discuss a systematic way of obtaining these \concept[valid inequality]{inequalities}.
 
 \section{Linear description of combinatorial problems}
 \seclab{lindesccomb}
-Consider the integer linear program
+Consider the \concept{integer linear program}
 \begin{equation}
 \max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\accl{0,1}^m},
 \end{equation}
-where $A$ is an $n\times m$ matrix of integers and $\vec{b}$ is an $n$-vector of integers. Suppose we solve the corresponding linear programming formulation. Of course, we would be quite fortuitous if the resulting values for the $\vec{x}$-variables would be integral. However, in some special cases to be discussed next, one can guarantee that the resulting solution is indeed integral.
+where $A$ is an $n\times m$ \concept{matrix} of \concepts{integer} and $\vec{b}$ is an $n$-vector of \concepts{integer}. Suppose we solve the corresponding \concept{linear programming formulation}. Of course, we would be quite fortuitous if the resulting values for the $\vec{x}$-variables would be \concept{integral}. However, in some special cases to be discussed next, one can guarantee that the resulting \concept{solution} is indeed \concept[integral solution]{integral}.
 
 \paragraph{}
-When solving the linear programming formulation, we know from the simplex method that there is a regular $n\times n$ submatrix $B$ of $A$ such that $\overline{x}=B^{-1}\cdot\vec{b}$ is the optimum solution of the linear program. Denoting the columns of $B$ by $B_{\star,j}$ $j\in\accl{1,\ldots,n}$, Cramer's rule gives an explicit description of the $n$ basic variables $x_j$ $j\in\accl{1,\ldots,n}$ corresponding to the columns of $B$:
+When solving the \concept{linear programming formulation}, we know from the \concept{simplex method} that there is a regular $n\times n$ submatrix $B$ of $A$ such that $\overline{x}=B^{-1}\cdot\vec{b}$ is the \concept{optimum solution} of the \concept{linear program}. Denoting the \concepts{column} of $B$ by $B_{\star,j}$ $j\in\accl{1,\ldots,n}$, \concept{Cramer's rule} gives an explicit description of the $n$ \concepts{basic variable} $x_j$ $j\in\accl{1,\ldots,n}$ corresponding to the \concepts{column} of $B$:
 
 \begin{equation}
 x_j=\displaystyle\frac{\funm{det}{B_{\star,1}|B_{\star,2}|\ldots|B_{\star,j-1}|\vec{b}|B_{\star,j+1}|\ldots|B_{\star,n}}}{\funm{det}{B}}.
 \end{equation}
 
-The upper determinant is integral. If the determinant of $B$ would be $\pm 1$, then $x_j$ is certainly integral. We call a matrix $B$ with that property unimodular (UM). Since the basis $B$ may vary with the objective $\vec{c}$ and the right-hand side $\vec{b}$, we would like to have a characterization of matrices $A$ for which each $n\times n$ submatrix $B$ is UM. Indeed, for such matrices, the polyhedron
+The upper \concept{determinant} is \concept{integral}. If the \concept{determinant} of $B$ would be $\pm 1$, then $x_j$ is certainly \concept{integral}. We call a \concept{matrix} $B$ with that property \concept{unimodular} (\conceptsee{UM}{unimodular}). Since the \concept{basis} $B$ may vary with the \concept{objective} $\vec{c}$ and the right-hand side $\vec{b}$, we would like to have a characterization of \concept[matrix]{matrices} $A$ for which each $n\times n$ submatrix $B$ is \concept{UM}. Indeed, for such \concept[matrix]{matrices}, the \concept{polyhedron}
 \begin{equation}
 P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}}
 \end{equation}
-has integral vertices.
+has \concept[integral vertex]{integral vertices}.
 
 \paragraph{}
-Next, consider the integer linear program
+Next, consider the \concept{integer linear program}
 \begin{equation}
 \max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\accl{0,1}}.
 \end{equation}
-To put the associated linear programming problem in the form above we introduce a slack-vector $\vec{y}$ and we reformulate it as
+To put the associated \concept{linear programming problem} in the form above we introduce a \concept{slack vector} $\vec{y}$ and we reformulate it as
 \begin{equation}
 \max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}+\vec{y}\leq\vec{b}\wedge\vec{x},\vec{y}\geq\vec{0}}.
 \end{equation}
-To obtain a similar result on the integrality of $\vec{x}$ (and $\vec{y}$), we can demand that each $n\times n$ submatrix of the matrix ($A|I$) be unimodular. This, however, is equivalent to stating that all regular square submatrices (not only those with $n$ rows and columns) of the matrix $A$ have a determinant $\pm 1$. Matrices with this property are called totally unimodular (TUM), see the next definition.
+To obtain a similar result on the \concept{integrality} of $\vec{x}$ (and $\vec{y}$), we can demand that each $n\times n$ submatrix of the \concept{matrix} ($A|I$) be \concept{unimodular}. This, however, is equivalent to stating that all regular square submatrices (not only those with $n$ rows and columns) of the matrix $A$ have a \concept{determinant} $\pm 1$. \concept[matrix]{Matrices} with this property are called \concept{totally unimodular} (\conceptsee{TUM}{totally unimodular}), see the next definition.
 
 \begin{definition}[Totally unimodular matrix]
-A matrix $A$ is called \emph{totally unimodular} if each square submatrix of $A$ has determinant equal to $-1$, $0$, or $+1$.
+A matrix $A$ is called \concept{totally unimodular} if each square \concept{submatrix} of $A$ has \concept{determinant} equal to $-1$, $0$, or $+1$.
 \end{definition}
 
 \paragraph{}
-We have the following important theorem for TUM matrices.
+We have the following important theorem for \concept[totally unimodular matrix]{totally unimodular matrices}.
 
 \begin{theorem}
-If a matrix $A$ is TUM, then the polyhedron $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has integral vertices.
+If a \concept{matrix} $A$ is \concept{TUM}, then the \concept{polyhedron} $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has \concept[integral vertex]{integral vertices}.
 \end{theorem}
 
 \paragraph{}
-Clearly, a TUM matrix consists only of entries $0,\pm 1$. In the following theorem we characterize two types of matrices that are totally unimodular.
+Clearly, a \concept{totally unimodular matrix} consists only of entries $0,\pm 1$. In the following theorem we characterize two types of \concept[matrix]{matrices} that are \concept{totally unimodular}.
 \begin{theorem}
 \thmlab{tum-matrix}
-Let $A$ be a matrix with entries in $\accl{-1, 0, 1}$ such that there are at most two nonzeros in each column. If there exists a partition of the rows of $A$ in two sets $R_1$ and $R_2$ such that
+Let $A$ be a \concept{matrix} with entries in $\accl{-1, 0, 1}$ such that there are at most two nonzeros in each \concept{column}. If there exists a \concept{partition} of the \concepts{row} of $A$ in two sets $R_1$ and $R_2$ such that
 \begin{enumerate}
- \item each column with two nonzero entries of the same sign, has one of its entries in $R_1$ and one in $R_2$,
- \item each column with two nonzero entries of different sign, has either both of its entries in $R_1$ or both of its entries in $R_2$,
+ \item each \concept{column} with two nonzero entries of the same \concept{sign}, has one of its \concept[entry]{entries} in $R_1$ and one in $R_2$,
+ \item each \concept{column} with two nonzero entries of different \concept{sign}, has either both of its \concept[entry]{entries} in $R_1$ or both of its \concept[entry]{entries} in $R_2$,
 \end{enumerate}
-then the matrix $A$ is TUM.
+then the matrix $A$ is \concept{TUM}.
 \begin{proof}
-We use induction on the size of the submatrices. Each submatrix of size $1\times 1$ is trivially TUM. Let $C$ be a submatrix of size $k\times k$. We consider three cases.
+We use \concept{induction} on the size of the \concept[submatrix]{submatrices}. Each \concept{submatrix} of size $1\times 1$ is trivially \concept{TUM}. Let $C$ be a \concept{submatrix} of size $k\times k$. We consider three cases.
 \begin{enumerate}
- \item If $C$ has a column with no nonzeros it is singular;
- \item if $C$ has a column with at most one nonzero, its determinant can be expanded along that column, and total unimodularity follows from the induction hypothesis;
- \item finally, if $C$ has only columns with two nonzeroes, we split its rows in the subsets with the property described above. Adding up the rows in each subset results in two identical row vectors, which implies that the matrix is singular.
+ \item If $C$ has a \concept{column} with no nonzeros it is \concept{singular};
+ \item if $C$ has a \concept{column} with at most one nonzero, its \concept{determinant} can be expanded along that \concept{column}, and \concept{total unimodularity} follows from the \concept{induction hypothesis};
+ \item finally, if $C$ has only \concepts{column} with two nonzeroes, we split its \concepts{row} in the subsets with the property described above. Adding up the \concepts{row} in each subset results in two identical \concept{row} \concepts{vector}, which implies that the \concept{matrix} is \concept{singular}.
 \end{enumerate}
 \end{proof}
 \end{theorem}
