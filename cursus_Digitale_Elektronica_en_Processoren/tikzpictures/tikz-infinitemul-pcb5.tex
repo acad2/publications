@@ -5,9 +5,9 @@
 \begin{scope}[xshift=\x cm]
 \node[pcbto92,pcblabel={2N3904},rotate=-180,anchor=basis] (NPN-\i) at (0,-1.5) {};%npn
 \node[pcbto92,pcblabel={2N3906},anchor=collector] (PNP-\i) at (0,1.5) {};%pnp
-\node[pcbvia] (VSS\i) at (-2,-2);
-\node[pcbvia] (VDD\i) at (-2,2);
-\node[pcbvia] (EXH\i) at (1,1.5);
+\node[pcbvia] (VSS\i) at (-2,-2) {};
+\node[pcbvia] (VDD\i) at (-2,2) {};
+\node[pcbvia] (EXH\i) at (1,1.5) {};
 \node[pcbacy,pcblabel={100k},anchor=pin1] (R0\i) at (0,0) {};
 \node[pcbacy,pcblabel={20k},anchor=pin1] (R1\i) at (0,1.75) {};
 \node[pcbtact,pcblabel={U\i},anchor=pin1] (U\i) at ($0.25*(R0\i.pin0)+0.75*(R1\i.pin0)$) {};
@@ -25,6 +25,9 @@
 \end{pgfonlayer}
 \end{scope}
 \end{scope}}
+\node[pcbdip,pcblabel=4707,rotate=90] (NG61) at (-3,-1.5) {};
+\node[pcbdip,pcblabel=4747,rotate=90] (DFF1) at (-1,-1.5) {};
+\node[pcbdip,pcblabel=4747,rotate=90] (DFF2) at (1,-1.5) {};
 \begin{scope}[gray]
 \begin{pgfonlayer}{background}
 \pcbpintopin{USB.pin0}{VSS0}
