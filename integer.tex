@@ -1,7 +1,7 @@
-\chapter{From linear to integer optimization}
+\chapter{From Linear to Integer Optimization}
 \chplab{lintointopt}
 
-\section{Two equivalent definitions of a polyhedron}
+\section{Two Equivalent Definitions of a Polyhedron}
 \seclab{defpolyhed}
 
 Consider the \concept{feasible region} depicted in \figref{polyhedron}. How to describe this object mathematically?
@@ -55,7 +55,7 @@ The set of \concepts{feasible solution} $X$ of a \concept{combinatorial optimiza
 \paragraph{}
 We will give (partial) answers to both questions. In the following section we identify \concepts{formulation} for problems that have the property that the \concept{linear programming relaxation} is tight, i.e., it describes $\funm{conv}{X}$ exactly. Then we describe a method, first illustrated using the \concept{stable set problem}, that improves the \concept{linear programming relaxation} by adding \concepts{linear constraint} (called \concept[valid inequality]{valid inequalities}) that make the \concept{formulation} tighter. Finally, we discuss a systematic way of obtaining these \concept[valid inequality]{inequalities}.
 
-\section{Linear description of combinatorial problems}
+\section{Linear Description of Combinatorial Problems}
 \seclab{lindesccomb}
 Consider the \concept{integer linear program}
 \begin{equation}
@@ -119,29 +119,27 @@ We use \concept{induction} on the size of the \concept[submatrix]{submatrices}. 
 \end{theorem}
 
 \paragraph{}
-There are two important classes of matrices that satisfy the conditions of the above theorem, and therefore are TUM. The node-arc incidence matrix $A$ of a directed graph (digraph) has rows corresponding with
-the nodes and columns corresponding with the arcs. The entry $A_{v,a}$ can obtain three possible values:
+There are two important classes of \concept[matrix]{matrices} that satisfy the conditions of the above theorem, and therefore are \concept{TUM}. The \concept{node-arc incidence matrix} $A$ of a \concept{directed graph} (\conceptsee{digraph}{directed graph}) has \concepts{row} corresponding with the \concepts{node} and \concepts{column} corresponding with the \concepts{arc}. The entry $A_{v,a}$ can obtain three possible values:
 \begin{enumerate}
- \item $A_{v,a}=-1$ if vertex $v$ is the tail of arc $a$.
- \item $A_{v,a}=1$ if vertex $v$ is the head of arc $a$.
- \item $A_{v,a}=0$ if vertex $v$ and arc $a$ are not incident.
+ \item $A_{v,a}=-1$ if \concept{vertex} $v$ is the \concept[tail of an arc]{tail} of \concept{arc} $a$.
+ \item $A_{v,a}=1$ if \concept{vertex} $v$ is the \concept[head of an arc]{head} of \concept{arc} $a$.
+ \item $A_{v,a}=0$ if \concept{vertex} $v$ and arc $a$ are not \concept{incident}.
 \end{enumerate}
 
 \paragraph{}
-The node-edge incidence matrix $A$ of a graph has rows corresponding with the nodes and columns corresponding with the edges. The entry $A_{v,e}$ can obtain two possible values:
+The \concept{node-edge incidence matrix} $A$ of a \concept{graph} has \concepts{row} corresponding with the \concepts{node} and \concepts{column} corresponding with the \concepts{edge}. The entry $A_{v,e}$ can obtain two possible values:
 \begin{enumerate}
- \item $A_{v,e}=1$ if vertex $v$ and edge $e$ are incident.
- \item $A_{v,e}=0$ if vertex $v$ and edge $e$ are not incident.
+ \item $A_{v,e}=1$ if \concept{vertex} $v$ and \concept{edge} $e$ are incident.
+ \item $A_{v,e}=0$ if \concept{vertex} $v$ and \concept{edge} $e$ are not incident.
 \end{enumerate}
 
 \begin{corollary}
 \collab{tum-graph}
-The node-arc incidence matrix of a digraph is TUM. The node-edge incidence matrix of a bipartite graph is TUM.
+The \concept{node-arc incidence matrix} of a \concept{digraph} is \concept{TUM}. The \concept{node-edge incidence matrix} of a \concept{bipartite graph} is \concept{TUM}.
 \end{corollary}
 
 \paragraph{}
-This implies that many optimization problems on (di)graphs can be solved with linear programming. Among them are the shortest path problem, the max-flow problem, the min-cost flow problem, and the matching problem on bipartite graphs. Finally, we will show by an example that general node-edge incidence matrices need not be TUM. Consider the complete graph on three vertices $K_3$. Its node edge
-incidence matrix is:
+This implies that many \concept{optimization problems} on (di)graphs can be solved with \concept{linear programming}. Among them are the \concept{shortest path problem}, the \concept{max-flow problem}, the \concept{min-cost flow problem}, and the \concept{matching problem} on \concept{bipartite graphs}. Finally, we will show by an example that general \concept[node-edge incidence matrix]{node-edge incidence matrices} need not be \concept{TUM}. Consider the \concept{complete graph} on three \concept[vertex]{vertices} $K_3$. Its \concept{node-edge incidence matrix} is:
 \begin{equation}
 \brak{\begin{array}{ccc}
 1&1&0\\
@@ -149,11 +147,11 @@ incidence matrix is:
 0&1&1
 \end{array}}
 \end{equation}
-The determinant of this matrix is $-2$. Now let us compare the ILP formulation of the maximum cardinality matching problem with its linear programming relaxation on this graph. A maximum matching consists of one edge, and thus has value $1$. The LP-relaxation has an optimum value of $1.5$, since each of the three variables can obtain the value $0.5$, without violating any of the linear constraints.
+The \concept{determinant} of this \concept{matrix} is $-2$. Now let us compare the \concept{ILP} \concept{formulation} of the \concept{maximum cardinality matching problem} with its \concept{linear programming} relaxation on this \concept{graph}. A \concept{maximum matching} consists of one \concept{edge}, and thus has value $1$. The \concept{LP-relaxation} has an optimum value of $1.5$, since each of the three variables can obtain the value $0.5$, without violating any of the \concepts{linear constraint}.
 
-\section{Valid inequalities}
+\section{Valid Inequalities}
 \seclab{validineq}
-Consider the stable set problem. Given is an arbitrary graph $G=\tupl{V,E}$. The feasible solutions are the stable sets in $G$. These solutions are represented by binary $n$-vectors, where the components correspond to the vertices. The integer linear programming formulation is the following, see also \eqnnrefr{stableset-m}{stableset-c2}.
+Consider the \concept{stable set problem}. Given is an arbitrary \concept{graph} $G=\tupl{V,E}$. The \concepts{feasible solution} are the \concepts{stable set} in $G$. These solutions are represented by \concept[binary vector]{binary $n$-vectors}, where the components correspond to the \concept[vertex]{vertices}. The \concept{integer linear programming} \concept{formulation} is the following, see also \eqnnrefr{stableset-m}{stableset-c2}.
 
 \begin{eqnarray}
 \mbox{maximize}&\sumdomain[v]{V}{x_v}\eqnlab{stablesetr-m}\\
@@ -161,15 +159,15 @@ Consider the stable set problem. Given is an arbitrary graph $G=\tupl{V,E}$. The
 &\forall v\in V:x_v\in\accl{0,1}\eqnlab{stablesetr-c2}
 \end{eqnarray}
 
-The stable set polytope $\funm{conv}{\mbox{SS}}$ is the convex hull of the feasible solutions of the above formulation, i.e., the set of vectors corresponding to stable sets. We will derive two classes of so-called valid inequalities, the clique inequalities and the odd-cycle inequalities. These valid inequalities will allow us to improve the solution found by the linear programming relaxation.
+The \concept{stable set polytope} $\funm{conv}{\mbox{SS}}$ is the \concept{convex hull} of the \concepts{feasible solution} of the above \concept{formulation}, i.e., the set of vectors corresponding to \concepts{stable set}. We will derive two classes of so-called \concept[valid inequality]{valid inequalities}, the \concept[clique inequality]{clique inequalities} and the \concept[odd-cycle inequality]{odd-cycle inequalities}. These \concept[valid inequality]{valid inequalities} will allow us to improve the solution found by the \concept{linear programming relaxation}.
 
 \begin{example}
-Consider the following graph depicted in \figref{clique-graph} on five vertices. The nodes 3, 4 and 5 form a clique, i.e., a subset of the vertices that induces a complete graph. At most one of these nodes can be present in a stable set. In other words, each feasible solution must satisfy the inequality $x_3+x_4+x_5\leq 1$. Thus, when solving the linear programming relaxation, one could add this constraint to the formulation, thereby making the constraints $x_3+x_4\leq 1$, $x_3+x_5\leq 1$ and $x_4+x_5\leq 1$ obsolete.
+Consider the following \concept{graph} depicted in \figref{clique-graph} on five \concept[vertex]{vertices}. The \concepts{node} $3$, $4$ and $5$ form a \concept{clique}, i.e., a subset of the \concept[vertex]{vertices} that induces a \concept{complete graph}. At most one of these \concepts{node} can be present in a \concept{stable set}. In other words, each \concept{feasible solution} must satisfy the inequality $x_3+x_4+x_5\leq 1$. Thus, when solving the \concept{linear programming relaxation}, one could add this \concept{constraint} to the \concept{formulation}, thereby making the \concepts{constraint} $x_3+x_4\leq 1$, $x_3+x_5\leq 1$ and $x_4+x_5\leq 1$ obsolete.
 
 \importtikzfigure{clique-graph}{Graph with cliques.}
 
 \paragraph{}
-Notice that the inequality $x_3+x_4+x_5\leq 1$ can be derived from the constraints in the formulation by rounding in the following way.
+Notice that the \concept{inequality} $x_3+x_4+x_5\leq 1$ can be derived from the \concepts{constraint} in the \concept{formulation} by rounding in the following way.
 
 \begin{equation}
 \begin{array}{rcrcrcc}
@@ -179,31 +177,31 @@ x_3&+&&&x_5&\leq&1\\\hline
 2\cdot x_3&+&2\cdot x_4&&2\cdot x_5&\leq&3
 \end{array}
 \end{equation}
-This gives $x_3+x_4+x_5\leq 1$. This way we can get $3$-cliques from $2$-cliques. The clique of the nodes $1$, $2$, $3$ and $4$ can not be derived by rounding constraints of the formulation. However, we can derive them from the constraints generated by the four $3$-cliques contained in $\accl{1,2,3,4}$.
+This gives $x_3+x_4+x_5\leq 1$. This way we can get $3$-\concept[clique]{cliques} from $2$-\concept[clique]{cliques}. The \concept{clique} of the \concepts{node} $1$, $2$, $3$ and $4$ can not be derived by \concepts{rounding constraint} of the \concept{formulation}. However, we can derive them from the \concepts{constraint} generated by the four $3$-\concepts{clique} contained in $\accl{1,2,3,4}$.
 \end{example}
 \begin{example}
-Consider the following graph depicted in \figref{odd-cycle}: It is a cycle consisting of five vertices. The following inequality is valid. At most two nodes of the cycle can be in a packing.
+Consider the following \concept{graph} depicted in \figref{odd-cycle}: It is a \concept{cycle} consisting of five \concept[vertex]{vertices}. The following \concept{inequality} is \concept[valid inequality]{valid}. At most two \concepts{node} of the \concept{cycle} can be in a \concept[node packing]{packing}.
 \begin{equation}
 x_1+x_2+x_3+x_4+x_5\leq 2
 \end{equation}
-In general, for a cycle $C$ with an odd number of vertices in a graph $G$, the inequality $\isumdomain[v]{C}{x_v\leq\floor{\frac{1}{2}\abs{C}}}$ valid. Unfortunately, adding such a constraint does not guarantee that the resulting solution is necessarily integral, as the graph depicted in \figref{odd-cycle-claw} shows.
+In general, for a \concept{cycle} $C$ with an odd number of \concept[vertex]{vertices} in a \concept{graph} $G$, the \concept[valid inequality]{inequality} $\isumdomain[v]{C}{x_v\leq\floor{\frac{1}{2}\abs{C}}}$ valid. Unfortunately, adding such a \concept{constraint} does not guarantee that the resulting \concept{solution} is necessarily \concept[integral solution]{integral}, as the \concept{graph} depicted in \figref{odd-cycle-claw} shows.
 
 \importtikzfigure{odd-cycle}{Odd cycle.}
 
-\importtikzfigure{odd-cycle-claw}{Odd cycle with 5-claw.}
+\importtikzfigure{odd-cycle-claw}{Odd cycle with $5$-claw.}
 
 \paragraph{}
-In this graph the solution $x=\tupl{\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{1}{5}}$ satisfies all the constraints that we have found for the stable set problem. However, the cumulative sum of the variables is larger than two, and the number of nodes in a packing in this graph is at most two. Therefore, we still do not have a description of $\funm{conv}{\mbox{SS}}$ for this graph. We will now strengthen the odd cycle inequality generated by the vertices $1$, $2$, $3$, $4$ and $5$. To do so, we look at the following inequality and we try to find a value for $\alpha$ as high as possible, such that the inequality maintains its validity.
+In this \concept{graph} the solution $x=\tupl{\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{1}{5}}$ satisfies all the \concepts{constraint} that we have found for the \concept{stable set problem}. However, the \concept{cumulative sum} of the \concepts{variable} is larger than two, and the number of \concepts{node} in a \concept[node packing]{packing} in this \concept{graph} is at most two. Therefore, we still do not have a description of $\funm{conv}{\mbox{SS}}$ for this \concept{graph}. We will now strengthen the \concept{odd cycle inequality} generated by the \concept[vertex]{vertices} $1$, $2$, $3$, $4$ and $5$. To do so, we look at the following \concept{inequality} and we try to find a value for $\alpha$ as high as possible, such that the \concept{inequality} maintains its validity.
 \begin{equation}
 x_1+x_2+x_3+x_4+x_5+\alpha\cdot x_6\leq 2
 \end{equation}
-If $x_6=0$, then the inequality reduces to the odd cycle inequality and is valid for any value of $\alpha$. If $x_6=1$, then node $6$ is in the packing. But this implies that nodes connected to $6$ can not be in the packing. Thus, $x_1=x_2=x_3=x_4=x_5=0$, and the inequality is valid for all $\alpha\leq 2$. Concluding, the inequality remains valid for $\alpha=2$.
+If $x_6=0$, then the \concept{inequality} reduces to the \concept{odd cycle inequality} and is valid for any value of $\alpha$. If $x_6=1$, then \concept{node} $6$ is in the \concept[node packing]{packing}. But this implies that \concepts{node} connected to $6$ can not be in the \concept[node packing]{packing}. Thus, $x_1=x_2=x_3=x_4=x_5=0$, and the inequality is valid for all $\alpha\leq 2$. Concluding, the inequality remains valid for $\alpha=2$.
 \end{example}
 \begin{application}[Generalized node packing]
-In structured problems with many inequalities one can sometimes derive so-called implications, i.e., if one variable has value 1 that implies that some other variable should have value 0. Such implications can lead to strong inequalities based on node packing inequalities which tighten a formulation. This technique is often used as a preprocessing step in solving huge integer linear programming problems.
+In structured problems with many \concept[inequality]{inequalities} one can sometimes derive so-called \concepts{implication}, i.e., if one \concept{variable} has value $1$ that implies that some other variable should have value $0$. Such \concepts{implications} can lead to strong inequalities based on \concept[node packing inequality]{node packing inequalities} which tighten a \concept{formulation}. This technique is often used as a \concept{preprocessing} step in solving huge \concepts{integer linear programming problem}.
 \end{application}
 \begin{example}
-Three binary variables $x_1$, $x_2$ and $x_3$ satisfy the following relations.
+Three \concepts{binary variable} $x_1$, $x_2$ and $x_3$ satisfy the following relations.
 
 \begin{equation}
 \begin{array}{rcrcrcr}
@@ -214,7 +212,7 @@ Three binary variables $x_1$, $x_2$ and $x_3$ satisfy the following relations.
 \end{equation}
 
 \paragraph{}
-By using the complementing variables $y_1=1-x_1$, $y_2=1-x_2$ and $y_3=1-x_3$, this system can be reformulated into a system consisting of knapsack constraints, as follows.
+By using the \concepts{complementing variable} $y_1=1-x_1$, $y_2=1-x_2$ and $y_3=1-x_3$, this system can be reformulated into a system consisting of \concepts{knapsack constraint}, as follows.
 
 \begin{equation}
 \begin{array}{rcrcrcr}
@@ -225,36 +223,36 @@ By using the complementing variables $y_1=1-x_1$, $y_2=1-x_2$ and $y_3=1-x_3$, t
 \end{equation}
 
 \paragraph{}
-The node packing graph defined by the variables and constraints consists of the following vertices and edges. There are two nodes for each variable, one representing the variable $x_i$ and the other its complement $y_i$ . Two nodes are connected by an edge if the corresponding pair of variables sums up to a value of at most $1$. In this example the edges are $\tupl{x_i,y_i}$ ($i=1,2,3$); $\tupl{y_i,y_j}$ ($1\leq i < j \leq 3$) (second constraint); $\tupl{x1,x3}$ (third constraint); $\tupl{y2,x3}$ (third constraint).
+The \concept{node packing graph} defined by the \concepts{variable} and \concepts{constraint} consists of the following \concept[vertex]{vertices} and \concepts{edge}. There are two \concepts{node} for each \concept{variable}, one representing the \concept{variable} $x_i$ and the other its \concept[complementary variable]{complement} $y_i$ . Two \concepts{node} are connected by an \concept{edge} if the corresponding pair of \concepts{variable} sums up to a \concept{value} of at most $1$. In this example the \concepts{edge} are $\tupl{x_i,y_i}$ ($i=1,2,3$); $\tupl{y_i,y_j}$ ($1\leq i < j \leq 3$) (second constraint); $\tupl{x1,x3}$ (third constraint); $\tupl{y2,x3}$ (third constraint).
 
 \importtikzfigure{gennodepacking}{Generalized Node Packing graph.}
 
 \paragraph{}
-There is a clique consisting of the vertices corresponding to $x_3$, $y_3$ and $y_2$. Thus, $x_3+y_3+y_2\leq 1$. Since $x_3+y_3=1$ this gives $y_2=0$ and $x_2=1$. Notice that the vector $\tupl{x_1,x_2,x_3}=\tupl{1,\frac{1}{2},\frac{1}{2}}$ satisfies the original linear programming relaxation, but is cut off by the generated clique constraint.
+There is a \concept{clique} consisting of the \concept[vertex]{vertices} corresponding to $x_3$, $y_3$ and $y_2$. Thus, $x_3+y_3+y_2\leq 1$. Since $x_3+y_3=1$ this gives $y_2=0$ and $x_2=1$. Notice that the \concept{vector} $\tupl{x_1,x_2,x_3}=\tupl{1,\frac{1}{2},\frac{1}{2}}$ satisfies the original \concept{linear programming relaxation}, but is cut off by the generated \concept{clique constraint}.
 \end{example}
 
-\section{Gomory-Chv\`atal rounding}
+\section{Gomory-Chv\`atal Rounding}
 \seclab{gomorychvatal}
-A general method for finding valid inequalities that really cut off a part from the linear programming relaxation is \concept{Gomory-Chv\`atal rounding}.
+A general method for finding \concept[valid inequality]{valid inequalities} that really cut off a part from the \concept{linear programming relaxation} is \concept{Gomory-Chv\`atal rounding}.
 
 \paragraph{}
-Suppose we have the following description of a set of points
+Suppose we have the following description of a set of \concepts{point}
 \begin{equation}
 X=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\mbox{ integral}}
 \end{equation}
 
 \paragraph{}
-Then, for any vector $\vec{u}\geq\vec{0}$, the following constraint is valid:
+Then, for any \concept{vector} $\vec{u}\geq\vec{0}$, the following \concept{constraint} is valid:
 \begin{equation}
 \floor{\vec{u}\cdot A}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}
 \end{equation}
 
 \paragraph{}
-By the nonnegativity of x we have that ⌊uA⌋x ≤ ub, and from the integrality of x it follows that the left hand side is integral, and therefore we are allowed to round down the right hand side. By adding these constraints for all nonnegative vectors u, we get the polyhedron $P^1=\condset{\vec{x}\in\RRR^n}{\vec{x}\geq\vec{0}\wedge\forall \vec{u}\in\RRR^n:\vec{u}\geq\vec{0}\Rightarrow\floor{\vec{u}\cdot\vec{A}}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}}$ which is really smaller than $P$. The problem is that there are infinitely many constraints from which only few are necessary. Moreover, the resulting polyhedron $P^1$ may still contain fractional vertices. Then the process of rounding can be repeated. Chv\`atal showed that this process gives the convex hull of all integral vectors in $P$ after a finite number of times. The number of times that these cuts must be added is called the \concept{Chv\`atal-rank}.
+By the \concept{nonnegativity} of $\vec{x}$ we have that $\floor{\vec{u}\cdot A}\cdot\vec{x}\leq\cdot\vec{u}\cdot\vec{b}$, and from the \concept{integrality} of $\vec{x}$ it follows that the left hand side is \concept[integral vector]{integral}, and therefore we are allowed to round down the right hand side. By adding these \concepts{constraint} for all \concepts{nonnegative vector} $\vec{u}$, we get the \concept{polyhedron} $P^1=\condset{\vec{x}\in\RRR^n}{\vec{x}\geq\vec{0}\wedge\forall \vec{u}\in\RRR^n:\vec{u}\geq\vec{0}\Rightarrow\floor{\vec{u}\cdot\vec{A}}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}}$ which is really smaller than $P$. The problem is that there are infinitely many \concepts{constraint} from which only few are necessary. Moreover, the resulting \concept{polyhedron} $P^1$ may still contain \concept[fractional vertex]{fractional vertices}. Then the process of rounding can be repeated. Chv\`atal showed that this process gives the \concept{convex hull} of all \concepts{integral vector} in $P$ after a finite number of times. The number of times that these cuts must be added is called the \concept{Chv\`atal-rank}.
 
 \paragraph{}
 \begin{example}
-Consider the following integer program:
+Consider the following \concept{integer program}:
 \begin{equation}
 \begin{array}{rrcrcr}
 \mbox{maximize}&&&x_2\\
@@ -266,12 +264,12 @@ Consider the following integer program:
 \end{equation}
 
 \paragraph{}
-The feasible region of the LP-relaxation of this integer program is depicted in \figref{feasibleregion-gc}.
+The \concept{feasible region} of the \concept{LP-relaxation} of this \concept{integer program} is depicted in \figref{feasibleregion-gc}.
 
 
 \importtikzfigure{feasibleregion-gc}{Feasible region of LP-relaxation.}
 
-Consider now the nonnegative vector $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. Using $\vec{u}$, we can construct the following linear combination of the given constraints:
+Consider now the \concept{nonnegative vector} $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. Using $\vec{u}$, we can construct the following \concept{linear combination} of the given \concepts{constraint}:
 \begin{equation}
 \begin{array}{rcrcrcrcr}
 \tfrac{5}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
@@ -281,7 +279,7 @@ Consider now the nonnegative vector $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. 
 \end{equation}
 
 \paragraph{}
-Another possibility is to set $\vec{u}=\tupl{\frac{1}{12},\frac{5}{12}}$. The resulting constraint can be found as follows:
+Another possibility is to set $\vec{u}=\tupl{\frac{1}{12},\frac{5}{12}}$. The resulting \concept{constraint} can be found as follows:
 \begin{equation}
 \begin{array}{rcrcrcrcr}
 \tfrac{1}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
@@ -291,16 +289,16 @@ Another possibility is to set $\vec{u}=\tupl{\frac{1}{12},\frac{5}{12}}$. The re
 \end{equation}
 
 \paragraph{}
-When both additional restrictions are added to the original constraints, a polytope depicted in \figref{feasibleregion-gc-mod} with integral vertices arises. Thus, when these constraints are added to the linear program, the problem can be solved with the simplex method.
+When both additional restrictions are added to the original \concepts{constraint}, a \concept{polytope} depicted in \figref{feasibleregion-gc-mod} with \concept[integral vertex]{integral vertices} arises. Thus, when these \concepts{constraint} are added to the \concept{linear program}, the problem can be solved with the \concept{simplex method}.
 
 \importtikzfigure{feasibleregion-gc-mod}{New polyhedron with additional constraints.}
 \end{example}
 
 \paragraph{}
-A main question is of course: how to get hold of a ``right'' $\vec{u}$? That is, a $\vec{u}$ such that the resulting inequality cuts away fractional extreme points without eliminating integral extreme vertices? A constructive method has been designed by Gomory.
+A main question is of course: how to get hold of a ``right'' $\vec{u}$? That is, a $\vec{u}$ such that the resulting inequality cuts away \concepts{fractional extreme point} without eliminating \concept[integral extreme vertex]{integral extreme vertices}? A constructive method has been designed by Gomory.
 
 \begin{example}
-We continue our example described above to illustrate the idea. When we solve the LP-relaxation of the formulation given in the example with the simplex-method (see e.g. Chv\`atal\cite{Chvatal/83/Linear}), we start with the following dictionair:
+We continue our example described above to illustrate the idea. When we solve the \concept{LP-relaxation} of the formulation given in the example with the \concept{simplex method} (see e.g. \emph{Chv\`atal}\cite{Chvatal/83/Linear}), we start with the following \concept{dictionair}:
 
 \begin{equation}
 \begin{array}{rcrcrcr}
@@ -311,7 +309,7 @@ z&=&&&&&x_2
 \end{equation}
 
 \paragraph{}
-After performing two iterations, we find the following, final, dictionair:
+After performing two iterations, we find the following, final, \concept{dictionair}:
 
 \begin{equation}
 \begin{array}{rcrcrcr}
@@ -322,14 +320,14 @@ z&=&&&&&x_2
 \end{equation}
 
 \paragraph{}
-Consider now the second equation of this last dictionair. We can rewrite it as follows:
+Consider now the second equation of this last \concept{dictionair}. We can rewrite it as follows:
 
 \begin{equation}
 x_2+\tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4=\tfrac{3}{2}\eqnlab{cg-cut-eq2-ini}
 \end{equation}
 
 \paragraph{}
-Since $x_3,x_4\geq 0$, it follows from the latter equality that:
+Since $x_3,x_4\geq 0$, it follows from the latter \concept{equality} that:
 
 \begin{equation}
 x_2+\floor{\tfrac{1}{4}}\cdot x_3+\tfrac{1}{4}\cdot x_4\leq\floor{\tfrac{3}{2}}
@@ -355,7 +353,7 @@ We now continue our argument by subtracting inequality \eqnnref{cg-cut-eq2-fin} 
 \tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4\geq\tfrac{1}{2}
 \end{equation}
 
-This is called a \concept{Gomory's cut}. Substituting for $x_3$ and $x_4$ their defining equations (see the first simplex dictionair), we obtain, an equivalent inequality:
+This is called a \concept{Gomory's cut}. Substituting for $x_3$ and $x_4$ their defining equations (see the first simplex \concept{dictionair}), we obtain, an equivalent inequality:
 
 \begin{equation}
 x_2\leq 1.
@@ -363,11 +361,11 @@ x_2\leq 1.
 \end{example}
 
 \begin{note}
-Notice that the current fractional solution violates this inequality. Repeatedly adding such a Gomory's cut gives in the end an integral solution.
+Notice that the current \concept{fractional solution} violates this inequality. Repeatedly adding such a \concept{Gomory's cut} gives in the end an \concept{integral solution}.
 \end{note}
 
 \paragraph{}
-We now show that the procedure outlined above not only works for this particular example, but in fact works in general. We denote by $B$ the set of basic variables, and use $x_{B_i}$ to denote the basic variable corresponding to row $i$ of the dictionair. Consider row $i$ from the last dictionair:
+We now show that the procedure outlined above not only works for this particular example, but in fact works in general. We denote by $B$ the set of \concepts{basic variable}, and use $x_{B_i}$ to denote the \concept{basic variable} corresponding to row $i$ of the \concept{dictionair}. Consider \concept{row} $i$ from the last \concept{dictionair}:
 \begin{equation}
 x_{B_i}+\sumndomain[j]{B}{d_{i,j}\cdot x_j}=d_i.\eqnlab{gc-theory1}
 \end{equation}
@@ -382,20 +380,20 @@ Next, due to integrality of the left-hand side, we can round down the right-hand
 x_{B_i}+\sumndomain[j]{B}{\floor{d_{i,j}}\cdot x_j}=\floor{d_i}.\eqnlab{gc-theory2}
 \end{equation}
 
-When we define $f_{i,j}=d_{i,j}-\floor{d_{i,j}}$, and $f_i=d_i−\floor{d_i}$, and when we subtract \eqnnref{gc-theory2} from \eqnnref{gc-theory1}, we get Gomory's cut:
+When we define $f_{i,j}=d_{i,j}-\floor{d_{i,j}}$, and $f_i=d_i−\floor{d_i}$, and when we subtract \eqnnref{gc-theory2} from \eqnnref{gc-theory1}, we get \concept{Gomory's cut}:
 \begin{equation}
 \sumndomain[j]{B}{f_{i,j}\cdot x_j}=f_i.
 \end{equation}
 
 \begin{note}
-Notice that when $d_i$ is not integral, then $f_i>0$, and hence Gomory's cut is violated by the current solution (which, of course, has $x_j=0$ for all $j\notin B$).
+Notice that when $d_i$ is not integral, then $f_i>0$, and hence \concept{Gomory's cut} is violated by the current \concept{solution} (which, of course, has $x_j=0$ for all $j\notin B$).
 \end{note}
 
 \paragraph{}
-Unfortunately, there are some disadvantages to Gomory's method:
+Unfortunately, there are some disadvantages to \concept{Gomory's method}:
 \begin{enumerate}
- \item The number of additional constraints is usually large. Moreover, Gomory's method does not always yield the best constraints possible.
- \item The additional constraints contain a lot of non-zero elements, in general. Therefore problems may arise with respect to the numerical stability of the simplex method.
+ \item The number of additional \concepts{constraint} is usually large. Moreover, \concept{Gomory's method} does not always yield the best \concepts{constraint} possible.
+ \item The additional \concepts{constraint} contain a lot of non-zero elements, in general. Therefore problems may arise with respect to the numerical stability of the \concept{simplex method}.
 \end{enumerate}
 In order to cope with these disadvantages we will develop methods for generating better constraints. Such methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
 

@@ -182,6 +182,10 @@ mode=LaTeX
 open=true
 order=1
 
+[item:integer.tex]
+column=311
+line=115
+
 [item:optimization_special_topics.kilepr]
 archive=true
 column=1
@@ -355,6 +359,11 @@ CursorColumn=68
 CursorLine=80
 JumpList=
 ViMarks=.,80,67,[,80,62,],80,67
+
+[view-settings,view=0,item:integer.tex]
+CursorColumn=311
+CursorLine=115
+ViMarks=.,115,310,[,115,310,],115,310
 
 [view-settings,view=0,item:tikzpictures/tikz-clique-graph.tex]
 CursorColumn=10
