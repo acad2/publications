@@ -250,22 +250,19 @@ where $A$ and $\vec{b}$ depend on the problem at hand. This type of \concept{for
 \section{General Combinatorial Optimization Problems}
 \seclab{generalcombinatorial}
 
-In the first section, we introduced binary variables to model decisions of the yes-no type, more specifically, to decide whether an element is in a set or not. These variables were used further to describe the constraints that determine the feasible solutions. In all the examples these constraints could be written as linear functions with a bound imposed on them. Similarly, the objective could be formulated as a linear function of the variables. In this section we will generalize the formulations of combinatorial problems, with respect to all three items, i.e., the variables, the constraints, and the objective.
+In the first section, we introduced \concepts{binary variable} to model \concepts{decision} of the yes-no type, more specifically, to decide whether an element is in a set or not. These variables were used further to describe the \concepts{constraint} that determine the \concepts{feasible solution}. In all the examples these constraints could be written as \concepts{linear function} with a \concept{bound} imposed on them. Similarly, the \concept{objective} could be formulated as a \concept{linear function} of the \concepts{variable}. In this section we will generalize the \concepts{formulation} of \concepts{combinatorial problem}, with respect to all three items, i.e., the \concepts{variable}, the \concepts{constraint}, and the \concept{objective}.
 
 \paragraph{}
-The decisions in combinatorial problems may be more complicated than simple yes/no decisions. One may have to introduce integer variables or even real variables, like in linear programming, to model certain decisions. And, of course, combinations of these types of variables are possible in a single problem formulation. The combinatorial nature (finite or countable number of feasible solutions) may not be so evident in these problems. However, the number of ``interesting'' feasible solutions is usually still finite in such problems. For instance, in linear programming, the interesting feasible solutions are the vertices
-of a polyhedron. The number of vertices is usually finite.
+The \concepts{decision} in \concepts{combinatorial problem} may be more complicated than simple yes/no decisions. One may have to introduce \concepts{integer variable} or even \concepts{real variable}, like in \concept{linear programming}, to model certain \concepts{decision}. And, of course, combinations of these types of variables are possible in a single problem \concept{formulation}. The combinatorial nature (finite or countable number of feasible solutions) may not be so evident in these problems. However, the number of ``\concepts{interesting feasible solution}'' is usually still finite in such problems. For instance, in \concept{linear programming}, the \concepts{interesting feasible solution} are the \concept[vertex]{vertices} of a \concept{polyhedron}. The number of \concept[vertex]{vertices} is usually finite.
 
 \paragraph{}
-One may consider any function of the variables with a bound imposed on it as a constraint. Moreover, logical compositions of constraints, like implications and disjunctions (logical ``or'') can be used to model
-the restrictions of a problem. In abstracto, any relation on the variables that restricts the set of feasible solutions can be used as a constraint.
+One may consider any function of the \concepts{variable} with a \concept{bound} imposed on it as a \concept{constraint}. Moreover, \concepts{logical composition} of \concepts{constraint}, like \concepts{implication} and \concepts{disjunction} (logical ``or'') can be used to model the restrictions of a problem. In abstracto, any relation on the \concepts{variable} that restricts the set of \concepts{feasible solution} can be used as a \concept{constraint}.
 
 \paragraph{}
-The objective of a problem can be any function of the variables, thus it is not restricted to linear functions.
+The \concept{objective} of a problem can be any function of the \concepts{variable}, thus it is not restricted to \concepts{linear function}.
 
 \paragraph{}
-The above observations lead to the following \concept{abstract formulation of optimization problems}. We distinguish between the real variables, denoted by the vector $\vec{x}$, and the integral variables, denoted by the
-vector $\vec{y}$. A formulation of a combinatorial optimization problem contains the following items:
+The above observations lead to the following \concept{abstract formulation of optimization problems}. We distinguish between the \concepts{real variable}, denoted by the \concept{vector} $\vec{x}$, and the \concepts{integral variable}, denoted by the \concept{vector} $\vec{y}$. A \concept{formulation} of a \concept{combinatorial optimization problem} contains the following items:
 \begin{itemize}
  \item a vector of $n$ real decision variables:
  \begin{equation}
@@ -286,49 +283,49 @@ vector $\vec{y}$. A formulation of a combinatorial optimization problem contains
 \end{itemize}
 
 \paragraph{}
-The set of \concepts{feasible solution} consists of vectors $\tupl{\vec{x},\vec{y}}$ that satisfy all the constraints. Each variable has a domain $D$, usually the set of real numbers $\RRR$, or the set of integer $\ZZZ$. The solution space of the problem is the Cartesian product of the domains of the variables, i.e., $\RRR^n\times\ZZZ^m$.
+The set of \concepts{feasible solution} consists of \concepts{vector} $\tupl{\vec{x},\vec{y}}$ that satisfy all the \concepts{constraint}. Each \concept{variable} has a \concept{domain} $D$, usually the set of \concepts{real number} $\RRR$, or the set of \concepts{integer} $\ZZZ$. The \concept{solution space} of the problem is the \concept{Cartesian product} of the \concepts{domains} of the \concepts{variable}, i.e., $\RRR^n\times\ZZZ^m$.
 
 \paragraph{}
-For many solution techniques, especially the ones that we are going to discuss, it is of eminent importance to restrict the domains of the variables as much as possible. Some constraints imply \concept[lower bound]{lower} and \concepts{upper bound} on the value of a variable, directly or indirectly. For instance, binary variables have an explicit lower and upper bound. If this is the case, we usually take this into account in the problem formulation explicitly, i.e., if a real variable $x_i$ has a lower bound $l_i$ and an upper bound $u_i$ , then we describe its domain as $\fbrk{l_i,u_i}$; if $y_j$ is an integral variable, with a lower bound $l_j$ and an upper bound $u_j$ , then we describe its domain as $\accl{l_j,\ldots,u_j}$.
+For many \concepts{solution technique}, especially the ones that we are going to discuss, it is of eminent importance to restrict the \concepts{domain} of the \concepts{variable} as much as possible. Some \concepts{constraint} imply \concept[lower bound]{lower} and \concepts{upper bound} on the value of a \concept{variable}, directly or indirectly. For instance, \concepts{binary variable} have an \concept[explicit lower bound]{explicit lower} and \concept[explicit upper bound]{upper bound}. If this is the case, we usually take this into account in the problem \concept{formulation} explicitly, i.e., if a \concept{real variable} $x_i$ has a \concept{lower bound} $l_i$ and an \concept{upper bound} $u_i$ , then we describe its \concept{domain} as $\fbrk{l_i,u_i}$; if $y_j$ is an \concept{integral variable}, with a \concept{lower bound} $l_j$ and an \concept{upper bound} $u_j$ , then we describe its domain as $\accl{l_j,l_j+1,\ldots,u_j}$.
 
 \section*{Exercises}
 \begin{exercise}
-Consider the stable set problem on an undirected graph $G=\tupl{V,E}$. Show that the formulation \eqnnrefr{stableset-m}{stableset-c2} is a correct formulation of the stable set problem.
+Consider the \concept{stable set problem} on an \concept{undirected graph} $G=\tupl{V,E}$. Show that the \concept{formulation} \eqnnrefr{stableset-m}{stableset-c2} is a correct \concept{formulation} of the \concept{stable set problem}.
 \end{exercise}
 \begin{exercise}
-Consider the matching depicted in \figref{matching-red}. Is it maximal? Is it maximum?
+Consider the \concept{matching} depicted in \figref{matching-red}. Is it \concept[maximal solution]{maximal}? Is it \concept[maximum solution]{maximum}?
 \end{exercise}
 \begin{exercise}
-Consider the stable set depicted in \figref{stableset-red}. Is it maximal? Is it maximum?
+Consider the \concept{stable set} depicted in \figref{stableset-red}. Is it \concept[maximal solution]{maximal}? Is it \concept[maximum solution]{maximum}?
 \end{exercise}
 \begin{exercise}
-Consider an undirected graph $G=\tupl{V,E}$. An \concept{edge cover} $E'$ is a subset of the edges such that each node is incident to at least one edge in $E'$. Formulate the problem of finding a minimum cardinality edge cover as an integer linear program.
+Consider an \concept{undirected graph} $G=\tupl{V,E}$. An \concept{edge cover} $E'$ is a subset of the \concepts{edge} such that each \concept{node} is \concept{incident} to at least one \concept{edge} in $E'$. Formulate the problem of finding a \concept{minimum cardinality edge cover} as an \concept{integer linear program}.
 \end{exercise}
 \begin{exercise}
-Consider an undirected graph $G=\tupl{V,E}$. A \concept{node cover} $V'$ is a subset of the nodes such that each edge is incident to at least one node in $V'$. Formulate the problem of finding a minimum cardinality node cover as an integer linear program.
+Consider an \concept{undirected graph} $G=\tupl{V,E}$. A \concept{node cover} $V'$ is a subset of the \concepts{node} such that each \concept{edge} is incident to at least one \concept{node} in $V'$. Formulate the problem of finding a \concept{minimum cardinality node cover} as an \concept{integer linear program}.
 \end{exercise}
 \begin{exercise}
 \exclab{clique-partitioning}
-A \concept{clique partitioning} of an undirected, complete graph $G$ is a partitioning of the vertices into subsets $V_1,V_2,\ldots,V_k$ such that the subgraph induced by each $V_i$ is a complete graph itself ($\rangei[i]{1}{k}$). Consider now a complete graph $G$ and an arbitrary weight $w_{i,j}$ for each edge of the graph (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative edge weights). The objective is to find a clique partitioning of maximal weight, that is, a clique partitioning such that the cumulative weight of the edges that have both vertices in one and the same component is maximum. Formulate this problem as an integer linear programming problem.
+A \concept{clique partitioning} of an \concept[undirected graph]{undirected}, \concept{complete graph} $G$ is a \concept{partitioning} of the \concept[vertex]{vertices} into subsets $V_1,V_2,\ldots,V_k$ such that the \concept{subgraph} induced by each $V_i$ is a \concept{complete graph} itself ($\rangei[i]{1}{k}$). Consider now a \concept{complete graph} $G$ and an arbitrary \concept{weight} $w_{i,j}$ for each \concept{edge} of the \concept{graph} (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative \concept{edge} \concepts{weight}). The \concept{objective} is to find a \concept{clique partitioning} of \concept{maximal weight}, that is, a \concept{clique partitioning} such that the \concept{cumulative weight} of the \concepts{edge} that have both \concept[vertex]{vertices} in one and the same component is maximum. Formulate this problem as an \concept{integer linear programming problem}.
 \begin{hint}
-Use a variable for each edge.
+Use a \concept{variable} for each \concept{edge}.
 \end{hint}
 \end{exercise}
 \begin{exercise}
-Consider the TSP.
+Consider the \concept{TSP}.
 \begin{itemize}
- \item When the distance matrix $C$ is known to be symmetric, can you simplify formulation \eqnnrefr{tsp-m}{tsp-c4} by ``merging'' \eqncsref{tsp-c1} and \eqnnref{tsp-c2}?
- \item Which of the two formulations given in \sscref{tsp} is stronger?
+ \item When the \concept{distance matrix} $C$ is known to be \concept[symmetric distance matrix]{symmetric}, can you simplify \concept{formulation} \eqnnrefr{tsp-m}{tsp-c4} by ``merging'' \eqncsref{tsp-c1} and \eqnnref{tsp-c2}?
+ \item Which of the two \concepts{formulation} given in \sscref{tsp} is stronger?
 \end{itemize}
 \end{exercise}
 \begin{exercise}\exclab{rectanglestabbing}
-Given is a set of axis-aligned rectangles in the plane. Each of these rectangles needs to be stabbed, either by a horizontal line or by a vertical line. The problem is to find a set horizontal and vertical lines, stabbing each rectangle at least once, with minimum cardinality. We call this the \concept{rectangle stabbing} problem. Formulate this problem as an integer linear programming problem.
+Given is a set of \concepts{axis-aligned rectangle} in the \concept{plane}. Each of these \concepts{rectangle} needs to be stabbed, either by a \concept{horizontal line} or by a \concept{vertical line}. The problem is to find a set \concept[horizontal line]{horizontal} and \concepts{vertical line}, stabbing each \concept{rectangle} at least once, with \concept{minimum cardinality}. We call this the \concept{rectangle stabbing problem}. Formulate this problem as an \concept{integer linear programming problem}.
 \begin{hint}
 First, give a formulation for the instance depicted in \figref{rectanglestabbing}).
 \end{hint}
 \end{exercise}
 \begin{exercise}
-Given an instance of the rectangle stabbing problem as depicted in \figref{rectanglestabbing}, what fractional solution is the optimal linear programming relaxation (of the integer program that you just wrote down) for this instance?
-\end{exercise}
+Given an instance of the \concept{rectangle stabbing problem} as depicted in \figref{rectanglestabbing}, what \concept{fractional solution} is the optimal \concept{linear programming relaxation} (of the integer program that you just wrote down) for this instance?
 
 \importtikzfigure{rectanglestabbing}{A rectangle stabbing instance.}
+\end{exercise}
