@@ -422,8 +422,8 @@ Use \concept{induction}, plus the facts that:
 \begin{answer}
 \footnote{Note: this answer does not actually use induction.}
 Firstly, we remark that each \concept[square matrix]{square} submatrix of an \concept{interval matrix} again is an \concept{interval matrix}. So to prove that each \concept{interval matrix} is \concept{TUM}, it is sufficient to prove that each \concept[square matrix]{square} \concept{interval matrix} is \concept{unimodular}. Secondly, given a \concept[square matrix]{square} \concept{interval matrix} $M$, if $det(M)=0$, then $M$ is \concept{unimodular}.\\
-What is left to prove, is that each $n$-by-$n$ interval matrix $M$ for which $det(M)\neq 0$ is unimodular, which means it has a determinant of $+1$ or $-1$. We will do this by showing that we can transform $M$ into an identity matrix with the row operations defined above.\\
-The first step in this proof is to define for each row $i \in 1..n$ the variables $s_i$ and $e_i$, denoting respectively the column where the interval of $1$'s starts and ends. For instance, the following interval matrix has three rows, where $s_1=1$, $s_2=1$, $s_3=2$, $e_1=3$, $e_2=2$, $e_3=3$:
+What is left to prove, is that each $n$-by-$n$ \concept{interval matrix} $M$ for which $det(M)\neq 0$ is \concept{unimodular}, which means it has a \concept{determinant} of $+1$ or $-1$. We will do this by showing that we can transform $M$ into an \concept{identity matrix} with the \concept{row} operations defined above.\\
+The first step in this proof is to define for each \concept{row} $i \in 1..n$ the variables $s_i$ and $e_i$, denoting respectively the \concept{column} where the \concept{interval} of $1$'s starts and ends. For instance, the following \concept{interval matrix} has three \concepts{row}, where $s_1=1$, $s_2=1$, $s_3=2$, $e_1=3$, $e_2=2$, $e_3=3$:
 \begin{equation}
 \label{unimodular_interval}
 \brak{\begin{array}{ccc}
@@ -432,7 +432,7 @@ The first step in this proof is to define for each row $i \in 1..n$ the variable
 0&1&1
 \end{array}}
 \end{equation}
-Now, whenever two rows $i$ and $j$ have $s_i=s_j$ or $e_i=e_j$, we subtract the row with the fewest $1$'s from the row with the most $1$'s. This transformation preserves both the consecutive ones property and the unimodular property, so we end up with a new interval matrix $M'$ with the same unimodular property\footnote{This transformation can change the sign of the determinant though.}, but with less $1$'s. For example, matrix \ref{unimodular_interval} can be transformed into
+Now, whenever two rows $i$ and $j$ have $s_i=s_j$ or $e_i=e_j$, we subtract the row with the fewest $1$'s from the \concept{row} with the most $1$'s. This transformation preserves both the consecutive ones property and the \concept{unimodular} property, so we end up with a new \concept{interval matrix} $M'$ with the same \concept{unimodular} property\footnote{This transformation can change the sign of the \concept{determinant} though.}, but with less $1$'s. For example, \concept{matrix} \ref{unimodular_interval} can be transformed into
 \begin{equation}
 \brak{\begin{array}{ccc}
 0&0&1\\
@@ -440,8 +440,8 @@ Now, whenever two rows $i$ and $j$ have $s_i=s_j$ or $e_i=e_j$, we subtract the 
 0&1&1
 \end{array}}
 \end{equation}
-by noting that $s_1=s_2$, and subsequently subtracting the row $2$ from the row $1$.\\
-If we now continue to apply this row operation until no two rows have the same start value or end value, we end up with a matrix containing exactly one $1$ in each row, never in the same column.\footnote{Note that no empty rows or columns can be derived, since we could assume the determinant was non-zero.} One way to understand this, is by noting that the $n$ $s_i$'s of the final matrix must all be different, and since they can only take the values $1..n$ (being the colomn numbers), each column is associated to exactly one $s_i$. The same argument can be made for the $e_i$'s. Now, since no $e_i$ can be smaller than its corresponding $s_i$, $e_i=s_i$ for all $i \in 1..n$. Continuing the example yields \ref{unimodular_interval_2} after subtracting row $1$ from row $3$ and then row $3$ from row $2$:
+by noting that $s_1=s_2$, and subsequently subtracting the \concept{row} $2$ from the \concept{row} $1$.\\
+If we now continue to apply this \concept{row} operation until no two \concepts{row} have the same start value or end value, we end up with a \concept{matrix} containing exactly one $1$ in each \concept{row}, never in the same \concept{column}.\footnote{Note that no empty rows or columns can be derived, since we could assume the determinant was non-zero.} One way to understand this, is by noting that the $n$ $s_i$'s of the final \concept{matrix} must all be different, and since they can only take the values $1..n$ (being the \concept{column} numbers), each \concept{column} is associated to exactly one $s_i$. The same argument can be made for the $e_i$'s. Now, since no $e_i$ can be smaller than its corresponding $s_i$, $e_i=s_i$ for all $i \in 1..n$. Continuing the example yields \ref{unimodular_interval_2} after subtracting \concept{row} $1$ from \concept{row} $3$ and then \concept{row} $3$ from \concept{row} $2$:
 \begin{equation}
 \label{unimodular_interval_2}
 \brak{\begin{array}{ccc}
@@ -450,7 +450,7 @@ If we now continue to apply this row operation until no two rows have the same s
 0&1&0
 \end{array}}
 \end{equation}
-Such a matrix can after some row-swap operations be transformed into the identity, e.g.:
+Such a \concept{matrix} can after some row-swap operations be transformed into the identity, e.g.:
 \begin{equation}
 \brak{\begin{array}{ccc}
 1&0&0\\
@@ -458,28 +458,26 @@ Such a matrix can after some row-swap operations be transformed into the identit
 0&0&1
 \end{array}}
 \end{equation}
-And since the identity is unimodular, and since we only used unimodularity preserving row operations, $M$ must be unimodular, which concludes the proof.
+And since the identity is \concept{unimodular}, and since we only used unimodularity preserving row operations, $M$ must be \concept{unimodular}, which concludes the proof.
 \end{answer}
 \end{exercise}
 \begin{exercise}
-Consider \excref{rectanglestabbing} of \chpref{formulations}, and let us modify that problem by only considering vertical lines as
-potential stabbing lines. The resulting problem can be formulated as follows: given a set of intervals,
-find a minimum number of vertical lines stabbing each interval at least once.
+Consider \excref{rectanglestabbing} of \chpref{formulations}, and let us modify that problem by only considering \concepts{vertical line} as potential stabbing lines. The resulting problem can be formulated as follows: given a set of \concepts{interval}, find a minimum number of \concepts{vertical line} stabbing each interval at least once.
 \begin{enumerate}
- \item Give an IP-formulation of the resulting problem.
- \item Is the corresponding constraint matrix an interval matrix (see \excref{interval-matrix})?
+ \item Give an \concept{IP-formulation} of the resulting problem.
+ \item Is the corresponding constraint \concept{matrix} an \concept{interval matrix} (see \excref{interval-matrix})?
  \item How would you solve this problem?
- \item Can you use the same approach for the rectangle stabbing problem?
+ \item Can you use the same approach for the \concept{rectangle stabbing problem}?
 \end{enumerate}
 \end{exercise}
 \begin{answer}
-The IP-formulation is the following:
+The \concept{IP-formulation} is the following:
 \begin{eqnarray}
 \mbox{minimize}&\sumieqb[i]{1}{n}{y_i}\eqnlab{rsv-m}\\
 \mbox{subject to}&\forall I\in\calI:\sumdomain[i]{I}{x_{i}}\geq 1\eqnlab{rsv-c1}\\
 &\forall\rangei[i]{1}{n}:x_i\in\accl{0,1}\eqnlab{rsv-c2}
 \end{eqnarray}
-The corresponding matrix is TUM since it is an interval matrix. You can solve this problem using linear programming since the matrix is TUM and thus the variables are guaranteed to be integral. It is not possible to solve the rectangle stabbing problem since such matrix is not guaranteed to be TUM.
+The corresponding \concept{matrix} is \concept{TUM} since it is an \concept{interval matrix}. You can solve this problem using \concept{linear programming} since the \concept{matrix} is \concept{TUM} and thus the variables are guaranteed to be integral. It is not possible to solve the \concept{rectangle stabbing problem} since such \concept{matrix} is not guaranteed to be \concept{TUM}.
 \end{answer}
 \begin{exercise}
 Consider the problem formulated below, where in addition, the variables $x_1$ and $x_2$ need to be integral.
@@ -493,7 +491,7 @@ Consider the problem formulated below, where in addition, the variables $x_1$ an
 &x_1&,&x_2&&\mbox{integral}
 \end{array}
 \end{equation}
-Solving the linear program by the simplex method gives the following final dictionary.
+Solving the \concept{linear program} by the \concept{simplex method} gives the following final \concept{dictionary}.
 \begin{equation}
 \begin{array}{rcrcrcr}
 x_1&=&\tfrac{18}{11}&-&\tfrac{3}{11}\cdot x_3&+&\tfrac{1}{11}\cdot x_4\\
@@ -502,10 +500,10 @@ z&=&\tfrac{52}{11}&-&\tfrac{5}{11}\cdot x_3&-&\tfrac{2}{11}\cdot x_4
 \end{array}
 \end{equation}
 \paragraph{}
-Find two Gomory cuts for the problem where the variables $x_1$ and $x_2$ need to be integral. Next, rewrite each of these cuts in terms of solely $x_1$ and $x_2$.
+Find two \concepts{Gomory cut} for the problem where the \concepts{variable} $x_1$ and $x_2$ need to be \concept[integral variable]{integral}. Next, rewrite each of these \concept[Gomory cut]{cuts} in terms of solely $x_1$ and $x_2$.
 \end{exercise}
 \begin{exercise}
-Consider the following problem in integral variables $x_1$ and $x_2$. How many cutting planes do you have to add to solve the problem for $k=2$? For $k=4$? For general $k$? Can you use integer rounding to generate a valid inequality?
+Consider the following problem in \concepts{integral variable} $x_1$ and $x_2$. How many \concepts{cutting plane} do you have to add to solve the problem for $k=2$? For $k=4$? For general $k$? Can you use integer rounding to generate a \concept{valid inequality}?
 \begin{hint}
 Draw a picture.
 \end{hint}
@@ -520,30 +518,30 @@ Draw a picture.
 \end{equation}
 \end{exercise}
 \begin{exercise}
-Let $G=\tupl{V,E}$ be an undirected graph. A matching in $G$ is represented by a vector $\vec{x}\in\BoolSet^{\abs{E}}$ in the following way. For each edge $e\in E$ we define
+Let $G=\tupl{V,E}$ be an \concept{undirected graph}. A \concept{matching} in $G$ is represented by a \concept{vector} $\vec{x}\in\BoolSet^{\abs{E}}$ in the following way. For each \concept{edge} $e\in E$ we define
 
 \begin{equation}
 \semboolvar{x_e}{if edge $e$ is selected in the matching;}{otherwise.}
 \end{equation}
 
-The set of matchings is now given by
+The set of \concepts{matching} is now given by
 
 \begin{equation}
 M=\condset{\vec{x}\in\BoolSet^{|E|}}{\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1\wedge\forall e\in E:x_e\in\accl{0,1}}.
 \end{equation}
 
 \begin{enumerate}
- \item Derive with integer rounding that
+ \item Derive with \concept{integer rounding} that
 \begin{equation}
 \sumdomain[e=\tupl{v_1,v_2}]{E:v_1,v_2\in S}{x_e}\leq\displaystyle\frac{\abs{S}-1}{2}
 \eqnlab{matching-introunding}
 \end{equation}
-is a valid inequality for each $S\subseteq V$ with $3\leq\abs{S}\leq\abs{V}$ and $\abs{S}$ odd. (These inequalities are called \concept{odd-set constraints}).
- \item Find, for the graph depicted in \figref{triangle}, a fractional solution violating the inequality \eqnref{matching-introunding} with $S=\accl{1,2,3}$.
+is a \concept{valid inequality} for each $S\subseteq V$ with $3\leq\abs{S}\leq\abs{V}$ and $\abs{S}$ odd. (These inequalities are called \concepts{odd-set constraint}).
+ \item Find, for the \concept{graph} depicted in \figref{triangle}, a fractional solution violating the inequality \eqnref{matching-introunding} with $S=\accl{1,2,3}$.
 \end{enumerate}
 \importtikzfigure{triangle}{A triangle.}
 \end{exercise}
 \begin{exercise}
-Consider the integer programming formulation of the clique partitioning problem (see \excref{clique-partitioning} of \chpref{formulations}). \figref{cliquepartition-integer} shows an instance of that problem. Notice that solid lines correspond to edges with weight $+1$, whereas dotted lines correspond to edges with weight $-1$. What is the value of the linear programming relaxation of the integer programming formulation corresponding to this instance? Can you find a violated inequality using integer rounding?
+Consider the \concept{integer programming formulation} of the \concept{clique partitioning problem} (see \excref{clique-partitioning} of \chpref{formulations}). \figref{cliquepartition-integer} shows an instance of that problem. Notice that solid lines correspond to \concepts{edge} with \concept{weight} $+1$, whereas dotted lines correspond to \concepts{edge} with \concept{weight} $-1$. What is the value of the \concept{linear programming relaxation} of the \concept{integer programming formulation} corresponding to this instance? Can you find a violated inequality using \concept{integer rounding}?
 \importtikzfigure{cliquepartition-integer}{An instance of clique partitioning.}
 \end{exercise}
