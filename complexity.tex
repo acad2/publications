@@ -19,19 +19,19 @@ Let us look at this issue from another vantage point. Consider the well-known \c
 So, how much progress can we expect on the theoretical front? Before we provide a tentative answer to this question, let us try to formulate more precisely some of the notions that have just been sketched.
 
 \section{Problems and problem instances}
-Formally speaking, a (computational) \concept{problem} is a generic question whose formulation includes a number of undetermined parameters. Here are some simple examples.
+Formally speaking, a (computational) \concept{problem} is a generic question whose formulation includes a number of undetermined \concepts{parameter}. Here are some simple examples.
 
 \begin{description}
- \item[Matrix addition problem] The parameters are $n$, $A$ and $B$ where $n\in\NNN$, and $A$ and $B$ are two $n\times n$ matrices. Question: what is the value of $A+B$?
- \item[Shortest path problem] The parameters are a graph $G=\tupl{V,E}$, two vertices $s,t\in V$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a shortest path from $s$ to $t$.
- \item[Traveling salesman problem] The parameters are a graph $G=\tupl{V,E}$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a shortest traveling salesman tour in $G$.
+ \item[\concept{Matrix addition problem}] The \concept{parameter} are $n$, $A$ and $B$ where $n\in\NNN$, and $A$ and $B$ are two $n\times n$ \concept[matrix]{matrices}. Question: what is the value of $A+B$?
+ \item[\concept{Shortest path problem}] The \concept{parameter} are a graph $G=\tupl{V,E}$, two vertices $s,t\in V$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a \concept{shortest path} from $s$ to $t$.
+ \item[\concept{Traveling salesman problem}] The \concept{parameter} are a graph $G=\tupl{V,E}$, and the length $\fun{l}{e}\geq 0$ of every edge $e\in E$. Question: find a \concept{shortest traveling salesman tour} in $G$.
 \end{description}
 
 \paragraph{}
-An \concept{instance} of a problem $P$ arises when the values of all undetermined parameters of $P$ are specified (or, more intuitively, by specifying the input file that contains the numerical data). So, a problem can also be viewed as a collection of instances. Notice that an instance admits an answer, but a problem does not (try to give the answer of the matrix addition problem above!). We will use the symbol $I$ for an instance.
+An \concept{instance} of a \concept{problem} $P$ arises when the values of all undetermined \concepts{parameter} of $P$ are specified (or, more intuitively, by specifying the input file that contains the numerical data). So, a \concept{problem} can also be viewed as a collection of \concepts{instance}. Notice that an \concept{instance} admits an answer, but a problem does not (try to give the answer of the \concept{matrix addition problem} above!). We will use the symbol $I$ for an \concept{instance}.
 
 \paragraph{}
-An \concept{algorithm} for a problem $P$ is a step-by-step procedure that describes how to compute a solution for every instance $I$ of $P$. To compare the efficiency of different algorithms for a same problem $P$ , we can determine the time required by each algorithm to solve an instance of $P$. Notice that this obviously depends on the particular instance which is to be solved, but also on the speed of the computer, on the skills of the programmer, etc. Therefore, we need again to define this notion in more formal way.
+An \concept{algorithm} for a \concept{problem} $P$ is a step-by-step procedure that describes how to compute a \concept{solution} for every \concept{instance} $I$ of $P$. To compare the efficiency of different algorithms for a same problem $P$, we can determine the time required by each algorithm to solve an instance of $P$. Notice that this obviously depends on the particular instance which is to be solved, but also on the speed of the computer, on the skills of the programmer, etc. Therefore, we need again to define this notion in more formal way.
 
 \paragraph{}
 The \concept{size of an instance} $I$, denoted by $\fun{s}{I}$, is the number of bits needed to represent $I$. It is determined both by the number of parameters and by their magnitude. (Intuitively, this can be viewed as the size of the input file of a computer program which solves $I$.)
