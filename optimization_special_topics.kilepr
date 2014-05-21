@@ -202,13 +202,13 @@ order=1
 
 [item:brackets-en.sty]
 archive=true
-column=0
+column=46
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=105
 mode=LaTeX
-open=false
-order=2
+open=true
+order=5
 
 [item:branch.tex]
 archive=true
@@ -232,10 +232,10 @@ order=2
 
 [item:formulation.tex]
 archive=true
-column=14
+column=4
 encoding=UTF-8
 highlight=LaTeX
-line=118
+line=59
 mode=LaTeX
 open=true
 order=4
@@ -272,10 +272,10 @@ order=-1
 
 [item:lifting.tex]
 archive=true
-column=17
+column=1266
 encoding=UTF-8
 highlight=LaTeX
-line=32
+line=108
 mode=LaTeX
 open=true
 order=3
@@ -463,10 +463,10 @@ JumpList=
 ViMarks=.,36,54,[,36,43,],36,54
 
 [view-settings,view=0,item:brackets-en.sty]
-CursorColumn=19
-CursorLine=21
+CursorColumn=46
+CursorLine=105
 JumpList=
-ViMarks=.,21,18,[,21,17,],21,18
+ViMarks=.,105,45,[,105,37,],105,45
 
 [view-settings,view=0,item:complexity.tex]
 CursorColumn=95
@@ -475,8 +475,8 @@ JumpList=
 ViMarks=.,226,94,[,226,87,],226,94
 
 [view-settings,view=0,item:formulation.tex]
-CursorColumn=14
-CursorLine=118
+CursorColumn=4
+CursorLine=59
 JumpList=
 ViMarks=
 
@@ -493,10 +493,10 @@ JumpList=
 ViMarks=.,544,602,[,544,602,],544,602
 
 [view-settings,view=0,item:lifting.tex]
-CursorColumn=17
-CursorLine=32
+CursorColumn=1266
+CursorLine=108
 JumpList=
-ViMarks=.,32,17,[,32,17,],32,17
+ViMarks=.,108,1265,[,108,1265,],108,1265
 
 [view-settings,view=0,item:tikzpictures/tikz-clique-graph.tex]
 CursorColumn=10
