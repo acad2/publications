@@ -15,245 +15,100 @@ Although one could argue that the \concept{knapsack problem} is a very specific 
 We assume, without loss of generality, that the parameters $a_1,a_2,\ldots,a_n$, and $b$ satisfy the following \concepts{condition}:
 
 \begin{enumerate}
-• selecting any single \concept{item} is a \concept{feasible solution}, or: $a_j\leq b$ for each $j$, and
-• selecting all $n$ \concepts{item} is not a \concept{feasible solution}, or: $\sumieqb[j]{1}{n}{a_j}>b$.
+ \item selecting any single \concept{item} is a \concept{feasible solution}, or: $a_j\leq b$ for each $j$, and
+ \item selecting all $n$ \concepts{item} is not a \concept{feasible solution}, or: $\sumieqb[j]{1}{n}{a_j}>b$.
 \end{enumerate}
 
 \begin{note}
 Notice that these \concepts{condition} can be checked easily. In the sequel we will also assume (unless explicitly stated otherwise) that the \concepts{item} in the instance of the \concept{knapsack problem} are sorted according to decreasing weights $a_j$, that is, $a_1\geq a_2\geq\ldots\geq a_n$. In the following section, we will derive a set of \concept[valid inequality]{valid inequalities} for the \concept{knapsack problem} and we will use them to sketch a \concept{solution} approach for the \concept{knapsack problem}.
 \end{note}
 
-\subsection{Separation of cover inequalities}
+\subsection{Separation of Cover Inequalities}
 
 \begin{example}
-Example Consider the following \concept{linear programming relaxation} of an instance of the \concept{knapsack problem}.
+Consider the following \concept{linear programming relaxation} of an instance of the \concept{knapsack problem}.
 
-\begin{align}{llll}
-\mbox{max}&\\
-\mbox{such that}&
-\end{align}
+\begin{eqnarray}
+\mbox{max}&206\cdot x_1+180\cdot x_2+176\cdot x_3+170\cdot x_4+146\cdot x_5+110\cdot x_6\\
+\mbox{such that}&83\cdot x_1+75\cdot x_2+70\cdot x_3+68\cdot x_4+59\cdot x_5+45\cdot x_6\leq 170\\
+&\forall\rangei[i]{1}{6}:0\leq x_i\leq 1
+\end{eqnarray}
 
-max
-
-206x1
-
-+
-
-180x2
-
-+
-
-176x3
-
-+ 170x4
-
-+ 146x5
-
-+
-
-110x6
-
-83x1
-
-+
-
-75x2
-
-+
-
-70x3
-
-+
-
-+
-
-+
-
-45x6
-
-0≤
-
-xj
-
-68x4
-
-59x5
-
-≤
-
-170
-
-≤ 1 j = 1, 2, 3, 4, 5, 6.
-
-32
-A solution of the linear programming relaxation of this instance is x∗ = (0, 0, 1, 1, 59
-, 0). We can conclude
-
-from this LP-solution that items 3, 4, and 5 cannot simultaneously be part of a knapsack-solution. Hence,
-x3 = x4 = x5 = 1 is impossible. Therefore, the following constraint is a valid inequality:
-x3 + x4 + x5 ≤ 2.
-In fact, this constraint is a violated valid inequality, that is, the given solution x∗ violates this inequality.
+A solution of the \concept{linear programming relaxation} of this instance is $\vec{x}^{\star}=\tupl{0,0,1,1,\dfrac{32}{59},0}$. We can conclude from this \concept{LP-solution} that \concepts{item} $3$, $4$, and $5$ cannot simultaneously be part of a \concept{knapsack} solution. Hence, $x_3=x_4=x_5=1$ is impossible. Therefore, the following \concept{constraint} is a \concept{valid inequality}:
+\begin{equation}
+x_3+x_4+x_5\leq2.
+\end{equation}
+In fact, this \concept{constraint} is a \concept{violated valid inequality}, that is, the given solution $\vec{x}^{\star}$ violates this \concept[valid inequality]{inequality}.
 \end{example}
 
-In general, for a subset C ⊆ {1, . . . , n} of the items with the property that
+\paragraph{}
+In general, for a subset $C\subseteq\accl{1,2,\ldots,n}$ of the \concepts{item} with the property that $\sumdomain[j]{C}{a_j}\geq b$, we have the following \concept{valid inequality}:
 
-j∈C
+\begin{equation}
+\sumdomain[j]{C}{x_j}\leq\abs{C}-1
+\end{equation}
 
-aj > b, we have the
+Such an \concept{inequality} is called a \concept{cover inequality}. The set $C$ is called a \concept{cover}. More precisely, any set of \concepts{item} whose total \concept{weight} exceeds $b$ is a \concept{cover} with respect to this \concept{constraint}. Thus, as an aside, earlier in this section, we in fact assumed that $\accl{1,2,\ldots,n}$ is a \concept{cover}. The \concept[valid inequality]{inequality} above is clearly \concept[valid inequality]{valid}: any \concept{feasible solution} to the \concept{knapsack problem} cannot select all \concepts{item} from $C$ when $C$ is a \concept{cover}. A \concept{minimal cover} is a \concept{cover} with the property that the removal of any \concept{item} makes the \concept{total weight} of the remaining \concepts{item} drop to $b$ or less. In other words: $C$ is a \concept{minimal cover} if
 
-following valid inequality:
-xj ≤ |C| − 1.
-j∈C
+\begin{equation}
+\sumdomain[j]{C}{a_j}\leq b\xand\forall i\in C:\sumdomain[j]{C\setminus\accl{i}}{a_j}\leq b
+\end{equation}
 
-Such an inequality is called a cover-inequality. The set C is called a cover. More precisely, any set of
-items whose total weight exceeds b is a cover with respect to this constraint. Thus, as an aside, earlier in
-this section, we in fact assumed that {1, 2, . . . , n} is a cover. The inequality above is clearly valid: any
-feasible solution to the knapsack problem cannot select all items from C when C is a cover. A minimal
-cover is a cover with the property that the removal of any element makes the total weight of the remaining
-elements drop to b or less. In other words: C is a minimal cover if
+The problem we now face is to find, given some \concept{point} $\vec{x}^{\star}\in\RRR^n$, a \concept{cover inequality} for the \concept{knapsack problem} that is not satisfied by the given point. More formally, the \concept{separation problem} for the \concept[cover inequality]{cover inequalities} is:
 
-j∈C
+\begin{definition}[Separation problem for cover inequalities]
+Given $\vec{x}^{\star}\in\RRR^n$, find a \concept{cover} $C$ such that $\sumdomain[j]{C}{x_j^{\star}}>\abs{C}-1$, or establish that no such \concept{cover} exists.
+\end{definition}
 
-aj > b
+Such an \concept{inequality} is called a \concept{violated cover inequality}. In general, the \concept{separation problem} is hard for \concepts{hard problem}. However, if we restrict the search of a \concept{violated inequality} to a subset of the \concept[valid inequality]{valid inequalities}, the \concept{separation problem} restricted to this subset of \concept[inequality]{inequalities}, may be easier to solve. We will restrict ourselves here to the \concept[separation problem]{separation} of the \concept[cover inequality]{cover inequalities} for the \concept{knapsack problem}.
 
-and
+\paragraph{}
+The \concept{separation problem} for the \concept[cover inequality]{cover inequalities} is now restated as follows. Let the \concept{point} $\vec{x}^{\star}\in\RRR^n$ be given. Is there a \concept{cover inequality} that is \concept[violated inequality]{violated} by $\vec{x}^{\star}$? In mathematical terms this problem can be described as follows.
 
-for all i ∈ C :
+\paragraph{}
+Given $\vec{x}^{\star}$: Is there a $C\subseteq\accl{1,2,\ldots,n}$ with
 
-j∈C{i}
+\begin{eqnarray}
+&&\sumdomain[j]{C}{x_j^{\star}}>\abs{C}-1\xand\eqnlab{sep-c1}\\
+&&\sumdomain[j]{C}{a_j}>b\eqnlab{sep-c2}
+\end{eqnarray}
+To solve this problem we introduce \concepts{binary variable} $z_j$ ($j=1,\ldots,n$):
 
-aj ≤ b.
+\begin{equation}
+\semboolvar{z_j}{if $j$ is chosen in the cover $C$;}{otherwise.}
+\end{equation}
 
-The problem we now face is to find, given some point x∗ ∈ IRn , a cover inequality for the knapsack
-problem that is not satisfied by the given point. More formally, the separation problem for the cover
-inequalities is:
-Given x∗ ∈ IRn , find a cover C such that
+These variables will determine which \concepts{item} are present in the \concept{cover}. The \concept{solution} $\vec{z}$ to be found should satisfy the following conditions.
 
-j∈C
+\begin{equation}
+1+\sumieqb[j]{1}{n}{x_j^{\star}\cdot z_j}>\sumieqb[j]{1}{n}{z_j}\eqnlab{setcoversep}
+\end{equation}
 
-x∗j > |C| − 1, or establish that no such cover exists.
+Clearly, this \concept{inequality} follows from reformulating \eqnnref{sep-c1} by taking the newly defined $\vec{z}$-\concepts{variable} into account (notice that, by definition, $\abs{C}=\sumieqb[j]{1}{n}{z_j}$). Let us rewrite \concept{inequality} \eqnnref{setcoversep} by bringing all terms with $\vec{z}$-\concepts{variable} to the left hand side:
 
-Such an inequality is called a violated cover inequality. In general, the separation problem is hard for hard
-problems. However, if we restrict the search of a violated inequality to a subset of the valid inequalities,
-the separation problem restricted to this subset of inequalities, may be easier to solve. We will restrict
-ourselves here to the separation of the cover inequalities for the knapsack problem.
-The separation problem for the cover inequalities is now restated as follows. Let the point x∗ ∈ IRn be
-given. Is there a cover-inequality that is violated by x∗ ? In mathematical terms this problem can be
-described as follows.
-Given x∗ : Is there a C ⊆ {1, 2, . . . , n} with
-x∗j
+\begin{equation}
+\sumieqb[j]{1}{n}{1-x_j^{\star}}\cdot z_j<1
+\end{equation}
 
->
+\paragraph{}
+Consider now \concept{inequality} \eqnnref{sep-c2}. When we plug in the $\vec{z}$-\concepts{variable} into this \concept{inequality}, the following \concept{inequality} results:
 
-|C| − 1 and
+\begin{equation}
+\sumieqb[j]{1}{n}{a_j\cdot z_j}\geq b+1
+\end{equation}
 
-(4.4)
+\paragraph{}
+Summarizing all \concepts{condition}, we can formulate the \concept{separation problem} for the \concept[cover inequality]{cover inequalities} as the following \concept{minimization problem}.
 
-aj
+\begin{eqnarray}
+\mbox{minimize}&\eta=\sumieqb[j]{1}{n}{\brak{1-x_j^{\star}}\cdot z_j}\eqnlab{sepco-m}\\
+\mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot z_j}\geq b+1\eqnlab{sepco-c1}\\
+\forall\rangei[j]{1}{n}&z_j\in\accl{0,1}\eqnlab{sepco-c2}
+\end{eqnarray}
 
->
+Suppose that we are able to solve \eqnnrefr{sepco-m}{sepco-c2}. Then, if $\eta<1$, a \concept{cover inequality} violated by $\vec{x}^{\star}$ has been found. If, on the other hand, $\eta\geq1$, then we haven't found a \concept{cover inequality} violated by $\vec{x}^{\star}$ (and for good reason: none exists!). Although the \concept{separation problem} for \concept[cover inequality]{cover inequalities}, i.e., solving \eqnnrefr{sepco-m}{sepco-c2} \concept{NP-hard} in general, the problem can become fairly easy for a given instance. This is due to the fact that there are usually only few \concepts{fractional value} in the \concept{solution} $\vec{x}^{\star}$. Indeed, items whose corresponding $\vec{x}^{\star}$-\concepts{variable} equal $1$ can always be added to the \concept{cover}; this follows from observing that \concept{objective function} \eqnnref{sepco-m} will not increase when selecting such an \concept{item} in the \concept{cover}. Also, \concepts{item} whose corresponding $\vec{x}^{\star}$-\concept{variable} equal $0$ can be safely excluded from the \concept{cover}, since selecting such an item will result in $\eta\geq 1$. In other words: if $x_j^{\star}=1$ then $z_j=1$, and if $x_j^{\star}=0$ then $z_j=0$. We illustrate this with the next example.
 
-b?
-
-(4.5)
-
-j∈C
-
-j∈C
-
-To solve this problem we introduce binary variables zj (1 ≤ j ≤ n). Define, for j = 1, 2, . . . , n:
-49
-
-zj
-
-
- 1
-=
- 0
-
-if j is chosen in the cover C;
-otherwise.
-
-These variables will determine which elements are present in the cover. The solution z to be found should
-satisfy the following conditions.
-
-
-
-n
-j=1
-
-x∗j zj > 
-
-n
-j=1
-
-
-
-zj  − 1
-
-(4.6)
-
-Clearly, this inequality follows from reformulating (4.4) by taking the newly defined z-variables into
-account (notice that, by definition, |C| =
-
-n
-j=1 zj ).
-
-Let us rewrite inequality (4.6) by bringing all terms
-
-with z-variables to the left hand side:
-n
-
-(1 − x∗j )zj < 1.
-j=1
-
-Consider now inequality (4.5). When we plug in the z-variables into this inequality, the following inequality results:
-
-n
-
-aj zj ≥ b + 1.
-j=1
-
-Summarizing all conditions, we can formulate the separation problem for the cover inequalities as the
-following minimization problem.
-
-n
-
-min η =
-j=1
-
-(1 − x∗j )zj
-
-(4.7)
-
-n
-
-aj z j ≥ b + 1
-
-s.t.
-
-(4.8)
-
-j=1
-
-zj ∈ {0, 1}
-
-for all j = 1, 2, . . . , n.
-
-(4.9)
-
-Suppose that we are able to solve (4.7)-(4.9). Then, if η < 1, a cover inequality violated by x∗ has been
-found. If, on the other hand, η ≥ 1, then we haven't found a cover inequality violated by x∗ (and for good
-reason: none exists!). Although the separation problem for cover inequalities, i.e., solving (4.7)-(4.9), is
-50
-
-NP-hard in general, the problem can become fairly easy for a given instance. This is due to the fact
-that there are usually only few fractional values in the solution x∗ . Indeed, items whose corresponding
-x∗ -variables equal 1 can always be added to the cover; this follows from observing that objective function
-(4.7) will not increase when selecting such an item in the cover. Also, items whose corresponding x∗ variables equal 0 can be safely excluded from the cover, since selecting such an item will result in η ≥ 1.
-In other words: if x∗j = 1 then zj = 1, and if x∗j = 0 then zj = 0. We illustrate this with the next
-example.
-Example
+\begin{example}
 79x1 + 53x2 + 53x3 + 47x4 + 45x5 ≤ 178
 A fractional solution for this example: x∗ = (1, 1, 46
 53 , 0, 0). To find a violated cover we have to solve the
@@ -288,6 +143,8 @@ x1 + x2 + x3 ≤ 2.
 In the following iterations of a cutting-plane algorithm, the number of fractional variables may increase
 since the number of constraints increases. Therefore, identifying violated inequalities may become more
 complicated in forthcoming steps.
+\end{example}
+
 Consider the following example.
 51
 
@@ -418,11 +275,9 @@ number of variables. Thus, the separation problem for the cover inequalities is 
 general, the number of fractional variables is bounded by the number of constraints of the problem at
 hand. Although this number may increase, the number of fractional variables tends to remain limited.
 This observation is true for many problems.
-52
 
-4.2
 
-Separation for the traveling salesman problem
+\section{Separation for the Traveling Salesman Problem}
 
 Consider the following formulation of the symmetric traveling salesman problem, which uses a binary
 variable xe indicating whether edge e is selected or not.
@@ -475,9 +330,7 @@ subtour elimination constraint.
 We leave it to the reader to verify this proposition. Concluding, by solving a minimum cut problem we
 solve the separation problem for the subtour elimination constraints.
 
-4.3
-
-Lifting: extended cover inequalities
+\section{Lifting: Extended Cover Inequalities}
 
 Consider the example in Section 4.1. From the first constraint we could have obtained the valid inequality
 x1 + x6 + x7 + x9 ≤ 1
@@ -628,9 +481,7 @@ this particular solution is cut off by (4.18), while it is not violated by (4.17
 different sequences may yield different inequalities. For instance, the sequence x3 , x1 , x2 produces another
 inequality. Thus, the order of lifting influences the final inequality we get, see Exercise 4.
 
-4.4
-
-Applications
+\section{Applications}
 
 Knapsack constraints are embedded in many structured problems. Two obvious examples are the multiknapsack problem and the generalized assignment problem. We will give their respective formulations
 below.
