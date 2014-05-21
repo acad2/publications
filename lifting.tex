@@ -1,58 +1,37 @@
-\chapter{Separation and lifting: towards a cutting-plane algorithm}
+\chapter{Separation and Lifting: Towards a Cutting-plane Algorithm}
 \chplab{lifting}
 In this chapter we show how \concept[valid inequality]{valid inequalities} can be used to develop \concepts{cutting plane algorithm}. A key issue in any \concept{cutting plane algorithm} is \concept{separation}. We illustrate how the \concept{separation problem} for specific classes of \concept[valid inequality]{valid inequalities} can be solved, by considering the \concept[cover inequality]{cover inequalities} for the \concept{knapsack problem} (\secref{knapsack}), and the \concept[subtour elimination inequality]{subtour elimination inequalities} for the \concept{traveling salesman problem} (\secref{salesman}). \concept{Lifting} is about strengthening \concept[valid inequality]{valid inequalities}; we apply this concept to the \concept[cover inequality]{cover inequalities} in \secref{coverineq}.
 
-\section{Separation for the knapsack problem}
+\section{Separation for the Knapsack Problem}
 \seclab{knapsack}
-Although one could argue that the \concept{knapsack problem} is a very specific problem featuring only a single \concept{constraint}, one should realize that any \concept{integer programming formulation} can be seen as an \concept{optimization problem} with many \concepts{knapsack constraint}. Thus, \concept[valid inequality]{valid inequalities} that we can derive from a \concept{knapsack constraint} are important since such an \concept{inequality} can be relevant for any \concept{integer program}. We restate the \concept{knapsack problem} (see (1.10)-(1.12) in \chpref{formulations}).
-47
+Although one could argue that the \concept{knapsack problem} is a very specific problem featuring only a single \concept{constraint}, one should realize that any \concept{integer programming formulation} can be seen as an \concept{optimization problem} with many \concepts{knapsack constraint}. Thus, \concept[valid inequality]{valid inequalities} that we can derive from a \concept{knapsack constraint} are important since such an \concept{inequality} can be relevant for any \concept{integer program}. We restate the \concept{knapsack problem} (see \eqnnrefr{knapsack-m}{knapsack-c2} in \chpref{formulations}).
 
-n
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[j]{1}{n}{c_j\cdot x_j}\eqnlab{knapsack4-m}\\
+\mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot x_j}\leq b\eqnlab{knapsack4-c1}\\
+&\forall\rangei[j]{1}{n}:x_j\in\accl{0,1}\eqnlab{knapsack4-c2}
+\end{eqnarray}
 
-(Knapsack)
+We assume, without loss of generality, that the parameters $a_1,a_2,\ldots,a_n$, and $b$ satisfy the following \concepts{condition}:
 
-cj xj
+\begin{enumerate}
+• selecting any single \concept{item} is a \concept{feasible solution}, or: $a_j\leq b$ for each $j$, and
+• selecting all $n$ \concepts{item} is not a \concept{feasible solution}, or: $\sumieqb[j]{1}{n}{a_j}>b$.
+\end{enumerate}
 
-(4.1)
+\begin{note}
+Notice that these \concepts{condition} can be checked easily. In the sequel we will also assume (unless explicitly stated otherwise) that the \concepts{item} in the instance of the \concept{knapsack problem} are sorted according to decreasing weights $a_j$, that is, $a_1\geq a_2\geq\ldots\geq a_n$. In the following section, we will derive a set of \concept[valid inequality]{valid inequalities} for the \concept{knapsack problem} and we will use them to sketch a \concept{solution} approach for the \concept{knapsack problem}.
+\end{note}
 
-aj xj ≤ b
+\subsection{Separation of cover inequalities}
 
-(4.2)
+\begin{example}
+Example Consider the following \concept{linear programming relaxation} of an instance of the \concept{knapsack problem}.
 
-max
-j=1
-n
+\begin{align}{llll}
 
-s.t.
-j=1
+\end{align}
 
-xj ∈ {0, 1}
-
-for all j = 1, 2, . . . , n.
-
-(4.3)
-
-We assume, without loss of generality, that the parameters a1 , a2 , . . . , an , and b satisfy the following
-conditions:
-
-• selecting any single item is a feasible solution, or: aj ≤ b for each j, and
-• selecting all n items is not a feasible solution, or:
-
-n
-j=1
-
-aj > b.
-
-Notice that these conditions can be checked easily. In the sequel we will also assume (unless explicitly
-stated otherwise) that the items in the instance of the knapsack problem are sorted according to decreasing
-weights aj , that is, a1 ≥ a2 ≥ . . . ≥ an . In the following section, we will derive a set of valid inequalities
-for the knapsack problem and we will use them to sketch a solution approach for the knapsack problem.
-
-4.1.1
-
-Separation of cover inequalities
-
-Example Consider the following linear programming relaxation of an instance of the knapsack problem.
 max
 
 206x1
@@ -113,9 +92,9 @@ from this LP-solution that items 3, 4, and 5 cannot simultaneously be part of a 
 x3 = x4 = x5 = 1 is impossible. Therefore, the following constraint is a valid inequality:
 x3 + x4 + x5 ≤ 2.
 In fact, this constraint is a violated valid inequality, that is, the given solution x∗ violates this inequality.
-48
+\end{example}
 
-In general, for a subset C ⊆ {1, . . . , n} of the items with the property that
+In general, for a subset C ⊆ {1, . . . , n} of the items with the property that
 
 j∈C
 
