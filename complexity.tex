@@ -166,7 +166,7 @@ Notice also that if the \concept{lower bound} $v^-$ is reasonably close to $\fun
 
 \paragraph{}
 \begin{example}
-For example, consider the traveling salesman instance described by the (symmetric) distance matrix $L$, where $l_{i,j}$ represents the distance from $i$ to $j$, with $i,j\in\accl{1,2,\ldots,6}$:
+For example, consider the \concept[traveling salesman problem]{traveling salesman} instance described by the (\concept[symmetric distance matrix]{symmetric}) \concept{distance matrix} $L$, where $l_{i,j}$ represents the \concept{distance} from $i$ to $j$, with $i,j\in\accl{1,2,\ldots,6}$:
 \begin{equation}
 L=\mtrx{cccccc}{
 0&4&7&2&6&3\\
@@ -179,36 +179,35 @@ L=\mtrx{cccccc}{
 \end{equation}
 
 
-Assume now that a heuristic returns the tour $x^H=\tupl{1,2,3,4,5,6}$ (displayed in \figref{heuristic-tsp-ex}).
+Assume now that a \concept{heuristic} returns the \concept{tour} $x^H=\tupl{1,2,3,4,5,6}$ (displayed in \figref{heuristic-tsp-ex}).
 
 \importtikzfigure{heuristic-tsp-ex}{A feasible tour.}
 
-The total length of this tour is $\funm{val}{x^H}=4+3+2+9+5+3=26$. On the other hand, an obvious lower bound on the optimal tour length is given by the sum of the $6$ shortest distances in $6$. Thus $v^−=2+2+3+3+4+5=19$, and, consequently, $\fun{E^-}{x^H}=\tfrac{26-19}{19}\approx 0.37$. We can therefore conclude that $x^H$ is at most $37\%$ longer than the optimal tour.
+The total \concept[length of a tour]{length of this tour} is $\funm{val}{x^H}=4+3+2+9+5+3=26$. On the other hand, an obvious \concept{lower bound} on the \concept{optimal tour length} is given by the sum of the $6$ shortest \concepts{distance} in $6$. Thus $v^−=2+2+3+3+4+5=19$, and, consequently, $\fun{E^-}{x^H}=\tfrac{26-19}{19}\approx 0.37$. We can therefore conclude that $x^H$ is at most $37\%$ longer than the \concept{optimal tour}.
 \end{example}
 
 \paragraph{}
-In order to compute lower bounds for combinatorial optimization problems, a simple but powerful principle can often be used: when a constraint of a minimization problem $P$ is relaxed (i.e., when the constraint is either removed or replaced by a weaker one), then the optimal value of the resulting ``relaxed'' problem provides a lower bound on the optimal value of $P$. This principle will be illustrated on the examples below.
-\section{Exercises}
+In order to compute \concepts{lower bound} for \concepts{combinatorial optimization problem}, a simple but powerful principle can often be used: when a \concept{constraint} of a \concept{minimization problem} $P$ is relaxed (i.e., when the \concept{constraint} is either removed or replaced by a weaker one), then the optimal value of the resulting ``\concept{relaxed problem}'' provides a \concept{lower bound} on the \concept{optimal value} of $P$. This principle will be illustrated on the examples below.
+\section*{Exercises}
 \begin{exercise}
 \exclab{ch3ex1}
-Consider again the traveling salesman problem. For every vertex $v\in V$, select the shortest edge $e_v$ incident to $v$. Show that $\isumdomain[v]{V}{\fun{l}{e_v}}$ is a lower bound on the length of the optimal tour.
+Consider again the \concept{traveling salesman problem}. For every \concept{vertex} $v\in V$, select the \concept{shortest edge} $e_v$ \concept{incident} to $v$. Show that $\isumdomain[v]{V}{\fun{l}{e_v}}$ is a \concept{lower bound} on the length of the \concept{optimal tour}.
 \paragraph{}
-Compute this lower bound for the numerical example in \sscref{ccpx}. Can you improve this lower bound by taking into account the two shortest edges incident to every vertex $v$? What bound do you obtain for the numerical example?
+Compute this \concept{lower bound} for the numerical example in \sscref{ccpx}. Can you improve this lower bound by taking into account the two \concepts{shortest edge} \concept{incident} to every \concept{vertex} $v$? What bound do you obtain for the numerical example?
 \end{exercise}
 \begin{exercise}
 \exclab{ch3ex2}
-Consider the following problem: you want to save $n$ electronic files with respective sizes $s_1,s_2,\ldots,s_n\geq 0$ on the smallest possible number of storing devices (say, floppy disks) with capacity $C$.
-This problem is known under the name of \concept{bin packing problem}, and it is NP-hard. Can you compute a lower bound on its optimal value?
+Consider the following problem: you want to save $n$ \concepts{electronic file} with respective sizes $s_1,s_2,\ldots,s_n\geq 0$ on the smallest possible number of \concepts{storing device} (say, floppy disks) with capacity $C$. This problem is known under the name of \concept{bin packing problem}, and it is \concept{NP-hard}. Can you compute a \concept{lower bound} on its \concept{optimal value}?
 \end{exercise}
 \begin{exercise}
 \exclab{ch3ex3}
-Show that the optimal value of the \concept{linear programming} problem
+Show that the optimal value of the \concept{linear programming problem}
 \begin{eqnarray}
 \mbox{minimize}&\vec{c}\cdot\vec{x}\\
 \mbox{subject to}&A\cdot\vec{x}\leq\vec{b}\\
 &\forall j\in1,2,\ldots,n:0\leq x_j\leq 1
 \end{eqnarray}
-provides a lower bound on the optimal value of the \concept{0-1 linear programming} problem
+provides a \concept{lower bound} on the \concept{optimal value} of the \concept{0-1 linear programming problem}
 \begin{eqnarray}
 \mbox{minimize}&\vec{c}\cdot\vec{x}\\
 \mbox{subject to}&A\cdot\vec{x}\leq\vec{b}\\
@@ -216,14 +215,14 @@ provides a lower bound on the optimal value of the \concept{0-1 linear programmi
 \end{eqnarray}
 \end{exercise}
 \begin{exercise}
-Show that the lower bounds obtained in \excrefr{ch3ex1}{ch3ex2} can all be viewed as optimal solutions of a relaxation of the original problem.
+Show that the \concepts{lower bound} obtained in \excrefr{ch3ex1}{ch3ex2} can all be viewed as \concepts{optimal solution} of a \concept{relaxation} of the original problem.
 \end{exercise}
 \begin{exercise}
-Consider the \concept{Hamiltonian cycle} problem (HC). Given a graph $G=\tupl{V,E}$, does $G$ contain a Hamiltonian cycle, i.e., a cycle visiting each node exactly once? Show that the \concept{Traveling salesman} Problem is at least as hard as the Hamiltonian cycle problem.
+Consider the \concept{Hamiltonian cycle problem} (HC). Given a \concept{graph} $G=\tupl{V,E}$, does $G$ contain a \concept{Hamiltonian cycle}, i.e., a \concept{cycle} visiting each \concept{node} exactly once? Show that the \concept{traveling salesman Problem} is at least as hard as the \concept{Hamiltonian cycle problem}.
 \end{exercise}
 \begin{exercise}
-Consider the \concept{Partition} problem. Given are $n$ integers $s_1,s_2,\ldots,s_n$, does there exist a set $S\subseteq{1,2,\ldots,n}$ such that $\isumdomain[i]{S}{s_i}=\isumndomain[i]{S}{s_i}$? Show that the \concept{Knapsack} problem is at least as hard as Partition.
+Consider the \concept{Partition} problem. Given are $n$ integers $s_1,s_2,\ldots,s_n$, does there exist a set $S\subseteq{1,2,\ldots,n}$ such that $\isumdomain[i]{S}{s_i}=\isumndomain[i]{S}{s_i}$? Show that the \concept{knapsack problem} is at least as hard as the \concept{partition problem}.
 \end{exercise}
 \begin{exercise}
-Show that \concept{min-cost flow} is at least as hard as \concept{shortest path}.
+Show that \concept{min-cost flow problem} is at least as hard as \concept{shortest path problem}.
 \end{exercise}
