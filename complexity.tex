@@ -1,8 +1,8 @@
-\chapter{A glimpse at computational complexity (Yves Crama)}
+\chapter{A Glimpse at Computational Complexity (Yves Crama)}
 \chplab{complexity}
 In order to fully appreciate the field of \concept{combinatorial optimization}, it is necessary to understand, at least at an intuitive level, some of the basic concepts of \concept{computational complexity}. This part of \concept{theoretical computer science} deals with fundamental, but extremely deep questions like: ``what tasks can be carried out by a computer?'', or ``how much time does a given computational task require?''. In this chapter, we attempt to introduce some elements of \concept{computational complexity}, in a very informal and hand-waving way.
 
-\section{Computational performance criteria}
+\section{Computational Performance Criteria}
 What do we expect from an \concept{algorithm} for a \concept{combinatorial optimization problem}? Well, an obvious answer would be that this \concept{algorithm} should always return an \concept{optimal solution} of the problem. Is it the only game in town? Certainly not. We might also want it to be fast or \concept{efficient}. Combining these two expectations is a crucial thing. Of course, the time required to solve a problem increases with the size of this problem,  where the size can be measured by the amount of data needed to describe a particular instance of the problem.
 
 \begin{example}
@@ -18,7 +18,7 @@ Let us look at this issue from another vantage point. Consider the well-known \c
 \paragraph{}
 So, how much progress can we expect on the theoretical front? Before we provide a tentative answer to this question, let us try to formulate more precisely some of the notions that have just been sketched.
 
-\section{Problems and problem instances}
+\section{Problems and Problem Instances}
 Formally speaking, a (computational) \concept{problem} is a generic question whose formulation includes a number of undetermined \concepts{parameter}. Here are some simple examples.
 
 \begin{description}
@@ -37,7 +37,7 @@ An \concept{algorithm} for a \concept{problem} $P$ is a step-by-step procedure t
 The \concept{size of an instance} $I$, denoted by $\fun{s}{I}$, is the number of bits needed to represent $I$. It is determined both by the number of parameters and by their magnitude. (Intuitively, this can be viewed as the size of the input file of a computer program which solves $I$.)
 
 \paragraph{}
-The \concept{running time} of an algorithm $A$ on an instance $I$, denoted $\fun{t_A}{I}$, is the number of elementary operations (additions, multiplications, comparisons,...) performed by $A$ when it runs on the instance $I$. Determining the running time of an algorithm for each particular instance $I$ is not an easy task. However, it is often easier to estimate the running time as a function of the size of the instance.
+The \concept{running time} of an algorithm $A$ on an instance $I$, denoted $\fun{t_A}{I}$, is the number of \concepts{elementary operation} (additions, multiplications, comparisons,...) performed by $A$ when it runs on the instance $I$. Determining the \concept{running time} of an algorithm for each particular instance $I$ is not an easy \concept{task}. However, it is often easier to estimate the running time as a function of the size of the instance.
 
 \paragraph{}
 Consider again the examples defined above.
@@ -58,13 +58,13 @@ Consider again the examples defined above.
 \end{description}
 
 \paragraph{}
-Notice that, in all these examples, we chose to ignore the size of a number, that is, we did not take into account the number of bits needed to store some number. In view of these examples, we are led to the following concept: the complexity of an algorithm $A$ for a problem $P$ is the function 
+Notice that, in all these examples, we chose to ignore the size of a number, that is, we did not take into account the number of bits needed to store some number. In view of these examples, we are led to the following concept: the \concept{complexity} of an algorithm $A$ for a problem $P$ is the function 
 \begin{equation}
 \fun{f_A}{n}=\max\condset{\fun{t_A}{I}}{\mbox{$I$ is an instance of $P$ with size $\fun{s}{I}=n$}}.
 \end{equation}
-This is sometimes called the ``worst-case complexity'' of $A$: indeed, the definition focuses on the worst-case running time of $A$ on an instance of size $n$, rather than on its average running.
+This is sometimes called the ``\concept{worst-case complexity}'' of $A$: indeed, the definition focuses on the \concept{worst-case running time} of $A$ on an instance of size $n$, rather than on its \concept{average running time}.
 
-\section{Easy and hard problems}
+\section{Easy and Hard Problems}
 
 \begin{figure}[hbt]
 \centering
@@ -74,81 +74,81 @@ This is sometimes called the ``worst-case complexity'' of $A$: indeed, the defin
 \figlab{cpx}
 \end{figure}
 
-\figref{cpx} represents different types of complexity behaviors for algorithms. The algorithm $A$ is polynomial if $\fun{F_A}{n}$ is a polynomial (or is bounded by a polynomial) in $n$ and exponential if $\fun{F_A}{n}$ grows faster than any polynomial process in $n$. Intuitively, we can probably accept the idea that a polynomial algorithm is more efficient than an exponential one.
+\figref{cpx} represents different types of \concept{complexity} behaviors for \concepts{algorithm}. The \concept{algorithm} $A$ is \concept{polynomial} if $\fun{F_A}{n}$ is a \concept{polynomial} (or is bounded by a \concept{polynomial}) in $n$ and \concept{exponential} if $\fun{F_A}{n}$ grows faster than any \concept{polynomial} process in $n$. Intuitively, we can probably accept the idea that a \concept{polynomial} \concept{algorithm} is more efficient than an \concept{exponential} one.
 
 \paragraph{}
-For instance, the obvious algorithms for the addition and or the multiplication of matrices are polynomial. So is the Gaussian elimination algorithm for the solution of systems of linear equations. On the other hand, the simplex method (or at least, some variants of it) for linear programming problems is known to be exponential\footnote{Klee and Minty provide instances I of the LP problem such that $\fun{t_{\mbox{\tiny simplex}}}{I}\geq 2^{\fun{s}{I}}$.} while interior point methods are polynomial. This clearly illustrates the emphasis on the ``worst-case'' running time which was already underlined above: indeed, in an average sense, the simplex algorithm is an efficient method.
+For instance, the obvious \concepts{algorithm} for the \concept[matrix addition problem]{addition} and or the \concept[matrix multiplication problem]{multiplication} of \concept[matrix]{matrices} are \concept{polynomial}. So is the \concept{Gaussian elimination algorithm} for the solution of systems of \concepts{linear equation}. On the other hand, the \concept{simplex method} (or at least, some variants of it) for \concepts{linear programming problem} is known to be \concept{exponential}\footnote{Klee and Minty provide instances I of the LP problem such that $\fun{t_{\mbox{\tiny simplex}}}{I}\geq 2^{\fun{s}{I}}$.} while \concepts{interior point method} are \concept{polynomial}. This clearly illustrates the emphasis on the ``\concept{worst-case running time}'' which was already underlined above: indeed, in an average sense, the \concept{simplex algorithm} is an efficient method.
 
 \paragraph{}
-The complete enumeration approach for shortest path, matching, stable set or traveling salesman problems is exponential, since all these problems have an exponential number of feasible solutions. But polynomial algorithms exist for the shortest path problem and the matching problem.
+The complete enumeration approach for \concept[shortest path problem]{shortest path}, \concept[matching problem]{matching}, \concept[stable set problem]{stable set} or \concept{traveling salesman problems} is \concept{exponential}, since all these \concepts{problem} have an exponential number of \concepts{feasible solution}. But \concepts{polynomial algorithm} exist for the \concept{shortest path problem} and the \concept{matching problem}.
 
 \paragraph{}
-For stable set, the traveling salesman problem, or for 0-1 integer programming problems, by contrast, only exponential algorithms are known. In fact, it is widely suspected that there does not exist any polynomial algorithm for these problems. This is a typical feature of so-called \concept{NP-hard} problems which we define (very informally again) as follows.
+For the \concept{stable set problem}, the \concept{traveling salesman problem}, or for \concepts{0-1 integer programming problem}, by contrast, only \concepts{exponential algorithm} are known. In fact, it is widely suspected that there does not exist any \concept{polynomial algorithm} for these problems. This is a typical feature of so-called \concept{NP-hard} problems which we define (very informally again) as follows.
 
 \begin{definition}[NP-hard]
-A problem $P$ is NP-hard if it is as least as difficult as the 0-1 linear programming problem, in the sense that any algorithm for $P$ can be used to solve the 0-1 LP problem with a polynomial increase in running time.
+A problem $P$ is \concept{NP-hard} if it is as least as difficult as the \concept{0-1 linear programming problem}, in the sense that any \concept{algorithm} for $P$ can be used to solve the \concept{0-1 LP problem} with a \concept{polynomial} increase in \concept{running time}.
 \end{definition}
 
 \paragraph{}
 The next claim has resisted all proof attempts (and there have been many) since the early 70's, but the vast majority of computer scientists and operations researchers believe that it holds true.
 
 \begin{conjecture}[$P\neq NP$]
-If a problem is N P -hard, then it cannot be solved by a polynomial algorithm.
+If a problem is \concept{NP-hard}, then it cannot be solved by a \concept{polynomial algorithm}.
 \end{conjecture}
 
 \paragraph{}
-The $P\neq NP$ conjecture, if true, expresses a deep and fundamental fact of complexity theory. Its implications are of enormous importance for the development of algorithms in operations research and related areas. Indeed, a large number of combinatorial optimization problems turn out to be NP-hard, and hence difficult to solve.
+The \concept{$P\neq NP$ conjecture}, if true, expresses a deep and fundamental fact of \concept{complexity theory}. Its implications are of enormous importance for the development of algorithms in operations research and related areas. Indeed, a large number of \concepts{combinatorial optimization problem} turn out to be \concept{NP-hard}, and hence difficult to solve.
 
 \begin{proposition}
 \prplab{nphard-problems}
-The following problems are NP-hard:
+The following problems are \concept{NP-hard}:
 \begin{enumerate}
- \item \concept{traveling salesman};
- \item \concept{stable set};
- \item \concept{graph coloring};
- \item \concept{knapsack};
- \item \concept{assembly line balancing};
- \item \concept{three-dimensional assignment};
- \item \concept{facility location};
- \item \concept{jobshop scheduling};
- \item several hundred other combinatorial optimization problems.
+ \item \concept[traveling salesman problem]{traveling salesman};
+ \item \concept[stable set problem]{stable set};
+ \item \concept[graph coloring problem]{graph coloring};
+ \item \concept[knapsack problem]{knapsack};
+ \item \concept[assembly line problem]{assembly line balancing};
+ \item \concept[three-dimensional assignment problem]{three-dimensional assignment};
+ \item \concept[facility location problem]{facility location};
+ \item \concept[job shop scheduling problem]{job shop scheduling};
+ \item several hundred other \concepts{combinatorial optimization problem}.
 \end{enumerate}
 \end{proposition}
 
-It is quite remarkable that most of the problems in the above list can in fact be formulated as special cases of the 0-1 LP problem. This is obvious, in particular, for the knapsack problem, but it is also true (though less obvious) for graph equipartitioning, or for the traveling salesman problem, or for graph coloring, etc. Thus, the actual meaning of \prpref{nphard-problems} is that all these NP-hard problems are somehow equivalent, in the sense that an efficient algorithm for any of them would immediately provide an efficient algorithm for all of them.
+It is quite remarkable that most of the problems in the above list can in fact be formulated as special cases of the \concept{0-1 LP problem}. This is obvious, in particular, for the \concept{knapsack problem}, but it is also true (though less obvious) for \concept[graph equipartitioning problem]{graph equipartitioning}, or for the \concept{traveling salesman problem}, or for \concept[graph coloring problem]{graph coloring}, etc. Thus, the actual meaning of \prpref{nphard-problems} is that all these \concept{NP-hard} problems are somehow equivalent, in the sense that an efficient algorithm for any of them would immediately provide an \concept{efficient algorithm} for all of them.
 
 \paragraph{}
-From a practical point of view, however, some N P -hard problems turn out to be more difficult than others. For instance, the knapsack problem is quite easy to solve as compared with the general 0-1 LP problems. Nevertheless, NP-hard problems seem to be intrinsically tougher than linear systems, LP problems or shortest path problems. As a consequence, for the solution of such difficult (or ``apparently difficult'') problems, heuristic algorithms are often used in practice. In addition, of course, not all combinatorial optimization problems are NP-hard. \concept{Minimal spanning tree}, \concept{min-cost flow}, \concept{linear optimization} are prime examples where polynomial-time algorithms suffice to find an optimal solution.
+From a practical point of view, however, some \concept{NP-hard} problems turn out to be more difficult than others. For instance, the \concept{knapsack problem} is quite easy to solve as compared with the general \concepts{0-1 LP problem}. Nevertheless, \concept{NP-hard} problems seem to be intrinsically tougher than \concepts{linear system}, \concepts{linear programming problem} or \concepts{shortest path problem}. As a consequence, for the solution of such difficult (or ``apparently difficult'') problems, \concepts{heuristic algorithm} are often used in practice. In addition, of course, not all \concepts{combinatorial optimization problem} are \concept{NP-hard}. \concept{Minimal spanning tree}, \concept{min-cost flow}, \concept{linear optimization} are prime examples where \concept{polynomial time} algorithms suffice to find an \concept{optimal solution}.
 
 \paragraph{}
 \begin{definition}[Heuristic]
-A \concept{heuristic} for an optimization problem $P$ is an algorithm which is based on intuitively appealing principles, but which does not guarantee to provide an optimal solution of $P$.
+A \concept{heuristic} for an \concept{optimization problem} $P$ is an \concept{algorithm} which is based on intuitively appealing principles, but which does not guarantee to provide an \concept{optimal solution} of $P$.
 \end{definition}
 
-So, when running on a particular combinatorial optimization problem, a heuristic could for instance:
+So, when running on a particular \concept{combinatorial optimization problem}, a \concept{heuristic} could for instance:
 \begin{enumerate}
- \item return an optimal solution of the problem; or
- \item return a suboptimal solution; or
- \item return an infeasible solution; or
- \item fail to return any solution at all;
+ \item return an \concept{optimal solution} of the problem; or
+ \item return a \concept{suboptimal solution}; or
+ \item return an \concept{infeasible solution}; or
+ \item fail to return any \concept{solution} at all;
  \item etc.
 \end{enumerate}
-This very broad definition of a heuristic may seem rather amazing at first sight. It raises again the question of the criteria which can be applied to analyze the performance of a particular heuristic. We mention here two criteria which will be of particular concern in this course.
+This very broad definition of a \concept{heuristic} may seem rather amazing at first sight. It raises again the question of the criteria which can be applied to analyze the performance of a particular \concept{heuristic}. We mention here two criteria which will be of particular concern in this course.
 
-\subsection{Computational complexity}
+\subsection{Computational Complexity}
 \ssclab{ccpx}
-Generally speaking, we want heuristics to be fast, at least when compared with the highly exponential running times mentioned above. In fact, the main reason for giving up optimality is that we want the heuristic to compute quickly a reasonably good solution. Thus, the basic trade-off that we want to achieve reads
+Generally speaking, we want \concepts{heuristic} to be fast, at least when compared with the highly exponential running times mentioned above. In fact, the main reason for giving up optimality is that we want the \concept{heuristic} to compute quickly a \concept{reasonably good solution}. Thus, the basic trade-off that we want to achieve reads
 \begin{quote}
 Solution quality versus running time
 \end{quote}
 
-\subsection{Quality of approximation}
+\subsection{Quality of Approximation}
 \ssclab{qoa}
-The solution returned by the heuristic should provide a good approximation of the optimal solution. To understand how to measure this, let $x^H$ be the solution computed by heuristic $H$ for a particular instance and let $x^{\star}$ be an optimal solution for this instance. Also, $\funm{val}{x^H}$ denotes the value of the solution found by the heuristic, and $\funm{val}{x^{\star}}$ denotes the optimum solution value. Then
+The \concept{solution} returned by the \concept{heuristic} should provide a good \concept{approximation} of the \concept{optimal solution}. To understand how to measure this, let $x^H$ be the \concept{solution} computed by \concept{heuristic} $H$ for a particular instance and let $x^{\star}$ be an \concept{optimal solution} for this instance. Also, $\funm{val}{x^H}$ denotes the value of the \concept{solution} found by the \concept{heuristic}, and $\funm{val}{x^{\star}}$ denotes the \concept{optimum solution} value. Then
 \begin{equation}
 \fun{E}{x^H}=\displaystyle\frac{\funm{val}{x^H}-\funm{val}{x^{\star}}}{\funm{val}{x^{\star}}}\geq 0
 \end{equation}
-provides a relative error measure: the closer it is to $0$, the better the solution $x^H$. Notice that we assume that we are dealing with a minimization problem.
+provides a \concept{relative error measure}: the closer it is to $0$, the better the solution $x^H$. Notice that we assume that we are dealing with a \concept{minimization problem}.
 
 \paragraph{}
 In general, however, $\funm{val}{x^{\star}}$ is unknown. So, suppose now that we know how to compute a \concept{lower bound} on $\funm{val}{x^{\star}}$, i.e. a number $v^-$ such that $v^-\leq\funm{val}{x^{\star}}$ (this is often much easier to compute than $\funm{val}{x^{\star}}$). Define
@@ -159,9 +159,9 @@ Then we have
 \begin{equation}
 \fun{E}{x^H}=\displaystyle\frac{\funm{val}{x^H}}{\funm{val}{x^{\star}}}-1\leq\displaystyle\frac{\funm{val}{x^H}}{v^-}-1=\fun{E^-}{x^H}
 \end{equation}
-which means that $\fun{E^-}{x^H}$ overestimates the relative error $\fun{E}{x^H}$. So, if $\fun{E^-}{x^H}$ is small, we can certainly be happy with the quality of the solution provided by $H$.
+which means that $\fun{E^-}{x^H}$ overestimates the \concept{relative error} $\fun{E}{x^H}$. So, if $\fun{E^-}{x^H}$ is small, we can certainly be happy with the \concept[quality of a solution]{quality of the solution} provided by $H$.
 \begin{note}
-Notice also that if the lower bound $v^-$ is reasonably close to $\funm{val}{x^{\star}}$, then $\fun{E^-}{x^H}$ actually provides a good estimate of the error.
+Notice also that if the \concept{lower bound} $v^-$ is reasonably close to $\funm{val}{x^{\star}}$, then $\fun{E^-}{x^H}$ actually provides a good estimate of the \concept{error}.
 \end{note}
 
 \paragraph{}

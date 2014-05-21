@@ -191,12 +191,12 @@ order=1
 
 [item:integer.tex]
 archive=true
-column=603
+column=21
 encoding=UTF-8
 highlight=LaTeX
-line=544
+line=510
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:optimization_special_topics.kilepr]
@@ -374,8 +374,8 @@ JumpList=
 ViMarks=.,80,67,[,80,62,],80,67
 
 [view-settings,view=0,item:integer.tex]
-CursorColumn=603
-CursorLine=544
+CursorColumn=21
+CursorLine=510
 JumpList=
 ViMarks=.,544,602,[,544,602,],544,602
 
