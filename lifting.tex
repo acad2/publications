@@ -121,22 +121,24 @@ A \concept{fractional solution} for this example: $\vec{x}^{\star}=\tupl{1,1,\fr
 \forall\rangei[j]{1}{5}&z_j\in\accl{0,1}\eqnlab{sepco-ex-c2}
 \end{eqnarray}
 
-As argued above, if $x_j^{\star}$, then $z_j=1$ as well (since the the coefficient of $z_j$ in \eqnnref{sepco-ex-m} equals zero). And,
-since we are only interested in finding violated cover inequalities, x∗j = 0 implies zj = 0 (since zj = 1
-gives η ≥ 1). Now, observe that the solution (z1 , z2 , z3 , z4 , z5 ) = (1, 1, 1, 0, 0) is feasible in (4.11)-(4.12),
-and has objective function value less than 1. Thus, we have identified a violated cover inequality:
-x1 + x2 + x3 ≤ 2.
+As argued above, if $x_j^{\star}$, then $z_j=1$ as well (since the the coefficient of $z_j$ in \eqnnref{sepco-ex-m} equals zero). And, since we are only interested in finding \concept[violated cover inequality]{violated cover inequalities}, $x_j^{\star}=0$ implies $z_j=0$ (since $z_j=1$ gives $\eta\geq 1$). Now, observe that the solution $\tupl{z_1,z_2,z_3,z_4,z_5}=\tupl{1,1,1,0,0}$ is feasible in \eqnnrefr{sepco-ex-c1}{sepco-ex-c2}, and has \concept{objective function} value less than $1$. Thus, we have identified a \concept{violated cover inequality}:
 
-In the following iterations of a cutting-plane algorithm, the number of fractional variables may increase
-since the number of constraints increases. Therefore, identifying violated inequalities may become more
-complicated in forthcoming steps.
+\begin{equation}
+x_1+x_2+x_3\leq2.
+\end{equation}
+
+In the following iterations of a \concept{cutting plane algorithm}, the number of \concepts{fractional variable} may increase since the number of \concepts{constraint} increases. Therefore, identifying \concept[violated inequality]{violated inequalities} may become more complicated in forthcoming steps.
 \end{example}
 
 Consider the following example.
-51
 
-max
-
+\begin{example}
+\begin{eqnarray}
+\mbox{maximize}&77\cdot x_1+6\cdot x_2+3\cdot x_3+6\cdot x_4+33\cdot x_5+13\cdot x_6+110\cdot x_7+21\cdot x_8+47\cdot x_9\\
+\mbox{subject to}&774\cdot x_1+76\cdot x_2+22\cdot x_3+42\cdot x_4+760\cdot x_5+818\cdot x_6+62\cdot x_8+785\cdot x_9\leq 1500\\
+&67\cdot x_1+27\cdot x_2+794\cdot x_3+53\cdot x_4+234\cdot x_5+32\cdot x_6+797\cdot x_8+785\cdot x_9\leq 1500\\
+&\forall\rangei[i]{1}{6}:0\leq x_i\leq 1
+\end{eqnarray}
 77x1 + 6x2 + 3x3 + 6x4 + 33x5 + 13x6 + 110x7 + 21x8 + 47x9
 
 s.t. 774x1 + 76x2 + 22x3 + 42x4 + 21x5 + 760x6 + 818x7 + 62x8 + 785x9 ≤ 1500
@@ -262,6 +264,7 @@ number of variables. Thus, the separation problem for the cover inequalities is 
 general, the number of fractional variables is bounded by the number of constraints of the problem at
 hand. Although this number may increase, the number of fractional variables tends to remain limited.
 This observation is true for many problems.
+\end{example}
 
 
 \section{Separation for the Traveling Salesman Problem}
