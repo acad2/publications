@@ -29,8 +29,8 @@ Notice that these \concepts{condition} can be checked easily. In the sequel we w
 Consider the following \concept{linear programming relaxation} of an instance of the \concept{knapsack problem}.
 
 \begin{eqnarray}
-\mbox{max}&206\cdot x_1+180\cdot x_2+176\cdot x_3+170\cdot x_4+146\cdot x_5+110\cdot x_6\\
-\mbox{such that}&83\cdot x_1+75\cdot x_2+70\cdot x_3+68\cdot x_4+59\cdot x_5+45\cdot x_6\leq 170\\
+\mbox{maximize}&206\cdot x_1+180\cdot x_2+176\cdot x_3+170\cdot x_4+146\cdot x_5+110\cdot x_6\\
+\mbox{subject to}&83\cdot x_1+75\cdot x_2+70\cdot x_3+68\cdot x_4+59\cdot x_5+45\cdot x_6\leq 170\\
 &\forall\rangei[i]{1}{6}:0\leq x_i\leq 1
 \end{eqnarray}
 
@@ -112,31 +112,16 @@ Suppose that we are able to solve \eqnnrefr{sepco-m}{sepco-c2}. Then, if $\eta<1
 \begin{equation}
 79\cdot x_1+53\cdot x_2+53\cdot x_3+47\cdot x_4+45\cdot x_5\leq178
 \end{equation}
-A fractional solution for this example: x∗ = (1, 1, 46
-53 , 0, 0). To find a violated cover we have to solve the
-problem (verify this!):
 
-min
-s.t.
+A \concept{fractional solution} for this example: $\vec{x}^{\star}=\tupl{1,1,\frac{46}{53},0,0}$. To find a \concept{violated cover} we have to solve the problem (verify this!):
 
-η=
+\begin{eqnarray}
+\mbox{minimize}&\eta=\frac{7}{53}\cdot z_3+z_4+z_5\eqnlab{sepco-ex-m}\\
+\mbox{subject to}&79\cdot z_1+53\cdot z_2+53\cdot z_3+47\cdot z_4+45\cdot z_5\geq 179\eqnlab{sepco-ex-c1}\\
+\forall\rangei[j]{1}{5}&z_j\in\accl{0,1}\eqnlab{sepco-ex-c2}
+\end{eqnarray}
 
-7
-53 z3
-
-+ z4 + z5
-
-(4.10)
-
-79z1 + 53z2 + 53z3 + 47z4 + 45z5 ≥ 179
-zj ∈ {0, 1}
-
-(4.11)
-for all j ∈ {1, . . . , 5}
-
-(4.12)
-
-As argued above, if x∗j = 1, then zj = 1 as well (since the the coefficient of zj in (4.10) equals zero). And,
+As argued above, if $x_j^{\star}$, then $z_j=1$ as well (since the the coefficient of zj in (4.10) equals zero). And,
 since we are only interested in finding violated cover inequalities, x∗j = 0 implies zj = 0 (since zj = 1
 gives η ≥ 1). Now, observe that the solution (z1 , z2 , z3 , z4 , z5 ) = (1, 1, 1, 0, 0) is feasible in (4.11)-(4.12),
 and has objective function value less than 1. Thus, we have identified a violated cover inequality:
