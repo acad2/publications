@@ -109,7 +109,9 @@ Summarizing all \concepts{condition}, we can formulate the \concept{separation p
 Suppose that we are able to solve \eqnnrefr{sepco-m}{sepco-c2}. Then, if $\eta<1$, a \concept{cover inequality} violated by $\vec{x}^{\star}$ has been found. If, on the other hand, $\eta\geq1$, then we haven't found a \concept{cover inequality} violated by $\vec{x}^{\star}$ (and for good reason: none exists!). Although the \concept{separation problem} for \concept[cover inequality]{cover inequalities}, i.e., solving \eqnnrefr{sepco-m}{sepco-c2} \concept{NP-hard} in general, the problem can become fairly easy for a given instance. This is due to the fact that there are usually only few \concepts{fractional value} in the \concept{solution} $\vec{x}^{\star}$. Indeed, items whose corresponding $\vec{x}^{\star}$-\concepts{variable} equal $1$ can always be added to the \concept{cover}; this follows from observing that \concept{objective function} \eqnnref{sepco-m} will not increase when selecting such an \concept{item} in the \concept{cover}. Also, \concepts{item} whose corresponding $\vec{x}^{\star}$-\concept{variable} equal $0$ can be safely excluded from the \concept{cover}, since selecting such an item will result in $\eta\geq 1$. In other words: if $x_j^{\star}=1$ then $z_j=1$, and if $x_j^{\star}=0$ then $z_j=0$. We illustrate this with the next example.
 
 \begin{example}
-79x1 + 53x2 + 53x3 + 47x4 + 45x5 ≤ 178
+\begin{equation}
+79\cdot x_1+53\cdot x_2+53\cdot x_3+47\cdot x_4+45\cdot x_5\leq178
+\end{equation}
 A fractional solution for this example: x∗ = (1, 1, 46
 53 , 0, 0). To find a violated cover we have to solve the
 problem (verify this!):
