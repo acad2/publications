@@ -1,9 +1,9 @@
 \chapter{Separation and Lifting: Towards a Cutting-plane Algorithm}
 \chplab{lifting}
-In this chapter we show how \concept[valid inequality]{valid inequalities} can be used to develop \concepts{cutting plane algorithm}. A key issue in any \concept{cutting plane algorithm} is \concept{separation}. We illustrate how the \concept{separation problem} for specific classes of \concept[valid inequality]{valid inequalities} can be solved, by considering the \concept[cover inequality]{cover inequalities} for the \concept{knapsack problem} (\secref{knapsack}), and the \concept[subtour elimination inequality]{subtour elimination inequalities} for the \concept{traveling salesman problem} (\secref{salesman}). \concept{Lifting} is about strengthening \concept[valid inequality]{valid inequalities}; we apply this concept to the \concept[cover inequality]{cover inequalities} in \secref{coverineq}.
+In this chapter we show how \concept[valid inequality]{valid inequalities} can be used to develop \concepts{cutting plane algorithm}. A key issue in any \concept{cutting plane algorithm} is \concept{separation}. We illustrate how the \concept{separation problem} for specific classes of \concept[valid inequality]{valid inequalities} can be solved, by considering the \concept[cover inequality]{cover inequalities} for the \concept{knapsack problem} (\secref{knapsacksep}), and the \concept[subtour elimination inequality]{subtour elimination inequalities} for the \concept{traveling salesman problem} (\secref{salesman}). \concept{Lifting} is about strengthening \concept[valid inequality]{valid inequalities}; we apply this concept to the \concept[cover inequality]{cover inequalities} in \secref{coverineq}.
 
 \section{Separation for the Knapsack Problem}
-\seclab{knapsack}
+\seclab{knapsacksep}
 Although one could argue that the \concept{knapsack problem} is a very specific problem featuring only a single \concept{constraint}, one should realize that any \concept{integer programming formulation} can be seen as an \concept{optimization problem} with many \concepts{knapsack constraint}. Thus, \concept[valid inequality]{valid inequalities} that we can derive from a \concept{knapsack constraint} are important since such an \concept{inequality} can be relevant for any \concept{integer program}. We restate the \concept{knapsack problem} (see \eqnnrefr{knapsack-m}{knapsack-c2} in \chpref{formulations}).
 
 \begin{eqnarray}
@@ -157,45 +157,38 @@ From the first table one can see that the number of \concepts{fractional variabl
 Consider the following \concept{formulation} of the \concept{symmetric traveling salesman problem}, which uses a \concept{binary variable} $x_e$ indicating whether \concept{edge} $e$ is selected or not.
 
 \begin{eqnarray}
-\mbox{minimize}&\sumdomain[e]{E}{c_e\cdot x_e}\\
-\mbox{subject to}&\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}x_e=2\\
-&\forall S\subseteq V:\abs{S}\geq2\rightarrow\sumdomain[e]{\fun{\delta}{S}}x_e\geq 2\\
-&\forall e\in E:x_e\in\accl{0,1}
+\mbox{minimize}&\sumdomain[e]{E}{c_e\cdot x_e}\eqnlab{stsp-m}\\
+\mbox{subject to}&\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}x_e=2\eqnlab{stsp-c1}\\
+&\forall S\subseteq V:\abs{S}\geq2\rightarrow\sumdomain[e]{\fun{\delta}{S}}x_e\geq 2\eqnlab{stsp-c2}\\
+&\forall e\in E:x_e\in\accl{0,1}\eqnlab{stsp-c3}
 \end{eqnarray}
 
-Obviously, \concept{constraints} (4.14) ensure that each node must be \concept{incident} to two \concepts{edge}; these \concepts{constraint} are referred to as \concepts{degree constraint}. Constraints (4.15) state that, for each \concept{nodeset} S ⊂ V , there at least two
-edges with one endpoint in S and one endpoint not in S. These constraints are the subtour elimination
-constraints.
-When we replace the integrality constraints (4.16) by 0 ≤ xe ≤ 1, we have created a linear program that
-we refer to as the subtour LP. Clearly, solving this subtour LP gives a lower bound to the optimal value
-of the TSP instance. Notice however, that this subtour LP contains exponentially many constraints. We
-will show how to solve the separation problem for the subtour elimination constraints efficiently, i.e., in
-polynomial time. This implies that we can optimize over the subtour LP in polynomial time (despite the
-exponential number of constraints).
-So, let us assume we are given a vector x∗e , found, for instance, by optimizing (4.13) over the constraints
-(4.14) and 0 ≤ xe ≤ 1. The question now is: does there exist a violated subtour elimination constraint?
-In other words, is there a set S ⊂ V such that the left-hand side of (4.15) is less than 2? To answer this
-question we build a network G consisting of nodes, edges, and a capacity for each edge as follows. There
-is a node in G for each city in the TSP-instance, and there is an edge in the network for each e with
-x∗e > 0. The capacity of this edge equals x∗e .
-Proposition 4.2.1 The value of a minimum cut in G is less than 2 if and only if there exists a violated
-subtour elimination constraint.
-53
+Obviously, \concept{constraints} \eqnnref{stsp-c1} ensure that each \concept{node} must be \concept{incident} to two \concepts{edge}; these \concepts{constraint} are referred to as \concepts{degree constraint}. \concepts{Constraint} \eqnnref{stsp-c2} state that, for each \concept{nodeset} $S\subseteq V$, there are at least two \concepts{edge} with one \concept{endpoint} in $S$ and one \concept{endpoint} not in $S$. These constraints are the \concepts{subtour elimination constraint}.
 
-We leave it to the reader to verify this proposition. Concluding, by solving a minimum cut problem we
-solve the separation problem for the subtour elimination constraints.
+\paragraph{}
+If we replace the \concepts{integrality constraint} \eqnnref{stsp-c3} by $0\leq x_e\leq 1$, we have created a \concept{linear program} that we refer to as the \concept{subtour LP}. Clearly, solving this \concept{subtour LP} gives a \concept{lower bound} to the \concept{optimal value} of the \concept{TSP} instance. Notice however, that this \concept{subtour LP} contains exponentially many \concepts{constraint}. We will show how to solve the \concept{separation problem} for the \concepts{subtour elimination constraint} efficiently, i.e., in \concept{polynomial time}. This implies that we can optimize over the \concept{subtour LP} in \concept{polynomial time} (despite the exponential number of \concepts{constraint}).
+
+\paragraph{}
+So, let us assume we are given a \concept{vector} $\vec{x}^{\star}$, found, for instance, by optimizing \eqnnref{stsp-m} over the \concepts{constraint} \eqnnref{stsp-c1} and $0\leq x\leq 1$. The question now is: does there exist a violated \concept{subtour elimination constraint}? In other words, is there a set $S\subseteq V$ such that the left-hand side of \eqnnref{stsp-c2} is less than $2$? To answer this question we build a \concept{network} $G$ consisting of \concepts{node}, \concepts{edge}, and a \concept{capacity} for each \concept{edge} as follows. There is a \concept{node} in $G$ for each \concept{city} in the \concept{TSP} instance, and there is an \concept{edge} in the \concept{network} for each $e$ with $x_e^{\star}>0$. The \concept{capacity} of this \concept{edge} equals $x_e^{\star}$.
+
+\begin{proposition}
+The value of a \concept{minimum cut} in $G$ is less than $2$ if and only if there exists a violated \concept{subtour elimination constraint}.
+\end{proposition}
+
+
+We leave it to the reader to verify this proposition. Concluding, by solving a \concept{minimum cut problem} we solve the \concept{separation problem} for the \concepts{subtour elimination constraint}.
 
 \section{Lifting: Extended Cover Inequalities}
 \seclab{liftingeci}
 
-Consider the example in Section 4.1. From the first constraint we could have obtained the valid inequality
-x1 + x6 + x7 + x9 ≤ 1
-. Indeed, since the coefficients of x1 , x6 , x7 and x9 are each larger than 750, no two of these variables
-can both equal 1. Thus, this inequality is valid, and in fact, it is stronger that the corresponding cover
-inequalities. Addition of this particular inequality to the linear programming relaxation would have
-given the integral solution immediately. Unfortunately, this inequality is not part of the class of cover
-inequalities. But we can derive it from a cover inequality with a technique called lifting.
-Example Let S be the set of feasible solutions of the problem in the previous section. Consider the inequality x1 +x7 ≤ 1. This inequality is valid in the set of solutions restricted to the items {1, 2, 3, 4, 5, 7, 8},
+Consider the example in \secref{knapsacksep}. From the first \concept{constraint} we could have obtained the \concept{valid inequality}
+
+\begin{equation}
+x_1+x_6+x_7+x_9\leq1.
+\end{equation}
+Indeed, since the \concepts{coefficient} of $x_1$, $x_6$, $x_7$ and $x_9$ are each larger than $750$, no two of these \concepts{variable} can both equal $1$. Thus, this \concept{inequality} is valid, and in fact, it is stronger that the corresponding \concept[cover inequality]{cover inequalities}. Addition of this particular \concept{inequality} to the \concept{linear programming relaxation} would have given the \concept{integral solution} immediately. Unfortunately, this \concept{inequality} is not part of the class of \concept[cover inequality]{cover inequalities}. But we can derive it from a \concept{cover inequality} with a technique called \concept{lifting}.
+
+\begin{example}Let S be the set of feasible solutions of the problem in the previous section. Consider the inequality x1 +x7 ≤ 1. This inequality is valid in the set of solutions restricted to the items {1, 2, 3, 4, 5, 7, 8},
 i.e., it is valid for the set S ∩ {x ∈ IB 9 |x6 = x9 = 0}. We will now derive an inequality
 x1 + αx6 + x7 ≤ 1
 where α is chosen such that this inequality is valid for S ∩ {x ∈ IB 9 |x9 = 0}. In order to do so, we have
@@ -214,9 +207,8 @@ x1 + x6 + x7 + x9 ≤ 1.
 Notice that the resulting inequality is not a cover inequality (there are four variables on the lefthand side,
 whereas the righthand side does not equal 3). This inequality belongs to the class of so-called extended
 cover inequalities.
-54
 
-Recall that we have assumed that the items are indexed according to decreasing weight. Consider a
+Recall that we have assumed that the items are indexed according to decreasing weight. Consider a
 minimal cover C = {j1 , . . . , jk }. Then the corresponding extended cover E(C) is defined as
 E(C) = {1, . . . , j1 − 1} ∪ C.
 Thus, each item that is heavier than the heaviest item in the cover C is added in order to construct the
