@@ -142,111 +142,9 @@ Consider the following example.
 
 In the following table we see how the \concept{linear programming solution} and its value develop after adding \concept[violated cover inequality]{violated cover inequalities}. In the first table we give the solutions that are generated in the iterations. In the second table the \concept[violated cover inequality]{violated cover inequalities} are given. Notice that we can derive \concept[cover inequality]{cover inequalities} from both \concepts{constraint}.
 
-Iteration
+\importtabulartable{lift-exa}{Linear programming relaxation for the leading example.}
 
-x1
-
-x2
-
-1
-
-.71
-
-2
-
-x3
-
-x4
-
-x5
-
-.35
-
-1
-
-1
-.63
-
-3
-4
-
-1
-
-.35
-
-1
-
-Iteration
-
-x6
-
-x7
-
-x8
-
-x9
-
-zLP
-
-1
-
-1
-
-1
-
-1
-
-1
-
-1
-
-1
-
-.61
-
-204.8
-
-1
-
-1
-
-.37
-
-1
-
-.63
-
-177.1
-
-1
-
-1
-
-1
-
-1
-
-225.7
-
-176.0
-
-Cover wrt constraint 1
-
-Cover wrt constraint 2
-
-1
-
-x1 + x7 ≤ 1
-
-x3 + x7 ≤ 1
-
-2
-
-x7 + x9 ≤ 1
-
-3
-
-x1 + x7 + x9 ≤ 1
+\importtabulartable{cove-exa}{Cover for the leading example.}
 
 Notice that the \concept{inequality} $x_1+x_7+x_9\leq1$ is not a \concept{cover inequality}. Indeed, although $\tupl{1,7,9}$ is a \concept{cover} with respect to the first \concept{inequality}, the right-hand side does not equal $\abs{C}-1$. This \concept{inequality} is a so-called \concept{extended cover inequality}. The \concept[extended cover inequality]{extended cover inequalities} are the subject of \secref{liftingeci}.
 
@@ -258,22 +156,12 @@ From the first table one can see that the number of \concepts{fractional variabl
 \section{Separation for the Traveling Salesman Problem}
 Consider the following \concept{formulation} of the \concept{symmetric traveling salesman problem}, which uses a \concept{binary variable} $x_e$ indicating whether \concept{edge} $e$ is selected or not.
 
-
-
-minimize
-subject to
-
-(4.13)
-
-e∈δ(v)
-
-xe = 2
-
-e∈δ(S)
-
-xe ≥ 2
-
-xe ∈ {0, 1}
+\begin{eqnarray}
+\mbox{minimize}&\sumdomain[e]{E}{c_e\cdot x_e}\\
+\mbox{subject to}&\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}x_e=2\\
+&\forall S\subseteq V:\abs{S}\geq2\rightarrow\sumdomain[e]{\fun{\delta}{S}}x_e\geq 2\\
+&\forall e\in E:x_e\in\accl{0,1}
+\end{eqnarray}
 
 Obviously, \concept{constraints} (4.14) ensure that each node must be \concept{incident} to two \concepts{edge}; these \concepts{constraint} are referred to as \concepts{degree constraint}. Constraints (4.15) state that, for each \concept{nodeset} S ⊂ V , there at least two
 edges with one endpoint in S and one endpoint not in S. These constraints are the subtour elimination
