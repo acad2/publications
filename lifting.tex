@@ -188,25 +188,25 @@ x_1+x_6+x_7+x_9\leq1.
 \end{equation}
 Indeed, since the \concepts{coefficient} of $x_1$, $x_6$, $x_7$ and $x_9$ are each larger than $750$, no two of these \concepts{variable} can both equal $1$. Thus, this \concept{inequality} is valid, and in fact, it is stronger that the corresponding \concept[cover inequality]{cover inequalities}. Addition of this particular \concept{inequality} to the \concept{linear programming relaxation} would have given the \concept{integral solution} immediately. Unfortunately, this \concept{inequality} is not part of the class of \concept[cover inequality]{cover inequalities}. But we can derive it from a \concept{cover inequality} with a technique called \concept{lifting}.
 
-\begin{example}Let S be the set of feasible solutions of the problem in the previous section. Consider the inequality x1 +x7 ≤ 1. This inequality is valid in the set of solutions restricted to the items {1, 2, 3, 4, 5, 7, 8},
-i.e., it is valid for the set S ∩ {x ∈ IB 9 |x6 = x9 = 0}. We will now derive an inequality
-x1 + αx6 + x7 ≤ 1
-where α is chosen such that this inequality is valid for S ∩ {x ∈ IB 9 |x9 = 0}. In order to do so, we have
-to evaluate two situations.
-x6 = 0:
+\begin{example}Let $S$ be the set of \concepts{feasible solution} of the problem in the previous section. Consider the \concept{inequality} $x_1+x_7\leq1$. This \concept{inequality} is \concept[valid inequality]{valid} in the set of \concepts{solution} restricted to the \concepts{item} $\accl{1,2,3,4,5,7,8}$, i.e., it is valid for the set $S\cap\condset{\vec{x}\in\BBB^9}{x_6=x_9=0}$. We will now derive an \concept{inequality}:
+\begin{equation}
+x_1+\alpha\cdot x_6+x_7\leq1
+\end{equation}
+where $\alpha$ is chosen such that this \concept{inequality} is \concept[valid inequality]{valid} for $S\cap\condset{\vec{x}\in\BBB^9}{x_9=0}$. In order to do so, we have to evaluate two situations.
 
-in this case the inequality remains valid trivially.
+\begin{sitenum}
+ \item $x_6=0$: in this case the \concept{inequality} remains valid trivially.
+ \item $x_6=1$: in this case each of the \concepts{item} $1$ and $7$ can not be taken into the \concept{knapsack} because \concept{constraint} $1$ would be \concept[violated constraint]{violated}. Therefore, taking $\alpha=1$ maintains \concept[valid constraint]{validity of the constraint}.
+\end{sitenum}
 
-x6 = 1:
+This process can be repeated for \concept{item} $9$. It will lead to the \concept{inequality}
 
-in this case each of the items 1 and 7 can not be taken into the knapsack because constraint 1
-would be violated. Therefore, taking α = 1 maintains validity of the constraint.
+\begin{equation}
+x_1+x_6+x_7+x_9\leq1.
+\end{equation}
 
-This process can be repeated for item 9. It will lead to the inequality
-x1 + x6 + x7 + x9 ≤ 1.
-Notice that the resulting inequality is not a cover inequality (there are four variables on the lefthand side,
-whereas the righthand side does not equal 3). This inequality belongs to the class of so-called extended
-cover inequalities.
+Notice that the resulting \concept{inequality} is not a \concept{cover inequality} (there are four variables on the left hand side, whereas the right hand side does not equal $3$). This \concept{inequality} belongs to the class of so-called \concept[extended cover inequality]{extended cover inequalities}.
+\end{example}
 
 Recall that we have assumed that the items are indexed according to decreasing weight. Consider a
 minimal cover C = {j1 , . . . , jk }. Then the corresponding extended cover E(C) is defined as
