@@ -208,28 +208,24 @@ x_1+x_6+x_7+x_9\leq1.
 Notice that the resulting \concept{inequality} is not a \concept{cover inequality} (there are four variables on the left hand side, whereas the right hand side does not equal $3$). This \concept{inequality} belongs to the class of so-called \concept[extended cover inequality]{extended cover inequalities}.
 \end{example}
 
-Recall that we have assumed that the items are indexed according to decreasing weight. Consider a
-minimal cover C = {j1 , . . . , jk }. Then the corresponding extended cover E(C) is defined as
-E(C) = {1, . . . , j1 − 1} ∪ C.
-Thus, each item that is heavier than the heaviest item in the cover C is added in order to construct the
-set of items E(C). We claim:
-Theorem 4.1
+\paragraph{}
+Recall that we have assumed that the \concepts{item} are indexed according to decreasing \concept{weight}. Consider a \concept{minimal cover} $C=\accl{j_1,j_2,\ldots,j_k}$. Then the corresponding \concept{extended cover} $\fun{E}{C}$ is defined as
 
-j∈E(C)
+\begin{equation}
+\fun{E}{C}=\accl{1,2,\ldots,j_1-1}\cup C.
+\end{equation}
 
-xj ≤ |C| − 1 is a valid inequality for the knapsack problem.
+Thus, each \concept{item} that is heavier than the heaviest \concept{item} in the \concept{cover} $C$ is added in order to construct the set of \concepts{item} $\fun{E}{C}$. We claim:
 
-The derivation of an extended cover inequality from a cover inequality can be seen as a special case
-of a process called lifting. Given some valid inequality (say, a cover inequality) lifting refers to raising
-coefficients of variables in this inequality in order to obtain a stronger, yet valid, new inequality (the
-extended cover inequality). Indeed, the coefficients of variables x1 , x2 , . . . , xj1 −1 have value 0 in the cover
-inequality, and have been raised to value 1 in the extended cover inequality. This principle, however, can
-be applied in a more general way. In fact, lifting is a technique that can be used in many problems to
-strengthen known classes of valid inequalities. The following theorems can be used repeatedly for this
-purpose. In the theorems stated below, we assume that x is a n-dimensional {0, 1} vector, and that S
-denotes the set of feasible x-vectors.
-Theorem 4.2 Suppose that
-Then αx1 +
+\begin{theorem}
+$\sumdomain[j]{\fun{E}{C}}{x_j}\leq\abs{C}-1$ is a \concept{valid inequality} for the \concept{knapsack problem}.
+\end{theorem}
+
+The derivation of an \concept{extended cover inequality} from a \concept{cover inequality} can be seen as a special case of a process called \concept{lifting}. Given some \concept{valid inequality} (say, a \concept{cover inequality}) \concept{lifting} refers to raising \concepts{coefficient} of \concepts{variable} in this \concept{inequality} in order to obtain a stronger, yet \concept[valid inequality]{valid}, new inequality (the \concept{extended cover inequality}). Indeed, the \concepts{coefficient} of \concepts{variable} $x_1,x_2,\ldots,x_{j_1-1}$ have value $0$ in the \concept{cover inequality}, and have been raised to value $1$ in the \concept{extended cover inequality}. This principle, however, can be applied in a more general way. In fact, \concept{lifting} is a technique that can be used in many problems to
+strengthen known classes of \concept[valid inequality]{valid inequalities}. The following theorems can be used repeatedly for this purpose. In the theorems stated below, we assume that $\vec{x}$ is a $n$-dimensional $\accl{0,1}$ \concept{vector}, and that $S$ denotes the set of \concept[feasible vector]{feasible} $\vec{x}$-vectors.
+
+\begin{theorem}
+Suppose that Then αx1 +
 
 n
 j=2
@@ -240,8 +236,10 @@ j=2
 πj xj ≤ π0 is valid for each x ∈ S with x1 = 0.
 
 πj xj ≤ π0 is valid for each x ∈ S as long as α ≤ π0 − maxx∈S|x1 =1
+\end{theorem}
 
-Theorem 4.3 Suppose that
+\begin{theorem}
+Suppose that
 Then βx1 +
 
 n
@@ -265,10 +263,12 @@ j=2
 πj xj −
 
 π0 .
-Notice that applying Theorem 4.2 does not change the righthand side, whereas applying Theorem 4.3
-may change the righthand side. In the remainder of this section we give an example in which the two
-theorems above are applied repeatedly.
-Example Consider the knapsack constraint
+\end{theorem}
+
+Notice that applying Theorem 4.2 does not change the right hand side, whereas applying Theorem 4.3 may change the righthand side. In the remainder of this section we give an example in which the two theorems above are applied repeatedly.
+
+\begin{example}
+Consider the knapsack constraint
 3x1 + x2 + x3 + x4 + x5 ≤ 4.
 55
 
@@ -323,11 +323,11 @@ It follows that α2 = 0. We arrive at the conclusion that the resulting inequali
 is a valid inequality for each x ∈ S. Notice that we have derived a new inequality (4.18) that is stronger
 than the original one (4.17). As an example, consider the solution x = ( 13 , 0, 1, 1, 1), and observe that
 this particular solution is cut off by (4.18), while it is not violated by (4.17).
-56
 
-Here we have lifted the variables x1 , x2 and x3 in the sequence x3 , x1 , x2 . It is interesting to notice that
+Here we have lifted the variables x1 , x2 and x3 in the sequence x3 , x1 , x2 . It is interesting to notice that
 different sequences may yield different inequalities. For instance, the sequence x3 , x1 , x2 produces another
 inequality. Thus, the order of lifting influences the final inequality we get, see Exercise 4.
+\end{example}
 
 \section{Applications}
 
@@ -405,65 +405,48 @@ xij ∈ {0, 1}
 
 \section*{Exercises}
 \begin{exercise}
-Find all inequalities, induced by minimal covers, of the following knapsack inequality:
-79x1 + 53x2 + 53x3 + 45x4 + 45x5 ≤ 178.
-Can you find an extended cover inequality?
+Find all \concept[inequality]{inequalities}, induced by \concepts{minimal cover}, of the following \concept{knapsack inequality}:
+\begin{equation}
+79\cdot x_1+53\cdot x_2+53\cdot x_3+45\cdot x_4+45\cdot x_5\leq178.
+\end{equation}
+Can you find an \concept{extended cover inequality}?
 \end{exercise}
 
 \begin{exercise}
-Consider the following knapsack problem.
-max
+Consider the following \concept{knapsack problem}.
 
-3x1 + 2x2 + x3
-
-s.t.
-
-4x1 + 3x2 + 2x3 ≤ 6
-x1 , x2 , x3 ∈ {0, 1}
-
-Solve this problem with a cutting-plane algorithm.
+\begin{eqnarray}
+\mbox{maximize}&3\cdot x_1+2\cdot x_2+x_3\\
+\mbox{subject to}&4\cdot x_1+3\cdot x_2+2\cdot x_3\leq6\\
+&x_1,x_2,x_3\in\accl{0,1}
+\end{eqnarray}
+Solve this problem with a \concept{cutting-plane algorithm}.
 \end{exercise}
 
 \begin{exercise}
-It is clear that one can use the simplex-method to find the linear programming relaxation of the knapsack
-problem as formulated by (1.10)-(1.12). However, we claim that there is a much easier way:
+It is clear that one can use the \concept{simplex method} to find the \concept{linear programming relaxation} of the \concept{knapsack problem} as formulated by \eqnnrefr{knapsack-m}{knapsack-c2}. However, we claim that there is a much easier way:
+
+\paragraph{}
 Sort the items such that
-c1
-c2
-cn
-≥
-≥ ... ≥
-,
-a1
-a2
-an
-and next fill the knapsack with items 1, 2, . . . , k − 1, until item k can only be fractionally added to the
-knapsack. In other words, we claim that the following solution is an optimal linear programming solution
-to the knapsack problem.
-
-
-
-1
-
-
-k−1
-xj =
-(b − j=1 aj )/ak
-
-
-
- 0
 
-for all j = 1, 2, . . . , k − 1
-if j = k
-for all j = k + 1, . . . , n.
+\begin{equation}
+\dfrac{c_1}{a_1}\geq\dfrac{c_2}{a_2}\geq\ldots\dfrac{c_n}{a_n}
+\end{equation}
 
-Can you prove this?
 
-Apply this to the example in Section 4.1.
+and next fill the \concept{knapsack} with \concepts{item} $1,2,\ldots,k-1$, until \concept{item} $k$ can only be \concept[fractional item]{fractionally} added to the \concept{knapsack}. In other words, we claim that the following solution is an optimal \concept{linear programming solution} to the \concept{knapsack problem}.
+
+\begin{equation}
+x_j=\acclguard{
+1&\xif j<k\\
+s&\xif j=k\\
+0&\xif j>k
+}\xwith s=\dfrac{b-\sumieqb[i]{1}{k-1}{a_i}}{a_k}
+\end{equation}
+
+Can you prove this? Apply this to the example in \secref{knapsacksep}.
 \end{exercise}
 
 \begin{exercise}
-Consider the example in Section 4.3. What inequality results if the variables are lifted in the sequence
-x2 , x1 , x3 ? And what inequality results when using x1 , x2 , x3 as lifting sequence?
+Consider the example in \secref{liftingeci}. What \concept{inequality} results if the \concepts{variable} are \concept[lifted variable]{lifted} in the sequence $x_2$, $x_1$ and $x_3$? And what \concept{inequality} results when using $x_1$, $x_2$ and $x_3$ as \concept{lifting sequence}?
 \end{exercise}
