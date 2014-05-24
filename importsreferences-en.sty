@@ -1,14 +1,18 @@
 \ProvidesPackage{importsreferences-en}
-\RequirePackage{tikz,subfigure,float,listings}
+\RequirePackage{tikz,subfigure,enumitem,float,listings,animate,float,etoolbox,algorithmicx,algpseudocode,algorithm,booktabs}
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
 \newfloat{listing}{htb}{codes}[chapter]
 \floatname{listing}{Listing}
 
+\newcounter{imprefA}
+
 \newcommand{\genlab}[2]{\label{#1:#2}}
 \newcommand{\genref}[3]{#2~\ref{#1:#3}}
-\newcommand{\genrefpag}[3]{\genref{#1}{#2}{#3} op pagina~\pageref{#1:#3}}
+\newcommand{\genrefpag}[3]{\genref{#1}{#2}{#3} on page~\pageref{#1:#3}}
+\newcommand{\genrefr}[4]{#2~\ref{#1:#3}-\ref{#1:#4}}
+\newcommand{\genrefe}[3]{#2~\setcounter{imprefA}{-1}\foreach\a in{#3}{\stepcounter{imprefA}}\foreach\a in{#3}{\ref{#1:\a}\ifthenelse{\value{imprefA}>0}{\ifthenelse{\value{imprefA}=1}{\ and\ }{,\ }\addtocounter{imprefA}{-1}}{}}}
 \newcommand{\figlab}[1]{\genlab{fig}{#1}}
 \newcommand{\figref}[1]{\genref{fig}{Figure}{#1}}
 \newcommand{\figrefpag}[1]{\genrefpag{fig}{Figure}{#1}}
@@ -33,12 +37,21 @@
 \newcommand{\collab}[1]{\genlab{col}{#1}}
 \newcommand{\colref}[1]{\genref{col}{Corollary}{#1}}
 \newcommand{\colrefpag}[1]{\genrefpag{col}{Corollary}{#1}}
-\newcommand{\thmlab}[1]{\genlab{col}{#1}}
-\newcommand{\thmref}[1]{\genref{col}{Theorem}{#1}}
+\newcommand{\thmlab}[1]{\genlab{thm}{#1}}
+\newcommand{\thmref}[1]{\genref{thm}{Theorem}{#1}}
+\newcommand{\lemlab}[1]{\genlab{lem}{#1}}
+\newcommand{\lemref}[1]{\genref{lem}{Lemma}{#1}}
 \newcommand{\thmrefpag}[1]{\genrefpag{col}{Theorem}{#1}}
 \newcommand{\exclab}[1]{\genlab{exc}{#1}}
 \newcommand{\excref}[1]{\genref{exc}{Exercise}{#1}}
+\newcommand{\excrefr}[2]{\genrefr{exc}{Exercises}{#1}{#2}}
 \newcommand{\excrefpag}[1]{\genrefpag{exc}{Exercise}{#1}}
+\newcommand{\prplab}[1]{\genlab{prp}{#1}}
+\newcommand{\prpref}[1]{\genref{prp}{Proposition}{#1}}
+\newcommand{\prprefpag}[1]{\genrefpag{prp}{Proposition}{#1}}
+\newcommand{\cjclab}[1]{\genlab{cjc}{#1}}
+\newcommand{\cjcref}[1]{\genref{cjc}{Conjecture}{#1}}
+\newcommand{\cjcrefpag}[1]{\genrefpag{cjc}{Conjecture}{#1}}
 \newcommand{\eqnlab}[1]{\genlab{eqn}{#1}}
 \newcommand{\eqnref}[1]{Equation~(\ref{eqn:#1})}
 \newcommand{\eqncref}[1]{Constraint~(\ref{eqn:#1})}
@@ -46,9 +59,29 @@
 \newcommand{\eqncsrefr}[2]{Constraints~(\ref{eqn:#1})-(\ref{eqn:#2})}
 \newcommand{\eqnnref}[1]{(\ref{eqn:#1})}
 \newcommand{\eqnnrefr}[2]{(\ref{eqn:#1})-(\ref{eqn:#2})}
+\newcommand{\eqnnrefe}[1]{\setcounter{imprefA}{-1}\foreach\a in{#1}{\stepcounter{imprefA}}\foreach\a in{#1}{(\ref{eqn:\a})\ifthenelse{\value{imprefA}>0}{\ifthenelse{\value{imprefA}=1}{\ and\ }{,\ }\addtocounter{imprefA}{-1}}{}}}
 \newcommand{\alglab}[1]{\genlab{alg}{#1}}
+\newcommand{\algoref}[1]{\genref{alg}{Algorithm}{#1}}
 \newcommand{\lstlab}[1]{\genlab{lst}{#1}}
 \newcommand{\lstref}[2][Listing]{\genref{lst}{#1}{#2}}
+\newcommand{\itmlab}[1]{\genlab{itm}{#1}}
+\newcommand{\itmref}[1]{\genref{itm}{Item}{#1}}
+\newcommand{\stplab}[1]{\genlab{stp}{#1}}
+\newcommand{\stpref}[1]{\genref{stp}{Step}{#1}}
+\newcommand{\phslab}[1]{\genlab{phs}{#1}}
+\newcommand{\phsref}[1]{\genref{phs}{Phase}{#1}}
+\newcommand{\phsrefe}[1]{\genrefe{phs}{Phases}{#1}}
+\newcommand{\phsrefr}[2]{\genrefr{phs}{Phases}{#1}{#2}}
+
+
+
+\newenvironment{inlineenumerate}{\begin{enumerate}}{\end{enumerate}}
+\newenvironment{stepenum}{\begin{enumerate}[label=\bfseries Step \arabic*:,ref=\arabic*]}{\end{enumerate}}
+\newenvironment{phasenum}{\begin{enumerate}[label=\bfseries Phase \arabic*:,ref=\arabic*]}{\end{enumerate}}
+\newenvironment{optionenum}{\begin{enumerate}[label=\bfseries Option \arabic*:,ref=\arabic*]}{\end{enumerate}}
+\newenvironment{sitenum}{\begin{enumerate}[label=\bfseries Situation \arabic*:,ref=\arabic*]}{\end{enumerate}}
+
+\newenvironment{subproof}{\begin{quote}\begin{proof}}{\end{proof}\end{quote}}
 
 \newcommand{\importtikz}[1]{
 \input{tikzpictures/tikz-#1.tex}
@@ -85,6 +118,13 @@
 \newcommand{\importtabularsubtable}[2]{
 \subtable[#2]{\importabular{#1}}
 }
+
+\algnewcommand\algorithmicto{\textbf{to}}
+\algnewcommand\algorithmicwith{\textbf{with}}
+\newcommand{\Forrange}[4][1]{
+\ifthenelse{#1=1}
+{\For{\ensuremath{#2\gets#3\ \algorithmicto\ #4}}}
+{\For{\ensuremath{#2\gets#3\ \algorithmicto\ #4\ \algorithmicwith\ #1}}}}
 
 \newcommand{\importalgorithmicalgorithm}[2]{
 \begin{algorithm}[hbt]

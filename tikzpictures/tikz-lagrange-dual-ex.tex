@@ -1,0 +1,17 @@
+\begin{tikzpicture}[xscale=8,yscale=0.5]
+\draw[help lines,xstep=0.1,ystep=2] (0,16) grid (1,36);
+\draw[thick,->] (-0.125,18) -- (1.125,18) node[anchor=north east]{$\lambda$};
+\draw[thick,->] (0,15) -- (0,36) node[anchor=north east]{$\fun{z}{\lambda,q_i}$};
+\foreach \x in {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1} {
+  \draw[thick] (\x,18.2) -- (\x,17.8) node[anchor=north] {$\x$};
+}
+\foreach \y in {16,18,...,36} {
+  \draw[thick] (0.0125,\y) -- (-0.0125,\y) node[anchor=east] {$\y$};
+}
+\draw (0,17.8) node[anchor=north west] {$0$};
+\foreach \i/\b/\a in {a/18/2,b/20/0,c/22/-2,d/23/5,e/25/3,f/27/1,g/29/-1,h/28/8} {
+  \draw (-0.0125,-0.0125*\a+\b) -- (1.125,1.125*\a+\b);
+  \draw (0.5,0.5*\a+\b) node[anchor=south] {$(\i)$};
+}
+\draw[very thick] (0,29) -- (0.1111111111111111,28.88888888889) -- (1,36);
+\end{tikzpicture}

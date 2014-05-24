@@ -1,0 +1,547 @@
+\chapter{From Linear to Integer Optimization}
+\chplab{lintointopt}
+
+\section{Two Equivalent Definitions of a Polyhedron}
+\seclab{defpolyhed}
+
+Consider the \concept{feasible region} depicted in \figref{polyhedron}. How to describe this object mathematically?
+
+\importtikzfigure{polyhedron}{A feasible region.}
+
+Here is one way: we can view the \concept{feasible region} as the \concept{intersection} of as a number of \concepts{halfspace}, each \concept{halfspace} defined by a \concept{linear inequality}. For instance, in the case of the figure above, we can write
+\begin{equation}
+\accl{\tupl{x_1,x_2}\in\RRR^2: -x_1+5\cdot x_2\leq 20 \wedge 2\cdot x_1+x_2\leq 6\wedge 6\cdot x_1-x_2\leq 10\wedge x_1\geq 0\wedge x_2\geq 0}.
+\end{equation}
+So we need five \concept[inequality]{inequalities} to precisely describe the \concept{feasible region}.
+
+\paragraph{}
+An alternative is to focus on the \concept[extreme vertex]{extreme vertices} of the \concept{feasible region} in \figref{polyhedron}. Indeed, we can alternatively write
+\begin{equation}
+\accl{\tupl{x_1,x_2}\in\funma{conv}{\tupl{0,0},\tupl{0,4},\tupl{\frac{10}{11},\frac{46}{11}},\tupl{2,2},\tupl{\frac{5}{3},0}}}.
+\end{equation}
+
+\paragraph{}
+The first approach can be seen as the \concept{linear programming} approach; here, we simply list all the \concept[inequality]{inequalities} that jointly define the \concept{feasible region}. The second approach can be seen as the \concept{integer programming} approach; then, we list the \concept{extreme vertices} of the \concept[feasible region]{region}, and define the \concept{feasible region} as anything that is in the \concept{convex hull} of these given vertices. The two approaches are equivalent: anything that can be written using \concept[inequality]{inequalities}, can be written as the \concept{convex hull} of a number of \concepts{point}, and vice versa. Let us now take a more general point of view. Thus, a \concept{polyhedron} $P$ can be defined in two equivalent ways. First, as the set of points in $\RRR^n$ that satisfy a finite set of \concepts{linear constraint}, i.e.,
+\begin{equation}
+P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq b}.
+\end{equation}
+
+\paragraph{}
+Second, $P$ can be defined as the set of \concepts{point} in $\RRR^n$ that are \concepts{convex combination} of \concepts{point} of a finite set $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$ plus \concepts{nonnegative combination} of \concepts{point} of a finite set $Y=\accl{\vec{y}_1,\vec{y}_2,\ldots,\vec{y}_L}$, i.e.,
+\begin{equation}
+P=\funm{conv}{X}+\funm{cone}{Y}
+\end{equation}
+where
+\begin{equation}
+\funm{conv}{X}=\condset{\sumieqb[k]{1}{K}{\alpha_k\cdot\vec{x}_k}}{\forall k:\alpha_k\in\RRR^+\wedge\sumieqb[k]{1}{K}{\alpha_k}=1}
+\end{equation}
+and
+\begin{equation}
+\funm{cone}{X}=\condset{\sumieqb[l]{1}{L}{\beta_l\cdot\vec{x}_l}}{\forall l:\alpha_l\in\RRR^+}
+\end{equation}
+
+\paragraph{}
+The \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem of Farkas, Minkowski, and Weyl} (see e.g. \emph{Nemhauser and Wolsey}\cite{citeulike:2212037}) proves that both definitions of a \concept{polyhedron} are equivalent. Moreover, if we have a description of $P$ in one form, then we know that there is a description in the other form.
+
+\paragraph{}
+In the sequel, we will consider only \concept[polyhedron]{polyhedra} which are subsets of the \concept{positive orthant} in $\RRR^n$ , i.e., $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. This guarantees, if $P$ is not \concept{empty}, the existence of \concepts{extreme point}. If $X$ and $Y$ are minimal, then $X$ contains the \concepts{extreme point}, and $Y$ contains the \concepts{extreme ray} of $P$. A \concept{polytope} is a \concept{bounded polyhedron}, i.e., $Y=\emptyset$ and $\funm{cone}{Y}=\accl{\vec{0}}$. With a few exceptions, we will only consider \concepts{polytope} in the sequel. In fact, most of the \concepts{polytope} that we consider lie in the $n$-dimensional \concept{unit cube} $\BBB^n=\condset{\vec{x}\in\RRR^n}{\vec{0}\leq\vec{x}\leq\vec{1}}$.
+
+\paragraph{}
+The way the \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem} is used in \concept{combinatorial optimization} is different from the way it is used in \concept{linear programming}. In \concept{linear programming} we are given a set of \concepts{feasible solution} by means of a system of \concepts{linear constraint} $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. The \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem} is used to show that the \concept{optimization problem} $\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has an \concept{extreme point} that is the \concept{optimum}. In \concept{combinatorial optimization} we are given, implicitly, a description of a finite set of \concepts{feasible solution} $\calS$. The set $\calS$ is usually described as the set of subsets of a certain \concept{ground set} $E$, where these subsets satisfy certain properties. The elements from $\calS$ are described by \concepts{vector} $X=\accl{\vec{x}_1,\vec{x}_2,\ldots,\vec{x}_K}$. The \concept[Farkas-Minkowski-Weyl representation theorem]{representation theorem} is used to conclude that $\funm{conv}{X}$ can be described by \concepts{linear constraint}, i.e., $\funm{conv}{X}=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ for some \concept{matrix} $A$ and some \concept{vector} $\vec{b}$. The main goal of this chapter is to find a way to obtain this set of \concepts{linear constraint}.
+
+\paragraph{}
+The set of \concepts{feasible solution} $X$ of a \concept{combinatorial optimization problem} is usually described through a \concept{formulation} with \concepts{linear restriction} and \concepts{integrality constraint} on the \concepts{variable}, i.e., $X=\condset{x\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\ZZZ^n}$. Notice that the \concept{formulation} of $X$ as an \concept{integer linear program} is not unique. The \concept{linear programming relaxation} of this \concept{formulation}, denoted by $\funm{LPR}{A,\vec{b}}$, is $\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$. Clearly, $\funm{conv}{X}$ is a subset of $\funm{LPR}{A,\vec{b}}$. A first question is: how well does the \concept{linear programming relaxation} of a \concept{formulation} describe the \concept{convex hull} of $X$? This gives a criterion to decide on which \concept{formulation} is best for a certain problem. In general we choose the \concept{formulation} that defines the smallest \concept{polyhedron} containing $\funm{conv}{X}$. A second question is: how can we find \concepts{constraint} that improve the \concept{linear programming relaxation}? Then, we are looking for \concepts{constraint} that are satisfied by all \concepts{feasible solution} in $X$, but that \concept{cut off part} of the \concept{polyhedron} defined by the \concept[linear programming relaxation]{relaxation}.
+
+\paragraph{}
+We will give (partial) answers to both questions. In the following section we identify \concepts{formulation} for problems that have the property that the \concept{linear programming relaxation} is tight, i.e., it describes $\funm{conv}{X}$ exactly. Then we describe a method, first illustrated using the \concept{stable set problem}, that improves the \concept{linear programming relaxation} by adding \concepts{linear constraint} (called \concept[valid inequality]{valid inequalities}) that make the \concept{formulation} tighter. Finally, we discuss a systematic way of obtaining these \concept[valid inequality]{inequalities}.
+
+\section{Linear Description of Combinatorial Problems}
+\seclab{lindesccomb}
+Consider the \concept{integer linear program}
+\begin{equation}
+\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\accl{0,1}^m},
+\end{equation}
+where $A$ is an $n\times m$ \concept{matrix} of \concepts{integer} and $\vec{b}$ is an $n$-vector of \concepts{integer}. Suppose we solve the corresponding \concept{linear programming formulation}. Of course, we would be quite fortuitous if the resulting values for the $\vec{x}$-variables would be \concept{integral}. However, in some special cases to be discussed next, one can guarantee that the resulting \concept{solution} is indeed \concept[integral solution]{integral}.
+
+\paragraph{}
+When solving the \concept{linear programming formulation}, we know from the \concept{simplex method} that there is a regular $n\times n$ submatrix $B$ of $A$ such that $\overline{x}=B^{-1}\cdot\vec{b}$ is the \concept{optimum solution} of the \concept{linear program}. Denoting the \concepts{column} of $B$ by $B_{\star,j}$ $j\in\accl{1,\ldots,n}$, \concept{Cramer's rule} gives an explicit description of the $n$ \concepts{basic variable} $x_j$ $j\in\accl{1,\ldots,n}$ corresponding to the \concepts{column} of $B$:
+
+\begin{equation}
+x_j=\displaystyle\frac{\funm{det}{B_{\star,1}|B_{\star,2}|\ldots|B_{\star,j-1}|\vec{b}|B_{\star,j+1}|\ldots|B_{\star,n}}}{\funm{det}{B}}.
+\end{equation}
+
+The upper \concept{determinant} is \concept{integral}. If the \concept{determinant} of $B$ would be $\pm 1$, then $x_j$ is certainly \concept{integral}. We call a \concept{matrix} $B$ with that property \concept{unimodular} (\conceptsee{UM}{unimodular}). Since the \concept{basis} $B$ may vary with the \concept{objective} $\vec{c}$ and the right-hand side $\vec{b}$, we would like to have a characterization of \concept[matrix]{matrices} $A$ for which each $n\times n$ submatrix $B$ is \concept{UM}. Indeed, for such \concept[matrix]{matrices}, the \concept{polyhedron}
+\begin{equation}
+P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}=\vec{b}\wedge\vec{x}\geq\vec{0}}
+\end{equation}
+has \concept[integral vertex]{integral vertices}.
+
+\paragraph{}
+Next, consider the \concept{integer linear program}
+\begin{equation}
+\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\in\accl{0,1}}.
+\end{equation}
+To put the associated \concept{linear programming problem} in the form above we introduce a \concept{slack vector} $\vec{y}$ and we reformulate it as
+\begin{equation}
+\max\condset{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}+\vec{y}\leq\vec{b}\wedge\vec{x},\vec{y}\geq\vec{0}}.
+\end{equation}
+To obtain a similar result on the \concept{integrality} of $\vec{x}$ (and $\vec{y}$), we can demand that each $n\times n$ submatrix of the \concept{matrix} ($A|I$) be \concept{unimodular}. This, however, is equivalent to stating that all regular square submatrices (not only those with $n$ rows and columns) of the matrix $A$ have a \concept{determinant} $\pm 1$. \concept[matrix]{Matrices} with this property are called \concept{totally unimodular} (\conceptsee{TUM}{totally unimodular}), see the next definition.
+
+\begin{definition}[Totally unimodular matrix]
+A matrix $A$ is called \concept{totally unimodular} if each square \concept{submatrix} of $A$ has \concept{determinant} equal to $-1$, $0$, or $+1$.
+\end{definition}
+
+\paragraph{}
+We have the following important theorem for \concept[totally unimodular matrix]{totally unimodular matrices}.
+
+\begin{theorem}
+If a \concept{matrix} $A$ is \concept{TUM}, then the \concept{polyhedron} $P=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}}$ has \concept[integral vertex]{integral vertices}.
+\end{theorem}
+
+\paragraph{}
+Clearly, a \concept{totally unimodular matrix} consists only of entries $0,\pm 1$. In the following theorem we characterize two types of \concept[matrix]{matrices} that are \concept{totally unimodular}.
+\begin{theorem}
+\thmlab{tum-matrix}
+Let $A$ be a \concept{matrix} with entries in $\accl{-1, 0, 1}$ such that there are at most two nonzeros in each \concept{column}. If there exists a \concept{partition} of the \concepts{row} of $A$ in two sets $R_1$ and $R_2$ such that
+\begin{enumerate}
+ \item each \concept{column} with two nonzero entries of the same \concept{sign}, has one of its \concept[entry]{entries} in $R_1$ and one in $R_2$,
+ \item each \concept{column} with two nonzero entries of different \concept{sign}, has either both of its \concept[entry]{entries} in $R_1$ or both of its \concept[entry]{entries} in $R_2$,
+\end{enumerate}
+then the matrix $A$ is \concept{TUM}.
+\begin{proof}
+We use \concept{induction} on the size of the \concept[submatrix]{submatrices}. Each \concept{submatrix} of size $1\times 1$ is trivially \concept{TUM}. Let $C$ be a \concept{submatrix} of size $k\times k$. We consider three cases.
+\begin{enumerate}
+ \item If $C$ has a \concept{column} with no nonzeros it is \concept{singular};
+ \item if $C$ has a \concept{column} with at most one nonzero, its \concept{determinant} can be expanded along that \concept{column}, and \concept{total unimodularity} follows from the \concept{induction hypothesis};
+ \item finally, if $C$ has only \concepts{column} with two nonzeroes, we split its \concepts{row} in the subsets with the property described above. Adding up the \concepts{row} in each subset results in two identical \concept{row} \concepts{vector}, which implies that the \concept{matrix} is \concept{singular}.
+\end{enumerate}
+\end{proof}
+\end{theorem}
+
+\paragraph{}
+There are two important classes of \concept[matrix]{matrices} that satisfy the conditions of the above theorem, and therefore are \concept{TUM}. The \concept{node-arc incidence matrix} $A$ of a \concept{directed graph} (\conceptsee{digraph}{directed graph}) has \concepts{row} corresponding with the \concepts{node} and \concepts{column} corresponding with the \concepts{arc}. The entry $A_{v,a}$ can obtain three possible values:
+\begin{enumerate}
+ \item $A_{v,a}=-1$ if \concept{vertex} $v$ is the \concept[tail of an arc]{tail} of \concept{arc} $a$.
+ \item $A_{v,a}=1$ if \concept{vertex} $v$ is the \concept[head of an arc]{head} of \concept{arc} $a$.
+ \item $A_{v,a}=0$ if \concept{vertex} $v$ and arc $a$ are not \concept{incident}.
+\end{enumerate}
+
+\paragraph{}
+The \concept{node-edge incidence matrix} $A$ of a \concept{graph} has \concepts{row} corresponding with the \concepts{node} and \concepts{column} corresponding with the \concepts{edge}. The entry $A_{v,e}$ can obtain two possible values:
+\begin{enumerate}
+ \item $A_{v,e}=1$ if \concept{vertex} $v$ and \concept{edge} $e$ are incident.
+ \item $A_{v,e}=0$ if \concept{vertex} $v$ and \concept{edge} $e$ are not incident.
+\end{enumerate}
+
+\begin{corollary}
+\collab{tum-graph}
+The \concept{node-arc incidence matrix} of a \concept{digraph} is \concept{TUM}. The \concept{node-edge incidence matrix} of a \concept{bipartite graph} is \concept{TUM}.
+\end{corollary}
+
+\paragraph{}
+This implies that many \concept{optimization problems} on (di)graphs can be solved with \concept{linear programming}. Among them are the \concept{shortest path problem}, the \concept{max-flow problem}, the \concept{min-cost flow problem}, and the \concept{matching problem} on \concept{bipartite graphs}. Finally, we will show by an example that general \concept[node-edge incidence matrix]{node-edge incidence matrices} need not be \concept{TUM}. Consider the \concept{complete graph} on three \concept[vertex]{vertices} $K_3$. Its \concept{node-edge incidence matrix} is:
+\begin{equation}
+\brak{\begin{array}{ccc}
+1&1&0\\
+1&0&1\\
+0&1&1
+\end{array}}
+\end{equation}
+The \concept{determinant} of this \concept{matrix} is $-2$. Now let us compare the \concept{ILP} \concept{formulation} of the \concept{maximum cardinality matching problem} with its \concept{linear programming} relaxation on this \concept{graph}. A \concept{maximum matching} consists of one \concept{edge}, and thus has value $1$. The \concept{LP-relaxation} has an optimum value of $1.5$, since each of the three variables can obtain the value $0.5$, without violating any of the \concepts{linear constraint}.
+
+\section{Valid Inequalities}
+\seclab{validineq}
+Consider the \concept{stable set problem}. Given is an arbitrary \concept{graph} $G=\tupl{V,E}$. The \concepts{feasible solution} are the \concepts{stable set} in $G$. These solutions are represented by \concept[binary vector]{binary $n$-vectors}, where the components correspond to the \concept[vertex]{vertices}. The \concept{integer linear programming} \concept{formulation} is the following, see also \eqnnrefr{stableset-m}{stableset-c2}.
+
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[v]{V}{x_v}\eqnlab{stablesetr-m}\\
+\mbox{subject to}&\forall\tupl{v_1,v_2}\in E:x_{v_1}+x_{v_2}\leq 1\eqnlab{stablesetr-c1}\\
+&\forall v\in V:x_v\in\accl{0,1}\eqnlab{stablesetr-c2}
+\end{eqnarray}
+
+The \concept{stable set polytope} $\funm{conv}{\mbox{SS}}$ is the \concept{convex hull} of the \concepts{feasible solution} of the above \concept{formulation}, i.e., the set of vectors corresponding to \concepts{stable set}. We will derive two classes of so-called \concept[valid inequality]{valid inequalities}, the \concept[clique inequality]{clique inequalities} and the \concept[odd-cycle inequality]{odd-cycle inequalities}. These \concept[valid inequality]{valid inequalities} will allow us to improve the solution found by the \concept{linear programming relaxation}.
+
+\begin{example}
+Consider the following \concept{graph} depicted in \figref{clique-graph} on five \concept[vertex]{vertices}. The \concepts{node} $3$, $4$ and $5$ form a \concept{clique}, i.e., a subset of the \concept[vertex]{vertices} that induces a \concept{complete graph}. At most one of these \concepts{node} can be present in a \concept{stable set}. In other words, each \concept{feasible solution} must satisfy the inequality $x_3+x_4+x_5\leq 1$. Thus, when solving the \concept{linear programming relaxation}, one could add this \concept{constraint} to the \concept{formulation}, thereby making the \concepts{constraint} $x_3+x_4\leq 1$, $x_3+x_5\leq 1$ and $x_4+x_5\leq 1$ obsolete.
+
+\importtikzfigure{clique-graph}{Graph with cliques.}
+
+\paragraph{}
+Notice that the \concept{inequality} $x_3+x_4+x_5\leq 1$ can be derived from the \concepts{constraint} in the \concept{formulation} by rounding in the following way.
+
+\begin{equation}
+\begin{array}{rcrcrcc}
+x_3&+&x_4&&&\leq&1\\
+&&x_4&+&x_5&\leq&1\\
+x_3&+&&&x_5&\leq&1\\\hline
+2\cdot x_3&+&2\cdot x_4&&2\cdot x_5&\leq&3
+\end{array}
+\end{equation}
+This gives $x_3+x_4+x_5\leq 1$. This way we can get $3$-\concept[clique]{cliques} from $2$-\concept[clique]{cliques}. The \concept{clique} of the \concepts{node} $1$, $2$, $3$ and $4$ can not be derived by \concepts{rounding constraint} of the \concept{formulation}. However, we can derive them from the \concepts{constraint} generated by the four $3$-\concepts{clique} contained in $\accl{1,2,3,4}$.
+\end{example}
+\begin{example}
+Consider the following \concept{graph} depicted in \figref{odd-cycle}: It is a \concept{cycle} consisting of five \concept[vertex]{vertices}. The following \concept{inequality} is \concept[valid inequality]{valid}. At most two \concepts{node} of the \concept{cycle} can be in a \concept[node packing]{packing}.
+\begin{equation}
+x_1+x_2+x_3+x_4+x_5\leq 2
+\end{equation}
+In general, for a \concept{cycle} $C$ with an odd number of \concept[vertex]{vertices} in a \concept{graph} $G$, the \concept[valid inequality]{inequality} $\isumdomain[v]{C}{x_v\leq\floor{\frac{1}{2}\abs{C}}}$ valid. Unfortunately, adding such a \concept{constraint} does not guarantee that the resulting \concept{solution} is necessarily \concept[integral solution]{integral}, as the \concept{graph} depicted in \figref{odd-cycle-claw} shows.
+
+\importtikzfigure{odd-cycle}{Odd cycle.}
+
+\importtikzfigure{odd-cycle-claw}{Odd cycle with $5$-claw.}
+
+\paragraph{}
+In this \concept{graph} the solution $x=\tupl{\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{2}{5},\frac{1}{5}}$ satisfies all the \concepts{constraint} that we have found for the \concept{stable set problem}. However, the \concept{cumulative sum} of the \concepts{variable} is larger than two, and the number of \concepts{node} in a \concept[node packing]{packing} in this \concept{graph} is at most two. Therefore, we still do not have a description of $\funm{conv}{\mbox{SS}}$ for this \concept{graph}. We will now strengthen the \concept{odd cycle inequality} generated by the \concept[vertex]{vertices} $1$, $2$, $3$, $4$ and $5$. To do so, we look at the following \concept{inequality} and we try to find a value for $\alpha$ as high as possible, such that the \concept{inequality} maintains its validity.
+\begin{equation}
+x_1+x_2+x_3+x_4+x_5+\alpha\cdot x_6\leq 2
+\end{equation}
+If $x_6=0$, then the \concept{inequality} reduces to the \concept{odd cycle inequality} and is valid for any value of $\alpha$. If $x_6=1$, then \concept{node} $6$ is in the \concept[node packing]{packing}. But this implies that \concepts{node} connected to $6$ can not be in the \concept[node packing]{packing}. Thus, $x_1=x_2=x_3=x_4=x_5=0$, and the inequality is valid for all $\alpha\leq 2$. Concluding, the inequality remains valid for $\alpha=2$.
+\end{example}
+\begin{application}[Generalized node packing]
+In structured problems with many \concept[inequality]{inequalities} one can sometimes derive so-called \concepts{implication}, i.e., if one \concept{variable} has value $1$ that implies that some other variable should have value $0$. Such \concepts{implications} can lead to strong inequalities based on \concept[node packing inequality]{node packing inequalities} which tighten a \concept{formulation}. This technique is often used as a \concept{preprocessing} step in solving huge \concepts{integer linear programming problem}.
+\end{application}
+\begin{example}
+Three \concepts{binary variable} $x_1$, $x_2$ and $x_3$ satisfy the following relations.
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+&&-3\cdot x_2&-&2\cdot x_3&\leq&-2\\
+-4\cdot x_1&-&3\cdot x_2&-&3\cdot x_3&\leq&-6\\
+2\cdot x_1&-&2\cdot x_2&+&6\cdot x_3&\leq&5
+\end{array}
+\end{equation}
+
+\paragraph{}
+By using the \concepts{complementing variable} $y_1=1-x_1$, $y_2=1-x_2$ and $y_3=1-x_3$, this system can be reformulated into a system consisting of \concepts{knapsack constraint}, as follows.
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+&&3\cdot y_2&+&2\cdot y_3&\leq&3\\
+4\cdot y_1&+&3\cdot y_2&+&3\cdot y_3&\leq&4\\
+2\cdot x_1&+&2\cdot y_2&+&6\cdot x_3&\leq&7
+\end{array}
+\end{equation}
+
+\paragraph{}
+The \concept{node packing graph} defined by the \concepts{variable} and \concepts{constraint} consists of the following \concept[vertex]{vertices} and \concepts{edge}. There are two \concepts{node} for each \concept{variable}, one representing the \concept{variable} $x_i$ and the other its \concept[complementary variable]{complement} $y_i$ . Two \concepts{node} are connected by an \concept{edge} if the corresponding pair of \concepts{variable} sums up to a \concept{value} of at most $1$. In this example the \concepts{edge} are $\tupl{x_i,y_i}$ ($i=1,2,3$); $\tupl{y_i,y_j}$ ($1\leq i < j \leq 3$) (second constraint); $\tupl{x1,x3}$ (third constraint); $\tupl{y2,x3}$ (third constraint).
+
+\importtikzfigure{gennodepacking}{Generalized Node Packing graph.}
+
+\paragraph{}
+There is a \concept{clique} consisting of the \concept[vertex]{vertices} corresponding to $x_3$, $y_3$ and $y_2$. Thus, $x_3+y_3+y_2\leq 1$. Since $x_3+y_3=1$ this gives $y_2=0$ and $x_2=1$. Notice that the \concept{vector} $\tupl{x_1,x_2,x_3}=\tupl{1,\frac{1}{2},\frac{1}{2}}$ satisfies the original \concept{linear programming relaxation}, but is cut off by the generated \concept{clique constraint}.
+\end{example}
+
+\section{Gomory-Chv\`atal Rounding}
+\seclab{gomorychvatal}
+A general method for finding \concept[valid inequality]{valid inequalities} that really cut off a part from the \concept{linear programming relaxation} is \concept{Gomory-Chv\`atal rounding}.
+
+\paragraph{}
+Suppose we have the following description of a set of \concepts{point}
+\begin{equation}
+X=\condset{\vec{x}\in\RRR^n}{A\cdot\vec{x}\leq\vec{b}\wedge\vec{x}\geq\vec{0}\wedge\vec{x}\mbox{ integral}}
+\end{equation}
+
+\paragraph{}
+Then, for any \concept{vector} $\vec{u}\geq\vec{0}$, the following \concept{constraint} is valid:
+\begin{equation}
+\floor{\vec{u}\cdot A}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}
+\end{equation}
+
+\paragraph{}
+By the \concept{nonnegativity} of $\vec{x}$ we have that $\floor{\vec{u}\cdot A}\cdot\vec{x}\leq\cdot\vec{u}\cdot\vec{b}$, and from the \concept{integrality} of $\vec{x}$ it follows that the left hand side is \concept[integral vector]{integral}, and therefore we are allowed to round down the right hand side. By adding these \concepts{constraint} for all \concepts{nonnegative vector} $\vec{u}$, we get the \concept{polyhedron} $P^1=\condset{\vec{x}\in\RRR^n}{\vec{x}\geq\vec{0}\wedge\forall \vec{u}\in\RRR^n:\vec{u}\geq\vec{0}\Rightarrow\floor{\vec{u}\cdot\vec{A}}\cdot\vec{x}\leq\floor{\vec{u}\cdot\vec{b}}}$ which is really smaller than $P$. The problem is that there are infinitely many \concepts{constraint} from which only few are necessary. Moreover, the resulting \concept{polyhedron} $P^1$ may still contain \concept[fractional vertex]{fractional vertices}. Then the process of rounding can be repeated. Chv\`atal showed that this process gives the \concept{convex hull} of all \concepts{integral vector} in $P$ after a finite number of times. The number of times that these cuts must be added is called the \concept{Chv\`atal-rank}.
+
+\paragraph{}
+\begin{example}
+Consider the following \concept{integer program}:
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&&&x_2\\
+\mbox{subject to}&3\cdot x_1&+&2\cdot x_2&\leq&6\\
+&-3\cdot x_1&+&2\cdot x_2&\leq&0\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
+
+\paragraph{}
+The \concept{feasible region} of the \concept{LP-relaxation} of this \concept{integer program} is depicted in \figref{feasibleregion-gc}.
+
+
+\importtikzfigure{feasibleregion-gc}{Feasible region of LP-relaxation.}
+
+Consider now the \concept{nonnegative vector} $\vec{u}=\tupl{\frac{5}{12},\frac{1}{12}}$. Using $\vec{u}$, we can construct the following \concept{linear combination} of the given \concepts{constraint}:
+\begin{equation}
+\begin{array}{rcrcrcrcr}
+\tfrac{5}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\tfrac{1}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline\\
+&&x_1&+&x_2&\leq&\floor{\frac{30}{12}}&=&2
+\end{array}
+\end{equation}
+
+\paragraph{}
+Another possibility is to set $\vec{u}=\tupl{\frac{1}{12},\frac{5}{12}}$. The resulting \concept{constraint} can be found as follows:
+\begin{equation}
+\begin{array}{rcrcrcrcr}
+\tfrac{1}{12}&\times&[3\cdot x_1&+&2\cdot x_2&\leq&6]&&\\
+\tfrac{5}{12}&\times&[-3\cdot x_1&+&2\cdot x_2&\leq&0]&&\\\hline
+&&-x_1&+&x_2&\leq&\floor{\tfrac{6}{12}}&=&0
+\end{array}
+\end{equation}
+
+\paragraph{}
+When both additional restrictions are added to the original \concepts{constraint}, a \concept{polytope} depicted in \figref{feasibleregion-gc-mod} with \concept[integral vertex]{integral vertices} arises. Thus, when these \concepts{constraint} are added to the \concept{linear program}, the problem can be solved with the \concept{simplex method}.
+
+\importtikzfigure{feasibleregion-gc-mod}{New polyhedron with additional constraints.}
+\end{example}
+
+\paragraph{}
+A main question is of course: how to get hold of a ``right'' $\vec{u}$? That is, a $\vec{u}$ such that the resulting inequality cuts away \concepts{fractional extreme point} without eliminating \concept[integral extreme vertex]{integral extreme vertices}? A constructive method has been designed by Gomory.
+
+\begin{example}
+We continue our example described above to illustrate the idea. When we solve the \concept{LP-relaxation} of the formulation given in the example with the \concept{simplex method} (see e.g. \emph{Chv\`atal}\cite{Chvatal/83/Linear}), we start with the following \concept{dictionair}:
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_3&=&6&-&3\cdot x_1&-&2\cdot x_2\\
+x_4&=&&&3\cdot x_1&-&2\cdot x_2\\\hline
+z&=&&&&&x_2
+\end{array}
+\end{equation}
+
+\paragraph{}
+After performing two iterations, we find the following, final, \concept{dictionair}:
+
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_1&=&6&-&3\cdot x_1&-&2\cdot x_2\\
+x_2&=&&&3\cdot x_1&-&2\cdot x_2\\\hline
+z&=&&&&&x_2
+\end{array}
+\end{equation}
+
+\paragraph{}
+Consider now the second equation of this last \concept{dictionair}. We can rewrite it as follows:
+
+\begin{equation}
+x_2+\tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4=\tfrac{3}{2}\eqnlab{cg-cut-eq2-ini}
+\end{equation}
+
+\paragraph{}
+Since $x_3,x_4\geq 0$, it follows from the latter \concept{equality} that:
+
+\begin{equation}
+x_2+\floor{\tfrac{1}{4}}\cdot x_3+\tfrac{1}{4}\cdot x_4\leq\floor{\tfrac{3}{2}}
+\end{equation}
+
+\paragraph{}
+Moreover, since we know that the left-hand side of this expression is integral, we can safely round down the right-hand side, and obtain:
+
+\begin{equation}
+x_2+\floor{\tfrac{1}{4}}\cdot x_3+\tfrac{1}{4}\leq\cdot x_4=1
+\end{equation}
+
+This is the same as writing
+
+\begin{equation}
+x_2\leq 1\eqnlab{cg-cut-eq2-fin}
+\end{equation}
+
+\paragraph{}
+We now continue our argument by subtracting inequality \eqnnref{cg-cut-eq2-fin} from equality \eqnnref{cg-cut-eq2-ini}. This gives us:
+
+\begin{equation}
+\tfrac{1}{4}\cdot x_3+\tfrac{1}{4}\cdot x_4\geq\tfrac{1}{2}
+\end{equation}
+
+This is called a \concept{Gomory's cut}. Substituting for $x_3$ and $x_4$ their defining equations (see the first simplex \concept{dictionair}), we obtain, an equivalent inequality:
+
+\begin{equation}
+x_2\leq 1.
+\end{equation}
+\end{example}
+
+\begin{note}
+Notice that the current \concept{fractional solution} violates this inequality. Repeatedly adding such a \concept{Gomory's cut} gives in the end an \concept{integral solution}.
+\end{note}
+
+\paragraph{}
+We now show that the procedure outlined above not only works for this particular example, but in fact works in general. We denote by $B$ the set of \concepts{basic variable}, and use $x_{B_i}$ to denote the \concept{basic variable} corresponding to row $i$ of the \concept{dictionair}. Consider \concept{row} $i$ from the last \concept{dictionair}:
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{d_{i,j}\cdot x_j}=d_i.\eqnlab{gc-theory1}
+\end{equation}
+
+Since $x_j\geq 0$ for all $j$, it follows that 
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{\floor{d_{i,j}}\cdot x_j}=d_i.
+\end{equation}
+
+Next, due to integrality of the left-hand side, we can round down the right-hand side, and obtain:
+\begin{equation}
+x_{B_i}+\sumndomain[j]{B}{\floor{d_{i,j}}\cdot x_j}=\floor{d_i}.\eqnlab{gc-theory2}
+\end{equation}
+
+When we define $f_{i,j}=d_{i,j}-\floor{d_{i,j}}$, and $f_i=d_i−\floor{d_i}$, and when we subtract \eqnnref{gc-theory2} from \eqnnref{gc-theory1}, we get \concept{Gomory's cut}:
+\begin{equation}
+\sumndomain[j]{B}{f_{i,j}\cdot x_j}=f_i.
+\end{equation}
+
+\begin{note}
+Notice that when $d_i$ is not integral, then $f_i>0$, and hence \concept{Gomory's cut} is violated by the current \concept{solution} (which, of course, has $x_j=0$ for all $j\notin B$).
+\end{note}
+
+\paragraph{}
+Unfortunately, there are some disadvantages to \concept{Gomory's method}:
+\begin{enumerate}
+ \item The number of additional \concepts{constraint} is usually large. Moreover, \concept{Gomory's method} does not always yield the best \concepts{constraint} possible.
+ \item The additional \concepts{constraint} contain a lot of non-zero elements, in general. Therefore problems may arise with respect to the numerical stability of the \concept{simplex method}.
+\end{enumerate}
+In order to cope with these disadvantages we will develop methods for generating better constraints. Such methods are usually problem specific, but they alleviate, to some extent, the problems mentioned.
+
+\section*{Exercises}
+\begin{exercise}\exclab{interval-matrix}
+Prove \colref{tum-graph}, i.e., show that the node-arc incidence matrix of a digraph is TUM, and that the node-edge incidence matrix of a bipartite graph is TUM.
+\begin{hint}
+Use \thmref{tum-matrix}.
+\end{hint}
+\begin{answer}We solve this exercise in two parts:
+\begin{description}
+ \item [Node-arc incidence matrix] Since $A_{v,a}$ can only be $0$, $1$ or $-1$, matrix $A$ consists out of $\accl{-1,0,1}$. The columns of $A$ represent the arcs every arc has only one tail and one head and therefore there is one $1$ and one $-1$ in each column. We can assign all rows to one partition $R_1$ since it cannot occur that two elements in a column have the same sign, there is no constraint that a row should belong to a different partition.
+ \item [Node-edge incidence matrix] By definition of a node-edge incidence matrix, the matrix only contains ones and zeros. Since each edges are incident to exactly two nodes, each column has exactly two ones. A bipartite graph can be split in two set of nodes such that there are only edges between the vertices of two different sets. By assigning the rows corresponding to the vertices of the first set to the first partition and the rows corresponding to the vertices of the second set, every two rows that have both one in a column are in a different column.
+\end{description}
+\end{answer}
+\end{exercise}
+\begin{exercise}
+A 0-1 \concept{matrix} has the consecutive ones property if each \concept{row} has its entries with value $1$ in neighboring \concepts{column}. Such a \concept{matrix} is also called an \concept{interval matrix}. Show that such \concept[matrix]{matrices} are \concept{TUM}.
+\begin{hint}
+Use \concept{induction}, plus the facts that:
+\begin{enumerate}
+ \item interchanging two \concepts{row} does not change whether a \concept{matrix} is \concept{TUM}, and
+ \item replacing \concept{row} $A_i$ by the difference of \concepts{row} $A_i$ and $A_j$ also does not change whether a \concept{matrix} is \concept{TUM}.
+\end{enumerate}
+\end{hint}
+\begin{answer}
+\footnote{Note: this answer does not actually use induction.}
+Firstly, we remark that each \concept[square matrix]{square} submatrix of an \concept{interval matrix} again is an \concept{interval matrix}. So to prove that each \concept{interval matrix} is \concept{TUM}, it is sufficient to prove that each \concept[square matrix]{square} \concept{interval matrix} is \concept{unimodular}. Secondly, given a \concept[square matrix]{square} \concept{interval matrix} $M$, if $det(M)=0$, then $M$ is \concept{unimodular}.\\
+What is left to prove, is that each $n$-by-$n$ \concept{interval matrix} $M$ for which $det(M)\neq 0$ is \concept{unimodular}, which means it has a \concept{determinant} of $+1$ or $-1$. We will do this by showing that we can transform $M$ into an \concept{identity matrix} with the \concept{row} operations defined above.\\
+The first step in this proof is to define for each \concept{row} $i \in 1..n$ the variables $s_i$ and $e_i$, denoting respectively the \concept{column} where the \concept{interval} of $1$'s starts and ends. For instance, the following \concept{interval matrix} has three \concepts{row}, where $s_1=1$, $s_2=1$, $s_3=2$, $e_1=3$, $e_2=2$, $e_3=3$:
+\begin{equation}
+\label{unimodular_interval}
+\brak{\begin{array}{ccc}
+1&1&1\\
+1&1&0\\
+0&1&1
+\end{array}}
+\end{equation}
+Now, whenever two rows $i$ and $j$ have $s_i=s_j$ or $e_i=e_j$, we subtract the row with the fewest $1$'s from the \concept{row} with the most $1$'s. This transformation preserves both the consecutive ones property and the \concept{unimodular} property, so we end up with a new \concept{interval matrix} $M'$ with the same \concept{unimodular} property\footnote{This transformation can change the sign of the \concept{determinant} though.}, but with less $1$'s. For example, \concept{matrix} \ref{unimodular_interval} can be transformed into
+\begin{equation}
+\brak{\begin{array}{ccc}
+0&0&1\\
+1&1&0\\
+0&1&1
+\end{array}}
+\end{equation}
+by noting that $s_1=s_2$, and subsequently subtracting the \concept{row} $2$ from the \concept{row} $1$.\\
+If we now continue to apply this \concept{row} operation until no two \concepts{row} have the same start value or end value, we end up with a \concept{matrix} containing exactly one $1$ in each \concept{row}, never in the same \concept{column}.\footnote{Note that no empty rows or columns can be derived, since we could assume the determinant was non-zero.} One way to understand this, is by noting that the $n$ $s_i$'s of the final \concept{matrix} must all be different, and since they can only take the values $1..n$ (being the \concept{column} numbers), each \concept{column} is associated to exactly one $s_i$. The same argument can be made for the $e_i$'s. Now, since no $e_i$ can be smaller than its corresponding $s_i$, $e_i=s_i$ for all $i \in 1..n$. Continuing the example yields \ref{unimodular_interval_2} after subtracting \concept{row} $1$ from \concept{row} $3$ and then \concept{row} $3$ from \concept{row} $2$:
+\begin{equation}
+\label{unimodular_interval_2}
+\brak{\begin{array}{ccc}
+0&0&1\\
+1&0&0\\
+0&1&0
+\end{array}}
+\end{equation}
+Such a \concept{matrix} can after some row-swap operations be transformed into the identity, e.g.:
+\begin{equation}
+\brak{\begin{array}{ccc}
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{array}}
+\end{equation}
+And since the identity is \concept{unimodular}, and since we only used unimodularity preserving row operations, $M$ must be \concept{unimodular}, which concludes the proof.
+\end{answer}
+\end{exercise}
+\begin{exercise}
+Consider \excref{rectanglestabbing} of \chpref{formulations}, and let us modify that problem by only considering \concepts{vertical line} as potential stabbing lines. The resulting problem can be formulated as follows: given a set of \concepts{interval}, find a minimum number of \concepts{vertical line} stabbing each interval at least once.
+\begin{enumerate}
+ \item Give an \concept{IP-formulation} of the resulting problem.
+ \item Is the corresponding constraint \concept{matrix} an \concept{interval matrix} (see \excref{interval-matrix})?
+ \item How would you solve this problem?
+ \item Can you use the same approach for the \concept{rectangle stabbing problem}?
+\end{enumerate}
+\end{exercise}
+\begin{answer}
+The \concept{IP-formulation} is the following:
+\begin{eqnarray}
+\mbox{minimize}&\sumieqb[i]{1}{n}{y_i}\eqnlab{rsv-m}\\
+\mbox{subject to}&\forall I\in\calI:\sumdomain[i]{I}{x_{i}}\geq 1\eqnlab{rsv-c1}\\
+&\forall\rangei[i]{1}{n}:x_i\in\accl{0,1}\eqnlab{rsv-c2}
+\end{eqnarray}
+The corresponding \concept{matrix} is \concept{TUM} since it is an \concept{interval matrix}. You can solve this problem using \concept{linear programming} since the \concept{matrix} is \concept{TUM} and thus the variables are guaranteed to be integral. It is not possible to solve the \concept{rectangle stabbing problem} since such \concept{matrix} is not guaranteed to be \concept{TUM}.
+\end{answer}
+\begin{exercise}
+Consider the problem formulated below, where in addition, the variables $x_1$ and $x_2$ need to be integral.
+
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&2\cdot x_1&+&x_2\\
+\mbox{subject to}&4\cdot x_1&+&x_2&\leq&8\\
+&-3\cdot x_1&+&3\cdot x_2&\leq&6\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
+Solving the \concept{linear program} by the \concept{simplex method} gives the following final \concept{dictionary}.
+\begin{equation}
+\begin{array}{rcrcrcr}
+x_1&=&\tfrac{18}{11}&-&\tfrac{3}{11}\cdot x_3&+&\tfrac{1}{11}\cdot x_4\\
+x_2&=&\tfrac{16}{11}&+&\tfrac{1}{11}\cdot x_3&-&\tfrac{4}{11}\cdot x_4\\\hline
+z&=&\tfrac{52}{11}&-&\tfrac{5}{11}\cdot x_3&-&\tfrac{2}{11}\cdot x_4
+\end{array}
+\end{equation}
+\paragraph{}
+Find two \concepts{Gomory cut} for the problem where the \concepts{variable} $x_1$ and $x_2$ need to be \concept[integral variable]{integral}. Next, rewrite each of these \concept[Gomory cut]{cuts} in terms of solely $x_1$ and $x_2$.
+\end{exercise}
+\begin{exercise}
+Consider the following problem in \concepts{integral variable} $x_1$ and $x_2$. How many \concepts{cutting plane} do you have to add to solve the problem for $k=2$? For $k=4$? For general $k$? Can you use integer rounding to generate a \concept{valid inequality}?
+\begin{hint}
+Draw a picture.
+\end{hint}
+\begin{equation}
+\begin{array}{rrcrcr}
+\mbox{maximize}&&&x_2\\
+\mbox{subject to}&x_1&-&2\cdot k\cdot x_2&\geq&0\\
+&2\cdot k\cdot x_1&+&x_2&\leq&2\cdot k\\
+&x_1&,&x_2&\geq&0\\
+&x_1&,&x_2&&\mbox{integral}
+\end{array}
+\end{equation}
+\end{exercise}
+\begin{exercise}
+Let $G=\tupl{V,E}$ be an \concept{undirected graph}. A \concept{matching} in $G$ is represented by a \concept{vector} $\vec{x}\in\BoolSet^{\abs{E}}$ in the following way. For each \concept{edge} $e\in E$ we define
+
+\begin{equation}
+\semboolvar{x_e}{if edge $e$ is selected in the matching;}{otherwise.}
+\end{equation}
+
+The set of \concepts{matching} is now given by
+
+\begin{equation}
+M=\condset{\vec{x}\in\BoolSet^{|E|}}{\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1\wedge\forall e\in E:x_e\in\accl{0,1}}.
+\end{equation}
+
+\begin{enumerate}
+ \item Derive with \concept{integer rounding} that
+\begin{equation}
+\sumdomain[e=\tupl{v_1,v_2}]{E:v_1,v_2\in S}{x_e}\leq\displaystyle\frac{\abs{S}-1}{2}
+\eqnlab{matching-introunding}
+\end{equation}
+is a \concept{valid inequality} for each $S\subseteq V$ with $3\leq\abs{S}\leq\abs{V}$ and $\abs{S}$ odd. (These inequalities are called \concepts{odd-set constraint}).
+ \item Find, for the \concept{graph} depicted in \figref{triangle}, a fractional solution violating the inequality \eqnref{matching-introunding} with $S=\accl{1,2,3}$.
+\end{enumerate}
+\importtikzfigure{triangle}{A triangle.}
+\end{exercise}
+\begin{exercise}
+Consider the \concept{integer programming formulation} of the \concept{clique partitioning problem} (see \excref{clique-partitioning} of \chpref{formulations}). \figref{cliquepartition-integer} shows an instance of that problem. Notice that solid lines correspond to \concepts{edge} with \concept{weight} $+1$, whereas dotted lines correspond to \concepts{edge} with \concept{weight} $-1$. What is the value of the \concept{linear programming relaxation} of the \concept{integer programming formulation} corresponding to this instance? Can you find a violated inequality using \concept{integer rounding}?
+\importtikzfigure{cliquepartition-integer}{An instance of clique partitioning.}
+\end{exercise}

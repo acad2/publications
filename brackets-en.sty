@@ -2,6 +2,7 @@
 \RequirePackage{amsfonts,amsmath,booktabs}
 
 \newcommand{\brak}[1]{\ensuremath{\left( #1 \right)}}
+\newcommand{\mtrx}[2]{\brak{\begin{array}{#1}#2\end{array}}}
 \newcommand{\tupl}[1]{\ensuremath{\left\langle #1 \right\rangle}}
 \newcommand{\fbrk}[1]{\ensuremath{\left[ #1 \right]}}
 \newcommand{\accl}[1]{\ensuremath{\left\{ #1 \right\}}}
@@ -14,12 +15,15 @@
 \newcommand{\floor}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
 \newcommand{\fun}[2]{\ensuremath{#1\brak{#2}}}
 \newcommand{\funa}[2]{\ensuremath{#1\accl{#2}}}
+\newcommand{\funcs}[3]{\ensuremath{#1\condset{#2}{#3}}}
 \newcommand{\funf}[2]{\ensuremath{#1\fbrk{#2}}}
 \newcommand{\funm}[2]{\fun{\mbox{#1}}{#2}}
-\newcommand{\funmf}[2]{\funf{\mbox{#1}}{#2}}
 \newcommand{\funma}[2]{\funa{\mbox{#1}}{#2}}
+\newcommand{\funmcs}[2]{\funcs{\mbox{#1}}{#2}}
+\newcommand{\funmf}[2]{\funf{\mbox{#1}}{#2}}
 \newcommand{\powset}[1]{\fun{\calP}{#1}}
 \newcommand{\funsig}[3]{\ensuremath{#1:#2\rightarrow #3}}
+\newcommand{\inr}[0]{\ensuremath{\in_{\textsc{R}}}}
 \newcommand{\condset}[2]{\accl{#1\ |\ #2}}
 \newcommand{\prob}[1]{\funf{\Pr}{#1}}
 \newcommand{\bigoh}[1]{\fun{\mathcal{O}}{#1}}
@@ -27,7 +31,9 @@
 \newcommand{\bigomega}[1]{\fun{\Omega}{#1}}
 \newcommand{\smallomega}[1]{\fun{\omega}{#1}}
 \newcommand{\bigtheta}[1]{\fun{\Theta}{#1}}
-\newcommand{\semboolvar}[3]{\ensuremath{#1=\acclguard{1&\mbox{#2}\\0&\mbox{#3}}}}
+\newcommand{\semvalvar}[5]{\ensuremath{#1=\acclguard{#2&\mbox{#3}\\#4&\mbox{#5}}}}
+\newcommand{\semboolvar}[3]{\semvalvar{#1}{1}{#2}{0}{#3}}
+\newcommand{\cclass}[1]{\ensuremath{\mbox{\textsc{#1}}}}
 
 \newcommand{\AAA}{\ensuremath{\mathbb{A}}}
 \newcommand{\BBB}{\ensuremath{\mathbb{B}}}
@@ -93,6 +99,12 @@
 \newcommand{\IntSet}{\ZZZ}
 
 \newcommand{\argmin}{\ensuremath{\mbox{argmin}}}
+\newcommand{\xif}{\ensuremath{\mbox{\bf if }}}
+\newcommand{\xwhere}{\ensuremath{\mbox{ \bf where }}}
+\newcommand{\xwith}{\ensuremath{\mbox{ \bf with }}}
+\newcommand{\xotherwise}{\ensuremath{\mbox{\bf otherwise}}}
+\newcommand{\xfor}{\ensuremath{\mbox{ \bf for }}}
+\newcommand{\xand}{\ensuremath{\mbox{ \bf and }}}
 
 \newcommand{\defaulttable}[3]{
 \begin{tabular}{#1}
