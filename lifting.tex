@@ -294,7 +294,7 @@ Here we have \concept[lifting]{lifted} the \concepts{variable} $x_1$, $x_2$ and 
 \begin{eqnarray}
 \mbox{maximize}&\sumieqb[i]{1}{n}{c_i\cdot x_i}\\
 \mbox{subject to}&\forall\rangi[i]{1}{n}:\sumieqb[j]{1}{n}{a_{ij}\cdot x_i}\leq b_i\\
-&\forall\rangi[i]{1}{n}:x_i\in\accl{0,1}
+&\forall\rangei[i]{1}{n}:x_i\in\accl{0,1}
 \end{eqnarray}
 
 \subsection{The Generalized Assignment Problem}
@@ -302,8 +302,8 @@ Here we have \concept[lifting]{lifted} the \concepts{variable} $x_1$, $x_2$ and 
 \begin{eqnarray}
 \mbox{maximize}&\sumieqb[i]{1}{m}{\sumieqb[j]{1}{n}{c_{ij}\cdot x_{ij}}}\\
 \mbox{subject to}&\forall\rangi[i]{1}{m}:\sumieqb[j]{1}{n}{a_{ij}\cdot x_{ij}}\leq b_i\\
-&\forall\rangi[j]{1}{n}:\sumieqb[i]{1}{m}x_{ij}\leq 1\\
-&\forall\rangi[i]{1}{m},\rangi[j]{1}{n}:x_{ij}\in\accl{0,1}
+&\forall\rangei[j]{1}{n}:\sumieqb[i]{1}{m}x_{ij}\leq 1\\
+&\forall\rangei[i]{1}{m},\rangei[j]{1}{n}:x_{ij}\in\accl{0,1}
 \end{eqnarray}
 
 \section*{Exercises}
