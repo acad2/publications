@@ -225,183 +225,86 @@ The derivation of an \concept{extended cover inequality} from a \concept{cover i
 strengthen known classes of \concept[valid inequality]{valid inequalities}. The following theorems can be used repeatedly for this purpose. In the theorems stated below, we assume that $\vec{x}$ is a $n$-dimensional $\accl{0,1}$ \concept{vector}, and that $S$ denotes the set of \concept[feasible vector]{feasible} $\vec{x}$-vectors.
 
 \begin{theorem}
-Suppose that Then αx1 +
-
-n
-j=2
-
-n
-j=2
-
-πj xj ≤ π0 is valid for each x ∈ S with x1 = 0.
-
-πj xj ≤ π0 is valid for each x ∈ S as long as α ≤ π0 − maxx∈S|x1 =1
+\thmlab{alphacut}
+Suppose that $\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0$ is valid for each $\vec{x}\in S$ with $x_1=0$, then $\alpha\cdot x_1+\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0$ is valid for each $\vex{x}\in S$ as long as $\alpha\leq\pi_0-\fun{\max_{\vec{x}\in S,x_1=1}}{\sumieqb[i]{2}{n}{\pi_i\cdot x_i}}$.
 \end{theorem}
 
 \begin{theorem}
-Suppose that
-Then βx1 +
-
-n
-j=2
-
-n
-j=2
-
-n
-j=2
-
-πj xj .
-
-πj xj ≤ π0 is valid for each x ∈ S with x1 = 1.
-
-πj xj ≤ π0 +β is a valid inequality for each x ∈ S as long as β ≥ maxx∈S|x1 =0
-
-n
-j=2
-
-πj xj −
-
-π0 .
+\thmlab{betacut}
+Suppose that $\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0$ is valid for each $\vec{x}\in S$ with $x_1=1$, then $\beta\cdot x_1+\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0+\beta$ is valid for each $\vex{x}\in S$ as long as $\beta\geq\pi_0-\fun{\max_{\vec{x}\in S,x_1=1}}{-\pi_0+\sumieqb[i]{2}{n}{\pi_i\cdot x_i}}$.
 \end{theorem}
 
-Notice that applying Theorem 4.2 does not change the right hand side, whereas applying Theorem 4.3 may change the righthand side. In the remainder of this section we give an example in which the two theorems above are applied repeatedly.
+Notice that applying \thmref{alphacut} does not change the right hand side, whereas applying \thmref{betacut} may change the right hand side. In the remainder of this section we give an example in which the two theorems above are applied repeatedly.
 
 \begin{example}
-Consider the knapsack constraint
-3x1 + x2 + x3 + x4 + x5 ≤ 4.
-55
+Consider the \concept{knapsack constraint}
 
-(4.17)
+\begin{equation}
+3\cdot x_1+x_2+x_3+x_4+x_5\leq4\eqnlab{knapsackconstraintexlift}.
+\end{equation}
 
-As before, let S be the set of (binary) feasible solutions of this constraint. Suppose that we fix the values
-of the first three variables as follows:
-x1 = 1, x2 = x3 = 0.
-Plugging in these values in (4.17) reduces the inequality to x4 + x5 ≤ 1. Thus x4 + x5 ≤ 1 is valid for
-each x ∈ S with x1 = 1, x2 = x3 = 0.
-We now lift variable x3 by applying Theorem 4.2. This gives (using α3 as coefficient for x3 ): find a
-maximal α3 such that α3 x3 + x4 + x5 ≤ 1 is valid for each in x ∈ S with x1 = 1, x2 = 0, x3 = 1. This is
-equivalent to determining a maximal α3 such that
-α3 ≤ 1 −
+As before, let $S$ be the set of (binary) \concepts{feasible solution} of this \concept{constraint}. Suppose that we fix the values of the first three \concepts{variable} as follows:
+\begin{equation}
+x_1=1, x_2=x_3=0.
+\end{equation}
+Plugging in these values in \eqnnref{knapsackconstraintexlift} reduces the \concept{inequality} to $x_4+x_5\leq1$. Thus $x_4+x_5\leq1$ is valid for each $\vec{x}\in S$ with $x_1=1, x_2=x_3=0$.
 
-max
+\paragraph{}
+We now \concept[lifting]{lift} \concept{variable} $x_3$ by applying \thmref{alphacut}. This gives (using $\alpha_3$ as coefficient for $x_3$): find a maximal $\alpha_3$ such that $\alpha_3\cdot x_3+x_4+x_5\leq1$ is valid for each in $\vec{x}\in S$ with $x_1=1, x_2=0, x_3=1$. This is equivalent to determining a maximal $\alpha_3$ such that
 
-x∈S|x1 =1,x2 =0,x3 =1
+\begin{equation}
+\alpha_3\leq1-\fun{\max_{\vec{x}\in S,x_1=1,x_2=0,x_3=1}}{x_4+x_5}.
+\end{equation}
 
-x4 + x5 .
+It follows that $\alpha_3=1$. In other words, we can conclude that $x_3+x_4+x_5\leq1$ is valid for all $\vec{x}\in S$ with $x_1=1$ and $x_2=0$.
 
-It follows that α3 = 1. In other words, we can conclude that x3 + x4 + x5 ≤ 1 is valid for all x ∈ S with
-x1 = 1, x2 = 0.
-We now proceed by lifting variable x1 using Theorem 4.3. This gives (using β1 as coefficient for x1 ): find
-a minimal β1 such that β1 x1 + x3 + x4 + x5 ≤ 1 + β1 is valid for each x ∈ S with x1 = x2 = 0. This is
-equivalent to determining a minimal β1 such that
-β1 ≥
+\paragraph{}
+We now proceed by \concept{lifting} \concept{variable} $x_1$ using \thmref{betacut}. This gives (using $\beta_1$ as coefficient for $x_1$): find a minimal $\beta_1$ such that $\beta_1\cdot x_1+x_3+x_4+x_5\leq1+\beta_1$ is valid for each $\vec{x}\in S$ with $x_1=x_2=0$. This is equivalent to determining a minimal $\beta_1$ such that
 
-(x3 + x4 + x5 ) − 1.
+\begin{equation}
+\beta_1\geq\fun{\max_{\vec{x}\in S,x_1=x_2=0}}{x_3+x_4+x_5-1}.
+\end{equation}
 
-max
+It follows that $\beta_1=2$. Thus, we conclude that $2\cdot x_1+x_3+x_4+x_5\leq3$ is valid for all $\vec{x}\in S$ with $x_2=0$.
 
-x∈S|x1 =x2 =0
+\paragraph{}
+Finally, we \concept[lifting]{lift} \concept{variable} $x_2$ using \thmref{alphacut}. This gives (using $\alpha_2$ as coefficient for $x_2$): find a maximal $\alpha_2$ such that $2\cdot x_1+\alpha_2\cdot x_2+x_3+x_4+x_5\leq3$ is valid for each $\vec{x}\in S$ with $x_2=1$. This is equivalent to determining a maximal $\alpha_2$ such that
 
-It follows that β1 = 2. Thus, we conclude that 2x1 + x3 + x4 + x5 ≤ 3 is valid for all x ∈ S with x2 = 0.
-Finally, we lift variable x2 using Theorem 4.2. This gives (using α2 as coefficient for x2 ): find a maximal
-α2 such that 2x1 + α2 x2 + x3 + x4 + x5 ≤ 3 is valid for each x ∈ S with x2 = 1. This is equivalent to
-determining a maximal α2 such that
-α2 ≤ 3 −
+\begin{equation}
+\alpha_2\leq3-\fun{\max_{\vec{x}\in S,x_2 =1}}{2\cdot x_1+x_3+x_4+x_5}.
+\end{equation}
 
-max
+It follows that $\alpha_2=0$. We arrive at the conclusion that the resulting \concept{inequality}
 
-x∈S|x2 =1
+\begin{equation}
+2\cdot x_1+x_3+x_4+x_5\leq3\eqnlab{resultingliftingex}
+\end{equation}
 
-2x1 + x3 + x4 + x5 .
-
-It follows that α2 = 0. We arrive at the conclusion that the resulting inequality
-2x1 + x3 + x4 + x5 ≤ 3
-
-(4.18)
-
-is a valid inequality for each x ∈ S. Notice that we have derived a new inequality (4.18) that is stronger
-than the original one (4.17). As an example, consider the solution x = ( 13 , 0, 1, 1, 1), and observe that
-this particular solution is cut off by (4.18), while it is not violated by (4.17).
-
-Here we have lifted the variables x1 , x2 and x3 in the sequence x3 , x1 , x2 . It is interesting to notice that
-different sequences may yield different inequalities. For instance, the sequence x3 , x1 , x2 produces another
-inequality. Thus, the order of lifting influences the final inequality we get, see Exercise 4.
+is a \concept{valid inequality} for each $\vec{x}\in S$. Notice that we have derived a new \concept{inequality} \eqnnref{resultingliftingex} that is stronger than the original one \eqnref{knapsackconstraintexlift}. As an example, consider the solution $\vec{x}=\tupl{\frac{1}{3},0,1,1,1}$, and observe that this particular solution is cut off by \eqnnref{resultingliftingex}, while it is not violated by \eqnnref{knapsackconstraintexlift}.
+\paragraph{}
+Here we have \concept[lifting]{lifted} the \concepts{variable} $x_1$, $x_2$ and $x_3$ in the sequence $x_3,x_1,x_2$. It is interesting to notice that different sequences may yield different \concept[inequality]{inequalities}. For instance, the sequence $x_3,x_1,x_2$ produces another \concept{inequality}. Thus, the order of \concept{lifting} influences the final \concept{inequality} we get, see \excref{liftingorder}.
 \end{example}
 
 \section{Applications}
 
-Knapsack constraints are embedded in many structured problems. Two obvious examples are the multiknapsack problem and the generalized assignment problem. We will give their respective formulations
-below.
-The multi-knapsack problem
+\concepts{Knapsack constraint} are embedded in many \concepts{structured problem}. Two obvious examples are the \concept{multi-knapsack problem} and the \concept{generalized assignment problem}. We will give their respective \concepts{formulations} below.
 
-n
+\subsection{The Multi-Knapsack Problem}
 
-cj xj
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[i]{1}{n}{c_i\cdot x_i}\\
+\mbox{subject to}&\forall\rangi[i]{1}{n}:\sumieqb[j]{1}{n}{a_{ij}\cdot x_i}\leq b_i\\
+&\forall\rangi[i]{1}{n}:x_i\in\accl{0,1}
+\end{eqnarray}
 
-(M KP ) max
+\subsection{The Generalized Assignment Problem}
 
-(4.19)
-
-j=1
-n
-
-aij xj ≤ bi
-
-s.t.
-
-for all i = 1, 2, . . . , m
-
-(4.20)
-
-for all j = 1, 2, . . . , n
-
-(4.21)
-
-j=1
-
-xj ∈ {0, 1}
-
-The generalized assignment problem
-
-m
-
-n
-
-cij xij
-
-(GAP ) max
-
-(4.22)
-
-i=1 j=1
-n
-
-s.t.
-
-aij xij ≤ bi
-
-for all i = 1, 2, . . . , m
-
-(4.23)
-
-for all j = 1, 2, . . . , m
-
-(4.24)
-
-for all i = 1, 2, . . . , m, for all j = 1, 2, . . . , n.
-
-(4.25)
-
-j=1
-m
-
-xij ≤ 1
-i=1
-
-xij ∈ {0, 1}
-
-57
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[i]{1}{m}{\sumieqb[j]{1}{n}{c_{ij}\cdot x_{ij}}}\\
+\mbox{subject to}&\forall\rangi[i]{1}{m}:\sumieqb[j]{1}{n}{a_{ij}\cdot x_{ij}}\leq b_i\\
+&\forall\rangi[j]{1}{n}:\sumieqb[i]{1}{m}x_{ij}\leq 1\\
+&\forall\rangi[i]{1}{m},\rangi[j]{1}{n}:x_{ij}\in\accl{0,1}
+\end{eqnarray}
 
 \section*{Exercises}
 \begin{exercise}
@@ -448,5 +351,6 @@ Can you prove this? Apply this to the example in \secref{knapsacksep}.
 \end{exercise}
 
 \begin{exercise}
+\exclab{liftingorder}
 Consider the example in \secref{liftingeci}. What \concept{inequality} results if the \concepts{variable} are \concept[lifted variable]{lifted} in the sequence $x_2$, $x_1$ and $x_3$? And what \concept{inequality} results when using $x_1$, $x_2$ and $x_3$ as \concept{lifting sequence}?
 \end{exercise}
