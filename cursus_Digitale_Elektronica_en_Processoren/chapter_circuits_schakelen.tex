@@ -38,12 +38,42 @@ De eerste band is altijd aangebracht op een plaats waar de straal van de weersta
 \paragraph{}
 In het algemeen beschrijven de eerste twee (in het geval van vier banden) of drie banden de cijfers die samen een getal vormen. Dit getal moet dan vermenigvuldigt worden met de multiplicator. De toleratie drukt aan de hand van een percentage uit wat het betrouwbaarheidsinterval is. Indien de weerstand bijvoorbeeld $10~\mbox{k}\Omega$ is met een toleratie van $5\%$, dan is het betrouwbaarheidsinterval: $\fbrk{9.5~\mbox{k}\Omega ; 10.5~\mbox{k}\Omega}$.
 \paragraph{}
-In het geval de weerstand vier banden bevat zijn de eerste twee banden cijfers $c_1$ en $c_2$, de derde de multiplicatie $m$ en de laatste de toleratie $t$.%TODO: finish
+In het geval de weerstand vier banden bevat zijn de eerste twee banden cijfers $c_1$ en $c_2$, de derde de multiplicatie $m$ en de laatste de toleratie $t$, in dat geval is de weerstandswaarde dus:
+\begin{equation}
+\begin{array}{lr}
+R=\brak{10\cdot c_1+c_2}\cdot m~\Omega&\mbox{($4$ banden)}
+\end{array}
+\end{equation}
+In het geval van vijf en zes banden zijn de eerste drie banden cijfers $c_1$, $c_2$ en $c_3$, de vierde de multiplicatie $m$, de vijfde de tolerantie $t$ en optioneel de zesde de temperatuurco\"effici\"ent. In dat geval is de weerstandswaarde dus:
+\begin{equation}
+\begin{array}{lr}
+R=\brak{100\cdot c_1+10\cdot c_2+c_3}\cdot m~\Omega&\mbox{($5$ en $6$ banden)}
+\end{array}
+\end{equation}
+%TODO: finish
+\subsection{Condensatoren}
+\emph{Condensatoren} en \emph{spoelen} zijn componenten die streven naar een behoudt van respectievelijk spanning en stroomsterkte. In het geval van wisselstroom of een periodiek veranderende spanning, kan men ze bovendien zien als weerstanden waarbij de weerstand afhangt van de fase op dat moment.
+\paragraph{}
+Een condensator heeft tot doel spanning te stabiliseren, dit doet een condensator door elektronische spanning om te zetten in een elektrisch veld, wanneer de spanning vervolgens oploopt of afneemt, zal het elektrische veld een tegenbeweging uitvoeren. Het garanderen van de spanning is van cruciaal belang in een groot digitaal circuit. Zo hebben computers meestal enkele condensatoren die dicht bij de voeding het spanningsverschil moeten waarborgen. Immers is het mogelijk dat door het aan- en uitschakelen van andere apparaten, de spanning licht fluctueert. In analoge circuits is dit meestal niet problematisch. In een digitaal circuit kan dit echter het verschil maken tussen een 0 of een 1. Omdat in sequenti\"ele circuits een fout ge\"interpreteerd signaal tot een opeenvolging van foute invoer en foute toestanden kan leiden is een foute interpretatie dus zeer gevaarlijk.
+\paragraph{}
+Een condensator wordt ook vaak gebruikt in een RC-keten: een keten waarbij een weerstand een condensator in serie worden geplaatst. Wanneer er dan spanning wordt aangelegd op het circuit, zal de spanning op de condensator traag evolueren. Dit kan men dus gebruiken om signalen met enige vertraging te laten propageren. Dit is belangrijk in analoge circuits alsook in digitale, bijvoorbeeld om een kloksignaal te generen (zie \secref{clocksignal}).
+\paragraph{}
+Een condensator wordt als volgt gerealiseerd. Men voorziet doorgaans twee of meer platen die dicht bij elkaar liggen, maar niet verbonden zijn zoals weergegeven op \figref{capacitor}.
+
+\importtikzfigure{capacitor}{De realisatie van een condensator.}
+
+Wanneer er spanning wordt aangelegd op de condensator, worden de platen elektrisch geladen. Als gevolg ontstaat er een elektrisch veld dat gelijk is aan:
+\begin{equation}
+E=\dfrac{V}{d}
+\end{equation}
+De meeste condensatoren worden niet gerealiseerd aan de hand van twee parallelle platen, maar aan de hand van bijvoorbeeld een opgerold structuur waarbij de twee platen gescheiden worden door een di\"elektrische stof.
+\subsection{Spoelen}
+Een spoel tracht de stroomsterkte te behouden, dit doet een spoel door de stroomsterkte om te zetten in een magnetisch veld.
+
+\importtikzfigure{inductor}{De realisatie van een spoel.}
 
 \subsection{Transistoren}
-\subsection{Condensatoren}
-
-\subsection{Spoelen}
+We hebben transistoren al in \chpref{} besproken, maar dan vooral in een digitale context. Transistoren worden echter ook in een analoge context gebruikt: als versterker waarbij de weerstand tussen de collector en de emittor wordt bepaald door de spanning die op de basis wordt aangelegd.
 \subsection{Diodes}
 \emph{Diodes} en \emph{operationele versterkers} zijn componenten die toelaten om bepaalde drempelwaarden in 
 \section{Bouw van een elektronische schakeling}
@@ -69,6 +99,7 @@ Het proces bestaat grofweg uit vier fases: ``blootstelling'', ``etsen'', ``tin b
 \subsection{Plaatsen van componenten}
 \subsection{Tips bij het solderen}
 \section{Implementatie van een kloksignaal}
+\seclab{clocksignal}
 In de cursus hebben we telkens abstractie gemaakt van de implementatie van een kloksignaal: een signaal die met een bepaalde frequentie afwisselend $0$ en $1$ aanlegt. Hoe kunnen we een dergelijk signaal implementeren? Een eerste antwoord zou kunnen zijn dat men een sequenti\"ele schakeling bouwt die dit signaal zal aanleggen. Het probleem is dat een dergelijke schakeling zelf een kloksignaal nodig heeft. We zullen dus een ander component nodig hebben. Twee populaire keuzes zijn het gebruik van een $555$-timer en een kristal-oscillator. We zullen beide technieken kort bespreken.
 \subsection{555-timer}
 De $555$-timer\footnote{Soms uitgesproken als ``triple five'' of ``triple five timer''.} is een ge\"integreerd circuit die gebruikt wordt om allerhande periodieke functies te implementeren. Het component kost los rond de $\$ 2.50$. Een 555-timer kan kloksignalen produceren tot ongeveer $300\mbox{ kHz}$.
