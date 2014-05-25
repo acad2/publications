@@ -16,22 +16,39 @@ Vermits het de bedoeling is dat men de circuits zelf implementeert, zullen we oo
 \end{figure}
 Een verbinding noemt men een ``pin'' of ``pootje''. Omdat chips correct geori\"enteerd moeten worden maakt men gebruik van twee systemen. De ``notch'' is een cirkelvormige inkeping aan \'e\'en kant van de chip. Daarnaast zet men op de meeste chips ook een ``index marker''. Een index marker is een cirkel in de buurt van pin 1. Wanneer we de notch aan de linkerkant plaatsen (zoals op de figuur), worden de pootjes onderaan van links naar rechts genummerd. De nummering van de bovenste pootjes verloopt van rechts naar links. Elke digitale chip beschikt telkens over minstens twee pootjes: de power pin (ofwel \mbox{Vcc}) en de ground pin (ofwel \mbox{GND}). Bij de meeste chips stelt pin 1 de ground pin door. Meestal stelt de laatste pin (pin 8 op \figref{dip8-packing}) de power pin voor. Soms gebruikt men ook de eerste pin van de bovenste rij (pin 5 op \figref{dip8-packing}). De powerpin moet worden verbonden met de positieve pool van de voeding, de ground pin met de negatieve pool. In een schematische voorstelling van een ge\"integreerd circuit geeft men vaak de nummers van de verschillende pinnen weer. Een diagram die de functie van de verschillende pinnen beschrijft noemt men een ``pinout''. \figref{dip8-front} en \figref{dip8-side} tonen het voor- en zijaanzicht van een DIP ge\"integreerd circuit. Doorgaans zijn de pootjes dikker rond het midden van de chip dan het einde. De structuur van DIP vereist bijna dat het aantal pootjes altijd even is. Indien dit niet het geval is zal men meestal een veelvoud van de componenten in een chip implementeren. Zo bestaan er bijvoorbeeld chips die $4$ NAND-poorten aanbieden.
 \subsection{Populaire ge\"integreerde circuits}
-Nu we de structuur van een ge\"integreerd circuit hebben voorgesteld, zullen we een bondige samenvatting geven over de belangrijkste ge\"integreerde circuits. Belangrijke ge\"integreerde circuits werden gestandaardiseerd met een nummer. Op gebied van digitale elektronica spreekt men over twee ``ge\"integreerde circuit-families'': de 74000 serie en de 4000 serie. De 74000 serie omvat digitale componenten ge\"implementeerd met transistor-transistor logic. De 4000 serie implementeert dezelfde schakelingen in CMOS-logica. Indien we dus Zo stelt ge\"integreerd circuit 4068 een 8-NAND poort voor in CMOS logica. 47068 biedt dezelfde poort aan, maar volgens een andere technologie.
+Nu we de structuur van een ge\"integreerd circuit hebben voorgesteld, zullen we een bondige samenvatting geven over de belangrijkste ge\"integreerde circuits. Belangrijke ge\"integreerde circuits werden gestandaardiseerd met een nummer. Op gebied van digitale elektronica spreekt men over twee ``ge\"integreerde circuit-families'': de 74000 serie en de 4000 serie. De 74000 serie omvat digitale componenten ge\"implementeerd met transistor-transistor logic. De 4000 serie implementeert dezelfde schakelingen in CMOS-logica. Indien we dus Zo stelt ge\"integreerd circuit 4068 een 8-NAND poort voor in CMOS logica. 47068 biedt dezelfde poort aan, maar volgens een andere technologie. Voor een volledige lijst van de ge\"integreerde circuits in de 74000 en 4000 families: zie \cite{74000icfamily,4000icfamily}.
 \paragraph{}
 \importtabulartable{popular-ic}{Lijst met populaire ge\"integreerde circuits.}
 In \tblref{popular-ic} staat een lijst met populaire ge\"integreerde circuits. Naast de digitale circuits omvat de tabel ook enkele analoge schakelingen. De werking van deze circuits wordt verder in dit hoofdstuk verduidelijkt.
 \section{Analoge componenten}
-Naast ge\"integreerde circuits zal men in de praktijk in een digitale schakeling ook analoge componenten aantreffen: weerstanden, condensatoren, transistoren en in mindere mate spoelen. In deze sectie geven we een kort overzicht. Voor een volledige lijst van de ge\"integreerde circuits in de 74000 en 4000 families: zie \cite{74000icfamily,4000icfamily}.
+Naast ge\"integreerde circuits zal men in de praktijk in een digitale schakeling ook analoge componenten aantreffen: weerstanden, condensatoren, transistoren en in mindere mate spoelen. Deze componenten zijn meestal nodig om effectief iets aan te sturen (bijvoorbeeld een led) of bij de captatie van invoer (bijvoorbeeld radiogolven). In deze sectie geven we een kort overzicht.
 \subsection{Weerstanden}
-%Een weerstand is een component die de spanning en stroomsterkte tussen componenten kan verlagen.
+Een weerstand is een component die de stroomsterkte in een circuit verlagen en bovendien lokaal de spanningsniveaus verminderen. Een circuit gedraagt zich dan ook volgens de ``\emph{Wet van Ohm}''. Deze wet stelt dat tussen elke twee punten in een elektronische schakeling, het verschil in potentiaal $\Delta V$ lineair schaalt met zowel de stroomsterkte $I$ als de \emph{weerstand} $R$:
+\begin{equation}
+\Delta V=I\cdot R
+\end{equation}
+De meeste weerstanden in een schakeling hebben een vaste weerstand $R$, er bestaan echter ook weerstanden zoals \emph{lichtgevoelige weerstanden}, waar de weerstand afhangt van de lichtintensiteit, temperatuur, ... In deze cursus zullen we enkel weerstanden met een vaste weerstand beschouwen.
 \subsubsection{Kleurcode}
-Op de meeste weerstanden wordt de weerstand niet in cijfers weergegeven, maar volgens een kleurencode.
+De weerstand wordt traditioneel niet numeriek op het component genoteerd, maar aan de hand van vier tot zes banden die elk een specifieke kleur hebben. Deze sequentie beschrijft de weerstand, de \emph{toleratie}\footnote{Dit is een betrouwbaarheidsinterval waarin de werkelijke weerstandswaarde zit.} en optioneel de \emph{temperatuursco\"effici\"ent}\footnote{De werkelijke waarde van de weerstand is altijd enigszins afhankelijk van de temperatuur van de weerstand op dat moment.}. Afhankelijk van het aantal banden, heeft elke band ook een verschillende betekenis: getal, multiplicatie, toleratie en temperatuursco\"effici\"ent. \tblref{resistor-colorcode} toont hoe de verschillende kleuren overeenstemmen met hun betekenis.
+
+\importtabulartable{resistor-colorcode}{De verschillende kleurcodes bij een weerstand.}
+\paragraph{}
+De eerste band is altijd aangebracht op een plaats waar de straal van de weerstand groter is. In het geval de weerstand uit zes banden bestaat, is de zesde band aangebracht aan de andere kant van de weerstand waar de straal ook groter is. Om toch het onderscheid te kunnen maken tussen de eerste en de laatste band zijn de tweede en de derde band altijd aan dezelfde kant van de weerstand. Vermits er hoogstens zes banden aangebracht zijn op een weerstand kan men dus door te rekenen vanuit het midden van de weerstand, altijd de eerste band lokaliseren door de kant te nemen die de meeste banden bevat. De posities samen met de betekenis van de banden staat schematisch voorgesteld op \figref{resistor-colorband}.
+\importtikzfigure{resistor-colorband}{De uitlijning en betekenis van de verschillende kleurbanden.}%TODO finish
+\paragraph{}
+In het algemeen beschrijven de eerste twee (in het geval van vier banden) of drie banden de cijfers die samen een getal vormen. Dit getal moet dan vermenigvuldigt worden met de multiplicator. De toleratie drukt aan de hand van een percentage uit wat het betrouwbaarheidsinterval is. Indien de weerstand bijvoorbeeld $10~\mbox{k}\Omega$ is met een toleratie van $5\%$, dan is het betrouwbaarheidsinterval: $\fbrk{9.5~\mbox{k}\Omega ; 10.5~\mbox{k}\Omega}$.
+\paragraph{}
+In het geval de weerstand vier banden bevat zijn de eerste twee banden cijfers $c_1$ en $c_2$, de derde de multiplicatie $m$ en de laatste de toleratie $t$.%TODO: finish
+
 \subsection{Transistoren}
 \subsection{Condensatoren}
+
 \subsection{Spoelen}
 \subsection{Diodes}
+\emph{Diodes} en \emph{operationele versterkers} zijn componenten die toelaten om bepaalde drempelwaarden in 
 \section{Bouw van een elektronische schakeling}
 \subsection{Matrixbord}
+Een \emph{matrixbord} ook wel \emph{breadboard} genoemd is .
 \subsection{Europrintplaat}
 \importtikzfigure{europrint}{Structuur van een europrintplaat.}
 Een europrintplaat is een stap tussen een matrixbord en speciaal ontwikkelde printplaat. In een europrintplaat beschouwen we een rechthoekige bord van kunststof. Op deze plaat brengt men in een rasterstructuur rechthoekige plaatjes van koper aan. Zo'n plaatje bevat drie gaten waarop men de verbindingen van de componenten kan solderen. Hierdoor zijn de componenten die verbonden zijn met de drie gaten verbonden met elkaar. Deze structuur is ge\"illustreerd op \figref{europrint}.
