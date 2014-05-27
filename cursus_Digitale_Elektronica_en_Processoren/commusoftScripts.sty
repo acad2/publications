@@ -307,7 +307,7 @@
   \coordinate (V\l) at (\dx*\arabic{tmpC},0);
   \draw[anchor=north] (V\l) node {\t};
   \ifthenelse{\ty=2}{
-    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny);
+    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny) {};
     \coordinate (Vn\l) at (V\l);
     \draw (V\l) -- (NV\l.input);
     \draw (NV\l.output) -- (V\l |- 0,#3 cm);
@@ -315,7 +315,7 @@
     \ifthenelse{\ty=3}{
     \addtocounter{tmpC}{1}
     \coordinate (Vn\l) at (\dx*\arabic{tmpC},0);
-    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny);
+    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny) {};
     \draw (V\l |- 0,\noy) -| (NV\l.input);
     \pdot{V\l |- 0,\noy}
     \draw (NV\l.output) -- (NV\l.output |- 0,#3 cm);
@@ -331,7 +331,7 @@
 }
 \foreach \l/\i/\k in {#5} {
   \addtocounter{tmpD}{1}
-  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},2*\ny+\arabic{tmpD}*#3/\arabic{tmpF}-\arabic{tmpD}*2*\ny/\arabic{tmpF});
+  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},2*\ny+\arabic{tmpD}*#3/\arabic{tmpF}-\arabic{tmpD}*2*\ny/\arabic{tmpF}) {};
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
@@ -340,7 +340,7 @@
   }
 }
 \addtocounter{tmpC}{1}
-\node[or gate,inputs=#6,scale=\sc] (O) at (\dx*\arabic{tmpC}+\dx,\ny+0.5*#3);
+\node[or gate,inputs=#6,scale=\sc] (O) at (\dx*\arabic{tmpC}+\dx,\ny+0.5*#3) {};
 \foreach \l/\i in {#5} {
   \draw (A\l.output) -- (A\l.output -| \dx*\arabic{tmpC},0) |- (O.input \arabic{tmpD});
   \addtocounter{tmpD}{-1}
