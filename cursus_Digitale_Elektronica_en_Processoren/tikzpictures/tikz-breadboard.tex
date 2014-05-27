@@ -1,22 +1,22 @@
 \begin{tikzpicture}
 \foreach \l/\x in {A/-5.5,B/-4.5,C/-3.5,D/-2.5,E/-1.5,F/1.5,G/2.5,H/3.5,I/4.5,J/5.5} {
   \foreach \y in {1,...,57} {
-    \node[pcbvia] (P\l\y) at (\x*0.1 in,-\y*0.1 in) {};
+%     \node[pcbvia] (P\l\y) at (\x*0.1 in,-\y*0.1 in) {};
   }
-  \draw (P\l1.north) node[anchor=south] {\l};
+%   \draw (P\l1.north) node[anchor=south] {\l};
 }
 \filldraw[fill=gray,draw=black] (PE1.east) rectangle (PF57.west);
 \foreach \y in {1,...,57} {
   \foreach \la/\lb in {A/B,B/C,C/D,D/E,F/G,G/H,H/I,I/J} {
     \draw (P\la\y) -- (P\lb\y);
   }
-  \draw (PA\y.west) node[anchor=east] {\y};
-  \draw (PJ\y.east) node[anchor=west] {\y};
+%   \draw (PA\y.west) node[anchor=east] {\y};
+%   \draw (PJ\y.east) node[anchor=west] {\y};
 }
 \foreach \l/\x in {SA/-9.5,SB/-8.5,SC/8.5,SD/9.5} {
   \foreach \y in {0,...,9} {
     \foreach \yi in {1,...,5} {
-      \node[pcbvia] (S\l0) at (\x*0.1 in,-\y*0.6 in-\yi*0.1 in) {};
+%       \node[pcbvia] (S\l0) at (\x*0.1 in,-\y*0.6 in-\yi*0.1 in) {};
     }
   }
 }
