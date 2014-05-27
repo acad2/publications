@@ -1137,7 +1137,7 @@ De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat e
 \State \textbf{return} $\left\{\left\{s|s\in S,\forall i\in I\wedge\forall f\left(s,i\right)=o_i\right\}|o\in O,\forall i\in I:\exists o_i\in O\right\}$
 \EndFunction
 \Function{Minimize2}{$S,I,\delta,\mathcal{P}$}
-\State \textbf{return} $\left\{\left\{s|s\in P\wedge \forall i \in I:\delta\left(s,i\right)=P_i\right\}|P\in\mathcal{P},\forall i\in I:\exits P_i\in\mathcal{P}\right\}$
+\State \textbf{return} $\left\{\left\{s|s\in P\wedge \forall i \in I:\delta\left(s,i\right)=P_i\right\}|P\in\mathcal{P},\forall i\in I:\exists P_i\in\mathcal{P}\right\}$
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
