@@ -374,7 +374,7 @@
 }
 \foreach \l/\i/\k in {#5} {
   \addtocounter{tmpD}{1}
-  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF});
+  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF}) {};
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
@@ -394,7 +394,7 @@
   \addtocounter{tmpE}{-\ni}
   \addtocounter{tmpE}{1}
   \coordinate (TMP) at ($0.5*(A\ni.output)+0.5*(A\nj.output)$);
-  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0);
+  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0) {};
   \foreach \nk in {\ni,...,\nj} {
     \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
     \addtocounter{tmpE}{-1}
@@ -428,7 +428,7 @@
 }
 \foreach \l/\i/\k/\t in {#5} {
   \addtocounter{tmpD}{1}
-  \node[\t,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF});
+  \node[\t,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF}) {};
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
@@ -444,7 +444,7 @@
   \addtocounter{tmpE}{-\ni}
   \addtocounter{tmpE}{1}
   \coordinate (TMP) at ($0.5*(A\ni.output)+0.5*(A\nj.output)$);
-  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0);
+  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0) {};
   \foreach \nk in {\ni,...,\nj} {
     \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
     \addtocounter{tmpE}{-1}
