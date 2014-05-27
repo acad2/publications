@@ -94,6 +94,15 @@
 
 \pgfdeclareshape{pcbvia} {
   \inheritsavedanchors[from=pcbbase]
+  \inheritanchor[from=pcbbase]{center}
+  \inheritanchor[from=pcbbase]{mid}
+  \inheritanchor[from=pcbbase]{base}
+  \inheritanchor[from=pcbbase]{north}
+  \inheritanchor[from=pcbbase]{south}
+  \inheritanchor[from=pcbbase]{west}
+  \inheritanchor[from=pcbbase]{east}
+  \inheritanchor[from=pcbbase]{midwest}
+  
   \anchor{pin0}{\centerpoint}
   \saveddimen\circlein{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcirclein}}}
   \saveddimen\circleout{\pgfmathsetlength{\pgf@x}{\pgfkeysvalueof{/pgf/pcbcircleout}}}
