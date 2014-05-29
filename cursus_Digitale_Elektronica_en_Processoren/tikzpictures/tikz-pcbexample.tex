@@ -1,19 +1,24 @@
 \begin{tikzpicture}
-\node[pcbconnusb,pcblabel={USB}] (USB) at (-3,0) {};
-\foreach \i/\x in {0/0,1/5} {
-%Toggle switch
-\begin{scope}[xshift=\x cm]
-\node[pcbto92,pcblabel={2SC}] (t1) at (0,-1.5) {};%npn
-\node[pcbto92,pcblabel={2SA}] (t2) at (0, 1.5) {};%pnp
-\node[pcbled]                 (l1) at (0, 1.5) {};%led
-\node[pcbacy]                 (r1) at (0, 1.5) {};%res
-\node[pcbacy]                 (r2) at (0, 1.5) {};%res
-\node[pcbacy]                 (r3) at (0, 1.5) {};%res
-\node[pcbrcy]                 (c1) at (0, 1.5) {};%res
+% \node[pcbjumper,pcbpins=2]                                (j1) at (-3,1) {};%jmp
+\node[pcbto92,pcblabel={2SA},rotate=180,anchor=collector] (t1) at (0,0) {};%pnp
+\node[pcbto92,pcblabel={2SC},anchor=basis]                (t2) at (0,1) {};%npn
+\node[pcbacy,pcblabel={100~k$\Omega$}]                    (r1) at (0,2) {};%res
+\node[pcbled,rotate=-90]                                  (l1) at (-1.5,2) {};%led
+\node[pcbacy,pcblabel={1~k$\Omega$},rotate=-90]           (r2) at (-0.75,0.75) {};%res
+\node[pcbacy]                                             (r3) at (-1,1.5) {};%res
+\node[pcbrcy,rotate=-90]                                  (c1) at (-1.5,0.75) {};%res
 \begin{scope}[gray]
 \begin{pgfonlayer}{background}
-\pcbpintopin{USB.pin0}{VSS0}
-\pcbpintopin{VDD0}{USB.pin4}
+\pcbpintopin{t1.basis}{t2.collector}
+\pcbpintopin{t1.collector}{t2.basis}
+\pcbpintopin{t2.collector}{r1.pina}
+\pcbpintopin{t2.emitter}{r1.pinb}
+\pcbpintopin{l1.pina}{r1.pina}
+\pcbpintopin{r2.pinb}{t1.emitter}
+\pcbpintopin{r2.pina}{r3.pinb}
+% \pcbpintopin{t2.collector}{t1.npn}
+% \pcbpintopin{USB.pin0}{VSS0}
+% \pcbpintopin{VDD0}{USB.pin4}
 % \pcbpintopin{NN1.pin11}{MM.pin1}
 \end{pgfonlayer}
 \end{scope}
