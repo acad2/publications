@@ -1,0 +1,20 @@
+\begin{tikzpicture}
+\node[pcbconnusb,pcblabel={USB}] (USB) at (-3,0) {};
+\foreach \i/\x in {0/0,1/5} {
+%Toggle switch
+\begin{scope}[xshift=\x cm]
+\node[pcbto92,pcblabel={2SC}] (t1) at (0,-1.5) {};%npn
+\node[pcbto92,pcblabel={2SA}] (t2) at (0, 1.5) {};%pnp
+\node[pcbled]                 (l1) at (0, 1.5) {};%led
+\node[pcbacy]                 (r1) at (0, 1.5) {};%res
+\node[pcbacy]                 (r2) at (0, 1.5) {};%res
+\node[pcbacy]                 (r3) at (0, 1.5) {};%res
+\node[pcbrcy]                 (c1) at (0, 1.5) {};%res
+\begin{scope}[gray]
+\begin{pgfonlayer}{background}
+\pcbpintopin{USB.pin0}{VSS0}
+\pcbpintopin{VDD0}{USB.pin4}
+% \pcbpintopin{NN1.pin11}{MM.pin1}
+\end{pgfonlayer}
+\end{scope}
+\end{tikzpicture}
