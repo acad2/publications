@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=tikzpictures/tikz-breadboard.tex
+lastDocument=chapter_circuits_schakelen.tex
 masterDocument=
 name=dep
 pkg_extIsRegExp=false
@@ -583,6 +583,13 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
+[document-settings,item:tikzpictures/tikz-pcbexample.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
 [document-settings,item:tikzpictures/tikz-setResetLatch-nand.tex]
 Bookmarks=
 Encoding=UTF-8
@@ -726,13 +733,13 @@ order=0
 
 [item:chapter_circuits_schakelen.tex]
 archive=true
-column=147
+column=31
 encoding=UTF-8
 highlight=LaTeX
-line=192
+line=111
 mode=LaTeX
-open=false
-order=1
+open=true
+order=0
 
 [item:chapter_combinatorische_schakelingen.tex]
 archive=true
@@ -746,10 +753,10 @@ order=-1
 
 [item:chapter_experimenten.tex]
 archive=true
-column=31
+column=87
 encoding=UTF-8
 highlight=LaTeX
-line=76
+line=69
 mode=LaTeX
 open=false
 order=2
@@ -811,7 +818,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=538
 mode=LaTeX
-open=true
+open=false
 order=0
 
 [item:cursus.tex]
@@ -886,13 +893,13 @@ order=4
 
 [item:pgflibraryPCBcomponents.code.tex]
 archive=true
-column=25
+column=36
 encoding=UTF-8
 highlight=LaTeX
-line=228
+line=95
 mode=LaTeX
 open=true
-order=2
+order=3
 
 [item:pgflibraryWashing.code.tex]
 archive=true
@@ -1926,12 +1933,12 @@ order=1
 
 [item:tikzpictures/tikz-breadboard.tex]
 archive=true
-column=48
+column=11
 encoding=UTF-8
 highlight=LaTeX
-line=5
+line=1
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:tikzpictures/tikz-canonicPos.tex]
@@ -2506,13 +2513,13 @@ order=2
 
 [item:tikzpictures/tikz-infinitemul-pcb5.tex]
 archive=true
-column=30
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=14
+line=40
 mode=LaTeX
 open=true
-order=3
+order=2
 
 [item:tikzpictures/tikz-instructionword-example.tex]
 archive=true
@@ -3164,6 +3171,16 @@ mode=LaTeX
 open=false
 order=9
 
+[item:tikzpictures/tikz-pcbexample.tex]
+archive=true
+column=29
+encoding=UTF-8
+highlight=LaTeX
+line=17
+mode=LaTeX
+open=true
+order=1
+
 [item:tikzpictures/tikz-pinout-555.tex]
 archive=true
 column=4485205
@@ -3441,10 +3458,10 @@ JumpList=
 ViMarks=.,1370,66,[,1370,66,],1370,66
 
 [view-settings,view=0,item:chapter_circuits_schakelen.tex]
-CursorColumn=147
-CursorLine=192
+CursorColumn=31
+CursorLine=111
 JumpList=
-ViMarks=.,192,146,[,192,141,],192,146
+ViMarks=.,110,662,[,110,630,],110,662
 
 [view-settings,view=0,item:chapter_combinatorische_schakelingen.tex]
 CursorColumn=0
@@ -3453,8 +3470,8 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:chapter_experimenten.tex]
-CursorColumn=31
-CursorLine=76
+CursorColumn=87
+CursorLine=69
 JumpList=
 ViMarks=.,75,82,[,75,67,],75,82
 
@@ -3507,8 +3524,8 @@ JumpList=
 ViMarks=.,12,0,[,0,0,],-1,-1
 
 [view-settings,view=0,item:pgflibraryPCBcomponents.code.tex]
-CursorColumn=25
-CursorLine=228
+CursorColumn=36
+CursorLine=95
 JumpList=
 ViMarks=.,228,25,[,228,25,],228,25
 
@@ -3771,10 +3788,10 @@ JumpList=
 ViMarks=.,27,42,[,27,42,],27,42
 
 [view-settings,view=0,item:tikzpictures/tikz-breadboard.tex]
-CursorColumn=48
-CursorLine=5
+CursorColumn=11
+CursorLine=1
 JumpList=
-ViMarks=.,5,38,[,5,38,],5,47
+ViMarks=.,1,10,[,1,8,],1,10
 
 [view-settings,view=0,item:tikzpictures/tikz-clock-555.tex]
 CursorColumn=0
@@ -3801,8 +3818,8 @@ JumpList=
 ViMarks=.,7,55,[,7,55,],7,55
 
 [view-settings,view=0,item:tikzpictures/tikz-infinitemul-pcb5.tex]
-CursorColumn=30
-CursorLine=14
+CursorColumn=17
+CursorLine=40
 JumpList=
 ViMarks=.,37,0,[,37,0,],37,1
 
@@ -3889,6 +3906,12 @@ CursorColumn=45
 CursorLine=1
 JumpList=
 ViMarks=.,1,0,[,1,0,],1,44
+
+[view-settings,view=0,item:tikzpictures/tikz-pcbexample.tex]
+CursorColumn=29
+CursorLine=17
+JumpList=
+ViMarks=.,17,28,[,17,28,],17,28
 
 [view-settings,view=0,item:tikzpictures/tikz-setResetLatch-nand.tex]
 CursorColumn=0
