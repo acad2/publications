@@ -19,30 +19,12 @@ Getallen worden standaard in decimale notatie uitgedrukt. Men kan ze ook in expo
 
 \paragraph{Karakterreeks}
 Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een sequentie karakters op, dus een tekstfragment. In \texttt{Java} noemt men een dergelijk type een \texttt{String}. Deze reeks wordt tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst, bijvoorbeeld \texttt{"Hello World!"}. Een probleem doet zich voor wanneer we de dubbele aanhalingstekens (\texttt{"}) zelf in het tekstfragment willen gebruiken. In dat geval dienen we de aanhalingstekens dubbel te plaatsen, bijvoorbeeld:
-\begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}.
+\begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}
 \paragraph{Bitreeksen}
-\vhdltermen{Bitreeks} (ofwel \vhdltermen{``bit string literal}''). Dit is een sequentie van uitgebreide cijfers\footnote{In geval van hexadecimale getallen.}. Ze worden tussen dubbele aanhalingstekens geplaatst (\vhdltermen{"}). Eventueel wordt er een B (binair), O (octaal) of X (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitstring in een bepaald formaat te lezen. Verder kan de gebruiker underscores (\_) toevoegen om de leesbaarheid te verhogen.
+Een \vhdltermen{bitreeks} (ofwel \vhdltermen{``bit string literal}'') is een sequentie aan bits (dit is een eenheid van informatie die ofwel \texttt{0} ofwel \texttt{1} is). Een bitreeks wordt geschreven als een sequentie van enen en nullen tussen dubbele aanhalingstekens (\vhdltermen{"}). Zoals we al vroeger in deze cursus hebben opgemerkt is zo'n sequentie niet effici\"ent, leesbaar en praktisch. Daarom laat men ook octale  en hexadecimale notatie toe. Hiertoe wordt er een \vhdltermen{B} (binair), \vhdltermen{O} (octaal) of \vhdltermen{X} (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitreeks in een bepaald formaat te lezen. Bij hexadecimale getallen gebruikt men \vhdltermen{a}, \vhdltermen{b}, \vhdltermen{c}, \vhdltermen{d}, \vhdltermen{e} en \vhdltermen{f} om respectievelijk $10$ tot $15$ voor te stellen. Net als bij getallen kan de gebruiker \termen{underscores} (\vhdltermen{\_}) toevoegen om tot meer leesbare code te komen.
 \subsection{Identifiers}
-Een identifier is een referentie naar een bepaalde waarde. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook het underscore (\_) teken is toegelaten als dit niet het eerste of laatste karakter is. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
-\subsection{scheidingstekens}
-\vhdltermen{Scheidingstekens} (ofwel ``\vhdltermen{delimiters}''): de
-scheidingstekens van VHDL worden weergegeven in tabel \ref{tbl:vHDLdelimiters}.
-\begin{table}[hbt]
-\centering
-\begin{tabular}{ccccc}
-\verb+&+&\verb+'+&\verb+(+&\verb+)+&\verb+*+\\
-\verb/+/&\verb+,+&\verb+-+&\verb+.+&\verb+/+\\
-\verb+:+&\verb+;+&\verb+<+&\verb+=+&\verb+>+\\
-\verb+|+&\verb+[+&\verb+]+&\verb+=>+&\verb+**+\\
-\verb+:=+&\verb+/=+&\verb+>=+&\verb+<=+&\verb+<>+
-\end{tabular}
-\caption{Scheidingstekens in VHDL.}
-\label{tbl:vHDLdelimiters}
-\end{table}
-\subsection{Commentaar}
-Commentaar: commentaar geplaatst na twee horizontale strepen \verb+--+, en eindigt op het einde van de lijn. Commentaar wordt genegeerd door de VHDL compiler.
-Daarnaast is er ook sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, dez worden hier niet beschouwd.
-\paragraph{Gereserveerde woorden}De woorden in tabel \ref{tbl:vHDLReservedWords} mogen niet gebruikt worden als identifiers.
+Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \texttt{Java}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
+\paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in VHDL: ze verwijzen naar functies die in de VHDL compiler zijn ingebakken. De woorden in \tblref{vHDLReservedWords} mogen niet gebruikt worden als identifiers.
 \begin{table}[hbt]
 \centering
 \small{\begin{tabular}{lllllll}
@@ -64,8 +46,27 @@ Daarnaast is er ook sprake van \vhdltermen{enumeration literals} en van de \vhdl
 \caption{Gereserveerde woorden in VHDL.}
 \label{tbl:vHDLReservedWords}
 \end{table}
-\subsubsection{Data-types}
-VHDL bevat enkele belangrijke datatypes die we in de volgende paragrafen vaak opnieuw zullen tegenkomen. Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. Tabel \ref{tbl:vHDLTypes} geeft een overzicht van de meest populaire hoofdtypes.
+We onderscheiden verschillende soorten sleutelwoorden: enerzijds zijn er compiler-directieven zoals bijvoorbeeld \vhdltermen{case} en \vhdltermen{downto}, daarnaast zijn er basis-operaties zoals \vhdltermen{nand} en \vhdltermen{sla}, tot slot zijn er ook type-directieven zoals \vhdltermen{array} en \vhdltermen{signal}.
+\subsection{scheidingstekens}
+Een \vhdltermen{scheidingsteken} (ofwel ``\vhdltermen{delimiter}'') wordt gebruikt om operaties en/of : de
+scheidingstekens van VHDL worden weergegeven in \tblref{vHDLdelimiters}.
+\begin{table}[hbt]
+\centering
+\begin{tabular}{ccccc}
+\verb+&+&\verb+'+&\verb+(+&\verb+)+&\verb+*+\\
+\verb/+/&\verb+,+&\verb+-+&\verb+.+&\verb+/+\\
+\verb+:+&\verb+;+&\verb+<+&\verb+=+&\verb+>+\\
+\verb+|+&\verb+[+&\verb+]+&\verb+=>+&\verb+**+\\
+\verb+:=+&\verb+/=+&\verb+>=+&\verb+<=+&\verb+<>+
+\end{tabular}
+\caption{Scheidingstekens in VHDL.}
+\label{tbl:vHDLdelimiters}
+\end{table}
+\subsection{Commentaar}
+Commentaar: commentaar geplaatst na twee horizontale strepen \verb+--+, en eindigt op het einde van de lijn. Commentaar wordt genegeerd door de VHDL compiler.
+Daarnaast is er ook sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, dez worden hier niet beschouwd.
+\subsection{Data-types}
+VHDL bevat enkele belangrijke datatypes die we in de volgende paragrafen vaak opnieuw zullen tegenkomen. Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vHDLTypes} geeft een overzicht van de meest populaire hoofdtypes.
 \begin{table}[hbt]
 \centering
 \subtable[Overzicht van belangrijke types in VHDL.]{\small{\begin{tabular}{c|cl}
@@ -107,7 +108,7 @@ Type&Bereik&Operatoren (prioriteit)\\\hline
 \caption{Overzicht van belangrijke types en afgeleide types in VHDL.}
 \label{tbl:vHDLTypesSubTypes}
 \end{table}
-Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in tabel \ref{tbl:vHDLSubTypes} samen met hun gereduceerd bereik.
+Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in \tblref{vHDLSubTypes} samen met hun gereduceerd bereik.
 \paragraph{Zelf types defini\"eren} Hoe defini\"eren we nu zelf types? Er zijn enkele manieren om zelf types te defni\"eren:
 \begin{itemize}
  \item Defini\"eren door opsomming
