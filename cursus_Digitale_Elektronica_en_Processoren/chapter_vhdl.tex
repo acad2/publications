@@ -13,10 +13,14 @@ We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en 
   \item \vhdltermen{physical types}: dit zijn fysische waarden. Fysische waarden bestaan uit een getal gevolgd door een fysische eenheid. Er wordt een spatie tussen het getal en de eenheid gezet. Bijvoorbeeld: \verb+1818 ns+. Dit type heeft geen echt equivalent in de meeste programmeertalen. Immers redeneren programmeertalen meestal niet over grootheden.
 \end{itemize}
 Getallen worden standaard in decimale notatie uitgedrukt. Men kan ze ook in exponenti\"ele vorm schrijven door het toevoegen van een '\vhdltermen{E}' of `\vhdltermen{e}' op het einde van het getal gevolgd door de exponent, bijvoorbeeld: \verb+14e2+. Om een andere basis te gebruiken, wordt volgend formaat gebruikt: \vhdltermen{base\#literal\#exp}, met de basis tussen 2 en 16. Zo kunnen we $1425$ schrijven als \verb+16#591#+, of $4864$ als \verb+16#13#E2+. Tot slot mag men ook vrij \emph{underscores} (\vhdltermen{\_}) toevoegen in een getal om de code leesbaar te houden. Bijvoorbeeld: \verb+19_171_425+.
-\begin{itemize}
-  \item \vhdltermen{Karakter} (ofwel ``\vhdltermen{character literal}''). Deze literals wordent tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst.
-  \item \vhdltermen{Karakterreeks} (ofwel ``\vhdltermen{string literal}''). Deze literals worden tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst. Indien we dubbele aanhalingstekens willen plaatsen binnen de karakterreeks dienen we twee maal dubbele aanhalingstekens te plaatsen. Bijvoorbeeld:
+
+
+\paragraph{Karakter} Een karakter (ofwel ``\vhdltermen{character literal}'') slaat een \termen{karakter} (ofwel \termen{character}) op: de eenheid van tekst. Deze literals worden tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst, bijvoorbeeld \texttt{'K'}.
+
+\paragraph{Karakterreeks}
+Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}''). Deze literals worden tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst. Indien we dubbele aanhalingstekens willen plaatsen binnen de karakterreeks dienen we twee maal dubbele aanhalingstekens te plaatsen. Bijvoorbeeld:
 \begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}.
+\begin{itemize}
   \item \vhdltermen{Bitreeks} (ofwel \vhdltermen{``bit string literal}''). Dit is een sequentie van uitgebreide cijfers\footnote{In geval van hexadecimale getallen.}. Ze worden tussen dubbele aanhalingstekens geplaatst (\vhdltermen{"}). Eventueel wordt er een B (binair), O (octaal) of X (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitstring in een bepaald formaat te lezen. Verder kan de gebruiker underscores (\_) toevoegen om de leesbaarheid te verhogen.
  \end{itemize}
 \subsection{Identifiers}
