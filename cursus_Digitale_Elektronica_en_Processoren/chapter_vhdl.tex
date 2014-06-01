@@ -15,14 +15,13 @@ We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en 
 Getallen worden standaard in decimale notatie uitgedrukt. Men kan ze ook in exponenti\"ele vorm schrijven door het toevoegen van een '\vhdltermen{E}' of `\vhdltermen{e}' op het einde van het getal gevolgd door de exponent, bijvoorbeeld: \verb+14e2+. Om een andere basis te gebruiken, wordt volgend formaat gebruikt: \vhdltermen{base\#literal\#exp}, met de basis tussen 2 en 16. Zo kunnen we $1425$ schrijven als \verb+16#591#+, of $4864$ als \verb+16#13#E2+. Tot slot mag men ook vrij \emph{underscores} (\vhdltermen{\_}) toevoegen in een getal om de code leesbaar te houden. Bijvoorbeeld: \verb+19_171_425+.
 
 
-\paragraph{Karakter} Een karakter (ofwel ``\vhdltermen{character literal}'') slaat een \termen{karakter} (ofwel \termen{character}) op: de eenheid van tekst. Deze literals worden tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst, bijvoorbeeld \texttt{'K'}.
+\paragraph{Karakter} Een karakter (ofwel ``\vhdltermen{character literal}'') slaat een \termen{karakter} (ofwel \termen{character}) op: de eenheid van tekst. Deze literals worden tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst, bijvoorbeeld \verb+'K'+. In \texttt{Java} zou het equivalent van dit type een \texttt{char} zijn.
 
 \paragraph{Karakterreeks}
-Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}''). Deze literals worden tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst. Indien we dubbele aanhalingstekens willen plaatsen binnen de karakterreeks dienen we twee maal dubbele aanhalingstekens te plaatsen. Bijvoorbeeld:
+Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een sequentie karakters op, dus een tekstfragment. In \texttt{Java} noemt men een dergelijk type een \texttt{String}. Deze reeks wordt tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst, bijvoorbeeld \texttt{"Hello World!"}. Een probleem doet zich voor wanneer we de dubbele aanhalingstekens (\texttt{"}) zelf in het tekstfragment willen gebruiken. In dat geval dienen we de aanhalingstekens dubbel te plaatsen, bijvoorbeeld:
 \begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}.
-\begin{itemize}
-  \item \vhdltermen{Bitreeks} (ofwel \vhdltermen{``bit string literal}''). Dit is een sequentie van uitgebreide cijfers\footnote{In geval van hexadecimale getallen.}. Ze worden tussen dubbele aanhalingstekens geplaatst (\vhdltermen{"}). Eventueel wordt er een B (binair), O (octaal) of X (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitstring in een bepaald formaat te lezen. Verder kan de gebruiker underscores (\_) toevoegen om de leesbaarheid te verhogen.
- \end{itemize}
+\paragraph{Bitreeksen}
+\vhdltermen{Bitreeks} (ofwel \vhdltermen{``bit string literal}''). Dit is een sequentie van uitgebreide cijfers\footnote{In geval van hexadecimale getallen.}. Ze worden tussen dubbele aanhalingstekens geplaatst (\vhdltermen{"}). Eventueel wordt er een B (binair), O (octaal) of X (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitstring in een bepaald formaat te lezen. Verder kan de gebruiker underscores (\_) toevoegen om de leesbaarheid te verhogen.
 \subsection{Identifiers}
 Een identifier is een referentie naar een bepaalde waarde. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook het underscore (\_) teken is toegelaten als dit niet het eerste of laatste karakter is. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
 \subsection{scheidingstekens}
