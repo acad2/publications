@@ -1,5 +1,5 @@
 \ProvidesPackage{importsreferences}
-\RequirePackage{tikz,subfigure,float,listings,ifthen,xstring}
+\RequirePackage{tikz,subfigure,float,listings,ifthen,xstring,etoolbox}
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
@@ -92,20 +92,19 @@
 \end{listing}
 }
 
-\makeatletter
-\newtoks\@tabtoks
-%%% assignments to \@tabtoks must be global, because they are done in \foreach
-\newcommand\addtabtoks[1]{\global\@tabtoks\expandafter{\the\@tabtoks#1}}
-%%% variable should always be operated on always locally or always globally
-\newcommand*\resettabtoks{\global\@tabtoks{}}
-\newcommand*\printtabtoks{\the\@tabtoks}
-\makeatother
-
 \newcommand{\compactcontenttable}[2]{
-\resettabtoks
 \setcounter{imreA}{1}\StrLen{#1}[\imresl]
+\def\temp{}
+\foreach\t in{#2}{
+  \expandafter\gdef\expandafter\temp\expandafter{\temp\t&}%
+}
+% \g@addto@macro\@temp{\t}
+% \ifthenelse{\equal{\imresl}{\value{imreA}}}{
+%   \setcounter{imreA}{1} \g@addto@macro\@temp{\\}
+% }{
+%   \stepcounter{imreA} \g@addto@macro\@temp{&}
+% }}
 \begin{tabular}{#1}
-\foreach\t in{#2}{\addtabtoks{\t\ifthenelse{\equal{\imresl}{\value{imreA}}}{\setcounter{imreA}{1}\\}{&\stepcounter{imreA}}}}
-\printtabtoks
+\temp
 \end{tabular}
 }
