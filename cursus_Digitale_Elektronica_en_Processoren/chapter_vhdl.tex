@@ -24,28 +24,10 @@ Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een seq
 Een \vhdltermen{bitreeks} (ofwel \vhdltermen{``bit string literal}'') is een sequentie aan bits (dit is een eenheid van informatie die ofwel \texttt{0} ofwel \texttt{1} is). Een bitreeks wordt geschreven als een sequentie van enen en nullen tussen dubbele aanhalingstekens (\vhdltermen{"}). Zoals we al vroeger in deze cursus hebben opgemerkt is zo'n sequentie niet effici\"ent, leesbaar en praktisch. Daarom laat men ook octale  en hexadecimale notatie toe. Hiertoe wordt er een \vhdltermen{B} (binair), \vhdltermen{O} (octaal) of \vhdltermen{X} (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitreeks in een bepaald formaat te lezen. Bij hexadecimale getallen gebruikt men \vhdltermen{a}, \vhdltermen{b}, \vhdltermen{c}, \vhdltermen{d}, \vhdltermen{e} en \vhdltermen{f} om respectievelijk $10$ tot $15$ voor te stellen. Net als bij getallen kan de gebruiker \termen{underscores} (\vhdltermen{\_}) toevoegen om tot meer leesbare code te komen.
 \subsection{Identifiers}
 Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \texttt{Java}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
-\paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in VHDL: ze verwijzen naar functies die in de VHDL compiler zijn ingebakken. De woorden in \tblref{vHDLReservedWords} mogen niet gebruikt worden als identifiers.
-\begin{table}[hbt]
-\centering
-\small{\begin{tabular}{lllllll}
-\verb+abs+&\verb+access+&\verb+after+&\verb+alias+&\verb+all+&\verb+and+&\verb+architecture+\\
-\verb+array+&\verb+assert+&\verb+attribute+&\verb+begin+&\verb+block+&\verb+body+&\verb+buffer+\\
-\verb+bus+&\verb+case+&\verb+component+&\verb+configuration+&\verb+constant+&\verb+disconnect+&\verb+downto+\\
-\verb+else+&\verb+elsif+&\verb+end+&\verb+entity+&\verb+exit+&\verb+file+&\verb+for+\\
-\verb+function+&\verb+generate+&\verb+generic+&\verb+group+&\verb+guarded+&\verb+if+&\verb+impure+\\
-\verb+in+&\verb+inertial+&\verb+inout+&\verb+is+&\verb+label+&\verb+library+&\verb+linkage+\\
-\verb+literal+&\verb+loop+&\verb+map+&\verb+mod+&\verb+nand+&\verb+new+&\verb+next+\\
-\verb+nor+&\verb+not+&\verb+null+&\verb+of+&\verb+on+&\verb+open+&\verb+or+\\
-\verb+others+&\verb+out+&\verb+package+&\verb+port+&\verb+postponed+&\verb+procedure+&\verb+process+\\
-\verb+pure+&\verb+range+&\verb+record+&\verb+register+&\verb+reject+&\verb+rem+&\verb+report+\\
-\verb+return+&\verb+rol+&\verb+ror+&\verb+select+&\verb+severity+&\verb+shared+&\verb+signal+\\
-\verb+sla+&\verb+sll+&\verb+sra+&\verb+srl+&\verb+subtype+&\verb+then+&\verb+to+\\
-\verb+transport+&\verb+type+&\verb+unaffected+&\verb+units+&\verb+until+&\verb+use+&\verb+variable+\\
-\verb+wait+&\verb+when+&\verb+while+&\verb+with+&\verb+xnor+&\verb+xor+
-\end{tabular}}
-\caption{Gereserveerde woorden in VHDL.}
-\label{tbl:vHDLReservedWords}
-\end{table}
+\paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in VHDL: ze verwijzen naar functies die in de VHDL compiler zijn ingebakken. De woorden in \tblref{vhdl-reserved-words} mogen niet gebruikt worden als identifiers.
+
+\importtabulartable{vhdl-reserved-words}{Gereserveerde woorden in VHDL.}
+
 We onderscheiden verschillende soorten sleutelwoorden: enerzijds zijn er compiler-directieven zoals bijvoorbeeld \vhdltermen{case} en \vhdltermen{downto}, daarnaast zijn er basis-operaties zoals \vhdltermen{nand} en \vhdltermen{sla}, tot slot zijn er ook type-directieven zoals \vhdltermen{array} en \vhdltermen{signal}.
 \subsection{scheidingstekens}
 Een \vhdltermen{scheidingsteken} (ofwel ``\vhdltermen{delimiter}'') wordt gebruikt om operaties en/of : de
