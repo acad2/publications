@@ -92,12 +92,20 @@
 \end{listing}
 }
 
+\makeatletter
+\newtoks\@tabtoks
+%%% assignments to \@tabtoks must be global, because they are done in \foreach
+\newcommand\addtabtoks[1]{\global\@tabtoks\expandafter{\the\@tabtoks#1}}
+%%% variable should always be operated on always locally or always globally
+\newcommand*\resettabtoks{\global\@tabtoks{}}
+\newcommand*\printtabtoks{\the\@tabtoks}
+\makeatother
+
 \newcommand{\compactcontenttable}[2]{
-\setcounter{imreA}{1}
-\StrLen{#1}[\imresl]
+\resettabtoks
+\setcounter{imreA}{1}\StrLen{#1}[\imresl]
 \begin{tabular}{#1}
-\foreach \t in {#2} {
-\ifthenelse{\equal{\imresl}{\value{imreA}}}{\setcounter{imreA}{1}A\\}{\stepcounter{imreA}B}
-}
+\foreach\t in{#2}{\addtabtoks{\t\ifthenelse{\equal{\imresl}{\value{imreA}}}{\setcounter{imreA}{1}\\}{&\stepcounter{imreA}}}}
+\printtabtoks
 \end{tabular}
 }

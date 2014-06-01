@@ -4,8 +4,10 @@
 In deze sectie zullen we eerst de woordenschat in de VHDL taal bespreken, waarna we de belangrijkste types zullen bespreken samen met het 
 \subsection{Lexicale elementen (woordenschat)}
 Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen die men \termen{tokens} oemt. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De tokens kunnen verder worden onderverdeeld in: \termen{literals} (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), \termen{identifiers} (dit zijn namen van variabelen, functies, componenten,... gebruikt om naar te refereren en defini\"eren), \termen{scheidingstekens}\footnote{Engels: \emph{delimiters}.} (haakjes en andere symbolen die waardes en identifiers combineren) en \termen{commentaar}. We beschrijven de verschillende soorten tokens verder in de volgende subsecties.
+
 \subsection{Literals}
-We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en bitreeksen. We overlopen de verschillende types.
+We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en bitreeksen. We overlopen de verschillende types. In VHDL is er ook nog sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, deze literals worden niet beschouwd.
+
 \paragraph{Getal}Een getal (ook wel ``\vhdltermen{abstract literal}'' genoemd) is een numerieke waarde. Net als bij programmeertalen onderscheid men verschillende soorten numerieke waarden:
 \begin{itemize}
   \item \vhdltermen{universal\_integer}: dit zijn numerieke literals die geen decimale komma (\vhdltermen{.}) bevatten, bijvoorbeeld \verb+1425+. Deze getallen zijn vergelijkbaar met het \texttt{int}-type in \texttt{Java}\footnote{De vergelijking gaat echter niet geheel op: een \texttt{int} is immers beperkt tot $32$ bit en heeft een specifieke representatie.}.
@@ -29,24 +31,17 @@ Een \vhdltermen{identifier} is een referentie naar een variabele, functie, compo
 \importtabulartable{vhdl-reserved-words}{Gereserveerde woorden in VHDL.}
 
 We onderscheiden verschillende soorten sleutelwoorden: enerzijds zijn er compiler-directieven zoals bijvoorbeeld \vhdltermen{case} en \vhdltermen{downto}, daarnaast zijn er basis-operaties zoals \vhdltermen{nand} en \vhdltermen{sla}, tot slot zijn er ook type-directieven zoals \vhdltermen{array} en \vhdltermen{signal}.
+
 \subsection{scheidingstekens}
-Een \vhdltermen{scheidingsteken} (ofwel ``\vhdltermen{delimiter}'') wordt gebruikt om operaties en/of : de
-scheidingstekens van VHDL worden weergegeven in \tblref{vHDLdelimiters}.
-\begin{table}[hbt]
-\centering
-\begin{tabular}{ccccc}
-\verb+&+&\verb+'+&\verb+(+&\verb+)+&\verb+*+\\
-\verb/+/&\verb+,+&\verb+-+&\verb+.+&\verb+/+\\
-\verb+:+&\verb+;+&\verb+<+&\verb+=+&\verb+>+\\
-\verb+|+&\verb+[+&\verb+]+&\verb+=>+&\verb+**+\\
-\verb+:=+&\verb+/=+&\verb+>=+&\verb+<=+&\verb+<>+
-\end{tabular}
-\caption{Scheidingstekens in VHDL.}
-\label{tbl:vHDLdelimiters}
-\end{table}
+Een \vhdltermen{scheidingsteken} (ofwel ``\vhdltermen{delimiter}'') tenslotte wordt gebruikt om operaties op gegevens uit te voeren, bijvoorbeeld een optelling maar ook een index. De
+scheidingstekens van VHDL worden weergegeven in \tblref{vhdl-delim}.
+
+\importtabulartable{vhdl-delim}{Scheidingstekens in VHDL.}
+
+We onderscheiden opnieuw verschillende soorten scheidingstekens: 
+
 \subsection{Commentaar}
-Commentaar: commentaar geplaatst na twee horizontale strepen \verb+--+, en eindigt op het einde van de lijn. Commentaar wordt genegeerd door de VHDL compiler.
-Daarnaast is er ook sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, dez worden hier niet beschouwd.
+Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \texttt{Java}.
 \subsection{Data-types}
 VHDL bevat enkele belangrijke datatypes die we in de volgende paragrafen vaak opnieuw zullen tegenkomen. Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vHDLTypes} geeft een overzicht van de meest populaire hoofdtypes.
 \begin{table}[hbt]
