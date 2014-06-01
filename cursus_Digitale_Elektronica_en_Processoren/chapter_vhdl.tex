@@ -1,28 +1,28 @@
 \chapter{VHDL}
 \chapterquote{In redelijke taal weerklinkt wat in werkelijkheid gebeurt.}{Gerard Bolland, Nederlands taalkundige en filosoof (1854-1922)}
-\section{Combinatorische schakelingen in VHDL}
-\label{s:combinatorischVHDL}
-Nu we verschillende combinatorische schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \ref{ss:combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
-\subsection{Elementen van de VHDL-taal}
-In deze subsectie zullen we eerst de woordenschat in de VHDL taal bespreken, waarna we de belangrijkste types zullen bespreken samen met het 
-\subsubsection{Lexicale elementen (woordenschat)}
-Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De lexicale elementen van bijna elke taal bestaat uit: literals (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), identifiers (we kennen waardes of structuren van waardes toe aan identifiers en refereren ook zo naar deze waarden), scheidingstekens\footnote{Engels: delimiters.} (haakjes en andere symbolen die waardes en identifiers combineren) en commentaar. In het geval van VHDL zijn dit:
+\section{Elementen van de VHDL-taal}
+In deze sectie zullen we eerst de woordenschat in de VHDL taal bespreken, waarna we de belangrijkste types zullen bespreken samen met het 
+\subsection{Lexicale elementen (woordenschat)}
+Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen die men \termen{tokens} oemt. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De tokens kunnen verder worden onderverdeeld in: \termen{literals} (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), \termen{identifiers} (dit zijn namen van variabelen, functies, componenten,... gebruikt om naar te refereren en defini\"eren), \termen{scheidingstekens}\footnote{Engels: \emph{delimiters}.} (haakjes en andere symbolen die waardes en identifiers combineren) en \termen{commentaar}. We beschrijven de verschillende soorten tokens verder in de volgende subsecties.
+\subsection{Literals}
+We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en bitreeksen. We overlopen de verschillende types.
+\paragraph{Getal}Een getal (ook wel ``\vhdltermen{abstract literal}'' genoemd) is een numerieke waarde. Net als bij programmeertalen onderscheid men verschillende soorten numerieke waarden:
 \begin{itemize}
- \item \vhdltermen{Literals}: we onderscheiden vier soorten literals:
- \begin{itemize}
-  \item \vhdltermen{Getal} (ook wel ``\vhdltermen{abstract literal}'') we onderscheiden 3 verschillende soorten getallen:
-  \begin{itemize}
-   \item \vhdltermen{universal\_integer}: dit zijn numerieke literals die geen decimale komma (\vhdltermen{.}) bevatten. Bijvoorbeeld \verb+1425+
-   \item \vhdltermen{universal\_real}: dit zijn numerieke getallen die wel een decimale komma bevatten. Bijvoorbeeld \verb+1425.1917+. Merk op dat indien er enkel nullen achter de komma staan dat het getal dezelfde waarde heeft als een universal\_integer: \verb+1425.0+.
-   \item \vhdltermen{physical types}: dit zijn fysische waarden. Fysische waarden bestaan uit een getal gevolgd door een fysische eenheid. Er wordt een spatie tussen het getal en de eenheid gezet. Bijvoorbeeld: \verb+1818 ns+.
-  \end{itemize}
+  \item \vhdltermen{universal\_integer}: dit zijn numerieke literals die geen decimale komma (\vhdltermen{.}) bevatten, bijvoorbeeld \verb+1425+. Deze getallen zijn vergelijkbaar met het \texttt{int}-type in \texttt{Java}\footnote{}.
+  \item \vhdltermen{universal\_real}: dit zijn numerieke getallen die wel een decimale komma bevatten. Bijvoorbeeld \verb+1425.1917+. Merk op dat indien er enkel nullen achter de komma staan dat het getal dezelfde waarde heeft als een \vhdltermen{universal\_integer}: \verb+1425.0+, maar daarom niet dezelfde representatie. In \texttt{Java} zouden we dit type voorstellen met bijvoorbeeld een \texttt{float} of \texttt{double}.
+  \item \vhdltermen{physical types}: dit zijn fysische waarden. Fysische waarden bestaan uit een getal gevolgd door een fysische eenheid. Er wordt een spatie tussen het getal en de eenheid gezet. Bijvoorbeeld: \verb+1818 ns+.
+\end{itemize}
 De numerieke literals kunnen ook geschreven worden in exponenti\"ele vorm door het toevoegen van een '\vhdltermen{E}' of `\vhdltermen{e}'. Bijvoorbeeld: \verb+14e2+. Getallen worden standaard in decimale notatie uitgedrukt. Om een andere basis te gebruiken bestaat wordt volgend formaat gebruikt: \vhdltermen{base\#literal\#exp}, met de basis tussen 2 en 16. Zo kunnen we 1425 schrijven als \verb+16#591#+, of 4864 als \verb+16#13#E2+. Tot slot mag men ook vrij underscores (\vhdltermen{\_}) toevoegen in het getal om de code leesbaar te houden. Bijvoorbeeld: \verb+19_171_425+.
+\begin{itemize}
   \item \vhdltermen{Karakter} (ofwel ``\vhdltermen{character literal}''). Deze literals wordent tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst.
   \item \vhdltermen{Karakterreeks} (ofwel ``\vhdltermen{string literal}''). Deze literals worden tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst. Indien we dubbele aanhalingstekens willen plaatsen binnen de karakterreeks dienen we twee maal dubbele aanhalingstekens te plaatsen. Bijvoorbeeld:
 \begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}.
   \item \vhdltermen{Bitreeks} (ofwel \vhdltermen{``bit string literal}''). Dit is een sequentie van uitgebreide cijfers\footnote{In geval van hexadecimale getallen.}. Ze worden tussen dubbele aanhalingstekens geplaatst (\vhdltermen{"}). Eventueel wordt er een B (binair), O (octaal) of X (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitstring in een bepaald formaat te lezen. Verder kan de gebruiker underscores (\_) toevoegen om de leesbaarheid te verhogen.
  \end{itemize}
- \item \vhdltermen{Scheidingstekens} (ofwel ``\vhdltermen{delimiters}''): de
+\subsection{Identifiers}
+Een identifier is een referentie naar een bepaalde waarde. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook het underscore (\_) teken is toegelaten als dit niet het eerste of laatste karakter is. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
+\subsection{scheidingstekens}
+\vhdltermen{Scheidingstekens} (ofwel ``\vhdltermen{delimiters}''): de
 scheidingstekens van VHDL worden weergegeven in tabel \ref{tbl:vHDLdelimiters}.
 \begin{table}[hbt]
 \centering
@@ -36,9 +36,8 @@ scheidingstekens van VHDL worden weergegeven in tabel \ref{tbl:vHDLdelimiters}.
 \caption{Scheidingstekens in VHDL.}
 \label{tbl:vHDLdelimiters}
 \end{table}
- \item Identifiers: Een identifier is een referentie naar een bepaalde waarde. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook het underscore (\_) teken is toegelaten als dit niet het eerste of laatste karakter is. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identief verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
- \item Commentaar: commentaar geplaatst na twee horizontale strepen \verb+--+, en eindigt op het einde van de lijn. Commentaar wordt genegeerd door de VHDL compiler.
-\end{itemize}
+\subsection{Commentaar}
+Commentaar: commentaar geplaatst na twee horizontale strepen \verb+--+, en eindigt op het einde van de lijn. Commentaar wordt genegeerd door de VHDL compiler.
 Daarnaast is er ook sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, dez worden hier niet beschouwd.
 \paragraph{Gereserveerde woorden}De woorden in tabel \ref{tbl:vHDLReservedWords} mogen niet gebruikt worden als identifiers.
 \begin{table}[hbt]
@@ -182,6 +181,9 @@ y <= a and b;
 We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{ ns}$ een 1 aanleggen. Dit heeft als implicatie dat ook \verb+y+ van waarde zal veranderen. Indien we dit met variabelen en constanten zouden hebben berekend zou variabele \verb+y+ na de toewijzing een waarde toegewezen krijgen, en deze tot een volgende toewijzing behouden. Merk verder op dat we hier ook de betekenis van het codewoord \vhdltermen{after} tonen. Een signaal kan ook een initiele waarde krijgen, hiervoor gebruiken we de \vhdltermen{:=} operator.
 \subsubsection{Bibliotheken}
 \subsubsection{Bewerkingen}
+\section{Combinatorische schakelingen in VHDL}
+\label{s:combinatorischVHDL}
+Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \ref{ss:combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
 \subsection{Hardwarebeschrijving met VHDL}
 \subsubsection{Structurele beschrijving}
 \begin{vhdlcode}[hbt]
