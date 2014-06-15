@@ -95,16 +95,19 @@
 \newcommand{\compactcontenttable}[2]{
 \setcounter{imreA}{1}\StrLen{#1}[\imresl]
 \def\temp{}
-\foreach\t in{#2}{
-  \expandafter\gdef\expandafter\temp\expandafter{\temp\t}%
-}
-\temp
+\foreach\tx in{#2}{
+\ifthenelse{\equal{\imresl}{\value{imreA}}}{
+\setcounter{imreA}{1}\expandafter\gdef\expandafter\temp\expandafter{\temp B}
+}{
+\stepcounter{imreA}\expandafter\gdef\expandafter\temp\expandafter{\temp A }
+}}
+\temp{}
+  
+%   \expandafter\gdef\expandafter\temp\expandafter{\temp\tx}%
+% }
+
 % \g@addto@macro\@temp{\t}
-% \ifthenelse{\equal{\imresl}{\value{imreA}}}{
-%   \setcounter{imreA}{1} \g@addto@macro\@temp{\\}
-% }{
-%   \stepcounter{imreA} \g@addto@macro\@temp{&}
-% }}
+% 
 % \begin{tabular}{#1}
 % \end{tabular}
 }
