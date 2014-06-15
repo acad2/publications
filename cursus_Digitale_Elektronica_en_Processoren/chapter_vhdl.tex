@@ -46,7 +46,7 @@ Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, ma
 \section{Typesysteem}
 VHDL is getypeerd: een variabele slaat data op volgens een bepaald type, dit type geeft een interpretatie aan zowel de data en de operatoren die erop gedefinieerd zijn. De types kunnen bovendien door de programmeur uitgebreid worden. Men vertrekt echter steeds van basistypes.
 
-\paragraph{}
+\subsection{Voorgedefinieerde types}
 Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vhdl-type} geeft een overzicht van de meest populaire basistypes.
 \begin{table}[hbt]
 \centering
@@ -57,14 +57,18 @@ Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vhd
 
 \paragraph{}
 Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in \tblref{vhdl-type-deriv} samen met hun gereduceerd bereik.
-\paragraph{Zelf types defini\"eren} Hoe defini\"eren we nu zelf types? Er zijn enkele manieren om zelf types te defni\"eren:
+
+\subsection{Zelf types defini\"eren}
+Hoe defini\"eren we nu zelf types? Afhankelijk van het soort type dat we willen bouwen zijn er verschillende mogelijkheden:
 \begin{itemize}
- \item Defini\"eren door opsomming
- \item Defini\"eren door subtypering (beperk het bereik)
- \item Defini\"eren van fysische types
- \item Afgeleide types met matrices en vectoren
+ \item Defini\"eren door opsomming;
+ \item Defini\"eren door subtypering (beperk het bereik);
+ \item Defini\"eren van fysische types;
+ \item Afgeleide types met matrices en vectoren.
 \end{itemize}
-\paragraph{Defini\"eren met opsomming} We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. \vhdlref{lst:typeEnum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}.
+
+\subsubsection{Defini\"eren met opsomming}
+We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. \vhdlref{lst:typeEnum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 type bit is ('0','1');
