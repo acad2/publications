@@ -66,16 +66,17 @@ Hoe defini\"eren we nu zelf types? Afhankelijk van het soort type dat we willen 
  \item Defini\"eren van fysische types;
  \item Afgeleide types met matrices en vectoren.
 \end{itemize}
+We bespreken de verschillende methodes nu in meer detail.
 
 \subsubsection{Defini\"eren met opsomming}
-We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. \vhdlref{lst:typeEnum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}.
+We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. \vhdlref{typeEnum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 type bit is ('0','1');
 type boolean is (false,true);
 \end{lstlisting}
 \caption{Defini\"eren van types door opsomming.}
-\label{lst:constante}
+\vhdllab{constante}
 \end{vhdlcode}
 
 \begin{vhdlcode}[hbt]
@@ -85,7 +86,7 @@ subtype byte is integer range 0 to 255;
 subtype lowercase is character range 'a' to 'z';
 \end{lstlisting}
 \caption{Defini\"eren van types door subtypering.}
-\label{lst:constante}
+\vhdllab{constante}
 \end{vhdlcode}
 
 \begin{vhdlcode}[hbt]
@@ -94,7 +95,7 @@ type bit is ('0','1');
 type boolean is (false,true);
 \end{lstlisting}
 \caption{Defini\"eren van fysische types.}
-\label{lst:constante}
+\vhdllab{constante}
 \end{vhdlcode}
 \subsubsection{Data-objecten}
 Een object in VHDL is een benoemd item met een specifieke waarde. We onderscheiden 3 soorten objecten: \vhdltermen{constante}, \vhdltermen{variabele} en \vhdltermen{signaal}.
@@ -106,7 +107,7 @@ constant byte_length : natural := 8;
 constant word_length : natural := 4*byte_length;
 \end{lstlisting}
 \caption{Werken met constanten.}
-\label{lst:constante}
+\vhdllab{constante}
 \end{vhdlcode}
 Het algemene formaat is dus \verb+constant <identifier> : <type> := <waarde>;+.
 \paragraph{Variabele}De syntax van een variabele is ongeveer dezelfde. Alleen wordt het sleutelwoord \vhdltermen{variable}. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{lst:variabele} toont het gebruik van variabelen in VHDL.
