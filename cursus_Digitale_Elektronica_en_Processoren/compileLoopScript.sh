@@ -14,6 +14,7 @@ do
 		make
 		sleep 60
 	done
+	scp cursus.pdf ulyssis:www/dep.pdf
 	git add .
 	timeout 10 git commit -S -am "$msg"
 	timeout 10 git commit -am "$msg"
