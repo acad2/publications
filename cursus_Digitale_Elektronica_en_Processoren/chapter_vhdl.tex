@@ -42,54 +42,19 @@ We onderscheiden opnieuw verschillende soorten scheidingstekens:
 
 \subsection{Commentaar}
 Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \texttt{Java}.
+
 \section{Typesysteem}
-VHDL is getypeerd: een variabele slaat data op volgens een bepaald type. De types kunnen bovendien door de programmeur uitgebreid worden. Men vertrekt echter steeds van basistypes.
+VHDL is getypeerd: een variabele slaat data op volgens een bepaald type, dit type geeft een interpretatie aan zowel de data en de operatoren die erop gedefinieerd zijn. De types kunnen bovendien door de programmeur uitgebreid worden. Men vertrekt echter steeds van basistypes.
 
 \paragraph{}
-
-Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vHDLTypes} geeft een overzicht van de meest populaire hoofdtypes.
+Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vhdl-type} geeft een overzicht van de meest populaire hoofdtypes.
 \begin{table}[hbt]
 \centering
-\subtable[Overzicht van belangrijke types in VHDL.]{\small{\begin{tabular}{c|cl}
-Type&Bereik&Operatoren (prioriteit)\\\hline
-\multirow{5}{*}{\vhdltermen{INTEGER}}&&\vhdltermen{ABS}, \vhdltermen{**}\\
-&-2\ 147\ 483\ 647&\vhdltermen{*}, \vhdltermen{/}, \vhdltermen{MOD}, \vhdltermen{REM}\\
-&tot&\vhdltermen{+} (unair), \vhdltermen{-} (unair)\\
-&2\ 147\ 483\ 647&\vhdltermen{+} (binair), \vhdltermen{-} (binair)\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\\hline
-\multirow{5}{*}{\vhdltermen{REAL}}&&\vhdltermen{ABS}, \vhdltermen{**}\\
-&-1.0E38&\vhdltermen{*}, \vhdltermen{/}\\
-&tot&\vhdltermen{+} (unair), \vhdltermen{-} (unair)\\
-&1.0E38&\vhdltermen{+} (binair), \vhdltermen{-} (binair)\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\\hline
-\multirow{5}{*}{\vhdltermen{TIME}}&-2\ 147\ 483\ 647&\vhdltermen{ABS}\\
-&tot&\vhdltermen{*}, \vhdltermen{/}\\
-&2\ 147\ 483\ 647&\vhdltermen{+} (unair), \vhdltermen{-} (unair)\\
-&\vhdltermen{fs}, \vhdltermen{ps}, \vhdltermen{ns}, \vhdltermen{us}&\vhdltermen{+} (binair), \vhdltermen{-} (binair)\\
-&\vhdltermen{ms}, \vhdltermen{sec}, \vhdltermen{min}, \vhdltermen{hr}&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\\hline
-\multirow{3}{*}{\vhdltermen{BIT}}&\multirow{3}{*}{'0' of '1'}&\vhdltermen{NOT}\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\
-&&\vhdltermen{AND}, \vhdltermen{NAND}, \vhdltermen{OR}, \vhdltermen{NOR}, \vhdltermen{XOR}, \vhdltermen{XNOR}\\\hline
-\multirow{5}{*}{\vhdltermen{BIT\_VECTOR}}&\multirow{5}{*}{onbegrensde rij \vhdltermen{BIT}}&\vhdltermen{NOT}\\
-&&\vhdltermen{\&}\\
-&&\vhdltermen{SLL}, \vhdltermen{SRL}, \vhdltermen{SLA}, \vhdltermen{SRA}, \vhdltermen{ROL}, \vhdltermen{ROR}\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\
-&&\vhdltermen{AND}, \vhdltermen{NAND}, \vhdltermen{OR}, \vhdltermen{NOR}, \vhdltermen{XOR}, \vhdltermen{XNOR}\\\hline
-\vhdltermen{CHARACTER}&256 karakters&\\\hline
-\vhdltermen{STRING}&onbegrensde rij \vhdltermen{CHARACTER}&
-\end{tabular}}
-\label{tbl:vHDLTypes}}
-\subtable[Overzicht van belangrijke afgeleide types in VHDL.]{\small{\begin{tabular}{c|cl}
-Type&Bereik&Operatoren (prioriteit)\\\hline
-\vhdltermen{NATURAL}&0 tot \vhdltermen{INTEGER'HIGH}&equivalent aan \vhdltermen{INTEGER}\\\hline
-\vhdltermen{POSITIVE}&1 tot \vhdltermen{INTEGER'HIGH}&equivalent aan \vhdltermen{INTEGER}\\\hline
-\vhdltermen{DELAY\_LENGTH}&0 \vhdltermen{fs} tot \vhdltermen{TIME'HIGH}&equivalent aan \vhdltermen{TIME}
-\end{tabular}}
-\label{tbl:vHDLSubTypes}}
+\importtabularsubtable{vhdl-type}{Overzicht van belangrijke types in VHDL.}
+\importtabularsubtable{vhdl-type-deriv}{Overzicht van belangrijke afgeleide types in VHDL.}
 \caption{Overzicht van belangrijke types en afgeleide types in VHDL.}
-\label{tbl:vHDLTypesSubTypes}
 \end{table}
-Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in \tblref{vHDLSubTypes} samen met hun gereduceerd bereik.
+Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in \tblref{vhdl-type-deriv} samen met hun gereduceerd bereik.
 \paragraph{Zelf types defini\"eren} Hoe defini\"eren we nu zelf types? Er zijn enkele manieren om zelf types te defni\"eren:
 \begin{itemize}
  \item Defini\"eren door opsomming
