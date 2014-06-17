@@ -755,7 +755,7 @@ $t_{DH}$&data houdtijd&0 ns&&0 ns&\\
 \end{table}
 \subsection{Geheugens met Impliciete Adressering}
 RAM geheugens vereisen dat we een absoluut adres meegeven. In heel wat programmeertalen hebben we echter datastructuren beschikbaar die zonder expliciete adressen werken. We spreken dan over een \termen{stapelgeheugen} ofwel \termen{stack} en een \termen{buffergeheugen} ofwel \termen{queue}. Omdat deze datastructuren bijzonder nuttig zijn in sommige algoritmen, werden hiervoor ook hardware-equivalenten ontwikkeld. We zullen in de volgende subsubsecties eerst deze datastructuren bespreken en vervolgens een hardwarecomponent bouwen die deze structuren implementeert. Studenten met een uitgebreide kennis over deze datastructuren kunnen de definitie overslaan.
-\subsubsection{Stack (LIFO: Last-In-First-Out)}
+\subsubsection{Stack (LIFO: Last-In-First-Out)}\ssclab{stack}
 \paragraph{Definitie}Een stack ofwel stapelgeheugen is een datastructuur die een lineare lijst voorstelt. Alle methodes van de stapel kunnen enkel bewerkingen uitvoeren op de \'e\'en uiteinde van deze lijst: de \termen{top}. De lijst van aangeboden functionaliteiten verschilt nogal. Toch dient een stapel minstens volgende functionaliteiten aan te bieden:
 \begin{itemize}
  \item \termen{push}: het toevoegen van een element aan de stapel. Dit element wordt dan de nieuwe top.
