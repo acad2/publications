@@ -12,7 +12,7 @@ Een \termen{Sequenti\"ele schakeling} is een schakeling waarbij niet alleen de i
 Doorgaans kunnen we sequenti\"ele schakelingen onderverdelen volgens twee classificatiesystemen: gebaseerd op de uitgangsfunctie $F$, en de synchroniciteit van de schakeling. Wat betreft de uitgangsfunctie beschouwen we twee types:
 \begin{itemize}
  \item \termen{Toestandsgebonden sequenti\"ele schakelingen}: In dit geval hangt de uitgangsfunctie enkel af van de toestand op dat moment. In dat geval is de uitgangsfunctie $F\left(S\right)$. Dit concept is ook bekend als de \termen{Moore machine} ofwel \termen{Moore-FSM}. Bij een Moore machine is de invloed van de ingang dus met vertraging te zien, vermits de schakeling eerst van toestand moet veranderen.
- \item \termen{Inputgebonden sequenti\"ele schakelingen}: Hierbij wordt de signatuur van de uitgangsfunctie uitgebreid. De uitgang is zowel afhankelijk van de toestand $S$ als van de ingang $X$. Dit betekent dat indien de ingang verandert, maar de toestand niet de uitvoer $F\left(S,X\right)$ ook verandert. Dit concept wordt ook wel de \termen{Mealy machine} ofwel \termen{Mealy-FSM} genoemd. Elke Moore machine is dus ook een Mealy machine waar de invoer geen onderdeel uitmaakt van de logica die de uitgang berekend.
+ \item \termen{Inputgebonden sequenti\"ele schakelingen}: Hierbij wordt de signatuur van de uitgangsfunctie uitgebreid. De uitgang is zowel afhankelijk van de toestand $S$ als van de ingang $X$. Dit betekent dat indien de ingang verandert, maar de toestand niet de uitvoer $F\left(S,X\right)$ ook verandert. Dit concept wordt ook wel de \termen{Mealy machine} ofwel \termen{Mealy-FSM} genoemd. Elke Moore machine is dus ook een Mealy machine waar de invoer geen onderdeel uitmaakt van de logica die de uitgang berekent.
 \end{itemize}
 Verder maken we ook een onderscheid in schakelingen inzake synchroniciteit, ook hier beschouwen we twee soorten:
 \begin{itemize}
@@ -28,7 +28,7 @@ Bij synchrone schakelingen maken we gebruik van een klokingang. Op deze klokinga
 \begin{equation}
 \mbox{klokfrequentie}=\displaystyle\frac{1}{\mbox{klokperiode}}
 \end{equation}
- \item ``\termen{Duty cycle}'': fragment van de klokcyclus die dat de klok op 1 staat.
+ \item ``\termen{Duty cycle}'': fragment van de klokcyclus dat de klok op 1 staat.
 \begin{equation}
 \mbox{duty cycle}=\displaystyle\frac{\mbox{tijd klok is 1}}{\mbox{klokperiode}}
 \end{equation}
