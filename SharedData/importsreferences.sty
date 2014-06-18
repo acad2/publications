@@ -98,17 +98,17 @@
 \makeatletter
 % \newcommand\addctabtoks[1]{\compactcontenttabletok\expandafter{\the\compactcontenttabletok#1}}
 % \newcommand\compactcontenttable[2]{\setcounter{imreA}{0}\setcounter{imreB}{#1}\compactcontenttabletok{\tabular{*#1c}}\compactcontenttable@i#2,,\@nil}\def\compactcontenttable@i#1,#2,#3\@nil{\stepcounter{imreA}\ifnum\thecol<\themaxcol\addctabtoks{ #1 & }\else \addctabtoks{#1 \\}\setcounter{imreA}{0}\fi\ifx\relax#2\relax \the\compactcontenttabletok\endtabular\else \compactcontenttable@i#2,#3\@nil\fi}%script by Herbert Voss
-\newcounter{col} \newcounter{maxcol} \newtoks\myTab
+\newtoks\myTab
 \makeatletter
 \newcommand\addtabtoks[1]{\myTab\expandafter{\the\myTab#1}}
 \newcommand\compactcontenttable[3][l]{%
-  \setcounter{col}{0}\setcounter{maxcol}{#2}%
-  \myTab{\tabular{*#2#1}}%                       Initial setting
+  \setcounter{imreA}{0}\setcounter{imreB}{#1}%
+  \myTab{\tabular{*#2#1}\toprule}%                       Initial setting
   \compactcontenttable@i#3,,\@nil}
 \def\compactcontenttable@i#1,#2,#3\@nil{%
-  \stepcounter{col}%
+  \stepcounter{imreA}%
   \ifnum\thecol<\themaxcol\addtabtoks{ #1 & }%  Default column
-  \else \addtabtoks{#1 \\}\setcounter{col}{0}\fi% start new line
-  \ifx\relax#2\relax \the\myTab\endtabular%     Output of list and \endtabular  
+  \else \addtabtoks{#1 \\}\setcounter{imreA}{0}\fi% start new line
+  \ifx\relax#2\relax \the\myTab\bottomrule\endtabular%     Output of list and \endtabular  
   \else \compactcontenttable@i#2,#3\@nil\fi}
 \makeatother
