@@ -102,8 +102,8 @@
 \newcommand\addtabtoks[1]{\imretokA\expandafter{\the\imretokA#1}}
 \newcommand\compacttable[2]{%
   \setcounter{imreA}{0}\setcounter{imreB}{#1}%
-  \imretokA{\tabular{*#1l}\toprule}%                       Initial setting
-  \imretokB{\bottomrule}
+  \imretokA{\tabular{*#1l}}%                       Initial setting
+  \imretokB{}
   \compacttable@i#2,,\@nil}
 \def\compacttable@i#1,#2,#3\@nil{%
   \stepcounter{imreA}%
