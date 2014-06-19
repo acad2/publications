@@ -107,8 +107,10 @@
   \compacttable@i#2,,\@nil}
 \def\compacttable@i#1,#2,#3\@nil{%
   \stepcounter{imreA}%
+  \ifx\relax#2\relax \addtabtoks{#1}\the\imretokA\the\imretokB\endtabular
+  \else
   \ifnum\theimreA<\theimreB\addtabtoks{ #1 & }%  Default column
   \else \addtabtoks{#1 \\}\setcounter{imreA}{0}\fi% start new line
-  \ifx\relax#2\relax \the\imretokA\the\imretokB\endtabular%     Output of list and \endtabular  
-  \else \compacttable@i#2,#3\@nil\fi}
+  %     Output of list and \endtabular  
+  \compacttable@i#2,#3\@nil\fi}
 \makeatother
