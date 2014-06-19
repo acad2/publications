@@ -144,7 +144,7 @@ Een alternatieve methode voor Karnaugh-kaarten is het \termen{Quine-McCluskey al
 \subsection{Realisatie in meer dan 2 lagen}
 Een Karnaugh-kaart laat toe tot een sterke implementatie te komen met twee lagen (een AND- en OR-laag). Zoals we echter in de volgende secties zullen zien, zullen complexe schakelingen bij twee lagen toch een hoge kost met zich meebrengen. Daarom is het soms aangewezen om de logica in meer lagen te implementeren. Dit veroorzaakt tragere schakelingen maar aan een goedkopere kostprijs. Hieronder geven we enkele technieken:
 \begin{itemize}
- \item Specificatie: in heel wat gevallen gaat de specificatie van het component reeds gepaard met een expliciete implementatie. Bijvoorbeeld ``1 indien $x$ en ofwel $y$ ofwel $z$ en $t$'' kunnen we dan rechtstreeks implementeren als: $f=x\wedge\left(y\oplus\left(z\wedge t\right)\right)$.
+ \item Specificatie: in heel wat gevallen gaat de specificatie van de component reeds gepaard met een expliciete implementatie. Bijvoorbeeld ``1 indien $x$ en ofwel $y$ ofwel $z$ en $t$'' kunnen we dan rechtstreeks implementeren als: $f=x\wedge\left(y\oplus\left(z\wedge t\right)\right)$.
  \item \termen{Factoranalyse}: We kunnen een expressie ook \termen{algebra\"isch manipuleren} met de wetten uit sectie \ref{s:booleaanseAlgebra}. Factoranalyse wordt ook gebruikt wanneer we een schakeling dienen te implementeren met beperkte fan-in: stel dat we enkel NAND-poorten met 2 ingangen ter beschikking hebben. Bij realisaties met beperkte fan-in moet men altijd proberen deze te implementeren in een boomstructuur. Indien we dus $f=x+y+z+t$ moeten implementeren converteren we dit naar $f=\left(x+y\right)+\left(z+t\right)$ en niet naar $f=x+\left(y+\left(z+t\right)\right)$. De boomstructuur laat toe schakelingen te realiseren die een vertraging van \bigoh{\log n} hebben tegenover de lineare implementatie met een vertraging van \bigoh{n}.
  \item \termen{Functionele ontbinding}: Soms zijn we ook in staat om een functie op te delen in verschillende deelfuncties. In subsectie \ref{sss:fulladder} zullen we bijvoorbeeld een volledige opteller beschouwen. In plaats van een optelling van drie bits rechtstreeks te implementeren kunnen we twee optellingen van twee bits realiseren. In het algemeen betekent dit dat we de functie $\vec{f}\left(\vec{x}\right)$ soms kunnen herschrijven als $\vec{h}\left(\vec{g}\left(\vec{x}\right),\vec{x}\right)$ waarbij $\vec{g}$ en $\vec{h}$ meestal eenvoudiger en goedkoper zijn.
 \end{itemize}
@@ -310,7 +310,7 @@ Omdat we meestal getallen met een groot aantal bit optellen\footnote{Op de meest
 \end{equation}
 Het is mogelijk dat we deze vertraging verder kunnen reduceren, een probleem is echter dat de vertraging een orde $n$ blijft. Voor berekeningen met grote getallen zijn ripple-carry adders dan ook onaanvaardbaar.
 \subsubsection{Carry-lookahead opteller}
-Een \termen{Carry-lookahead opteller (CLA)} is een component ter vervanging van een full adder. Het is de bedoeling om met behulp van dit component rechtstreeks $c_i$ te berekenen als een functie $c_i\left(c_0,x_0,x_1,\ldots,x_{i-1},y_0,y_1,\ldots,y_{i-1}\right)$. De Carry-lookahead opteller heeft dezelfde ingangen als een full adder: $(x_i,y_i,c_i)$, maar meer uitgangen $(c_{i+1},g_i,p_i,s_i)$. Deze uitgangssignalen hebben volgende functie:
+Een \termen{Carry-lookahead opteller (CLA)} is een component ter vervanging van een full adder. Het is de bedoeling om met behulp van deze component rechtstreeks $c_i$ te berekenen als een functie $c_i\left(c_0,x_0,x_1,\ldots,x_{i-1},y_0,y_1,\ldots,y_{i-1}\right)$. De Carry-lookahead opteller heeft dezelfde ingangen als een full adder: $(x_i,y_i,c_i)$, maar meer uitgangen $(c_{i+1},g_i,p_i,s_i)$. Deze uitgangssignalen hebben volgende functie:
 \begin{itemize}
  \item \termen{carry-generate $g_i$}: 1 indien er bij het optellen van $x_i$ en $y_i$ overdracht gegenereerd wordt. Bijgevolg is $g_i=x_iy_i$.
  \item \termen{carry-propagate $p_i$}: 1 indien bij de optelling de overdracht verder gepropageerd zal worden. Bijgevolg $p_i=x_iy_i'+x_i'y_i$.
@@ -326,7 +326,7 @@ De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementati
 \caption{Carry-Lookahead Opteller (CLA).}
 \figlab{carryLookaheadAdder}
 \end{figure}
-Een belangrijke opmerking bij dit component is dat we de overdracht $c_{i+1}$ vervolgens kunnen berekenen als $c_{i+1}=g_i+c_ip_i$. De overdacht hangt dus niet rechtstreeks af van $x_i$ of $y_i$, deze eigenschap is belangrijk voor de synthese van een ander component: de CLA-generator.
+Een belangrijke opmerking bij deze component is dat we de overdracht $c_{i+1}$ vervolgens kunnen berekenen als $c_{i+1}=g_i+c_ip_i$. De overdacht hangt dus niet rechtstreeks af van $x_i$ of $y_i$, deze eigenschap is belangrijk voor de synthese van een ander component: de CLA-generator.
 \subsubsection{CLA-generator}
 Om een opteller te realiseren moeten we, net zoals bij de Ripple-carry opteller, alleen nog de glue voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \termen{CLA-generator}. Een $n$-bit CLA-generator is een component met ingangen $\left(c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}\right)$. De component heeft tot doel om de overdracht (carry) te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\left(c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}\right)$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
 \begin{figure}[hbt]
@@ -619,7 +619,7 @@ Het uitbreiden van deze vermenigvuldiger naar gehele getallen met 2-complement v
 \end{array}
 \end{array}
 \end{equation}
-De oplossing bestaat eruit om $-2$ te zien in zijn binaire vorm als $-8+4+2=-2$. Elk van de bits dient afzonderlijk vermenigvuldigt te worden, en vervolgens opgeteld te worden zoals in onderstaande vermenigvuldiging:
+De oplossing bestaat eruit om $-2$ te zien in zijn binaire vorm als $-8+4+2=-2$. Elk van de bits dient afzonderlijk vermenigvuldigd te worden, en vervolgens opgeteld te worden zoals in onderstaande vermenigvuldiging:
 \begin{equation}
 \begin{array}{lcr}
 \begin{array}{lrcr}
@@ -708,11 +708,11 @@ N=\left(-1\right)^s\times\mbox{mantisse}\times r^{\mbox{\tiny{exponent}}}
 \end{equation}
 met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen als \termen{$\float\left<m,e\right>$} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. Verder onderscheiden we nog twee families van vlottende komma voorstellingen:
 \begin{itemize}
- \item \termen{Genormaliseerde vlottende komma voorstelling}: hierbij leggen we extra constraint betreffende de mantisse: $1\leq\mbox{mantisse}<r$. Omdat in dat geval de eerste bit dus altijd gelijk is aan 1, behoren enkel de bits na de komma tot de voorstelling. In dat geval denken we er de 1 dus bij.
+ \item \termen{Genormaliseerde vlottende komma voorstelling}: hierbij leggen we een extra constraint betreffende de mantisse: $1\leq\mbox{mantisse}<r$. Omdat in dat geval de eerste bit dus altijd gelijk is aan 1, behoren enkel de bits na de komma tot de voorstelling. In dat geval denken we er de 1 dus bij.
  \item \termen{Niet-genormaliseerde vlottende komma voorstelling}: hierbij is deze bovengenoemde constraint dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, maar hebben een groot nadeel: men kan een getal op verschillende manieren voorstellen: eenzelfde getal kan op verschillende manieren voorgesteld worden.
 \end{itemize}
 \subsubsection{Underflow en overflow}
-Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\termen{underflow}''. Underflow treed op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. Figuur \ref{fig:floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
+Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\termen{underflow}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. Figuur \ref{fig:floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
 \importtikzfigure{floatingpoint-underflow}{Underflow van een vlottende komma voorstelling.}
 \subsubsection{IEEE-formaat voor vlottende komma getallen}
 Nu we de vlottende komma voorstelling theoretisch beschreven hebben, zullen we het formaat gedefinieerd door IEEE bespreken. De floating point wordt beschreven in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. Hierbij worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Hierbij maakt met een onderscheid tussen vlottende komma getallen met \termen{enkele precisie} (32-bit en beter bekend onder de term \termen{\texttt{float}} of \termen{\texttt{Single}}) en \termen{dubbele precisie} (64-bit en beter bekend als \termen{\texttt{double}}). Tabel \ref{tbl:iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
@@ -758,9 +758,10 @@ Vermenigvuldigen is bij vlottende komma simpeler dan optellen:
 \end{enumerate}
 \subsection{Andere voorstellingen van gegevens}
 \label{ss:otherRepresentations}
-Naast de hierboven beschreven voorstellingen voor natuurlijke-, gehele- en kommagetallen. Bestaan er nog andere voorstelling. We stellen er in deze subsectie twee voor: \termen{Binary Coded Decimal (BCD)} is een alternatief formaat om natuurlijke getallen voor te stellen. Dit kan eventueel uitgebreid worden tot gehele- en kommagetallen. De \termen{American Standard Code for Information Interchange (ASCII)} is een formaat dat hoofdzakelijk bedoelt is om tekst op te slaan.
+Naast de hierboven beschreven voorstellingen voor natuurlijke-, gehele- en kommagetallen bestaan er nog andere voorstellingen. We stellen er in deze subsectie twee voor: \termen{Binary Coded Decimal (BCD)} is een alternatief formaat om natuurlijke getallen voor te stellen. Dit kan eventueel uitgebreid worden tot gehele- en kommagetallen. De \termen{American Standard Code for Information Interchange (ASCII)} is een formaat dat hoofdzakelijk bedoeld is om tekst op te slaan.
 \subsubsection{Binary Coded Decimal (BCD)}
-In de vorige subsecties hebben we geen aandacht besteed aan het omzetten van een getal naar tekst. Deze omzetting is vrij arbeidsintensief en kost dus ook veel hardware. Bovendien stuiten we op nog een probleem: heel wat decimale kommagetallen kunnen niet voorgesteld worden in het binair getalstelsel. Zo bestaat er geen enkel binaire vorm die $0.3$ voorstelt. In dat geval moeten we het getal zo goed mogelijk benaderen\footnote{Het is echter niet omdat het binair stelsel er niet in slaagt om alle decimale getallen voor te stellen dat het minder accuraat is, integendeel: het binair stelsel is accurater.}. Een oplossing voor deze twee problemen is het Binary Coded Decimal (BCD) systeem. We kunnen elke decimaal cijfer voorstellen met 4-bit. We kunnen dus een decimaal getal voorstellen, door voor ieder cijfers zijn binair equivalent te gebruiken. Dit betekent dus dat we een decimaal getal met $n$ cijfers voorstellen met $4n$ bit. Elk van deze groepen bits kan dus alleen waardes van $0$ tot $9$ aannemen. Bijvoorbeeld: $1425_{10}=0101\_1001\_0001_2=0001\_0100\_0010\_0101_{\mbox{\tiny{BCD}}}$. Een groot nadeel van BCD voorstelling is dat bewerkingen heel wat complexe worden. Tabel \ref{tbl:bCDConversion} toont de omzetting van een decimaal cijfer naar het BCD equivalent.
+\label{ss:bcd}
+In de vorige subsecties hebben we geen aandacht besteed aan het omzetten van een getal naar tekst. Deze omzetting is vrij arbeidsintensief en kost dus ook veel hardware. Bovendien stuiten we op nog een probleem: heel wat decimale kommagetallen kunnen niet voorgesteld worden in het binair getalstelsel. Zo bestaat er geen enkel binaire vorm die $0.3$ voorstelt. In dat geval moeten we het getal zo goed mogelijk benaderen\footnote{Het is echter niet omdat het binair stelsel er niet in slaagt om alle decimale getallen voor te stellen dat het minder accuraat is, integendeel: het binair stelsel is accurater.}. Een oplossing voor deze twee problemen is het Binary Coded Decimal (BCD) systeem. We kunnen elk decimaal cijfer voorstellen met 4-bit. We kunnen dus een decimaal getal voorstellen, door voor ieder cijfer zijn binair equivalent te gebruiken. Dit betekent dus dat we een decimaal getal met $n$ cijfers voorstellen met $4n$ bit. Elk van deze groepen bits kan dus alleen waardes van $0$ tot $9$ aannemen. Bijvoorbeeld: $1425_{10}=0101\_1001\_0001_2=0001\_0100\_0010\_0101_{\mbox{\tiny{BCD}}}$. Een groot nadeel van BCD voorstelling is dat bewerkingen heel wat complexer worden. Tabel \ref{tbl:bCDConversion} toont de omzetting van een decimaal cijfer naar het BCD equivalent.
 \begin{table}[hbt]
 \centering
 \begin{tabular}{c|c}
@@ -809,7 +810,7 @@ Decimaal&BCD\\\hline
 \caption{Mogelijke implementatie van een BCD opteller.}
 \figlab{bCDAdder}
 \end{figure}
-Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het BCD formaat. Hierbij streven we niet zozeer naar een minimale implementatie, maar tonen we dat een optelling in ieder geval complexer is dan bij zijn binair equivalent. Bij een optelling dienen we immers elke decimaal afzonderlijk op te tellen. Net zoals een half- en full adder bit per bit optelden, dienen we nu per decimaal een 4-bit opteller te realiseren. Indien het resultaat van deze optelling echter groter is dan 9, dienen we dit resultaat verder aan te passen, zodat het resultaat 10 minder is, en we de overdacht (carry) doorgeven. Voor dit eerste hebben we nogmaals een 4-bit opteller nodig. Verder hebben we een component nodig die controleert of het eerste resultaat groter is dan 9. Dit component heeft niet alleen een carry als uitgang, maar moet ook invoer genereren voor de tweede opteller. Indien het eerste resultaat immers groter is dan 9, tellen we er nog eens 6 bij op. Dit betekent dat bij een tussenresultaat van 10, de tweede opteller tot 16 komt wat dus gebaseerd op de laatste 4 bits in 0 resulteert. Figuur \ref{fig:bCDAdderSchematic} toont schematisch hoe we twee decimale cijfers kunnen optellen. Indien we deze structuur voor ieder cijfer herhalen, realiseren we een BCD opteller. De vergelijker synthetiseren we met behulp van Karnaugh-kaarten zoals op figuur \ref{fig:bCDAdderKarnaugh}. Merk op dat het resultaat van de eerst opteller hoogstens 18 is, en we dus voor de andere waarden don't cares kunnen gebruiken. Een mogelijke synthese van deze vergelijker staat op figuur \ref{fig:bCDAdderComparator}. Tot slot merken we op dat we bij het bepalen van het negatieve getal van een BCD niet het 2-complement moeten berekenen, maar het 10-complement. Ook deze stap vereist extra hardware.
+Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het BCD formaat. Hierbij streven we niet zozeer naar een minimale implementatie, maar tonen we dat een optelling in ieder geval complexer is dan bij zijn binair equivalent. Bij een optelling dienen we immers elke decimaal afzonderlijk op te tellen. Net zoals een half- en full adder bit per bit optelden, dienen we nu per decimaal een 4-bit opteller te realiseren. Indien het resultaat van deze optelling echter groter is dan 9, dienen we dit resultaat verder aan te passen, zodat het resultaat 10 minder is, en we de overdacht (carry) doorgeven. Voor dit eerste hebben we nogmaals een 4-bit opteller nodig. Verder hebben we een component nodig die controleert of het eerste resultaat groter is dan 9. Deze component heeft niet alleen een carry als uitgang, maar moet ook invoer genereren voor de tweede opteller. Indien het eerste resultaat immers groter is dan 9, tellen we er nog eens 6 bij op. Dit betekent dat bij een tussenresultaat van 10, de tweede opteller tot 16 komt wat dus gebaseerd op de laatste 4 bits in 0 resulteert. Figuur \ref{fig:bCDAdderSchematic} toont schematisch hoe we twee decimale cijfers kunnen optellen. Indien we deze structuur voor ieder cijfer herhalen, realiseren we een BCD opteller. De vergelijker synthetiseren we met behulp van Karnaugh-kaarten zoals op figuur \ref{fig:bCDAdderKarnaugh}. Merk op dat het resultaat van de eerste opteller hoogstens 18 is, en we dus voor de andere waarden don't cares kunnen gebruiken. Een mogelijke synthese van deze vergelijker staat op figuur \ref{fig:bCDAdderComparator}. Tot slot merken we op dat we bij het bepalen van het negatieve getal van een BCD niet het 2-complement moeten berekenen, maar het 10-complement. Ook deze stap vereist extra hardware.
 \subsubsection{American Standard Code for Information Interchange (ASCII)}
 \begin{table}[hbt]
 \centering
@@ -844,7 +845,7 @@ Een standaard om tekst voor te stellen is de American Standard Code for Informat
 Naast de rekenkundige schakelingen in sectie \ref{s:rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In subsectie \ref{ss:multiplexer} bespreken we de multiplexer. Daarna bespreken we in \ref{ss:decoder} en \ref{ss:demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \ref{ss:encoder}. We eindigen met de vergelijker in \ref{ss:comparator} en de reeds aangehaalde schuifoperatie in subsectie \ref{ss:shiftoperators}.
 \subsection{Multiplexer}
 \label{ss:multiplexer}
-Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema wordt dit component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op figuur \ref{fig:multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. Figuren \ref{fig:multiplexerTruthTable} en \ref{fig:multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van dit component.
+Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema wordt deze component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op figuur \ref{fig:multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. Figuren \ref{fig:multiplexerTruthTable} en \ref{fig:multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van deze component.
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{
@@ -981,7 +982,7 @@ We kunnen uiteraard multiplexers met een verschillende parameter $n$ bouwen. Het
 \end{equation}
 \subsection{Decoder}
 \label{ss:decoder}
-Een andere schakeling die sterk gerelateerd is aan een multiplexer is een \termen{decoder}. Een decoder beschikt over een \termen{enable-ingang $e$}, en $n$ \termen{adres-ingangen $a_i$}. De uitvoer bestaat uit $2^n$ \termen{selectie-uitgangen $s_i$}. Een decoder zal indien er een 1 aangelegd wordt op de enable-ingang $e$, een 1 op de uitgang zetten met index $A$. Hierbij staat $A$ voor de binaire waarde die voorgesteld wordt door de adres-ingangen $a_i$. In een blokschema wordt een decoder voorgesteld zoals op figuur \ref{fig:decoderInterface} door een rechthoek. In dit geval een 2-naar-4 decoder. Bovenaan staat de adres-ingangen $a_i$, aan de zijkant de enable-ingang $e$, en onderaan de uitgangen $s_i$.
+Een andere schakeling die sterk gerelateerd is aan een multiplexer is een \termen{decoder}. Een decoder beschikt over een \termen{enable-ingang $e$}, en $n$ \termen{adres-ingangen $a_i$}. De uitvoer bestaat uit $2^n$ \termen{selectie-uitgangen $s_i$}. Een decoder zal indien er een 1 aangelegd wordt op de enable-ingang $e$, een 1 op de uitgang zetten met index $A$. Hierbij staat $A$ voor de binaire waarde die voorgesteld wordt door de adres-ingangen $a_i$. In een blokschema wordt een decoder voorgesteld zoals op figuur \ref{fig:decoderInterface} door een rechthoek. In dit geval een 2-naar-4 decoder. Bovenaan staan de adres-ingangen $a_i$, aan de zijkant de enable-ingang $e$, en onderaan de uitgangen $s_i$.
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{
@@ -1080,7 +1081,7 @@ $e$&$a_0$&$a_1$&$s_0$&$s_1$&$s_2$&$s_3$\\\hline
 \caption{Decoder.}
 \figlab{decoder}
 \end{figure}
-Op figuur \ref{fig:decoderTruthTable} staat de waarheidstabel voor dit component. Figuur \ref{fig:decoderSchema} toont een mogelijke implementatie. Decoders worden hoofdzakelijk gebruikt voor het decoderen van adressen.
+Op figuur \ref{fig:decoderTruthTable} staat de waarheidstabel voor deze component. Figuur \ref{fig:decoderSchema} toont een mogelijke implementatie. Decoders worden hoofdzakelijk gebruikt voor het decoderen van adressen.
 \subsubsection{Cascade}
 Net als bij multiplexer kunnen we in plaats van een heel arsenaal aan decoders aan te bieden door middel van een cascade een nieuwe decoder bouwen, zoals op figuur \ref{fig:decoderCascade}. Hier bouwen we een 4-naar-16 decoder met 5 2-naar-4 decoders. In het algemeen kunnen we een $nm$-naar-$2^{nm}$ decoder bouwen met $n$ niveaus van $m$-naar-$2^m$ decoders. In totaal hebben we dus volgend aantal decoders nodig:
 \begin{equation}
@@ -1185,7 +1186,7 @@ Decoders worden ook gebruikt voor de synthese van bijvoorbeeld multiplexers. Fig
 \end{figure}
 \subsection{Demultiplexer}
 \label{ss:demultiplexer}
-Het inverse van een $2^n$-naar-1 multiplexer is een 1-naar-$2^n$ \termen{demultiplexer} (ook wel \termen{demux} genoemd). Dit component bestaat dan ook logischerwijs uit 1 \termen{data-ingang $d$} en $n$ \termen{selectie-ingangen $a_i$}. Het component beschikt verder over $2^n$ uitgangen $s_i$. Logischerwijs zetten we de waarde van de data-ingang $d$ op de uitgang met de index die wordt voorgesteld door de selectie-ingangen. Een aandachtige lezer zal misschien al opgemerkt hebben dat dit probleem in wezen niet veel verschilt van de constructie van een decoder. Sterker nog, we hoeven niets aan te passen, het is alleen een kwestie van een andere interface. Figuur \ref{fig:demultiplexer} toont de interface van een demultiplexer en de equivalentie met een decoder. In tegenstelling tot de decoder zetten we de selectie-ingangen aan de zijkant en de data-ingang aan de bovenkant.
+Het inverse van een $2^n$-naar-1 multiplexer is een 1-naar-$2^n$ \termen{demultiplexer} (ook wel \termen{demux} genoemd). Deze component bestaat dan ook logischerwijs uit 1 \termen{data-ingang $d$} en $n$ \termen{selectie-ingangen $a_i$}. De component beschikt verder over $2^n$ uitgangen $s_i$. Logischerwijs zetten we de waarde van de data-ingang $d$ op de uitgang met de index die wordt voorgesteld door de selectie-ingangen. Een aandachtige lezer zal misschien al opgemerkt hebben dat dit probleem in wezen niet veel verschilt van de constructie van een decoder. Sterker nog, we hoeven niets aan te passen, het is alleen een kwestie van een andere interface. Figuur \ref{fig:demultiplexer} toont de interface van een demultiplexer en de equivalentie met een decoder. In tegenstelling tot de decoder zetten we de selectie-ingangen aan de zijkant en de data-ingang aan de bovenkant.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -1214,7 +1215,7 @@ Het inverse van een $2^n$-naar-1 multiplexer is een 1-naar-$2^n$ \termen{demulti
 Demultiplexers worden maar zeer zelden gebruikt, kun doel is immers om data op een bepaalde lijn te plaatsen, terwijl men op de andere lijnen een 0 aanlegt. In de praktijk is het aanleggen van de data op alle lijnen meestal geen probleem. In dat geval kunnen we dus de demultiplexer eenvoudigweg vervangen door een draad die de data-ingang met alle uitgangen verbindt.
 \subsection{Encoder}
 \label{ss:encoder}
-Ook de decoder heeft een invers: een $2^n$-naar-$n$ \termen{encoder}. Een encoder bevat $2^n$ \termen{data-ingangen $d_i$}. Het is de bedoeling dat de encoder afhankelijk van de lijn waarop een 1 staat de index weergeeft op de \termen{selectie-uitgangen $s_i$}. Verder bevat de encoder ook nog een extra uitgang: de \termen{any-uitgang $a$}, op deze uitgang wordt 1 aangelegd indien \'e\'en van de data-ingangen een 1 vertoont, anders wordt er een 0 op de any-uitgang aangelegd. We kunnen dit gedrag samenvatten in een waarheidstabel zoals in tabel \ref{tbl:truthTableEncoderNormal} voor een 4-naar-2 encoder.
+Ook de decoder heeft een inverse: een $2^n$-naar-$n$ \termen{encoder}. Een encoder bevat $2^n$ \termen{data-ingangen $d_i$}. Het is de bedoeling dat de encoder afhankelijk van de lijn waarop een 1 staat de index weergeeft op de \termen{selectie-uitgangen $s_i$}. Verder bevat de encoder ook nog een extra uitgang: de \termen{any-uitgang $a$}, op deze uitgang wordt 1 aangelegd indien \'e\'en van de data-ingangen een 1 vertoont, anders wordt er een 0 op de any-uitgang aangelegd. We kunnen dit gedrag samenvatten in een waarheidstabel zoals in tabel \ref{tbl:truthTableEncoderNormal} voor een 4-naar-2 encoder.
 \begin{table}[hbt]
 \centering
 \subtable[Encoder]{
@@ -1253,7 +1254,7 @@ f_0=d_3+d_2
 \end{equation}
 We kunnen deze schakeling dus eenvoudig realiseren met \'e\'en OR-poort per uitgang.
 \paragraph{Prioriteitsencoder}
-Een variant van de encoder is de \termen{prioriteitsencoder}. Een prioriteitsencoder biedt een antwoord op de ongeldige ingangen van de encoder. Hierbij telt niet d\'e index van de data-ingang waarop een 1 wordt aangelegd. Maar de hoogste index van alle datalijnen met 1. Tabel \ref{tbl:truthTablePriorityEncoder} formaliseert dit. Deze schakeling kunnen we als volgt implementeren:
+Een variant van de encoder is de \termen{prioriteitsencoder}. Een prioriteitsencoder biedt een antwoord op de ongeldige ingangen van de encoder. Hierbij telt niet d\'e index van de data-ingang waarop een 1 wordt aangelegd, maar de hoogste index van alle datalijnen met 1. Tabel \ref{tbl:truthTablePriorityEncoder} formaliseert dit. Deze schakeling kunnen we als volgt implementeren:
 \begin{equation}
 \left\{
 \begin{array}{l}
@@ -1263,7 +1264,7 @@ f_0=d_3+d_2
 \end{array}
 \right.
 \end{equation}
-Wat overeenkomt met \'e\'en extra AND- en NOT-poort. De interface voor beide schakelingen staat beschreven op figuur \ref{fig:encoderInterface}.
+Dit komt overeen met \'e\'en extra AND- en NOT-poort. De interface voor beide schakelingen staat beschreven op figuur \ref{fig:encoderInterface}.
 \begin{figure}[hbt]
 \centering
 \subfigure[Interfaces]{
@@ -1334,7 +1335,7 @@ Wat overeenkomt met \'e\'en extra AND- en NOT-poort. De interface voor beide sch
 }
 \caption{Encoder en Prioriteitsencoder.}
 \end{figure}
-De interface is opnieuw een rechthoek. De data-ingangen staan bovenaan. De selectie-uitgangen onderaan, en de any-uitgang aan de linkerkant.
+De interface is opnieuw een rechthoek. De data-ingangen staan bovenaan, de selectie-uitgangen onderaan, en de any-uitgang aan de linkerkant.
 \subsubsection{Prioriteitsencoders cascaderen}
 Ook bij prioriteitsencoders gaan we even in het op het cascaderend karakter. Ook encoders laten zich eenvoudig cascaderen, mits we ook extra multiplexers gebruiken. In figuur \ref{fig:encoderCascade} bouwen we een 16-naar-4 prioriteitsencoder met 4 4-naar-2 prioriteitsencoders en 2 4-naar-1 multiplexers.
 \subsection{Vergelijker}
@@ -1482,7 +1483,7 @@ We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder besc
 \caption{Speciale gevallen van vergelijkers}
 \end{figure}
 \paragraph{Vergelijken met constanten}
-We willen een getal niet altijd vergelijken met andere getal, maar soms met een constante. In dat geval zouden we natuurlijk ook van de vergelijker kunnen gebruikmaken, en de $Y$ zelf samenstellen. Aangezien $Y$ echter op voorhand gekend is spreekt het voor zichzelf dat we de implementatie echter grondig kunnen verbeteren. Bovendien kunnen we ook testen ontwerpen die we niet kunnen uitvoeren met een vergelijker\footnote{Bijvoorbeeld deelbaarheid door 2.}. Dergelijke componenten bouwen getuigd verder ook van enig inzicht. Alle speciale gevallen beschouwen is moeilijk. Op figuur \ref{fig:comparatorConstants} geven we enkele voorbeelden.
+We willen een getal niet altijd vergelijken met andere getal, maar soms met een constante. In dat geval zouden we natuurlijk ook van de vergelijker kunnen gebruikmaken, en de $Y$ zelf samenstellen. Aangezien $Y$ echter op voorhand gekend is spreekt het voor zichzelf dat we de implementatie echter grondig kunnen verbeteren. Bovendien kunnen we ook testen ontwerpen die we niet kunnen uitvoeren met een vergelijker\footnote{Bijvoorbeeld deelbaarheid door 2.}. Dergelijke componenten bouwen getuigt verder ook van enig inzicht. Alle speciale gevallen beschouwen is moeilijk. Op figuur \ref{fig:comparatorConstants} geven we enkele voorbeelden.
 \subsection{Schuifoperator}
 \ssclab{shiftoperators}
 \label{ss:shiftoperators}
@@ -1506,7 +1507,7 @@ X\verb+>>+M\equiv X\div 2^M
  \item Bij het \termen{roteren} vangen we de bits op die er langs \'e\'en kant afvallen en plaatsen we deze op de vrijgekomen plaatsen aan de andere kant.
 \end{itemize}
 \subsubsection{Implementatie van schuifoperaties}
-In deze subsubsectie zullen we twee schakelingen realiseren. De eerste is een component die alle schuifoperaties kan realiseren op 4-bit getallen. Maar slechts over 1 plaats naar links of rechts. Het tweede component is 8-bit \termen{barrel left rotator}. Dit component roteert 8-bit getallen naar links over een variabel aantal plaatsen. Merk op dat het bij een rotatie het eigenlijk niet uitmaakt in welke richting we roteren: een $n$-bit getal $m$ plaatsen naar links roteren is net hetzelfde als het getal $n-m$ plaatsen naar rechts roteren. Dit tweede component illustreert verder hoe we schuifoperaties effici\"ent over meerdere posities kunnen uitvoeren.
+In deze subsubsectie zullen we twee schakelingen realiseren. De eerste is een component die alle schuifoperaties kan realiseren op 4-bit getallen, maar slechts over 1 plaats naar links of rechts. Het tweede component is 8-bit \termen{barrel left rotator}. Dit component roteert 8-bit getallen naar links over een variabel aantal plaatsen. Merk op dat het bij een rotatie het eigenlijk niet uitmaakt in welke richting we roteren: een $n$-bit getal $m$ plaatsen naar links roteren is net hetzelfde als het getal $n-m$ plaatsen naar rechts roteren. Deze tweede component illustreert verder hoe we schuifoperaties effici\"ent over meerdere posities kunnen uitvoeren.
 \paragraph{Schuifoperaties over 1 bit}
 Indien we een component maken die meerdere operaties kan uitvoeren moeten we altijd eerst een instructieset defini\"eren, zoals in subsubsectie \ref{sss:aLUInstructionSet}. De instructieset dient zowel een onderscheid te maken tussen schuiven of roteren, aritmetisch of logisch\footnote{Enkel in geval van schuiven is dit relevant.} en links of rechts. Verder willen we ook een bit voorzien die aangeeft of er \"uberhaupt een schuifoperatie moet worden uitgevoerd. We zullen dus een 4-bit instructieset gebruiken. Tabel \ref{tbl:shiftInstructionSet} toont de betekenis van elke bit.
 \begin{table}[hbt]
