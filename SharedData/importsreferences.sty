@@ -1,5 +1,5 @@
 \ProvidesPackage{importsreferences}
-\RequirePackage{tikz,subfigure,float,listings,ifthen,xstring,etoolbox}
+\RequirePackage{tikz,subfigure,float,listings,ifthen,xstring,etoolbox,booktabs}
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
@@ -10,6 +10,10 @@
 \newcounter{imreB}
 \newcounter{imreC}
 \newcounter{imreD}
+\newtoks\imretokA
+\newtoks\imretokB
+\newtoks\imretokC
+\newtoks\imretokD
 
 \newcommand{\genlab}[2]{\label{#1:#2}}
 \newcommand{\genref}[3]{#2~\ref{#1:#3}}
@@ -94,22 +98,19 @@
 \end{listing}
 }
 
-\newcommand{\compactcontenttable}[2]{
-\setcounter{imreA}{1}\StrLen{#1}[\imresl]
-\def\temp{}
-\foreach\tx in{#2}{
-\ifthenelse{\equal{\imresl}{\value{imreA}}}{
-\setcounter{imreA}{1}\expandafter\gdef\expandafter\temp\expandafter{\temp B}
-}{
-\stepcounter{imreA}\expandafter\gdef\expandafter\temp\expandafter{\temp A }
-}}
-\temp{}
-  
-%   \expandafter\gdef\expandafter\temp\expandafter{\temp\tx}%
-% }
-
-% \g@addto@macro\@temp{\t}
-% 
-% \begin{tabular}{#1}
-% \end{tabular}
-}
+\makeatletter
+\newcommand\addtabtoks[1]{\imretokA\expandafter{\the\imretokA#1}}
+\newcommand\compacttable[2]{%
+  \setcounter{imreA}{0}\setcounter{imreB}{#1}%
+  \imretokA{\tabular{*#1l}\toprule}%                       Initial setting
+  \imretokB{\\\bottomrule}
+  \compacttable@i#2,,\@nil}
+\def\compacttable@i#1,#2,#3\@nil{%
+  \stepcounter{imreA}%
+  \ifx\relax#2\relax \addtabtoks{#1}\the\imretokA\the\imretokB\endtabular
+  \else
+  \ifnum\theimreA<\theimreB\addtabtoks{ #1 & }%  Default column
+  \else \addtabtoks{#1 \\}\setcounter{imreA}{0}\fi% start new line
+  %     Output of list and \endtabular  
+  \compacttable@i#2,#3\@nil\fi}
+\makeatother
