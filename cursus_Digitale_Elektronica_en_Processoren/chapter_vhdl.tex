@@ -1,9 +1,10 @@
 \chapter{VHDL}
 \chapterquote{In redelijke taal weerklinkt wat in werkelijkheid gebeurt.}{Gerard Bolland, Nederlands taalkundige en filosoof (1854-1922)}
+\minitoc[n]
 \section{Elementen van de VHDL-taal}
 In deze sectie zullen we eerst de woordenschat in de VHDL taal bespreken, waarna we de belangrijkste types zullen bespreken samen met het 
 \subsection{Lexicale elementen (woordenschat)}
-Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen die men \termen{tokens} oemt. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De tokens kunnen verder worden onderverdeeld in: \termen{literals} (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), \termen{identifiers} (dit zijn namen van variabelen, functies, componenten,... gebruikt om naar te refereren en defini\"eren), \termen{scheidingstekens}\footnote{Engels: \emph{delimiters}.} (haakjes en andere symbolen die waardes en identifiers combineren) en \termen{commentaar}. We beschrijven de verschillende soorten tokens verder in de volgende subsecties.
+Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen die men \termen{tokens} noemt. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De tokens kunnen verder worden onderverdeeld in: \termen{literals} (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), \termen{identifiers} (dit zijn namen van variabelen, functies, componenten,... gebruikt om naar te refereren en defini\"eren), \termen{scheidingstekens}\footnote{Engels: \emph{delimiters}.} (haakjes en andere symbolen die waardes en identifiers combineren) en \termen{commentaar}. We beschrijven de verschillende soorten tokens verder in de volgende subsecties.
 
 \subsection{Literals}
 We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en bitreeksen. We overlopen de verschillende types. In VHDL is er ook nog sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, deze literals worden niet beschouwd.
@@ -23,7 +24,7 @@ Getallen worden standaard in decimale notatie uitgedrukt. Men kan ze ook in expo
 Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een sequentie karakters op, dus een tekstfragment. In \texttt{Java} noemt men een dergelijk type een \texttt{String}. Deze reeks wordt tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst, bijvoorbeeld \texttt{"Hello World!"}. Een probleem doet zich voor wanneer we de dubbele aanhalingstekens (\texttt{"}) zelf in het tekstfragment willen gebruiken. In dat geval dienen we de aanhalingstekens dubbel te plaatsen, bijvoorbeeld:
 \begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}
 \paragraph{Bitreeksen}
-Een \vhdltermen{bitreeks} (ofwel \vhdltermen{``bit string literal}'') is een sequentie aan bits (dit is een eenheid van informatie die ofwel \texttt{0} ofwel \texttt{1} is). Een bitreeks wordt geschreven als een sequentie van enen en nullen tussen dubbele aanhalingstekens (\vhdltermen{"}). Zoals we al vroeger in deze cursus hebben opgemerkt is zo'n sequentie niet effici\"ent, leesbaar en praktisch. Daarom laat men ook octale  en hexadecimale notatie toe. Hiertoe wordt er een \vhdltermen{B} (binair), \vhdltermen{O} (octaal) of \vhdltermen{X} (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitreeks in een bepaald formaat te lezen. Bij hexadecimale getallen gebruikt men \vhdltermen{a}, \vhdltermen{b}, \vhdltermen{c}, \vhdltermen{d}, \vhdltermen{e} en \vhdltermen{f} om respectievelijk $10$ tot $15$ voor te stellen. Net als bij getallen kan de gebruiker \termen{underscores} (\vhdltermen{\_}) toevoegen om tot meer leesbare code te komen.
+Een \vhdltermen{bitreeks} (ofwel ``\vhdltermen{bit string literal}'') is een sequentie aan bits (dit is een eenheid van informatie die ofwel \texttt{0} ofwel \texttt{1} is). Een bitreeks wordt geschreven als een sequentie van enen en nullen tussen dubbele aanhalingstekens (\vhdltermen{"}). Zoals we al vroeger in deze cursus hebben opgemerkt is zo'n sequentie niet effici\"ent, leesbaar en praktisch. Daarom laat men ook octale  en hexadecimale notatie toe. Hiertoe wordt er een \vhdltermen{B} (binair), \vhdltermen{O} (octaal) of \vhdltermen{X} (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitreeks in een bepaald formaat te lezen. Bij hexadecimale getallen gebruikt men \vhdltermen{a}, \vhdltermen{b}, \vhdltermen{c}, \vhdltermen{d}, \vhdltermen{e} en \vhdltermen{f} om respectievelijk $10$ tot $15$ voor te stellen. Net als bij getallen kan de gebruiker \termen{underscores} (\vhdltermen{\_}) toevoegen om tot meer leesbare code te komen.
 \subsection{Identifiers}
 Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \texttt{Java}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
 \paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in VHDL: ze verwijzen naar functies die in de VHDL compiler zijn ingebakken. De woorden in \tblref{vhdl-reserved-words} mogen niet gebruikt worden als identifiers.
@@ -76,7 +77,7 @@ type bit is ('0','1');
 type boolean is (false,true);
 \end{lstlisting}
 \caption{Defini\"eren van types door opsomming.}
-\vhdllab{constante}
+\vhdllab{typeEnum}
 \end{vhdlcode}
 
 
@@ -100,7 +101,7 @@ type boolean is (false,true);
 \end{vhdlcode}
 \subsubsection{Data-objecten}
 Een object in VHDL is een benoemd item met een specifieke waarde. We onderscheiden 3 soorten objecten: \vhdltermen{constante}, \vhdltermen{variabele} en \vhdltermen{signaal}.
-\paragraph{Constante}Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{lst:constante} toont de declaratie van verschillende constanten. Merk op data VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
+\paragraph{Constante}Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{constante} toont de declaratie van verschillende constanten. Merk op dat VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 constant pi : real := 3.14159265;
@@ -111,7 +112,7 @@ constant word_length : natural := 4*byte_length;
 \vhdllab{constante}
 \end{vhdlcode}
 Het algemene formaat is dus \verb+constant <identifier> : <type> := <waarde>;+.
-\paragraph{Variabele}De syntax van een variabele is ongeveer dezelfde. Alleen wordt het sleutelwoord \vhdltermen{variable}. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{lst:variabele} toont het gebruik van variabelen in VHDL.
+\paragraph{Variabele}De syntax van een variabele is ongeveer dezelfde, alleen wordt het sleutelwoord \vhdltermen{variable} gebruikt. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{variabele} toont het gebruik van variabelen in VHDL.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 variable index : integer;
@@ -121,9 +122,9 @@ variable andere_index : natural := 12;
 variable antwoord : natural := 4*andere_index-6*index;
 \end{lstlisting}
 \caption{Werken met variabelen.}
-\label{lst:variabele}
+\vhdllab{variabele}
 \end{vhdlcode}
-\paragraph{Signaal}Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een signaal wordt geconstrueerd met behulp van het sleutelwoord \vhdltermen{signal}. Toewijzingen aan een signaal gebeuren met de \vhdltermen{<=} operator. De toewijzing bij een signaal werkt anders dan bij een variabele en constante. Variabelen en constanten worden onmiddellijk toegewezen. Dit betekent dat expressies als \verb/index := index + 1;/ mogelijk zijn. Signalen veranderen echter wanneer elementen uit hun toewijzing veranderen. Beschouw het voorbeeld uit \vhdlref{lst:signal}.
+\paragraph{Signaal}Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een signaal wordt geconstrueerd met behulp van het sleutelwoord \vhdltermen{signal}. Toewijzingen aan een signaal gebeuren met de \vhdltermen{<=} operator. De toewijzing bij een signaal werkt anders dan bij een variabele en constante. Variabelen en constanten worden onmiddellijk toegewezen. Dit betekent dat expressies als \verb/index := index + 1;/ mogelijk zijn. Signalen veranderen echter wanneer elementen uit hun toewijzing veranderen. Beschouw het voorbeeld uit \vhdlref{signal}.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 signal a : bit;
@@ -134,9 +135,9 @@ b <= '0', '1' after 100 ns;
 y <= a and b;
 \end{lstlisting}
 \caption{Werken met signalen.}
-\label{lst:variabele}
+\vhdllab{signal}
 \end{vhdlcode}
-We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{ ns}$ een 1 aanleggen. Dit heeft als implicatie dat ook \verb+y+ van waarde zal veranderen. Indien we dit met variabelen en constanten zouden hebben berekend zou variabele \verb+y+ na de toewijzing een waarde toegewezen krijgen, en deze tot een volgende toewijzing behouden. Merk verder op dat we hier ook de betekenis van het codewoord \vhdltermen{after} tonen. Een signaal kan ook een initiele waarde krijgen, hiervoor gebruiken we de \vhdltermen{:=} operator.
+We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{ ns}$ een 1 aanleggen. Dit heeft als implicatie dat ook \verb+y+ van waarde zal veranderen. Indien we dit met variabelen en constanten zouden hebben berekend zou variabele \verb+y+ na de toewijzing een waarde toegewezen krijgen, en deze tot een volgende toewijzing behouden. Merk verder op dat we hier ook de betekenis van het codewoord \vhdltermen{after} tonen. Een signaal kan ook een initi\"ele waarde krijgen, hiervoor gebruiken we de \vhdltermen{:=} operator.
 \subsubsection{Bibliotheken}
 \subsubsection{Bewerkingen}
 \section{Combinatorische schakelingen in VHDL}
