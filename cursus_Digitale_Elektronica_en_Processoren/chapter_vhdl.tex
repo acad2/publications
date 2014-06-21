@@ -68,6 +68,9 @@ Hoe defini\"eren we nu zelf types? Afhankelijk van het soort type dat we willen 
  \item Afgeleide types met matrices en vectoren.
 \end{itemize}
 
+De lijst is niet exhaustief: VHDL bevat ook constructies om bijvoorbeeld records aan te maken, deze constructies vallen buiten het bereik van deze cursus.
+
+\paragraph{}
 We bespreken de verschillende methodes nu in meer detail.
 
 \subsubsection{Defini\"eren met opsomming}
@@ -75,22 +78,34 @@ We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Dez
 
 \importvhdl{type-enum}{Defini\"eren van types door opsomming.}
 
+\paragraph{}
+In \texttt{Java} is de \texttt{enum} de dichtste imitator van het defini\"eren van types aan de hand van opsomming. Immers is het aantal waarden die een \texttt{enum} kan aannemen beperkt. VHDL is echter wel niet (sterk) objectgericht, dus deze analogie gaat slechts gedeeltelijk op.
+
 
 \subsubsection{Defini\"eren met subtypering}
 
 Soms wensen we een type te specificeren die een deelverzameling omvat van een reeds eerder gespecificeerd type. Zo zal een \vhdltermen{integer} alle waarden omvatten die met $32$ bit voor te stellen zijn, het is echter mogelijk dat we bijvoorbeeld een type \texttt{byte} willen specificeren die uitsluitend numerieke waarden bevat die we op $8$ bit kunnen voorstellen. In dat geval gebruiken we het sleutelwoord \vhdltermen{subtype} gevolgd door een identifier die de naam van het type aanduidt, daarna volgt opnieuw het sleutelwoord \vhdltermen{is} en het "supertype". VHDL kent twee soorten beperkingen die hierop kunnen volgen: de "range beperking" en de "index beperking".
 
 \paragraph{}
-Een "range beperking" omvat twee literals die het begin en het einde markeren van een bereik van waarden. Vermits alle basistypes in VHDL een inherente orde-relatie hebben\footnote{Voor karakters maakt men gebruik van de ASCII-code.}
+Een "range beperking" omvat twee literals die het begin en het einde markeren van een bereik van waarden. Vermits alle basistypes in VHDL een inherente orde-relatie hebben\footnote{Voor karakters maakt men gebruik van de ASCII-code.} is dit voldoende om altijd alle waarden tussen de twee gegeven waarden mee in het bereik te nemen. Syntactisch definieert men een range beperking met het sleutelwoord \vhdltermen{range} gevolgd door de laagste waarde gevolgd door het sleutelwoord \vhdltermen{to} gevolgd door de hoogste waarde.
 
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-subtype byte is integer range 0 to 255;
-subtype lowercase is character range 'a' to 'z';
-\end{lstlisting}
-\caption{Defini\"eren van types door subtypering.}
-\vhdllab{constante}
-\end{vhdlcode}
+\paragraph{}
+Voor vectoren kan men gebruik maken van de "index constraint". Deze beperking zet voorwaarden op het bereik van de index van de vector. Syntactisch schrijven we tussen haakjes respectievelijk de laagste of hoogste waarde gevolgd door respectievelijk het sleutelwoord \vhdltermen{to} of \vhdltermen{downto} en daarna respectievelijk de hoogste of laagste waarde. In VHDL hoeft men geen getal als index te gebruiken: ook karakters kunnen bijvoorbeeld voor dit doel worden aangewend. Bovendien is het mogelijk dat een lijst multidimensionaal is en er dus verschillende indices moeten beperkt. In dat geval worden de indices gescheiden door komma's. Omdat deze cursus slechts een inleiding tot VHDL wil geven zullen we deze uitzonderlijke situaties niet verder beschouwen. We verwijzen dan ook naar \cite{hardi00}.
+
+\paragraph{}
+\vhdlref{type-sub} lijkt enkele definities van types op aan de hand van subtypering. Zo defini\"eren we de \texttt{byte} aan de hand van een \vhdltermen{integer} en het type \texttt{lowercase} is een deelverzameling van de \vhdltermen{character}. Tot slot defini\"eren we ook een type \texttt{InputVector} die een sequentie bits voorstelt waarvan de index loopt van $7$ tot $3$.
+
+\importvhdl{type-sub}{Defini\"eren van types door subtypering.}
+
+\paragraph{}
+Er bestaan in \texttt{Java} geen duidelijk equivalent van definities aan de hand van subtypering. Natuurlijk kan men wel subklassen defini\"eren met behulp van het sleutelwoord \texttt{extends}, maar in \texttt{Java} heeft men de mogelijkheid extra velden toe te voegen. De beste analogie is misschien een speciale constructor die bij aanmaak van een object na zal gaan of de gewenste waarde wel degelijk mogelijk is.
+
+\subsubsection{Defini\"eren van fysische types}
+
+\importvhdl{type-fys}{Defini\"eren van fysische types.}
+
+
+\subsubsection{Defini\"eren van matrices en vectoren}
 
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
