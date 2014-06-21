@@ -31,7 +31,7 @@ Een \vhdltermen{identifier} is een referentie naar een variabele, functie, compo
 
 \importtabulartable{vhdl-reserved-words}{Gereserveerde woorden in VHDL.}
 
-We onderscheiden verschillende soorten sleutelwoorden: enerzijds zijn er compiler-directieven zoals bijvoorbeeld \vhdltermen{case} en \vhdltermen{downto}, daarnaast zijn er basis-operaties zoals \vhdltermen{nand} en \vhdltermen{sla}, tot slot zijn er ook type-directieven zoals \vhdltermen{array} en \vhdltermen{signal}.
+We onderscheiden verschillende soorten sleutelwoorden: enerzijds zijn er compiler-directieven zoals bijvoorbeeld \vhdltermen{case} en \vhdltermen{downto}, daarnaast zijn er basis-operaties zoals \vhdltermen{nand} en \vhdltermen{sla}, tot slot zijn er ook type-directieven zoals \vhdltermen{array} en \vhdltermen{signal}. Sommige gereserveerde worden werden pas ge\"introduceerd in VHDL'93, we gaan hier niet verder op in.
 
 \subsection{scheidingstekens}
 Een \vhdltermen{scheidingsteken} (ofwel ``\vhdltermen{delimiter}'') tenslotte wordt gebruikt om operaties op gegevens uit te voeren, bijvoorbeeld een optelling maar ook een index. De
@@ -39,7 +39,7 @@ scheidingstekens van VHDL worden weergegeven in \tblref{vhdl-delim}.
 
 \importtabulartable{vhdl-delim}{Scheidingstekens in VHDL.}
 
-We onderscheiden opnieuw verschillende soorten scheidingstekens: 
+We onderscheiden opnieuw verschillende soorten scheidingstekens: tekens die operaties voorstellen (zoals \texttt{+} en \texttt{*}), tekens die voorwaarden voorstellen (zoals \texttt{<>}), tekens die tekst afbakenen (zoals \texttt{(} en \texttt{[}) en tekens die aangeven dat twee fragmenten los van elkaar staan (zoals \texttt{,}).
 
 \subsection{Commentaar}
 Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \texttt{Java}.
@@ -71,14 +71,8 @@ We bespreken de verschillende methodes nu in meer detail.
 
 \subsubsection{Defini\"eren met opsomming}
 We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. \vhdlref{typeEnum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-type bit is ('0','1');
-type boolean is (false,true);
-\end{lstlisting}
-\caption{Defini\"eren van types door opsomming.}
-\vhdllab{typeEnum}
-\end{vhdlcode}
+
+\importvhdl{type-enum}{Defini\"eren van types door opsomming.}
 
 
 \paragraph{Defini\"eren met subtypering}
