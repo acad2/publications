@@ -67,15 +67,22 @@ Hoe defini\"eren we nu zelf types? Afhankelijk van het soort type dat we willen 
  \item Defini\"eren van fysische types;
  \item Afgeleide types met matrices en vectoren.
 \end{itemize}
+
 We bespreken de verschillende methodes nu in meer detail.
 
 \subsubsection{Defini\"eren met opsomming}
-We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. \vhdlref{typeEnum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}.
+We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. Dit doen we na het sleutelwoord \vhdltermen{type} en de identifier voor het type. \vhdlref{type-enum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}. We defini\"eren ook het type \texttt{StateMachine}, dit type bevat drie elementen: \texttt{start}, \texttt{processing} en \texttt{wait} die de "toestanden" weergeven van een schakeling die we bijvoorbeeld zouden kunnen willen bouwen.
 
 \importvhdl{type-enum}{Defini\"eren van types door opsomming.}
 
 
-\paragraph{Defini\"eren met subtypering}
+\subsubsection{Defini\"eren met subtypering}
+
+Soms wensen we een type te specificeren die een deelverzameling omvat van een reeds eerder gespecificeerd type. Zo zal een \vhdltermen{integer} alle waarden omvatten die met $32$ bit voor te stellen zijn, het is echter mogelijk dat we bijvoorbeeld een type \texttt{byte} willen specificeren die uitsluitend numerieke waarden bevat die we op $8$ bit kunnen voorstellen. In dat geval gebruiken we het sleutelwoord \vhdltermen{subtype} gevolgd door een identifier die de naam van het type aanduidt, daarna volgt opnieuw het sleutelwoord \vhdltermen{is} en het "supertype". VHDL kent twee soorten beperkingen die hierop kunnen volgen: de "range beperking" en de "index beperking".
+
+\paragraph{}
+Een "range beperking" omvat twee literals die het begin en het einde markeren van een bereik van waarden. Vermits alle basistypes in VHDL een inherente orde-relatie hebben\footnote{Voor karakters maakt men gebruik van de ASCII-code.}
+
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 subtype byte is integer range 0 to 255;
