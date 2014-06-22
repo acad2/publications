@@ -105,15 +105,19 @@ Er bestaan in \texttt{Java} geen duidelijk equivalent van definities aan de hand
 Soms dienen we ook te werken met fysische types: types met een zekere eenheid. Zo is de periode van het kloksignaal een tijdsverschil die we dienen uit te drukken in een zekere tijdseenheid.
 
 \parapgraph{}
-VHDL ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten die de "eenheden" vormen. Zo kan men bijvoorbeeld gewicht defini\"eren als een getal tussen $0$ en $1'000'000$ met drie eenheden: de gram, de kilogram en de ton. Merk op dat dit paradigma haaks staat het fysische paradigma. Immers kan men in VHDL bijvoorbeeld een tijdsverschil specificeren zonder eenheid.
+VHDL ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten die de "eenheden" vormen. Zo kan men bijvoorbeeld gewicht defini\"eren als een getal tussen $0$ en $1'000'000$ met drie eenheden: de gram, de kilogram en de ton.
+
+\paragraph{}
+\vhdlref{type-fys} toont aan de hand van voorbeelden hoe we een fysische eenheid defini\"eren. We vermelden opnieuw het sleutelwoord \vhdltermen{type} gevolgd door de identifier van het type. Daarna bakenen we het type af aan de hand van een "range beperking", in een \vhdltermen{units} blok defini\"eren we vervolgens de eenheden als "virtuele constanten". Het eenheden-blok bestaat altijd uit minstens \'e\'en eenheid-identifier: de ``primaire eenheid''. De primaire eenheid heeft altijd een waarde gelijk aan $1$ en specificeert bijgevolg ook meteen de nauwkeurigheid. Zo kunnen we in het voorbeeld geen gewichten voorstellen met een nauwkeurigheid van een microgram: immers drukken we elk gewicht uit in gram. Daarna volgen optioneel andere eenheden, deze eenheden gaan altijd gepaard met een toekenning van een reeds gekende eenheid. Zo is bijvoorbeeld een kilogram het equivalent van $1'000$ gram. VHDL zal al deze eenheden doorrekenen als constanten. Een ton krijgt dus de waarde $1'000'000$. Een code-blok wordt be\"eindigd met het \vhdltermen{end} sleutelwoord waarna het soort blok wordt herhaald.
 
 \importvhdl{type-fys}{Defini\"eren van fysische types.}
 
 \parapgraph{}
-Er is opnieuw geen equivalent in \texttt{Java}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{Gram} en \texttt{Kilogram} noemen.
+Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{Gram} en \texttt{Kilogram} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
 
 
 \subsubsection{Defini\"eren van matrices en vectoren}
+Tot slot kunnen we ook types ook verder gebruiken bij de constructie van vector- en matrix-types. Dit hebben we bovendien al eerder gedaan: de bitvector is 
 
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
@@ -228,4 +232,6 @@ end behav;
 \label{vhdl:adder}
 \end{vhdlcode}
 \subsubsection{Repetitieve structuren}
-\label{ss:combinatorischVHDLHardware}
+\ssclab{combinatorischVHDLHardware}
+\section{Programmeerjargon}
+\seclab{programmingjargon}
