@@ -117,15 +117,31 @@ Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook cons
 
 
 \subsubsection{Defini\"eren van matrices en vectoren ("array aggregate")}
-Tot slot kunnen we ook types ook verder gebruiken bij de constructie van vector- en matrix-types. Dit hebben we bovendien al eerder gedaan: de \vhdltermen{bit_vector} is een \termen{array aggregate} van het basistype \vhdltermen{bit}.
+Tot slot kunnen we ook types ook verder gebruiken bij de constructie van vector- en matrix-types. Dit hebben we bovendien al eerder gedaan: de \vhdltermen{bit\_vector} is een \termen{array aggregate} van het basistype \vhdltermen{bit}.
 
 \paragraph{}
-VHDL kent twee soorten vector-types: begrensde ("constrained") en ongebonden ("unconstrained").
+VHDL kent twee soorten vector-types: begrensde ("constrained") en ongebonden ("unconstrained"). In het geval van een begrensde vector wordt het aantal elementen gespecificeerd samen met het type\footnote{Dus niet bij de declaratie van een object van dat type.}, terwijl in het geval van een ongebonden vector er geen beperking op de index wordt gezet.
+
+\paragraph{}
+In het geval van begrensde vectoren specificeren we het type met het sleutelwoord \vhdltermen{type} gevolgd door de identifier van het type. Daarna schrijven we \vhdltermen{is} \vhdltermen{array} daarna volgt de "index beperking" (zie eerder) en het sleutelwoord \vhdltermen{of} tot slot dienen we ook het basistype te specificeren. Zoals reeds eerder gezegd hoeft een "index beperking" niet altijd te slaan op een bereik van een numerieke index. In \vhdlref{type-matrix} geven we twee voorbeelden. In het eerste geval gebruiken we een numerieke index. In het tweede geval maken we gebruik van het eerder ge\"introduceerde type \texttt{StateMachine} (zie \vhdlref{type-enum}), vermits een opsomming beperkt is in lengte de vector dit bijgevolg ook. Wanneer we meerdimensionale vectoren willen specificeren scheiden we de verschillende indices aan de hand van een komma (\vhdltermen{,}).
+
+\paragraph{}
+In het geval van een onbegrensde vector schrijven we als "index beperking" de identifier van een (eerder gedefinieerd) type gevolgd door het \vhdltermen{range} sleutelwoord en daarna het \vhdltermen{<>} scheidingsteken. Een voor de hand liggend type om te gebruiken als index is het \vhdltermen{natural} type: de natuurlijke getallen zoals dit ook als index in \texttt{Java} wordt gebruikt. Onbegrensde vectoren worden meestal als associatieve lijsten opgeslagen: enkel wanneer een index wordt toegekend wordt deze opgeslagen\footnote{Indien de index immers niet begrensd is zou men anders oneindig veel geheugen nodig hebben om zo'n lijst op te slaan.}. Men kan natuurlijk ook combinaties maken van begrensde en onbegrensde indices: bijvoorbeeld een matrix waar de eerste index begrensd is maar de tweede niet. Op \vhdlref{type-matrix} tonen we een voor de hand liggende declaratie van een onbegrensde vector van \vhdltermen{real} objecten.
 
 \importvhdl{type-matrix}{Defini\"eren van matrix types.}
 
-\subsubsection{Data-objecten}
-Een object in VHDL is een benoemd item met een specifieke waarde. We onderscheiden 3 soorten objecten: \vhdltermen{constante}, \vhdltermen{variabele} en \vhdltermen{signaal}.
+\paragraph{}
+Er bestaat geen equivalentie in \texttt{Java}. Men kan argumenteren dat het declareren van een array een vaste lengte heeft en dus zou kunnen overeenkomen met een begrensde array. Deze begrenzing manifesteert zich echter op instantie-niveau en niet op type-niveau. Wanneer we deze analogie wel zouden gebruiken kan een onbegrensde vector worden gezien als een \texttt{HashMap}.
+
+\section{Objecten}
+Types beschrijven enkel het soort waarden die een \termen{object} (ofwel \termen{instantie}) kunnen voorstellen. Types zijn daarom nuttig omdat de VHDL-compiler consistentie kan controleren. Een programma werkt echter in de eerste plaats met objecten.
+\paragraph{}
+Een object is een benoemd item (aan de hand van een identifier) met een specifieke waarde. We onderscheiden 3 soorten objecten:
+\begin{enumerate}
+ \item \termen{constante}: een object met een vaste waarde. Deze waarde wordt \'e\'enmaal ergens in het programma bepaald en kan in de rest van de code gebruikt worden;
+ \item \termen{variabele}: een object met een waarde die kan veranderen doorheen het programma. Een variabele verandert meteen van waarde en heeft dus geen echte band met de "werkelijkheid"; en
+ \item \termen{signaal}: een object die de toestand van een draad, in- of uitgang of een andere fysische toestand voorstelt. De waarde verandert enkel nadat er een zekere tijd is verstreken.
+\end{enumerate}
 \paragraph{Constante}Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{constante} toont de declaratie van verschillende constanten. Merk op dat VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
