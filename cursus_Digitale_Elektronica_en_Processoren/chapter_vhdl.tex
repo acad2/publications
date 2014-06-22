@@ -113,20 +113,17 @@ VHDL ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten
 \importvhdl{type-fys}{Defini\"eren van fysische types.}
 
 \parapgraph{}
-Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{Gram} en \texttt{Kilogram} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
+Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{gr} en \texttt{kg} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
 
 
 \subsubsection{Defini\"eren van matrices en vectoren ("array aggregate")}
 Tot slot kunnen we ook types ook verder gebruiken bij de constructie van vector- en matrix-types. Dit hebben we bovendien al eerder gedaan: de \vhdltermen{bit_vector} is een \termen{array aggregate} van het basistype \vhdltermen{bit}.
 
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-type bit is ('0','1');
-type boolean is (false,true);
-\end{lstlisting}
-\caption{Defini\"eren van fysische types.}
-\vhdllab{constante}
-\end{vhdlcode}
+\paragraph{}
+VHDL kent twee soorten vector-types: begrensde ("constrained") en ongebonden ("unconstrained").
+
+\importvhdl{type-matrix}{Defini\"eren van matrix types.}
+
 \subsubsection{Data-objecten}
 Een object in VHDL is een benoemd item met een specifieke waarde. We onderscheiden 3 soorten objecten: \vhdltermen{constante}, \vhdltermen{variabele} en \vhdltermen{signaal}.
 \paragraph{Constante}Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{constante} toont de declaratie van verschillende constanten. Merk op dat VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
