@@ -153,7 +153,7 @@ Constanten worden gebruikt om aan een ontwerp parameters toe te kennen. Stel dat
 We specificeren een constante aan de hand van het \vhdltermen{constant} sleutelwoord, vervolgens specificeren we de naam en het type. We plaatsen het \vhdltermen{:} tussen de naam en het type. Na het \vhdltermen{:=} scheidingsteken plaatsen we een waarde of een expressie. Het algemene formaat is dus:
 
 \begin{equation}%TODO: syntax trees?
-\vhdltermen{constant}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ \vhdltermen{:=}\ \textit{waarde}\vhdltermen{;}
+\vhdltermen{constant}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ \vhdltermen{:=}\ \textit{expressie}\vhdltermen{;}
 \end{equation}
 
 \paragraph{}
@@ -165,8 +165,26 @@ In plaats van een waarde kunnen we ook een expressie specificeren. In zo'n expre
 
 \subsection{Variabele}
 \ssclab{vhdlVariable}
-De syntax van een variabele is ongeveer dezelfde, alleen wordt het sleutelwoord \vhdltermen{variable} gebruikt. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{variabele} toont het gebruik van variabelen in VHDL.
+Een variabele is een VHDL-object die wel van waarde kan veranderen. Ze worden tijdens de uitvoer gebruikt door de VHDL-compiler, bijvoorbeeld om te bepalen hoeveel klokflanken een component moet wachten alvorens weer van waarde te veranderen, of wanneer de compiler bijvoorbeeld een tweede maal door de een lus gaat ander gedrag te bewerkstelligen.
 
+\paragraph{}
+Omdat een variabele van waarde kan veranderen zijn er twee soorten toekenningen: de ``\termen{declaratie}'' en de ``\termen{assignatie}''. Bij de declaratie stelt men de variabele voor samen met een type en optioneel een initi\"ele waarde, bij de assignatie geeft met de variabele een nieuwe waarde.
+
+\paragraph{}
+Bij de declaratie gebruikt men het sleutelwoord \vhdltermen{variable} gevolgd door de naam van de variabele, het \vhdltermen{:} scheidingsteken en het type van de variabele. Optioneel voegt men hierna nog het \vhdltermen{:=} scheidingsteken toe met een expressie de de eerste waarde voor de variabele oplevert. Een algemeen formaat\footnote{Delen van de formaat-declaratie die tussen vierkante haken staan zijn optioneel.} is dus:
+
+\begin{equation}%TODO: syntax trees?
+\vhdltermen{variable}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ [\vhdltermen{:=}\ \textit{expressie}]\vhdltermen{;}
+\end{equation}
+
+Bij de assignatie kent men een nieuwe waarde toe. Dit doet men door de identifier van de variabele te vernoemen gevolgd door het \vhdltermen{:=} scheidingsteken en een expressie voor de nieuwe waarde, of formeler:
+
+\begin{equation}%TODO: syntax trees?
+\textit{identifier}\ \vhdltermen{:=}\ \textit{expressie}\vhdltermen{;}
+\end{equation}
+
+\paragraph{}
+Voorbeelden van werken met variabelen staan in \vhdlref{varb}. In de code wordt de declaratie van \texttt{index} getoond zonder directe assignatie. Later kennen we achtereenvolgens $0$ en $1$ toe aan \texttt{index}. We declareren ook \texttt{twaalf} en geven deze variabele de waarde $12$. We declareren ook \texttt{viertwee} die de waarde $42$ krijgt\footnote{Op dat moment heeft \texttt{index} nog de waarde $1$}. tenslotte hogen we \texttt{index} voor de laatste keer op.
 \importvhdl{varb}{Werken met variabelen.}
 
 \subsection{Signaal}
