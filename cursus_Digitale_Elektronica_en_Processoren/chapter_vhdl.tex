@@ -184,7 +184,7 @@ Bij de assignatie kent men een nieuwe waarde toe. Dit doet men door de identifie
 \end{equation}
 
 \paragraph{}
-Voorbeelden van werken met variabelen staan in \vhdlref{varb}. In de code wordt de declaratie van \texttt{index} getoond zonder directe assignatie. Later kennen we achtereenvolgens $0$ en $1$ toe aan \texttt{index}. We declareren ook \texttt{twaalf} en geven deze variabele de waarde $12$. We declareren ook \texttt{viertwee} die de waarde $42$ krijgt\footnote{Op dat moment heeft \texttt{index} nog de waarde $1$}. tenslotte hogen we \texttt{index} voor de laatste keer op.
+Voorbeelden van werken met variabelen staan in \vhdlref{varb}. In de code wordt de declaratie van \texttt{index} getoond zonder directe assignatie. Later kennen we achtereenvolgens $0$ en $1$ toe aan \texttt{index}. We declareren ook \texttt{twaalf} en geven deze variabele de waarde $12$. We declareren ook \texttt{viertwee} die de waarde $42$ krijgt\footnote{Op dat moment heeft \texttt{index} nog de waarde $1$.}. tenslotte hogen we \texttt{index} voor de laatste keer op.
 \importvhdl{varb}{Werken met variabelen.}
 
 \subsection{Signaal}
@@ -194,8 +194,8 @@ Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een
 \importvhdl{sign}{Werken met signalen.}
 
 We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{ ns}$ een 1 aanleggen. Dit heeft als implicatie dat ook \verb+y+ van waarde zal veranderen. Indien we dit met variabelen en constanten zouden hebben berekend zou variabele \verb+y+ na de toewijzing een waarde toegewezen krijgen, en deze tot een volgende toewijzing behouden. Merk verder op dat we hier ook de betekenis van het codewoord \vhdltermen{after} tonen. Een signaal kan ook een initi\"ele waarde krijgen, hiervoor gebruiken we de \vhdltermen{:=} operator.
-\subsubsection{Bibliotheken}
-\subsubsection{Bewerkingen}
+\section{Bibliotheken}
+\section{Bewerkingen}
 \section{Combinatorische schakelingen in VHDL}
 \seclab{combinatorischVHDL}
 Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \ref{ss:combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
@@ -261,5 +261,7 @@ end behav;
 \end{vhdlcode}
 \subsubsection{Repetitieve structuren}
 \ssclab{combinatorischVHDLHardware}
+\section{Sequenti\"ele schakelingen in VHDL}
+\section{Processoren in VHDL}
 \section{Programmeerjargon}
 \seclab{programmingjargon}
