@@ -62,9 +62,9 @@ Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types.
 \subsection{Zelf types defini\"eren}
 Hoe defini\"eren we nu zelf types? Afhankelijk van het soort type dat we willen bouwen zijn er verschillende mogelijkheden:
 \begin{itemize}
- \item Defini\"eren door opsomming;
- \item Defini\"eren door subtypering (beperk het bereik);
- \item Defini\"eren van fysische types;
+ \item opsomming;
+ \item subtypering (beperk het bereik);
+ \item fysische types; en
  \item Afgeleide types met matrices en vectoren.
 \end{itemize}
 
@@ -116,17 +116,17 @@ VHDL ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten
 Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{gr} en \texttt{kg} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
 
 
-\subsubsection{Defini\"eren van matrices en vectoren ("array aggregate")}
+\subsubsection{Defini\"eren van matrices en vectoren (``array aggregate'')}
 Tot slot kunnen we ook types ook verder gebruiken bij de constructie van vector- en matrix-types. Dit hebben we bovendien al eerder gedaan: de \vhdltermen{bit\_vector} is een \termen{array aggregate} van het basistype \vhdltermen{bit}.
 
 \paragraph{}
-VHDL kent twee soorten vector-types: begrensde ("constrained") en ongebonden ("unconstrained"). In het geval van een begrensde vector wordt het aantal elementen gespecificeerd samen met het type\footnote{Dus niet bij de declaratie van een object van dat type.}, terwijl in het geval van een ongebonden vector er geen beperking op de index wordt gezet.
+VHDL kent twee soorten vector-types: begrensde (``constrained") en ongebonden (``unconstrained"). In het geval van een begrensde vector wordt het aantal elementen gespecificeerd samen met het type\footnote{Dus niet bij de declaratie van een object van dat type.}, terwijl in het geval van een ongebonden vector er geen beperking op de index wordt gezet.
 
 \paragraph{}
-In het geval van begrensde vectoren specificeren we het type met het sleutelwoord \vhdltermen{type} gevolgd door de identifier van het type. Daarna schrijven we \vhdltermen{is} \vhdltermen{array} daarna volgt de "index beperking" (zie eerder) en het sleutelwoord \vhdltermen{of} tot slot dienen we ook het basistype te specificeren. Zoals reeds eerder gezegd hoeft een "index beperking" niet altijd te slaan op een bereik van een numerieke index. In \vhdlref{type-matrix} geven we twee voorbeelden. In het eerste geval gebruiken we een numerieke index. In het tweede geval maken we gebruik van het eerder ge\"introduceerde type \texttt{StateMachine} (zie \vhdlref{type-enum}), vermits een opsomming beperkt is in lengte de vector dit bijgevolg ook. Wanneer we meerdimensionale vectoren willen specificeren scheiden we de verschillende indices aan de hand van een komma (\vhdltermen{,}).
+In het geval van begrensde vectoren specificeren we het type met het sleutelwoord \vhdltermen{type} gevolgd door de identifier van het type. Daarna schrijven we \vhdltermen{is} \vhdltermen{array} daarna volgt de ``index beperking" (zie eerder) en het sleutelwoord \vhdltermen{of} tot slot dienen we ook het basistype te specificeren. Zoals reeds eerder gezegd hoeft een ``index beperking" niet altijd te slaan op een bereik van een numerieke index. In \vhdlref{type-matrix} geven we twee voorbeelden. In het eerste geval gebruiken we een numerieke index. In het tweede geval maken we gebruik van het eerder ge\"introduceerde type \texttt{StateMachine} (zie \vhdlref{type-enum}), vermits een opsomming beperkt is in lengte de vector dit bijgevolg ook. Wanneer we meerdimensionale vectoren willen specificeren scheiden we de verschillende indices aan de hand van een komma (\vhdltermen{,}).
 
 \paragraph{}
-In het geval van een onbegrensde vector schrijven we als "index beperking" de identifier van een (eerder gedefinieerd) type gevolgd door het \vhdltermen{range} sleutelwoord en daarna het \vhdltermen{<>} scheidingsteken. Een voor de hand liggend type om te gebruiken als index is het \vhdltermen{natural} type: de natuurlijke getallen zoals dit ook als index in \texttt{Java} wordt gebruikt. Onbegrensde vectoren worden meestal als associatieve lijsten opgeslagen: enkel wanneer een index wordt toegekend wordt deze opgeslagen\footnote{Indien de index immers niet begrensd is zou men anders oneindig veel geheugen nodig hebben om zo'n lijst op te slaan.}. Men kan natuurlijk ook combinaties maken van begrensde en onbegrensde indices: bijvoorbeeld een matrix waar de eerste index begrensd is maar de tweede niet. Op \vhdlref{type-matrix} tonen we een voor de hand liggende declaratie van een onbegrensde vector van \vhdltermen{real} objecten.
+In het geval van een onbegrensde vector schrijven we als ``index beperking" de identifier van een (eerder gedefinieerd) type gevolgd door het \vhdltermen{range} sleutelwoord en daarna het \vhdltermen{<>} scheidingsteken. Een voor de hand liggend type om te gebruiken als index is het \vhdltermen{natural} type: de natuurlijke getallen zoals dit ook als index in \texttt{Java} wordt gebruikt. Onbegrensde vectoren worden meestal als associatieve lijsten opgeslagen: enkel wanneer een index wordt toegekend wordt deze opgeslagen\footnote{Indien de index immers niet begrensd is zou men anders oneindig veel geheugen nodig hebben om zo'n lijst op te slaan.}. Men kan natuurlijk ook combinaties maken van begrensde en onbegrensde indices: bijvoorbeeld een matrix waar de eerste index begrensd is maar de tweede niet. Op \vhdlref{type-matrix} tonen we een voor de hand liggende declaratie van een onbegrensde vector van \vhdltermen{real} objecten.
 
 \importvhdl{type-matrix}{Defini\"eren van matrix types.}
 
@@ -139,53 +139,42 @@ Types beschrijven enkel het soort waarden die een \termen{object} (ofwel \termen
 Een object is een benoemd item (aan de hand van een identifier) met een specifieke waarde. We onderscheiden 3 soorten objecten:
 \begin{enumerate}
  \item \termen{constante}: een object met een vaste waarde. Deze waarde wordt \'e\'enmaal ergens in het programma bepaald en kan in de rest van de code gebruikt worden;
- \item \termen{variabele}: een object met een waarde die kan veranderen doorheen het programma. Een variabele verandert meteen van waarde en heeft dus geen echte band met de "werkelijkheid"; en
+ \item \termen{variabele}: een object met een waarde die kan veranderen doorheen het programma. Een variabele verandert meteen van waarde en heeft dus geen echte band met de ``werkelijkheid"; en
  \item \termen{signaal}: een object die de toestand van een draad, in- of uitgang of een andere fysische toestand voorstelt. De waarde verandert enkel nadat er een zekere tijd is verstreken.
 \end{enumerate}
 
 We bespreken de verschillende soorten objecten hieronder in meer detail samen met de bijbehorende syntax en semantiek.
 
 \subsection{Constante}
-Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{constante} toont de declaratie van verschillende constanten. Merk op dat VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-constant pi : real := 3.14159265;
-constant byte_length : natural := 8;
-constant word_length : natural := 4*byte_length;
-\end{lstlisting}
-\caption{Werken met constanten.}
-\vhdllab{constante}
-\end{vhdlcode}
-Het algemene formaat is dus \verb+constant <identifier> : <type> := <waarde>;+.
+\ssclab{vhdlConstant}
+Constanten worden gebruikt om aan een ontwerp parameters toe te kennen. Stel dat we bijvoorbeeld een processor wensen te ontwerpen, maar nog niet bepaald hebben hoe groot het operand gedeelte van de operand in een instructie moet worden, kunnen we hiervoor een constante toekennen. Wanneer we dan later van operandgrootte willen veranderen, dienen we enkel de constante aan te passen. Constanten zijn dus benoemde waarden die door de VHDL-compiler op alle plaatsen waar de constante wordt aangeroepen zullen worden vervangen door de werkelijke waarde.
+
+\paragraph{}
+We specificeren een constante aan de hand van het \vhdltermen{constant} sleutelwoord, vervolgens specificeren we de naam en het type. We plaatsen het \vhdltermen{:} tussen de naam en het type. Na het \vhdltermen{:=} scheidingsteken plaatsen we een waarde of een expressie. Het algemene formaat is dus:
+
+\begin{equation}%TODO: syntax trees?
+\vhdltermen{constant}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ \vhdltermen{:=}\ \textit{waarde}\vhdltermen{;}
+\end{equation}
+
+\paragraph{}
+In plaats van een waarde kunnen we ook een expressie specificeren. In zo'n expressie mogen we waarden en constanten schrijven en operaties hiertussen. Het gebruik van variabelen is natuurlijk niet toegelaten vermits de waarde van deze variabelen niet op voorhand gekend is en kan veranderen.
+
+\importvhdl{const}{Defini\"eren van constanten.}
+
+\vhdlref{constante} toont enkele voorbeelden van constante-declaraties. Zo defini\"eren we \texttt{pi} en \texttt{byte\_length} aan de hand van waarden, \texttt{word\_length} wordt gedefini\"eerd aan de hand van een expressie waarin zowel een waarde en een constante betrokken zijn.
 
 \subsection{Variabele}
+\ssclab{vhdlVariable}
 De syntax van een variabele is ongeveer dezelfde, alleen wordt het sleutelwoord \vhdltermen{variable} gebruikt. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{variabele} toont het gebruik van variabelen in VHDL.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-variable index : integer;
-index := 0;
-index := index + 1;
-variable andere_index : natural := 12;
-variable antwoord : natural := 4*andere_index-6*index;
-\end{lstlisting}
-\caption{Werken met variabelen.}
-\vhdllab{variabele}
-\end{vhdlcode}
+
+\importvhdl{varb}{Werken met variabelen.}
 
 \subsection{Signaal}
+\ssclab{vhdlSignal}
 Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een signaal wordt geconstrueerd met behulp van het sleutelwoord \vhdltermen{signal}. Toewijzingen aan een signaal gebeuren met de \vhdltermen{<=} operator. De toewijzing bij een signaal werkt anders dan bij een variabele en constante. Variabelen en constanten worden onmiddellijk toegewezen. Dit betekent dat expressies als \verb/index := index + 1;/ mogelijk zijn. Signalen veranderen echter wanneer elementen uit hun toewijzing veranderen. Beschouw het voorbeeld uit \vhdlref{signal}.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-signal a : bit;
-signal b : bit;
-signal y : bit;
-a <= '1';
-b <= '0', '1' after 100 ns;
-y <= a and b;
-\end{lstlisting}
-\caption{Werken met signalen.}
-\vhdllab{signal}
-\end{vhdlcode}
+
+\importvhdl{sign}{Werken met signalen.}
+
 We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{ ns}$ een 1 aanleggen. Dit heeft als implicatie dat ook \verb+y+ van waarde zal veranderen. Indien we dit met variabelen en constanten zouden hebben berekend zou variabele \verb+y+ na de toewijzing een waarde toegewezen krijgen, en deze tot een volgende toewijzing behouden. Merk verder op dat we hier ook de betekenis van het codewoord \vhdltermen{after} tonen. Een signaal kan ook een initi\"ele waarde krijgen, hiervoor gebruiken we de \vhdltermen{:=} operator.
 \subsubsection{Bibliotheken}
 \subsubsection{Bewerkingen}

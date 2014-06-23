@@ -1,0 +1,6 @@
+signal a : bit;
+signal b : bit;
+signal y : bit;
+a <= '1';
+b <= '0', '1' after 100 ns;
+y <= a and b;
