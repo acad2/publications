@@ -142,7 +142,11 @@ Een object is een benoemd item (aan de hand van een identifier) met een specifie
  \item \termen{variabele}: een object met een waarde die kan veranderen doorheen het programma. Een variabele verandert meteen van waarde en heeft dus geen echte band met de "werkelijkheid"; en
  \item \termen{signaal}: een object die de toestand van een draad, in- of uitgang of een andere fysische toestand voorstelt. De waarde verandert enkel nadat er een zekere tijd is verstreken.
 \end{enumerate}
-\paragraph{Constante}Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{constante} toont de declaratie van verschillende constanten. Merk op dat VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
+
+We bespreken de verschillende soorten objecten hieronder in meer detail samen met de bijbehorende syntax en semantiek.
+
+\subsection{Constante}
+Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{constante} toont de declaratie van verschillende constanten. Merk op dat VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 constant pi : real := 3.14159265;
@@ -153,7 +157,9 @@ constant word_length : natural := 4*byte_length;
 \vhdllab{constante}
 \end{vhdlcode}
 Het algemene formaat is dus \verb+constant <identifier> : <type> := <waarde>;+.
-\paragraph{Variabele}De syntax van een variabele is ongeveer dezelfde, alleen wordt het sleutelwoord \vhdltermen{variable} gebruikt. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{variabele} toont het gebruik van variabelen in VHDL.
+
+\subsection{Variabele}
+De syntax van een variabele is ongeveer dezelfde, alleen wordt het sleutelwoord \vhdltermen{variable} gebruikt. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{variabele} toont het gebruik van variabelen in VHDL.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 variable index : integer;
@@ -165,7 +171,9 @@ variable antwoord : natural := 4*andere_index-6*index;
 \caption{Werken met variabelen.}
 \vhdllab{variabele}
 \end{vhdlcode}
-\paragraph{Signaal}Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een signaal wordt geconstrueerd met behulp van het sleutelwoord \vhdltermen{signal}. Toewijzingen aan een signaal gebeuren met de \vhdltermen{<=} operator. De toewijzing bij een signaal werkt anders dan bij een variabele en constante. Variabelen en constanten worden onmiddellijk toegewezen. Dit betekent dat expressies als \verb/index := index + 1;/ mogelijk zijn. Signalen veranderen echter wanneer elementen uit hun toewijzing veranderen. Beschouw het voorbeeld uit \vhdlref{signal}.
+
+\subsection{Signaal}
+Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een signaal wordt geconstrueerd met behulp van het sleutelwoord \vhdltermen{signal}. Toewijzingen aan een signaal gebeuren met de \vhdltermen{<=} operator. De toewijzing bij een signaal werkt anders dan bij een variabele en constante. Variabelen en constanten worden onmiddellijk toegewezen. Dit betekent dat expressies als \verb/index := index + 1;/ mogelijk zijn. Signalen veranderen echter wanneer elementen uit hun toewijzing veranderen. Beschouw het voorbeeld uit \vhdlref{signal}.
 \begin{vhdlcode}[hbt]
 \begin{lstlisting}
 signal a : bit;
@@ -182,7 +190,7 @@ We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{
 \subsubsection{Bibliotheken}
 \subsubsection{Bewerkingen}
 \section{Combinatorische schakelingen in VHDL}
-\label{s:combinatorischVHDL}
+\seclab{combinatorischVHDL}
 Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \ref{ss:combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
 \subsection{Hardwarebeschrijving met VHDL}
 \subsubsection{Structurele beschrijving}
