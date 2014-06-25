@@ -908,10 +908,10 @@ order=-1
 
 [item:chapter_vhdl.tex]
 archive=true
-column=55
+column=25
 encoding=UTF-8
 highlight=LaTeX
-line=182
+line=22
 mode=LaTeX
 open=true
 order=0
@@ -3739,10 +3739,10 @@ JumpList=
 ViMarks=.,1,17,[,1,8,],1,17
 
 [view-settings,view=0,item:chapter_vhdl.tex]
-CursorColumn=55
-CursorLine=182
+CursorColumn=25
+CursorLine=22
 JumpList=
-ViMarks=.,191,602,[,191,602,],191,602
+ViMarks=.,265,23,[,265,9,],265,23
 
 [view-settings,view=0,item:commusoftScripts.sty]
 CursorColumn=40
