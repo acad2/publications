@@ -140,15 +140,15 @@ We hebben reeds het type \vhdltermen{bit} gedefinieerd. Dit type neemt twee waar
 \paragraph{}
 IEEE 1164 introduceert onder meer twee nieuwe types: \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic}. Beide types bevatten volgende elementen:
 \begin{enumerate}
- \item \vhdltermen{'U'}: een niet-ge\"intialiseerd signaal (bijvoorbeeld bij het opstarten van hardware).
- \item \vhdltermen{'X'}: 
- \item \vhdltermen{'0'}: 
- \item \vhdltermen{'1'}: 
- \item \vhdltermen{'Z'}: 
- \item \vhdltermen{'W'}: 
- \item \vhdltermen{'L'}: 
- \item \vhdltermen{'H'}: 
- \item \vhdltermen{'-'}: 
+ \item \vhdltermen{'U'}: een niet-ge\"intialiseerd signaal (bijvoorbeeld bij het opstarten van hardware);
+ \item \vhdltermen{'X'}: een sterk aangestuurd maar onbekend signaal;
+ \item \vhdltermen{'0'}: een sterk aangestuurde logische $0$;
+ \item \vhdltermen{'1'}: een sterk aangestuurde logische $1$; 
+ \item \vhdltermen{'Z'}: hoog-impedant (niet aangestuurd);
+ \item \vhdltermen{'W'}: een zwak aangestuurde maar ongekend signaal;
+ \item \vhdltermen{'L'}: een zwak aangestuurde logische $0$;
+ \item \vhdltermen{'H'}: een zwak aangestuurde logische $1$; en
+ \item \vhdltermen{'-'}: don't care (\vhdltermen{'0'} of \vhdltermen{'1'}).
 \end{enumerate}
 
 \importtabulartable{vhdl-logic-resolution}{Resolutie-tabel voor \vhdltermen{std\_ulogic}.}
