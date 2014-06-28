@@ -135,7 +135,23 @@ Er bestaat geen equivalentie in \texttt{Java}. Men kan argumenteren dat het decl
 
 \subsection{Logische types}
 
+We hebben reeds het type \vhdltermen{bit} gedefinieerd. Dit type neemt twee waarden aan: \texttt{'0'} en \texttt{'1'}. In de praktijk zijn deze waarden ontoereikend om hardware te beschrijven. In de cursus hebben we al vaak de toestand ``hoog impedant'' aangehaald: een toestand waarbij de draad aan geen enkel deel van het circuit aangelegd wordt. Deze toestand wordt bijvoorbeeld gebruikt bij de realisatie van een bus. Om meer toestanden te kunnen voorstellen, werd \termen{IEEE 1164} opgesteld. Dit zijn de verschillende toestanden waarin een draad zich kan bevinden, een verrijkt \vhdltermen{bit}-type dus.
 
+\paragraph{}
+IEEE 1164 introduceert onder meer twee nieuwe types: \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic}. Beide types bevatten volgende elementen:
+\begin{enumerate}
+ \item \vhdltermen{'U'}: een niet-ge\"intialiseerd signaal (bijvoorbeeld bij het opstarten van hardware).
+ \item \vhdltermen{'X'}: 
+ \item \vhdltermen{'0'}: 
+ \item \vhdltermen{'1'}: 
+ \item \vhdltermen{'Z'}: 
+ \item \vhdltermen{'W'}: 
+ \item \vhdltermen{'L'}: 
+ \item \vhdltermen{'H'}: 
+ \item \vhdltermen{'-'}: 
+\end{enumerate}
+
+\importtabulartable{vhdl-logic-resolution}{Resolutie-tabel voor \vhdltermen{std\_ulogic}.}
 
 \section{Objecten}
 Types beschrijven enkel het soort waarden die een \termen{object} (ofwel \termen{instantie}) kunnen voorstellen. Types zijn daarom nuttig omdat de VHDL-compiler consistentie kan controleren. Een programma werkt echter in de eerste plaats met objecten.
