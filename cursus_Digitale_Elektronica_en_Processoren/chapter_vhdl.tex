@@ -133,6 +133,10 @@ In het geval van een onbegrensde vector schrijven we als ``index beperking'' de 
 \paragraph{}
 Er bestaat geen equivalentie in \texttt{Java}. Men kan argumenteren dat het declareren van een array een vaste lengte heeft en dus zou kunnen overeenkomen met een begrensde array. Deze begrenzing manifesteert zich echter op instantie-niveau en niet op type-niveau. Wanneer we deze analogie wel zouden gebruiken kan een onbegrensde vector worden gezien als een \texttt{HashMap}.
 
+\subsection{Speciale types}
+
+
+
 \section{Objecten}
 Types beschrijven enkel het soort waarden die een \termen{object} (ofwel \termen{instantie}) kunnen voorstellen. Types zijn daarom nuttig omdat de VHDL-compiler consistentie kan controleren. Een programma werkt echter in de eerste plaats met objecten.
 \paragraph{}
@@ -161,7 +165,8 @@ In plaats van een waarde kunnen we ook een expressie specificeren. In zo'n expre
 
 \importvhdl{const}{Defini\"eren van constanten.}
 
-\vhdlref{constante} toont enkele voorbeelden van constante-declaraties. Zo defini\"eren we \texttt{pi} en \texttt{byte\_length} aan de hand van waarden, \texttt{word\_length} wordt gedefini\"eerd aan de hand van een expressie waarin zowel een waarde en een constante betrokken zijn.
+\paragraph{}
+\vhdlref{const} toont enkele voorbeelden van constante-declaraties. Zo defini\"eren we \texttt{pi} en \texttt{byte\_length} aan de hand van waarden, \texttt{word\_length} wordt gedefini\"eerd aan de hand van een expressie waarin zowel een waarde en een constante betrokken zijn.
 
 \subsection{Variabele}
 \ssclab{vhdlVariable}
@@ -185,15 +190,31 @@ Bij de assignatie kent men een nieuwe waarde toe. Dit doet men door de identifie
 
 \paragraph{}
 Voorbeelden van werken met variabelen staan in \vhdlref{varb}. In de code wordt de declaratie van \texttt{index} getoond zonder directe assignatie. Later kennen we achtereenvolgens $0$ en $1$ toe aan \texttt{index}. We declareren ook \texttt{twaalf} en geven deze variabele de waarde $12$. We declareren ook \texttt{viertwee} die de waarde $42$ krijgt\footnote{Op dat moment heeft \texttt{index} nog de waarde $1$.}. tenslotte hogen we \texttt{index} voor de laatste keer op.
+
 \importvhdl{varb}{Werken met variabelen.}
 
 \subsection{Signaal}
 \ssclab{vhdlSignal}
-Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een signaal wordt geconstrueerd met behulp van het sleutelwoord \vhdltermen{signal}. Toewijzingen aan een signaal gebeuren met de \vhdltermen{<=} operator. De toewijzing bij een signaal werkt anders dan bij een variabele en constante. Variabelen en constanten worden onmiddellijk toegewezen. Dit betekent dat expressies als \verb/index := index + 1;/ mogelijk zijn. Signalen veranderen echter wanneer elementen uit hun toewijzing veranderen. Beschouw het voorbeeld uit \vhdlref{sign}.
+Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een toekenning bij een signaal is niet direct: de expressie wordt niet louter ge\"evalueerd. Wanneer de betrokken signalen waarop de toekenning steunt later veranderen, zal het signaal zelf ook veranderen.
 
+\paragraph{}
+Een signaal wordt gedeclareerd door het sleutelwoord \vhldtermen{signal} gevolgd door de identifier van het signaal en na een dubbele punt (\vhdltermen{:}) het type van het signaal. Optioneel volgt ook een assignatie gedeelte, of formeler:
+
+\begin{equation}%TODO: syntax trees?
+\vhdltermen{signal}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ [\vhdltermen{<=}\ \textit{expressie}]\vhdltermen{;}
+\end{equation}
+
+Bij een ``assignatie'' plaatsen we eerst de identifier van het object gevolgd door de \vhdltermen{<=} operator en de expressie, of formeler:
+
+\begin{equation}%TODO: syntax trees?
+\textit{identifier}\ \vhdltermen{<=}\ \textit{expressie}\vhdltermen{;}
+\end{equation}
+
+Zoals reeds eerder vermeld werkt de toekenning bij een signaal anders dan bij de toekenning van een variabele en constante.
+
+\paragraph{}
 \importvhdl{sign}{Werken met signalen.}
-
-We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{ ns}$ een 1 aanleggen. Dit heeft als implicatie dat ook \verb+y+ van waarde zal veranderen. Indien we dit met variabelen en constanten zouden hebben berekend zou variabele \verb+y+ na de toewijzing een waarde toegewezen krijgen, en deze tot een volgende toewijzing behouden. Merk verder op dat we hier ook de betekenis van het codewoord \vhdltermen{after} tonen. Een signaal kan ook een initi\"ele waarde krijgen, hiervoor gebruiken we de \vhdltermen{:=} operator.
+In \vhdlref{sign} beschouwen we drie signalen van het type \vhdltermen{bit}: \texttt{a}, \texttt{b} en \texttt{y}. De signalen hebben dus ofwel de waarde \texttt{'0'} of \texttt{'1'}. \texttt{a} kennen we de constante \texttt{'1'} toe. Het signaal blijft dus constant. Bij \texttt{b} kennen we de waarde \texttt{'0'} toe, maar na $100$ nanoseconden wordt het signaal \texttt{'1'}. Wanneer we \texttt{y} gelijk stellen aan een AND-operatie tussen \texttt{a} en \texttt{b}. Het signaal van \texttt{y} zal dus gelijk zijn aan \texttt{'0'}, maar na $100$ nanoseconden (en een zekere vertraging) wordt de waarde gelijk aan \texttt{'1'}.
 \section{Bibliotheken}
 \section{Bewerkingen}
 \section{Combinatorische schakelingen in VHDL}
