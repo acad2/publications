@@ -5,6 +5,8 @@
 \floatname{vhdlcode}{VHDL-code}
 \newfloat{listing}{htb}{codes}[chapter]
 \floatname{listing}{Listing}
+\newfloat{gramf}{hbt}{grm}
+\floatname{gramf}{Grammatica}
 
 \newcounter{imreA}
 \newcounter{imreB}
@@ -46,6 +48,9 @@
 \newcommand{\lstref}[2][Listing]{\genref{lst}{#1}{#2}}
 \newcommand{\vhdllab}[1]{\genlab{vhdl}{#1}}
 \newcommand{\vhdlref}[1]{\genref{vhdl}{\texttt{VHDL}-code}{#1}}
+\newcommand{\grmlab}[1]{\genlab{grm}{#1}}
+\newcommand{\grmref}[1]{\genref{grm}{Grammatica}{#1}}
+\newcommand{\grmrefpag}[1]{\genrefpag{grm}{Grammatica}{#1}}
 
 \newcommand{\importtikz}[1]{
 \input{tikzpictures/tikz-#1.tex}
@@ -77,6 +82,14 @@
 \caption{#2}
 \tbllab{#1}
 \end{table}
+}
+
+\newcommand{\importgram}[3][(colon){$\rightarrow$}][(semicolon)$|$][(comma){}][(period){\\}][(quote){\begin{bf}}{\end{bf}}][(nonterminal){$\langle$}{$\rangle$}]{
+\begin{gramf}
+\begin{grammar}[#1]\input{grammars/#2.tex}\end{grammar}
+\caption{#3}
+\grmlab{#2}
+\end{gramf}
 }
 
 \newcommand{\importtabularsubtable}[2]{
