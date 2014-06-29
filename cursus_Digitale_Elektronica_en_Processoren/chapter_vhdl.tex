@@ -207,14 +207,18 @@ Bij een ``assignatie'' plaatsen we eerst de identifier van het object gevolgd do
 \end{equation}
 
 Zoals reeds eerder vermeld werkt de toekenning bij een signaal anders dan bij de toekenning van een variabele en constante.
+VHDL laat bovendien slechts \'e\'en toekenning toe per signaal (die mogelijk uitgesteld kan worden en beslist op de waarde
+van variabelen). In het andere geval betekent dit immers dat een draad wordt aangestuurd door twee verschillende expressies
+en dus kortsluiting kan veroorzaken. Hoe we dit probleem kunnen oplossen bespreken we in deze sectie.
 
 \paragraph{}
 \importvhdl{sign}{Werken met signalen.}
+
 In \vhdlref{sign} beschouwen we drie signalen van het type \vhdltermen{bit}: \texttt{a}, \texttt{b} en \texttt{y}. De signalen hebben dus ofwel de waarde \texttt{'0'} of \texttt{'1'}. \texttt{a} kennen we de constante \texttt{'1'} toe. Het signaal blijft dus constant. Bij \texttt{b} kennen we de waarde \texttt{'0'} toe, maar na $100$ nanoseconden wordt het signaal \texttt{'1'}. Wanneer we \texttt{y} gelijk stellen aan een AND-operatie tussen \texttt{a} en \texttt{b}. Het signaal van \texttt{y} zal dus gelijk zijn aan \texttt{'0'}, maar na $100$ nanoseconden (en een zekere vertraging) wordt de waarde gelijk aan \texttt{'1'}.
 
 \subsubsection{Logische signalen}
 
-We hebben reeds het type \vhdltermen{bit} gedefinieerd. Dit type neemt twee waarden aan: \texttt{'0'} en \texttt{'1'}. In de praktijk zijn deze waarden ontoereikend om hardware te beschrijven. In de cursus hebben we al vaak de toestand ``hoog impedant'' aangehaald: een toestand waarbij de draad aan geen enkel deel van het circuit aangelegd wordt. Deze toestand wordt bijvoorbeeld gebruikt bij de realisatie van een bus. Om meer toestanden te kunnen voorstellen, werd \termen{IEEE 1164} opgesteld. Dit zijn de verschillende toestanden waarin een draad zich kan bevinden, een verrijkt \vhdltermen{bit}-type dus.
+We hebben reeds het type \vhdltermen{bit} gedefinieerd. Dit type neemt twee waarden aan: \texttt{'0'} en \texttt{'1'}, dit lijkt een ideaal type bij het werken met signalen. In de praktijk zijn deze waarden echter ontoereikend om hardware te beschrijven. In de cursus hebben we bijvoorbeeld al vaak de toestand ``hoog impedant'' aangehaald: een toestand waarbij de draad aan geen enkel deel van het circuit aangelegd wordt. Deze toestand wordt bijvoorbeeld gebruikt bij de realisatie van een bus. Om meer toestanden te kunnen voorstellen, werd \termen{IEEE 1164} opgesteld. Dit zijn de verschillende toestanden waarin een draad zich kan bevinden, een verrijkt \vhdltermen{bit}-type dus.
 
 \paragraph{}
 IEEE 1164 introduceert onder meer twee nieuwe types: \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic}. Beide types bevatten volgende elementen:
