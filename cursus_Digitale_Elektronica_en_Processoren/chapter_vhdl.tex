@@ -236,9 +236,19 @@ IEEE 1164 introduceert onder meer twee nieuwe types: \vhdltermen{std\_logic} en 
 
 \importvhdl{std-logic}{De definitie van \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic} (IEEE 1164).}
 
-\vhdlref{std-logic} toont hoe we de types zouden kunnen defini\"eren. Bij deze code zien we dat \vhdltermen{std\_logic} wordt gedefinieerd met behulp van \vhdltermen{std\_ulogic}, maar dat er ook nog een extra identifier bij deze declaratie staat: \texttt{resolved}. Deze identifier wijst naar een functie de verder in de code wordt 
+\vhdlref{std-logic} toont hoe we de types zouden kunnen defini\"eren. Bij deze code zien we dat \vhdltermen{std\_logic} wordt gedefinieerd met behulp van \vhdltermen{std\_ulogic}, maar dat er ook nog een extra identifier bij deze declaratie staat: \texttt{resolved}. Deze identifier wijst naar een functie waarvan de signatuur eerder in de code werd gedefinieerd. Deze functie wordt gebruikt om meervoudige toekenning mogelijk te maken: stel dat we een bus zouden schrijven in VHDL, dan zullen we de poorten van verschillende componenten toewijzen aan eenzelfde signaal. Zoals echter al opgemerkt laat VHDL dit niet toe, tenzij we een resolutie-functie \texttt{resolved}\footnote{We kunnen ook een andere identifier gebruiken.} defini\"eren die regels specificeert hoe een verzameling aan signalen -- de \vhdltermen{std\_ulogic\_vector} -- worden omgezet in \'e\'en type. VHDL zal dus bij meervoudige toekenning een soort virtueel ``bus''-component bijvoegen met invoer alle mogelijke signalen die op de bus worden aangebracht en als uitvoer het signaal die op de ``werkelijke'' bus staat.
+
+\paragraph{}
+De \texttt{resolved} functie doet dus dienst als een operator die gegeven verschillende signalen, een consensus-signaal moet berekenen. IEEE berekent zo'n signaal aan de hand van een tweedimensionale tabel \texttt{res\_table} die twee signalen omzet in \'e\'en signaal. Deze tabel staat beschreven in \tblref{vhdl-logic-resolution}.
 
 \importtabulartable{vhdl-logic-resolution}{Resolutie-tabel voor \vhdltermen{std\_logic}.}
+
+\paragraph{}
+De tabel is commutatief: onafhankelijk van welke dimensie we voor welk signaal kiezen levert dit eenzelfde waarde op. Dit is vanzelfsprekend: anders zouden we immers een signaal in de bus bevoordelen tegenover een ander signaal. Verder is de tabel ook associatief: wanneer we resolutie $\oplus$ toepassen op drie verschillende signalen $a$, $b$ en $c$, maakt het niet uit welke twee signalen we eerst uitrekenen: $a\oplus\brak{b\oplus c}=\brak{a\oplus b}\oplus c$, ongeacht de waardes van de signalen. Er is tot slot ook sprake van enige prioriteit: wanneer een signaal de waarde \vhdltermen{'U'} heeft aangenomen, is het resultaat sowieso \vhdltermen{'U'}. Op basis van de tabel kunnen we volgende ``prioriteitsregels'' opstellen:
+\begin{equation}
+\vhdltermen{'U'}\succ\vhdltermen{'X'},\vhdltermen{'-'}\succ\vhdltermen{'0'},\vhdltermen{'1'}\succ\vhdltermen{'W'}\succ\vhdltermen{'L'},\vhdltermen{'H'}\succ\vhdltermen{'Z'}
+\end{equation}
+Dit betekent dat wanneer we resolutie $\oplus$ toepassen op twee signalen van een verschillende prioriteitsklasse, het resultaat steeds de waarde van de 
 
 \paragraph{}
 Tot slot bevat het pakket ook afgeleide types zoals \vhdltermen{std\_logic\_vector}. Dit is een vector van het type \vhldtermen{std\_logic} en gedraagt zich zoals elk vector type.
