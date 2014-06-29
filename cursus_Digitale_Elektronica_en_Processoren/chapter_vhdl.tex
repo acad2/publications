@@ -133,26 +133,6 @@ In het geval van een onbegrensde vector schrijven we als ``index beperking'' de 
 \paragraph{}
 Er bestaat geen equivalentie in \texttt{Java}. Men kan argumenteren dat het declareren van een array een vaste lengte heeft en dus zou kunnen overeenkomen met een begrensde array. Deze begrenzing manifesteert zich echter op instantie-niveau en niet op type-niveau. Wanneer we deze analogie wel zouden gebruiken kan een onbegrensde vector worden gezien als een \texttt{HashMap}.
 
-\subsection{Logische types}
-
-We hebben reeds het type \vhdltermen{bit} gedefinieerd. Dit type neemt twee waarden aan: \texttt{'0'} en \texttt{'1'}. In de praktijk zijn deze waarden ontoereikend om hardware te beschrijven. In de cursus hebben we al vaak de toestand ``hoog impedant'' aangehaald: een toestand waarbij de draad aan geen enkel deel van het circuit aangelegd wordt. Deze toestand wordt bijvoorbeeld gebruikt bij de realisatie van een bus. Om meer toestanden te kunnen voorstellen, werd \termen{IEEE 1164} opgesteld. Dit zijn de verschillende toestanden waarin een draad zich kan bevinden, een verrijkt \vhdltermen{bit}-type dus.
-
-\paragraph{}
-IEEE 1164 introduceert onder meer twee nieuwe types: \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic}. Beide types bevatten volgende elementen:
-\begin{enumerate}
- \item \vhdltermen{'U'}: een niet-ge\"intialiseerd signaal (bijvoorbeeld bij het opstarten van hardware);
- \item \vhdltermen{'X'}: een sterk aangestuurd maar onbekend signaal;
- \item \vhdltermen{'0'}: een sterk aangestuurde logische $0$;
- \item \vhdltermen{'1'}: een sterk aangestuurde logische $1$; 
- \item \vhdltermen{'Z'}: hoog-impedant (niet aangestuurd);
- \item \vhdltermen{'W'}: een zwak aangestuurde maar ongekend signaal;
- \item \vhdltermen{'L'}: een zwak aangestuurde logische $0$;
- \item \vhdltermen{'H'}: een zwak aangestuurde logische $1$; en
- \item \vhdltermen{'-'}: don't care (\vhdltermen{'0'} of \vhdltermen{'1'}).
-\end{enumerate}
-
-\importtabulartable{vhdl-logic-resolution}{Resolutie-tabel voor \vhdltermen{std\_ulogic}.}
-
 \section{Objecten}
 Types beschrijven enkel het soort waarden die een \termen{object} (ofwel \termen{instantie}) kunnen voorstellen. Types zijn daarom nuttig omdat de VHDL-compiler consistentie kan controleren. Een programma werkt echter in de eerste plaats met objecten.
 \paragraph{}
@@ -231,6 +211,29 @@ Zoals reeds eerder vermeld werkt de toekenning bij een signaal anders dan bij de
 \paragraph{}
 \importvhdl{sign}{Werken met signalen.}
 In \vhdlref{sign} beschouwen we drie signalen van het type \vhdltermen{bit}: \texttt{a}, \texttt{b} en \texttt{y}. De signalen hebben dus ofwel de waarde \texttt{'0'} of \texttt{'1'}. \texttt{a} kennen we de constante \texttt{'1'} toe. Het signaal blijft dus constant. Bij \texttt{b} kennen we de waarde \texttt{'0'} toe, maar na $100$ nanoseconden wordt het signaal \texttt{'1'}. Wanneer we \texttt{y} gelijk stellen aan een AND-operatie tussen \texttt{a} en \texttt{b}. Het signaal van \texttt{y} zal dus gelijk zijn aan \texttt{'0'}, maar na $100$ nanoseconden (en een zekere vertraging) wordt de waarde gelijk aan \texttt{'1'}.
+
+\subsubsection{Logische signalen}
+
+We hebben reeds het type \vhdltermen{bit} gedefinieerd. Dit type neemt twee waarden aan: \texttt{'0'} en \texttt{'1'}. In de praktijk zijn deze waarden ontoereikend om hardware te beschrijven. In de cursus hebben we al vaak de toestand ``hoog impedant'' aangehaald: een toestand waarbij de draad aan geen enkel deel van het circuit aangelegd wordt. Deze toestand wordt bijvoorbeeld gebruikt bij de realisatie van een bus. Om meer toestanden te kunnen voorstellen, werd \termen{IEEE 1164} opgesteld. Dit zijn de verschillende toestanden waarin een draad zich kan bevinden, een verrijkt \vhdltermen{bit}-type dus.
+
+\paragraph{}
+IEEE 1164 introduceert onder meer twee nieuwe types: \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic}. Beide types bevatten volgende elementen:
+\begin{enumerate}
+ \item \vhdltermen{'U'}: een niet-ge\"intialiseerd signaal (bijvoorbeeld bij het opstarten van hardware);
+ \item \vhdltermen{'X'}: een sterk aangestuurd maar onbekend signaal;
+ \item \vhdltermen{'0'}: een sterk aangestuurde logische $0$;
+ \item \vhdltermen{'1'}: een sterk aangestuurde logische $1$; 
+ \item \vhdltermen{'Z'}: hoog-impedant (niet aangestuurd);
+ \item \vhdltermen{'W'}: een zwak aangestuurde maar ongekend signaal;
+ \item \vhdltermen{'L'}: een zwak aangestuurde logische $0$;
+ \item \vhdltermen{'H'}: een zwak aangestuurde logische $1$; en
+ \item \vhdltermen{'-'}: don't care (\vhdltermen{'0'} of \vhdltermen{'1'}).
+\end{enumerate}
+
+\importtabulartable{vhdl-logic-resolution}{Resolutie-tabel voor \vhdltermen{std\_logic}.}
+
+\paragraph{}
+Tot slot bevat het pakket ook afgeleide types zoals \vhdltermen{std\_logic\_vector}. Dit is een vector van het type \vhldtermen{std\_logic} en gedraagt zich zoals elk vector type.
 \section{Bibliotheken}
 \section{Bewerkingen}
 \section{Combinatorische schakelingen in VHDL}
