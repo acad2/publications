@@ -263,8 +263,10 @@ Zoals men al uit de code kon afleiden bevat het pakket tot slot ook nog vector-t
 
 \section{Bibliotheken}
 \seclab{vhdl-lib}
-Net zoals \texttt{Java}
+Net zoals \texttt{Java} kent VHDL een mechanisme om eerder gedefinieerde deelprogramma's te groeperen in een pakket dat dan in een volgend ontwerp kan worden gebruikt.
 
+\paragraph{}
+VHDL laat ook ``\termen{overloading}'' toe. Bij overloading kan men eenzelfde functie meerdere malen defini\"eren wanneer het aantal of het type parameters verschilt. Zo kan men een optelling beschrijven op een \vhdltermen{bit\_vector} en een \vhdltermen{integer}, en is de uiteindelijke uitwerking transparant naar de gebruiker toe.
 
 \section{Combinatorische schakelingen in VHDL}
 \seclab{combinatorischVHDL}
