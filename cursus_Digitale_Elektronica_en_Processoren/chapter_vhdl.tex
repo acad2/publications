@@ -104,7 +104,7 @@ Er bestaan in \texttt{Java} geen duidelijk equivalent van definities aan de hand
 
 Soms dienen we ook te werken met fysische types: types met een zekere eenheid. Zo is de periode van het kloksignaal een tijdsverschil die we dienen uit te drukken in een zekere tijdseenheid.
 
-\parapgraph{}
+\paragraph{}
 VHDL ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten die de ``eenheden'' vormen. Zo kan men bijvoorbeeld gewicht defini\"eren als een getal tussen $0$ en $1'000'000$ met drie eenheden: de gram, de kilogram en de ton.
 
 \paragraph{}
@@ -112,7 +112,7 @@ VHDL ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten
 
 \importvhdl{type-fys}{Defini\"eren van fysische types.}
 
-\parapgraph{}
+\paragraph{}
 Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{gr} en \texttt{kg} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
 
 
@@ -194,7 +194,7 @@ Voorbeelden van werken met variabelen staan in \vhdlref{varb}. In de code wordt 
 Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een toekenning bij een signaal is niet direct: de expressie wordt niet louter ge\"evalueerd. Wanneer de betrokken signalen waarop de toekenning steunt later veranderen, zal het signaal zelf ook veranderen.
 
 \paragraph{}
-Een signaal wordt gedeclareerd door het sleutelwoord \vhldtermen{signal} gevolgd door de identifier van het signaal en na een dubbele punt (\vhdltermen{:}) het type van het signaal. Optioneel volgt ook een assignatie gedeelte, of formeler:
+Een signaal wordt gedeclareerd door het sleutelwoord \vhdltermen{signal} gevolgd door de identifier van het signaal en na een dubbele punt (\vhdltermen{:}) het type van het signaal. Optioneel volgt ook een assignatie gedeelte, of formeler:
 
 \begin{equation}%TODO: syntax trees?
 \vhdltermen{signal}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ [\vhdltermen{<=}\ \textit{expressie}]\vhdltermen{;}
@@ -336,5 +336,6 @@ end behav;
 \section{Sequenti\"ele schakelingen in VHDL}
 \section{Processoren in VHDL}
 \section{VHDL grammatica}
+\importgram{vhdl}{De belangrijkste delen van de VHDL-grammatica.}
 \section{Programmeerjargon}
 \seclab{programmingjargon}
