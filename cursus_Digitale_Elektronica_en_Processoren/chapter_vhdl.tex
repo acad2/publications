@@ -244,11 +244,15 @@ De \texttt{resolved} functie doet dus dienst als een operator die gegeven versch
 \importtabulartable{vhdl-logic-resolution}{Resolutie-tabel voor \vhdltermen{std\_logic}.}
 
 \paragraph{}
-De tabel is commutatief: onafhankelijk van welke dimensie we voor welk signaal kiezen levert dit eenzelfde waarde op. Dit is vanzelfsprekend: anders zouden we immers een signaal in de bus bevoordelen tegenover een ander signaal. Verder is de tabel ook associatief: wanneer we resolutie $\oplus$ toepassen op drie verschillende signalen $a$, $b$ en $c$, maakt het niet uit welke twee signalen we eerst uitrekenen: $a\oplus\brak{b\oplus c}=\brak{a\oplus b}\oplus c$, ongeacht de waardes van de signalen. Er is tot slot ook sprake van enige prioriteit: wanneer een signaal de waarde \vhdltermen{'U'} heeft aangenomen, is het resultaat sowieso \vhdltermen{'U'}. Op basis van de tabel kunnen we volgende ``prioriteitsregels'' opstellen:
+De tabel is reflexief: wanneer de twee signalen gelijk zijn, is de het resultaat ook gelijk aan de invoer. De tabel is ook commutatief: onafhankelijk van welke dimensie we voor welk signaal kiezen levert dit eenzelfde waarde op. Dit is vanzelfsprekend: anders zouden we immers een signaal in de bus bevoordelen tegenover een ander signaal. Verder is de tabel ook associatief: wanneer we resolutie $\oplus$ toepassen op drie verschillende signalen $a$, $b$ en $c$, maakt het niet uit welke twee signalen we eerst uitrekenen: $a\oplus\brak{b\oplus c}=\brak{a\oplus b}\oplus c$, ongeacht de waardes van de signalen. Er is tot slot ook sprake van enige prioriteit: wanneer een signaal de waarde \vhdltermen{'U'} heeft aangenomen, is het resultaat sowieso \vhdltermen{'U'}. Op basis van de tabel kunnen we volgende ``prioriteitsregels'' opstellen:
 \begin{equation}
 \vhdltermen{'U'}\succ\vhdltermen{'X'},\vhdltermen{'-'}\succ\vhdltermen{'0'},\vhdltermen{'1'}\succ\vhdltermen{'W'}\succ\vhdltermen{'L'},\vhdltermen{'H'}\succ\vhdltermen{'Z'}
+\eqnlab{stdlogic-priority}
 \end{equation}
-Dit betekent dat wanneer we resolutie $\oplus$ toepassen op twee signalen van een verschillende prioriteitsklasse, het resultaat steeds de waarde van de hoogste prioriteitsklasse wordt gebruikt. Een uitzondering vormt de don't care (\vhdltermen{'-'}) die zich als sterk signaal (\vhdltermen{'X'}) gedraagt.
+Dit betekent dat wanneer we resolutie $\oplus$ toepassen op twee signalen van een verschillende prioriteitsklasse, het resultaat steeds de waarde van de hoogste prioriteitsklasse wordt gebruikt. Een uitzondering vormt de don't care (\vhdltermen{'-'}) die zich als sterk signaal (\vhdltermen{'X'}) gedraagt. Wanneer twee waarden uit dezelfde prioriteitsklasse komen en gelijk zijn is het resultaat evident gelijk aan de invoer-signalen. Wanneer de twee invoer-signalen niet gelijk zijn, is het resultaat het signaal van een prioriteitsklasse hoger, \eqnref{stdlogic-priority} zorgt ervoor dat telkens wanneer dit mogelijk is, de prioriteitsklasse erboven slechts \'e\'en element bevat, de don't care (\vhdltermen{'-'}) doet zich immers voor als een sterk signaal (\vhdltermen{'X'}).
+
+\paragraph{}
+\importvhdl{std-logic-resolution}{Implementatie van de \vhdltermen{std\_logic} resolutie-functie in VHDL.}
 
 \paragraph{}
 Tot slot bevat het pakket ook afgeleide types zoals \vhdltermen{std\_logic\_vector}. Dit is een vector van het type \vhldtermen{std\_logic} en gedraagt zich zoals elk vector type.
