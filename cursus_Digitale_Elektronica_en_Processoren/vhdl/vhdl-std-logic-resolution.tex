@@ -12,8 +12,8 @@ constant res_table : array (std_ulogic,std_ulogic) of std_ulogic :=
   );
 
 function resolved (s : std_ulogic_vector) return std_ulogic is
+variable result : std_ulogic := 'Z';
 begin
-    variable result : std_ulogic := 'Z';
     if s'length = 1 then
         return s(s'low);
     else
