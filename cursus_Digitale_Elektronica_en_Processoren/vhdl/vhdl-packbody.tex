@@ -1,0 +1,7 @@
+package body various is
+    constant hold : time := 100 ns;
+    procedure push (signal button : inout std_logic; hold : time) is
+    begin
+        button <= `0', `1' after hold;
+    end procedure push;
+end package body various;

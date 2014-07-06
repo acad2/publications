@@ -296,6 +296,12 @@ Een pakket (``package'') groepeert functies, programma's, types, constanten, sig
 Een bibliotheek (``library'') daarentegen is een plaats waar men code en analyses opslaat. Dit is dus een map of een databank.
 
 \paragraph{}
+\importvhdl{packhead}{Voorbeeld van een ``package declaration''.}
+
+\importvhdl{packbody}{Voorbeeld van een ``package body''.}
+
+\vhdlref{packhead} en \vhdlref{packbody} tonen respectievelijk een voorbeeld van een ``package declaration'' en ``package body''. Beide voorbeelden hebben betrekking op een pakket \texttt{various} die we willen defini\"eren. In de ``package declaration'' schrijven we dat het pakket twee items bevat: een constante \texttt{hold} van het type \texttt{time} en een procedure \texttt{push} (wat een procedure precies doet is hier niet relevant). In het ``package body'' dienen we deze abstracte items te binden met betekenis. Zo is de waarde van \texttt{hold} $100~\mbox{ns}$ en komt \texttt{push} er blijkbaar op neer dat de knop tijdelijk het signaal \vhdltermen{`0'} zal aanleggen.
+
 Om pakketten te defini\"eren en . De bibliotheken \texttt{work} en \texttt{std} zijn altijd beschikbaar.
 
 \paragraph{}
