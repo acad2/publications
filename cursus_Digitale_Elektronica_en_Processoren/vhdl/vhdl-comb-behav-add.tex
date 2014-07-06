@@ -1,0 +1,21 @@
+-- Opteller
+--
+library ieee;
+use ieee.std_logic_signed.all;
+
+entity adder is
+  generic(n : positive := 4);
+  port(Cin : in std_logic;
+       X,Y : in std_logic_vector(n-1 downto 0);
+       S   : in std_logic_vector(n-1 downto 0);
+       Cout, Overflow : out std_logic);
+end adder;
+
+architecture behav of adder is
+  signal Sum : std_logic_vector(n downto 0);
+begin
+  Sum <= (X(n-1) & X) + Y + Cin;
+  S <= Sum(n-1 downto 0);
+  Cout <= Sum(n);
+  Overflow <= Sum(n) xor X(n-1) xor Y(n-1) xor Sum(n-1);
+end behav;

@@ -274,67 +274,12 @@ VHDL laat ook ``\termen{overloading}'' toe. Bij overloading kan men eenzelfde fu
 
 \section{Combinatorische schakelingen in VHDL}
 \seclab{combinatorischVHDL}
-Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \ref{ss:combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
+Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \sscref{combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
 \subsection{Hardwarebeschrijving met VHDL}
 \subsubsection{Structurele beschrijving}
-\begin{vhdlcode}[hbt]
-\centering
-\begin{lstlisting}
--- 2-naar-1 Multiplexer
---
-architecture Struct of MUX2 is
-  signal U,V,W : bit;
-  component AND2 is
-    port (X,Y: in bit;
-          Z: out bit);
-  end component AND2;
-  component OR2 is
-    port (X,Y: in bit;
-          Z: out bit);
-  end component OR2;
-  component INV is
-    port (X: in bit;
-          Z: out bit);
-    end component INV;
-begin
-  Gate1: component INV  port map (X=>S,Z=>U);
-  Gate2: component AND2 port map (X=>A,Y=>S,Z=>W);
-  Gate3: component AND2 port map (U,B,V);
-  Gate4: component OR2  port map (X=>W,Y=>V,Z=>Y);
-end Struct;
-\end{lstlisting}
-\caption{2-naar-1-multiplexer.}
-\label{vhdl:bToAMultiplexer}
-\end{vhdlcode}
+\importvhdl{comb-struc-mux}{2-naar-1-multiplexer.}
 \subsubsection{Gedragsbeschrijving}
-\begin{vhdlcode}[hbt]
-\centering
-\begin{lstlisting}
--- Opteller
---
-library ieee;
-use ieee.std_logic_signed.all;
-
-entity adder is
-  generic(n : positive := 4);
-  port(Cin : in std_logic;
-       X,Y : in std_logic_vector(n-1 downto 0);
-       S   : in std_logic_vector(n-1 downto 0);
-       Cout, Overflow : out std_logic);
-end adder;
-
-architecture behav of adder is
-  signal Sum : std_logic_vector(n downto 0);
-begin
-  Sum <= (X(n-1) & X) + Y + Cin;
-  S <= Sum(n-1 downto 0);
-  Cout <= Sum(n);
-  Overflow <= Sum(n) xor X(n-1) xor Y(n-1) xor Sum(n-1);
-end behav;
-\end{lstlisting}
-\caption{$n$-bit Opteller.}
-\label{vhdl:adder}
-\end{vhdlcode}
+\importvhdl{comb-behav-add}{$n$-bit Opteller.}
 \subsubsection{Repetitieve structuren}
 \ssclab{combinatorischVHDLHardware}
 \section{Sequenti\"ele schakelingen in VHDL}

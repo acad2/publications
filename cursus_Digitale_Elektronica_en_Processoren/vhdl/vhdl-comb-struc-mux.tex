@@ -1,0 +1,22 @@
+-- 2-naar-1 Multiplexer
+--
+architecture Struct of MUX2 is
+  signal U,V,W : bit;
+  component AND2 is
+    port (X,Y: in bit;
+          Z: out bit);
+  end component AND2;
+  component OR2 is
+    port (X,Y: in bit;
+          Z: out bit);
+  end component OR2;
+  component INV is
+    port (X: in bit;
+          Z: out bit);
+    end component INV;
+begin
+  Gate1: component INV  port map (X=>S,Z=>U);
+  Gate2: component AND2 port map (X=>A,Y=>S,Z=>W);
+  Gate3: component AND2 port map (U,B,V);
+  Gate4: component OR2  port map (X=>W,Y=>V,Z=>Y);
+end Struct;
