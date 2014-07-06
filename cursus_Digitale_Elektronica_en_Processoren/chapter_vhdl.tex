@@ -5,12 +5,17 @@ VHDL is een taal waarmee hardware kan worden beschreven. Het wordt gebruikt om e
 %TODO
 \end{chapterintro}
 \minitoc[n]
+
 \section{Elementen van de VHDL-taal}
-In deze sectie zullen we eerst de woordenschat in de VHDL taal bespreken, waarna we de belangrijkste types zullen bespreken samen met het 
+\seclab{vhdl-elem}
+In deze sectie bespreken we de verschillende elementen van de VHDL-taal. Een opsomming van de mogelijke sleutelwoorden en andere karaktersequenties met hun betekenis wordt doorgaans de ``syntax'' van de taal genoemd. In deze sectie lichten we de verschillende sleutelwoorden toe. In de rest van dit hoofdstuk zullen we dan de betekenis (ofwel ``semantiek'') bespreken.
+
 \subsection{Lexicale elementen (woordenschat)}
+\seclab{vhdl-elem-syntax}
 Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen die men \termen{tokens} noemt. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De tokens kunnen verder worden onderverdeeld in: \termen{literals} (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), \termen{identifiers} (dit zijn namen van variabelen, functies, componenten,... gebruikt om naar te refereren en defini\"eren), \termen{scheidingstekens}\footnote{Engels: \emph{delimiters}.} (haakjes en andere symbolen die waardes en identifiers combineren) en \termen{commentaar}. We beschrijven de verschillende soorten tokens verder in de volgende subsecties.
 
 \subsection{Literals}
+\seclab{vhdl-elem-lit}
 We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en bitreeksen. We overlopen de verschillende types. In VHDL is er ook nog sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, deze literals worden niet beschouwd.
 
 \paragraph{Getal}Een getal (ook wel ``\vhdltermen{abstract literal}'' genoemd) is een numerieke waarde. Net als bij programmeertalen onderscheid men verschillende soorten numerieke waarden:
@@ -27,10 +32,13 @@ Getallen worden standaard in decimale notatie uitgedrukt. Men kan ze ook in expo
 \paragraph{Karakterreeks}
 Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een sequentie karakters op, dus een tekstfragment. In \texttt{Java} noemt men een dergelijk type een \texttt{String}. Deze reeks wordt tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst, bijvoorbeeld \texttt{"Hello World!"}. Een probleem doet zich voor wanneer we de dubbele aanhalingstekens (\texttt{"}) zelf in het tekstfragment willen gebruiken. In dat geval dienen we de aanhalingstekens dubbel te plaatsen, bijvoorbeeld:
 \begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}
+
 \paragraph{Bitreeksen}
 Een \vhdltermen{bitreeks} (ofwel ``\vhdltermen{bit string literal}'') is een sequentie aan bits (dit is een eenheid van informatie die ofwel \texttt{0} ofwel \texttt{1} is). Een bitreeks wordt geschreven als een sequentie van enen en nullen tussen dubbele aanhalingstekens (\vhdltermen{"}). Zoals we al vroeger in deze cursus hebben opgemerkt is zo'n sequentie niet effici\"ent, leesbaar en praktisch. Daarom laat men ook octale  en hexadecimale notatie toe. Hiertoe wordt er een \vhdltermen{B} (binair), \vhdltermen{O} (octaal) of \vhdltermen{X} (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitreeks in een bepaald formaat te lezen. Bij hexadecimale getallen gebruikt men \vhdltermen{a}, \vhdltermen{b}, \vhdltermen{c}, \vhdltermen{d}, \vhdltermen{e} en \vhdltermen{f} om respectievelijk $10$ tot $15$ voor te stellen. Net als bij getallen kan de gebruiker \termen{underscores} (\vhdltermen{\_}) toevoegen om tot meer leesbare code te komen.
+
 \subsection{Identifiers}
 Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \texttt{Java}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
+
 \paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in VHDL: ze verwijzen naar functies die in de VHDL compiler zijn ingebakken. De woorden in \tblref{vhdl-reserved-words} mogen niet gebruikt worden als identifiers.
 
 \importtabulartable{vhdl-reserved-words}{Gereserveerde woorden in VHDL.}
@@ -49,9 +57,11 @@ We onderscheiden opnieuw verschillende soorten scheidingstekens: tekens die oper
 Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \texttt{Java}.
 
 \section{Typesysteem}
+\seclab{vhdl-type}
 VHDL is getypeerd: een variabele slaat data op volgens een bepaald type, dit type geeft een interpretatie aan zowel de data en de operatoren die erop gedefinieerd zijn. De types kunnen bovendien door de programmeur uitgebreid worden. Men vertrekt echter steeds van basistypes.
 
 \subsection{Voorgedefinieerde types}
+\ssclab{vhdl-type-predef}
 Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vhdl-type} geeft een overzicht van de meest populaire basistypes.
 \begin{table}[hbt]
 \centering
@@ -64,6 +74,7 @@ Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. \tblref{vhd
 Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in \tblref{vhdl-type-deriv} samen met hun gereduceerd bereik.
 
 \subsection{Zelf types defini\"eren}
+\ssclab{vhdl-type-selfdef}
 Hoe defini\"eren we nu zelf types? Afhankelijk van het soort type dat we willen bouwen zijn er verschillende mogelijkheden:
 \begin{itemize}
  \item opsomming;
@@ -78,6 +89,7 @@ De lijst is niet exhaustief: VHDL bevat ook constructies om bijvoorbeeld records
 We bespreken de verschillende methodes nu in meer detail.
 
 \subsubsection{Defini\"eren met opsomming}
+\ssslab{vhdl-type-enum}
 We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. Dit doen we na het sleutelwoord \vhdltermen{type} en de identifier voor het type. \vhdlref{type-enum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}. We defini\"eren ook het type \texttt{StateMachine}, dit type bevat drie elementen: \texttt{start}, \texttt{processing} en \texttt{wait} die de ``toestanden'' weergeven van een schakeling die we bijvoorbeeld zouden kunnen willen bouwen.
 
 \importvhdl{type-enum}{Defini\"eren van types door opsomming.}
@@ -87,7 +99,7 @@ In \texttt{Java} is de \texttt{enum} de dichtste imitator van het defini\"eren v
 
 
 \subsubsection{Defini\"eren met subtypering}
-
+\ssslab{vhdl-type-subtype}
 Soms wensen we een type te specificeren die een deelverzameling omvat van een reeds eerder gespecificeerd type. Zo zal een \vhdltermen{integer} alle waarden omvatten die met $32$ bit voor te stellen zijn, het is echter mogelijk dat we bijvoorbeeld een type \texttt{byte} willen specificeren die uitsluitend numerieke waarden bevat die we op $8$ bit kunnen voorstellen. In dat geval gebruiken we het sleutelwoord \vhdltermen{subtype} gevolgd door een identifier die de naam van het type aanduidt, daarna volgt opnieuw het sleutelwoord \vhdltermen{is} en het ``supertype''. VHDL kent twee soorten beperkingen die hierop kunnen volgen: de ``range beperking'' en de ``index beperking''.
 
 \paragraph{}
@@ -105,7 +117,7 @@ Voor vectoren kan men gebruik maken van de ``index constraint''. Deze beperking 
 Er bestaan in \texttt{Java} geen duidelijk equivalent van definities aan de hand van subtypering. Natuurlijk kan men wel subklassen defini\"eren met behulp van het sleutelwoord \texttt{extends}, maar in \texttt{Java} heeft men de mogelijkheid extra velden toe te voegen. De beste analogie is misschien een speciale constructor die bij aanmaak van een object na zal gaan of de gewenste waarde wel degelijk mogelijk is.
 
 \subsubsection{Defini\"eren van fysische types}
-
+\ssslab{vhdl-type-fys}
 Soms dienen we ook te werken met fysische types: types met een zekere eenheid. Zo is de periode van het kloksignaal een tijdsverschil die we dienen uit te drukken in een zekere tijdseenheid.
 
 \paragraph{}
@@ -121,6 +133,7 @@ Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook cons
 
 
 \subsubsection{Defini\"eren van matrices en vectoren (``array aggregate'')}
+\ssslab{vhdl-type-array}
 Tot slot kunnen we ook types ook verder gebruiken bij de constructie van vector- en matrix-types. Dit hebben we bovendien al eerder gedaan: de \vhdltermen{bit\_vector} is een \termen{array aggregate} van het basistype \vhdltermen{bit}.
 
 \paragraph{}
@@ -138,6 +151,7 @@ In het geval van een onbegrensde vector schrijven we als ``index beperking'' de 
 Er bestaat geen equivalentie in \texttt{Java}. Men kan argumenteren dat het declareren van een array een vaste lengte heeft en dus zou kunnen overeenkomen met een begrensde array. Deze begrenzing manifesteert zich echter op instantie-niveau en niet op type-niveau. Wanneer we deze analogie wel zouden gebruiken kan een onbegrensde vector worden gezien als een \texttt{HashMap}.
 
 \section{Objecten}
+\seclab{vhdl-obj}
 Types beschrijven enkel het soort waarden die een \termen{object} (ofwel \termen{instantie}) kunnen voorstellen. Types zijn daarom nuttig omdat de VHDL-compiler consistentie kan controleren. Een programma werkt echter in de eerste plaats met objecten.
 \paragraph{}
 Een object is een benoemd item (aan de hand van een identifier) met een specifieke waarde. We onderscheiden 3 soorten objecten:
@@ -273,7 +287,9 @@ Net zoals \texttt{Java} kent VHDL een mechanisme om eerder gedefinieerde deelpro
 VHDL laat ook ``\termen{overloading}'' toe. Bij overloading kan men eenzelfde functie meerdere malen defini\"eren wanneer het aantal of het type parameters verschilt. Zo kan men een optelling beschrijven op een \vhdltermen{bit\_vector} en een \vhdltermen{integer}, en is de uiteindelijke uitwerking transparant naar de gebruiker toe.
 
 \section{Combinatorische schakelingen in VHDL}
-\seclab{combinatorischVHDL}
+\seclab{combinatorischVHDL}%TODO: remove
+\seclab{vhdl-comb}
+
 Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \sscref{combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
 
 \subsection{Hardwarebeschrijving met VHDL}
@@ -288,10 +304,13 @@ Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te besch
 \ssclab{combinatorischVHDLHardware}
 
 \section{Sequenti\"ele schakelingen in VHDL}
+\seclab{vhdl-seq}
 
 \section{Processoren in VHDL}
+\seclab{vhdl-proc}
 
 \section{VHDL grammatica}
+\seclab{vhdl-gram}
 Een programmeertaal beschrijft men meestal aan de hand van een (geannoteerde) context-vrije grammatica. Zo'n grammatica bestaat uit ``productieregels''. Een productieregel bestaat aan de linkerkant uit een een ``non-terminal'' en aan de rechterkant uit een sequentie van ``terminals'' en non-terminals. Een non-terminal is een symbool waarop verdere productieregels kunnen worden toegepast. Een terminal is een elementen uit de taal zelf, bijvoorbeeld een sleutelwoord of karakter. Een programma is geldig wanneer men vanuit de start-non-terminal een sequentie van terminals kan genereren die equivalent is met dat programma.
 
 \paragraph{}
@@ -301,6 +320,7 @@ Om een grammatica compacter voor te stellen maakt men doorgaans gebruik van extr
 \grmref{vhdl} beschrijft de belangrijkste delen van de VHDL taal. Deze grammatica wordt louter ter illustratie gegeven: het is niet de bedoeling deze grammatica te kennen, het kan echter helpen bij het begrijpen van de VHDL syntax.
 
 \importgram{vhdl}{De belangrijkste delen van de VHDL-grammatica.}
+% 
 \section{Programmeerjargon}
 \seclab{programmingjargon}
 Tijdens het beschrijven van de VHDL taal zijn we verschillende termen tegengekomen die vaak aan bod komen bij programmeertalen in het algemeen. Voor lezers die minder vertrouwd zijn met programmeren volgt hier een beschrijving van deze concepten.
