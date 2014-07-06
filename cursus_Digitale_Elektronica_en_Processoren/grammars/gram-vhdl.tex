@@ -1,6 +1,9 @@
 <type-declaration>:"type",<identifier>,"is",<type-indication>,";".
 <subtype-declaration>:"subtype",<identifier>,"is",<subtype-indication>,";".
 
+<array-type-declaration>:"type",<identifier>,"is","array","(",<type-name>,"range","<>",{",",<type-name>,"range","<>"},")","of",<element-subtype-indication>,";".
+<array-type-declaration>:"type",<identifier>,"is","array",<index-constraint>,"of",<element-subtype-indication>,";".
+
 <constant-declaration>:"constant",<identifier>,{",",<identifier>},<subtype-indication>,[":=",<expression>],";".
 <variable-declaration>:["shared"],"variable",<identifier>,{",",<identifier>},<subtype-indication>,[":=",<expression>],";".
 <signal-declaration>:"signal",<identifier>,{",",<identifier>},<subtype-indication>,["register";"bus"],[":=",<expression>],";".
@@ -11,3 +14,4 @@
 
 <subtype-indication>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
 <type-indication>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
+<element-subtype-indication>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
