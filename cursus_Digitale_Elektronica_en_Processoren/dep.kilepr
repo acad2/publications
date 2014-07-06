@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=../SharedData/importsreferences.sty
+lastDocument=chapter_vhdl.tex
 masterDocument=
 name=dep
 pkg_extIsRegExp=false
@@ -702,6 +702,20 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
+[document-settings,item:vhdl/vhdl-packbody.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:vhdl/vhdl-packhead.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
 [document-settings,item:vhdl/vhdl-sign.tex]
 Bookmarks=
 Encoding=UTF-8
@@ -780,10 +794,10 @@ order=-1
 
 [item:../SharedData/importsreferences.sty]
 archive=true
-column=66
+column=18
 encoding=UTF-8
 highlight=LaTeX
-line=96
+line=146
 mode=LaTeX
 open=true
 order=1
@@ -950,10 +964,10 @@ order=-1
 
 [item:chapter_vhdl.tex]
 archive=true
-column=68
+column=681
 encoding=UTF-8
 highlight=LaTeX
-line=279
+line=302
 mode=LaTeX
 open=true
 order=0
@@ -3658,6 +3672,26 @@ mode=LaTeX
 open=false
 order=-1
 
+[item:vhdl/vhdl-packbody.tex]
+archive=true
+column=65
+encoding=UTF-8
+highlight=LaTeX
+line=2
+mode=LaTeX
+open=true
+order=3
+
+[item:vhdl/vhdl-packhead.tex]
+archive=true
+column=66
+encoding=UTF-8
+highlight=LaTeX
+line=2
+mode=LaTeX
+open=true
+order=4
+
 [item:vhdl/vhdl-sign.tex]
 archive=true
 column=55
@@ -3751,10 +3785,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:../SharedData/importsreferences.sty]
-CursorColumn=66
-CursorLine=96
+CursorColumn=18
+CursorLine=146
 JumpList=
-ViMarks=.,96,0,[,96,0,],96,0
+ViMarks=.,146,17,[,146,14,],146,17
 
 [view-settings,view=0,item:../SharedData/lstlibrarybinlanguage.sty]
 CursorColumn=141
@@ -3841,10 +3875,10 @@ JumpList=
 ViMarks=.,1,17,[,1,8,],1,17
 
 [view-settings,view=0,item:chapter_vhdl.tex]
-CursorColumn=68
-CursorLine=279
+CursorColumn=681
+CursorLine=302
 JumpList=
-ViMarks=.,324,0,[,324,0,],324,14
+ViMarks=.,302,680,[,302,669,],302,680
 
 [view-settings,view=0,item:commusoftScripts.sty]
 CursorColumn=40
@@ -4325,6 +4359,18 @@ CursorColumn=48
 CursorLine=2
 JumpList=
 ViMarks=
+
+[view-settings,view=0,item:vhdl/vhdl-packbody.tex]
+CursorColumn=65
+CursorLine=2
+JumpList=
+ViMarks=.,4,37,[,4,0,],4,37
+
+[view-settings,view=0,item:vhdl/vhdl-packhead.tex]
+CursorColumn=66
+CursorLine=2
+JumpList=
+ViMarks=.,2,65,[,2,4,],2,65
 
 [view-settings,view=0,item:vhdl/vhdl-sign.tex]
 CursorColumn=55
