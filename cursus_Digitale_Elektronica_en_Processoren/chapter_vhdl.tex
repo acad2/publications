@@ -1,5 +1,9 @@
 \chapter{VHDL}
 \chapterquote{In redelijke taal weerklinkt wat in werkelijkheid gebeurt.}{Gerard Bolland, Nederlands taalkundige en filosoof (1854-1922)}
+\begin{chapterintro}
+VHDL is een taal waarmee hardware kan worden beschreven. Het wordt gebruikt om elektronische schakelingen te genereren, simuleren, analyseren, enzovoort.
+%TODO
+\end{chapterintro}
 \minitoc[n]
 \section{Elementen van de VHDL-taal}
 In deze sectie zullen we eerst de woordenschat in de VHDL taal bespreken, waarna we de belangrijkste types zullen bespreken samen met het 
@@ -336,6 +340,14 @@ end behav;
 \section{Sequenti\"ele schakelingen in VHDL}
 \section{Processoren in VHDL}
 \section{VHDL grammatica}
+Een programmeertaal beschrijft men meestal aan de hand van een (geannoteerde) context-vrije grammatica. Zo'n grammatica bestaat uit ``productieregels''. Een productieregel bestaat aan de linkerkant uit een een ``non-terminal'' en aan de rechterkant uit een sequentie van ``terminals'' en non-terminals. Een non-terminal is een symbool waarop verdere productieregels kunnen worden toegepast. Een terminal is een elementen uit de taal zelf, bijvoorbeeld een sleutelwoord of karakter. Een programma is geldig wanneer men vanuit de start-non-terminal een sequentie van terminals kan genereren die equivalent is met dat programma.
+
+\paragraph{}
+Om een grammatica compacter voor te stellen maakt men doorgaans gebruik van extra componenten. Zo zijn elementen aan de rechterkant van een productie-regel tussen vierkante haken optioneel. Ze zijn niet verplicht bij een productieregel. Wel is het zo dat alles wat tussen vierkante haakjes staat samengenomen moet worden: wanneer twee elementen binnen dezelfde vierkante haken staan, worden beide elementen genegeerd, of allebei toegevoegd. Een tweede vorm van syntactische suiker zijn accolades. Deze worden gebruikt bij herhaling van een groep elementen: de elementen binnen acculades worden nul, \'e\'en of meerdere keren herhaald. Doorgaans zal het laatste element binnen de accolades een terminal zijn: het scheidingsteken tussen twee groepen elementen.
+
+\paragraph{}
+\grmref{vhdl} beschrijft de belangrijkste delen van de VHDL taal. Deze grammatica wordt louter ter illustratie gegeven: het is niet de bedoeling deze grammatica te kennen, het kan echter helpen bij het begrijpen van de VHDL syntax.
+
 \importgram{vhdl}{De belangrijkste delen van de VHDL-grammatica.}
 \section{Programmeerjargon}
 \seclab{programmingjargon}
