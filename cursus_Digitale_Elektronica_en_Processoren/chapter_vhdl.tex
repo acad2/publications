@@ -275,15 +275,22 @@ VHDL laat ook ``\termen{overloading}'' toe. Bij overloading kan men eenzelfde fu
 \section{Combinatorische schakelingen in VHDL}
 \seclab{combinatorischVHDL}
 Nu we verschillende schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \sscref{combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
+
 \subsection{Hardwarebeschrijving met VHDL}
+
 \subsubsection{Structurele beschrijving}
 \importvhdl{comb-struc-mux}{2-naar-1-multiplexer.}
+
 \subsubsection{Gedragsbeschrijving}
 \importvhdl{comb-behav-add}{$n$-bit Opteller.}
+
 \subsubsection{Repetitieve structuren}
 \ssclab{combinatorischVHDLHardware}
+
 \section{Sequenti\"ele schakelingen in VHDL}
+
 \section{Processoren in VHDL}
+
 \section{VHDL grammatica}
 Een programmeertaal beschrijft men meestal aan de hand van een (geannoteerde) context-vrije grammatica. Zo'n grammatica bestaat uit ``productieregels''. Een productieregel bestaat aan de linkerkant uit een een ``non-terminal'' en aan de rechterkant uit een sequentie van ``terminals'' en non-terminals. Een non-terminal is een symbool waarop verdere productieregels kunnen worden toegepast. Een terminal is een elementen uit de taal zelf, bijvoorbeeld een sleutelwoord of karakter. Een programma is geldig wanneer men vanuit de start-non-terminal een sequentie van terminals kan genereren die equivalent is met dat programma.
 
@@ -296,3 +303,8 @@ Om een grammatica compacter voor te stellen maakt men doorgaans gebruik van extr
 \importgram{vhdl}{De belangrijkste delen van de VHDL-grammatica.}
 \section{Programmeerjargon}
 \seclab{programmingjargon}
+Tijdens het beschrijven van de VHDL taal zijn we verschillende termen tegengekomen die vaak aan bod komen bij programmeertalen in het algemeen. Voor lezers die minder vertrouwd zijn met programmeren volgt hier een beschrijving van deze concepten.
+
+\begin{description}
+ \item [Overloading] Overloading betekent dat men verschillende betekenissen kan koppelen aan \'e\'en en dezelfde identifier. Door extra informatie kan de compiler echter zelf bepalen welke betekenis aan een oproep moet worden gekoppeld. Zo is het bijvoorbeeld in \texttt{Java} toegestaan om verschillende methodes te defini\"eren met eenzelfde naam, wanneer het aantal parameters of de types van deze parameters anders zijn. Op basis van het aantal parameters en het type van deze parameters weet de \texttt{Java} compiler welke methode moet worden opgeroepen.
+\end{description}
