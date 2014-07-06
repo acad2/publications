@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=grammars/gram-vhdl.tex
+lastDocument=chapter_vhdl.tex
 masterDocument=
 name=dep
 pkg_extIsRegExp=false
@@ -772,7 +772,7 @@ highlight=LaTeX
 line=90
 mode=LaTeX
 open=true
-order=6
+order=3
 
 [item:../SharedData/lstlibrarybinlanguage.sty]
 archive=true
@@ -936,10 +936,10 @@ order=-1
 
 [item:chapter_vhdl.tex]
 archive=true
-column=254
+column=44
 encoding=UTF-8
 highlight=LaTeX
-line=168
+line=339
 mode=LaTeX
 open=true
 order=0
@@ -961,7 +961,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=22
 mode=LaTeX
-open=true
+open=false
 order=8
 
 [item:dep.kilepr]
@@ -992,7 +992,7 @@ highlight=LaTeX
 line=12
 mode=LaTeX
 open=true
-order=7
+order=4
 
 [item:listings/lst-asm-minmaxsum.tex]
 archive=true
@@ -1521,7 +1521,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=1
 mode=LaTeX
-open=true
+open=false
 order=3
 
 [item:tables/tbl-vhdl-reserved-words.tex]
@@ -3631,7 +3631,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=3
 mode=LaTeX
-open=true
+open=false
 order=1
 
 [item:vhdl/vhdl-std-logic-resolution.tex]
@@ -3642,7 +3642,7 @@ highlight=LaTeX
 line=14
 mode=LaTeX
 open=true
-order=5
+order=2
 
 [item:vhdl/vhdl-std-logic.tex]
 archive=true
@@ -3652,7 +3652,7 @@ highlight=LaTeX
 line=14
 mode=LaTeX
 open=true
-order=4
+order=1
 
 [item:vhdl/vhdl-type-enum.tex]
 archive=true
@@ -3701,7 +3701,7 @@ encoding=UTF-8
 highlight=LaTeX
 line=5
 mode=LaTeX
-open=true
+open=false
 order=2
 
 [view-settings,view=0,item:../SharedData/brackets.sty]
@@ -3807,10 +3807,10 @@ JumpList=
 ViMarks=.,1,17,[,1,8,],1,17
 
 [view-settings,view=0,item:chapter_vhdl.tex]
-CursorColumn=254
-CursorLine=168
+CursorColumn=44
+CursorLine=339
 JumpList=
-ViMarks=.,196,57,[,196,57,],196,57
+ViMarks=.,345,757,[,345,757,],345,757
 
 [view-settings,view=0,item:commusoftScripts.sty]
 CursorColumn=40
