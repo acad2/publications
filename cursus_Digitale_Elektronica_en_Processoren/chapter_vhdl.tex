@@ -20,17 +20,17 @@ We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en 
 
 \paragraph{Getal}Een getal (ook wel ``\vhdltermen{abstract literal}'' genoemd) is een numerieke waarde. Net als bij programmeertalen onderscheid men verschillende soorten numerieke waarden:
 \begin{itemize}
-  \item \vhdltermen{universal\_integer}: dit zijn numerieke literals die geen decimale komma (\vhdltermen{.}) bevatten, bijvoorbeeld \verb+1425+. Deze getallen zijn vergelijkbaar met het \texttt{int}-type in \texttt{Java}\footnote{De vergelijking gaat echter niet geheel op: een \texttt{int} is immers beperkt tot $32$ bit en heeft een specifieke representatie.}.
-  \item \vhdltermen{universal\_real}: dit zijn numerieke getallen die wel een decimale komma bevatten. Bijvoorbeeld \verb+1425.1917+. Merk op dat indien er enkel nullen achter de komma staan dat het getal dezelfde waarde heeft als een \vhdltermen{universal\_integer}: \verb+1425.0+, maar daarom niet dezelfde representatie. In \texttt{Java} zouden we dit type voorstellen met bijvoorbeeld een \texttt{float} of \texttt{double}.
+  \item \vhdltermen{universal\_integer}: dit zijn numerieke literals die geen decimale komma (\vhdltermen{.}) bevatten, bijvoorbeeld \verb+1425+. Deze getallen zijn vergelijkbaar met het \texttt{int}-type in \tjava{}\footnote{De vergelijking gaat echter niet geheel op: een \texttt{int} is immers beperkt tot $32$ bit en heeft een specifieke representatie.}.
+  \item \vhdltermen{universal\_real}: dit zijn numerieke getallen die wel een decimale komma bevatten. Bijvoorbeeld \verb+1425.1917+. Merk op dat indien er enkel nullen achter de komma staan dat het getal dezelfde waarde heeft als een \vhdltermen{universal\_integer}: \verb+1425.0+, maar daarom niet dezelfde representatie. In \tjava{} zouden we dit type voorstellen met bijvoorbeeld een \texttt{float} of \texttt{double}.
   \item \vhdltermen{physical types}: dit zijn fysische waarden. Fysische waarden bestaan uit een getal gevolgd door een fysische eenheid. Er wordt een spatie tussen het getal en de eenheid gezet. Bijvoorbeeld: \verb+1818 ns+. Dit type heeft geen echt equivalent in de meeste programmeertalen. Immers redeneren programmeertalen meestal niet over grootheden.
 \end{itemize}
 Getallen worden standaard in decimale notatie uitgedrukt. Men kan ze ook in exponenti\"ele vorm schrijven door het toevoegen van een '\vhdltermen{E}' of `\vhdltermen{e}' op het einde van het getal gevolgd door de exponent, bijvoorbeeld: \verb+14e2+. Om een andere basis te gebruiken, wordt volgend formaat gebruikt: \vhdltermen{base\#literal\#exp}, met de basis tussen 2 en 16. Zo kunnen we $1425$ schrijven als \verb+16#591#+, of $4864$ als \verb+16#13#E2+. Tot slot mag men ook vrij \emph{underscores} (\vhdltermen{\_}) toevoegen in een getal om de code leesbaar te houden. Bijvoorbeeld: \verb+19_171_425+.
 
 
-\paragraph{Karakter} Een karakter (ofwel ``\vhdltermen{character literal}'') slaat een \termen{karakter} (ofwel \termen{character}) op: de eenheid van tekst. Deze literals worden tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst, bijvoorbeeld \verb+'K'+. In \texttt{Java} zou het equivalent van dit type een \texttt{char} zijn.
+\paragraph{Karakter} Een karakter (ofwel ``\vhdltermen{character literal}'') slaat een \termen{karakter} (ofwel \termen{character}) op: de eenheid van tekst. Deze literals worden tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst, bijvoorbeeld \verb+'K'+. In \tjava{} zou het equivalent van dit type een \texttt{char} zijn.
 
 \paragraph{Karakterreeks}
-Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een sequentie karakters op, dus een tekstfragment. In \texttt{Java} noemt men een dergelijk type een \texttt{String}. Deze reeks wordt tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst, bijvoorbeeld \texttt{"Hello World!"}. Een probleem doet zich voor wanneer we de dubbele aanhalingstekens (\texttt{"}) zelf in het tekstfragment willen gebruiken. In dat geval dienen we de aanhalingstekens dubbel te plaatsen, bijvoorbeeld:
+Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een sequentie karakters op, dus een tekstfragment. In \tjava{} noemt men een dergelijk type een \texttt{String}. Deze reeks wordt tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst, bijvoorbeeld \texttt{"Hello World!"}. Een probleem doet zich voor wanneer we de dubbele aanhalingstekens (\texttt{"}) zelf in het tekstfragment willen gebruiken. In dat geval dienen we de aanhalingstekens dubbel te plaatsen, bijvoorbeeld:
 \begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}
 
 \paragraph{Bitreeksen}
@@ -38,7 +38,7 @@ Een \vhdltermen{bitreeks} (ofwel ``\vhdltermen{bit string literal}'') is een seq
 
 \subsection{Identifiers}
 \ssclab{vhdl-elem-idtf}
-Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \texttt{Java}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
+Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \tjava{}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
 
 \paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in VHDL: ze verwijzen naar functies die in de VHDL compiler zijn ingebakken. De woorden in \tblref{vhdl-reserved-words} mogen niet gebruikt worden als identifiers.
 
@@ -57,7 +57,7 @@ We onderscheiden opnieuw verschillende soorten scheidingstekens: tekens die oper
 
 \subsection{Commentaar}
 \ssclab{vhdl-elem-cmmnt}
-Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \texttt{Java}.
+Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \tjava{}.
 
 \section{Typesysteem}
 \seclab{vhdl-type}
@@ -98,7 +98,7 @@ We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Dez
 \importvhdl{type-enum}{Defini\"eren van types door opsomming.}
 
 \paragraph{}
-In \texttt{Java} is de \texttt{enum} de dichtste imitator van het defini\"eren van types aan de hand van opsomming. Immers is het aantal waarden die een \texttt{enum} kan aannemen beperkt. VHDL is echter wel niet (sterk) objectgericht, dus deze analogie gaat slechts gedeeltelijk op.
+In \tjava{} is de \texttt{enum} de dichtste imitator van het defini\"eren van types aan de hand van opsomming. Immers is het aantal waarden die een \texttt{enum} kan aannemen beperkt. VHDL is echter wel niet (sterk) objectgericht, dus deze analogie gaat slechts gedeeltelijk op.
 
 
 \subsubsection{Defini\"eren met subtypering}
@@ -117,7 +117,7 @@ Voor vectoren kan men gebruik maken van de ``index constraint''. Deze beperking 
 \importvhdl{type-sub}{Defini\"eren van types door subtypering.}
 
 \paragraph{}
-Er bestaan in \texttt{Java} geen duidelijk equivalent van definities aan de hand van subtypering. Natuurlijk kan men wel subklassen defini\"eren met behulp van het sleutelwoord \texttt{extends}, maar in \texttt{Java} heeft men de mogelijkheid extra velden toe te voegen. De beste analogie is misschien een speciale constructor die bij aanmaak van een object na zal gaan of de gewenste waarde wel degelijk mogelijk is.
+Er bestaan in \tjava{} geen duidelijk equivalent van definities aan de hand van subtypering. Natuurlijk kan men wel subklassen defini\"eren met behulp van het sleutelwoord \texttt{extends}, maar in \tjava{} heeft men de mogelijkheid extra velden toe te voegen. De beste analogie is misschien een speciale constructor die bij aanmaak van een object na zal gaan of de gewenste waarde wel degelijk mogelijk is.
 
 \subsubsection{Defini\"eren van fysische types}
 \ssslab{vhdl-type-fys}
@@ -132,7 +132,7 @@ VHDL ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten
 \importvhdl{type-fys}{Defini\"eren van fysische types.}
 
 \paragraph{}
-Er is opnieuw geen echt equivalent in \texttt{Java}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{gr} en \texttt{kg} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
+Er is opnieuw geen echt equivalent in \tjava{}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{gr} en \texttt{kg} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
 
 
 \subsubsection{Defini\"eren van matrices en vectoren (``array aggregate'')}
@@ -146,12 +146,12 @@ VHDL kent twee soorten vector-types: begrensde (``constrained'') en ongebonden (
 In het geval van begrensde vectoren specificeren we het type met het sleutelwoord \vhdltermen{type} gevolgd door de identifier van het type. Daarna schrijven we \vhdltermen{is} \vhdltermen{array} daarna volgt de ``index beperking'' (zie eerder) en het sleutelwoord \vhdltermen{of} tot slot dienen we ook het basistype te specificeren. Zoals reeds eerder gezegd hoeft een ``index beperking'' niet altijd te slaan op een bereik van een numerieke index. In \vhdlref{type-matrix} geven we twee voorbeelden. In het eerste geval gebruiken we een numerieke index. In het tweede geval maken we gebruik van het eerder ge\"introduceerde type \texttt{StateMachine} (zie \vhdlref{type-enum}), vermits een opsomming beperkt is in lengte de vector dit bijgevolg ook. Wanneer we meerdimensionale vectoren willen specificeren scheiden we de verschillende indices aan de hand van een komma (\vhdltermen{,}).
 
 \paragraph{}
-In het geval van een onbegrensde vector schrijven we als ``index beperking'' de identifier van een (eerder gedefinieerd) type gevolgd door het \vhdltermen{range} sleutelwoord en daarna het \vhdltermen{<>} scheidingsteken. Een voor de hand liggend type om te gebruiken als index is het \vhdltermen{natural} type: de natuurlijke getallen zoals dit ook als index in \texttt{Java} wordt gebruikt. Onbegrensde vectoren worden meestal als associatieve lijsten opgeslagen: enkel wanneer een index wordt toegekend wordt deze opgeslagen\footnote{Indien de index immers niet begrensd is zou men anders oneindig veel geheugen nodig hebben om zo'n lijst op te slaan.}. Men kan natuurlijk ook combinaties maken van begrensde en onbegrensde indices: bijvoorbeeld een matrix waar de eerste index begrensd is maar de tweede niet. Op \vhdlref{type-matrix} tonen we een voor de hand liggende declaratie van een onbegrensde vector van \vhdltermen{real} objecten.
+In het geval van een onbegrensde vector schrijven we als ``index beperking'' de identifier van een (eerder gedefinieerd) type gevolgd door het \vhdltermen{range} sleutelwoord en daarna het \vhdltermen{<>} scheidingsteken. Een voor de hand liggend type om te gebruiken als index is het \vhdltermen{natural} type: de natuurlijke getallen zoals dit ook als index in \tjava{} wordt gebruikt. Onbegrensde vectoren worden meestal als associatieve lijsten opgeslagen: enkel wanneer een index wordt toegekend wordt deze opgeslagen\footnote{Indien de index immers niet begrensd is zou men anders oneindig veel geheugen nodig hebben om zo'n lijst op te slaan.}. Men kan natuurlijk ook combinaties maken van begrensde en onbegrensde indices: bijvoorbeeld een matrix waar de eerste index begrensd is maar de tweede niet. Op \vhdlref{type-matrix} tonen we een voor de hand liggende declaratie van een onbegrensde vector van \vhdltermen{real} objecten.
 
 \importvhdl{type-matrix}{Defini\"eren van matrix types.}
 
 \paragraph{}
-Er bestaat geen equivalentie in \texttt{Java}. Men kan argumenteren dat het declareren van een array een vaste lengte heeft en dus zou kunnen overeenkomen met een begrensde array. Deze begrenzing manifesteert zich echter op instantie-niveau en niet op type-niveau. Wanneer we deze analogie wel zouden gebruiken kan een onbegrensde vector worden gezien als een \texttt{HashMap}.
+Er bestaat geen equivalentie in \tjava{}. Men kan argumenteren dat het declareren van een array een vaste lengte heeft en dus zou kunnen overeenkomen met een begrensde array. Deze begrenzing manifesteert zich echter op instantie-niveau en niet op type-niveau. Wanneer we deze analogie wel zouden gebruiken kan een onbegrensde vector worden gezien als een \texttt{HashMap}.
 
 \section{Objecten}
 \seclab{vhdl-obj}
@@ -274,17 +274,29 @@ Dit betekent dat wanneer we resolutie $\oplus$ toepassen op twee signalen van ee
 
 \paragraph{}
 \importvhdl{std-logic-resolution}{Implementatie van de \vhdltermen{std\_logic} resolutie-functie in VHDL.}
-\vhdlref{std-logic-resolution} toont hoe we deze resolutie-functie kunnen schrijven in VHDL. Dit code-fragment is bovendien interessant omdat het inzicht heeft in het ontwikkelen van functies en de verschillende attributen die bij een vector horen. In de eerste lijnen van de code defini\"eren we de \texttt{res\_table}: een tabel die de hierboven beschreven functie opslaat. De functie \texttt{resolved} wordt dan gebruikt om voor een vector van signalen met willekeurige grootte een nieuw signaal uit te rekenen. Na de signatuur van de functie volgt een lijst van lokale variabelen, deze komen voor het \vhdltermen{function}-blok. We declareren de resultaat-variabele \texttt{result} en geven deze de standaard waarde \vhdltermen{'Z'}. We controleren vervolgens of de vector een lengte heeft die gelijk is aan $1$. Dit doen we door het \vhdltermen{length} attribuut op te vragen van de vector\footnote{We krijgen toegang tot een attribuut met de \texttt{'}-operator, dit is vergelijkbaar met het punt (\texttt{.}) in \texttt{Java}.}. Indien de vector een lengte heeft van $1$ is de resolutie triviaal: we geven dit element terug. Wanneer er sprake is van meer (of minder) elementen. We doen dit door het \vhdltermen{low} attribuut op te vragen: de laagste (en enige) index. In het andere geval vouwen we de vector aan de hand van de accumulator \texttt{result} en de tabel \texttt{res\_table}. Dit doen we door het \vhdltermen{range} op te vragen: dit is een verzameling van indices die gedefinieerd zijn voor de vector. Indien er dus sprake is van een lege vector is het resultaat \vhdltermen{'Z'}.
+\vhdlref{std-logic-resolution} toont hoe we deze resolutie-functie kunnen schrijven in VHDL. Dit code-fragment is bovendien interessant omdat het inzicht heeft in het ontwikkelen van functies en de verschillende attributen die bij een vector horen. In de eerste lijnen van de code defini\"eren we de \texttt{res\_table}: een tabel die de hierboven beschreven functie opslaat. De functie \texttt{resolved} wordt dan gebruikt om voor een vector van signalen met willekeurige grootte een nieuw signaal uit te rekenen. Na de signatuur van de functie volgt een lijst van lokale variabelen, deze komen voor het \vhdltermen{function}-blok. We declareren de resultaat-variabele \texttt{result} en geven deze de standaard waarde \vhdltermen{'Z'}. We controleren vervolgens of de vector een lengte heeft die gelijk is aan $1$. Dit doen we door het \vhdltermen{length} attribuut op te vragen van de vector\footnote{We krijgen toegang tot een attribuut met de \texttt{'}-operator, dit is vergelijkbaar met het punt (\texttt{.}) in \tjava{}.}. Indien de vector een lengte heeft van $1$ is de resolutie triviaal: we geven dit element terug. Wanneer er sprake is van meer (of minder) elementen. We doen dit door het \vhdltermen{low} attribuut op te vragen: de laagste (en enige) index. In het andere geval vouwen we de vector aan de hand van de accumulator \texttt{result} en de tabel \texttt{res\_table}. Dit doen we door het \vhdltermen{range} op te vragen: dit is een verzameling van indices die gedefinieerd zijn voor de vector. Indien er dus sprake is van een lege vector is het resultaat \vhdltermen{'Z'}.
 
 \paragraph{}
-Zoals men al uit de code kon afleiden bevat het pakket tot slot ook nog vector-types zoals \vhdltermen{std\_logic\_vector} en \vhdltermen{std\_ulogic\_vector}.
+Zoals men al uit de code kan afleiden bevat het pakket tot slot ook nog vector-types zoals \vhdltermen{std\_logic\_vector} en \vhdltermen{std\_ulogic\_vector}.
 
 \section{Bewerkingen}
 \seclab{vhdl-oper}
 
 \section{Bibliotheken}
 \seclab{vhdl-lib}
-Net zoals \texttt{Java} kent VHDL een mechanisme om eerder gedefinieerde deelprogramma's te groeperen in een pakket dat dan in een volgend ontwerp kan worden gebruikt.
+Net zoals \tjava{} kent VHDL een mechanisme om eerder gedefinieerde deelprogramma's te groeperen in een pakket dat dan in een volgend ontwerp kan worden gebruikt. Dit is belangrijk: net zoals men in \tjava{} grote delen van een programma kan hergebruiken voor andere programma's kan men meestal componenten uit een vorig project hergebruiken om nieuwe hardware te beschrijven.
+
+\paragraph{}
+\tvhdl{} maakt gebruik van twee concepten: ``packages'' en ``libraries''.
+
+\paragraph{}
+Een pakket (``package'') groepeert functies, programma's, types, constanten, signalen, structuren, enzovoort die zullen worden gedeeld onder verschillende eenheden. \tvhdl{} kent verschillende standaard pakketten zoals IEEE~1164. Een pakket bestaat doorgaans uit twee delen: de ``pakket declaratie'' (ook wel ``package declaration'') genoemd waarin men samen met de naam van het pakket de verschillende componenten die in het pakket zitten oplijst, en de ``package body'' waarin men de opgelijste delen specificeert en implementeert.
+
+\paragraph{}
+Een bibliotheek (``library'') daarentegen is een plaats waar men code en analyses opslaat. Dit is dus een map of een databank.
+
+\paragraph{}
+Om pakketten te defini\"eren en . De bibliotheken \texttt{work} en \texttt{std} zijn altijd beschikbaar.
 
 \paragraph{}
 VHDL laat ook ``\termen{overloading}'' toe. Bij overloading kan men eenzelfde functie meerdere malen defini\"eren wanneer het aantal of het type parameters verschilt. Zo kan men een optelling beschrijven op een \vhdltermen{bit\_vector} en een \vhdltermen{integer}, en is de uiteindelijke uitwerking transparant naar de gebruiker toe.
@@ -329,5 +341,5 @@ Om een grammatica compacter voor te stellen maakt men doorgaans gebruik van extr
 Tijdens het beschrijven van de VHDL taal zijn we verschillende termen tegengekomen die vaak aan bod komen bij programmeertalen in het algemeen. Voor lezers die minder vertrouwd zijn met programmeren volgt hier een beschrijving van deze concepten.
 
 \begin{description}
- \item [Overloading] Overloading betekent dat men verschillende betekenissen kan koppelen aan \'e\'en en dezelfde identifier. Door extra informatie kan de compiler echter zelf bepalen welke betekenis aan een oproep moet worden gekoppeld. Zo is het bijvoorbeeld in \texttt{Java} toegestaan om verschillende methodes te defini\"eren met eenzelfde naam, wanneer het aantal parameters of de types van deze parameters anders zijn. Op basis van het aantal parameters en het type van deze parameters weet de \texttt{Java} compiler welke methode moet worden opgeroepen.
+ \item [Overloading] Overloading betekent dat men verschillende betekenissen kan koppelen aan \'e\'en en dezelfde identifier. Door extra informatie kan de compiler echter zelf bepalen welke betekenis aan een oproep moet worden gekoppeld. Zo is het bijvoorbeeld in \tjava{} toegestaan om verschillende methodes te defini\"eren met eenzelfde naam, wanneer het aantal parameters of de types van deze parameters anders zijn. Op basis van het aantal parameters en het type van deze parameters weet de \tjava{} compiler welke methode moet worden opgeroepen.
 \end{description}
