@@ -11,11 +11,11 @@ VHDL is een taal waarmee hardware kan worden beschreven. Het wordt gebruikt om e
 In deze sectie bespreken we de verschillende elementen van de VHDL-taal. Een opsomming van de mogelijke sleutelwoorden en andere karaktersequenties met hun betekenis wordt doorgaans de ``syntax'' van de taal genoemd. In deze sectie lichten we de verschillende sleutelwoorden toe. In de rest van dit hoofdstuk zullen we dan de betekenis (ofwel ``semantiek'') bespreken.
 
 \subsection{Lexicale elementen (woordenschat)}
-\seclab{vhdl-elem-syntax}
+\ssclab{vhdl-elem-syntax}
 Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen die men \termen{tokens} noemt. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De tokens kunnen verder worden onderverdeeld in: \termen{literals} (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), \termen{identifiers} (dit zijn namen van variabelen, functies, componenten,... gebruikt om naar te refereren en defini\"eren), \termen{scheidingstekens}\footnote{Engels: \emph{delimiters}.} (haakjes en andere symbolen die waardes en identifiers combineren) en \termen{commentaar}. We beschrijven de verschillende soorten tokens verder in de volgende subsecties.
 
 \subsection{Literals}
-\seclab{vhdl-elem-lit}
+\ssclab{vhdl-elem-lit}
 We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en bitreeksen. We overlopen de verschillende types. In VHDL is er ook nog sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, deze literals worden niet beschouwd.
 
 \paragraph{Getal}Een getal (ook wel ``\vhdltermen{abstract literal}'' genoemd) is een numerieke waarde. Net als bij programmeertalen onderscheid men verschillende soorten numerieke waarden:
@@ -37,6 +37,7 @@ Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een seq
 Een \vhdltermen{bitreeks} (ofwel ``\vhdltermen{bit string literal}'') is een sequentie aan bits (dit is een eenheid van informatie die ofwel \texttt{0} ofwel \texttt{1} is). Een bitreeks wordt geschreven als een sequentie van enen en nullen tussen dubbele aanhalingstekens (\vhdltermen{"}). Zoals we al vroeger in deze cursus hebben opgemerkt is zo'n sequentie niet effici\"ent, leesbaar en praktisch. Daarom laat men ook octale  en hexadecimale notatie toe. Hiertoe wordt er een \vhdltermen{B} (binair), \vhdltermen{O} (octaal) of \vhdltermen{X} (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitreeks in een bepaald formaat te lezen. Bij hexadecimale getallen gebruikt men \vhdltermen{a}, \vhdltermen{b}, \vhdltermen{c}, \vhdltermen{d}, \vhdltermen{e} en \vhdltermen{f} om respectievelijk $10$ tot $15$ voor te stellen. Net als bij getallen kan de gebruiker \termen{underscores} (\vhdltermen{\_}) toevoegen om tot meer leesbare code te komen.
 
 \subsection{Identifiers}
+\ssclab{vhdl-elem-idtf}
 Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \texttt{Java}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
 
 \paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in VHDL: ze verwijzen naar functies die in de VHDL compiler zijn ingebakken. De woorden in \tblref{vhdl-reserved-words} mogen niet gebruikt worden als identifiers.
@@ -46,6 +47,7 @@ Een \vhdltermen{identifier} is een referentie naar een variabele, functie, compo
 We onderscheiden verschillende soorten sleutelwoorden: enerzijds zijn er compiler-directieven zoals bijvoorbeeld \vhdltermen{case} en \vhdltermen{downto}, daarnaast zijn er basis-operaties zoals \vhdltermen{nand} en \vhdltermen{sla}, tot slot zijn er ook type-directieven zoals \vhdltermen{array} en \vhdltermen{signal}. Sommige gereserveerde worden werden pas ge\"introduceerd in VHDL'93, we gaan hier niet verder op in.
 
 \subsection{scheidingstekens}
+\ssclab{vhdl-elem-delim}
 Een \vhdltermen{scheidingsteken} (ofwel ``\vhdltermen{delimiter}'') tenslotte wordt gebruikt om operaties op gegevens uit te voeren, bijvoorbeeld een optelling maar ook een index. De
 scheidingstekens van VHDL worden weergegeven in \tblref{vhdl-delim}.
 
@@ -54,6 +56,7 @@ scheidingstekens van VHDL worden weergegeven in \tblref{vhdl-delim}.
 We onderscheiden opnieuw verschillende soorten scheidingstekens: tekens die operaties voorstellen (zoals \texttt{+} en \texttt{*}), tekens die voorwaarden voorstellen (zoals \texttt{<>}), tekens die tekst afbakenen (zoals \texttt{(} en \texttt{[}) en tekens die aangeven dat twee fragmenten los van elkaar staan (zoals \texttt{,}).
 
 \subsection{Commentaar}
+\ssclab{vhdl-elem-cmmnt}
 Commentaar zijn delen van de code die genegeerd worden door de VHDL-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \texttt{Java}.
 
 \section{Typesysteem}
@@ -319,7 +322,7 @@ Om een grammatica compacter voor te stellen maakt men doorgaans gebruik van extr
 \paragraph{}
 \grmref{vhdl} beschrijft de belangrijkste delen van de VHDL taal. Deze grammatica wordt louter ter illustratie gegeven: het is niet de bedoeling deze grammatica te kennen, het kan echter helpen bij het begrijpen van de VHDL syntax.
 
-\importgram{vhdl}{De belangrijkste delen van de VHDL-grammatica.}
+\importvhdlgram{vhdl}{De belangrijkste delen van de VHDL-grammatica.}%TODO: package-definitie
 % 
 \section{Programmeerjargon}
 \seclab{programmingjargon}

@@ -92,6 +92,14 @@
 \end{gramf}
 }
 
+\newcommand{\importvhdlgram}[2]{
+\begin{gramf}
+\begin{grammar}[(colon){$\rightarrow$}][(semicolon)$|$][(comma){\,}][(period){\\}][(quote){\begin{tt}}{\end{tt}}][(nonterminal){$\langle$}{$\rangle$}]\input{grammars/gram-#1.tex}\end{grammar}
+\caption{#2}
+\grmlab{#1}
+\end{gramf}
+}
+
 \newcommand{\importtabularsubtable}[2]{
 \subtable[#2]{\importabular{#1}}
 }
