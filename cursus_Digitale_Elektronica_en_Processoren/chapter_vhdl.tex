@@ -338,6 +338,9 @@ Een programmeertaal beschrijft men meestal aan de hand van een (geannoteerde) co
 Om een grammatica compacter voor te stellen maakt men doorgaans gebruik van extra componenten. Zo zijn elementen aan de rechterkant van een productie-regel tussen vierkante haken optioneel. Ze zijn niet verplicht bij een productieregel. Wel is het zo dat alles wat tussen vierkante haakjes staat samengenomen moet worden: wanneer twee elementen binnen dezelfde vierkante haken staan, worden beide elementen genegeerd, of allebei toegevoegd. Een tweede vorm van syntactische suiker zijn accolades. Deze worden gebruikt bij herhaling van een groep elementen: de elementen binnen acculades worden nul, \'e\'en of meerdere keren herhaald. Doorgaans zal het laatste element binnen de accolades een terminal zijn: het scheidingsteken tussen twee groepen elementen.
 
 \paragraph{}
+In een grammatica komen traditioneel veel identifiers voor: namen van allerhande items die op de \'e\'en of andere manier gerelateerd zijn met het type. Een probleem is echter dat een productie-regel verschillende identifiers kunnen bevatten en daarom de betekenis niet altijd duidelijk is. Daarom zullen we non-terminals die eigenlijk identifiers zijn extra annoteren. De non-terminal eindigt op ``-ident''. In werkelijkheid staat er dus een identifier. De prefix geeft echter semantische informatie over de identifier.
+
+\paragraph{}
 \grmref{vhdl} beschrijft de belangrijkste delen van de VHDL taal. Deze grammatica wordt louter ter illustratie gegeven: het is niet de bedoeling deze grammatica te kennen, het kan echter helpen bij het begrijpen van de VHDL syntax.
 
 \importvhdlgram{vhdl}{De belangrijkste delen van de VHDL-grammatica.}%TODO: package-definitie

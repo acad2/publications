@@ -1,21 +1,21 @@
-<type-declaration>:"type",<identifier>,"is",<type-indication>,";".
-<subtype-declaration>:"subtype",<identifier>,"is",<subtype-indication>,";".
+<type-decl>:"type",<ident>,"is",<type-ind>,";".
+<subtype-decl>:"subtype",<ident>,"is",<subtype-ind>,";".
 
-<array-type-declaration>:"type",<identifier>,"is","array","(",<type-name>,"range","\textless\textgreater",\{",",<type-name>,"range","\textless\textgreater"\},")","of",<element-subtype-indication>,";".
-<array-type-declaration>:"type",<identifier>,"is","array",<index-constraint>,"of",<element-subtype-indication>,";".
+<arraytype-decl>:"type",<ident>,"is","array","(",<type-name>,"range","\textless\textgreater",\{",",<type-name>,"range","\textless\textgreater"\},")","of",<elem-subtype-ind>,";".
+<arraytype-decl>:"type",<ident>,"is","array",<index-constraint>,"of",<elem-subtype-ind>,";".
 
-<constant-declaration>:"constant",<identifier>,\{",",<identifier>\},<subtype-indication>,[":=",<expression>],";".
-<variable-declaration>:["shared"],"variable",<identifier>,\{",",<identifier>\},<subtype-indication>,[":=",<expression>],";".
-<signal-declaration>:"signal",<identifier>,\{",",<identifier>\},<subtype-indication>,["register";"bus"],[":=",<expression>],";".
+<const-decl>:"constant",<ident>,\{",",<ident>\},<subtype-ind>,[":=",<expression>],";".
+<var-decl>:["shared"],"variable",<ident>,\{",",<ident>\},<subtype-ind>,[":=",<expression>],";".
+<signl-decl>:"signal",<ident>,\{",",<ident>\},<subtype-ind>,["register";"bus"],[":=",<expression>],";".
 
-<package-declaration>:"package",<identifier>,"is",\{<type-declaration>;<subtype-declaration>;<array-type-declaration>;<constant-declaration>;<variable-declaration>;<signal-declaration>;<component-declaration>;<use-clause>\},"end",["package"],[<package-name-identifier>],";".
-<library-clause>:"library",<logical-name-identifier>,\{",",<logical-name-identifier>\},";".
+<package-decl>:"package",<ident>,"is",\{<type-decl>;<subtype-decl>;<arraytype-decl>;<const-decl>;<var-decl>;<signl-decl>;<component-declaration>;<use-clause>\},"end",["package"],[<package-name-ident>],";".
+<lib-clause>:"library",<logical-name-ident>,\{",",<logical-name-ident>\},";".
 <use-clause>:"use",<selected-name>.
 
-<package-body>:"package","body",<package-name-identifier>,"is",\{\},"end",["package","body"],[<package-name-identifier>],";".
+<package-body>:"package","body",<package-name-ident>,"is",\{\},"end",["package","body"],[<package-name-ident>],";".
 
-<subtype-indication>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
-<type-indication>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
-<element-subtype-indication>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
+<subtype-ind>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
+<type-ind>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
+<elem-subtype-ind>:[<resolution-function-name>],<type-name>,[<range-constraint>;<index-constraint>].
 
 <selected-name>:<prefix>,".",<suffix>.
