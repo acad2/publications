@@ -1,0 +1,12 @@
+\Function{NodeCover1}{$V,E$}
+\State $W\gets\emptyset$
+\State $V'\gets V$
+\State $E'\gets E$
+\While{$V'\neq\emptyset$}
+\State $v\inr\condset{v}{v\in V':\funm{deg}{v}=\fun{\min_{w\in V'}}{\funm{deg}{w}}}$
+\State $W\gets W\cup\accl{v}$
+\State $V'\gets V'\setminus\accl{v}$
+\State $E'\gets E'\setminus\fun{\delta}{v}$
+\EndWhile
+\State \Return $W$
+\EndFunction

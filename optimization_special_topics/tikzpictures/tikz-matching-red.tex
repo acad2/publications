@@ -1,0 +1,29 @@
+\begin{tikzpicture}[yscale=-1,scale=2]
+\node[draw=black,circle] (N01) at (0,0) {1};
+\node[draw=black,circle] (N02) at (1,0) {2};
+\node[draw=black,circle] (N03) at (-1,1) {3};
+\node[draw=black,circle] (N04) at (0,1) {4};
+\node[draw=black,circle] (N05) at (1,1) {5};
+\node[draw=black,circle] (N06) at (2,1) {6};
+\node[draw=black,circle] (N07) at (-1,2) {7};
+\node[draw=black,circle] (N08) at (0,2) {8};
+\node[draw=black,circle] (N09) at (1,2) {9};
+\node[draw=black,circle] (N10) at (2,2) {10};
+\draw (N01) -- (N02);
+\draw (N01) -- (N03);
+\draw (N01) -- (N04);
+\draw (N02) -- (N06);
+\draw (N03) -- (N04);
+\draw (N04) -- (N05);
+\draw (N04) -- (N07);
+\draw (N05) -- (N06);
+\draw (N05) -- (N09);
+\draw (N06) -- (N10);
+\draw (N07) -- (N08);
+\draw (N08) -- (N09);
+\draw (N09) -- (N10);
+\draw[red] (N01) -- (N06);
+\draw[red] (N03) -- (N07);
+\draw[red] (N04) -- (N10);
+\draw[red] (N05) -- (N08);
+\end{tikzpicture}

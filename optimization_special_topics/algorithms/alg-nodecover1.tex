@@ -1,0 +1,10 @@
+\Function{NodeCover1}{$V,E$}
+\State $W\gets\emptyset$
+\State $E'\gets E$
+\While{$E'\neq\emptyset$}
+\State $v\inr\condset{v}{v\in V:\funm{deg}{v}=\fun{\max_{w\in V}}{\funm{deg}{w}}}$
+\State $W\gets W\cup\accl{v}$
+\State $E\gets E\setminus\fun{\delta}{v}$
+\EndWhile
+\State \Return $W$
+\EndFunction

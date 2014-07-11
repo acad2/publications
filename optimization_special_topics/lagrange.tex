@@ -1,0 +1,366 @@
+\chapter{Lagrangian Relaxation}
+\chplab{lagrange}
+In this chapter we study a concept called \concept{Lagrangian relaxation}. The formulation of many practical \concepts{combinatorial optimization problem} contains several sets of \concepts{constraint}. \concept{Lagrangian relaxation} exploits this property by disregarding one or more sets of \concepts{constraint}. It turns out that this \concept{relaxation} allows one to obtain \concepts{lower bound} (\concepts{upper bound}) for difficult minimization (maximization) problems. In \secref{lagrangeterminology} we introduce some terminology, \secref{lagrangeresult} presents some basic results, in \secref{lagrangeapplication} we describe an application, and \secref{lagrangedual} concludes this chapter by presenting two ways of strengthening the \concept{Lagrangian dual}.
+
+\section{Terminology}
+\seclab{lagrangeterminology}
+
+Consider an \concept{integer program}:
+
+\begin{equation}
+z_{ip}=\funcs{\max}{\vec{c}\cdot\vec{x}}{x\in S},\mbox{ where }S=\condset{\vec{x}\in\ZZZ^n}{\vec{x}\geq\vec{0}\wedge A\cdot\vec{x}\leq\vec{b}},
+\end{equation}
+
+which can be rewritten as an \concept{integer problem} (IP):
+
+\begin{eqnarray}
+\mbox{maximize}&z_{ip}=\vec{c}\cdot\vec{x}\eqnlab{lagragea-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}\leq\vec{b}_1\eqnlab{lagragea-c1}\\
+&A_2\cdot\vec{x}\leq\vec{b}_2\eqnlab{lagragea-c2}\\
+&\vec{x}\geq\vec{0}\eqnlab{lagragea-c3}\\
+&\vec{x}\in\ZZZ^n\eqnlab{lagragea-c4}
+\end{eqnarray}
+
+We are going to assume that $A_2\cdot\vec{x}\leq\vec{b}_2$ are $m-m_1$ ``\concepts{nice constraint}'', say those of an \concept[assignment problem]{assignment} or a \concept{network problem}. By simply dropping the $m_1$ ``\concepts{complicating constraint}'' $A_1\cdot\vec{x}\leq\vec{b}_1$, we obtain a \concept{relaxation} of the \concept{integer problem} (\concept{IP}) that is obviously easier to solve than the problem itself. There are many problems for which the constraints can be \concept[constraint partitioning]{partitioned} in this way. An example will be given in \secref{lagrangedual}.
+
+\paragraph{}
+The idea of dropping constraints can be embedded in a more general framework called \concept{Lagrangian relaxation}. It is convenient to consider a generalization of problem (IP) called \concept{IP(Q)}, which we formulate as follows:
+
+\begin{eqnarray}
+\mbox{maximize}&z_{ip}=\vec{c}\cdot\vec{x}\eqnlab{lagrageb-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}\leq\vec{b}_1\eqnlab{lagrageb-c1}\\
+&\vec{x}\in Q\eqnlab{lagrageb-c2}
+\end{eqnarray}
+
+However, when we are discussing results that are specific to \concept{IP}, it is assumed that $Q=\condset{x\in\ZZZ^n}{\vec{x}\geq\vec{0}\wedge A_2\cdot\vec{x}=\vec{b}_2}\neq\emptyset$. Of course, the problem obtained from \concept{IP(Q)} by dropping the \concepts{complicating constraint}, $A_1\cdot\vec{x}\leq\vec{b}_1$ is much easier to solve than \concept{IP(Q)}. Now, for any $\lambda\in\brak{\RRR^+}^{m_1}$, consider the problem \concept{LR($\vec{\lambda}$)}:
+
+\begin{equation}
+\fun{z_{lr}}{\vec{\lambda}}=\funcs{\max}{\fun{z}{\vec{\lambda},\vec{x}}}{x\in Q},\mbox{ where }\fun{z}{\vec{\lambda},\vec{x}}=\vec{c}\cdot\vec{x}+\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{x}}.
+\end{equation}
+
+The problem \concept{LR($\vec{\lambda}$)} is called the \concept{Lagrangian relaxation} of \concept{IP(Q)} with respect to $A_1\cdot\vec{x}\leq\vec{b}_1$. This terminology is used because the vector $\lambda$ plays a role in \concept{LR($\vec{\lambda}$)} similar to the role of \concepts{Lagrange multiplier} in \concepts{constrained optimization problem}. By our choice, \concept{LR($\vec{\lambda}$)} does not contain the \concepts{complicating constraint}. Instead we have included these constraints in the \concept{objective function} with the ``\concept{penalty term}'' $\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{x}}$. Since $\vec{\lambda}\geq\vec{0}$, violations of $A_1\cdot\vec{x}\leq\vec{b_1}$ make the \concept{penalty term} negative, and thus, intuitively speaking, for suitably large values of $\vec{\lambda}$, one would expect that $A_1\cdot\vec{x}\leq\vec{b}_1$ will be satisfied.
+
+\paragraph{}
+Let us formally state the relation between $z_{ip}$ and $\fun{z_{lr}}{\vec{\lambda}}$:
+\begin{theorem}
+$\fun{z_{lr}}{\vec{\lambda}}\geq z_{ip}$ for all $\vec{\lambda}\geq\vec{0}$.
+\begin{proof}
+If $\vec{x}$ is feasible in \concept{IP(Q)}, then $\vec{x}\in Q$ and hence $\vec{x}$ is feasible for \concept{LR($\vec{\lambda}$)}. Also, $\fun{z}{\vec{\lambda},\vec{x}}=\vec{c}\cdot\vec{x}+\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{x}}\geq\vec{c}\cdot\vec{x}$ for all $\vec{x}$ feasible in \concept{IP(Q)} since $A_1\cdot\vec{x}\leq\vec{b}_1$ and $\vec{\lambda}\geq\vec{0}$.
+\end{proof}
+\end{theorem}
+
+\paragraph{}
+Obviously, one is interested in the \concept{least upper bound} from the infinite family of \concept[lagrange relaxation]{relaxations} $\accl{\funm{LR}{\vec{\lambda}}}_{\vec{\lambda}\geq\vec{0}}$,
+denoted here by $\fun{z_{lr}}{\vec{\lambda}^{\star}}$, where $\vec{\lambda}^{\star}$ is an \concept{optimal solution} to the problem called \concept{LD}:
+
+\begin{equation}
+z_{ld}=\fun{\min_{\vec{\lambda}\geq\vec{0}}}{\fun{z_{lr}}{\vec{\lambda}}}.
+\end{equation}
+
+Problem \concept{LD} is called the \concept{Lagrangian dual} of \concept{IP(Q)} with respect to the \concepts{constraint} $A_1\cdot\vec{x}\leq\vec{b_1}$.
+
+\section{Some results}
+\seclab{lagrangeresult}
+In this section we illustrate the terminology introduced in the previous section with the following example and use this example to derive some results.
+
+\begin{example}
+Consider the following problem.
+
+\begin{eqnarray}
+\mbox{maximize}&7\cdot x_1+2\cdot x_2		\eqnlab{lagragec-m}\\
+\mbox{subject to}&-x_1+2\cdot x_2\leq4		\eqnlab{lagragec-c1}\\
+&6\cdot x_1+x_2\leq24				\eqnlab{lagragec-c2}\\
+&-2\cdot x_1-2\cdot x_2\leq-7			\eqnlab{lagragec-c3}\\
+&-x_1\leq-2					\eqnlab{lagragec-c4}\\
+&x_2\leq4					\eqnlab{lagragec-c5}\\
+&x_1,x_2\in\ZZZ^+				\eqnlab{lagragec-c6}
+\end{eqnarray}
+
+Let $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{\vec{x}\mbox{ satisfies \eqnnrefe{lagragec-c1,lagragec-c2,lagragec-c3,lagragec-c4,lagragec-c5,lagragec-c6}}}$. The \concept{Lagrangian relaxation} (see \secref{lagrangeterminology}) with respect to $-x_1+2\cdot x_2\leq 4$ is: $\fun{z_{lt}}{\lambda}=\funf{\max_{x\in Q}}{7\cdot x_1+2\cdot x_2+\lambda\cdot\brak{4+x_1-2\cdot x_2}}$ or equivalently:
+
+\begin{eqnarray}
+\mbox{maximize}&\brak{7+\lambda}\cdot x_1+\brak{2-2\cdot\lambda}\cdot x_2+4\cdot\lambda\eqnlab{lagraged-m}\\
+\mbox{subject to}&6\cdot x_1+x_2\leq24		\eqnlab{lagraged-c1}\\
+&-2\cdot x_1-2\cdot x_2\leq-7			\eqnlab{lagraged-c2}\\
+&-x_1\leq-2					\eqnlab{lagraged-c3}\\
+&x_2\leq4					\eqnlab{lagraged-c4}\\
+&x_1,x_2\in\ZZZ^+				\eqnlab{lagraged-c5}
+\end{eqnarray}
+
+Notice that $Q$ is a finite set of points, which can be written as follows (see \figref{lagrange-region-ex}):
+\begin{equation}
+\tupl{\vec{q}_1,\vec{q}_2,\vec{q}_3,\vec{q}_4,\vec{q}_5,\vec{q}_6,\vec{q}_7,\vec{q}_8}=\tupl{\tupl{2,2},\tupl{2,3},\tupl{2,4},\tupl{3,1},\tupl{3,2},\tupl{3,3},\tupl{3,4},\tupl{4,0}}.
+\end{equation}
+\end{example}
+
+\importtikzfigure{lagrange-region-ex}{The $Q$ region of the Lagrange relaxation example.}
+
+The example suggests at least two different \concepts{viewpoint}. The first one is to see $\fun{z}{\vec{\lambda},\vec{x}}=\brak{\vec{c}-\lambda\cdot A_1}\cdot\vec{x}+\vec{\lambda}\cdot\vec{b}_1$ as a \concept{linear function} of $\vec{x}$ for fixed $\vec{\lambda}$. It then follows that $\fun{z_{lr}}{\vec{\lambda}}$ can be determined by solving the \concept{linear program}.
+
+\begin{equation}
+\fun{z_{lr}}{\vec{\lambda}}=\funcs{\max}{\fun{z}{\vec{\lambda},\vec{x}}}{\vec{x}\in\funm{conv}{Q}}.
+\end{equation}
+
+In this example,
+
+\begin{equation}
+\funm{conv}{Q}=\condset{\vec{x}\in\brak{\RRR^+}^2}{-x_1\leq-2\wedge x_2\leq4\wedge-x_1-x_2\leq-4\wedge4\cdot x_1+x_2\leq16}.
+\end{equation}
+
+In \figref{lagrange-region-ex}, solid lines indicate the original constraints, the dots correspond to the \concept[feasible integral vertex]{feasible integral vertices}, and the dashed lines correspond to constraints describing $\funm{conv}{Q}$.
+
+\paragraph{}
+Thus, computing $\fun{z_{lr}}{\lambda}$ for $\lambda=0$ and $\lambda=1$ gives:
+
+\begin{eqnarray}
+\fun{z_{lr}}{0}=\funcs{\max}{7\cdot x_1+2\cdot x_2}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{0,\vec{q}_7}=\fun{z}{0,\tupl{3,4}}=29\\
+\fun{z_{lr}}{0}=\funcs{\max}{8\cdot x_1+4}{\vec{x}\in\funm{conv}{Q}}=\fun{z}{1,\vec{q}_8}=\fun{z}{1,\tupl{4,0}}=36
+\end{eqnarray}
+
+As one increases $\lambda$ from $0$, $\fun{z_{lr}}{\lambda}$ first decreases until $\lambda=\dfrac{1}{9}$ and then it increases. In general we obtain
+
+
+\begin{equation}
+\fun{z_{lr}}{\lambda}=\acclguard{\fun{z}{\lambda,\vec{q}_7}=29-\lambda&\xif0\leq\lambda\leq\dfrac{1}{9}\\\fun{z}{\lambda,\vec{q}_8}=28+8\cdot\lambda&\xif\dfrac{1}{9}<\lambda\leq1}.
+\end{equation}
+
+Hence, we can deduce that $z_{ld}=\fun{z_{lr}}{\dfrac{1}{9}}=\fun{z}{\dfrac{1}{9},\vec{q}_7}=\fun{z}{\dfrac{1}{9},\vec{q}_8}=\dfrac{260}{9}$ and $\lambda^{\star}=\dfrac{1}{9}$. Notice that, for $\lambda=\dfrac{1}{9}$, $\vec{q}_7$ as well as $\vec{q}_8$ are optimal with respect to the constraints determining $\funm{conv}{Q}$, and hence the \concept{objective function} - which equals $\dfrac{64}{9}\cdot x_1+\dfrac{16}{9}\cdot x_2$ - must be parallel to $4\cdot x_1+x_2\leq16$. All these calculations can be seen in \figref{lagrange-region-ex}.
+
+\paragraph{}
+The second \concept{viewpoint} is to consider $\fun{z_{lr}}{\vec{\lambda}}$ to be determined by \concept{maximization} over a set of \concepts{discrete point}, that is,
+
+\begin{equation}
+\fun{z_{lr}}{\vec{\lambda}}=\fun{\max_{\vec{q}_i\in Q}}{\fun{z}{\vec{\lambda},\vec{q}_i}}.
+\end{equation}
+
+Observe here that for a fixed $\vec{q}_i$ , $\fun{z}{\vec{\lambda},\vec{q}_i}=\vec{c}\cdot\vec{q}_i+\vec{\lambda}\cdot\brak{\vec{b}_1-A_1\cdot\vec{q}_i}$ is a \concept{linear function} of $\vec{\lambda}$. See \figref{lagrange-dual-ex}, where we have drawn the \concepts{linear function} $\fun{z}{\lambda,q_i}$ for $q_i\in Q$ for the leading example.
+
+
+\importtikzfigure{lagrange-dual-ex}{The lines: (a) $18+2\cdot\lambda$; (b) $20$; (c) $22-2\cdot\lambda$; (d) $23-5\cdot\lambda$; (e) $25+3\cdot\lambda$; (f) $27+\lambda$; (g) $29-\lambda$; (h) $28+8\cdot\lambda$.}
+
+In \figref{lagrange-dual-ex} one can read the values of $\fun{z_{lr}}{\lambda}$ for any value of $\lambda$. We see that $\fun{z_{lr}}{\lambda}$ is concept{piecewise linear} and \concept{convex} (the heavy lines in \figref{lagrange-dual-ex}) and that $z_{ld}=\dfrac{260}{9}$. Formally, one solves the \concept{linear program}:
+
+\begin{equation}
+\fun{z_{lr}}{\lambda}=\funcs{\min}{w}{w\geq\fun{z}{\lambda,q_i}\xfor i=1,2\ldots,8},
+\end{equation}
+
+which shows that $\fun{z_{lr}}{\lambda}$ is the maximum of a finite number of \concepts{linear function} and is therefore \concept{piecewise linear} and \concept{convex}.
+
+\paragraph{}
+We now study how the solution of the \concept{Lagrangian dual} relates to the \concept{solution} of the original problem \concept{IP(Q)}. Returning to \figref{lagrange-region-ex}, notice that when $\lambda=\dfrac{1}{9}$ we obtain:
+
+\begin{eqnarray}
+\dfrac{209}{9}&=&\fun{z}{\dfrac{1}{9},q_7}=\fun{z}{\dfrac{1}{9},q_8}\\
+&=&\fun{z}{\dfrac{1}{9},\dfrac{8}{9}\cdot q_7+\dfrac{1}{9}\cdot q_8}=\fun{z}{\dfrac{1}{9},\dfrac{8}{9}\cdot\tupl{3,4}+\dfrac{1}{9}\cdot\tupl{4,0}}\\
+&=&\fun{z}{\dfrac{1}{9},\tupl{\dfrac{28}{9},\dfrac{32}{9}}}=\fun{z}{\dfrac{1}{9},\vec{q}^{\star}}\xwhere \vec{q}^{\star}=\tupl{\dfrac{28}{9},\dfrac{32}{9}}\\
+&=&\vec{c}\cdot\vec{q}^{\star}+\dfrac{1}{9}\cdot\brak{4+u_1^{\star}-2\cdot u_2^{\star}}=\vec{c}\cdot\vec{q}^{\star}.
+\end{eqnarray}
+
+In other words, by taking a \concept{convex combination} of \concepts{point} in $Q$ (in this example $q_7$ and $q_8$), we obtain a \concept{point} $q^{\star}$ in $\funm{conv}{Q}$ satisfying the complicating \concept{constraint}, for which $\vec{c}\cdot\vec{q}^{\star}=z_{ld}$. This shows that for the example we get $z_{ld}=\funcs{\max}{\vec{c}\cdot\vec{x}}{A_1\cdot\vec{x}\leq\vec{b}_1\wedge\vec{x}\in\funm{conv}{Q}}$. And in fact this holds in general as witnessed by the following theorem which we state without proof.
+
+\begin{theorem}
+$z_{ld}=\funcs{\max}{\vec{c}\cdot\vec{x}}{A_1\cdot\vec{x}\leq\vec{b}_1\wedge\vec{x}\in\funm{conv}{Q}}$.
+\end{theorem}
+
+\paragraph{}
+An interesting question is of course: how good is the bound $z_{ld}$? In general, the difference between $z_{ld}$ and $z_{ip}$ (called the \concept{duality gap}) depends on the sizes of $\funm{conv}{S}$ (which determines $z_{ip}$), $\funm{conv}{Q}\cap\condset{\vec{x}}{A_1\cdot\vec{x}\leq\vec{b}_1}$ (which determines $z_{ld}$) and the \concepts{objective coefficient} $\vec{c}$. A \concept{duality gap} of $0$ can be characterized as follows.
+
+\begin{theorem}
+$z_{ld}=z_{ip}$ for all $\vec{c}$ if and only if:
+\begin{equation}
+\funm{conv}{Q\cap\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}}=\funm{conv}{Q}\cap\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}.
+\end{equation}
+\end{theorem}
+
+\paragraph{}
+Another interesting difference is the difference between $z_{ld}$ and the value of the \concept{LP-relaxation}, denoted by $z_{lp}$. Notice that this only makes sense when $Q=\accl{x\in\brak{\ZZZ^+}^n
+}{A_2\cdot\vec{x}\leq\vec{b}_2}$. We can characterize the case where $z_{lp}=z_{ld}$.
+
+\begin{theorem}
+$z_{ld}=z_{lp}$ for all $\vec{c}$ if all the \concepts{extreme point} of $\condset{\vec{x}\in\brak{\RRR^+}^n}{A_2\cdot\vec{x}\leq\vec{b}_2}$ are \concept{integral}.
+\end{theorem}
+
+It is easily verified that the conditions mentioned in the two previous theorems are not fulfilled by our example. Indeed, we have $28=z_{ip}<z_{ld}=\dfrac{209}{9}<z_{lp}=\dfrac{332}{11}$ (check this !).
+
+\paragraph{}
+In fact, a more natural choice of \concepts{complicating constraint} in our example would lead to different results for $z_{ld}$. If we set $Q=\condset{\vec{x}\in\brak{\ZZZ^+}^2}{-x_1\leq-2\wedge x_2\leq4}$, we find that $\condset{\vec{x}\in\brak{\RRR^+}^2}{-x_1\leq-2\wedge x_2\leq4}$ only has \concepts{integral extreme point} so that by our latest theorem, this \concept{Lagrangian relaxation} would terminate with
+$z_{ld}=z_{lp}=\dfrac{332}{11}$
+
+\paragraph{}
+Summarizing, we have
+\begin{equation}
+\funm{conv}{S}\subseteq\funm{conv}{Q}\cap\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}\subseteq{\vec{x}\in\brak{\RRR^+}^n}{A\cdot\vec{x}\leq\vec{b}}.
+\end{equation}
+
+This implies that $z_{ip}\leq z_{ld}\leq z_{lp}$. But because some faces of the respective \concept[polyhedron]{polyhedra} can \concept{coincide}, we may obtain $z_{ip}=z_{ld}$ or $z_{ld}=z_{lp}$ for a particular $c$ even if the conditions of the two previous theorems do not hold. In \tblref{lagrange-objectives} indicating the possibilities using four different \concepts{objective function} $c_1$, $c_2$, $c_3$ and $c_4$.
+
+\importtabulartable{lagrange-objectives}{Order of objective values.}
+
+\section{An application}
+\seclab{lagrangeapplication}
+
+Suppose there is a set of $n$ \concepts{job} to be assigned to a set of $n$ \concepts{worker}, with $N=\accl{1,2,\ldots,n}$. Suppose further that
+
+\begin{enumerate}
+ \item $c_{ij}$ is the value of assigning \concept{worker} $i$ to \concept{job} $j$,
+ \item $t_{ij}$ is the cost of training \concept{worker} $i$ to do \concept{job} $j$; and
+ \item there is a \concept{training budget} of $b$ \concepts{unit} (this constraint is called the ``\concept{budget constraint}'').
+\end{enumerate}
+
+We wish to maximize the total value of the \concept{assignment} subject to the \concept{budget constraint}, that is
+
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[i]{N}{\sumdomain[j]{N}{c_{ij}\cdot x_{ij}}}\eqnlab{jobwork-m}\\
+\mbox{subject to}&\forall i\in N:\sumdomain[j]{N}{x_{ij}}=1\eqnlab{jobwork-c1}\\
+&\forall j\in N:\sumdomain[i]{M}{l_i\cdot x_{ij}}=1\eqnlab{jobwork-c2}\\
+&\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b\eqnlab{jobwork-c3}\\
+&\forall i\in N,j\in N:x_{ij}\in\accl{0,1}\eqnlab{jobwork-c4}
+\end{eqnarray}
+
+If we wish to use \concept{Lagrangian relaxation} there are different options to consider. Notice that in each of the following four options the relaxed problem \concept{LR($\lambda$)} is considerably easier to solve than the original problem.
+
+\begin{optionenum}
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c3}. Then $\fun{\mbox{LR}_1}{\lambda}$, $\lambda\in\RRR^+$ is an \concept{assignment problem} with \concept{objective function}
+ 
+ \begin{equation}
+ \lambda\cdot b+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-\lambda\cdot t_{ij}}\cdot x_{ij}}}.
+ \end{equation}
+
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} and \eqnref{jobwork-c2}. Then $\fun{\mbox{LR}_2}{\vec{u},\vec{v}}$, $\vec{u},\vec{v}\in\RRR^n$ is a \concept{knapsack problem} with \concept{objective function}
+
+ \begin{equation}
+ \sumdomain[i]{N}{u_i}+\sumdomain[j]{N}{v_j}+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-u_i-v_j}\cdot x_{ij}}}.
+ \end{equation}
+
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} or \eqnref{jobwork-c2}, say \eqnref{jobwork-c1}. Then $\fun{\mbox{LR}_3}{\vec{u}}$, $\vec{u}\in\RRR^n$ is a \concept{knapsack problem} with so-called \concepts{generalized upper bound constraint} and with \concept{objective function}
+
+ \begin{equation}
+ \sumdomain[i]{N}{u_i}+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-u_i}\cdot x_{ij}}}.
+ \end{equation}
+
+ \item \concept{Lagrangian relaxation} with respect to \eqnref{jobwork-c1} or \eqnref{jobwork-c2} and \eqnref{jobwork-c3}, say \eqnref{jobwork-c1} or \eqnref{jobwork-c3}. Only \concepts{generalized upper bound constraint} remain. Thus, $\fun{\mbox{LR}_4}{\vec{u},\lambda}$, $\vec{u}\in\RRR^n$, $\lambda\in\RRR^n$ with \concept{objective function}
+
+ \begin{equation}
+ \lambda\cdot b+\sumdomain[i]{N}{u_i}+\sumdomain[i]{N}{\sumdomain[j]{N}{\brak{c_{ij}-u_i-\lambda\cdot t_{ij}}\cdot x_{ij}}}.
+ \end{equation}
+
+which is \concept[trivial solution]{trivial to solve}. (For each $j$, an $i$ is chosen to maximize $c_{ij}-u_i-\lambda\cdot t_{ij}$, and the corresponding $x_{ij}$ is set to $1$).
+\end{optionenum}
+
+In choosing a \concept{relaxation} there are two major questions to consider: how strong is the \concept{lower bound} $z_{ld}$ and how difficult to solve is the \concept{Lagrangian dual} (LD)? Let us here only consider the \concept[lower bound]{bounds}. When $Q$ is a set of \concepts{assignment constraint} or a set of \concepts{generalized upper bound constraint}, we have that $z_{ld,1}=z_{ld,4}=z_{lp}$. Since
+
+\begin{eqnarray}
+Q_3&=&\condset{X\in\accl{0,1}^{n\times n}}{\forall j\in N:\sumdomain[i]{N}{x_{ij}}=1\xfor j\in N\wedge\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b}\\
+Q_3&\subsetneq&Q_2=\condset{X\in\accl{0,1}^{n\times n}}{\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b}\\
+\xand\funm{conv}{Q_2}&\subsetneq&\condset{X\in\brak{\RRR^+}^{n\times n}}{\sumdomain[i]{N}{\sumdomain[j]{N}{t_{ij}\cdot x_{ij}}}\leq b\wedge\forall i,j\in N:x_{ij}\leq 1},
+\end{eqnarray}
+
+we have
+
+\begin{equation}
+z_{ip}\leq z_{ld,3}\leq z_{ld,2}\leq z_{ld,1}=z_{ld,4}=z_{lp},
+\end{equation}
+
+and each of the \concept[inequality]{inequalities} is strict for some \concept{objective function}.
+
+\section{Strengthening the Lagrangian dual}
+\seclab{lagrangedual}
+
+We now consider two ways of strengthening the \concept{Lagrangian dual} of problem \concept{IP}. The first approach yields a \concept[lagrangian dual]{dual} whose \concept{optimal value} equals
+
+\begin{equation}
+\funcs{\max}{\vec{c}\cdot\vec{x}}{\vec{x}\in\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_1\cdot\vec{y}\leq\vec{b}_1}\cap\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_2\cdot\vec{y}\leq\vec{b}_2}}.
+\end{equation}
+
+This \concept[lagrangian dual]{dual} is obtained by applying \concept{Lagrangian duality} to a reformulation of \concept{IP}, which is called \concept{RIP}:
+
+\begin{eqnarray}
+\mbox{maximize}&z_{ip}=\vec{c}\cdot\vec{x}_1\eqnlab{rip-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}_1\leq\vec{b}_1\eqnlab{rip-c1}\\
+&A_2\cdot\vec{x}_2\leq\vec{b}_2\eqnlab{rip-c2}\\
+&\vec{x}_1-\vec{x}_2=\vec{0}\eqnlab{rip-c3}\\
+&\vec{x}_1,\vec{x_2}\in\in\brak{\ZZZ^+}^n\eqnlab{rip-c4}
+\end{eqnarray}
+
+Taking now $\vec{x}_1-\vec{x}_2=\vec{0}$ as \concepts{complicating constraint}, we obtain the \concept{Lagrangian dual} of \concept{RIP}:
+
+\begin{eqnarray}
+\mbox{maximize}&z_{csd}=\funa{\min_{\vec{u}}}{\funa{\max}{\brak{\vec{c}-\vec{u}\cdot\vec{x}_1+\vec{u}\cdot\vec{x}_2}}}\eqnlab{ripld-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}_1\leq\vec{b}_1\eqnlab{ripld-c1}\\
+&A_2\cdot\vec{x}_2\leq\vec{b}_2\eqnlab{ripld-c2}\\
+&\vec{x}_1,\vec{x_2}\in\in\brak{\ZZZ^+}^n\eqnlab{ripld-c3}
+\end{eqnarray}
+
+or
+
+\begin{eqnarray}
+\mbox{maximize}&z_{csd}=\funa{\min_{\vec{c}_1,\vec{c}_2}}{\fun{\max}{\vec{c}_1\cdot\vec{x}_1}+\fun{\max}{\vec{c}_2\cdot\vec{x}_2}}\eqnlab{ripld-m}\\
+\mbox{subject to}&A_1\cdot\vec{x}_1\leq\vec{b}_1\eqnlab{ripld-c1}\\
+&A_2\cdot\vec{x}_2\leq\vec{b}_2\eqnlab{ripld-c2}\\
+&\vec{x}_1,\vec{x_2}\in\in\brak{\ZZZ^+}^n\eqnlab{ripld-c3}
+\end{eqnarray}
+
+where $\vec{u}=\vec{c}_2$.
+
+\paragraph{}
+A \concept[polyhedron]{polyhedral} interpretation of the \concept[lagrangian dual]{dual} is stated in the next theorem.
+
+\begin{theorem}
+$z_{csd}=\funcs{\max}{\vec{c}\cdot\vec{x}}{\vec{x}\in\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_1\cdot\vec{y}\leq\vec{b}_1}\cap\funmcs{conv}{\vec{y}\in\brak{\ZZZ^+}^n}{A_2\cdot\vec{y}\leq\vec{b}_2}}$ and $z_{csd}\leq z_{ld}$.
+\end{theorem}
+
+
+The technique described is referred to here with \concept[cost splitting]{CS} since this technique has been called \concept{cost splitting}. The technique is useful when
+
+\begin{enumerate}
+ \item $\funmcs{conv}{\vec{x}\in\brak{\ZZZ^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}\subsetneq\condset{\vec{x}\in\brak{\RRR^+}^n}{A_1\cdot\vec{x}\leq\vec{b}_1}$, so for some \concepts{objective function} $c$ we obtain $z_{csd}<z_{ld}$.
+ \item The sets of \concepts{constraint} $A_i\cdot\vec{x}\leq\vec{b}_i$ are simple to deal with separately; that is, the difficulty is caused by their \concept{interaction}.
+\end{enumerate}
+
+In our example, we could take $A_1\cdot\vec{x}\leq\vec{b}_1$ to be \concept{constraint} set \eqnnref{jobwork-c1} and \eqnnref{jobwork-c3} and take $A_2\cdot\vec{x}\leq\vec{b}_2$ to be constraint sets \eqnnref{jobwork-c2} and \eqnnref{jobwork-c3}. This yields $z_{csd}\leq z_{ld,3}$ with the \concept{inequality} strict for some \concepts{objective function} $c$.
+
+\paragraph{}
+Another approach that domiantes the \concept{Lagrangian dual} is the ``\concept{surrogate dual}''. Starting from \concept{IP($Q$)}, with \concepts{weight} $\vec{\lambda}\in\brak{\RRR^+}^{m_1}$ for the \concepts{complicating constraint}, consider the following problem called \concept{SD($\vec{\lambda}$)}.
+
+\begin{equation}
+\fun{z_{sd}}{\lambda}=\funcs{\max}{\vec{c}\cdot\vec{x}}{\vec{\lambda}\cdot A_1\cdot\vec{x}\leq\vec{\lambda}\cdot\vec{b}_1\wedge\vec{x}\in Q}.
+\end{equation}
+
+The problem \concept{SD($\vec{\lambda}$)} is called the \concept{surrogate relaxation} of \concept{IP($Q$)} with respect to $A_1\cdot\vec{x}\leq\vec{b}_1$. \concept{SD($\vec{\lambda}$)} contains a single \concept{complicating constraint}. For instance when $Q=\brak{\ZZZ^+}^n$ the \concept{surrogate relaxation} is a \concept{knapsack problem}. The \concept{surrogate dual} of \concept{IP($Q$)} is the problem denoted by \concept{SD}.
+
+\begin{equation}
+z_{sd}=\fun{\min_{\vec{\lambda}\geq\vec{0}}}{\fun{z_{sd}}{\vec{\lambda}}}.
+\end{equation}
+
+Although the \concept{surrogate dual} can be used computationally, it does not have such nice theoretical properties as the \concept{Lagrangian dual}.
+
+\section*{Exercises}
+\begin{exercise}
+Consider the following problem.
+
+\begin{eqnarray}
+\mbox{maximize}&2\cdot x_1+5\cdot x_2\eqnlab{ex71-m}\\
+\mbox{subject to}&4\cdot x_1+x_2\leq28\eqnlab{ex71-c1}\\
+&x_1+4\cdot x_2\leq27\eqnlab{ex71-c2}\\
+&x_1-5\cdot x_2\leq1\eqnlab{ex71-c3}\\
+&x_1,x_2\in\ZZZ^+\eqnlab{ex71-c4}
+\end{eqnarray}
+
+\begin{enumerate}
+ \item \itmlab{ex-711} Show that if any two \concepts{constraint} are \concept[dual constraint]{dualized}, the value of the \concept{Lagrangian dual} equals the value of the \concept{LP-relaxation}.
+ \item Find an \concept{objective function} for which \itmref{ex-711} is false.
+ \item Show that if any single constraint is \concept[dual constraint]{dualized}, the value of the \concept{Lagrangian dual} is an improvement compared to the value of the \concept{LP-relaxation}.
+ \item Apply \concept{cost-splitting} to get a better \concept{Lagrangian dual}.
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+Construct two \concepts{Lagrangian dual} for the \concept{generalized assignment problem} and discuss their merits.
+
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[i]{M}{\sumdomain[j]{N}{c_{ij}\cdot x_{ij}}}\eqnlab{ex72-m}\\
+\mbox{subject to}&\forall i\in M:\sumdomain[j]{N}{x_{ij}}\leq 1\eqnlab{ex72-c1}\\
+&\forall j\in N:\sumdomain[i]{M}{l_i\cdot x_{ij}}\leq b_j\eqnlab{ex72-c2}\\
+&\forall i\in M,j\in N:x_{ij}\in\accl{0,1}\eqnlab{ex72-c3}
+\end{eqnarray}
+\end{exercise}
