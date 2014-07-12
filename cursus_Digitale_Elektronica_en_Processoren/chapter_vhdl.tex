@@ -297,9 +297,11 @@ op \vhdltermen{bit}, \vhdltermen{boolean}, \vhdltermen{std\_logic} en op afgelei
 Tot slot zijn er nog enkele operaties gedefinieerd op generische\footnote{Onder generisch verstaan we dat het ``element-type'' er niet toe doet} vectoren. Dit zijn de ``\emph{concatenate}'' en de ``\emph{slice}''.
 
 \paragraph{}
-Bij een ``concatenate''\footnote{Nederlands: aaneenschakeling of concatinatie.} voegen we twee vectoren samen in \'e\'en nieuwe vector. Fysisch komt dit dus neer op het bundelen van signalen. Een concatenate wordt aangeduid met de \vhdltermen{\&} operator. Een typisch voorbeeld is een bus die data vanuit verschillende componenten groepeert en doorstuurt. Stel bijvoorbeeld dat twee componenten elk vier bit op de bus willen zetten, kunnen we dit beschrijven zoals in \vhdlref{vector-concat}.
+Bij een ``concatenate''\footnote{Nederlands: aaneenschakeling of concatinatie.} voegen we twee vectoren samen in \'e\'en nieuwe vector. Fysisch komt dit dus neer op het bundelen van signalen. Een concatenate wordt aangeduid met de \vhdltermen{\&} operator: de identifiers van twee vectoren met hetzelfde type worden links en rechts van de operator geschreven, het resultaat is een vector van hetzelfde type met de lengte de som van de lengtes van de twee gegeven vectoren. Een typisch voorbeeld is een bus die data vanuit verschillende componenten groepeert en doorstuurt. Stel bijvoorbeeld dat twee componenten elk vier bit op de bus willen zetten, kunnen we dit beschrijven zoals in \vhdlref{vector-concat}.
 
 \importvhdl{vector-concat}{Vector aaneenschakeling.}
+
+Het voorbeeld is equivalent met het t
 
 \paragraph{}
 Bij een ``slice''\footnote{Nederlands: matrixdeel} halen we een deel van de elementen uit een vector en wordt deze gezien als een op zichzelf staande vector.
