@@ -285,8 +285,9 @@ Zoals men al uit de code kan afleiden bevat het pakket tot slot ook nog vector-t
 We kunnen zoals in \vhdlref{std-logic-resolution} telkens een tabel aanleggen voor de uitvoer van een functie, maar dit is niet echt praktisch. Bovendien is het mogelijk dat we het bereik van een variabele op voorhand niet kennen. \tvhdl{} kent dan ook een groot aantal bewerkingen van verschillende aard. Voor de meeste van deze bewerkingen hebben we in deze cursus al hardware gesynthetiseerd: bijvoorbeeld een opteller, vermenigvuldiger, schuifoperator. In deze sectie geven we een overzicht van de belangrijkste bewerkingen.
 
 \subsection{Logische bewerkingen}
-De logische bewerkingen komen grotendeels overeen met de beschouwden poorten in \chpref{basis}. Dit zijn dus de \vhdltermen{not}, \vhdltermen{and}, \vhdltermen{or}, \vhdltermen{xor}, \vhdltermen{nand}, \vhdltermen{nor} en \vhdltermen{xnor}\footnote{\vhdltermen{xnor} is niet beschikbaar is \tvhdl{}'87.}.
-op \vhdltermen{bit}, \vhdltermen{boolean}, \vhdltermen{std\_logic} en op afgeleide ``array aggregaten''\footnote{Dit op voorwaarde dat de dimensies van de twee arrays identiek zijn, de operatie wordt dan elementgewijs toegepast.}.
+De logische bewerkingen komen grotendeels overeen met de beschouwden poorten in \chpref{basis}. Dit zijn dus de \vhdltermen{not}, \vhdltermen{and}, \vhdltermen{nand}, \vhdltermen{or}, \vhdltermen{nor}, \vhdltermen{xor} en \vhdltermen{xnor}\footnote{\vhdltermen{xnor} is niet beschikbaar is \tvhdl{}'87.}. Behalve de \vhdltermen{not}-operator zijn alle operatoren gedefinieerd met twee operanden. Logische bewerkingen zijn gedefinieerd op logische types zoals \vhdltermen{bit}, \vhdltermen{boolean}, \vhdltermen{std\_logic} en op afgeleide ``array aggregaten'' zoals de \vhdltermen{bit\_vector} en \vhdltermen{std\_logic\_vector}. Een voorwaarde bij deze vectoren is dat ze van dezelfde lengte zijn: wat zou men immers invullen op plaatsen die maar door \'e\'en elementen bepaald zijn?
+
+\paragraph{}
 
 \subsection{Rekenkundige bewerkingen}
 
