@@ -4,7 +4,15 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
+<<<<<<< HEAD
 lastDocument=chapter_vhdl.tex
+=======
+<<<<<<< HEAD
+lastDocument=cursus.tex
+=======
+lastDocument=pgflibraryPCBcomponents.code.tex
+>>>>>>> master
+>>>>>>> master
 masterDocument=
 name=dep
 pkg_extIsRegExp=false
@@ -681,7 +689,39 @@ Highlighting=LaTeX
 Indentation Mode=normal
 Mode=LaTeX
 
+<<<<<<< HEAD
+[document-settings,item:tikzpictures/tikz-synchronization-circuit.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-synchronization-freq.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-synchronization-multi.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-synchronization-problems.tex]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=LaTeX
+Indentation Mode=normal
+Mode=LaTeX
+
+[document-settings,item:tikzpictures/tikz-synchronization-single.tex]
+=======
 [document-settings,item:tikzpictures/tikz-toggleswitch-transistor.tex]
+>>>>>>> master
 Bookmarks=
 Encoding=UTF-8
 Highlighting=LaTeX
@@ -822,10 +862,17 @@ order=-1
 
 [item:../SharedData/importsreferences.sty]
 archive=true
+<<<<<<< HEAD
 column=18
 encoding=UTF-8
 highlight=LaTeX
 line=146
+=======
+column=1
+encoding=UTF-8
+highlight=LaTeX
+line=46
+>>>>>>> master
 mode=LaTeX
 open=false
 order=1
@@ -962,13 +1009,22 @@ order=2
 
 [item:chapter_niet_programmeerbare_processoren.tex]
 archive=true
+<<<<<<< HEAD
+column=88
+=======
 column=12
+>>>>>>> master
 encoding=UTF-8
 highlight=LaTeX
-line=2304
+line=2320
 mode=LaTeX
+<<<<<<< HEAD
+open=true
+order=0
+=======
 open=false
 order=1
+>>>>>>> master
 
 [item:chapter_programmeerbare_processoren.tex]
 archive=true
@@ -1012,7 +1068,30 @@ order=0
 
 [item:commusoftScripts.sty]
 archive=true
+<<<<<<< HEAD
 column=40
+=======
+<<<<<<< HEAD
+column=35
+encoding=UTF-8
+highlight=LaTeX
+line=456
+mode=LaTeX
+open=false
+order=3
+
+[item:cursus.tex]
+archive=true
+column=12
+encoding=UTF-8
+highlight=LaTeX
+line=165
+mode=LaTeX
+open=true
+order=1
+=======
+column=17
+>>>>>>> master
 encoding=UTF-8
 highlight=LaTeX
 line=132
@@ -1028,7 +1107,12 @@ highlight=LaTeX
 line=22
 mode=LaTeX
 open=false
+<<<<<<< HEAD
 order=8
+=======
+order=0
+>>>>>>> master
+>>>>>>> master
 
 [item:dep.kilepr]
 archive=true
@@ -1092,10 +1176,24 @@ order=-1
 
 [item:pgflibraryDEPcomponents.code.tex]
 archive=true
+<<<<<<< HEAD
 column=22
 encoding=UTF-8
 highlight=LaTeX
 line=1316
+=======
+<<<<<<< HEAD
+column=23
+encoding=UTF-8
+highlight=LaTeX
+line=4570
+=======
+column=4
+encoding=UTF-8
+highlight=LaTeX
+line=2289
+>>>>>>> master
+>>>>>>> master
 mode=LaTeX
 open=false
 order=4
@@ -1622,10 +1720,14 @@ order=4
 
 [item:tikzlibraryDEPcomponents.code.tex]
 archive=true
-column=0
+column=150
 encoding=UTF-8
 highlight=LaTeX
+<<<<<<< HEAD
+line=60
+=======
 line=44
+>>>>>>> master
 mode=LaTeX
 open=false
 order=5
@@ -3012,10 +3114,10 @@ order=-1
 
 [item:tikzpictures/tikz-loadregi-cle.tex]
 archive=true
-column=46
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=7
+line=8
 mode=LaTeX
 open=false
 order=5
@@ -3630,15 +3732,69 @@ mode=
 open=false
 order=-1
 
+<<<<<<< HEAD
+[item:tikzpictures/tikz-synchronization-circuit.tex]
+archive=true
+column=17
+=======
 [item:tikzpictures/tikz-toggleswitch-transistor.tex]
 archive=true
 column=36
+>>>>>>> master
+encoding=UTF-8
+highlight=LaTeX
+line=20
+mode=LaTeX
+<<<<<<< HEAD
+open=false
+order=-1
+
+[item:tikzpictures/tikz-synchronization-freq.tex]
+archive=true
+column=11
+encoding=UTF-8
+highlight=LaTeX
+line=14
+mode=LaTeX
+open=false
+order=-1
+
+[item:tikzpictures/tikz-synchronization-multi.tex]
+archive=true
+column=50
 encoding=UTF-8
 highlight=LaTeX
 line=20
 mode=LaTeX
 open=false
+<<<<<<< HEAD
+=======
+order=-1
+
+[item:tikzpictures/tikz-synchronization-problems.tex]
+archive=true
+column=28
+encoding=UTF-8
+highlight=LaTeX
+line=7
+mode=LaTeX
+open=false
+order=-1
+
+[item:tikzpictures/tikz-synchronization-single.tex]
+archive=true
+column=30
+encoding=UTF-8
+highlight=LaTeX
+line=9
+mode=LaTeX
+open=false
+order=-1
+=======
+open=true
+>>>>>>> master
 order=5
+>>>>>>> master
 
 [item:tikzpictures/tikz-twocomplement.tex]
 archive=true
@@ -3843,8 +3999,13 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:../SharedData/importsreferences.sty]
+<<<<<<< HEAD
 CursorColumn=18
 CursorLine=146
+=======
+CursorColumn=1
+CursorLine=46
+>>>>>>> master
 JumpList=
 ViMarks=.,146,17,[,146,14,],146,17
 
@@ -3921,10 +4082,15 @@ JumpList=
 ViMarks=.,75,82,[,75,67,],75,82
 
 [view-settings,view=0,item:chapter_niet_programmeerbare_processoren.tex]
+<<<<<<< HEAD
+CursorColumn=88
+CursorLine=2320
+=======
 CursorColumn=12
 CursorLine=2304
+>>>>>>> master
 JumpList=
-ViMarks=.,2304,48,[,2304,48,],2304,48
+ViMarks=.,2320,88,[,2320,88,],2320,88
 
 [view-settings,view=0,item:chapter_programmeerbare_processoren.tex]
 CursorColumn=30
@@ -3951,8 +4117,31 @@ JumpList=
 ViMarks=.,289,11,[,288,0,],289,11
 
 [view-settings,view=0,item:commusoftScripts.sty]
+<<<<<<< HEAD
 CursorColumn=40
 CursorLine=132
+=======
+<<<<<<< HEAD
+CursorColumn=35
+CursorLine=456
+JumpList=
+ViMarks=.,456,35,[,456,35,],456,35
+
+[view-settings,view=0,item:cursus.tex]
+CursorColumn=12
+CursorLine=165
+JumpList=
+ViMarks=.,197,21,[,197,11,],197,21
+
+[view-settings,view=0,item:pgflibraryDEPcomponents.code.tex]
+CursorColumn=23
+CursorLine=4570
+JumpList=
+ViMarks=.,4650,3,[,4650,3,],4650,3
+=======
+CursorColumn=17
+CursorLine=961
+>>>>>>> master
 JumpList=
 ViMarks=.,446,80,[,446,78,],446,80
 
@@ -3978,7 +4167,12 @@ ViMarks=.,12,0,[,0,0,],-1,-1
 CursorColumn=36
 CursorLine=95
 JumpList=
+<<<<<<< HEAD
 ViMarks=.,228,25,[,228,25,],228,25
+=======
+ViMarks=.,457,19,[,457,19,],457,19
+>>>>>>> master
+>>>>>>> master
 
 [view-settings,view=0,item:pgflibraryWashing.code.tex]
 CursorColumn=0
@@ -4076,11 +4270,17 @@ CursorLine=12
 JumpList=
 ViMarks=
 
+<<<<<<< HEAD
+[view-settings,view=0,item:tikzlibraryDEPcomponents.code.tex]
+CursorColumn=150
+CursorLine=60
+=======
 [view-settings,view=0,item:tables/tbl-infinitemul-code5.tex]
 CursorColumn=0
 CursorLine=0
+>>>>>>> master
 JumpList=
-ViMarks=
+ViMarks=.,60,149,[,60,148,],60,149
 
 [view-settings,view=0,item:tables/tbl-infinitemul-combine5.tex]
 CursorColumn=0
@@ -4311,8 +4511,8 @@ JumpList=
 ViMarks=.,18,36,[,18,31,],18,36
 
 [view-settings,view=0,item:tikzpictures/tikz-loadregi-cle.tex]
-CursorColumn=46
-CursorLine=7
+CursorColumn=17
+CursorLine=8
 JumpList=
 ViMarks=.,7,45,[,7,45,],7,45
 
@@ -4400,11 +4600,43 @@ CursorLine=0
 JumpList=
 ViMarks=
 
+<<<<<<< HEAD
+[view-settings,view=0,item:tikzpictures/tikz-synchronization-circuit.tex]
+CursorColumn=17
+CursorLine=20
+JumpList=
+ViMarks=.,10,94,[,10,93,],10,94
+
+[view-settings,view=0,item:tikzpictures/tikz-synchronization-freq.tex]
+CursorColumn=11
+CursorLine=14
+JumpList=
+ViMarks=.,14,10,[,14,10,],14,10
+
+[view-settings,view=0,item:tikzpictures/tikz-synchronization-multi.tex]
+CursorColumn=50
+CursorLine=20
+JumpList=
+ViMarks=.,20,49,[,20,47,],20,49
+
+[view-settings,view=0,item:tikzpictures/tikz-synchronization-problems.tex]
+CursorColumn=28
+CursorLine=7
+JumpList=
+ViMarks=.,7,27,[,7,27,],7,27
+
+[view-settings,view=0,item:tikzpictures/tikz-synchronization-single.tex]
+CursorColumn=30
+CursorLine=9
+JumpList=
+ViMarks=.,7,131,[,7,131,],7,131
+=======
 [view-settings,view=0,item:tikzpictures/tikz-toggleswitch-transistor.tex]
 CursorColumn=36
 CursorLine=20
 JumpList=
 ViMarks=.,0,16,[,0,16,],0,16
+>>>>>>> master
 
 [view-settings,view=0,item:tikzpictures/tikz-twopnp.tex]
 CursorColumn=48

@@ -1,0 +1,87 @@
+\documentclass[titlepage]{book}
+
+\usepackage{fullpage,importsreferences-en,brackets-en,amsmath,amsthm,amssymb,amsfonts,tikz,makeidx,glossaries,hyperref,enumitem}
+\usetikzlibrary{shapes}
+
+\makeindex
+\makeglossary
+
+\newcommand{\conceptsee}[2]{\toindex{#1}\indexlayout{#1}}
+\newcommand{\concept}[2][]{\ifthenelse{\equal{#1}{}}{\toindex{#2}\indexlayout{#2}}{\toindex{#1}\indexlayout{#2}}}
+\newcommand{\concepts}[1]{\concept[#1]{#1s}}
+
+\newcommand{\indexlayout}[1]{\emph{#1}}
+
+\makeatletter
+\newcommand\toindex{\@ifstar{\@dblarg{\@toindexs}}{\@toindex}}
+\def\@toindexs[#1]#2{\index{#1@#2}}
+\newcommand\@toindex[2][]{%
+  \if\relax\detokenize{#1}\relax
+    %
+    \begingroup
+    \@splitword#2\@nil%
+    \uppercase\expandafter{%
+      \expandafter\def\expandafter\@initial\expandafter{\@first}}%
+    \toks0=\expandafter{\@initial}%
+    \toks2=\expandafter{\@rest}%
+    \edef\x{\endgroup\noexpand\index{\the\toks0 \the\toks2 }}\x
+  \else
+    \index{#1}
+  \fi
+}
+\def\@splitword#1#2\@nil{\def\@first{#1}\def\@rest{#2}}
+\makeatother
+
+\title{Optimization: Special Topics}
+\author{Frits Spieksma\\ \\Edited by:\\Jo Devriendt\\Willem Van Onsem}
+\date{February, 2013\\Edited: February 2014 - June 2014}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}[chapter]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{application}{Application}
+\newtheorem{answer}{Answer}
+\newtheorem{hint}{Hint}
+\newtheorem{note}{Note}
+
+\begin{document}
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+\tableofcontents
+
+\input{preface}
+
+\input{formulation}
+
+\input{integer}
+
+\input{complexity}
+
+\input{lifting}
+
+\input{branch}
+
+\input{approx}
+
+\input{lagrange}
+
+\appendix
+\input{math}
+
+\bibliographystyle{alpha}
+\bibliography{biblio}
+\printindex
+\glsaddall
+\glossarystyle{listgroup}
+\printglossaries
+
+\end{document}

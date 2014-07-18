@@ -1,0 +1,331 @@
+\chapter{Formulations in combinatorial optimization}
+\chplab{formulations}
+In this first chapter, we will give an informal notion of \concepts{combinatorial optimization problem}. The defining characteristic of a \concept{combinatorial optimization problem} is that it has a finite number of \concepts{feasible solution}. We now give \concepts{formulation} of a number of basic \concepts{combinatorial optimization problem}.
+
+\section{Formulations of Basic Combinatorial Optimization Problems}
+\seclab{formulations}
+Below, we present mathematical formulations of some well-known \concepts{combinatorial optimization problem}. Some of these problems can be formulated in a straightforward way. Others, however, have more complicated formulations. Among the latter ones are problems that can be solved very easily by a \concept{greedy algorithm}, like the \concept{spanning tree} problem. Other problems are notoriously hard to solve. This already shows that a \concept{formulation} need not give insight into the problem's difficulty. Moreover, a problem may have several correct \concepts{formulation}. This leads us to a very important question: which \concepts{formulation} are good and which are bad? Clearly, an answer to this question depends on one's goal; we will adopt here a \concept{solver}'s point of view. Thus, a \concept{formulation} is better than another \concept{formulation} when it leads to better \concepts{solution}, or when it produces \concepts{solution} faster.
+
+\paragraph{}
+Almost all \concepts{formulation} will use \concept[binary variable]{binary} or \concepts{integral variable}. This shows that \concept{integer programming} is closely related to (or, as a matter of fact, is itself a problem from the domain of) \concept{combinatorial optimization}.
+
+\subsection{The Matching Problem}
+\ssclab{matching}
+The \concept{Matching} problem (also known as the \conceptsee{Edge packing}{Matching} problem) is one of the fundamental problems in Combinatorial Optimization. It is described as follows.
+
+\begin{definition}[Matching problem]
+We are given an arbitrary \concept{graph} $G=\tupl{V,E}$. A subset of the \concepts{edge} $E'\subseteq E$ is called a \concept{matching} (or an \concept{edge packing}) if each \concept{vertex} of $V$ is \concept{incident} to at most one \concept{edge} of $E'$. In other words, $E'$ is a \concept{matching} if no two edges of $E'$ have a \concept{vertex} in common. The problem is to find a \concept{matching} in $G$ consisting of as many \concepts{edge} as possible (a \concept{maximum cardinality matching}).
+\end{definition}
+
+\importtikzfigure{matching-red}{The red edges form a matching.}
+
+\paragraph{}
+A matching is called \concept[maximum solution]{maximum} when no matching of larger cardinality exists. A matching is called \concept[maximal solution]{maximal} when it cannot be enlarged.
+
+\paragraph{}
+The \concept{matching problem} can be formulated as an \concept{integer program} as follows, where we use the symbol $\fun{\delta}{v}$ to denote the set of edges that are incident to vertex $v\in V$. For instance, in \figref{matching-red}, $\fun{\delta}{v}=\accl{\tupl{3,7},\tupl{4,7},\tupl{7,8}}$. We define a \concept{0-1 variable} for each edge $e\in E$ as follows:
+\begin{equation}
+\semboolvar{x_e}{if edge $e$ is selected in the matching;}{otherwise.}
+\end{equation}
+And here is the integer program:
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[e]{E}{x_e}\eqnlab{matching-m}\\
+\mbox{subject to}&\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1\eqnlab{matching-c1}\\
+&\forall e\in E:x_e\in\accl{0,1}\eqnlab{matching-c2}
+\end{eqnarray}
+
+\paragraph{}
+The \concept{weighted matching} problem is a generalization of the \concept{cardinality matching problem} above by assuming that there is a given \concept{weight function} $\funsig{w}{E}{\RRR}$ defined on the \concepts{edge}. Then, the \concept{objective} is to find a \concept{maximum weight matching}, and the \concept{objective} is changed accordingly to $\max\isumdomain[e]{E}{w_e\cdot x_e}$ (Obviously, it is a generalization, since the \concept{cardinality matching problem} arises when the \concept{weight} $w_e$ for each $e\in E$ is the same positive number). In the \concept{perfect matching} problem the set of \concepts{feasible solution} is restricted to \concepts{perfect matching}. These are \concepts{matching} such that each \concept{vertex} is \concept{incident} to precisely one \concept{edge} in the \concept{matching}; then, constraints \eqnnref{matching-c1} become \concept[equality]{equalities}. Notice that a \concept{perfect matching} may not exist (consider e.g. a \concept{triangle}), whereas there is always a \concept{feasible solution} to \eqnrefr{matching-m}{matching-c2}.
+
+\paragraph{}
+We emphasize that we distinguish between, on the one hand, the \concept{problem} itself, and, on the other hand, its \concept{formulation} as an \concept{integer program}. Indeed, these two are not the same! In fact, in some cases it is appropriate to show the \concept{correctness} of a \concept{formulation}. Such an \concept[correctness argument]{argument} is usually based on a correspondence between \concepts{feasible solution} to the problem, and vectors of \concepts{decision variable} satisfying the \concepts{constraint}.
+
+\paragraph{}
+Let us illustrate this matter for the \concept{matching problem}. Notice that there is a 1-1 correspondence between \concepts{subset} of the set of \concepts{edge} $E$ and the 0-1 \concepts{vector} defined by the \concepts{variable}, which are indexed by the \concepts{edge}. To prove that this \concept{formulation} is correct we must show that there is a 1-1 correspondence between the \concepts{subset} of the \concepts{edge} that define \concepts{matching} and the \concepts{feasible solution} of the above \concept{formulation}. Moreover, we must show that the \concept{matching} and its corresponding \concept{vector} have the same value. This can be done as follows. First, consider an arbitrary \concept{matching} $M$ in a \concept{graph}. By definition, this implies that each \concept{node} $v\in V$ of the \concept{graph} is \concept{incident} with at most one \concept{edge} of $M$ . Let us now construct a \concept{solution vector} $\vec{x}_M$ in a straightforward manner: we put a ``$1$'' in $\vec{x}_M$ when the corresponding \concept{edge} is in $M$, and otherwise we put a ``$0$'' in the \concept{vector} $\vec{x}_M$. Clearly, $\vec{x}_M$ is a \concept{0-1 vector}, and obviously satisfies \eqnref{matching-c2}. Also, the \concept{solution vector} $\vec{x}_M$ corresponding to $M$ satisfies the \concepts{constraint} \eqnref{matching-c1} since at most one of the \concepts{variable} in the left-hand side has value $1$. Thus, a \concept{matching} $M$ corresponds to a \concept{feasible solution} of the \concept{integer program}. Second, consider a \concept{subset} of the \concepts{edge} $E'$ that is \textbf{not} a \concept{matching}. Then there is a \concept{vertex}, say $v$, that is \concept{incident} to at least two \concepts{edge} in $E'$. But then, at least two of the \concepts{variable} in the left-hand side of \eqnref{matching-c1} have value $1$ for this particular \concept{vertex}. Thus, the \concept{vector} corresponding to $E'$ is not \concept{feasible} in the \concept{formulation}. Finally, we observe that the value of each \concept{set} $E'\subseteq E$ is equal to its number of \concepts{edge}, i.e., $\abs{E'}=\isumdomain[e]{E'}{1}=\isumdomain[e]{E}{x_e}$.
+
+\paragraph{}
+In general, it may not be trivial to prove the 1-1 correspondence of \concepts{feasible solution} of a \concept{combinatorial problem} to \concepts{solution} of its \concept{formulation}, i.e., solutions satisfying the \concepts{constraint}. For many problems, however, a \concept{correctness proof} is omitted because the problem is an (extension of) a well-known problem, and the correctness of a formulation is evident.
+
+\subsection{The Independent Set Problem}
+\ssclab{independentset}
+
+Another basic problem within the field of combinatorial optimization is the \concept{Independent set} problem (also known as \conceptsee{Stable set}{independent set}, or as \conceptsee{Node packing}{Independent set}). It can be described as follows.
+
+\begin{definition}[Independent set problem]
+Consider an arbitrary \concept{graph} $G=\tupl{V,E}$. A \concept{subset} of the \concept[vertex]{vertices} $V'\subseteq V$ is called an \concept{independent set} (or a \concept{stable set}, or a \concept{node packing}) if each \concept{edge} of $E$ is \concept{incident} to at most one \concept{vertex} of $V'$. In other words, $V'$ is an \concept{independent set} if no two \concept[vertex]{vertices} of an \concept{edge} are selected both. The problem is to find an \concept{independent set} in $G$ containing as many \concept[vertex]{vertices} as possible (a \concept{maximum cardinality independent set}).
+\end{definition}
+
+The problem can be formulated as an \concept{integer program} as follows. We define a 0-1 \concept{variable} for each \concept{vertex} $v\in V$ as follows:
+\begin{equation}
+\semboolvar{x_v}{if vertex $v$ is selected in the independent set;}{otherwise.}
+\end{equation}
+And here is the \concept{integer program}:
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[v]{V}{x_v}\eqnlab{stableset-m}\\
+\mbox{subject to}&\forall\tupl{v_1,v_2}\in E:x_{v_1}+x_{v_2}\leq 1\eqnlab{stableset-c1}\\
+&\forall v\in V:x_v\in\accl{0,1}\eqnlab{stableset-c2}
+\end{eqnarray}
+
+\importtikzfigure{stableset-red}{A stable set.}
+
+\subsection{The Spanning Forest Problem}
+\ssclab{spanningforest}
+
+We start with a definition for the \concept{spanning forest problem}:
+
+\begin{definition}[Spanning forest problem]
+Consider an \concept{undirected graph} $G=\tupl{V,E}$. A \concept{subset} of the \concepts{edge} $E'\subseteq E$ is called a \concept{forest} if the \concept{subgraph} of $G$ induced by $E'$ is \concept[acyclic graph]{acyclic}, see \figref{forest-red} for an example. In case a \concept{forest} consists of $\abs{V}-1$ edges it is called a \concept{tree}. The problem is to find a \concept{maximum weight forest} in $G$.
+\end{definition}
+
+The problem to find a \concept{maximum weight forest} can be formulated as an \concept{integer program} as follows. We define a 0-1 \concept{variable} for each \concept{edge} $e\in E$ as follows:
+\begin{equation}
+\semboolvar{x_e}{if edge $e$ is selected in the forest;}{otherwise.}
+\end{equation}
+And here is the \concept{integer program}:
+\begin{eqnarray}
+\mbox{maximize}&\sumdomain[e]{E}{w_e\cdot x_e}\eqnlab{forest-m}\\
+\mbox{subject to}&\forall V'\subseteq V:2\leq\abs{V'}\leq\abs{V}:\sumdomain[e]{\fun{\delta}{v_1}\cap\fun{\delta}{v_2},v_1,v_2\in V}{x_e}\leq\abs{V'}-1\eqnlab{forest-c1}\\
+&\forall e\in E:x_e\in\accl{0,1}\eqnlab{forest-c2}
+\end{eqnarray}
+
+\importtikzfigure{forest-red}{The edges in red form a forest.}
+\paragraph{}The \eqncsref{forest-c1} limit the number of chosen \concepts{edge} with both \concept[endvertex]{endvertices} in any given \concept{subset} $V'$ of the \concepts{node} to at most $\abs{V'}-1$. Since a \concept{cycle} contains as many \concepts{edge} as \concepts{vertice}, the \eqncsref{forest-c1} prevent the graph $\tupl{V,E'}$ from containing \concepts{cycle}.
+\paragraph{}
+Notice that the number of \concepts{subset} of $V$ of size $2$ or bigger is $2^{\abs{V}}-\abs{V}-1$. Thus, the number of \eqnref{forest-c1} is exponential in the size of the problem. Thus, the size of the formulation is exponential in the size of the input, although the problem is trivially solvable by a \concept{greedy algorithm}.
+\paragraph{}
+The \concept{spanning tree} problem is a variant of the \concept{spanning forest} problem, where the set of feasible solutions is restricted to those \concept[acyclic graph]{acyclic subgraphs} that are \concept[connected graph]{connected}. It is well-known that for an \concept[acyclic graph]{acyclic subgraph} the requirement of \concept[connected graph]{connectedness} is equivalent to the requirement of having $\abs{V}-1$ \concepts{edge}, i.e., $\abs{E'}=\abs{V}-1$. Thus, by adding the constraint $\isumdomain[e]{E}{x_e}=n-1$ to \eqnnrefr{forest-c1}{forest-c2}, a correct \concept{formulation} of the \concept{minimum weight spanning tree} problem arises.
+
+\subsection{The Knapsack Problem}
+\ssclab{knapsack}
+
+We start this section with the definition of the \concept{knapsack problem}:
+
+\begin{definition}[Knapsack problem]
+We are given a set of $n$ \concepts{item}, each with a \concept{weight} $a_j$ and a \concept{value} $c_j$ for $\rangei[j]{1}{n}$. \concepts{Feasible solution} are the \concepts{subset} of the set of \concepts{item} with \concept{cumulative weight} at most $b$. The objective is to find a \concept{feasible solution} of maximum value.
+\end{definition}
+
+The problem \concept{formulation} contains \concept{binary variable} $x_j$ which indicate whether \concept{item} $j$ with $\rangei[j]{1}{n}$ is in the \concept{knapsack}:
+
+\begin{equation}
+\semboolvar{x_j}{if item $j$ is selected in the knapsack;}{otherwise.}
+\end{equation}
+
+And here is the \concept{integer program}:
+
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[j]{1}{n}{c_j\cdot x_j}\eqnlab{knapsack-m}\\
+\mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot x_j}\leq b\eqnlab{knapsack-c1}\\
+&\forall\rangei[j]{1}{n}:x_j\in\accl{0,1}\eqnlab{knapsack-c2}
+\end{eqnarray}
+In this text, we will come back extensively to the \concept{knapsack problem}. There is a book devoted to this problem, see Kellerer et al.\cite{KelPfePis04}.
+
+\section{Formulations and difficulty}
+\ssclab{difficulty}
+Does the \concept{formulation} of a problem tell us anything about the problem's difficulty? The answer is no, it doesn't. Consider for instance the \concept{matching} problem (\sscref{matching}) and the \concept{stable set} problem (\sscref{independentset}). These problems look similar, since the roles of the \concepts{edge} and \concept[vertex]{vertices} are interchanged. However, there is a striking difference between them. The \concept{matching problem} can be solved in \concept{polynomial time}, but the \concept{node packing problem} is \concept{NP-hard} (see \chpref{complexity}). In other words, whereas, for the \concept{matching problem}, fast and efficient \concepts{algorithm} exist, and have been designed, no such \concepts{algorithm} have been found for the \concept{node packing problem}. Indeed, this does not rule out the possibility that fast \concepts{algorithm} could exist for \concept{node packing}, however, no one has ever found such an \concept{algorithm}. In fact, it is widely suspected that such \concepts{algorithm} do not exist, but a proof of this hypothesis is lacking. All this boils down to the famous, 1 million-dollar worth, P=NP question. In practice, this means that we can find an \concept{optimal solution} to a \concept{matching problem} on a \concept{graph} with, say 10.000 \concepts{node} and 50.000 \concepts{edge} within seconds, while there is no \concept{algorithm} known that would return an \concept{optimal solution} with one hour for the \concept{stable set} instance on the same \concept{graph}. Therefore: a \concept{formulation} does not give an indication of the solvability of a problem. Also, the number of variables and/or constraints is no clue concerning the difficulty of a problem. For instance, the ``natural'' \concept{formulation} of the \concept{minimum spanning tree problem} (see \sscref{spanningforest}) has an exponential number of constraints, while the problem is easily solvable by a \concept{greedy algorithm}.
+
+\section{Multiple formulations of a combinatorial optimization problem}
+\seclab{multipleformulations}
+
+\subsection{Traveling Salesman Problem}
+\ssclab{tsp}
+Probably the most well-known problem in \concept{combinatorial optimization} is the \concept{traveling salesman problem} (\concept{TSP}). The \concept{TSP} is the prototype \concept{combinatorial optimization problem}. No other problem has received as much attention as the \concept{TSP}, and no other problem has captured the imagination as an easy-to-describe, yet hard-to-solve problem. A description of the problem is as follows.
+
+\begin{definition}[Traveling salesman problem]
+Given is a set of $n$ ``\concept[city]{cities}'' and a \concept{distance} $c_{i,j}$ between each pair of them. The goal is to find a \concept{tour} of \concept{minimum length}, that is to start in some \concept{city}, visit each other \concept{city} once, and to return to the \concept{city} where the \concept{tour} was started. More formally, given an $n\times n$ matrix $C=c_{i,j}$, find a permutation $\pi$ of $\accl{1,2,\ldots,n}$ such that $c_{\fun{\pi}{n},\fun{\pi}{1}}+\isumieqb[i]{1}{n-1}{c_{\fun{\pi}{i},\fun{\pi}{i+1}}}$ is minimum.
+\end{definition}
+
+Different \concepts{formulation} of the \concept{TSP} exist. Here is a conventional one, using \concepts{binary variable} $x_{i,j}$ indicating whether \concept{city} $j$ is visited directly after \concept{city} $i$:
+
+\begin{eqnarray}
+\mbox{minimize}&\sumieqb[i]{1}{n}{\sumieqb[j]{1}{n}{c_{i,j}\cdot x_{i,j}}}\eqnlab{tsp-m}\\
+\mbox{subject to}&\forall\rangei[j]{1}{n}:\sumieqb[i]{1}{n}{x_{i,j}}=1\eqnlab{tsp-c1}\\
+&\forall\rangei[i]{1}{n}:\sumieqb[j]{1}{n}{x_{i,j}}=1\eqnlab{tsp-c2}\\
+&\forall S\subsetneq V:2\leq\abs{S}:\sumdomain[i]{S}{\sumdomain[j]{S}{x_{i,j}}}\leq\abs{S}-1\eqnlab{tsp-c3}\\
+&\forall\rangei[i,j]{1}{n}:x_{i,j}\in\accl{0,1}\eqnlab{tsp-c4}
+\end{eqnarray}
+
+\paragraph{}
+\eqncsref{tsp-c3} are called the \concept{subtour elimination constraints}. An equivalent way of writing them is:
+\begin{equation}
+\forall S\subsetneq V:\abs{S}\geq 2:\sumdomain[i]{S}{\sumndomain[j]{S}{x_{i,j}}}\geq 1
+\end{equation}
+
+\paragraph{}
+Notice that this formulation has a polynomial number of \concepts{variable} ($n^2$), and an exponential number of \concepts{constraint} (\bigoh{2^n}). The latter fact might be considered a disadvantage of \concept{formulation} \eqnnrefr{tsp-m}{tsp-c4}.
+
+\paragraph{}
+There is, however, an alternative for this formulation which uses additional \concepts{real variable} $u_i$ , one such \concept{variable} for each \concept{city} $i$. The interpretation of this \concept{variable} is the \concept{position} of \concept{city} $i$ in the \concept{tour}, while putting the \concept{position} of city $1$ first. Next, by replacing \eqncsref{tsp-c3} by the following constraints:
+
+\begin{eqnarray}
+\forall \rangei[i,j]{2}{n}:i\neq j:u_i-u_j+n\cdot x_{i,j}\leq n-1\eqnlab{mtz-c1}\\
+u_1=1\eqnlab{mtz-c2}
+\end{eqnarray}
+
+we arrive at a formulation that is called the \concept{Miller-Tucker-Zemlin (MTZ) formulation} of the TSP. It is an interesting exercise to verify the \concept{correctness} of the \concept{MTZ-formulation}. More concrete: why is it that \eqnnref{mtz-c1} exclude \concepts{subtour}? The answer lies in noticing that: any solution satisfying \eqnnref{tsp-c1}, \eqnnref{tsp-c2}, and \eqnnref{tsp-c4} consists of a collection of \concepts{subtour} (or a \concept{feasible solution}, that is, a single \concept{tour}). In case there are \concepts{subtour}, then there is a \concept{subtour} that does not contain \concept{city} $1$. Let us now, for each pair of consecutive \concept[city]{cities} $i$ and $j$ in this \concept{subtour}, sum the corresponding \concept[inequality]{inequalities} \eqnnref{mtz-c1}. The $u$-variables will cancel out, and the resulting lefthand side will be larger than the resulting righthand side, which means that this \concept{subtour} will be forbidden by \eqnnref{mtz-c1}. Thus, any \concept{subtour} not containing city $1$ will be forbidden, and hence, the only possible solution is a single \concept{tour}.
+
+\paragraph{}
+There is more than one book devoted to the TSP. We mention \emph{Applegate et al.}\cite{Applegate.2006} and \emph{Lawler et al.}\cite{Lawler85}.
+
+\paragraph{}
+We will end this section with a problem for which we have two natural \concepts{formulation}. Both \concepts{formulation} have the same sets of \concepts{variable}, but they have different sets of \concepts{constraint}. Later we will see different \concepts{formulation} of problems where the sets of \concepts{variable} differ.
+
+\subsection{The Uncapacitated Facility Location Problem}
+\ssclab{facilitylocation}
+
+We start with defining the \concept{Uncapacitated facility location problem}:
+
+\begin{definition}[Uncapacitated facility location problem]
+We are given a set of $m$ \concept[facility]{facilities} and $n$ \concepts{client}. Let us call the set of \concept[facility]{facilities} $M\equiv\accl{1,2,\ldots,m}$, and let us call the set of \concepts{client} $N\equiv\accl{1,2,\ldots,n}$. Each of the \concept[facility]{facilities} can (but does not need to be) be opened to serve \concepts{client}. Each \concept{client} must be served by a \concept{facility}. The \concept{cost} for opening \concept{facility} $i$ is $f_i$, $i\in M$; the cost for serving \concept{client} $j$ by \concept{facility} $i$ is $c_{i,j}$, $i\in M$, $j\in N$. The aim is to minimize the total costs, but serve every \concept{client}.
+\end{definition}
+
+This problem can be formulated in two ways with the following sets of \concepts{variable}, defined for each $i\in M$, $j\in N$:
+
+\begin{eqnarray}
+\semboolvar{x_{i,j}}{if facility $j$ serves client $j$;}{otherwise.}\\
+\semboolvar{y_i}{if facility $i$ is open;}{otherwise.}
+\end{eqnarray}
+
+\paragraph{}
+The first \concept{formulation} makes use of the fact that there is an \concept{upper bound} on the number of \concepts{client} that are served by a \concept{facility}, namely the total number of \concepts{client} $n$.
+
+\begin{eqnarray}
+\mbox{minimize}&\sumdomain[i]{M}{\brak{f_i\cdot y_i+\sumdomain[j]{N}{c_{i,j}\cdot x_{i,j}}}}\eqnlab{ufl-ma}\\
+\mbox{subject to}&\forall j\in N:\sumdomain[i]{M}{x_{i,j}}=1\eqnlab{ufl-ca1}\\
+&\forall i\in M:\sumdomain[j]{N}{x_{i,j}}\leq n\cdot y_i\eqnlab{ufl-ca2}\\
+&\forall i\in M,j\in N:x_{i,j},y_i\in\accl{0,1}\eqnlab{ufl-ca3}
+\end{eqnarray}
+
+\paragraph{}
+In the second \concept{formulation}, each of the \eqncsref{ufl-ca2} is disaggregated into $n$ new \concepts{constraint}, leading to \concepts{constraint} \eqncsref{ufl-cb2}.
+
+\begin{eqnarray}
+\mbox{minimize}&\sumdomain[i]{M}{\brak{f_i\cdot y_i+\sumdomain[j]{N}{c_{i,j}\cdot x_{i,j}}}}\eqnlab{ufl-mb}\\
+\mbox{subject to}&\forall j\in N:\sumdomain[i]{M}{x_{i,j}}=1\eqnlab{ufl-cb1}\\
+&\forall i\in M,j\in N:x_{i,j}\leq y_i\eqnlab{ufl-cb2}\\
+&\forall i\in M,j\in N:x_{i,j},y_i\in\accl{0,1}\eqnlab{ufl-cb3}
+\end{eqnarray}
+
+Which of these \concepts{formulation} is preferable is not a matter of comparing the number of \concepts{constraint} or \concepts{variable}. In fact, as will be shown in the sequel, large \concepts{formulation} with many \concepts{constraint} and/or \concepts{variable} are usually better from a \concept{solver}'s point of view. This depends on the techniques that are used to solve the problem. Since these techniques very often rely heavily on \concept{linear programming}, the quality of the \concept{formulation} depends almost always on the accuracy of the \concept{linear programming relaxation}, i.e., the problem which results when the \concepts{integrality constraint} are removed. For the \concept{uncapacitated facility location} problem \concept{formulation} \eqnnrefr{ufl-mb}{ufl-cb3} is better than \eqnnrefr{ufl-ma}{ufl-ca3}, since the \concepts{constraint} \eqncsref{ufl-cb2} imply the \concepts{constraint} \eqncsref{ufl-ca2}.
+
+\section{Combinatorial Optimization: a General Formulation}
+\seclab{generalform}
+In this section we (informally) argue that each \concept{combinatorial optimization problem} can be formulated as an \concept{integer program}. In a \concept{combinatorial optimization problem} a finite \concept{ground set} $E$ is given. To each \concept{element} $e\in E$ a \concept{weight} $w_e$ is attached. A family $\calS$ of subsets of $E$ is identified as the set of \concept{feasible solution}. This family depends on the \concept{particular problem}. The \concept{weight} of a set $E'\subseteq E$ is the \concept{cumulative weight} of its \concepts{element}, i.e., $\fun{w}{E'}=\isumdomain[e]{E'}{w_e}$. The associated \concept{optimization problem} is to find the \concept[maximum weight feasible solution]{maximum} (or \concept[minimum weight feasible solution]{minimum}) weight feasible solution $E'\in S$, i.e.,
+
+\begin{equation}
+\displaystyle\max_{E'\in\calS}\accl{\fun{w}{E'}}
+\end{equation}
+
+\paragraph{}
+The set of \concepts{feasible solution} $\calS$ is usually given implicitly. It is described by the properties of \concepts{feasible solution}; it may be very large. For instance, in case of the \concept{matching problem}, the \concept{ground set} equals the set of \concepts{edge}, and the set $\calS$ is the collection of edge-sets that are \concepts{matching}. In case of the \concept{knapsack problem}, the \concept{ground set} equals the set of items, and the set $\calS$ equals the collection of item-sets that can be put together in the \concept{knapsack}.
+
+\paragraph{}
+Many examples of problems that fit in the above formulation are found in \concept{graph theory} (\secref{formulations}). Among them are well-known problems like the \concept{shortest path problem}, the \concept{minimum spanning tree problem}, and the \concept{traveling salesman problem}. We define some graph theory problems below.
+
+\begin{definition}[Shortest path problem]
+In a \concept{graph} $G=\tupl{V,E}$ the \concepts{feasible solution} are the subsets of the \concepts{edge} that form \concepts{path} between two specified \concept[vertex]{vertices} $s$ and $t$. Among the \concepts{path} between $s$ and $t$ we want to find the one with a minimum number of \concepts{edge}, or if a \concept{length function} is given on the \concepts{edge}, we want to find a \concept{path} of \concept{minimum total length}.
+\end{definition}
+
+\begin{definition}[Minimum spanning tree problem]
+In the \concept{minimum spanning tree problem} a \concept{graph} $G=\tupl{V,E}$ is given together with a \concept{weight function} on the \concepts{edge}. A \concept{feasible solution} is a set of \concepts{edge} that forms a \concept{tree}. Among the \concepts{tree} we want to find one with \concept{minimum weight}. This problem is easily solvable by a \concept{greedy algorithm} like \concept{Prim's algorithm} or \concept{Kruskal's algorithm}.
+
+\begin{definition}[Hamiltonian path problem]
+If we restrict the \concept{minimum spanning tree problem} such that the set of \concepts{feasible solution} only contains \concepts{tree} that form \concepts{path}, the problem becomes the \concept{Hamiltonian path problem}, which is highly \concept{intractable}. Thus, in general, problems do not become simpler when the set of \concepts{feasible solution} is reduced.
+\end{definition}
+
+\paragraph{}
+To formulate a \concept{combinatorial optimization problem} in mathematical terms, we introduce \concepts{decision variable} for all elements of the \concept{ground set} $E$. Each \concept{decision variable} denotes a choice, namely whether the corresponding element is chosen or not. So, a \concept{variable} can have two values, which are usually taken from $\accl{0,1}$. A set $E'\subseteq E$ can be described by a \concept{binary vector} $\vec{x}_{E'}=\brak{x_e}_{e\in E}$ with $n=\abs{E}$ components as follows:
+
+\begin{equation}
+\semboolvar{x_e}{if element $e$ is in $E'$;}{otherwise.}
+\end{equation}
+
+\paragraph{}
+The finite set of \concepts{vector} $X\subseteq\RRR^n$ corresponding to \concepts{feasible solution} from $\calS$ can then be described by means of \concepts{constraint}. In many cases, these \concepts{constraint} are \concept[linear constraint]{linear} and involve \concepts{binary variable}. The \concept{objective function} $\vec{w}$ is usually a \concept{linear function} of the components of $\vec{x}\in X$. The problem is then
+
+\begin{equation}
+\max\condset{\vec{w}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\wedge \vec{x}\in\accl{0,1}^n}
+\end{equation}
+where $A$ and $\vec{b}$ depend on the problem at hand. This type of \concept{formulation} is often called an \concept[Integer linear programming]{Integer (or Binary) Linear Program}, (\concept{ILP}).
+
+\section{General Combinatorial Optimization Problems}
+\seclab{generalcombinatorial}
+
+In the first section, we introduced \concepts{binary variable} to model \concepts{decision} of the yes-no type, more specifically, to decide whether an element is in a set or not. These variables were used further to describe the \concepts{constraint} that determine the \concepts{feasible solution}. In all the examples these constraints could be written as \concepts{linear function} with a \concept{bound} imposed on them. Similarly, the \concept{objective} could be formulated as a \concept{linear function} of the \concepts{variable}. In this section we will generalize the \concepts{formulation} of \concepts{combinatorial problem}, with respect to all three items, i.e., the \concepts{variable}, the \concepts{constraint}, and the \concept{objective}.
+
+\paragraph{}
+The \concepts{decision} in \concepts{combinatorial problem} may be more complicated than simple yes/no decisions. One may have to introduce \concepts{integer variable} or even \concepts{real variable}, like in \concept{linear programming}, to model certain \concepts{decision}. And, of course, combinations of these types of variables are possible in a single problem \concept{formulation}. The combinatorial nature (finite or countable number of feasible solutions) may not be so evident in these problems. However, the number of ``\concepts{interesting feasible solution}'' is usually still finite in such problems. For instance, in \concept{linear programming}, the \concepts{interesting feasible solution} are the \concept[vertex]{vertices} of a \concept{polyhedron}. The number of \concept[vertex]{vertices} is usually finite.
+
+\paragraph{}
+One may consider any function of the \concepts{variable} with a \concept{bound} imposed on it as a \concept{constraint}. Moreover, \concepts{logical composition} of \concepts{constraint}, like \concepts{implication} and \concepts{disjunction} (logical ``or'') can be used to model the restrictions of a problem. In abstracto, any relation on the \concepts{variable} that restricts the set of \concepts{feasible solution} can be used as a \concept{constraint}.
+
+\paragraph{}
+The \concept{objective} of a problem can be any function of the \concepts{variable}, thus it is not restricted to \concepts{linear function}.
+
+\paragraph{}
+The above observations lead to the following \concept{abstract formulation of optimization problems}. We distinguish between the \concepts{real variable}, denoted by the \concept{vector} $\vec{x}$, and the \concepts{integral variable}, denoted by the \concept{vector} $\vec{y}$. A \concept{formulation} of a \concept{combinatorial optimization problem} contains the following items:
+\begin{itemize}
+ \item a vector of $n$ real decision variables:
+ \begin{equation}
+  \vec{x}=\tupl{x_1,x_2,\ldots,x_n}
+ \end{equation}
+ \item a vector of $m$ integral decision variables:
+ \begin{equation}
+  \vec{y}=\tupl{y_1,y_2,\ldots,y_m}
+ \end{equation}
+ \item a set $C$ of $k$ constraints:
+ \begin{equation}
+  C=\accl{C_1,\ldots,C_k}
+ \end{equation}
+ \item an objective function on the variables:
+ \begin{equation}
+  \fun{f}{\vec{x},\vec{y}}
+ \end{equation}
+\end{itemize}
+
+\paragraph{}
+The set of \concepts{feasible solution} consists of \concepts{vector} $\tupl{\vec{x},\vec{y}}$ that satisfy all the \concepts{constraint}. Each \concept{variable} has a \concept{domain} $D$, usually the set of \concepts{real number} $\RRR$, or the set of \concepts{integer} $\ZZZ$. The \concept{solution space} of the problem is the \concept{Cartesian product} of the \concepts{domains} of the \concepts{variable}, i.e., $\RRR^n\times\ZZZ^m$.
+
+\paragraph{}
+For many \concepts{solution technique}, especially the ones that we are going to discuss, it is of eminent importance to restrict the \concepts{domain} of the \concepts{variable} as much as possible. Some \concepts{constraint} imply \concept[lower bound]{lower} and \concepts{upper bound} on the value of a \concept{variable}, directly or indirectly. For instance, \concepts{binary variable} have an \concept[explicit lower bound]{explicit lower} and \concept[explicit upper bound]{upper bound}. If this is the case, we usually take this into account in the problem \concept{formulation} explicitly, i.e., if a \concept{real variable} $x_i$ has a \concept{lower bound} $l_i$ and an \concept{upper bound} $u_i$ , then we describe its \concept{domain} as $\fbrk{l_i,u_i}$; if $y_j$ is an \concept{integral variable}, with a \concept{lower bound} $l_j$ and an \concept{upper bound} $u_j$ , then we describe its domain as $\accl{l_j,l_j+1,\ldots,u_j}$.
+
+\section*{Exercises}
+\begin{exercise}
+Consider the \concept{stable set problem} on an \concept{undirected graph} $G=\tupl{V,E}$. Show that the \concept{formulation} \eqnnrefr{stableset-m}{stableset-c2} is a correct \concept{formulation} of the \concept{stable set problem}.
+\end{exercise}
+\begin{exercise}
+Consider the \concept{matching} depicted in \figref{matching-red}. Is it \concept[maximal solution]{maximal}? Is it \concept[maximum solution]{maximum}?
+\end{exercise}
+\begin{exercise}
+Consider the \concept{stable set} depicted in \figref{stableset-red}. Is it \concept[maximal solution]{maximal}? Is it \concept[maximum solution]{maximum}?
+\end{exercise}
+\begin{exercise}
+Consider an \concept{undirected graph} $G=\tupl{V,E}$. An \concept{edge cover} $E'$ is a subset of the \concepts{edge} such that each \concept{node} is \concept{incident} to at least one \concept{edge} in $E'$. Formulate the problem of finding a \concept{minimum cardinality edge cover} as an \concept{integer linear program}.
+\end{exercise}
+\begin{exercise}
+Consider an \concept{undirected graph} $G=\tupl{V,E}$. A \concept{node cover} $V'$ is a subset of the \concepts{node} such that each \concept{edge} is incident to at least one \concept{node} in $V'$. Formulate the problem of finding a \concept{minimum cardinality node cover} as an \concept{integer linear program}.
+\end{exercise}
+\begin{exercise}
+\exclab{clique-partitioning}
+A \concept{clique partitioning} of an \concept[undirected graph]{undirected}, \concept{complete graph} $G$ is a \concept{partitioning} of the \concept[vertex]{vertices} into subsets $V_1,V_2,\ldots,V_k$ such that the \concept{subgraph} induced by each $V_i$ is a \concept{complete graph} itself ($\rangei[i]{1}{k}$). Consider now a \concept{complete graph} $G$ and an arbitrary \concept{weight} $w_{i,j}$ for each \concept{edge} of the \concept{graph} (notice that $w_{i,j}$ can be negative; in fact, the problem is only interesting when there are both positive and negative \concept{edge} \concepts{weight}). The \concept{objective} is to find a \concept{clique partitioning} of \concept{maximal weight}, that is, a \concept{clique partitioning} such that the \concept{cumulative weight} of the \concepts{edge} that have both \concept[vertex]{vertices} in one and the same component is maximum. Formulate this problem as an \concept{integer linear programming problem}.
+\begin{hint}
+Use a \concept{variable} for each \concept{edge}.
+\end{hint}
+\end{exercise}
+\begin{exercise}
+Consider the \concept{TSP}.
+\begin{itemize}
+ \item When the \concept{distance matrix} $C$ is known to be \concept[symmetric distance matrix]{symmetric}, can you simplify \concept{formulation} \eqnnrefr{tsp-m}{tsp-c4} by ``merging'' \eqncsref{tsp-c1} and \eqnnref{tsp-c2}?
+ \item Which of the two \concepts{formulation} given in \sscref{tsp} is stronger?
+\end{itemize}
+\end{exercise}
+\begin{exercise}\exclab{rectanglestabbing}
+Given is a set of \concepts{axis-aligned rectangle} in the \concept{plane}. Each of these \concepts{rectangle} needs to be stabbed, either by a \concept{horizontal line} or by a \concept{vertical line}. The problem is to find a set \concept[horizontal line]{horizontal} and \concepts{vertical line}, stabbing each \concept{rectangle} at least once, with \concept{minimum cardinality}. We call this the \concept{rectangle stabbing problem}. Formulate this problem as an \concept{integer linear programming problem}.
+\begin{hint}
+First, give a formulation for the instance depicted in \figref{rectanglestabbing}).
+\end{hint}
+\end{exercise}
+\begin{exercise}
+Given an instance of the \concept{rectangle stabbing problem} as depicted in \figref{rectanglestabbing}, what \concept{fractional solution} is the optimal \concept{linear programming relaxation} (of the integer program that you just wrote down) for this instance?
+
+\importtikzfigure{rectanglestabbing}{A rectangle stabbing instance.}
+\end{exercise}

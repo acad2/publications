@@ -759,7 +759,11 @@ $(x\cdot y)'=x'+y'$&$(x+y)'=x'\cdot y'$
 \caption{Booleaanse algebra met meerdere variabelen.}
 \label{tbl:booleanAlgebraMultiple}
 \end{table}
+<<<<<<< HEAD
 \paragraph{Dualiteit}Een opmerkelijke eigenschap bij booleaanse algebra is de dualiteit. Indien we bij een van de wetten uit \tblref{booleanAlgebraNone}, \tblref{booleanAlgebraSingle} of \tblref{booleanAlgebraMultiple}. De OR operaties door AND operaties vervangen en vice-versa, en de 1 door 0 vervangen en vice-versa, bekomen we eenvoudigweg een andere wet uit deze tabellen. Deze eigenschap noemen we de \termen{dualiteit} van de booleaanse algebra. Bovendien geldt ook dat slechts de helft van de gestelde wetten vereist is. Het andere deel kan met de wetten van De Morgan afgeleid worden.
+=======
+\paragraph{Dualiteit}Een opmerkelijke eigenschap bij booleaanse algebra is de dualiteit. Indien we bij een van de wetten uit tabel \ref{tbl:booleanAlgebraNone}, \ref{tbl:booleanAlgebraSingle} of \ref{tbl:booleanAlgebraMultiple} de OR operaties door AND operaties vervangen en vice-versa, en de 1 door 0 vervangen en vice-versa, bekomen we eenvoudigweg een andere wet uit deze tabellen. Deze eigenschap noemen we de \termen{dualiteit} van de booleaanse algebra. Bovendien geldt ook dat slechts de helft van de gestelde wetten vereist is. Het andere deel kan met de wetten van De Morgan afgeleid worden.
+>>>>>>> master
 \paragraph{Verschil met de gewone algebra}Omdat ook de booleaanse algebra een optelling en vermenigvuldiging lijkt te defini\"eren en er bovendien ook analogie\"en te trekken zijn, lijkt het soms dat booleaanse algebra niet verschilt van de standaard algebra. Toch zijn er enkele opmerkelijke verschillen. Zo bestaat er geen verschil of deling in de booleaanse algebra. Verder voldoet in de booleaanse algebra volgend stelsel voor iedere $y$:
 \begin{equation}
 \left\{\begin{array}{l}
@@ -1165,7 +1169,11 @@ Zoals reeds kort vermeld in subsectie \ref{ss:logischePoorten} zijn NAND en NOR 
 \figlab{standardizationNandNor}
 \end{figure}
 \section{Digitaal ontwerp in grote lijnen}
+<<<<<<< HEAD
 Nu we de concepten van een digitaal ontwerp in grote lijnen uitgetekend hebben, kunnen we het over de praktische kant van de zaak hebben. Immers komt bij een digitaal ontwerp veel meer kijken dan alleen het bouwen van de juiste schakeling. Een klant zal immers specificaties sturen waaraan de hardware moet voldoen, bovendien wil de klant naast de hardware vaak ook nog documentatie over hoe men het toestel dient te gebruiken. Bovendien willen we vermijden dat we bij het ontwerpen telkens opnieuw het wiel moeten uitvinden. Er bestaan immers al bibliotheken die allerhande schakelingen voor bijvoorbeeld optellingen, testen op gelijke waarde,... bevatten. Deze zijn meestal met de nodige zorg samengesteld zodat het vinden van een nog effici\"entere implementatie moeilijk wordt. \figref{digitalDesignManagement} vat het hele verloop goed samen. Verder zullen we in de volgende subsecties de verschillende stappen want meer in detail bekijken.
+=======
+Nu we de concepten van een digitaal ontwerp in grote lijnen uitgetekend hebben, kunnen we het over de praktische kant van de zaak hebben. Immers komt bij een digitaal ontwerp veel meer kijken dan alleen het bouwen van de juiste schakeling. Een klant zal immers specificaties sturen waaraan de hardware moet voldoen, bovendien wil de klant naast de hardware vaak ook nog documentatie over hoe men het toestel dient te gebruiken. Daarbij willen we vermijden dat we bij het ontwerpen telkens opnieuw het wiel moeten uitvinden. Er bestaan immers al bibliotheken die allerhande schakelingen voor bijvoorbeeld optellingen, testen op gelijke waarde,... bevatten. Deze zijn meestal met de nodige zorg samengesteld zodat het vinden van een nog effici\"entere implementatie moeilijk wordt. Figuur \ref{fig:digitalDesignManagement} vat het hele verloop goed samen. Verder zullen we in de volgende subsecties de verschillende stappen want meer in detail bekijken.
+>>>>>>> master
 \begin{figure}
 \centering
 \begin{tikzpicture}[itm/.style={draw=black,rectangle,minimum width=3 cm,minimum height=0.5 cm}]
@@ -1209,26 +1217,30 @@ We dienen niet het volledige stuk hardware vanaf transistor of poortniveau te on
  \item Men streeft naar telkens hogere integratieniveaus waarbij soms volledige systemen op chip te verkrijgen zijn. Bovendien worden deze systemen telkens geavanceerder. Dit komt door de \termen{Wet van Moore}. Deze stelt dat elke 24 maanden het aantal transistoren op een chip verdubbelt.
  \item Vaak kan men componenten kopen die een bepaalde functie vervullen. Dit bespaart veel ontwerpwerk. Bovendien zijn deze componenten vaak veel goedkoper dan ze zelf te ontwerpen en te produceren. Bijvoorbeeld een 16 kB geheugen.
 \end{itemize}
-Er bestaan bibliotheken op elk syntheseniveau. Dus bijgevolg kan men tot op het niveau die men zelf kiest putten uit de bibliotheken.
+Er bestaan bibliotheken op elk syntheseniveau. Dus bijgevolg kan men tot op het niveau dat men zelf kiest putten uit de bibliotheken.
 \subsection{Analyse}
 \label{ss:analyse}
 Na elke synthesestap is het belangrijk om te testen of aan de vereiste specificaties voldaan is. Dit wordt gedaan in de \termen{Analyse}. Niet alleen wordt hier getest of de implementatie de functionaliteit levert die gevraagd is, ook allerhande andere parameters worden in rekening gebracht:
 \begin{itemize}
  \item Kostprijs: vaak wordt hier als metriek het aantal pinnen en de oppervlakte van de printplaat (PCB\footnote{PCB: Printed Circuit Board.}) gebruikt.
- \item Vermogengebruik: het vermogenverbruik wordt meestal berekent met de formule $C\cdot f\cdot V^2$ met als parameters:
+ \item Vermogengebruik: het vermogenverbruik wordt meestal berekend met de formule $C\cdot f\cdot V^2$ met als parameters:
  \begin{itemize}
   \item $C$ De oppervlakte van de chip. De oppervlakte is in de tijd toegenomen. In 1983 was een gemiddelde chip immers $0.25\mbox{ cm}^2$, in 2000 was dat ongeveer $4\mbox{ cm}^2$.
   \item $f$ De \termen{klokfrequentie}. De klokfrequentie is in de loop der tijd exponentieel gestegen. Met $1\mbox{ MHz}$ in 1983, en $1\mbox{ GHz}$ in 2000.
   \item $V$ De spanning die aan de chip geleverd wordt. De spanning is gedaald: van $5\mbox{ V}$ in 1983 tot $1.5\mbox{ V}$ ongeveer 17 jaar later.
  \end{itemize}
  \item Snelheid: de vertraging of \termen{doorvoer} (``\termen{throughput}''). Dit is het aantal resultaten per seconde.
- \item Testbaarheid: kunnen we alle fouten ontdekking met behulp van testvectoren?
+ \item Testbaarheid: kunnen we alle fouten ontdekken met behulp van testvectoren?
 \end{itemize}
 \subsection{Documentatie}
 \label{ss:documentatie}
 Naast de hardware verlangt de klant meestal ook \termen{Documentatie}. Afhankelijk van het soort klant zal er andere documentatie vereist zijn. Indien we een volledig afgewerkt consumentenproduct maken, dienen we een handleiding voor de consument en de hersteller samen te stellen. Hierin beschrijven we in natuurlijke taal hoe de component aangestuurd kan worden. Indien we echter een component leveren, bijvoorbeeld een geheugenmodule zal men een handleiding maken met daarin de specifieke ontwerpdetails. Meestal zal ook intern binnen het bedrijf documentatie een vereiste zijn. Dit om de eventueel verdere ontwikkelingen te ondersteunen.
 \subsection{Ontwerpen met CAD}
+<<<<<<< HEAD
 \termen{Computer Aided Design (CAD)} wordt vaak toegepast om een chip te ontwikkelen. Hierbij wordt met behulp van een computer een een speciaal softwarepakket meestal het volledige ontwerp begeleid. Een concreet voorbeeld hiervan is bijvoorbeeld \emph{KiCad} voor \emph{Linux}. Zoals andere CAD tools bevat \emph{KiCad} een project manager die de gebruiker door de verschillende stappen begeleid, en een set tools die de gebruiker bij iedere stap de nodige ondersteuning bieden. Uiteraard ziet het ontwerp met een CAD-tool er gelijkaardig uit aan het ontwikkelingsproces op \figref{digitalDesignManagement}. De CAD-tools bieden echter meer mogelijkheden om ontwerpen al in een vroeg stadium te testen en te simuleren. \figref{digitalDesignManagementCad} toont het ontwikkelingsproces met behulp van een CAD-tool.
+=======
+\termen{Computer Aided Design (CAD)} wordt vaak toegepast om een chip te ontwikkelen. Hierbij wordt met behulp van een computer een een speciaal softwarepakket meestal het volledige ontwerp begeleid. Een concreet voorbeeld hiervan is bijvoorbeeld \emph{KiCad} voor \emph{Linux}. Zoals andere CAD tools bevat \emph{KiCad} een project manager die de gebruiker door de verschillende stappen begeleidt, en een set tools die de gebruiker bij iedere stap de nodige ondersteuning bieden. Uiteraard ziet het ontwerp met een CAD-tool er gelijkaardig uit aan het ontwikkelingsproces op figuur \ref{fig:digitalDesignManagement}. De CAD-tools bieden echter meer mogelijkheden om ontwerpen al in een vroeg stadium te testen en te simuleren. Figuur \ref{fig:digitalDesignManagementCad} toont het ontwikkelingsproces met behulp van een CAD-tool.
+>>>>>>> master
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}[itm/.style={draw=black,rectangle,minimum width=4 cm}]
@@ -1294,7 +1306,11 @@ Een probleem met code in het algemeen is dat het erg onoverzichtelijk is. Een ee
 \paragraph{}
 Het feit dat VHDL redelijk uitgebreid is, brengt bovendien allerhande nadelen met zich mee. Alle extra features voor bijvoorbeeld tijdsgedrag simulaties dienen immers in de taal beschreven te kunnen worden. Bijgevolg worden sommige taalconcepten hierdoor hopeloos moeilijker gemaakt.
 \subsection{Beperkingen}
+<<<<<<< HEAD
 Naast de voor- en nadelen heeft VHDL ook enkele beperkingen. Zo is VHDL slechts tot op zeker niveau automatisch synthetiseerbaar. Hierbij ondersteund elke fabrikant van VHDL een verschillende subset. Het tweede grote nadeel is dat slechts de syntax en de semantiek van VHDL gestandaardiseerd is. Niet hoe de code geschreven moet worden. Dit houdt in dat eenzelfde gedrag op tientallen verschillende manieren beschreven kan worden. Dit zorgt er ook voor dat elk programma die VHDL leest de code op een andere manier kan implementeren. Het gevolg is dat de codestijl, die in grote mate bepaalt hoe de code ge\"implementeerd zal worden, variabel is. In het ene programma kan een bepaalde code tot de meest optimale implementatie leiden, terwijl een ander programma met dezelfde code slechts een standaardimplementatie kiest. Men moet dus eerst heel wat ervaring opdoen met een programma alvorens men weet hoe men de code moet schrijven zodat deze een effici\"ente implementatie oplevert.
+=======
+Naast de voor- en nadelen heeft VHDL ook enkele beperkingen. Zo is VHDL slechts tot op zeker niveau automatisch synthetiseerbaar. Hierbij ondersteunt elke fabrikant van VHDL een verschillende subset. Het tweede grote nadeel is dat slechts de syntax en de semantiek van VHDL gestandaardiseerd is. Niet hoe de code geschreven moet worden. Dit houdt in dat eenzelfde gedrag op tientallen verschillende manieren beschreven kan worden. Dit zorgt er ook voor dat elk programma dat VHDL leest de code op een andere manier kan implementeren. Het gevolg is dat de codestijl, die in grote mate bepaalt hoe de code ge\"implementeerd zal worden, variabel is. In het ene programma kan een bepaalde code tot de meest optimale implementatie leiden, terwijl een ander programma met dezelfde code slechts een standaardimplementatie kiest. Men moet dus eerst heel wat ervaring opdoen met een programma alvorens men weet hoe men de code moet schrijven zodat deze een effici\"ente implementatie kiest.
+>>>>>>> master
 \subsection{Concepten (entiteiten en architectuur)}
 Na de voor en nadelen besproken te hebben, is het tijd voor een voorbeeld waarmee we de verschillende concepten zullen duidelijk maken. We ontwerpen een schakeling zoals op \figref{vhdl-example}. Hierbij willen we een schakeling ``test'' ontwerpen. Deze schakeling krijgt drie 8-bit ingangen (\texttt{In1}, \texttt{In2} en \texttt{In3}). Als uitgangen zijn er twee bits (\texttt{Out1} en \texttt{Out2}). \texttt{Out1} geeft 1 terug indien \texttt{In1} en \texttt{In2} aan elkaar gelijk zijn. Analoog geeft \texttt{Out2} 1 terug indien \texttt{In2} en \texttt{In3} gelijk zijn. Om deze vergelijker te bouwen werken we bijgevolg met een hi\"erarchisch schema. Waarbij we \texttt{Comp} op een andere plaats implementeren.
 \importtikzfigure{vhdl-example}{Voorbeeldcircuit voor VHDL code.}

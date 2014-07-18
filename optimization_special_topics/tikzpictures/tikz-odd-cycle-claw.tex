@@ -1,0 +1,10 @@
+\begin{tikzpicture}[scale=2]
+\node[draw=black,circle] (N06) at (0,0) {$6$};
+\foreach \i/\a in {3/90,4/162,5/234,1/306,2/18} {
+  \node[draw=black,circle] (N0\i) at (\a:1) {$\i$};
+  \draw (N0\i) -- (N06);
+}
+\foreach \i/\j in {1/2,2/3,3/4,4/5,5/1} {
+  \draw (N0\i) -- (N0\j);
+}
+\end{tikzpicture}

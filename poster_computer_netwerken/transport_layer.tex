@@ -74,7 +74,7 @@
 \begin{scope}[xshift=32 cm, yshift=5 cm,yscale=-1]
 \draw[thick,->] (0,-0.2) -- (0,4.5);
 \draw[thick,->] (-0.2,0) -- (12,0);
-\draw[dashed] plot[variable=\x,domain=0:4] (0.5*\x,{0.125*2^{\x}});
+\draw[dashed] plot[variable=\x,domain=0:4] (0.5*\x,{0.125*pow(2,\x)});
 \foreach\y in {1,2,...,35} {
 \draw[dotted] (-0.2,0.125*\y) -- (12,0.125*\y);
 }

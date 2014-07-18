@@ -1,0 +1,356 @@
+\chapter{Separation and Lifting: Towards a Cutting-plane Algorithm}
+\chplab{lifting}
+In this chapter we show how \concept[valid inequality]{valid inequalities} can be used to develop \concepts{cutting plane algorithm}. A key issue in any \concept{cutting plane algorithm} is \concept{separation}. We illustrate how the \concept{separation problem} for specific classes of \concept[valid inequality]{valid inequalities} can be solved, by considering the \concept[cover inequality]{cover inequalities} for the \concept{knapsack problem} (\secref{knapsacksep}), and the \concept[subtour elimination inequality]{subtour elimination inequalities} for the \concept{traveling salesman problem} (\secref{salesman}). \concept{Lifting} is about strengthening \concept[valid inequality]{valid inequalities}; we apply this concept to the \concept[cover inequality]{cover inequalities} in \secref{coverineq}.
+
+\section{Separation for the Knapsack Problem}
+\seclab{knapsacksep}
+Although one could argue that the \concept{knapsack problem} is a very specific problem featuring only a single \concept{constraint}, one should realize that any \concept{integer programming formulation} can be seen as an \concept{optimization problem} with many \concepts{knapsack constraint}. Thus, \concept[valid inequality]{valid inequalities} that we can derive from a \concept{knapsack constraint} are important since such an \concept{inequality} can be relevant for any \concept{integer program}. We restate the \concept{knapsack problem} (see \eqnnrefr{knapsack-m}{knapsack-c2} in \chpref{formulations}).
+
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[j]{1}{n}{c_j\cdot x_j}\eqnlab{knapsack4-m}\\
+\mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot x_j}\leq b\eqnlab{knapsack4-c1}\\
+&\forall\rangei[j]{1}{n}:x_j\in\accl{0,1}\eqnlab{knapsack4-c2}
+\end{eqnarray}
+
+We assume, without loss of generality, that the parameters $a_1,a_2,\ldots,a_n$, and $b$ satisfy the following \concepts{condition}:
+
+\begin{enumerate}
+ \item selecting any single \concept{item} is a \concept{feasible solution}, or: $a_j\leq b$ for each $j$, and
+ \item selecting all $n$ \concepts{item} is not a \concept{feasible solution}, or: $\sumieqb[j]{1}{n}{a_j}>b$.
+\end{enumerate}
+
+\begin{note}
+Notice that these \concepts{condition} can be checked easily. In the sequel we will also assume (unless explicitly stated otherwise) that the \concepts{item} in the instance of the \concept{knapsack problem} are sorted according to decreasing weights $a_j$, that is, $a_1\geq a_2\geq\ldots\geq a_n$. In the following section, we will derive a set of \concept[valid inequality]{valid inequalities} for the \concept{knapsack problem} and we will use them to sketch a \concept{solution} approach for the \concept{knapsack problem}.
+\end{note}
+
+\subsection{Separation of Cover Inequalities}
+
+\begin{example}
+Consider the following \concept{linear programming relaxation} of an instance of the \concept{knapsack problem}.
+
+\begin{eqnarray}
+\mbox{maximize}&206\cdot x_1+180\cdot x_2+176\cdot x_3+170\cdot x_4+146\cdot x_5+110\cdot x_6\\
+\mbox{subject to}&83\cdot x_1+75\cdot x_2+70\cdot x_3+68\cdot x_4+59\cdot x_5+45\cdot x_6\leq 170\\
+&\forall\rangei[i]{1}{6}:0\leq x_i\leq 1
+\end{eqnarray}
+
+A solution of the \concept{linear programming relaxation} of this instance is $\vec{x}^{\star}=\tupl{0,0,1,1,\dfrac{32}{59},0}$. We can conclude from this \concept{LP-solution} that \concepts{item} $3$, $4$, and $5$ cannot simultaneously be part of a \concept{knapsack} solution. Hence, $x_3=x_4=x_5=1$ is impossible. Therefore, the following \concept{constraint} is a \concept{valid inequality}:
+\begin{equation}
+x_3+x_4+x_5\leq2.
+\end{equation}
+In fact, this \concept{constraint} is a \concept{violated valid inequality}, that is, the given solution $\vec{x}^{\star}$ violates this \concept[valid inequality]{inequality}.
+\end{example}
+
+\paragraph{}
+In general, for a subset $C\subseteq\accl{1,2,\ldots,n}$ of the \concepts{item} with the property that $\sumdomain[j]{C}{a_j}\geq b$, we have the following \concept{valid inequality}:
+
+\begin{equation}
+\sumdomain[j]{C}{x_j}\leq\abs{C}-1
+\end{equation}
+
+Such an \concept{inequality} is called a \concept{cover inequality}. The set $C$ is called a \concept{cover}. More precisely, any set of \concepts{item} whose total \concept{weight} exceeds $b$ is a \concept{cover} with respect to this \concept{constraint}. Thus, as an aside, earlier in this section, we in fact assumed that $\accl{1,2,\ldots,n}$ is a \concept{cover}. The \concept[valid inequality]{inequality} above is clearly \concept[valid inequality]{valid}: any \concept{feasible solution} to the \concept{knapsack problem} cannot select all \concepts{item} from $C$ when $C$ is a \concept{cover}. A \concept{minimal cover} is a \concept{cover} with the property that the removal of any \concept{item} makes the \concept{total weight} of the remaining \concepts{item} drop to $b$ or less. In other words: $C$ is a \concept{minimal cover} if
+
+\begin{equation}
+\sumdomain[j]{C}{a_j}\leq b\xand\forall i\in C:\sumdomain[j]{C\setminus\accl{i}}{a_j}\leq b
+\end{equation}
+
+The problem we now face is to find, given some \concept{point} $\vec{x}^{\star}\in\RRR^n$, a \concept{cover inequality} for the \concept{knapsack problem} that is not satisfied by the given point. More formally, the \concept{separation problem} for the \concept[cover inequality]{cover inequalities} is:
+
+\begin{definition}[Separation problem for cover inequalities]
+Given $\vec{x}^{\star}\in\RRR^n$, find a \concept{cover} $C$ such that $\sumdomain[j]{C}{x_j^{\star}}>\abs{C}-1$, or establish that no such \concept{cover} exists.
+\end{definition}
+
+Such an \concept{inequality} is called a \concept{violated cover inequality}. In general, the \concept{separation problem} is hard for \concepts{hard problem}. However, if we restrict the search of a \concept{violated inequality} to a subset of the \concept[valid inequality]{valid inequalities}, the \concept{separation problem} restricted to this subset of \concept[inequality]{inequalities}, may be easier to solve. We will restrict ourselves here to the \concept[separation problem]{separation} of the \concept[cover inequality]{cover inequalities} for the \concept{knapsack problem}.
+
+\paragraph{}
+The \concept{separation problem} for the \concept[cover inequality]{cover inequalities} is now restated as follows. Let the \concept{point} $\vec{x}^{\star}\in\RRR^n$ be given. Is there a \concept{cover inequality} that is \concept[violated inequality]{violated} by $\vec{x}^{\star}$? In mathematical terms this problem can be described as follows.
+
+\paragraph{}
+Given $\vec{x}^{\star}$: Is there a $C\subseteq\accl{1,2,\ldots,n}$ with
+
+\begin{eqnarray}
+&&\sumdomain[j]{C}{x_j^{\star}}>\abs{C}-1\xand\eqnlab{sep-c1}\\
+&&\sumdomain[j]{C}{a_j}>b\eqnlab{sep-c2}
+\end{eqnarray}
+To solve this problem we introduce \concepts{binary variable} $z_j$ ($j=1,\ldots,n$):
+
+\begin{equation}
+\semboolvar{z_j}{if $j$ is chosen in the cover $C$;}{otherwise.}
+\end{equation}
+
+These variables will determine which \concepts{item} are present in the \concept{cover}. The \concept{solution} $\vec{z}$ to be found should satisfy the following conditions.
+
+\begin{equation}
+1+\sumieqb[j]{1}{n}{x_j^{\star}\cdot z_j}>\sumieqb[j]{1}{n}{z_j}\eqnlab{setcoversep}
+\end{equation}
+
+Clearly, this \concept{inequality} follows from reformulating \eqnnref{sep-c1} by taking the newly defined $\vec{z}$-\concepts{variable} into account (notice that, by definition, $\abs{C}=\sumieqb[j]{1}{n}{z_j}$). Let us rewrite \concept{inequality} \eqnnref{setcoversep} by bringing all terms with $\vec{z}$-\concepts{variable} to the left hand side:
+
+\begin{equation}
+\sumieqb[j]{1}{n}{1-x_j^{\star}}\cdot z_j<1
+\end{equation}
+
+\paragraph{}
+Consider now \concept{inequality} \eqnnref{sep-c2}. When we plug in the $\vec{z}$-\concepts{variable} into this \concept{inequality}, the following \concept{inequality} results:
+
+\begin{equation}
+\sumieqb[j]{1}{n}{a_j\cdot z_j}\geq b+1
+\end{equation}
+
+\paragraph{}
+Summarizing all \concepts{condition}, we can formulate the \concept{separation problem} for the \concept[cover inequality]{cover inequalities} as the following \concept{minimization problem}.
+
+\begin{eqnarray}
+\mbox{minimize}&\eta=\sumieqb[j]{1}{n}{\brak{1-x_j^{\star}}\cdot z_j}\eqnlab{sepco-m}\\
+\mbox{subject to}&\sumieqb[j]{1}{n}{a_j\cdot z_j}\geq b+1\eqnlab{sepco-c1}\\
+\forall\rangei[j]{1}{n}&z_j\in\accl{0,1}\eqnlab{sepco-c2}
+\end{eqnarray}
+
+Suppose that we are able to solve \eqnnrefr{sepco-m}{sepco-c2}. Then, if $\eta<1$, a \concept{cover inequality} violated by $\vec{x}^{\star}$ has been found. If, on the other hand, $\eta\geq1$, then we haven't found a \concept{cover inequality} violated by $\vec{x}^{\star}$ (and for good reason: none exists!). Although the \concept{separation problem} for \concept[cover inequality]{cover inequalities}, i.e., solving \eqnnrefr{sepco-m}{sepco-c2} \concept{NP-hard} in general, the problem can become fairly easy for a given instance. This is due to the fact that there are usually only few \concepts{fractional value} in the \concept{solution} $\vec{x}^{\star}$. Indeed, items whose corresponding $\vec{x}^{\star}$-\concepts{variable} equal $1$ can always be added to the \concept{cover}; this follows from observing that \concept{objective function} \eqnnref{sepco-m} will not increase when selecting such an \concept{item} in the \concept{cover}. Also, \concepts{item} whose corresponding $\vec{x}^{\star}$-\concept{variable} equal $0$ can be safely excluded from the \concept{cover}, since selecting such an item will result in $\eta\geq 1$. In other words: if $x_j^{\star}=1$ then $z_j=1$, and if $x_j^{\star}=0$ then $z_j=0$. We illustrate this with the next example.
+
+\begin{example}
+\begin{equation}
+79\cdot x_1+53\cdot x_2+53\cdot x_3+47\cdot x_4+45\cdot x_5\leq178
+\end{equation}
+
+A \concept{fractional solution} for this example: $\vec{x}^{\star}=\tupl{1,1,\frac{46}{53},0,0}$. To find a \concept{violated cover} we have to solve the problem (verify this!):
+
+\begin{eqnarray}
+\mbox{minimize}&\eta=\frac{7}{53}\cdot z_3+z_4+z_5\eqnlab{sepco-ex-m}\\
+\mbox{subject to}&79\cdot z_1+53\cdot z_2+53\cdot z_3+47\cdot z_4+45\cdot z_5\geq 179\eqnlab{sepco-ex-c1}\\
+\forall\rangei[j]{1}{5}&z_j\in\accl{0,1}\eqnlab{sepco-ex-c2}
+\end{eqnarray}
+
+As argued above, if $x_j^{\star}$, then $z_j=1$ as well (since the the coefficient of $z_j$ in \eqnnref{sepco-ex-m} equals zero). And, since we are only interested in finding \concept[violated cover inequality]{violated cover inequalities}, $x_j^{\star}=0$ implies $z_j=0$ (since $z_j=1$ gives $\eta\geq 1$). Now, observe that the solution $\tupl{z_1,z_2,z_3,z_4,z_5}=\tupl{1,1,1,0,0}$ is feasible in \eqnnrefr{sepco-ex-c1}{sepco-ex-c2}, and has \concept{objective function} value less than $1$. Thus, we have identified a \concept{violated cover inequality}:
+
+\begin{equation}
+x_1+x_2+x_3\leq2.
+\end{equation}
+
+In the following iterations of a \concept{cutting plane algorithm}, the number of \concepts{fractional variable} may increase since the number of \concepts{constraint} increases. Therefore, identifying \concept[violated inequality]{violated inequalities} may become more complicated in forthcoming steps.
+\end{example}
+
+Consider the following example.
+
+\begin{example}
+\begin{eqnarray}
+\mbox{maximize}&77\cdot x_1+6\cdot x_2+3\cdot x_3+6\cdot x_4+33\cdot x_5+13\cdot x_6+110\cdot x_7+21\cdot x_8+47\cdot x_9\\
+\mbox{subject to}&774\cdot x_1+76\cdot x_2+22\cdot x_3+42\cdot x_4+21\cdot x_5+760\cdot x_6+818\cdot x_7+62\cdot x_8+785\cdot x_9\leq 1500\\
+&67\cdot x_1+27\cdot x_2+794\cdot x_3+53\cdot x_4+234\cdot x_5+32\cdot x_6+797\cdot x_7+97\cdot x_8+435\cdot x_9\leq 1500\\
+&\forall\rangei[i]{1}{9}:0\leq x_i\leq 1
+\end{eqnarray}
+
+In the following table we see how the \concept{linear programming solution} and its value develop after adding \concept[violated cover inequality]{violated cover inequalities}. In the first table we give the solutions that are generated in the iterations. In the second table the \concept[violated cover inequality]{violated cover inequalities} are given. Notice that we can derive \concept[cover inequality]{cover inequalities} from both \concepts{constraint}.
+
+\importtabulartable{lift-exa}{Linear programming relaxation for the leading example.}
+
+\importtabulartable{cove-exa}{Cover for the leading example.}
+
+Notice that the \concept{inequality} $x_1+x_7+x_9\leq1$ is not a \concept{cover inequality}. Indeed, although $\tupl{1,7,9}$ is a \concept{cover} with respect to the first \concept{inequality}, the right-hand side does not equal $\abs{C}-1$. This \concept{inequality} is a so-called \concept{extended cover inequality}. The \concept[extended cover inequality]{extended cover inequalities} are the subject of \secref{liftingeci}.
+
+\paragraph{}
+From the first table one can see that the number of \concepts{fractional variable} is small compared to the total number of \concepts{variable}. Thus, the \concept{separation problem} for the \concept[cover inequality]{cover inequalities} is fairly easy here. In general, the number of \concepts{fractional variable} is bounded by the number of \concepts{constraint} of the problem at hand. Although this number may increase, the number of \concepts{fractional variable} tends to remain limited. This observation is true for many problems.
+\end{example}
+
+
+\section{Separation for the Traveling Salesman Problem}
+Consider the following \concept{formulation} of the \concept{symmetric traveling salesman problem}, which uses a \concept{binary variable} $x_e$ indicating whether \concept{edge} $e$ is selected or not.
+
+\begin{eqnarray}
+\mbox{minimize}&\sumdomain[e]{E}{c_e\cdot x_e}\eqnlab{stsp-m}\\
+\mbox{subject to}&\forall v\in V:\sumdomain[e]{\fun{\delta}{v}}x_e=2\eqnlab{stsp-c1}\\
+&\forall S\subseteq V:\abs{S}\geq2\rightarrow\sumdomain[e]{\fun{\delta}{S}}x_e\geq 2\eqnlab{stsp-c2}\\
+&\forall e\in E:x_e\in\accl{0,1}\eqnlab{stsp-c3}
+\end{eqnarray}
+
+Obviously, \concept{constraints} \eqnnref{stsp-c1} ensure that each \concept{node} must be \concept{incident} to two \concepts{edge}; these \concepts{constraint} are referred to as \concepts{degree constraint}. \concepts{Constraint} \eqnnref{stsp-c2} state that, for each \concept{nodeset} $S\subseteq V$, there are at least two \concepts{edge} with one \concept{endpoint} in $S$ and one \concept{endpoint} not in $S$. These constraints are the \concepts{subtour elimination constraint}.
+
+\paragraph{}
+If we replace the \concepts{integrality constraint} \eqnnref{stsp-c3} by $0\leq x_e\leq 1$, we have created a \concept{linear program} that we refer to as the \concept{subtour LP}. Clearly, solving this \concept{subtour LP} gives a \concept{lower bound} to the \concept{optimal value} of the \concept{TSP} instance. Notice however, that this \concept{subtour LP} contains exponentially many \concepts{constraint}. We will show how to solve the \concept{separation problem} for the \concepts{subtour elimination constraint} efficiently, i.e., in \concept{polynomial time}. This implies that we can optimize over the \concept{subtour LP} in \concept{polynomial time} (despite the exponential number of \concepts{constraint}).
+
+\paragraph{}
+So, let us assume we are given a \concept{vector} $\vec{x}^{\star}$, found, for instance, by optimizing \eqnnref{stsp-m} over the \concepts{constraint} \eqnnref{stsp-c1} and $0\leq x\leq 1$. The question now is: does there exist a violated \concept{subtour elimination constraint}? In other words, is there a set $S\subseteq V$ such that the left-hand side of \eqnnref{stsp-c2} is less than $2$? To answer this question we build a \concept{network} $G$ consisting of \concepts{node}, \concepts{edge}, and a \concept{capacity} for each \concept{edge} as follows. There is a \concept{node} in $G$ for each \concept{city} in the \concept{TSP} instance, and there is an \concept{edge} in the \concept{network} for each $e$ with $x_e^{\star}>0$. The \concept{capacity} of this \concept{edge} equals $x_e^{\star}$.
+
+\begin{proposition}
+The value of a \concept{minimum cut} in $G$ is less than $2$ if and only if there exists a violated \concept{subtour elimination constraint}.
+\end{proposition}
+
+
+We leave it to the reader to verify this proposition. Concluding, by solving a \concept{minimum cut problem} we solve the \concept{separation problem} for the \concepts{subtour elimination constraint}.
+
+\section{Lifting: Extended Cover Inequalities}
+\seclab{liftingeci}
+
+Consider the example in \secref{knapsacksep}. From the first \concept{constraint} we could have obtained the \concept{valid inequality}
+
+\begin{equation}
+x_1+x_6+x_7+x_9\leq1.
+\end{equation}
+Indeed, since the \concepts{coefficient} of $x_1$, $x_6$, $x_7$ and $x_9$ are each larger than $750$, no two of these \concepts{variable} can both equal $1$. Thus, this \concept{inequality} is valid, and in fact, it is stronger that the corresponding \concept[cover inequality]{cover inequalities}. Addition of this particular \concept{inequality} to the \concept{linear programming relaxation} would have given the \concept{integral solution} immediately. Unfortunately, this \concept{inequality} is not part of the class of \concept[cover inequality]{cover inequalities}. But we can derive it from a \concept{cover inequality} with a technique called \concept{lifting}.
+
+\begin{example}Let $S$ be the set of \concepts{feasible solution} of the problem in the previous section. Consider the \concept{inequality} $x_1+x_7\leq1$. This \concept{inequality} is \concept[valid inequality]{valid} in the set of \concepts{solution} restricted to the \concepts{item} $\accl{1,2,3,4,5,7,8}$, i.e., it is valid for the set $S\cap\condset{\vec{x}\in\BBB^9}{x_6=x_9=0}$. We will now derive an \concept{inequality}:
+\begin{equation}
+x_1+\alpha\cdot x_6+x_7\leq1
+\end{equation}
+where $\alpha$ is chosen such that this \concept{inequality} is \concept[valid inequality]{valid} for $S\cap\condset{\vec{x}\in\BBB^9}{x_9=0}$. In order to do so, we have to evaluate two situations.
+
+\begin{sitenum}
+ \item $x_6=0$: in this case the \concept{inequality} remains valid trivially.
+ \item $x_6=1$: in this case each of the \concepts{item} $1$ and $7$ can not be taken into the \concept{knapsack} because \concept{constraint} $1$ would be \concept[violated constraint]{violated}. Therefore, taking $\alpha=1$ maintains \concept[valid constraint]{validity of the constraint}.
+\end{sitenum}
+
+This process can be repeated for \concept{item} $9$. It will lead to the \concept{inequality}
+
+\begin{equation}
+x_1+x_6+x_7+x_9\leq1.
+\end{equation}
+
+Notice that the resulting \concept{inequality} is not a \concept{cover inequality} (there are four variables on the left hand side, whereas the right hand side does not equal $3$). This \concept{inequality} belongs to the class of so-called \concept[extended cover inequality]{extended cover inequalities}.
+\end{example}
+
+\paragraph{}
+Recall that we have assumed that the \concepts{item} are indexed according to decreasing \concept{weight}. Consider a \concept{minimal cover} $C=\accl{j_1,j_2,\ldots,j_k}$. Then the corresponding \concept{extended cover} $\fun{E}{C}$ is defined as
+
+\begin{equation}
+\fun{E}{C}=\accl{1,2,\ldots,j_1-1}\cup C.
+\end{equation}
+
+Thus, each \concept{item} that is heavier than the heaviest \concept{item} in the \concept{cover} $C$ is added in order to construct the set of \concepts{item} $\fun{E}{C}$. We claim:
+
+\begin{theorem}
+$\sumdomain[j]{\fun{E}{C}}{x_j}\leq\abs{C}-1$ is a \concept{valid inequality} for the \concept{knapsack problem}.
+\end{theorem}
+
+The derivation of an \concept{extended cover inequality} from a \concept{cover inequality} can be seen as a special case of a process called \concept{lifting}. Given some \concept{valid inequality} (say, a \concept{cover inequality}) \concept{lifting} refers to raising \concepts{coefficient} of \concepts{variable} in this \concept{inequality} in order to obtain a stronger, yet \concept[valid inequality]{valid}, new inequality (the \concept{extended cover inequality}). Indeed, the \concepts{coefficient} of \concepts{variable} $x_1,x_2,\ldots,x_{j_1-1}$ have value $0$ in the \concept{cover inequality}, and have been raised to value $1$ in the \concept{extended cover inequality}. This principle, however, can be applied in a more general way. In fact, \concept{lifting} is a technique that can be used in many problems to
+strengthen known classes of \concept[valid inequality]{valid inequalities}. The following theorems can be used repeatedly for this purpose. In the theorems stated below, we assume that $\vec{x}$ is a $n$-dimensional $\accl{0,1}$ \concept{vector}, and that $S$ denotes the set of \concept[feasible vector]{feasible} $\vec{x}$-vectors.
+
+\begin{theorem}
+\thmlab{alphacut}
+Suppose that $\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0$ is valid for each $\vec{x}\in S$ with $x_1=0$, then $\alpha\cdot x_1+\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0$ is valid for each $\vex{x}\in S$ as long as $\alpha\leq\pi_0-\fun{\max_{\vec{x}\in S,x_1=1}}{\sumieqb[i]{2}{n}{\pi_i\cdot x_i}}$.
+\end{theorem}
+
+\begin{theorem}
+\thmlab{betacut}
+Suppose that $\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0$ is valid for each $\vec{x}\in S$ with $x_1=1$, then $\beta\cdot x_1+\sumieqb[i]{2}{n}{\pi_i\cdot x_i}\leq\pi_0+\beta$ is valid for each $\vex{x}\in S$ as long as $\beta\geq\pi_0-\fun{\max_{\vec{x}\in S,x_1=1}}{-\pi_0+\sumieqb[i]{2}{n}{\pi_i\cdot x_i}}$.
+\end{theorem}
+
+Notice that applying \thmref{alphacut} does not change the right hand side, whereas applying \thmref{betacut} may change the right hand side. In the remainder of this section we give an example in which the two theorems above are applied repeatedly.
+
+\begin{example}
+Consider the \concept{knapsack constraint}
+
+\begin{equation}
+3\cdot x_1+x_2+x_3+x_4+x_5\leq4\eqnlab{knapsackconstraintexlift}.
+\end{equation}
+
+As before, let $S$ be the set of (binary) \concepts{feasible solution} of this \concept{constraint}. Suppose that we fix the values of the first three \concepts{variable} as follows:
+\begin{equation}
+x_1=1, x_2=x_3=0.
+\end{equation}
+Plugging in these values in \eqnnref{knapsackconstraintexlift} reduces the \concept{inequality} to $x_4+x_5\leq1$. Thus $x_4+x_5\leq1$ is valid for each $\vec{x}\in S$ with $x_1=1, x_2=x_3=0$.
+
+\paragraph{}
+We now \concept[lifting]{lift} \concept{variable} $x_3$ by applying \thmref{alphacut}. This gives (using $\alpha_3$ as coefficient for $x_3$): find a maximal $\alpha_3$ such that $\alpha_3\cdot x_3+x_4+x_5\leq1$ is valid for each in $\vec{x}\in S$ with $x_1=1, x_2=0, x_3=1$. This is equivalent to determining a maximal $\alpha_3$ such that
+
+\begin{equation}
+\alpha_3\leq1-\fun{\max_{\vec{x}\in S,x_1=1,x_2=0,x_3=1}}{x_4+x_5}.
+\end{equation}
+
+It follows that $\alpha_3=1$. In other words, we can conclude that $x_3+x_4+x_5\leq1$ is valid for all $\vec{x}\in S$ with $x_1=1$ and $x_2=0$.
+
+\paragraph{}
+We now proceed by \concept{lifting} \concept{variable} $x_1$ using \thmref{betacut}. This gives (using $\beta_1$ as coefficient for $x_1$): find a minimal $\beta_1$ such that $\beta_1\cdot x_1+x_3+x_4+x_5\leq1+\beta_1$ is valid for each $\vec{x}\in S$ with $x_1=x_2=0$. This is equivalent to determining a minimal $\beta_1$ such that
+
+\begin{equation}
+\beta_1\geq\fun{\max_{\vec{x}\in S,x_1=x_2=0}}{x_3+x_4+x_5-1}.
+\end{equation}
+
+It follows that $\beta_1=2$. Thus, we conclude that $2\cdot x_1+x_3+x_4+x_5\leq3$ is valid for all $\vec{x}\in S$ with $x_2=0$.
+
+\paragraph{}
+Finally, we \concept[lifting]{lift} \concept{variable} $x_2$ using \thmref{alphacut}. This gives (using $\alpha_2$ as coefficient for $x_2$): find a maximal $\alpha_2$ such that $2\cdot x_1+\alpha_2\cdot x_2+x_3+x_4+x_5\leq3$ is valid for each $\vec{x}\in S$ with $x_2=1$. This is equivalent to determining a maximal $\alpha_2$ such that
+
+\begin{equation}
+\alpha_2\leq3-\fun{\max_{\vec{x}\in S,x_2 =1}}{2\cdot x_1+x_3+x_4+x_5}.
+\end{equation}
+
+It follows that $\alpha_2=0$. We arrive at the conclusion that the resulting \concept{inequality}
+
+\begin{equation}
+2\cdot x_1+x_3+x_4+x_5\leq3\eqnlab{resultingliftingex}
+\end{equation}
+
+is a \concept{valid inequality} for each $\vec{x}\in S$. Notice that we have derived a new \concept{inequality} \eqnnref{resultingliftingex} that is stronger than the original one \eqnref{knapsackconstraintexlift}. As an example, consider the solution $\vec{x}=\tupl{\frac{1}{3},0,1,1,1}$, and observe that this particular solution is cut off by \eqnnref{resultingliftingex}, while it is not violated by \eqnnref{knapsackconstraintexlift}.
+\paragraph{}
+Here we have \concept[lifting]{lifted} the \concepts{variable} $x_1$, $x_2$ and $x_3$ in the sequence $x_3,x_1,x_2$. It is interesting to notice that different sequences may yield different \concept[inequality]{inequalities}. For instance, the sequence $x_3,x_1,x_2$ produces another \concept{inequality}. Thus, the order of \concept{lifting} influences the final \concept{inequality} we get, see \excref{liftingorder}.
+\end{example}
+
+\section{Applications}
+
+\concepts{Knapsack constraint} are embedded in many \concepts{structured problem}. Two obvious examples are the \concept{multi-knapsack problem} and the \concept{generalized assignment problem}. We will give their respective \concepts{formulations} below.
+
+\subsection{The Multi-Knapsack Problem}
+
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[i]{1}{n}{c_i\cdot x_i}\\
+\mbox{subject to}&\forall\rangi[i]{1}{n}:\sumieqb[j]{1}{n}{a_{ij}\cdot x_i}\leq b_i\\
+&\forall\rangei[i]{1}{n}:x_i\in\accl{0,1}
+\end{eqnarray}
+
+\subsection{The Generalized Assignment Problem}
+
+\begin{eqnarray}
+\mbox{maximize}&\sumieqb[i]{1}{m}{\sumieqb[j]{1}{n}{c_{ij}\cdot x_{ij}}}\\
+\mbox{subject to}&\forall\rangi[i]{1}{m}:\sumieqb[j]{1}{n}{a_{ij}\cdot x_{ij}}\leq b_i\\
+&\forall\rangei[j]{1}{n}:\sumieqb[i]{1}{m}x_{ij}\leq 1\\
+&\forall\rangei[i]{1}{m},\rangei[j]{1}{n}:x_{ij}\in\accl{0,1}
+\end{eqnarray}
+
+\section*{Exercises}
+\begin{exercise}
+Find all \concept[inequality]{inequalities}, induced by \concepts{minimal cover}, of the following \concept{knapsack inequality}:
+\begin{equation}
+79\cdot x_1+53\cdot x_2+53\cdot x_3+45\cdot x_4+45\cdot x_5\leq178.
+\end{equation}
+Can you find an \concept{extended cover inequality}?
+\end{exercise}
+
+\begin{exercise}
+Consider the following \concept{knapsack problem}.
+
+\begin{eqnarray}
+\mbox{maximize}&3\cdot x_1+2\cdot x_2+x_3\\
+\mbox{subject to}&4\cdot x_1+3\cdot x_2+2\cdot x_3\leq6\\
+&x_1,x_2,x_3\in\accl{0,1}
+\end{eqnarray}
+Solve this problem with a \concept{cutting-plane algorithm}.
+\end{exercise}
+
+\begin{exercise}
+It is clear that one can use the \concept{simplex method} to find the \concept{linear programming relaxation} of the \concept{knapsack problem} as formulated by \eqnnrefr{knapsack-m}{knapsack-c2}. However, we claim that there is a much easier way:
+
+\paragraph{}
+Sort the items such that
+
+\begin{equation}
+\dfrac{c_1}{a_1}\geq\dfrac{c_2}{a_2}\geq\ldots\dfrac{c_n}{a_n}
+\end{equation}
+
+
+and next fill the \concept{knapsack} with \concepts{item} $1,2,\ldots,k-1$, until \concept{item} $k$ can only be \concept[fractional item]{fractionally} added to the \concept{knapsack}. In other words, we claim that the following solution is an optimal \concept{linear programming solution} to the \concept{knapsack problem}.
+
+\begin{equation}
+x_j=\acclguard{
+1&\xif j<k\\
+s&\xif j=k\\
+0&\xif j>k
+}\xwith s=\dfrac{b-\sumieqb[i]{1}{k-1}{a_i}}{a_k}
+\end{equation}
+
+Can you prove this? Apply this to the example in \secref{knapsacksep}.
+\end{exercise}
+
+\begin{exercise}
+\exclab{liftingorder}
+Consider the example in \secref{liftingeci}. What \concept{inequality} results if the \concepts{variable} are \concept[lifted variable]{lifted} in the sequence $x_2$, $x_1$ and $x_3$? And what \concept{inequality} results when using $x_1$, $x_2$ and $x_3$ as \concept{lifting sequence}?
+\end{exercise}

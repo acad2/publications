@@ -1,0 +1,9 @@
+\begin{tikzpicture}[scale=2.0]
+\draw[thick,->] (-0.1,0) -- (3.5,0);
+\draw[thick,->] (0,-0.1,0) -- (0,2);
+\draw (0,0) -- (1,1.5) -- (2,0);
+\foreach \x/\y in {0/0,1/0,1/1,2/0} {
+  \fill (\x,\y) circle(0.05 cm);
+}
+\draw (0,0) -- (1,1) -- (2,0);
+\end{tikzpicture}
