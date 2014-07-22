@@ -18,6 +18,6 @@
 
 \newcommand{\todef}{}
 \DeclareDocumentCommand{\dey}{ O{} m m O{} }{\newglossaryentry{#1}{name={#2},description={\renewcommand{\todef}{\emph{#2}}#3},see={#4}}}
-\DeclareDocumentCommand{\rey}{ m }{\gls{#1}}
+\DeclareDocumentCommand{\rey}{ m }{\textit{\gls{#1}}}
 
 \AtBeginDocument{\maketitle}
