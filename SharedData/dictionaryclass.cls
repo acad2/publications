@@ -1,6 +1,6 @@
 \ProvidesClass{dictionaryclass}
 \LoadClass{extbook}
-\RequirePackage{glossaries,../SharedData/dictionary,hyperref}
+\RequirePackage{glossaries,../SharedData/dictionary,xparse,hyperref}
 \makeglossaries
 
 \newglossarystyle{dicgls}{%
