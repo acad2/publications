@@ -16,6 +16,6 @@
 }
 \setglossarystyle{dicgls}
 
-\newcommand{\defentry}[3][]{\newglossaryentry{#1}{name={#2},description={#3}}}
+\DeclareDocumentCommand{\defentry}{ O{} m m O{} }{\newglossaryentry{#1}{name={#2},description={#3},see={#4}}}
 
 \AtBeginDocument{\maketitle}
