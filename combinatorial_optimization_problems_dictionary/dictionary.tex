@@ -5,8 +5,11 @@
 \date{KU Leuven\\Department of Computer Science\\Celestijnenlaan 200A, 3001 Heverlee, Belgium\\2013-201.}
 \hypersetup{pdftitle={Combinatorial Optimization Problems Dictionary},pdfauthor={Willem Van Onsem (Willem.VanOnsem@cs.kuleuven.be)}, pdfsubject={Combinatorial Optimization Problem}, pdfkeywords={Combinatorial, Optimization, Problem, Heuristics}, linktoc=none}
 
+\definecolor{frml-bg}{RGB}{255,247,220}
+\definecolor{frml-fg}{RGB}{224,220,191}
+
 \newcommand{\nmn}[1]{\emph{#1}}
-\newcommand{\frml}[1]{\begin{quote}\fcolorbox{red}{yellow}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textbf{Formal:}\\#1}}\end{quote}}
+\newcommand{\frml}[1]{\begin{quote}\fcolorbox{frml-fg}{frml-bg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textbf{Formal:}\\#1}}\end{quote}}
 \newcommand{\fcop}[3][maximize]{\begin{eqnarray}\mbox{#1}&&#2,\\\mbox{subject to}&&#3\end{eqnarray}}
 
 \dey[Maximum satisfiability]{Maximum satisfiability}{In the maximum satisfiability problem, one is given a set of boolean functions $\phi_1,\phi_2,\ldots,\phi_n$ defined on the set of boolean variables
