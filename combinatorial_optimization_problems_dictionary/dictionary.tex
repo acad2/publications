@@ -30,12 +30,14 @@
 \begin{document}
 \clearpage\lettergroup{1}\dictchar{Introduction}
 In this dictionary, we document several combinatorial optimization problems.
-\paragraph{}
+\paragraph{Approaches}
 Several approaches have been developed to solve a combinatorial optimization problem exactly, regardless of the ``shape of the problem''. Some other techniques can only be applied to cases where the problem itself meets certain criteria. We enumerate the most popular approaches to solve combinatorial optimization problems exactly:
 \begin{description}
  \item [Brute force] a brute force algorithm enumerates the entire configuration space by assigning every value of the domain to the respective variable. Such approach always results in computation time exponential in the number of variables. The approach is not efficient at all since in most cases -- based on a partial assignment -- one can decide if potential good solutions can be derived from such assignment.
  \item [Branch-and-bound] In case of a branch-and-bound algorithm, one enumerate the configuration space as well, but one uses a \nmn{bound}: a value for the fitness of the thus far best solution found.
  \item [Dynamic programming]
+ \item [State space relaxation]
+ \item [Preprocessing]
 \end{description}
 \glsaddall
 \printglossaries
