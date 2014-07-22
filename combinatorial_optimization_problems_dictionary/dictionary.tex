@@ -26,6 +26,7 @@
 \dey[multi-constrained knapsack]{Multi-constrained knapsack}{A special case of the \rey{knapsack} problem where each item has weights $w_{i\;j}$ of several flavors $j$ and for each of these flavors $j$ there is a weight bound $W_j$. The \todef{} problem has the same representation power of a \rey{integer linear} problem with positive coefficients.}
 \dey[bin packing]{Bin packing}{In the \todef{} problem, one is given a set of items $i$ each with a specific length $l_i$ together with the length of a bin $L$, the objective is to organize the given items in such a way that the number of used bins is minimized. Items belong to only one bin and thus can't be split over the several bins.\frml{\fcop[minimize]{\sumieqb[i]{1}{n}{y_i}}{\sumieqb[j]{1}{n}{l_i\cdot x_{i\,j}}\leq L\cdot y_i\\&&\sumieqb[i]{1}{n}{x_{i\,j}}=1\\&&y_i\in\accl{0,1}\\&&x_{i\,j}\in\accl{0,1}}}}
 \dey[job shop scheduling]{Job shop scheduling}{In the \todef{} problem, one is given a list of tasks that must be performed...}
+\dey[subset-sum]{Subset-sum}{}
 \dey[integer linear]{Integer linear}{}
 
 \begin{document}
