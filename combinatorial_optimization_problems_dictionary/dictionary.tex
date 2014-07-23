@@ -48,6 +48,8 @@
 
 \dey[set covering]{Set covering}{Given a set $S$ of $m$ items and $n$ subsets $S_i\in\calS$ of $S$ with for each subset $S_i$ an associated cost $c_i$. The objective is to choose a bag of subsets $S_i$ such that the union of the subsets contains all items in $S$ with minimized total cost.\frml{\fcop[-]{\sumieqb[i]{1}{n}{c_i\cdot x_i}}{\sumdomain[S_i]{\calS,j\in S_i}{x_i}\geq 1\\&&x_i\in\accl{0,1}}}}
 
+\dey[continuous 0-1 knapsack]{Continuous 0-1 knapsack}{The \todef{} problem is a special case of the \rey{0-1 knapsack} problem where it is allowed to add fractions of an item into the knapsack, as a result the variables have real values and the problem is a special case of a \rey{linear programming} problem, as a result it can be solved in \nmn{polynomial} time.\frml{\fcop{\sumieqb[i]{1}{n}{v_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&&x_i\in\fbrk{0,1}}}}
+
 \dey[collapsing knapsack]{Collapsing knapsack}{}
 
 \dey[nested knapsack]{Nested knapsack}{}
@@ -57,6 +59,8 @@
 \dey[inverse-parametric knapsack]{Inverse-parametric knapsack}{}
 
 \dey[generalized assignment knapsack]{Generalized assignment knapsack}{}
+
+\dey[linear programming]{Linear programming}{}
 
 \begin{document}
 \clearpage\lettergroup{1}\dictchar{Introduction}
