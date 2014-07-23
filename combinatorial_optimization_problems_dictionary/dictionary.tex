@@ -11,7 +11,8 @@
 \newcommand{\nmn}[1]{\index{#1}\emph{#1}}
 \newcommand{\nmns}[1]{\index{#1}\emph{#1s}}
 \newcommand{\frml}[1]{\begin{quote}\fcolorbox{frml-fg}{frml-bg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textit{formal}\\#1}}\end{quote}}
-\newcommand{\fcop}[3][maximize]{\begin{eqnarray}\mbox{#1}&&#2,\\\mbox{subject to}&&#3\end{eqnarray}}
+\newcommand{\fcopm}{}
+\newcommand{\fcop}[3][+]{\ifthenelse{\equal{#1}{+}}{\renewcommand{\fcopm}{maximize}}{\renewcommand{\fcopm}{minimize}}\begin{eqnarray}\mbox{\fcopm{}}&&#2,\\\mbox{subject to}&&#3\end{eqnarray}}
 \newcommand{\ccnpcomplete}{\textsc{NP-Complete}}
 \newcommand{\ccnphard}{\textsc{NP-Hard}}
 \newcommand{\ccp}{\textsc{P}}
@@ -33,17 +34,17 @@
 
 \dey[multi-constrained knapsack]{Multi-constrained knapsack}{A special case of the \rey{knapsack} problem where each item has weights $w_{i\;j}$ of several flavors $j$ and for each of these flavors $j$ there is a weight bound $W_j$. The \todef{} problem has the same representation power of a \rey{integer linear} problem with positive coefficients. This problem is the most general \rey{knapsack} problem.\frml{\fcop{\sumieqb[i]{1}{n}{p_i\cdot x_i}}{\sumieqb[j]{1}{n}{w_{i\;j}\cdot x_{j}}\leq W_i\\&&x_{i}\in\NNN}}}
 
-\dey[bin-packing]{Bin-packing}{In the \todef{} problem, one is given a set of items $i$ each with a specific size $l_i$. The objects must be organized in a number of equally sized bins with size $L$. Items belong atomically to one bin: they can't be split over the several bins.\frml{\fcop[minimize]{\sumieqb[i]{1}{n}{y_i}}{\sumieqb[j]{1}{n}{l_i\cdot x_{i\,j}}\leq L\cdot y_i\\&&\sumieqb[i]{1}{n}{x_{i\,j}}=1\\&&y_i\in\accl{0,1}\\&&x_{i\,j}\in\accl{0,1}}}}
+\dey[bin-packing]{Bin-packing}{In the \todef{} problem, one is given a set of items $i$ each with a specific size $l_i$. The objects must be organized in a number of equally sized bins with size $L$. Items belong atomically to one bin: they can't be split over the several bins.\frml{\fcop[-]{\sumieqb[i]{1}{n}{y_i}}{\sumieqb[j]{1}{n}{l_i\cdot x_{i\,j}}\leq L\cdot y_i\\&&\sumieqb[i]{1}{n}{x_{i\,j}}=1\\&&y_i\in\accl{0,1}\\&&x_{i\,j}\in\accl{0,1}}}}
 
 \dey[job shop scheduling]{Job shop scheduling}{In the \todef{} problem, one is given a list of tasks that must be performed...}
 
 \dey[subset-sum]{Subset-sum}{One is given a number of integers $w_i$, the aim is to determine a subset of the given integers such that the sum is maximum but less than or equal to a given bound $W$.\frml{\fcop{\sumieqb[i]{1}{n}{w_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&&x_i\in\accl{0,1}}}The problem is strongly connected to the \rey{0-1 knapsack} problem where the utility value $v_i$ and the weights $w_i$ of each item are equal.}[0-1 knapsack]
 
-\dey[change-making]{Change-making}{One is given a number of \mnm{coin value} $c_i$ and one must calculate a bag of such coins such that the sum is equal to a given amount of money $C$ such that the total number of \mnms{coin} is minimized.\frml{\fcop[minimize]{\sumieqb[i]{1}{n}{\cdot x_i}}{\sumieqb[i]{1}{n}{c_i\cdot x_i}=C\\&&x_i\in\NNN}}The problem can be seen as a minimization variant of the \rey{unbounded knapsack} problem with an equality for the capacity bound.}[unbounded knapsack]
+\dey[change-making]{Change-making}{One is given a number of \mnm{coin value} $c_i$ and one must calculate a bag of such coins such that the sum is equal to a given amount of money $C$ such that the total number of \mnms{coin} is minimized.\frml{\fcop[-]{\sumieqb[i]{1}{n}{\cdot x_i}}{\sumieqb[i]{1}{n}{c_i\cdot x_i}=C\\&&x_i\in\NNN}}The problem can be seen as a minimization variant of the \rey{unbounded knapsack} problem with an equality for the capacity bound.}[unbounded knapsack]
 
 \dey[integer linear programming]{Integer linear programming}{In the \todef{} problem, one is given a matrix $A$ and two vectors $\vec{b}$ and $\vec{c}$. The aim is to find an optimal integer values for a vector of variables $\vec{x}$ such that the dot-product of $\vec{x}$ and $\vec{c}$ is maximized and the product of $A$ and $\vec{x}$ is element-wise less than or equal to $\vec{b}$.\frml{\fcop{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\\&&\vec{x}\in\NNN^n}}The \todef{} problem is proven to be \nphard{} although there exist solvers that solve most instances efficiently. Several combinatorial optimization problems are subsets of the \todef{} problem like the \rey{knapsack} problem.}
 
-\dey[set covering]{Set covering}{Given a sequence of $m$ items and $n$ subsets $S_i$ of $S$ with for each subset $S_i$ an associated cost $c_i$.}
+\dey[set covering]{Set covering}{Given a set $S$ of $m$ items and $n$ subsets $S_i\in\calS$ of $S$ with for each subset $S_i$ an associated cost $c_i$. The objective is to choose a bag of subsets $S_i$ such that the union of the subsets contains all items in $S$ with minimized total cost.\frml{\fcop[-]{\sumieqb[i]{1}{n}{c_i\cdot x_i}}{\sumdomain[S_i]{\calS,j\in S_i}{x_i}\geq 1\\&&x_i\in\accl{0,1}}}}
 
 \dey[collapsing knapsack]{Collapsing knapsack}{}
 
