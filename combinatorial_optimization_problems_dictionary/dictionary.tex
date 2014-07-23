@@ -18,17 +18,29 @@
 
 \dey[maximum satisfiability]{Maximum satisfiability}{In the maximum satisfiability problem, one is given a set of boolean functions $\phi_1,\phi_2,\ldots,\phi_n$ defined on the set of boolean variables
  $x_1,x_2,\ldots,x_n$. One aims to find the boolean configuration $\vec{x}$ such that the maximum number of boolean functions is satisfied.}
-\dey[knapsack]{Knapsack}{The knapsack problem is a group of different problems. In each problem, one is given a sequence of items $x_i$. Each item has one or more weights $w_i$ and some kind of utility value\footnote{Sometimes this value depends on other objects in the bag.} $v_i$. The objective is to generate a bag of objects such that the total utility is maximized under one or more weight bounds $W$. The number of weight constraints is called the \nmn{dimension} of the problem. The most standard \todef{} problem is the so called \rey{0-1 knapsack} problem. The \todef{} problem can be solved using dynamic programming in pseudo-polynomial time, it is therefore sometimes used as a subroutine for a more complex optimization problem. All \todef{} problems are \ccnphard{}. The \todef{} problem is however considered to be an easy problem in the family of \ccnphard{} problems because there exists a \nmn{dynamic programming} approach to solve most problems in \nmn{pseudo-polynomial} time.}[0-1 knapsack,bounded knapsack,unbounded knapsack,multiple-choice knapsack]
-\dey[0-1 knapsack]{0-1 knapsack}{A special form of the \rey{knapsack} problem. In this variant, a bag contains zero or one instances of every item, in other words no copies of the specified items are allowed.\frml{\fcop{\sumieqb[i]{1}{n}{v_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&&x_i\in\accl{0,1}}}}[subset-sum]
+
+ \dey[knapsack]{Knapsack}{The knapsack problem is a group of different problems. In each problem, one is given a sequence of items $x_i$. Each item has one or more weights $w_i$ and some kind of utility value\footnote{Sometimes this value depends on other objects in the bag.} $v_i$. The objective is to generate a bag of objects such that the total utility is maximized under one or more weight bounds $W$. The number of weight constraints is called the \nmn{dimension} of the problem. The most standard \todef{} problem is the so called \rey{0-1 knapsack} problem. The \todef{} problem can be solved using dynamic programming in pseudo-polynomial time, it is therefore sometimes used as a subroutine for a more complex optimization problem. All \todef{} problems are \ccnphard{}. The \todef{} problem is however considered to be an easy problem in the family of \ccnphard{} problems because there exists a \nmn{dynamic programming} approach to solve most problems in \nmn{pseudo-polynomial} time.}[0-1 knapsack,bounded knapsack,unbounded knapsack,multiple-choice knapsack]
+\
+dey[0-1 knapsack]{0-1 knapsack}{A special form of the \rey{knapsack} problem. In this variant, a bag contains zero or one instances of every item, in other words no copies of the specified items are allowed.\frml{\fcop{\sumieqb[i]{1}{n}{v_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&&x_i\in\accl{0,1}}}}[subset-sum]
+
 \dey[bounded knapsack]{Bounded knapsack}{A special case of the \rey{knapsack} problem. In this variant, each item $x_i$ can has a bounded number of instances (specified by $c_i$).\frml{\fcop{\sumieqb[i]{1}{n}{v_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&&x_i\in\accl{0,1,\ldots,c_i}}}}
+
 \dey[unbounded knapsack]{Unbounded knapsack}{A special case of the \rey{knapsack} problem. In this variant each item $x_i$ can have an unlimited number of instances in the bag.\frml{\fcop{\sumieqb[i]{1}{n}{v_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&&x_i\in\NNN}}}
+
 \dey[multiple-choice knapsack]{Multiple-choice knapsack}{A special case of the \rey{knapsack} problem where items are chosen from disjoint classes. From each class only one item can be selected.\frml{\fcop{\sumieqb[i]{1}{n}{\sumdomain[j]{N_i}{v_{i\;j}\cdot x_{i\;j}}}}{\sumieqb[i]{1}{n}{\sumdomain[j]{N_i}{w_{i\;j}\cdot x_{i\;j}}}\leq W\\&&\sumdomain[j]{N_i}{x_{i\;j}}=1\\&&x_{i\;j}\in\accl{0,1}}}}
+
 \dey[multiple knapsack]{Multiple knapsack}{A special case of the \rey{knapsack} problem where several knapsacks are filled simultaneously based on the same set of items.}
+
 \dey[multi-constrained knapsack]{Multi-constrained knapsack}{A special case of the \rey{knapsack} problem where each item has weights $w_{i\;j}$ of several flavors $j$ and for each of these flavors $j$ there is a weight bound $W_j$. The \todef{} problem has the same representation power of a \rey{integer linear} problem with positive coefficients.}
+
 \dey[bin packing]{Bin packing}{In the \todef{} problem, one is given a set of items $i$ each with a specific length $l_i$ together with the length of a bin $L$, the objective is to organize the given items in such a way that the number of used bins is minimized. Items belong to only one bin and thus can't be split over the several bins.\frml{\fcop[minimize]{\sumieqb[i]{1}{n}{y_i}}{\sumieqb[j]{1}{n}{l_i\cdot x_{i\,j}}\leq L\cdot y_i\\&&\sumieqb[i]{1}{n}{x_{i\,j}}=1\\&&y_i\in\accl{0,1}\\&&x_{i\,j}\in\accl{0,1}}}}
+
 \dey[job shop scheduling]{Job shop scheduling}{In the \todef{} problem, one is given a list of tasks that must be performed...}
+
 \dey[subset-sum]{Subset-sum}{One is given a number of integers $w_i$, the aim is to determine a subset of the given integers such that the sum is maximum but less than or equal to a given bound $W$.\frml{\fcop{\sumieqb[i]{1}{n}{w_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&&x_i\in\accl{0,1}}}The problem is strongly connected to the \rey{0-1 knapsack} problem where the utility value $v_i$ and the weights $w_i$ of each item are equal.}[0-1 knapsack]
+
 \dey[change-making]{Change-making}{One is given a number of \mnm{coin value} $c_i$ and one must calculate a bag of such coins such that the sum is equal to a given amount of money $C$ such that the total number of \mnms{coin} is minimized.\frml{\fcop[minimize]{\sumieqb[i]{1}{n}{\cdot x_i}}{\sumieqb[i]{1}{n}{c_i\cdot x_i}=C\\&&x_i\in\NNN}}The problem can be seen as a minimization variant of the \rey{unbounded knapsack} problem with an equality for the capacity bound.}[unbounded knapsack]
+
 \dey[integer linear programming]{Integer linear programming}{}
 
 \begin{document}
