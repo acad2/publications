@@ -8,8 +8,8 @@
 \definecolor{frml-bg}{RGB}{255,247,220}
 \definecolor{frml-fg}{RGB}{224,220,191}
 
-\newcommand{\nmn}[1]{\emph{#1}}
-\newcommand{\nmns}[1]{\emph{#1s}}
+\newcommand{\nmn}[1]{\index{#1}\emph{#1}}
+\newcommand{\nmns}[1]{\index{#1}\emph{#1s}}
 \newcommand{\frml}[1]{\begin{quote}\fcolorbox{frml-fg}{frml-bg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textit{formal}\\#1}}\end{quote}}
 \newcommand{\fcop}[3][maximize]{\begin{eqnarray}\mbox{#1}&&#2,\\\mbox{subject to}&&#3\end{eqnarray}}
 \newcommand{\ccnpcomplete}{\textsc{NP-Complete}}
@@ -48,5 +48,11 @@ Several approaches have been developed to solve a combinatorial optimization pro
 \printglossaries
 \clearpage\lettergroup{@}\dictchar{Appendix}
 \section*{Mathematics}
+In this section we will describe mathematical structures used in the corpus of this dictionary.
+\begin{description}
+ \item [Bag] A collection of items such that each item can occur zero, one or more times. A bag has no inherent order: there is no $i$-th item in a bag. A bag is sometimes called a \nmn{multiset}.
+ \item [Set] A collection of items. Each item can belong or not belong to a set. Multiple occurrences are not allowed. A set has no inherent order.
+ \item [List] A collection of items such that each item can occur zero, one or more times. A list has an inherent order: given that a list $L$ contains $n$ items, an item $l_i$ is called the $i$-th item of the list. A list is sometimes called a \nmn{vector} or \nmn{tuple}.
+\end{description}
 
 \end{document}
