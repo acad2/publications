@@ -20,6 +20,7 @@
 \newcommand{\todef}{}
 \DeclareDocumentCommand{\dey}{ O{} m m O{} }{\newglossaryentry{#1}{name={#2},description={\renewcommand{\todef}{\emph{#2}}#3},see={#4}}}
 \DeclareDocumentCommand{\rey}{ m }{\textit{\gls{#1}}}
+\DeclareDocumentCommand{\aey}{ O{} m m }{\newglossaryentry{#1}{name={#2},description={\emph{see} \rey{#3}}}}
 
 \AtBeginDocument{\maketitle}
 \AtEndDocument{\clearpage\lettergroup{?}\dictchar{Index}\printindex}
