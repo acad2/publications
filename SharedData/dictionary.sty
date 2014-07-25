@@ -99,7 +99,7 @@
 
 %COMMANDS
 \newcommand\entry[3][]{\hangpara{2em}{1}{\fontfamily{phv}\selectfont{\textbf{{#2}}}}\
-#3\ifx\relax#1\relax\markboth{#2}{#2}\else\markboth{#1}{#1}\fi
+{#3}\ifx\relax#1\relax\markboth{#2}{#2}\else\markboth{#1}{#1}\fi
 \par}\nopagebreak[4]
 \newcommand*{\dictchar}[1]{\parbox[c][3cm][c]{2cm}{\Huge\textbf{#1}}\par}
 
