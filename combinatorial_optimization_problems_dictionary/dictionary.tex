@@ -103,7 +103,7 @@
 
 \dey[max flow]{Max flow}{Given a \nmn{graph} $G=\tupl{V,E}$ where the each edge $e$ is labeled with a numerical value indicating the maximum flow $m_e$ through that edge, the objective is to assign a flow $x_e$ to each edge such that the total flow from a given vertex called the \nmn{source} $v_s$ is maximized to a given vertex called the \nmn{drain} $v_d$. Evidently the total flow entering each vertex $v$ is equal to the total flow leaving that vertex (except for the source and the drain).\frml{\fcop{\sumdomain[e]{\fun{\delta}{v_s}}{x_e}}{-m_e\leq x_e\leq m_e&e\in E\\&\sumdomain[e]{\fun{\delta}{v}}{x_e}=0&v\in V\setminus\accl{v_s,v_d}}}The \todef{} problem can be solved in \nmn{polynomial} time.}
 
-\dey[graph coloring]{Graph coloring}{Given a graph $G=\tupl{V,E}$ the objective is to assign a color $c_v$ to each node $v\in V$ such that for each edge $\tupl{v_i,v_j}\in E$, the two vertices have a different color and the total number of used colors is minimized. \todef{} has applications in compilers for register allocation. The problem is strongly related to \todef{node packing} problem.}
+\dey[graph coloring]{Graph coloring}{Given a graph $G=\tupl{V,E}$ the objective is to assign a color $c_v$ to each node $v\in V$ such that for each edge $\tupl{v_i,v_j}\in E$, the two vertices have a different color and the total number of used colors is minimized. \todef{} has applications in compilers for register allocation. The problem is strongly related to the \rey{node packing} problem.}
 
 \dey[major league baseball umpire scheduling]{Major league baseball umpire scheduling}{}
 
