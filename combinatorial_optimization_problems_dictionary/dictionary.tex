@@ -79,13 +79,17 @@
 
 \dey[weighted matching]{Weighted matching}{A variant of the \rey{matching} problem where each edge $e$ is assigned a weight $w_e$. The objective is to find the \nmn{matching} with the maximum sum of the weights of the \nmns{edge}.}
 
-\aey[edge packing]{Edge packing}{matching}
-
 \dey[node packing]{Node packing}{Given a \nmn{graph} $G=\tupl{V,E}$, one aims to find the largest set of \nmns{node} such that for each \nmn{edge} $e\in E$ at most one \nmn{node} is selected.\frml{\fcop{\sumdomain[v]{V}{x_v}}{x_v\in\accl{0,1}&v\in V\\&x_{v_1}+x_{v_2}\leq 1&\tupl{v_1,v_2}\in E}}.}
 
-\aey[independent set]{Independent set}{node packing}
+\dey[linear programming]{Linear programming}{A generic problem where one is given an $n\times m$-matrix $A$, an $m$-vector $\vec{b}$ and an $n$-vector $\vec{c}$, the aim is to find an $n$-vector of real variables $\vec{x}$ such that the dot-product with $\vec{c}$ is maximized given that the product of $A$ with $\vec{x}$ is element-wise less than or equal to $\vec{b}$.\frml{\fcop{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\\&\vec{x}\in\RRR	^n}}Strictly spoken the problem is not a combinatorial optimization problem since the set of real values is infinite. However floating points are represented discretized on a machine. The problem can be solved in \nmn{polynomial} time in the number of variables and the inverse precision $1/\epsilon$: a parameter that determines the maximum error on the solution.}
 
-\aey[stable set]{Stable set}{node packing}
+\dey[shortest path]{Shortest path}{Given a \nmn{directed graph} $G=\tupl{V,E}$ where the \nmns{edge} $E$ are labeled with numerical values, the objective is to find a path $\pi$ between two given vertices $v_1$ and $v_2$ such that the sum of the edges in $\pi$ is minimized. The problem can be solved in \nmn{polynomial} time using \nmn{Dijkstra's algorithm}.}
+
+\dey[max flow]{Max flow}{Given a \nmn{graph} $G=\tupl{V,E}$ where the each edge $e$ is labeled with a numerical value indicating the maximum flow $m_e$ through that edge, the objective is to assign a flow $x_e$ to each edge such that the total flow from a given vertex called the \nmn{source} $v_s$ is maximized to a given vertex called the \nmn{drain} $v_d$. Evidently the total flow entering each vertex $v$ is equal to the total flow leaving that vertex (except for the source and the drain).\frml{\fcop{\sumdomain[e]{\fun{\delta}{v_s}}{x_e}}{-m_e\leq x_e\leq m_e&e\in E\\&\sumdomain[e]{\fun{\delta}{v}}{x_e}=0&v\in V\setminus\accl{v_s,v_d}}}The \todef{} problem can be solved in \nmn{polynomial} time.}
+
+\dey[graph coloring]{Graph coloring}{Given a graph $G=\tupl{V,E}$ the objective is to assign a color $c_v$ to each node $v\in V$ such that for each edge $\tupl{v_i,v_j}\in E$, the two vertices have a different color and the total number of used colors is minimized. \todef{} has applications in compilers for register allocation. The problem is strongly related to the \rey{node packing} problem.}
+
+\dey[major league baseball umpire scheduling]{Major league baseball umpire scheduling}{}
 
 \dey[collapsing knapsack]{Collapsing knapsack}{}
 
@@ -97,15 +101,9 @@
 
 \dey[generalized assignment knapsack]{Generalized assignment knapsack}{}
 
-\dey[linear programming]{Linear programming}{A generic problem where one is given an $n\times m$-matrix $A$, an $m$-vector $\vec{b}$ and an $n$-vector $\vec{c}$, the aim is to find an $n$-vector of real variables $\vec{x}$ such that the dot-product with $\vec{c}$ is maximized given that the product of $A$ with $\vec{x}$ is element-wise less than or equal to $\vec{b}$.\frml{\fcop{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\\&\vec{x}\in\RRR	^n}}Strictly spoken the problem is not a combinatorial optimization problem since the set of real values is infinite. However floating points are represented discretized on a machine. The problem can be solved in \nmn{polynomial} time in the number of variables and the inverse precision $1/\epsilon$: a parameter that determines the maximum error on the solution.}
-
-\dey[shortest path]{Shortest path}{Given a \nmn{directed graph} $G=\tupl{V,E}$ where the \nmns{edge} $E$ are labeled with numerical values, the objective is to find a path $\pi$ between two given vertices $v_1$ and $v_2$ such that the sum of the edges in $\pi$ is minimized. The problem can be solved in \nmn{polynomial} time using \nmn{Dijkstra's algorithm}.}
-
-\dey[max flow]{Max flow}{Given a \nmn{graph} $G=\tupl{V,E}$ where the each edge $e$ is labeled with a numerical value indicating the maximum flow $m_e$ through that edge, the objective is to assign a flow $x_e$ to each edge such that the total flow from a given vertex called the \nmn{source} $v_s$ is maximized to a given vertex called the \nmn{drain} $v_d$. Evidently the total flow entering each vertex $v$ is equal to the total flow leaving that vertex (except for the source and the drain).\frml{\fcop{\sumdomain[e]{\fun{\delta}{v_s}}{x_e}}{-m_e\leq x_e\leq m_e&e\in E\\&\sumdomain[e]{\fun{\delta}{v}}{x_e}=0&v\in V\setminus\accl{v_s,v_d}}}The \todef{} problem can be solved in \nmn{polynomial} time.}
-
-\dey[graph coloring]{Graph coloring}{Given a graph $G=\tupl{V,E}$ the objective is to assign a color $c_v$ to each node $v\in V$ such that for each edge $\tupl{v_i,v_j}\in E$, the two vertices have a different color and the total number of used colors is minimized. \todef{} has applications in compilers for register allocation. The problem is strongly related to the \rey{node packing} problem.}
-
-\dey[major league baseball umpire scheduling]{Major league baseball umpire scheduling}{}
+\aey[edge packing]{Edge packing}{matching}
+\aey[independent set]{Independent set}{node packing}
+\aey[stable set]{Stable set}{node packing}
 
 \begin{document}
 \clearpage\lettergroup{1}\dictchar{Introduction}
