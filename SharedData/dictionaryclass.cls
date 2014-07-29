@@ -1,6 +1,6 @@
 \ProvidesClass{dictionaryclass}
 \LoadClass{extbook}
-\RequirePackage{makeidx,glossaries,../SharedData/dictionary,xparse,hyperref}
+\RequirePackage{makeidx,amsmath,amsthm,amssymb,amsfonts,glossaries,../SharedData/dictionary,xparse,hyperref}
 \makeindex
 \makeglossaries
 
