@@ -91,7 +91,7 @@
 \dey[frequency assignment]{Frequency assignment}{A family of problems related to wireless communication. In all problems a set of \nmns{transmitter} is given and each of these transmitters must be given \nmn{bandwidth}. Transmitters close to each other in space and bandwidth interfere with each other resulting in communication problems. The objective of all problems is to minimize some flavor of inference.}[minimum order frequency assignment,minimum span frequency assignment,minimum blocking frequency assignment,minimum inference frequency assignment]
 
 %TODO: problems to define
-\dey[minimum order frequency assignment]{Minimum order frequency assignment}{Given an \nmn{undirected graph} $G=\tupl{V,E}$ of \nmns{transmitter} $V$ such that for each $v\in V$, $\tupl{v,v}\in E$.\frml{\fcop[-]{\abs{}}{}}}
+\dey[minimum order frequency assignment]{Minimum order frequency assignment}{Given an \nmn{undirected graph} $G=\tupl{V,E}$ of \nmns{transmitter} $V$ such that for each $v\in V$, $\tupl{v,v}\notin E$.\frml{\fcop[-]{\abs{\cupdomain[v]{V}{f_v}}}{\abs{f_v}\leq c_v&v\in V\\&f_v\subseteq D_v\\&\abs{f_{v\;i}-f_{w\;j}}\notin T_{v\;w}&\tupl{v,w}\in E,f_{v\;i}\in f_v,f_{w\;j}\in f_w}}}
 \dey[minimum span frequency assignment]{Minimum span frequency assignment}{}
 \dey[minimum blocking frequency assignment]{Minimum blocking frequency assignment}{}
 \dey[minimum inference frequency assignment]{Minimum inference frequency assignment}{}
