@@ -71,13 +71,13 @@
 
 \dey[water distribution network design]{Water distribution network design}{The objective is to find the optimal network configuration in terms of pipe diameters. One aims to minimize the investment cost while satisfying conservation of mass and energy and the minimum and maximum of the pressure.\frml{\fcop[-]{\sumdomain[p]{P}{\sumdomain[t]{T}{l_p\cdot c_t\cdot x_{p,t}}}}{x_{p,t}\in\accl{0,1}&p\in P,t\in T\\&y_{p}\in\accl{-1,1}&p\in P\\&\sumdomain[p]{l}{\displaystyle\frac{10.67\cdot y_p\cdot q_p^{1.852}}{\sumdomain[t]{T}{x_{p,t}\cdot c_t^{1.852}\cdot d_t^{4.871}}}}=0&l\in L\\&H_{n,\mbox{\small min}}\leq H_n\leq H_{n,\mbox{\small max}}&n\in N\\&\sumdomain[t]{T}{x_{p,t}}=1&p\in P}} Where:\begin{enumerate}\item $x_{p,t}$ denotes a binary decision variable that states that pipe $p$ is of type $t$;\item $c_{t}$ is the cost per meter of a pipe of type $t$;\item $q_{i,j}$ is the flow rate from node $i$ to $j$ (in \unmps[3]);\item $q_{p}$ is the water flow rate through pipe $p$ (in \unmps[3]);\item $r_t$ is the roughness coefficient of pipe type $t$;\item $H_{n,\mbox{\small min}}$ is the minimal pressure head in node $n$ (in \unm); \item $H_{n,\mbox{\small max}}$ is the maximal pressure head in node $n$ (in \unm); \item $P$ is the set of pipes; $T$ is the set of pipe types; \item $l_p$ is the length of pipe $p$ (in \unm); \item $d_n$ is the demand of node $n$ (in \unmps[3]); \item $s_n$ is the supply of node $n$ (in \unmps[3]); \item $H_n$ is the pressure head in node $n$ (in \unm);\item $N$ is the set of nodes; and \item $L$ is the set of loops.\end{enumerate}}
 
-\dey[matching]{Matching}{Given a \nmn{graph} $G=\tupl{V,E}$, one aims to find the \nmn{matching} with the maximum number of \nmns{edge}.\frml{\fcop{\sumdomain[e]{E}{x_e}}{x_e\in\accl{0,1}&e\in E\\&\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1&v\in V}}. A variant of this problem is the \rey{weighted matching} problem.}
+\dey[matching]{Matching}{Given a \nmn{graph} $G=\tupl{V,E}$, one aims to find the \nmn{matching} with the maximum number of \nmns{edge}.\frml{\fcop{\sumdomain[e]{E}{x_e}}{x_e\in\accl{0,1}&e\in E\\&\sumdomain[e]{\fun{\delta}{v}}{x_e}\leq 1&v\in V}} A variant of this problem is the \rey{weighted matching} problem.}
 
 \dey[weighted matching]{Weighted matching}{A variant of the \rey{matching} problem where each edge $e$ is assigned a weight $w_e$. The objective is to find the \nmn{matching} with the maximum sum of the weights of the \nmns{edge}.}
 
 \dey[node packing]{Node packing}{Given a \nmn{graph} $G=\tupl{V,E}$, one aims to find the largest set of \nmns{node} such that for each \nmn{edge} $e\in E$ at most one \nmn{node} is selected.\frml{\fcop{\sumdomain[v]{V}{x_v}}{x_v\in\accl{0,1}&v\in V\\&x_{v_1}+x_{v_2}\leq 1&\tupl{v_1,v_2}\in E}}.}
 
-\dey[linear programming]{Linear programming}{A generic problem where one is given an $n\times m$-matrix $A$, an $m$-vector $\vec{b}$ and an $n$-vector $\vec{c}$, the aim is to find an $n$-vector of real variables $\vec{x}$ such that the dot-product with $\vec{c}$ is maximized given that the product of $A$ with $\vec{x}$ is element-wise less than or equal to $\vec{b}$.\frml{\fcop{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\\&\vec{x}\in\RRR	^n}}Strictly spoken the problem is not a combinatorial optimization problem since the set of real values is infinite. However floating points are represented discretized on a machine. The problem can be solved in \nmn{polynomial} time in the number of variables and the inverse precision $1/\epsilon$: a parameter that determines the maximum error on the solution.}
+\dey[linear programming]{Linear programming}{A generic problem where one is given an $n\times m$-matrix $A$, an $m$-vector $\vec{b}$ and an $n$-vector $\vec{c}$, the aim is to find an $n$-vector of real variables $\vec{x}$ such that the dot-product with $\vec{c}$ is maximized given that the product of $A$ with $\vec{x}$ is element-wise less than or equal to $\vec{b}$.\frml{\fcop{\vec{c}\cdot\vec{x}}{A\cdot\vec{x}\leq\vec{b}\\&\vec{x}\in\RRR^n}}Strictly spoken the problem is not a combinatorial optimization problem since the set of real values is infinite. However floating points are represented discretized on a machine. The problem can be solved in \nmn{polynomial} time in the number of variables and the inverse precision $1/\epsilon$: a parameter that determines the maximum error on the solution.}
 
 \dey[shortest path]{Shortest path}{Given a \nmn{directed graph} $G=\tupl{V,E}$ where the \nmns{edge} $E$ are labeled with numerical values, the objective is to find a path $\pi$ between two given vertices $v_1$ and $v_2$ such that the sum of the edges in $\pi$ is minimized. The problem can be solved in \nmn{polynomial} time using \nmn{Dijkstra's algorithm}.}
 
@@ -88,25 +88,20 @@
 \dey[spanning forest]{Spanning forest}{Given a \nmn{graph} $G=\tupl{V,E}$ the objective is to find a subgraph that is a \nmn{forest} such that the sum of the \nmn{weight} of the \nmns{edge} is maximized.\frml{
 \fcop{\sumdomain[e]{E}{x_e\cdot w_e}}{\sumdomain[e]{\fun{\delta}{i}\cap\fun{\delta}{j},i,j\in W}{x_e}\leq\abs{V}-1&V\subseteq W:2\leq\abs{V}\leq\abs{W}\\&x_e\in\accl{0,1}&e\in E}}}
 
-%}
-%
+\dey[frequency assignment]{Frequency assignment}{A family of problems related to wireless communication. In all problems a set of \nmns{transmitter} are considered}[minimum order frequency assignment,minimum span frequency assignment,minimum blocking frequency assignment,minimum inference frequency assignment]
 
+%TODO: problems to define
+\dey[minimum order frequency assignment]{Minimum order frequency assignment}{}
+\dey[minimum span frequency assignment]{Minimum span frequency assignment}{}
+\dey[minimum blocking frequency assignment]{Minimum blocking frequency assignment}{}
+\dey[minimum inference frequency assignment]{Minimum inference frequency assignment}{}
 \dey[major league baseball umpire scheduling]{Major league baseball umpire scheduling}{}
-
 \dey[collapsing knapsack]{Collapsing knapsack}{}
-
 \dey[nested knapsack]{Nested knapsack}{}
-
 \dey[nonlinear knapsack]{Nonlinear knapsack}{}
-
 \dey[inverse-parametric knapsack]{Inverse-parametric knapsack}{}
-
 \dey[generalized assignment knapsack]{Generalized assignment knapsack}{}
-
-\dey[frequency assignment]{Frequency assignment}{}
-
 \dey[circle positioning]{Circle positioning}{}
-
 \dey[scheduling]{Scheduling}{}
 
 %alternatives
