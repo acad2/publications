@@ -88,10 +88,10 @@
 \dey[spanning forest]{Spanning forest}{Given a \nmn{graph} $G=\tupl{V,E}$ the objective is to find a subgraph that is a \nmn{forest} such that the sum of the \nmn{weight} of the \nmns{edge} is maximized.\frml{
 \fcop{\sumdomain[e]{E}{x_e\cdot w_e}}{\sumdomain[e]{\fun{\delta}{i}\cap\fun{\delta}{j},i,j\in W}{x_e}\leq\abs{V}-1&V\subseteq W:2\leq\abs{V}\leq\abs{W}\\&x_e\in\accl{0,1}&e\in E}}}
 
-\dey[frequency assignment]{Frequency assignment}{A family of problems related to wireless communication. In all problems a set of \nmns{transmitter} are considered}[minimum order frequency assignment,minimum span frequency assignment,minimum blocking frequency assignment,minimum inference frequency assignment]
+\dey[frequency assignment]{Frequency assignment}{A family of problems related to wireless communication. In all problems a set of \nmns{transmitter} is given and each of these transmitters must be given \nmn{bandwidth}. Transmitters close to each other in space and bandwidth interfere with each other resulting in communication problems. The objective of all problems is to minimize some flavor of inference.}[minimum order frequency assignment,minimum span frequency assignment,minimum blocking frequency assignment,minimum inference frequency assignment]
 
 %TODO: problems to define
-\dey[minimum order frequency assignment]{Minimum order frequency assignment}{}
+\dey[minimum order frequency assignment]{Minimum order frequency assignment}{Given an \nmn{undirected graph} $G=\tupl{V,E}$ of \nmns{transmitter} $V$ such that for each $v\in V$, $\tupl{v,v}\in E$.\frml{\fcop[-]{\abs{}}{}}}
 \dey[minimum span frequency assignment]{Minimum span frequency assignment}{}
 \dey[minimum blocking frequency assignment]{Minimum blocking frequency assignment}{}
 \dey[minimum inference frequency assignment]{Minimum inference frequency assignment}{}
