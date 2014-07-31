@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\node[state,initial]   (qa) at (0,0)  {$q_1$};
+\node[state]           (qb) at (4,0)  {$q_2$};
+\node[state]           (qc) at (2,-1) {$q_3$};
+\node[state,accepting] (qh) at (4,-2) {$q_4$};
+\path[->] (qa) edge              node {$0/1/R$} (qb)
+               edge              node {$1/1/L$} (qc)
+          (qb) edge [bend right] node {$0/1/L$} (qa)
+               edge [loop above] node {$1/1/R$} ()
+          (qc) edge              node {$0/1/L$} (qb)
+               edge              node {$1/1/R$} (qh);
+\end{tikzpicture}

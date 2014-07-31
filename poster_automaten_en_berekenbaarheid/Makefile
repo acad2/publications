@@ -1,8 +1,8 @@
-all : *.tex Makefile ../SharedData/*.sty *.svg *.sh
+all : *.tex Makefile ../SharedData/*.sty ../SharedData/*.cls *.svg *.sh */*.tex
 	make images
 	make poster.pdf
 	make clean
-poster.pdf : *.tex Makefile ../SharedData/*.sty *.svg *.sh
+poster.pdf : *.tex Makefile ../SharedData/*.sty ../SharedData/*.cls *.svg *.sh */*.tex
 	qrencode -o "bar.eps" -l H -t EPS "http://goo.gl/csd51c"
 	pdflatex --shell-escape --interaction nonstopmode poster.tex >/dev/null 2>/dev/null
 diagnostic :
