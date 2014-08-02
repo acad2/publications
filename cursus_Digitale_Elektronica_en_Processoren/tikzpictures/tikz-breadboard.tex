@@ -12,7 +12,7 @@
   }
   \draw ($(P\l1.north)+(0,0.025 in)$) node[anchor=south,scale=0.5] {\small{\l}};
 }
-\filldraw[fill=gray,draw=black] ($(PE1.north east)+(0.5,0)$) rectangle ($(PF57.south west)-(0.5,0)$);
+\filldraw[fill=gray,draw=black] ($(PE1.east)+(0.5,0)$) rectangle ($(PF57.west)-(0.5,0)$);
 \foreach \y in {1,...,57} {
   \foreach \la/\lb in {A/B,B/C,C/D,D/E,F/G,G/H,H/I,I/J} {
     \pcbspintopin{P\la\y}{P\lb\y}

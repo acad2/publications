@@ -222,25 +222,25 @@
     \pgfutil@tempdimc=\circlediff
     \pgfutil@tempdimd=\dipdx
     \pgfutil@tempdime=0.5\pgfutil@tempdimc
-    \pgfmathloop%
-    \ifnum\pgfmathcounter>\halfpins\relax
-    \else
-      \advance\pgfutil@tempdime by -0.5\pgfutil@tempdimc
-      \repeatpgfmathloop%
-    \fi
+%     \pgfmathloop%
+%     \ifnum\pgfmathcounter>\halfpins\relax
+%     \else
+%       \advance\pgfutil@tempdime by -0.5\pgfutil@tempdimc
+%       \repeatpgfmathloop%
+%     \fi
     \pgfutil@tempdimf=\dipheight
     \pgfutil@tempdimg=\dipwidth
     \pgfutil@tempdimh=\dipnudge
-    \pgfmathloop%
-    \ifnum\pgfmathcounter>\halfpins\relax%pins
-    \else
-      \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-      \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-      \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
-      \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
-      \advance\pgfutil@tempdime by\pgfutil@tempdimc
-      \repeatpgfmathloop
-    \fi
+%     \pgfmathloop%
+%     \ifnum\pgfmathcounter>\halfpins\relax%pins
+%     \else
+%       \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+%       \centerpoint\advance\pgf@x by-0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+%       \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdima}
+%       \centerpoint\advance\pgf@x by0.5\pgfutil@tempdimd\advance\pgf@y by\pgfutil@tempdime\pgfpathcircle{\pgfpoint{\pgf@x}{\pgf@y}}{\pgfutil@tempdimb}
+%       \advance\pgfutil@tempdime by\pgfutil@tempdimc
+%       \repeatpgfmathloop
+%     \fi
     \color{gray}
     \pgfusepath{fill}
     \pgfsetlinewidth{2\pgflinewidth}
