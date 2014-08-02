@@ -76,13 +76,10 @@
 *.swp
 *.bak
 *.kate-swp
-<<<<<<< HEAD
 *.glsdefs
-=======
 *.sxc
 *.sbx
 *.sxd
 *.sbx
 *.thm
 *.mx*
->>>>>>> master
