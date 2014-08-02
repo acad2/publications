@@ -962,24 +962,6 @@
 \newcommand{\pcbspintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
   \draw[{#1}] (#2) -- (#3);
 }
-%Begin Kudos
-%to Heiko Oberdiek for this script.
-\makeatletter
-\pgfmathdeclarefunction{sign}{1}{%
-  \begingroup
-    \ifdim#1pt>\z@
-      \def\pgfmathresult{1}%
-    \else
-      \ifdim#1pt=\z@
-        \def\pgfmathresult{0}%
-      \else
-        \def\pgfmathresult{-1}%
-      \fi
-    \fi
-    \pgfmath@smuggleone\pgfmathresult
-  \endgroup
-}
-\makeatother
 
 \newcommand{\pcbpintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
   \draw[{#1}]
