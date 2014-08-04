@@ -43,8 +43,6 @@
 
 \dey[bin-packing]{Bin-packing}{In the \todef{} problem, one is given a set of items $i$ each with a specific size $l_i$. The objects must be organized in a number of equally sized bins with size $L$. Items belong atomically to one bin: they can't be split over the several bins.\frml{\fcop[-]{\sumieqb[i]{1}{n}{y_i}}{\sumieqb[j]{1}{n}{l_i\cdot x_{i\,j}}\leq L\cdot y_i\\&\sumieqb[i]{1}{n}{x_{i\,j}}=1\\&y_i\in\accl{0,1}\\&x_{i\,j}\in\accl{0,1}}}}
 
-\dey[job shop scheduling]{Job shop scheduling}{In the \todef{} problem, one is given a list of tasks that must be performed...}
-
 \dey[subset-sum]{Subset-sum}{One is given a number of integers $w_i$, the aim is to determine a subset of the given integers such that the sum is maximum but less than or equal to a given bound $W$.\frml{\fcop{\sumieqb[i]{1}{n}{w_i\cdot x_i}}{\sumieqb[i]{1}{n}{w_i\cdot x_i}\leq W\\&x_i\in\accl{0,1}}}The problem is strongly connected to the \rey{0-1 knapsack} problem where the utility value $v_i$ and the weights $w_i$ of each item are equal.}[0-1 knapsack]
 
 \dey[change-making]{Change-making}{One is given a number of \nmn{coin value} $c_i$ and one must calculate a bag of such coins such that the sum is equal to a given amount of money $C$ such that the total number of \nmns{coin} is minimized.\frml{\fcop[-]{\sumieqb[i]{1}{n}{\cdot x_i}}{\sumieqb[i]{1}{n}{c_i\cdot x_i}=C\\&x_i\in\NNN}}The problem can be seen as a minimization variant of the \rey{unbounded knapsack} problem with an equality for the capacity bound.}[unbounded knapsack]
@@ -102,9 +100,9 @@
 
 \dey[minimum inference frequency assignment]{Minimum inference frequency assignment}{Given an \nmn{undirected graph} $G=\tupl{V,E}$ of \nmns{transmitter} $V$ such that for each $v\in V$, $\tupl{v,v}\notin E$. Each of the transmitters $v$ is annotated with a set of possible frequencies $D_v$ and a penalty $p_{v\;w\;f_{v\;i}\;f_{w\;j}}$ for each two transmitters and their possible frequencies $f_{v\;i}\in D_v$ and $f_{w\;j}\in D_w$. Each of the edges $\tupl{v,w}$ is annotated with a set of unacceptable inferences $T_{v\;w}$. The objective is to assign a set of frequencies $f_v$ to each of the transmitters $v$ such that each submitter is assigned a fixed number of frequencies $c_v$ and the sum of the penalties for assigning unacceptable inference frequencies $T_{v\;w}$ to two transmitters $v$ and $w$ is minimized.\frml{\fcop[-]{\sumdomain[\tupl{v,w}]{E}{\sumdomain[f_{v\;i}]{f_v}{\sumdomain[f_{w\;j}]{f_w}{p_{v\;w\;f_{v\;i}\;f_{w\;j}}\cdot\kronecker{\abs{f_{v\;i}-f_{w\;j}}\in T_{v\;w}}}}}}{\abs{f_v}=c_v&v\in V\\&f_v\subseteq D_v&v\in V}}Sometimes the list of penalties is not given explicitly but calculated based on a function where the distance between the transmitters is taken into account.}
 
-\dey[collapsing knapsack]{Collapsing knapsack}{A family of problems that generalize \rey{knapsack} problems. In the \rey{knapsack} problem the \nmn{capacity}\footnote{Or capacities.} of the knapsack is fixed whereas in the \todef{} problem, the capacity is determined by a non-increasing function in the number of items included. Like the \rey{knapsack} family, several flavors of the problem exists.}[0-1 collapsing knapsack]
+\dey[collapsing knapsack]{Collapsing knapsack}{A family of problems that generalize \rey{knapsack} problems. In the \rey{knapsack} problem the \nmn{capacity}\footnote{Or capacities.} of the knapsack is fixed whereas in the \todef{} problem, the capacity is determined by a non-increasing function $\funsig{b}{\NNN}{\NNN}$ in the number of items included. In case the function is linear, the problem can be converted to a \rey{knapsack} problem. Like the \rey{knapsack} family, several flavors of the problem exists.}[0-1 collapsing knapsack]
 
-\dey[0-1 collapsing knapsack]{0-1 collapsing knapsack}{\frml{\fcop{\sumieqb{1}{n}c_i\cdot x_i}{\sumieqb{1}{n}{a_i\cdot x_i}\leq\fun{b}{\sumieqb{1}{n}{x_i}}\\&x_i\in\accl{0,1}&\iran{1}{n}}}The \todef{} has applications in \nmn{satellite communication} and \nmn{scheduling}. In satellite communication, transmissions on the band require gaps between the portions of the band assigned to each user. On \nmn{time-sharing computer systems} each processes that runs on the system causes additional overhead thus reducing the capacity.}
+\dey[0-1 collapsing knapsack]{0-1 collapsing knapsack}{A special form of the \rey{collapsing knapsack} problem. In this variant, a bag contains zero or one instances of every item, in other words no copies of the specified items are allowed. \frml{\fcop{\sumieqb{1}{n}c_i\cdot x_i}{\sumieqb{1}{n}{a_i\cdot x_i}\leq\fun{b}{\sumieqb{1}{n}{x_i}}\\&x_i\in\accl{0,1}&\iran{1}{n}}}The \todef{} has applications in \nmn{satellite communication} and \nmn{scheduling}. In satellite communication, transmissions on the band require gaps between the portions of the band assigned to each user. On \nmn{time-sharing computer systems} each processes that runs on the system causes additional overhead thus reducing the capacity.}
 
 %TODO: problems to define
 \dey[major league baseball umpire scheduling]{Major league baseball umpire scheduling}{}
@@ -114,6 +112,9 @@
 \dey[generalized assignment knapsack]{Generalized assignment knapsack}{}
 \dey[circle positioning]{Circle positioning}{}
 \dey[scheduling]{Scheduling}{}
+\dey[expanding knapsack]{Expanding knapsack}{}
+\dey[0-1 expanding knapsack]{0-1 expanding knapsack}{}
+\dey[job shop scheduling]{Job shop scheduling}{In the \todef{} problem, one is given a list of tasks that must be performed...}
 
 %alternative names
 \aey[edge packing]{Edge packing}{matching}
