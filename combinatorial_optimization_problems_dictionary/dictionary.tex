@@ -106,21 +106,23 @@
 
 \dey[expanding knapsack]{expanding knapsack}{A family of problems that generalize \rey{knapsack} problems. In the \rey{knapsack} problem the \nmn{capacity}\footnote{Or capacities.} of the knapsack is fixed whereas in the \todef{} problem, the capacity is determined by a nondecreasing function $\funsig{b}{\NNN}{\NNN}$ in the number of items included. In case the function is linear, the problem can be converted to a \rey{knapsack} problem. Like the \rey{knapsack} family, several flavors of the problem exists.}[0-1 expanding knapsack]
 
+\dey[job shop scheduling]{Job shop scheduling}{Given a set of $n$ \nmns{job} $J_i$ and a set of $m$ \nmns{machine} $M_r$. Each job $J_i$ has a list of \nmns{operation} $O_{i\;j}$ that must be processed on a specific machine with a \nmn{duration} of $d_{i\;j}$. A machine can only handle one operation at a time and operations must be processed atomically and in the order specified by the corresponding job. Operations can however be processed in parallel if they require a different machine. The aim is to minimize the \nmn{makespan}: the time it takes to process all operations.}
+
+\dey[scheduling]{Scheduling}{\todef{} is a family of problems where each problems aims to allocate shared resources over time to competing activities.}[job shop scheduling]
+
 %TODO: problems to define
 \dey[major league baseball umpire scheduling]{Major league baseball umpire scheduling}{}
 \dey[nested knapsack]{Nested knapsack}{}
 \dey[nonlinear knapsack]{Nonlinear knapsack}{}
 \dey[inverse-parametric knapsack]{Inverse-parametric knapsack}{}
 \dey[generalized assignment knapsack]{Generalized assignment knapsack}{}
-\dey[circle positioning]{Circle positioning}{}
-\dey[scheduling]{Scheduling}{}
 \dey[0-1 expanding knapsack]{0-1 expanding knapsack}{}
-\dey[job shop scheduling]{Job shop scheduling}{In the \todef{} problem, one is given a list of tasks that must be performed...}
 
 %alternative names
 \aey[edge packing]{Edge packing}{matching}
 \aey[independent set]{Independent set}{node packing}
 \aey[stable set]{Stable set}{node packing}
+\aey[job-shop]{Job-shop}{job shop scheduling}
 
 %abbreviations
 \bey{MO-FAP}{minimum order frequency assignment}
