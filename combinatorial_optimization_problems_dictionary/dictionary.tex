@@ -120,8 +120,12 @@
 \dey[multiperiod knapsack]{Multiperiod knapsack}{}
 \dey[nested knapsack]{Nested knapsack}{}
 \dey[0-1 multiple choice nested knapsack]{0-1 multiple choice nested knapsack}{\frml{\fcop{\sumieqb{1}{m}{v_i\cdot x_{i\;1\;1}-\sumieqb[j]{1}{m}{c_s\cdot y_js}}}{
-\sumieqb{1}{m}{l_i\cdot x_{i\;j\;s}}
-
+\sumieqb{1}{m}{l_i\cdot x_{i\;1\;1}}\leq L_1\\
+&\sumieqb{1}{m}{l_i\cdot x_{i\;j\;s}}\leq L_s\cdot y_{j\;s}&\iran[j]{1}{m},\iran[s]{2}{S}\\
+&x_{i\;1\;1}\leq\sumieqb[j]{1}{m}{x_{i\;j\;s}}&\iran[j]{1}{m},\iran[s]{1}{S}\\
+&\maxv[j]{x_{p\;j\;s}+x_{q\;j\;s}}\leq&\maxv[j]{x_{p\;j\;s-1}+x_{q\;j\;s-1}}&\iran[p,q]{1}{m},\iran[s]{3}{S},p\neq q\\
+&x_{i\;j\;s}\in\BBB&\iran[i,j]{1}{m},\iran[s]{1}{S}\\
+&y_{j\;s}\in\BBB&\iran[j]{1}{m},\iran[s]{1}{S}
 }}}
 \dey[flow shop sequencing]{Flow shop sequencing}{}
 \dey[open shop scheduling]{Open shop scheduling}{}
