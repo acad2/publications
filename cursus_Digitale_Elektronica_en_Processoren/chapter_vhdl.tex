@@ -367,7 +367,9 @@ Een dergelijke samenvatting kan bijvoorbeeld als handtekening gebruikt worden om
 \paragraph{}
 Het algoritme in pseudo-code staat beschreven in \algoref{sha1}.
 \importalgorithmicalgorithm{sha1}{Genereren van een sha1 checksum.}
+Technisch gezien moet het bericht dus uit blokken van 512 bits bestaan en de lengte in bits moet congruent zijn met $448\mod 512$. Dit is natuurlijk niet altijd het geval. In dat geval worden $0$'en bijgevoegd op het einde van het bestand tot aan de voorwaarde is voldaan. De overige $64$ bits in het laatste blok moeten dan worden opgevuld met de lengte van het bestand in bits modulo $2^64$. We gaan er vanuit dat deze stappen al uitgevoerd zijn door de logica die invoer op onze processor aanlegt, we krijgen dus $512$-bit blokken aangeleverd met correcte inhoud. Een laatste opmerking over de invoer is dat indien het bestand bovendien tekst bevat is nog een extra stap nodig, we gaan er hier vanuit dat het bestand binair is, ook deze stappen worden dus niet beschouwd.
 
+\paragraph{}
 
 \section{VHDL grammatica}
 \seclab{vhdl-gram}
