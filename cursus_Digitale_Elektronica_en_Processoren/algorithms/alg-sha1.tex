@@ -1,11 +1,16 @@
 \begin{algorithmic}[1]
-\Procedure{Sha1}{$\vec{b}$}\Comment{$\vec{b}$ is een vector van $512$-bit blokken.}
+\Procedure{Sha1}{$\vec{x}$}\Comment{$\vec{x}$ is een vector van $512$-bit blokken.}
 \State $h_0\gets \textrm{67452301}_{16}$
 \State $h_1\gets \textrm{EFCDAB89}_{16}$
 \State $h_2\gets \textrm{98BADCFE}_{16}$
 \State $h_3\gets \textrm{10325476}_{16}$
 \State $h_4\gets \textrm{C3D2E1F0}_{16}$
-\For{$b\in\vec{b}$}
+\For{$x\in\vec{x}$}
+\State $a\gets h_0$
+\State $b\gets h_1$
+\State $c\gets h_2$
+\State $d\gets h_3$
+\State $e\gets h_4$
 % \State $\mathcal{P}\gets\emptyset$\Comment{Initi\"ele partitionering gebaseerd op uitvoer.}
 % \While{$V\neq\emptyset\wedge E\neq\emptyset$}\Comment{Er zijn nog knopen en bogen over over}
 % \State $e^{\star}\gets\argmax_{e\in E}\ \fun{l}{e}$\Comment{Bereken de prioriteitsrand met de grootste winst.}
@@ -15,7 +20,12 @@
 % \EndWhile
 % \For{$v\in V$}\Comment{Er zijn nog knopen over, maar geen bogen}
 % \State $\calP\gets\calP\cup\accl{v}$\Comment{Voeg de knoop toe als enkelvoudige partitie.}
+\State $h_0\gets h_0+a$
+\State $h_1\gets h_1+b$
+\State $h_2\gets h_2+c$
+\State $h_3\gets h_3+d$
+\State $h_4\gets h_4+e$
 \EndFor
-\State \textbf{return} $h_0\shl$\Comment{De uiteindelijke partitie.}
+\State \textbf{return} $h_0\shlcmd128|h_1\shlcmd96|h_2\shlcmd64|h_3\shlcmd32|h_4$\Comment{De uiteindelijke partitie.}
 \EndProcedure
 \end{algorithmic}
