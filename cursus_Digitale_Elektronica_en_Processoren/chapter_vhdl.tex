@@ -358,6 +358,17 @@ In deze sectie zullen we verschillende combinatorische schakelingen die we doorh
 \section{Processoren in VHDL}
 \seclab{vhdl-proc}
 
+\subsection{Leidend voorbeeld: sha1 checksum}
+Als leidend voorbeeld zullen we een specifieke processor bouwen die de sha1 hash van een boodschap kan berekenen. Een hash is een ``samenvatting'' van een sequentie data. In het geval van sha1 is deze samenvatting 160 bit lang (voor eender welke sequentie aan bits).
+
+\paragraph{}
+Een dergelijke samenvatting kan bijvoorbeeld als handtekening gebruikt worden om te verifi\"eren dat een het bestand wel degelijk gemaakt is door de afzender en niet aangepast is door een ``man-in-the-middle''. Zo kan men een samenvatting van het document genereren en deze bijvoorbeeld via een ander kanaal doorsturen. Wanneer de ontvanger dan ook het originele bestand ontvangt kan deze, door zelf ook de samenvatting uit te rekenen dat men over hetzelfde bestand spreekt. Het is natuurlijk niet uitgesloten dat twee bestanden tot dezelfde samenvatting worden herleid, maar het algoritme is zo opgesteld dat ``reverse engineering''\footnote{Het analyseren van het resultaat om dit vervolgens uit te buiten.} zeer moeilijk is.
+
+\paragraph{}
+Het algoritme in pseudo-code staat beschreven in \algoref{sha1}.
+\importalgorithmicalgorithm{sha1}{Genereren van een sha1 checksum.}
+
+
 \section{VHDL grammatica}
 \seclab{vhdl-gram}
 Een programmeertaal beschrijft men meestal aan de hand van een (geannoteerde) context-vrije grammatica. Zo'n grammatica bestaat uit ``productieregels''. Een productieregel bestaat aan de linkerkant uit een een ``non-terminal'' en aan de rechterkant uit een sequentie van ``terminals'' en non-terminals. Een non-terminal is een symbool waarop verdere productieregels kunnen worden toegepast. Een terminal is een elementen uit de taal zelf, bijvoorbeeld een sleutelwoord of karakter. Een programma is geldig wanneer men vanuit de start-non-terminal een sequentie van terminals kan genereren die equivalent is met dat programma.
