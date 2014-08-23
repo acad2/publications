@@ -893,10 +893,10 @@ order=-1
 
 [item:algorithms/alg-sha1.tex]
 archive=true
-column=7
+column=17
 encoding=UTF-8
 highlight=LaTeX
-line=24
+line=35
 mode=LaTeX
 open=true
 order=3
@@ -993,20 +993,20 @@ order=2
 
 [item:chapter_niet_programmeerbare_processoren.tex]
 archive=true
-column=12
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=2320
+line=100
 mode=LaTeX
 open=false
 order=1
 
 [item:chapter_programmeerbare_processoren.tex]
 archive=true
-column=30
+column=867
 encoding=UTF-8
 highlight=LaTeX
-line=1
+line=10
 mode=LaTeX
 open=false
 order=3
@@ -1043,12 +1043,12 @@ order=1
 
 [item:commusoftScripts.sty]
 archive=true
-column=24
+column=16
 encoding=UTF-8
 highlight=LaTeX
-line=262
+line=41
 mode=LaTeX
-open=false
+open=true
 order=4
 
 [item:cursus.tex]
@@ -3924,14 +3924,26 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:algorithms/alg-sha1.tex]
-CursorColumn=7
-CursorLine=24
+CursorColumn=17
+CursorLine=35
 JumpList=
-ViMarks=.,24,6,[,24,0,],24,6
+ViMarks=.,35,17,[,35,17,],35,17
 
 [view-settings,view=0,item:chapter_basis_digitaal_ontwerp.tex]
 CursorColumn=39
 CursorLine=16
+JumpList=
+ViMarks=
+
+[view-settings,view=0,item:chapter_niet_programmeerbare_processoren.tex]
+CursorColumn=0
+CursorLine=100
+JumpList=
+ViMarks=
+
+[view-settings,view=0,item:chapter_programmeerbare_processoren.tex]
+CursorColumn=867
+CursorLine=10
 JumpList=
 ViMarks=
 
@@ -3942,10 +3954,10 @@ JumpList=
 ViMarks=.,374,81,[,374,33,],374,81
 
 [view-settings,view=0,item:commusoftScripts.sty]
-CursorColumn=24
-CursorLine=262
+CursorColumn=16
+CursorLine=41
 JumpList=
-ViMarks=.,963,1,[,963,1,],963,1
+ViMarks=.,41,15,[,41,15,],41,15
 
 [view-settings,view=0,item:cursus.tex]
 CursorColumn=22
