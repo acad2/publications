@@ -1,45 +1,27 @@
 \begin{algorithmic}[1]
 \Procedure{Sha1}{$\vec{x}$}\Comment{$\vec{x}$ is een vector van $512$-bit blokken.}
-\State $h_0\gets\textrm{67452301}_{16}$
-\State $h_1\gets\textrm{EFCDAB89}_{16}$
-\State $h_2\gets\textrm{98BADCFE}_{16}$
-\State $h_3\gets\textrm{10325476}_{16}$
-\State $h_4\gets\textrm{C3D2E1F0}_{16}$
+\State $h_0\gets\textrm{67452301}_{16}$; $h_1\gets\textrm{EFCDAB89}_{16}$; $h_2\gets\textrm{98BADCFE}_{16}$; $h_3\gets\textrm{10325476}_{16}$; $h_4\gets\textrm{C3D2E1F0}_{16}$
 \For{$x\in\vec{x}$}
-\State $a\gets h_0$
-\State $b\gets h_1$
-\State $c\gets h_2$
-\State $d\gets h_3$
-\State $e\gets h_4$
+\State $a\gets h_0$; $b\gets h_1$; $c\gets h_2$; $d\gets h_3$; $e\gets h_4$
+\For{$i=0\mbox{ \textbf{to} }15$}
+\State $w_i\gets x\shrcmd{}32\cdot i$
+\EndFor
 \For{$i=16\mbox{ \textbf{to} }79$}
 \State $w_i\gets\brak{w_{i-3}\xorcmd{}w_{i-8}\xorcmd{}w_{i-14}\xorcmd{}w_{i-16}}\rolcmd{}1$
 \EndFor
 \For{$i=0\mbox{ \textbf{to} }79$}
 \If{$0\leq i\leq 19$}
-\State $f\gets \brak{b\andcmd{}c}\orcmd{}\brak{\brak{\notcmd{}b}\andcmd{}d}$
-\State $k\gets\textrm{5A827999}_{16}$
+\State $f\gets \brak{b\andcmd{}c}\orcmd{}\brak{\brak{\notcmd{}b}\andcmd{}d}$; $k\gets\textrm{5A827999}_{16}$
 \ElsIf{$20\leq i\leq 39$}
-\State $f\gets b\xorcmd{}c\xorcmd{}d$
-\State $k\gets\textrm{6ED9EBA1}_{16}$
+\State $f\gets b\xorcmd{}c\xorcmd{}d$; $k\gets\textrm{6ED9EBA1}_{16}$
 \ElsIf{$40\leq i\leq 59$}
-\State $f\gets \brak{b\andcmd{}c}\orcmd{}\brak{b\andcmd{}d}\orcmd{}\brak{c\andcmd{}d}$
-\State $k\gets\textrm{8F1BBCDC}_{16}$
+\State $f\gets \brak{b\andcmd{}c}\orcmd{}\brak{b\andcmd{}d}\orcmd{}\brak{c\andcmd{}d}$; $k\gets\textrm{8F1BBCDC}_{16}$
 \ElsIf{$60\leq i\leq 79$}
-\State $f\gets b\xorcmd{}c\xorcmd{}d$
-\State $k\gets\textrm{CA62C1D6}_{16}$
+\State $f\gets b\xorcmd{}c\xorcmd{}d$; $k\gets\textrm{CA62C1D6}_{16}$
 \EndIf
-\State $t\gets \brak{a\rolcmd{}5}+f+e+k+w_i$
-\State $e\gets d$
-\State $d\gets c$
-\State $c\gets b\rolcmd{}30$
-\State $b\gets a$
-\State $a\gets t$
+\State $t\gets \brak{a\rolcmd{}5}+f+e+k+w_i$; $e\gets d$; $d\gets c$; $c\gets b\rolcmd{}30$; $b\gets a$; $a\gets t$
 \EndFor
-\State $h_0\gets h_0+a$
-\State $h_1\gets h_1+b$
-\State $h_2\gets h_2+c$
-\State $h_3\gets h_3+d$
-\State $h_4\gets h_4+e$
+\State $h_0\gets h_0+a$; $h_1\gets h_1+b$; $h_2\gets h_2+c$; $h_3\gets h_3+d$; $h_4\gets h_4+e$
 \EndFor
 \State \textbf{return} $h_0\shlcmd128|h_1\shlcmd96|h_2\shlcmd64|h_3\shlcmd32|h_4$\Comment{De uiteindelijke partitie.}
 \EndProcedure
