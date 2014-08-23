@@ -3,10 +3,10 @@
 \State $h_0\gets\textrm{67452301}_{16}$; $h_1\gets\textrm{EFCDAB89}_{16}$; $h_2\gets\textrm{98BADCFE}_{16}$; $h_3\gets\textrm{10325476}_{16}$; $h_4\gets\textrm{C3D2E1F0}_{16}$
 \For{$x\in\vec{x}$}
 \State $a\gets h_0$; $b\gets h_1$; $c\gets h_2$; $d\gets h_3$; $e\gets h_4$
-\For{$i=0\mbox{ \textbf{to} }15$}
+\For{$i=0\mbox{ \textbf{to} }15$}\Comment{Elke $w_i$ telt $32$-bit.}
 \State $w_i\gets x\shrcmd{}32\cdot i$
 \EndFor
-\For{$i=16\mbox{ \textbf{to} }79$}
+\For{$i=16\mbox{ \textbf{to} }79$}\Comment{Blok wordt uitgebreid naar $80\times 32$-bit.}
 \State $w_i\gets\brak{w_{i-3}\xorcmd{}w_{i-8}\xorcmd{}w_{i-14}\xorcmd{}w_{i-16}}\rolcmd{}1$
 \EndFor
 \For{$i=0\mbox{ \textbf{to} }79$}
