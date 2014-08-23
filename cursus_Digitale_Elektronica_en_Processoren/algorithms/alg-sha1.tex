@@ -1,5 +1,5 @@
 \begin{algorithmic}[1]
-\Procedure{Sha1}{$\vec{x}$}\Comment{$\vec{x}$ is een vector van $512$-bit blokken.}
+\Function{Sha1}{$\vec{x}$}\Comment{$\vec{x}$ is een vector van $512$-bit blokken.}
 \State $h_0\gets\textrm{67452301}_{16}$; $h_1\gets\textrm{EFCDAB89}_{16}$; $h_2\gets\textrm{98BADCFE}_{16}$; $h_3\gets\textrm{10325476}_{16}$; $h_4\gets\textrm{C3D2E1F0}_{16}$
 \For{$x\in\vec{x}$}
 \State $a\gets h_0$; $b\gets h_1$; $c\gets h_2$; $d\gets h_3$; $e\gets h_4$
@@ -16,13 +16,13 @@
 \State $f\gets b\xorcmd{}c\xorcmd{}d$; $k\gets\textrm{6ED9EBA1}_{16}$
 \ElsIf{$40\leq i\leq 59$}
 \State $f\gets \brak{b\andcmd{}c}\orcmd{}\brak{b\andcmd{}d}\orcmd{}\brak{c\andcmd{}d}$; $k\gets\textrm{8F1BBCDC}_{16}$
-\ElsIf{$60\leq i\leq 79$}
+\Else{}\Comment{$60\leq i\leq 79$}
 \State $f\gets b\xorcmd{}c\xorcmd{}d$; $k\gets\textrm{CA62C1D6}_{16}$
 \EndIf
 \State $t\gets \brak{a\rolcmd{}5}+f+e+k+w_i$; $e\gets d$; $d\gets c$; $c\gets b\rolcmd{}30$; $b\gets a$; $a\gets t$
 \EndFor
 \State $h_0\gets h_0+a$; $h_1\gets h_1+b$; $h_2\gets h_2+c$; $h_3\gets h_3+d$; $h_4\gets h_4+e$
 \EndFor
-\State \textbf{return} $\brak{h_0\shlcmd128}\orcmd{}\brak{h_1\shlcmd96}\orcmd{}\brak{h_2\shlcmd64}\orcmd{}\brak{h_3\shlcmd32}\orcmd{}\brak{h_4}$\Comment{De uiteindelijke partitie.}
-\EndProcedure
+\State \textbf{return} $\brak{h_0\shlcmd128}\orcmd{}\brak{h_1\shlcmd96}\orcmd{}\brak{h_2\shlcmd64}\orcmd{}\brak{h_3\shlcmd32}\orcmd{}h_4$
+\EndFunction
 \end{algorithmic}
