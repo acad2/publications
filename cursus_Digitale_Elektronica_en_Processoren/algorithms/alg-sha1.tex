@@ -23,6 +23,6 @@
 \EndFor
 \State $h_0\gets h_0+a$; $h_1\gets h_1+b$; $h_2\gets h_2+c$; $h_3\gets h_3+d$; $h_4\gets h_4+e$
 \EndFor
-\State \textbf{return} $h_0\shlcmd128|h_1\shlcmd96|h_2\shlcmd64|h_3\shlcmd32|h_4$\Comment{De uiteindelijke partitie.}
+\State \textbf{return} $\brak{h_0\shlcmd128}\orcmd{}\brak{h_1\shlcmd96}\orcmd{}\brak{h_2\shlcmd64}\orcmd{}\brak{h_3\shlcmd32}\orcmd{}\brak{h_4}$\Comment{De uiteindelijke partitie.}
 \EndProcedure
 \end{algorithmic}
