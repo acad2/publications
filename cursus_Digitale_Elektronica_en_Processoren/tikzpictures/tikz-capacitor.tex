@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\def\dx{0.8};
+\def\wi{1.5};
+\def\dy{1.5};
+\def\th{0.1};
+\draw[very thick] (-\dx-\th,\dy) -- ++(2*\th,0) -- ++(0,-2*\dy) -- ++(-2*\th,0) -- ++(0,\dy-\th) -- ++(-\wi,0) -- ++(0,2*\th) -- ++(\wi,0) -- cycle;
+\draw[very thick] (\dx+\th,\dy) -- ++(-2*\th,0) -- ++(0,-2*\dy) -- ++(2*\th,0) -- ++(0,\dy-\th) -- ++(\wi,0) -- ++(0,2*\th) -- ++(-\wi,0) -- cycle;
+\node (E) at (0,0) {$\vec{E}$};
+\end{tikzpicture}

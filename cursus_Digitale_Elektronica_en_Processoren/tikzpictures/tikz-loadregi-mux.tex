@@ -7,5 +7,5 @@
 \draw (D.Clk) -- (D.Clk -| IC) node[anchor=east]{Clk};
 \draw (M.data1) -- (M.data1 -| IC) node[anchor=east]{D};
 \draw (M.data0) -- (M.data0 -| JC) |- ($(D.north east)+(0.5,0.5)$) |- (D.Q);
-\draw (M.selin0) |- ($(M.selin -| IC)+(0,-0.75)$) node[anchor=east]{CE};
+\draw (M.selin0) |- ($(M.selin0 -| IC)+(0,-0.75)$) node[anchor=east]{CE};
 \end{tikzpicture}

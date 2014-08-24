@@ -1,10 +1,21 @@
 \ProvidesPackage{importsreferences}
-\RequirePackage{tikz,subfigure,float,listings}
+\RequirePackage{tikz,subfigure,float,listings,ifthen,xstring,etoolbox,booktabs}
 
 \newfloat{vhdlcode}{htb}{codes}[chapter]
 \floatname{vhdlcode}{VHDL-code}
 \newfloat{listing}{htb}{codes}[chapter]
 \floatname{listing}{Listing}
+\newfloat{gramf}{hbt}{grm}
+\floatname{gramf}{Grammatica}
+
+\newcounter{imreA}
+\newcounter{imreB}
+\newcounter{imreC}
+\newcounter{imreD}
+\newtoks\imretokA
+\newtoks\imretokB
+\newtoks\imretokC
+\newtoks\imretokD
 
 \newcommand{\genlab}[2]{\label{#1:#2}}
 \newcommand{\genref}[3]{#2~\ref{#1:#3}}
@@ -33,8 +44,18 @@
 \newcommand{\eqnlab}[1]{\genlab{eqn}{#1}}
 \newcommand{\eqnref}[1]{Vergelijking~(\ref{eqn:#1})}
 \newcommand{\alglab}[1]{\genlab{alg}{#1}}
+\newcommand{\algoref}[1]{\genref{alg}{Algoritme}{#1}}
+\newcommand{\algorefpag}[1]{\genrefpag{alg}{Algoritme}{#1}}
 \newcommand{\lstlab}[1]{\genlab{lst}{#1}}
 \newcommand{\lstref}[2][Listing]{\genref{lst}{#1}{#2}}
+\newcommand{\vhdllab}[1]{\genlab{vhdl}{#1}}
+\newcommand{\vhdlref}[1]{\genref{vhdl}{\texttt{VHDL}-code}{#1}}
+\newcommand{\grmlab}[1]{\genlab{grm}{#1}}
+\newcommand{\grmref}[1]{\genref{grm}{Grammatica}{#1}}
+\newcommand{\grmrefpag}[1]{\genrefpag{grm}{Grammatica}{#1}}
+\newcommand{\binlab}[1]{\genlab{bin}{#1}}
+\newcommand{\binref}[1]{\genref{bin}{Binair fragment}{#1}}
+\newcommand{\binrefpag}[1]{\genrefpag{bin}{Binair fragment}{#1}}
 
 \newcommand{\importtikz}[1]{
 \input{tikzpictures/tikz-#1.tex}
@@ -68,6 +89,22 @@
 \end{table}
 }
 
+\newcommand{\importgram}[2]{
+\begin{gramf}
+\begin{grammar}[(colon){$\rightarrow$}][(semicolon)$|$][(comma){}][(period){\\}][(quote){\begin{bf}}{\end{bf}}][(nonterminal){$\langle$}{$\rangle$}]\input{grammars/gram-#1.tex}\end{grammar}
+\caption{#2}
+\grmlab{#1}
+\end{gramf}
+}
+
+\newcommand{\importvhdlgram}[2]{
+\begin{gramf}
+\begin{grammar}[(colon){$\rightarrow$}][(semicolon)$|$][(comma){\ }][(period){\\}][(quote){\begin{tt}}{\end{tt}}][(nonterminal){$\langle$}{$\rangle$}]\input{grammars/gram-#1.tex}\end{grammar}
+\caption{#2}
+\grmlab{#1}
+\end{gramf}
+}
+
 \newcommand{\importtabularsubtable}[2]{
 \subtable[#2]{\importabular{#1}}
 }
@@ -84,5 +121,32 @@
 \lstinputlisting[caption=\relax,title=\relax,frame=none,language=#1]{listings/lst-#2.tex}
 \caption{#3}
 \lstlab{#2}
-\end{listing}
-}
+\end{listing}}
+
+\newcommand{\importvhdl}[2]{
+\begin{vhdlcode}[hbt]
+\centering
+\lstinputlisting[caption=\relax,title=\relax,frame=none,language=VHDL]{vhdl/vhdl-#1.tex}
+\caption{#2}
+\vhdllab{#1}
+\end{vhdlcode}}
+
+\makeatletter
+\newcommand\addtabtoks[1]{\imretokA\expandafter{\the\imretokA#1}}
+\newcommand\compacttable[2]{%
+  \setcounter{imreA}{0}\setcounter{imreB}{#1}%
+  \imretokA{\tabular{*#1l}\toprule}%                       Initial setting
+  \imretokB{\\\bottomrule}
+  \compacttable@i#2,,\@nil}
+\def\compacttable@i#1,#2,#3\@nil{%
+  \stepcounter{imreA}%
+  \ifx\relax#2\relax \addtabtoks{#1}\the\imretokA\the\imretokB\endtabular
+  \else
+  \ifnum\theimreA<\theimreB\addtabtoks{ #1 & }%  Default column
+  \else \addtabtoks{#1 \\}\setcounter{imreA}{0}\fi% start new line
+  %     Output of list and \endtabular  
+  \compacttable@i#2,#3\@nil\fi}
+\makeatother
+
+\newcommand{\tjava}{\texttt{Java}}
+\newcommand{\tvhdl}{\texttt{VHDL}}

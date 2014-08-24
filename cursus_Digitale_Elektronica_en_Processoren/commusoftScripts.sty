@@ -35,8 +35,13 @@
 \newcommand{\procedureref}[1]{\textsc{#1}}
 \newcommand{\shlcmd}{\ensuremath{\mbox{ \textbf{shl} }}}
 \newcommand{\shrcmd}{\ensuremath{\mbox{ \textbf{shr} }}}
+\newcommand{\xorcmd}{\ensuremath{\mbox{ \textbf{xor} }}}
+\newcommand{\andcmd}{\ensuremath{\mbox{ \textbf{and} }}}
+\newcommand{\orcmd}{\ensuremath{\mbox{ \textbf{or} }}}
+\newcommand{\notcmd}{\ensuremath{\mbox{\textbf{not} }}}
+\newcommand{\rolcmd}{\ensuremath{\mbox{ \textbf{rol} }}}
+\newcommand{\rorcmd}{\ensuremath{\mbox{ \textbf{ror} }}}
 \newcommand{\fixedpoint}[1]{\ensuremath{\left\llbracket #1\right\rrbracket}}
-\newcommand{\algoref}[1]{\textbf{Algorithm \ref{#1}}}
 \newcommand{\termenlayout}[1]{\textbf{\sffamily{#1}}}
 \newcommand\termen{\@ifstar{\@dblarg{\@termens}}{\@termen}}
 \def\@termens[#1]#2{\termenlayout{#2}\index{#1@#2}}
@@ -307,7 +312,7 @@
   \coordinate (V\l) at (\dx*\arabic{tmpC},0);
   \draw[anchor=north] (V\l) node {\t};
   \ifthenelse{\ty=2}{
-    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny);
+    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny) {};
     \coordinate (Vn\l) at (V\l);
     \draw (V\l) -- (NV\l.input);
     \draw (NV\l.output) -- (V\l |- 0,#3 cm);
@@ -315,7 +320,7 @@
     \ifthenelse{\ty=3}{
     \addtocounter{tmpC}{1}
     \coordinate (Vn\l) at (\dx*\arabic{tmpC},0);
-    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny);
+    \node[not gate,scale=\sc,rotate=90] (NV\l) at (\dx*\arabic{tmpC},\ny) {};
     \draw (V\l |- 0,\noy) -| (NV\l.input);
     \pdot{V\l |- 0,\noy}
     \draw (NV\l.output) -- (NV\l.output |- 0,#3 cm);
@@ -331,7 +336,7 @@
 }
 \foreach \l/\i/\k in {#5} {
   \addtocounter{tmpD}{1}
-  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},2*\ny+\arabic{tmpD}*#3/\arabic{tmpF}-\arabic{tmpD}*2*\ny/\arabic{tmpF});
+  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},2*\ny+\arabic{tmpD}*#3/\arabic{tmpF}-\arabic{tmpD}*2*\ny/\arabic{tmpF}) {};
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
@@ -340,7 +345,7 @@
   }
 }
 \addtocounter{tmpC}{1}
-\node[or gate,inputs=#6,scale=\sc] (O) at (\dx*\arabic{tmpC}+\dx,\ny+0.5*#3);
+\node[or gate,inputs=#6,scale=\sc] (O) at (\dx*\arabic{tmpC}+\dx,\ny+0.5*#3) {};
 \foreach \l/\i in {#5} {
   \draw (A\l.output) -- (A\l.output -| \dx*\arabic{tmpC},0) |- (O.input \arabic{tmpD});
   \addtocounter{tmpD}{-1}
@@ -374,7 +379,7 @@
 }
 \foreach \l/\i/\k in {#5} {
   \addtocounter{tmpD}{1}
-  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF});
+  \node[and gate,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF}) {};
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
@@ -394,7 +399,7 @@
   \addtocounter{tmpE}{-\ni}
   \addtocounter{tmpE}{1}
   \coordinate (TMP) at ($0.5*(A\ni.output)+0.5*(A\nj.output)$);
-  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0);
+  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0) {};
   \foreach \nk in {\ni,...,\nj} {
     \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
     \addtocounter{tmpE}{-1}
@@ -428,7 +433,7 @@
 }
 \foreach \l/\i/\k/\t in {#5} {
   \addtocounter{tmpD}{1}
-  \node[\t,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF});
+  \node[\t,inputs=\i,scale=\sc] (A\l) at (\dx*\arabic{tmpC},\arabic{tmpD}*#3/\arabic{tmpF}) {};
   \setcounter{tmpE}{1}
   \foreach\v in \k {
     \draw (A\l.input \arabic{tmpE}) -- (A\l.input \arabic{tmpE} -| V\v);
@@ -444,7 +449,7 @@
   \addtocounter{tmpE}{-\ni}
   \addtocounter{tmpE}{1}
   \coordinate (TMP) at ($0.5*(A\ni.output)+0.5*(A\nj.output)$);
-  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0);
+  \node[or gate,inputs=\i,scale=\sc] (O\l) at (TMP -| \dx*\arabic{tmpC}+\dx,0) {};
   \foreach \nk in {\ni,...,\nj} {
     \draw (A\nk.output) -- (A\nk.output -| \dx*\arabic{tmpC},0) |- (O\l.input \arabic{tmpE});
     \addtocounter{tmpE}{-1}
@@ -962,24 +967,6 @@
 \newcommand{\pcbspintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
   \draw[{#1}] (#2) -- (#3);
 }
-%Begin Kudos
-%to Heiko Oberdiek for this script.
-\makeatletter
-\pgfmathdeclarefunction{sign}{1}{%
-  \begingroup
-    \ifdim#1pt>\z@
-      \def\pgfmathresult{1}%
-    \else
-      \ifdim#1pt=\z@
-        \def\pgfmathresult{0}%
-      \else
-        \def\pgfmathresult{-1}%
-      \fi
-    \fi
-    \pgfmath@smuggleone\pgfmathresult
-  \endgroup
-}
-\makeatother
 
 \newcommand{\pcbpintopin}[3][gray,line width=0.015 in,shorten <=0.0225 in,shorten >=0.0225 in]{%
   \draw[{#1}]

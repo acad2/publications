@@ -2,6 +2,8 @@
 \RequirePackage{amsfonts,amsmath,booktabs,tikz}
 \usetikzlibrary{calc}
 
+%Begin Kudos
+%to Heiko Oberdiek for this script.
 \makeatletter
 \pgfmathdeclarefunction{sign}{1}{%
   \begingroup
@@ -23,7 +25,6 @@
 \newcommand{\tupl}[1]{\ensuremath{\left\langle #1 \right\rangle}}
 \newcommand{\fbrk}[1]{\ensuremath{\left[ #1 \right]}}
 \newcommand{\accl}[1]{\ensuremath{\left\{ #1 \right\}}}
-\newcommand{\abs}[1]{\ensuremath{\left| #1 \right|}}
 \newcommand{\acclguard}[1]{\ensuremath{\left\{\begin{array}{ll} #1 \end{array}\right.}}
 \newcommand{\acclarray}[2][c]{\accl{\begin{array}{#1} #2 \end{array}}}
 \newcommand{\accol}[1]{\ensuremath{\left\{#1\right\}}}
@@ -40,7 +41,6 @@
 \newcommand{\funsig}[3]{\ensuremath{#1:#2\rightarrow #3}}
 \newcommand{\condset}[2]{\accl{#1\ |\ #2}}
 \newcommand{\prob}[1]{\funf{\Pr}{#1}}
-\newcommand{\bigoh}[1]{\fun{\mathcal{O}}{#1}}
 \newcommand{\smalloh}[1]{\fun{o}{#1}}
 \newcommand{\bigomega}[1]{\fun{\Omega}{#1}}
 \newcommand{\smallomega}[1]{\fun{\omega}{#1}}

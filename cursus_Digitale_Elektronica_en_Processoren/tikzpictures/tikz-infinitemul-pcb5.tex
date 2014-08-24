@@ -5,9 +5,9 @@
 \begin{scope}[xshift=\x cm]
 \node[pcbto92,pcblabel={2N3904},rotate=-180,anchor=basis] (NPN-\i) at (0,-1.5) {};%npn
 \node[pcbto92,pcblabel={2N3906},anchor=collector] (PNP-\i) at (0,1.5) {};%pnp
-\node[pcbvia] (VSS\i) at (-2,-2);
-\node[pcbvia] (VDD\i) at (-2,2);
-\node[pcbvia] (EXH\i) at (1,1.5);
+\node[pcbvia] (VSS\i) at (-2,-2) {};
+\node[pcbvia] (VDD\i) at (-2,2) {};
+\node[pcbvia] (EXH\i) at (1,1.5) {};
 \node[pcbacy,pcblabel={100k},anchor=pin1] (R0\i) at (0,0) {};
 \node[pcbacy,pcblabel={20k},anchor=pin1] (R1\i) at (0,1.75) {};
 \node[pcbtact,pcblabel={U\i},anchor=pin1] (U\i) at ($0.25*(R0\i.pin0)+0.75*(R1\i.pin0)$) {};
@@ -25,10 +25,17 @@
 \end{pgfonlayer}
 \end{scope}
 \end{scope}}
+\node[pcbdip,pcblabel=7474,rotate=90] (MM1) at (0,-3) {};
+\node[pcbdip,pcblabel=7474,rotate=90] (MM2) at (2,-3) {};
+\node[pcbdip,pcblabel=7407,rotate=90] (MM3) at (4,-3) {};
+\node[pcbdip,pcblabel=7410,rotate=90] (NN1) at (0,-5) {};
+\node[pcbdip,pcblabel=7410,rotate=90] (NN2) at (2,-5) {};
+\node[pcbdip,pcblabel=7410,rotate=90] (NN3) at (4,-5) {};
 \begin{scope}[gray]
 \begin{pgfonlayer}{background}
 \pcbpintopin{USB.pin0}{VSS0}
-\pcbpintopin{VDD0}{USB.pin4}
+\pcbpintopin{VDD0}{USB.pin3}
+% \pcbpintopin{NN1.pin11}{MM.pin1}
 \end{pgfonlayer}
 \end{scope}
 \end{tikzpicture}

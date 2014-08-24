@@ -1,4 +1,5 @@
 #!/bin/sh
+git checkout dep
 if [ $# -le 0 ]
 then
 	msg="temp commit"
@@ -13,8 +14,9 @@ do
 		make
 		sleep 60
 	done
+	scp cursus.pdf ulyssis:www/dep.pdf
 	git add .
-	git commit -S -a -m "$msg"
+	timeout 10 git commit -S -am "$msg"
+	timeout 10 git commit -am "$msg"
 	git push --all
-	git push --tags
 done

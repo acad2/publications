@@ -1,0 +1,41 @@
+\begin{tikzpicture}[scale=0.8]
+\def\sc{0.8}
+\filldraw[very thick,fill=gray!10] (-1.1 in,0.35 in) rectangle (1.1 in,-5.8 in);
+\foreach \l/\x in {A/-0.825,B/-0.275,C/0.275,D/0.825} {
+  \filldraw[fill=gray!50,draw=black,thick] (\x in,0.15 in) circle (0.125 in);
+  \filldraw[fill=gray,thick] (\x in,0.15 in) circle (0.1 in);
+  \fill (\x in,0.15 in) circle (0.05 in);
+}
+\foreach \l/\x in {A/-5.5,B/-4.5,C/-3.5,D/-2.5,E/-1.5,F/1.5,G/2.5,H/3.5,I/4.5,J/5.5} {
+  \foreach \y in {1,...,57} {
+    \node[pcbvia,scale=\sc] (P\l\y) at (\x*0.1 in,-\y*0.1 in) {};
+  }
+  \draw ($(P\l1.north)+(0,0.025 in)$) node[anchor=south,scale=0.5] {\small{\l}};
+}
+\filldraw[fill=gray,draw=black] ($(PE1.east)+(0.5,0)$) rectangle ($(PF57.west)-(0.5,0)$);
+\foreach \y in {1,...,57} {
+  \foreach \la/\lb in {A/B,B/C,C/D,D/E,F/G,G/H,H/I,I/J} {
+    \pcbspintopin{P\la\y}{P\lb\y}
+  }
+  \draw ($(PA\y.west)-(0.025 in,0)$) node[anchor=east,scale=0.5] {\small{\y}};
+  \draw ($(PJ\y.east)+(0.025 in,0)$) node[anchor=west,scale=0.5] {\small{\y}};
+}
+\foreach \l/\x in {A/-9.5,B/-8.5,C/8.5,D/9.5} {
+  \foreach \y in {0,...,9} {
+    \foreach \yi in {1,...,5} {
+      \node[pcbvia,scale=\sc] (S\l\y\yi) at (\x*0.1 in,-\y*0.57777 in-\yi*0.1 in) {};
+    }
+    \foreach \ya/\yb in {1/2,2/3,3/4,4/5} {
+      \pcbspintopin{S\l\y\ya}{S\l\y\yb}
+    }
+  }
+  \foreach \ya/\yb in {0/1,1/2,2/3,3/4,5/6,6/7,7/8,8/9} {
+    \pcbspintopin{S\l\ya5}{S\l\yb1}
+  }
+}
+\foreach \x in {-10,-8,8,10} {
+  \foreach \ya/\yb in {0/4,5/9} {
+    \draw[thick] (\x*0.1 in, -\ya*0.57777 in-0.05 in) -- (\x*0.1 in,-\yb*0.57777 in-0.55 in);
+  }
+}
+\end{tikzpicture}

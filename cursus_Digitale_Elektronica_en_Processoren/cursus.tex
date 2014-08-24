@@ -20,7 +20,8 @@
 \usepackage{bbding}
 \usepackage{array}
 \usepackage{eurosym}
-\usepackage{commusoftScripts,../SharedData/brackets,../SharedData/importsreferences,../SharedData/lstlibraryciscasmlanguage,../SharedData/lstlibrarybinlanguage}
+\usepackage{circuitikz}
+\usepackage{bnf,commusoftScripts,../SharedData/brackets,../SharedData/importsreferences,../SharedData/lstlibraryciscasmlanguage,../SharedData/lstlibrarybinlanguage}
 \usetikzlibrary{circuits.logic.US}
 \usetikzlibrary{DEPcomponents}
 \usetikzlibrary{PCBcomponents}
@@ -57,6 +58,7 @@ title=\lstname,                 % show the filename of files included with \lsti
                                 % also try caption instead of title
 }
 
+\usepackage[hidelinks,bookmarks]{hyperref}
 \usepackage{minitoc}
 \dominitoc
 \setcounter{minitocdepth}{3}
@@ -68,7 +70,6 @@ title=\lstname,                 % show the filename of files included with \lsti
 \newenvironment{chapterintro}{\begin{center}\begin{large}\begin{it}\begin{minipage}{12 cm}}{\end{minipage}\end{it}\end{large}\end{center}}
 \newcommand{\gtermen}[2]{\newglossaryentry{#1}{description={#2}}\termen{#1}}
 \newcommand{\vhdltermen}[1]{\index{\texttt{VHDL}!\texttt{#1}}\texttt{#1}}
-\newcommand{\vhdlref}[1]{\texttt{VHDL}-code \ref{#1}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\clrsin}{\texttt{Clr$^*$}}
 \newcommand{\prsin}{\texttt{Pr$^*$}}
@@ -118,7 +119,7 @@ Kudos gaan uit naar volgende personen/groepen (in alfabetische volgorde):
  \item[Ingmar Dasseville] Voor enkele Haskell scripts in het kader van geautomatiseerde \LaTeX-code generatie.
  \item[Wina studentenkring] Om overduidelijke redenen... In tegenstelling tot VTK...
  \item[Het revisoren-team] bestaande uit: Ingmar Dasseville, Jonas Vanthornhout, Katie Pauwelyn en Steven Roose.
- \item[Personen die errata indienden] Ingmar Dasseville, Pieter Van Riet, Jonas Vanthornhout, Lynn Houthuys, Katie Pauwelyn, Christophe Van Ginneken, Alex Witteveen, Sander Van Loock, Philippe De Croock, Davy Vanclee
+ \item[Personen die errata indienden] Alex Witteveen, Christophe Van Ginneken, Davy Vanclee, Dennis Degryse, Ingmar Dasseville, Jonas Devlieghere, Jonas Vanthornhout, Katie Pauwelyn, Lynn Houthuys, Neline van Ginkel, Philippe De Croock, Pieter Van Riet , Sander Van Loock
 \end{description}
 \section*{Link naar deze cursus}
 De meest recente versie van deze cursus is op onderstaande link te vinden:

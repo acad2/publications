@@ -76,9 +76,11 @@
 *.swp
 *.bak
 *.kate-swp
+*.glsdefs
 *.sxc
 *.sbx
 *.sxd
 *.sbx
 *.thm
 *.mx*
+*.glsdefs

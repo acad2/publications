@@ -1,0 +1,19 @@
+type std_ulogic is (
+    'U',  --niet geinitialiseerd (opstarten)
+    'X',  --sterk aangestuurd, maar ongekend
+    '0',  --sterk aangestuurde logische 0
+    '1',  --sterk aangestuurde logische 1
+    'Z',  --hoog impedant (niet aangestuurd)
+    'W',  --zwak aangestuurd, maar ongekend
+    'L',  --zwak aangestuurde logische 0
+    'H',  --zwak aangestuurde logische 1
+    '-'   --don't care ('0' of '1')
+);
+
+type std_ulogic_vector is array (natural range <>) of std_ulogic;
+
+function resolved (s : std_ulogic_vector) return std_ulogic;
+
+type std_logic is resolved std_ulogic;
+
+type std_logic_vector is array (natural range <>) of std_logic;

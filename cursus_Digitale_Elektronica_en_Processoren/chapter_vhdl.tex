@@ -1,246 +1,406 @@
 \chapter{VHDL}
 \chapterquote{In redelijke taal weerklinkt wat in werkelijkheid gebeurt.}{Gerard Bolland, Nederlands taalkundige en filosoof (1854-1922)}
+\begin{chapterintro}
+\tvhdl{} is een taal waarmee hardware kan worden beschreven. Het wordt gebruikt om elektronische schakelingen te genereren, simuleren, analyseren, enzovoort.
+%TODO
+\end{chapterintro}
+\minitoc[n]
+
+\section{Elementen van de VHDL-taal}
+\seclab{vhdl-elem}
+In deze sectie bespreken we de verschillende elementen van de \tvhdl{}-taal. Een opsomming van de mogelijke sleutelwoorden en andere karaktersequenties met hun betekenis wordt doorgaans de ``syntax'' van de taal genoemd. In deze sectie lichten we de verschillende sleutelwoorden toe. In de rest van dit hoofdstuk zullen we dan de betekenis (ofwel ``semantiek'') bespreken.
+
+\subsection{Lexicale elementen (woordenschat)}
+\ssclab{vhdl-elem-syntax}
+Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen die men \termen{tokens} noemt. We zullen eerst de verschillende lexicale elementen die in \tvhdl{}-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De tokens kunnen verder worden onderverdeeld in: \termen{literals} (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), \termen{identifiers} (dit zijn namen van variabelen, functies, componenten,... gebruikt om naar te refereren en defini\"eren), \termen{scheidingstekens}\footnote{Engels: \emph{delimiters}.} (haakjes en andere symbolen die waardes en identifiers combineren) en \termen{commentaar}. We beschrijven de verschillende soorten tokens verder in de volgende subsecties.
+
+\subsection{Literals}
+\ssclab{vhdl-elem-lit}
+We onderscheiden vier soorten literals: getallen, karakters, karakterreeksen en bitreeksen. We overlopen de verschillende types. In \tvhdl{} is er ook nog sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, deze literals worden niet beschouwd.
+
+\paragraph{Getal}Een getal (ook wel ``\vhdltermen{abstract literal}'' genoemd) is een numerieke waarde. Net als bij programmeertalen onderscheid men verschillende soorten numerieke waarden:
+\begin{itemize}
+  \item \vhdltermen{universal\_integer}: dit zijn numerieke literals die geen decimale komma (\vhdltermen{.}) bevatten, bijvoorbeeld \verb+1425+. Deze getallen zijn vergelijkbaar met het \texttt{int}-type in \tjava{}\footnote{De vergelijking gaat echter niet geheel op: een \texttt{int} is immers beperkt tot $32$ bit en heeft een specifieke representatie.}.
+  \item \vhdltermen{universal\_real}: dit zijn numerieke getallen die wel een decimale komma bevatten. Bijvoorbeeld \verb+1425.1917+. Merk op dat indien er enkel nullen achter de komma staan dat het getal dezelfde waarde heeft als een \vhdltermen{universal\_integer}: \verb+1425.0+, maar daarom niet dezelfde representatie. In \tjava{} zouden we dit type voorstellen met bijvoorbeeld een \texttt{float} of \texttt{double}.
+  \item \vhdltermen{physical types}: dit zijn fysische waarden. Fysische waarden bestaan uit een getal gevolgd door een fysische eenheid. Er wordt een spatie tussen het getal en de eenheid gezet. Bijvoorbeeld: \verb+1818 ns+. Dit type heeft geen echt equivalent in de meeste programmeertalen. Immers redeneren programmeertalen meestal niet over grootheden.
+\end{itemize}
+Getallen worden standaard in decimale notatie uitgedrukt. Men kan ze ook in exponenti\"ele vorm schrijven door het toevoegen van een '\vhdltermen{E}' of `\vhdltermen{e}' op het einde van het getal gevolgd door de exponent, bijvoorbeeld: \verb+14e2+. Om een andere basis te gebruiken, wordt volgend formaat gebruikt: \vhdltermen{base\#literal\#exp}, met de basis tussen 2 en 16. Zo kunnen we $1425$ schrijven als \verb+16#591#+, of $4864$ als \verb+16#13#E2+. Tot slot mag men ook vrij \emph{underscores} (\vhdltermen{\_}) toevoegen in een getal om de code leesbaar te houden. Bijvoorbeeld: \verb+19_171_425+.
+
+
+\paragraph{Karakter} Een karakter (ofwel ``\vhdltermen{character literal}'') slaat een \termen{karakter} (ofwel \termen{character}) op: de eenheid van tekst. Deze literals worden tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst, bijvoorbeeld \verb+'K'+. In \tjava{} zou het equivalent van dit type een \texttt{char} zijn.
+
+\paragraph{Karakterreeks}
+Een \termen{karakterreeks} (ofwel ``\vhdltermen{string literal}'') slaat een sequentie karakters op, dus een tekstfragment. In \tjava{} noemt men een dergelijk type een \texttt{String}. Deze reeks wordt tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst, bijvoorbeeld \texttt{"Hello World!"}. Een probleem doet zich voor wanneer we de dubbele aanhalingstekens (\texttt{"}) zelf in het tekstfragment willen gebruiken. In dat geval dienen we de aanhalingstekens dubbel te plaatsen, bijvoorbeeld:
+\begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}
+
+\paragraph{Bitreeksen}
+Een \vhdltermen{bitreeks} (ofwel ``\vhdltermen{bit string literal}'') is een sequentie aan bits (dit is een eenheid van informatie die ofwel \texttt{0} ofwel \texttt{1} is). Een bitreeks wordt geschreven als een sequentie van enen en nullen tussen dubbele aanhalingstekens (\vhdltermen{"}). Zoals we al vroeger in deze cursus hebben opgemerkt is zo'n sequentie niet effici\"ent, leesbaar en praktisch. Daarom laat men ook octale  en hexadecimale notatie toe. Hiertoe wordt er een \vhdltermen{B} (binair), \vhdltermen{O} (octaal) of \vhdltermen{X} (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitreeks in een bepaald formaat te lezen. Bij hexadecimale getallen gebruikt men \vhdltermen{a}, \vhdltermen{b}, \vhdltermen{c}, \vhdltermen{d}, \vhdltermen{e} en \vhdltermen{f} om respectievelijk $10$ tot $15$ voor te stellen. Net als bij getallen kan de gebruiker \termen{underscores} (\vhdltermen{\_}) toevoegen om tot meer leesbare code te komen.
+
+\subsection{Identifiers}
+\ssclab{vhdl-elem-idtf}
+Een \vhdltermen{identifier} is een referentie naar een variabele, functie, component,... Dit is vergelijkbaar met de naam van een variabele, methode, klasse,... in \tjava{}. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook de underscore (\vhdltermen{\_}) teken is toegelaten, indien dit niet het eerste of laatste karakter van de identifier vormt. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identifier verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
+
+\paragraph{Gereserveerde woorden}Niet alle namen die aan de hierboven beschreven regels mag men zelf gebruiken. Sommige identifiers zijn immers \termen{sleutelwoorden} die een reeds ingebouwde functie vevullen in \tvhdl{}: ze verwijzen naar functies die in de \tvhdl{} compiler zijn ingebakken. De woorden in \tblref{vhdl-reserved-words} mogen niet gebruikt worden als identifiers.
+
+\importtabulartable{vhdl-reserved-words}{Gereserveerde woorden in \tvhdl{}.}
+
+We onderscheiden verschillende soorten sleutelwoorden: enerzijds zijn er compiler-directieven zoals bijvoorbeeld \vhdltermen{case} en \vhdltermen{downto}, daarnaast zijn er basis-operaties zoals \vhdltermen{nand} en \vhdltermen{sla}, tot slot zijn er ook type-directieven zoals \vhdltermen{array} en \vhdltermen{signal}. Sommige gereserveerde worden werden pas ge\"introduceerd in VHDL'93, we gaan hier niet verder op in.
+
+\subsection{scheidingstekens}
+\ssclab{vhdl-elem-delim}
+Een \vhdltermen{scheidingsteken} (ofwel ``\vhdltermen{delimiter}'') tenslotte wordt gebruikt om operaties op gegevens uit te voeren, bijvoorbeeld een optelling maar ook een index. De
+scheidingstekens van \tvhdl{} worden weergegeven in \tblref{vhdl-delim}.
+
+\importtabulartable{vhdl-delim}{Scheidingstekens in \tvhdl{}.}
+
+We onderscheiden opnieuw verschillende soorten scheidingstekens: tekens die operaties voorstellen (zoals \texttt{+} en \texttt{*}), tekens die voorwaarden voorstellen (zoals \texttt{<>}), tekens die tekst afbakenen (zoals \texttt{(} en \texttt{[}) en tekens die aangeven dat twee fragmenten los van elkaar staan (zoals \texttt{,}).
+
+\subsection{Commentaar}
+\ssclab{vhdl-elem-cmmnt}
+Commentaar zijn delen van de code die genegeerd worden door de \tvhdl{}-compiler, maar die nuttig zijn voor programmeurs: ze bevatten gegevens over het project en richtlijnen die een belangrijke rol kunnen hebben tijdens het project. Commentaar plaatst men na twee horizontale strepen \verb+--+ en reikt tot het einde van de lijn. Dit is vergelijkbaar met de dubbele slash (\verb+//+) in \tjava{}.
+
+\section{Typesysteem}
+\seclab{vhdl-type}
+\tvhdl{} is getypeerd: een variabele slaat data op volgens een bepaald type, dit type geeft een interpretatie aan zowel de data en de operatoren die erop gedefinieerd zijn. De types kunnen bovendien door de programmeur uitgebreid worden. Men vertrekt echter steeds van basistypes.
+
+\subsection{Voorgedefinieerde types}
+\ssclab{vhdl-type-predef}
+Ook in de \tvhdl{}-secties werden sommige van deze types reeds gebruikt. \tblref{vhdl-type} geeft een overzicht van de meest populaire basistypes.
+\begin{table}[hbt]
+\centering
+\importtabularsubtable{vhdl-type}{Overzicht van belangrijke types in \tvhdl{}.}
+\importtabularsubtable{vhdl-type-deriv}{Overzicht van belangrijke afgeleide types in \tvhdl{}.}
+\caption{Overzicht van belangrijke types en afgeleide types in \tvhdl{}.}
+\end{table}
+
+\paragraph{}
+Naast deze reeks van basistypes bevat \tvhdl{} ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in \tblref{vhdl-type-deriv} samen met hun gereduceerd bereik.
+
+\subsection{Zelf types defini\"eren}
+\ssclab{vhdl-type-selfdef}
+Hoe defini\"eren we nu zelf types? Afhankelijk van het soort type dat we willen bouwen zijn er verschillende mogelijkheden:
+\begin{itemize}
+ \item opsomming;
+ \item subtypering (beperk het bereik);
+ \item fysische types; en
+ \item Afgeleide types met matrices en vectoren.
+\end{itemize}
+
+De lijst is niet exhaustief: \tvhdl{} bevat ook constructies om bijvoorbeeld records aan te maken, deze constructies vallen buiten het bereik van deze cursus.
+
+\paragraph{}
+We bespreken de verschillende methodes nu in meer detail.
+
+\subsubsection{Defini\"eren met opsomming}
+\ssslab{vhdl-type-enum}
+We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. Dit doen we na het sleutelwoord \vhdltermen{type} en de identifier voor het type. \vhdlref{type-enum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}. We defini\"eren ook het type \texttt{StateMachine}, dit type bevat drie elementen: \texttt{start}, \texttt{processing} en \texttt{wait} die de ``toestanden'' weergeven van een schakeling die we bijvoorbeeld zouden kunnen willen bouwen.
+
+\importvhdl{type-enum}{Defini\"eren van types door opsomming.}
+
+\paragraph{}
+In \tjava{} is de \texttt{enum} de dichtste imitator van het defini\"eren van types aan de hand van opsomming. Immers is het aantal waarden die een \texttt{enum} kan aannemen beperkt. \tvhdl{} is echter wel niet (sterk) objectgericht, dus deze analogie gaat slechts gedeeltelijk op.
+
+
+\subsubsection{Defini\"eren met subtypering}
+\ssslab{vhdl-type-subtype}
+Soms wensen we een type te specificeren die een deelverzameling omvat van een reeds eerder gespecificeerd type. Zo zal een \vhdltermen{integer} alle waarden omvatten die met $32$ bit voor te stellen zijn, het is echter mogelijk dat we bijvoorbeeld een type \texttt{byte} willen specificeren die uitsluitend numerieke waarden bevat die we op $8$ bit kunnen voorstellen. In dat geval gebruiken we het sleutelwoord \vhdltermen{subtype} gevolgd door een identifier die de naam van het type aanduidt, daarna volgt opnieuw het sleutelwoord \vhdltermen{is} en het ``supertype''. \tvhdl{} kent twee soorten beperkingen die hierop kunnen volgen: de ``range beperking'' en de ``index beperking''.
+
+\paragraph{}
+Een ``range beperking'' omvat twee literals die het begin en het einde markeren van een bereik van waarden. Vermits alle basistypes in \tvhdl{} een inherente orde-relatie hebben\footnote{Voor karakters maakt men gebruik van de ASCII-code.} is dit voldoende om altijd alle waarden tussen de twee gegeven waarden mee in het bereik te nemen. Syntactisch definieert men een range beperking met het sleutelwoord \vhdltermen{range} gevolgd door de laagste waarde gevolgd door het sleutelwoord \vhdltermen{to} gevolgd door de hoogste waarde.
+
+\paragraph{}
+Voor vectoren kan men gebruik maken van de ``index constraint''. Deze beperking zet voorwaarden op het bereik van de index van de vector. Syntactisch schrijven we tussen haakjes respectievelijk de laagste of hoogste waarde gevolgd door respectievelijk het sleutelwoord \vhdltermen{to} of \vhdltermen{downto} en daarna respectievelijk de hoogste of laagste waarde. In \tvhdl{} hoeft men geen getal als index te gebruiken: ook karakters kunnen bijvoorbeeld voor dit doel worden aangewend. Bovendien is het mogelijk dat een lijst multidimensionaal is en er dus verschillende indices moeten beperkt. In dat geval worden de indices gescheiden door komma's. Omdat deze cursus slechts een inleiding tot \tvhdl{} wil geven zullen we deze uitzonderlijke situaties niet verder beschouwen. We verwijzen dan ook naar \cite{hardi00}.
+
+\paragraph{}
+\vhdlref{type-sub} lijkt enkele definities van types op aan de hand van subtypering. Zo defini\"eren we de \texttt{byte} aan de hand van een \vhdltermen{integer} en het type \texttt{lowercase} is een deelverzameling van de \vhdltermen{character}. Tot slot defini\"eren we ook een type \texttt{InputVector} die een sequentie bits voorstelt waarvan de index loopt van $7$ tot $3$.
+
+\importvhdl{type-sub}{Defini\"eren van types door subtypering.}
+
+\paragraph{}
+Er bestaan in \tjava{} geen duidelijk equivalent van definities aan de hand van subtypering. Natuurlijk kan men wel subklassen defini\"eren met behulp van het sleutelwoord \texttt{extends}, maar in \tjava{} heeft men de mogelijkheid extra velden toe te voegen. De beste analogie is misschien een speciale constructor die bij aanmaak van een object na zal gaan of de gewenste waarde wel degelijk mogelijk is.
+
+\subsubsection{Defini\"eren van fysische types}
+\ssslab{vhdl-type-fys}
+Soms dienen we ook te werken met fysische types: types met een zekere eenheid. Zo is de periode van het kloksignaal een tijdsverschil die we dienen uit te drukken in een zekere tijdseenheid.
+
+\paragraph{}
+\tvhdl{} ziet fysische eenheden eerder als getallen, maar met bijgevoegde constanten die de ``eenheden'' vormen. Zo kan men bijvoorbeeld gewicht defini\"eren als een getal tussen $0$ en $1'000'000$ met drie eenheden: de gram, de kilogram en de ton.
+
+\paragraph{}
+\vhdlref{type-fys} toont aan de hand van voorbeelden hoe we een fysische eenheid defini\"eren. We vermelden opnieuw het sleutelwoord \vhdltermen{type} gevolgd door de identifier van het type. Daarna bakenen we het type af aan de hand van een ``range beperking'', in een \vhdltermen{units} blok defini\"eren we vervolgens de eenheden als ``virtuele constanten''. Het eenheden-blok bestaat altijd uit minstens \'e\'en eenheid-identifier: de ``primaire eenheid''. De primaire eenheid heeft altijd een waarde gelijk aan $1$ en specificeert bijgevolg ook meteen de nauwkeurigheid. Zo kunnen we in het voorbeeld geen gewichten voorstellen met een nauwkeurigheid van een microgram: immers drukken we elk gewicht uit in gram. Daarna volgen optioneel andere eenheden, deze eenheden gaan altijd gepaard met een toekenning van een reeds gekende eenheid. Zo is bijvoorbeeld een kilogram het equivalent van $1'000$ gram. \tvhdl{} zal al deze eenheden doorrekenen als constanten. Een ton krijgt dus de waarde $1'000'000$. Een code-blok wordt be\"eindigd met het \vhdltermen{end} sleutelwoord waarna het soort blok wordt herhaald.
+
+\importvhdl{type-fys}{Defini\"eren van fysische types.}
+
+\paragraph{}
+Er is opnieuw geen echt equivalent in \tjava{}. Men kan natuurlijk ook constanten defini\"eren en deze bijvoorbeeld \texttt{gr} en \texttt{kg} noemen. Fysische types zijn echter meer getallen waar men een soort afspraak maakt hoe deze getallen een fysische grootheid zullen voorstellen.
+
+
+\subsubsection{Defini\"eren van matrices en vectoren (``array aggregate'')}
+\ssslab{vhdl-type-array}
+Tot slot kunnen we ook types ook verder gebruiken bij de constructie van vector- en matrix-types. Dit hebben we bovendien al eerder gedaan: de \vhdltermen{bit\_vector} is een \termen{array aggregate} van het basistype \vhdltermen{bit}.
+
+\paragraph{}
+\tvhdl{} kent twee soorten vector-types: begrensde (``constrained'') en ongebonden (``unconstrained''). In het geval van een begrensde vector wordt het aantal elementen gespecificeerd samen met het type\footnote{Dus niet bij de declaratie van een object van dat type.}, terwijl in het geval van een ongebonden vector er geen beperking op de index wordt gezet.
+
+\paragraph{}
+In het geval van begrensde vectoren specificeren we het type met het sleutelwoord \vhdltermen{type} gevolgd door de identifier van het type. Daarna schrijven we \vhdltermen{is} \vhdltermen{array} daarna volgt de ``index beperking'' (zie eerder) en het sleutelwoord \vhdltermen{of} tot slot dienen we ook het basistype te specificeren. Zoals reeds eerder gezegd hoeft een ``index beperking'' niet altijd te slaan op een bereik van een numerieke index. In \vhdlref{type-matrix} geven we twee voorbeelden. In het eerste geval gebruiken we een numerieke index. In het tweede geval maken we gebruik van het eerder ge\"introduceerde type \texttt{StateMachine} (zie \vhdlref{type-enum}), vermits een opsomming beperkt is in lengte de vector dit bijgevolg ook. Wanneer we meerdimensionale vectoren willen specificeren scheiden we de verschillende indices aan de hand van een komma (\vhdltermen{,}).
+
+\paragraph{}
+In het geval van een onbegrensde vector schrijven we als ``index beperking'' de identifier van een (eerder gedefinieerd) type gevolgd door het \vhdltermen{range} sleutelwoord en daarna het \vhdltermen{<>} scheidingsteken. Een voor de hand liggend type om te gebruiken als index is het \vhdltermen{natural} type: de natuurlijke getallen zoals dit ook als index in \tjava{} wordt gebruikt. Onbegrensde vectoren worden meestal als associatieve lijsten opgeslagen: enkel wanneer een index wordt toegekend wordt deze opgeslagen\footnote{Indien de index immers niet begrensd is zou men anders oneindig veel geheugen nodig hebben om zo'n lijst op te slaan.}. Men kan natuurlijk ook combinaties maken van begrensde en onbegrensde indices: bijvoorbeeld een matrix waar de eerste index begrensd is maar de tweede niet. Op \vhdlref{type-matrix} tonen we een voor de hand liggende declaratie van een onbegrensde vector van \vhdltermen{real} objecten.
+
+\importvhdl{type-matrix}{Defini\"eren van matrix types.}
+
+\paragraph{}
+Er bestaat geen equivalentie in \tjava{}. Men kan argumenteren dat het declareren van een array een vaste lengte heeft en dus zou kunnen overeenkomen met een begrensde array. Deze begrenzing manifesteert zich echter op instantie-niveau en niet op type-niveau. Wanneer we deze analogie wel zouden gebruiken kan een onbegrensde vector worden gezien als een \texttt{HashMap}.
+
+\section{Objecten}
+\seclab{vhdl-obj}
+Types beschrijven enkel het soort waarden die een \termen{object} (ofwel \termen{instantie}) kunnen voorstellen. Types zijn daarom nuttig omdat de \tvhdl{}-compiler consistentie kan controleren. Een programma werkt echter in de eerste plaats met objecten.
+\paragraph{}
+Een object is een benoemd item (aan de hand van een identifier) met een specifieke waarde. We onderscheiden 3 soorten objecten:
+\begin{enumerate}
+ \item \termen{constante}: een object met een vaste waarde. Deze waarde wordt \'e\'enmaal ergens in het programma bepaald en kan in de rest van de code gebruikt worden;
+ \item \termen{variabele}: een object met een waarde die kan veranderen doorheen het programma. Een variabele verandert meteen van waarde en heeft dus geen echte band met de ``werkelijkheid''; en
+ \item \termen{signaal}: een object die de toestand van een draad, in- of uitgang of een andere fysische toestand voorstelt. De waarde verandert enkel nadat er een zekere tijd is verstreken.
+\end{enumerate}
+
+We bespreken de verschillende soorten objecten hieronder in meer detail samen met de bijbehorende syntax en semantiek.
+
+\subsection{Constante}
+\ssclab{vhdlConstant}
+Constanten worden gebruikt om aan een ontwerp parameters toe te kennen. Stel dat we bijvoorbeeld een processor wensen te ontwerpen, maar nog niet bepaald hebben hoe groot het operand gedeelte van de operand in een instructie moet worden, kunnen we hiervoor een constante toekennen. Wanneer we dan later van operandgrootte willen veranderen, dienen we enkel de constante aan te passen. Constanten zijn dus benoemde waarden die door de \tvhdl{}-compiler op alle plaatsen waar de constante wordt aangeroepen zullen worden vervangen door de werkelijke waarde.
+
+\paragraph{}
+We specificeren een constante aan de hand van het \vhdltermen{constant} sleutelwoord, vervolgens specificeren we de naam en het type. We plaatsen het \vhdltermen{:} tussen de naam en het type. Na het \vhdltermen{:=} scheidingsteken plaatsen we een waarde of een expressie. Het algemene formaat is dus:
+
+\begin{equation}%TODO: syntax trees?
+\vhdltermen{constant}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ \vhdltermen{:=}\ \textit{expressie}\vhdltermen{;}
+\end{equation}
+
+\paragraph{}
+In plaats van een waarde kunnen we ook een expressie specificeren. In zo'n expressie mogen we waarden en constanten schrijven en operaties hiertussen. Het gebruik van variabelen is natuurlijk niet toegelaten vermits de waarde van deze variabelen niet op voorhand gekend is en kan veranderen.
+
+\importvhdl{const}{Defini\"eren van constanten.}
+
+\paragraph{}
+\vhdlref{const} toont enkele voorbeelden van constante-declaraties. Zo defini\"eren we \texttt{pi} en \texttt{byte\_length} aan de hand van waarden, \texttt{word\_length} wordt gedefini\"eerd aan de hand van een expressie waarin zowel een waarde en een constante betrokken zijn.
+
+\subsection{Variabele}
+\ssclab{vhdlVariable}
+Een variabele is een \tvhdl{}-object die wel van waarde kan veranderen. Ze worden tijdens de uitvoer gebruikt door de \tvhdl{}-compiler, bijvoorbeeld om te bepalen hoeveel klokflanken een component moet wachten alvorens weer van waarde te veranderen, of wanneer de compiler bijvoorbeeld een tweede maal door de een lus gaat ander gedrag te bewerkstelligen.
+
+\paragraph{}
+Omdat een variabele van waarde kan veranderen zijn er twee soorten toekenningen: de ``\termen{declaratie}'' en de ``\termen{assignatie}''. Bij de declaratie stelt men de variabele voor samen met een type en optioneel een initi\"ele waarde, bij de assignatie geeft met de variabele een nieuwe waarde.
+
+\paragraph{}
+Bij de declaratie gebruikt men het sleutelwoord \vhdltermen{variable} gevolgd door de naam van de variabele, het \vhdltermen{:} scheidingsteken en het type van de variabele. Optioneel voegt men hierna nog het \vhdltermen{:=} scheidingsteken toe met een expressie de de eerste waarde voor de variabele oplevert. Een algemeen formaat\footnote{Delen van de formaat-declaratie die tussen vierkante haken staan zijn optioneel.} is dus:
+
+\begin{equation}%TODO: syntax trees?
+\vhdltermen{variable}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ [\vhdltermen{:=}\ \textit{expressie}]\vhdltermen{;}
+\end{equation}
+
+Bij de assignatie kent men een nieuwe waarde toe. Dit doet men door de identifier van de variabele te vernoemen gevolgd door het \vhdltermen{:=} scheidingsteken en een expressie voor de nieuwe waarde, of formeler:
+
+\begin{equation}%TODO: syntax trees?
+\textit{identifier}\ \vhdltermen{:=}\ \textit{expressie}\vhdltermen{;}
+\end{equation}
+
+\paragraph{}
+Voorbeelden van werken met variabelen staan in \vhdlref{varb}. In de code wordt de declaratie van \texttt{index} getoond zonder directe assignatie. Later kennen we achtereenvolgens $0$ en $1$ toe aan \texttt{index}. We declareren ook \texttt{twaalf} en geven deze variabele de waarde $12$. We declareren ook \texttt{viertwee} die de waarde $42$ krijgt\footnote{Op dat moment heeft \texttt{index} nog de waarde $1$.}. tenslotte hogen we \texttt{index} voor de laatste keer op.
+
+\importvhdl{varb}{Werken met variabelen.}
+
+\subsection{Signaal}
+\ssclab{vhdlSignal}
+Een signaal ten slotte is het \tvhdl{}-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een toekenning bij een signaal is niet direct: de expressie wordt niet louter ge\"evalueerd. Wanneer de betrokken signalen waarop de toekenning steunt later veranderen, zal het signaal zelf ook veranderen.
+
+\paragraph{}
+Een signaal wordt gedeclareerd door het sleutelwoord \vhdltermen{signal} gevolgd door de identifier van het signaal en na een dubbele punt (\vhdltermen{:}) het type van het signaal. Optioneel volgt ook een assignatie gedeelte, of formeler:
+
+\begin{equation}%TODO: syntax trees?
+\vhdltermen{signal}\ \textit{identifier}\ \vhdltermen{:}\ \textit{type}\ [\vhdltermen{<=}\ \textit{expressie}]\vhdltermen{;}
+\end{equation}
+
+Bij een ``assignatie'' plaatsen we eerst de identifier van het object gevolgd door de \vhdltermen{<=} operator en de expressie, of formeler:
+
+\begin{equation}%TODO: syntax trees?
+\textit{identifier}\ \vhdltermen{<=}\ \textit{expressie}\vhdltermen{;}
+\end{equation}
+
+Zoals reeds eerder vermeld werkt de toekenning bij een signaal anders dan bij de toekenning van een variabele en constante.
+\tvhdl{} laat bovendien slechts \'e\'en toekenning toe per signaal (die mogelijk uitgesteld kan worden en beslist op de waarde
+van variabelen). In het andere geval betekent dit immers dat een draad wordt aangestuurd door twee verschillende expressies
+en dus kortsluiting kan veroorzaken. Hoe we dit probleem kunnen oplossen bespreken we in deze sectie.
+
+\paragraph{}
+\importvhdl{sign}{Werken met signalen.}
+
+In \vhdlref{sign} beschouwen we drie signalen van het type \vhdltermen{bit}: \texttt{a}, \texttt{b} en \texttt{y}. De signalen hebben dus ofwel de waarde \texttt{'0'} of \texttt{'1'}. \texttt{a} kennen we de constante \texttt{'1'} toe. Het signaal blijft dus constant. Bij \texttt{b} kennen we de waarde \texttt{'0'} toe, maar na $100$ nanoseconden wordt het signaal \texttt{'1'}. Wanneer we \texttt{y} gelijk stellen aan een AND-operatie tussen \texttt{a} en \texttt{b}. Het signaal van \texttt{y} zal dus gelijk zijn aan \texttt{'0'}, maar na $100$ nanoseconden (en een zekere vertraging) wordt de waarde gelijk aan \texttt{'1'}.
+
+\subsubsection{Logische signalen}
+
+We hebben reeds het type \vhdltermen{bit} gedefinieerd. Dit type neemt twee waarden aan: \texttt{'0'} en \texttt{'1'}, dit lijkt een ideaal type bij het werken met signalen. In de praktijk zijn deze waarden echter ontoereikend om hardware te beschrijven. In de cursus hebben we bijvoorbeeld al vaak de toestand ``hoog impedant'' aangehaald: een toestand waarbij de draad aan geen enkel deel van het circuit aangelegd wordt. Deze toestand wordt bijvoorbeeld gebruikt bij de realisatie van een bus. Om meer toestanden te kunnen voorstellen, werd \termen{IEEE 1164} opgesteld. Dit zijn de verschillende toestanden waarin een draad zich kan bevinden, een verrijkt \vhdltermen{bit}-type dus.
+
+\paragraph{}
+IEEE 1164 introduceert onder meer twee nieuwe types: \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic}. Beide types bevatten volgende elementen:
+\begin{enumerate}
+ \item \vhdltermen{'U'}: een niet-ge\"intialiseerd signaal (bijvoorbeeld bij het opstarten van hardware);
+ \item \vhdltermen{'X'}: een sterk aangestuurd maar onbekend signaal;
+ \item \vhdltermen{'0'}: een sterk aangestuurde logische $0$;
+ \item \vhdltermen{'1'}: een sterk aangestuurde logische $1$; 
+ \item \vhdltermen{'Z'}: hoog-impedant (niet aangestuurd);
+ \item \vhdltermen{'W'}: een zwak aangestuurde maar ongekend signaal;
+ \item \vhdltermen{'L'}: een zwak aangestuurde logische $0$;
+ \item \vhdltermen{'H'}: een zwak aangestuurde logische $1$; en
+ \item \vhdltermen{'-'}: don't care (\vhdltermen{'0'} of \vhdltermen{'1'}).
+\end{enumerate}
+
+\importvhdl{std-logic}{De definitie van \vhdltermen{std\_logic} en \vhdltermen{std\_ulogic} (IEEE 1164).}
+
+\vhdlref{std-logic} toont hoe we de types zouden kunnen defini\"eren. Bij deze code zien we dat \vhdltermen{std\_logic} wordt gedefinieerd met behulp van \vhdltermen{std\_ulogic}, maar dat er ook nog een extra identifier bij deze declaratie staat: \texttt{resolved}. Deze identifier wijst naar een functie waarvan de signatuur eerder in de code werd gedefinieerd. Deze functie wordt gebruikt om meervoudige toekenning mogelijk te maken: stel dat we een bus zouden schrijven in \tvhdl{}, dan zullen we de poorten van verschillende componenten toewijzen aan eenzelfde signaal. Zoals echter al opgemerkt laat \tvhdl{} dit niet toe, tenzij we een resolutie-functie \texttt{resolved}\footnote{We kunnen ook een andere identifier gebruiken.} defini\"eren die regels specificeert hoe een verzameling aan signalen -- de \vhdltermen{std\_ulogic\_vector} -- worden omgezet in \'e\'en type. \tvhdl{} zal dus bij meervoudige toekenning een soort virtueel ``bus''-component bijvoegen met invoer alle mogelijke signalen die op de bus worden aangebracht en als uitvoer het signaal die op de ``werkelijke'' bus staat.
+
+\paragraph{}
+De \texttt{resolved} functie doet dus dienst als een operator die gegeven verschillende signalen, een consensus-signaal moet berekenen. IEEE berekent zo'n signaal aan de hand van een tweedimensionale tabel \texttt{res\_table} die twee signalen omzet in \'e\'en signaal. Deze tabel staat beschreven in \tblref{vhdl-logic-resolution}.
+
+\importtabulartable{vhdl-logic-resolution}{Resolutie-tabel voor \vhdltermen{std\_logic}.}
+
+\paragraph{}
+De tabel is reflexief: wanneer de twee signalen gelijk zijn, is de het resultaat ook gelijk aan de invoer. De tabel is ook commutatief: onafhankelijk van welke dimensie we voor welk signaal kiezen levert dit eenzelfde waarde op. Dit is vanzelfsprekend: anders zouden we immers een signaal in de bus bevoordelen tegenover een ander signaal. Verder is de tabel ook associatief: wanneer we resolutie $\oplus$ toepassen op drie verschillende signalen $a$, $b$ en $c$, maakt het niet uit welke twee signalen we eerst uitrekenen: $a\oplus\brak{b\oplus c}=\brak{a\oplus b}\oplus c$, ongeacht de waardes van de signalen. Er is tot slot ook sprake van enige prioriteit: wanneer een signaal de waarde \vhdltermen{'U'} heeft aangenomen, is het resultaat sowieso \vhdltermen{'U'}. Op basis van de tabel kunnen we volgende ``prioriteitsregels'' opstellen:
+\begin{equation}
+\vhdltermen{'U'}\succ\vhdltermen{'X'},\vhdltermen{'-'}\succ\vhdltermen{'0'},\vhdltermen{'1'}\succ\vhdltermen{'W'}\succ\vhdltermen{'L'},\vhdltermen{'H'}\succ\vhdltermen{'Z'}
+\eqnlab{stdlogic-priority}
+\end{equation}
+Dit betekent dat wanneer we resolutie $\oplus$ toepassen op twee signalen van een verschillende prioriteitsklasse, het resultaat steeds de waarde van de hoogste prioriteitsklasse wordt gebruikt. Een uitzondering vormt de don't care (\vhdltermen{'-'}) die zich als sterk signaal (\vhdltermen{'X'}) gedraagt. Wanneer twee waarden uit dezelfde prioriteitsklasse komen en gelijk zijn is het resultaat evident gelijk aan de invoer-signalen. Wanneer de twee invoer-signalen niet gelijk zijn, is het resultaat het signaal van een prioriteitsklasse hoger, \eqnref{stdlogic-priority} zorgt ervoor dat telkens wanneer dit mogelijk is, de prioriteitsklasse erboven slechts \'e\'en element bevat, de don't care (\vhdltermen{'-'}) doet zich immers voor als een sterk signaal (\vhdltermen{'X'}).
+
+\paragraph{}
+\importvhdl{std-logic-resolution}{Implementatie van de \vhdltermen{std\_logic} resolutie-functie in \tvhdl{}.}
+
+\vhdlref{std-logic-resolution} toont hoe we deze resolutie-functie kunnen schrijven in \tvhdl{}. Dit code-fragment is bovendien interessant omdat het inzicht heeft in het ontwikkelen van functies en de verschillende attributen die bij een vector horen. In de eerste lijnen van de code defini\"eren we de \texttt{res\_table}: een tabel die de hierboven beschreven functie opslaat. De functie \texttt{resolved} wordt dan gebruikt om voor een vector van signalen met willekeurige grootte een nieuw signaal uit te rekenen. Na de signatuur van de functie volgt een lijst van lokale variabelen, deze komen voor het \vhdltermen{function}-blok. We declareren de resultaat-variabele \texttt{result} en geven deze de standaard waarde \vhdltermen{'Z'}. We controleren vervolgens of de vector een lengte heeft die gelijk is aan $1$. Dit doen we door het \vhdltermen{length} attribuut op te vragen van de vector\footnote{We krijgen toegang tot een attribuut met de \texttt{'}-operator, dit is vergelijkbaar met het punt (\texttt{.}) in \tjava{}.}. Indien de vector een lengte heeft van $1$ is de resolutie triviaal: we geven dit element terug. Wanneer er sprake is van meer (of minder) elementen. We doen dit door het \vhdltermen{low} attribuut op te vragen: de laagste (en enige) index. In het andere geval vouwen we de vector aan de hand van de accumulator \texttt{result} en de tabel \texttt{res\_table}. Dit doen we door het \vhdltermen{range} op te vragen: dit is een verzameling van indices die gedefinieerd zijn voor de vector. Indien er dus sprake is van een lege vector is het resultaat \vhdltermen{'Z'}.
+
+\paragraph{}
+Zoals men al uit de code kan afleiden bevat het pakket tot slot ook nog vector-types zoals \vhdltermen{std\_logic\_vector} en \vhdltermen{std\_ulogic\_vector}.
+
+\section{Bewerkingen}
+\seclab{vhdl-oper}
+We kunnen zoals in \vhdlref{std-logic-resolution} telkens een tabel aanleggen voor de uitvoer van een functie, maar dit is niet echt praktisch. Bovendien is het mogelijk dat we het bereik van een variabele op voorhand niet kennen. \tvhdl{} kent dan ook een groot aantal bewerkingen van verschillende aard. Voor de meeste van deze bewerkingen hebben we in deze cursus al hardware gesynthetiseerd: bijvoorbeeld een opteller, vermenigvuldiger, schuifoperator. In deze sectie geven we een overzicht van de belangrijkste bewerkingen.
+
+\subsection{Logische bewerkingen}
+De logische bewerkingen komen grotendeels overeen met de beschouwden poorten in \chpref{basis}. Dit zijn dus de \vhdltermen{not}, \vhdltermen{and}, \vhdltermen{nand}, \vhdltermen{or}, \vhdltermen{nor}, \vhdltermen{xor} en \vhdltermen{xnor}\footnote{\vhdltermen{xnor} is niet beschikbaar is \tvhdl{}'87.}. Behalve de \vhdltermen{not}-operator zijn alle operatoren gedefinieerd met twee operanden. Logische bewerkingen zijn gedefinieerd op logische types zoals \vhdltermen{bit}, \vhdltermen{boolean}, \vhdltermen{std\_logic} en op afgeleide ``array aggregaten'' zoals de \vhdltermen{bit\_vector} en \vhdltermen{std\_logic\_vector}. Een voorwaarde bij deze vectoren is dat ze van dezelfde lengte zijn: wat zou men immers invullen op plaatsen die maar door \'e\'en elementen bepaald zijn?
+
+\paragraph{}
+
+\subsection{Rekenkundige bewerkingen}
+
+\subsection{Schuifoperaties}
+
+\subsection{Vergelijkingen}
+
+\subsection{``Array aggregaat'' bewerkingen}
+Tot slot zijn er nog enkele operaties gedefinieerd op generische\footnote{Onder generisch verstaan we dat het ``element-type'' er niet toe doet} vectoren. Dit zijn de ``\emph{concatenate}'' en de ``\emph{slice}''.
+
+\paragraph{}
+Bij een ``concatenate''\footnote{Nederlands: aaneenschakeling of concatinatie.} voegen we twee vectoren samen in \'e\'en nieuwe vector. Fysisch komt dit dus neer op het bundelen van signalen. Een concatenate wordt aangeduid met de \vhdltermen{\&} operator: de identifiers van twee vectoren met hetzelfde type worden links en rechts van de operator geschreven, het resultaat is een vector van hetzelfde type met de lengte de som van de lengtes van de twee gegeven vectoren. Een typisch voorbeeld is een bus die data vanuit verschillende componenten groepeert en doorstuurt. Stel bijvoorbeeld dat twee componenten elk vier bit op de bus willen zetten, kunnen we dit beschrijven zoals in \vhdlref{vector-concat}.
+
+\importvhdl{vector-concat}{Vector aaneenschakeling.}
+
+Zoals ook in het codefragment staat is een aaneenschakeling equivalent met het overlopen van de indices en de eerste indices toekennen vanuit de eerste operand. Wanneer de eerste operand uitgeput is, wordt de tweede operand gebruikt. Het voordeel van de concatenate operator is echter dat men niet op voorhand hoeft te weten over welk bereik de operanden werken.
+
+\paragraph{}
+Bij een ``slice''\footnote{Nederlands: matrixdeel} halen we een deel van de elementen uit een vector en wordt deze gezien als een op zichzelf staande vector.
+
+\importvhdl{vector-slice}{Vector matrixdeling.}
+
+\section{Bibliotheken}
+\seclab{vhdl-lib}
+Net zoals \tjava{} kent \tvhdl{} een mechanisme om eerder gedefinieerde deelprogramma's te groeperen in een pakket dat dan in een volgend ontwerp kan worden gebruikt. Dit is belangrijk: net zoals men in \tjava{} grote delen van een programma kan hergebruiken voor andere programma's kan men meestal componenten uit een vorig project hergebruiken om nieuwe hardware te beschrijven.
+
+\paragraph{}
+\tvhdl{} maakt gebruik van twee concepten: ``packages'' en ``libraries''.
+
+\paragraph{}
+Een pakket (``package'') groepeert functies, programma's, types, constanten, signalen, structuren, enzovoort die zullen worden gedeeld onder verschillende eenheden. \tvhdl{} kent verschillende standaard pakketten zoals IEEE~1164. Een pakket bestaat doorgaans uit twee delen: de ``pakket declaratie'' (ook wel ``package declaration'') genoemd waarin men samen met de naam van het pakket de verschillende componenten die in het pakket zitten oplijst, en de ``package body'' waarin men de opgelijste delen specificeert en implementeert.
+
+\paragraph{}
+Een bibliotheek (``library'') daarentegen is een plaats waar men code en analyses opslaat. Dit is dus een map of een databank.
+
+\paragraph{}
+\importvhdl{packhead}{Voorbeeld van een ``package declaration''.}
+
+\importvhdl{packbody}{Voorbeeld van een ``package body''.}
+
+\vhdlref{packhead} en \vhdlref{packbody} tonen respectievelijk een voorbeeld van een ``package declaration'' en ``package body''. Beide voorbeelden hebben betrekking op een pakket \texttt{various} die we willen defini\"eren. In de ``package declaration'' schrijven we dat het pakket twee items bevat: een constante \texttt{hold} van het type \texttt{time} en een procedure \texttt{push} (wat een procedure precies doet is hier niet relevant). In het ``package body'' dienen we deze abstracte items te binden met betekenis. Zo is de waarde van \texttt{hold} $100~\mbox{ns}$ en komt \texttt{push} er blijkbaar op neer dat de knop tijdelijk het signaal \vhdltermen{`0'} zal aanleggen.
+
+Om pakketten te defini\"eren en . De bibliotheken \texttt{work} en \texttt{std} zijn altijd beschikbaar.
+
+\paragraph{}
+\tvhdl{} laat ook ``\termen{overloading}'' toe. Bij overloading kan men eenzelfde functie meerdere malen defini\"eren wanneer het aantal of het type parameters verschilt. Zo kan men een optelling beschrijven op een \vhdltermen{bit\_vector} en een \vhdltermen{integer}, en is de uiteindelijke uitwerking transparant naar de gebruiker toe.
+
 \section{Combinatorische schakelingen in VHDL}
-\label{s:combinatorischVHDL}
-Nu we verschillende combinatorische schakelingen hebben gebouwd zullen we deze proberen te beschrijven met VHDL. In deze sectie zullen we eerst een formeel overzicht geven van de VHDL-syntax. Vervolgens zullen we in subsectie \ref{ss:combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
-\subsection{Elementen van de VHDL-taal}
-In deze subsectie zullen we eerst de woordenschat in de VHDL taal bespreken, waarna we de belangrijkste types zullen bespreken samen met het 
-\subsubsection{Lexicale elementen (woordenschat)}
-Elk code-bestand\footnote{Onafhankelijk van de taal.} bestaat uit een sequentie van lexicale elementen. We zullen eerst de verschillende lexicale elementen die in VHDL-code kunnen voorkomen beschrijven. Deze kunnen we dan als terminologie gebruiken. De lexicale elementen van bijna elke taal bestaat uit: literals (deze vertegenwoordigen bepaalde waardes zoals getallen, tekst,...), identifiers (we kennen waardes of structuren van waardes toe aan identifiers en refereren ook zo naar deze waarden), scheidingstekens\footnote{Engels: delimiters.} (haakjes en andere symbolen die waardes en identifiers combineren) en commentaar. In het geval van VHDL zijn dit:
-\begin{itemize}
- \item \vhdltermen{Literals}: we onderscheiden vier soorten literals:
- \begin{itemize}
-  \item \vhdltermen{Getal} (ook wel ``\vhdltermen{abstract literal}'') we onderscheiden 3 verschillende soorten getallen:
-  \begin{itemize}
-   \item \vhdltermen{universal\_integer}: dit zijn numerieke literals die geen decimale komma (\vhdltermen{.}) bevatten. Bijvoorbeeld \verb+1425+
-   \item \vhdltermen{universal\_real}: dit zijn numerieke getallen die wel een decimale komma bevatten. Bijvoorbeeld \verb+1425.1917+. Merk op dat indien er enkel nullen achter de komma staan dat het getal dezelfde waarde heeft als een universal\_integer: \verb+1425.0+.
-   \item \vhdltermen{physical types}: dit zijn fysische waarden. Fysische waarden bestaan uit een getal gevolgd door een fysische eenheid. Er wordt een spatie tussen het getal en de eenheid gezet. Bijvoorbeeld: \verb+1818 ns+.
-  \end{itemize}
-De numerieke literals kunnen ook geschreven worden in exponenti\"ele vorm door het toevoegen van een '\vhdltermen{E}' of `\vhdltermen{e}'. Bijvoorbeeld: \verb+14e2+. Getallen worden standaard in decimale notatie uitgedrukt. Om een andere basis te gebruiken bestaat wordt volgend formaat gebruikt: \vhdltermen{base\#literal\#exp}, met de basis tussen 2 en 16. Zo kunnen we 1425 schrijven als \verb+16#591#+, of 4864 als \verb+16#13#E2+. Tot slot mag men ook vrij underscores (\vhdltermen{\_}) toevoegen in het getal om de code leesbaar te houden. Bijvoorbeeld: \verb+19_171_425+.
-  \item \vhdltermen{Karakter} (ofwel ``\vhdltermen{character literal}''). Deze literals wordent tussen enkele aanhalingstekens (\vhdltermen{'}) geplaatst.
-  \item \vhdltermen{Karakterreeks} (ofwel ``\vhdltermen{string literal}''). Deze literals worden tussen dubbele aanhalingstekens (\vhdltermen{"}) geplaatst. Indien we dubbele aanhalingstekens willen plaatsen binnen de karakterreeks dienen we twee maal dubbele aanhalingstekens te plaatsen. Bijvoorbeeld:
-\begin{quote}\verb+"""The answer?"" said Deep Thought. ""The answer to what?"""+\cite[\S25]{Adams81BOOK54}\end{quote}.
-  \item \vhdltermen{Bitreeks} (ofwel \vhdltermen{``bit string literal}''). Dit is een sequentie van uitgebreide cijfers\footnote{In geval van hexadecimale getallen.}. Ze worden tussen dubbele aanhalingstekens geplaatst (\vhdltermen{"}). Eventueel wordt er een B (binair), O (octaal) of X (hexadecimaal) voor de dubbele aanhalingstekens geplaatst om de bitstring in een bepaald formaat te lezen. Verder kan de gebruiker underscores (\_) toevoegen om de leesbaarheid te verhogen.
- \end{itemize}
- \item \vhdltermen{Scheidingstekens} (ofwel ``\vhdltermen{delimiters}''): de
-scheidingstekens van VHDL worden weergegeven in tabel \ref{tbl:vHDLdelimiters}.
-\begin{table}[hbt]
-\centering
-\begin{tabular}{ccccc}
-\verb+&+&\verb+'+&\verb+(+&\verb+)+&\verb+*+\\
-\verb/+/&\verb+,+&\verb+-+&\verb+.+&\verb+/+\\
-\verb+:+&\verb+;+&\verb+<+&\verb+=+&\verb+>+\\
-\verb+|+&\verb+[+&\verb+]+&\verb+=>+&\verb+**+\\
-\verb+:=+&\verb+/=+&\verb+>=+&\verb+<=+&\verb+<>+
-\end{tabular}
-\caption{Scheidingstekens in VHDL.}
-\label{tbl:vHDLdelimiters}
-\end{table}
- \item Identifiers: Een identifier is een referentie naar een bepaalde waarde. Identifiers beginnen met een letter en mogen letters en cijfers bevatten. Ook het underscore (\_) teken is toegelaten als dit niet het eerste of laatste karakter is. Identifiers zijn niet hoofdletter gevoelig. In VHDL'93 wordt het begrip van een identief verder uitgebreid. Deze uitbreiding wordt hier niet beschouwd. Voor meer details \cite[p. 4]{hardi00}.
- \item Commentaar: commentaar geplaatst na twee horizontale strepen \verb+--+, en eindigt op het einde van de lijn. Commentaar wordt genegeerd door de VHDL compiler.
-\end{itemize}
-Daarnaast is er ook sprake van \vhdltermen{enumeration literals} en van de \vhdltermen{NULL literal}, dez worden hier niet beschouwd.
-\paragraph{Gereserveerde woorden}De woorden in tabel \ref{tbl:vHDLReservedWords} mogen niet gebruikt worden als identifiers.
-\begin{table}[hbt]
-\centering
-\small{\begin{tabular}{lllllll}
-\verb+abs+&\verb+access+&\verb+after+&\verb+alias+&\verb+all+&\verb+and+&\verb+architecture+\\
-\verb+array+&\verb+assert+&\verb+attribute+&\verb+begin+&\verb+block+&\verb+body+&\verb+buffer+\\
-\verb+bus+&\verb+case+&\verb+component+&\verb+configuration+&\verb+constant+&\verb+disconnect+&\verb+downto+\\
-\verb+else+&\verb+elsif+&\verb+end+&\verb+entity+&\verb+exit+&\verb+file+&\verb+for+\\
-\verb+function+&\verb+generate+&\verb+generic+&\verb+group+&\verb+guarded+&\verb+if+&\verb+impure+\\
-\verb+in+&\verb+inertial+&\verb+inout+&\verb+is+&\verb+label+&\verb+library+&\verb+linkage+\\
-\verb+literal+&\verb+loop+&\verb+map+&\verb+mod+&\verb+nand+&\verb+new+&\verb+next+\\
-\verb+nor+&\verb+not+&\verb+null+&\verb+of+&\verb+on+&\verb+open+&\verb+or+\\
-\verb+others+&\verb+out+&\verb+package+&\verb+port+&\verb+postponed+&\verb+procedure+&\verb+process+\\
-\verb+pure+&\verb+range+&\verb+record+&\verb+register+&\verb+reject+&\verb+rem+&\verb+report+\\
-\verb+return+&\verb+rol+&\verb+ror+&\verb+select+&\verb+severity+&\verb+shared+&\verb+signal+\\
-\verb+sla+&\verb+sll+&\verb+sra+&\verb+srl+&\verb+subtype+&\verb+then+&\verb+to+\\
-\verb+transport+&\verb+type+&\verb+unaffected+&\verb+units+&\verb+until+&\verb+use+&\verb+variable+\\
-\verb+wait+&\verb+when+&\verb+while+&\verb+with+&\verb+xnor+&\verb+xor+
-\end{tabular}}
-\caption{Gereserveerde woorden in VHDL.}
-\label{tbl:vHDLReservedWords}
-\end{table}
-\subsubsection{Data-types}
-VHDL bevat enkele belangrijke datatypes die we in de volgende paragrafen vaak opnieuw zullen tegenkomen. Ook in de VHDL-secties werden sommige van deze types reeds gebruikt. Tabel \ref{tbl:vHDLTypes} geeft een overzicht van de meest populaire hoofdtypes.
-\begin{table}[hbt]
-\centering
-\subtable[Overzicht van belangrijke types in VHDL.]{\small{\begin{tabular}{c|cl}
-Type&Bereik&Operatoren (prioriteit)\\\hline
-\multirow{5}{*}{\vhdltermen{INTEGER}}&&\vhdltermen{ABS}, \vhdltermen{**}\\
-&-2\ 147\ 483\ 647&\vhdltermen{*}, \vhdltermen{/}, \vhdltermen{MOD}, \vhdltermen{REM}\\
-&tot&\vhdltermen{+} (unair), \vhdltermen{-} (unair)\\
-&2\ 147\ 483\ 647&\vhdltermen{+} (binair), \vhdltermen{-} (binair)\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\\hline
-\multirow{5}{*}{\vhdltermen{REAL}}&&\vhdltermen{ABS}, \vhdltermen{**}\\
-&-1.0E38&\vhdltermen{*}, \vhdltermen{/}\\
-&tot&\vhdltermen{+} (unair), \vhdltermen{-} (unair)\\
-&1.0E38&\vhdltermen{+} (binair), \vhdltermen{-} (binair)\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\\hline
-\multirow{5}{*}{\vhdltermen{TIME}}&-2\ 147\ 483\ 647&\vhdltermen{ABS}\\
-&tot&\vhdltermen{*}, \vhdltermen{/}\\
-&2\ 147\ 483\ 647&\vhdltermen{+} (unair), \vhdltermen{-} (unair)\\
-&\vhdltermen{fs}, \vhdltermen{ps}, \vhdltermen{ns}, \vhdltermen{us}&\vhdltermen{+} (binair), \vhdltermen{-} (binair)\\
-&\vhdltermen{ms}, \vhdltermen{sec}, \vhdltermen{min}, \vhdltermen{hr}&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\\hline
-\multirow{3}{*}{\vhdltermen{BIT}}&\multirow{3}{*}{'0' of '1'}&\vhdltermen{NOT}\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\
-&&\vhdltermen{AND}, \vhdltermen{NAND}, \vhdltermen{OR}, \vhdltermen{NOR}, \vhdltermen{XOR}, \vhdltermen{XNOR}\\\hline
-\multirow{5}{*}{\vhdltermen{BIT\_VECTOR}}&\multirow{5}{*}{onbegrensde rij \vhdltermen{BIT}}&\vhdltermen{NOT}\\
-&&\vhdltermen{\&}\\
-&&\vhdltermen{SLL}, \vhdltermen{SRL}, \vhdltermen{SLA}, \vhdltermen{SRA}, \vhdltermen{ROL}, \vhdltermen{ROR}\\
-&&\vhdltermen{=}, \vhdltermen{/=}, \vhdltermen{<}, \vhdltermen{<=}, \vhdltermen{>}, \vhdltermen{>=}\\
-&&\vhdltermen{AND}, \vhdltermen{NAND}, \vhdltermen{OR}, \vhdltermen{NOR}, \vhdltermen{XOR}, \vhdltermen{XNOR}\\\hline
-\vhdltermen{CHARACTER}&256 karakters&\\\hline
-\vhdltermen{STRING}&onbegrensde rij \vhdltermen{CHARACTER}&
-\end{tabular}}
-\label{tbl:vHDLTypes}}
-\subtable[Overzicht van belangrijke afgeleide types in VHDL.]{\small{\begin{tabular}{c|cl}
-Type&Bereik&Operatoren (prioriteit)\\\hline
-\vhdltermen{NATURAL}&0 tot \vhdltermen{INTEGER'HIGH}&equivalent aan \vhdltermen{INTEGER}\\\hline
-\vhdltermen{POSITIVE}&1 tot \vhdltermen{INTEGER'HIGH}&equivalent aan \vhdltermen{INTEGER}\\\hline
-\vhdltermen{DELAY\_LENGTH}&0 \vhdltermen{fs} tot \vhdltermen{TIME'HIGH}&equivalent aan \vhdltermen{TIME}
-\end{tabular}}
-\label{tbl:vHDLSubTypes}}
-\caption{Overzicht van belangrijke types en afgeleide types in VHDL.}
-\label{tbl:vHDLTypesSubTypes}
-\end{table}
-Naast deze reeks van basistypes bevat VHDL ook standaard enkele afgeleide types. Het zijn types die een gereduceerd bereik uit de basistypes vertegenwoordigen. Deze subtypes staan in tabel \ref{tbl:vHDLSubTypes} samen met hun gereduceerd bereik.
-\paragraph{Zelf types defini\"eren} Hoe defini\"eren we nu zelf types? Er zijn enkele manieren om zelf types te defni\"eren:
-\begin{itemize}
- \item Defini\"eren door opsomming
- \item Defini\"eren door subtypering (beperk het bereik)
- \item Defini\"eren van fysische types
- \item Afgeleide types met matrices en vectoren
-\end{itemize}
-\paragraph{Defini\"eren met opsomming} We kunnen een type specificeren door alle mogelijke toestanden op te sommen. Deze methode wordt toegepast voor bijvoorbeeld de types \vhdltermen{bit} en \vhdltermen{byte}. De namen of karakters die de toestand bepalen worden tussen haakjes opgesomd na het sleutelwoord \vhdltermen{is}. \vhdlref{lst:typeEnum} toont mogelijke definities van \vhdltermen{bit} en \vhdltermen{byte}.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-type bit is ('0','1');
-type boolean is (false,true);
-\end{lstlisting}
-\caption{Defini\"eren van types door opsomming.}
-\label{lst:constante}
-\end{vhdlcode}
+\seclab{combinatorischVHDL}%TODO: remove
+\seclab{vhdl-comb}
 
-\begin{vhdlcode}[hbt]
-\paragraph{Defini\"eren met subtypering}
-\begin{lstlisting}
-subtype byte is integer range 0 to 255;
-subtype lowercase is character range 'a' to 'z';
-\end{lstlisting}
-\caption{Defini\"eren van types door subtypering.}
-\label{lst:constante}
-\end{vhdlcode}
+In deze sectie zullen we verschillende combinatorische schakelingen die we doorheen de cursus hebben ontwikkeld beschrijven in \tvhdl{}. In deze sectie zullen we eerst een formeel overzicht geven van de \tvhdl{}-syntax. Vervolgens zullen we in subsectie \sscref{combinatorischVHDLHardware} een methode ontwikkelen om combinatorische elementen te beschrijven met deze syntax. In elk hoofdstuk zullen we de methodologie uitbreiden zodat we de nieuwe componenten ook kunnen beschrijven.
 
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-type bit is ('0','1');
-type boolean is (false,true);
-\end{lstlisting}
-\caption{Defini\"eren van fysische types.}
-\label{lst:constante}
-\end{vhdlcode}
-\subsubsection{Data-objecten}
-Een object in VHDL is een benoemd item met een specifieke waarde. We onderscheiden 3 soorten objecten: \vhdltermen{constante}, \vhdltermen{variabele} en \vhdltermen{signaal}.
-\paragraph{Constante}Een constante is een object die slechts \'e\'enmaal een waarde kan toegekend worden. Ze geven een interpretatie aan de waarde, en maken de VHDL-code daarom beter verstaanbaar en aanpasbaar. We gebruiken hiervoor het sleutelwoord \vhdltermen{constant}. \vhdlref{lst:constante} toont de declaratie van verschillende constanten. Merk op data VHDL niet hoofdlettergevoelig is in programma-syntax. Alleen de waarde die in karakters en karakterreeksen wordt opgeslagen zijn hoofdlettergevoelig.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-constant pi : real := 3.14159265;
-constant byte_length : natural := 8;
-constant word_length : natural := 4*byte_length;
-\end{lstlisting}
-\caption{Werken met constanten.}
-\label{lst:constante}
-\end{vhdlcode}
-Het algemene formaat is dus \verb+constant <identifier> : <type> := <waarde>;+.
-\paragraph{Variabele}De syntax van een variabele is ongeveer dezelfde. Alleen wordt het sleutelwoord \vhdltermen{variable}. Verder is het onmiddellijk toekennen van een waarde optioneel. \vhdlref{lst:variabele} toont het gebruik van variabelen in VHDL.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-variable index : integer;
-index := 0;
-index := index + 1;
-variable andere_index : natural := 12;
-variable antwoord : natural := 4*andere_index-6*index;
-\end{lstlisting}
-\caption{Werken met variabelen.}
-\label{lst:variabele}
-\end{vhdlcode}
-\paragraph{Signaal}Een signaal ten slotte is het VHDL-equivalent van een fysische verbinding of een groep van verbindingen in de hardware. Een signaal wordt geconstrueerd met behulp van het sleutelwoord \vhdltermen{signal}. Toewijzingen aan een signaal gebeuren met de \vhdltermen{<=} operator. De toewijzing bij een signaal werkt anders dan bij een variabele en constante. Variabelen en constanten worden onmiddellijk toegewezen. Dit betekent dat expressies als \verb/index := index + 1;/ mogelijk zijn. Signalen veranderen echter wanneer elementen uit hun toewijzing veranderen. Beschouw het voorbeeld uit \vhdlref{lst:signal}.
-\begin{vhdlcode}[hbt]
-\begin{lstlisting}
-signal a : bit;
-signal b : bit;
-signal y : bit;
-a <= '1';
-b <= '0', '1' after 100 ns;
-y <= a and b;
-\end{lstlisting}
-\caption{Werken met signalen.}
-\label{lst:variabele}
-\end{vhdlcode}
-We zien drie signalen \verb+a+, \verb+b+ en \verb+y+. \verb+b+ zal na $100\mbox{ ns}$ een 1 aanleggen. Dit heeft als implicatie dat ook \verb+y+ van waarde zal veranderen. Indien we dit met variabelen en constanten zouden hebben berekend zou variabele \verb+y+ na de toewijzing een waarde toegewezen krijgen, en deze tot een volgende toewijzing behouden. Merk verder op dat we hier ook de betekenis van het codewoord \vhdltermen{after} tonen. Een signaal kan ook een initiele waarde krijgen, hiervoor gebruiken we de \vhdltermen{:=} operator.
-\subsubsection{Bibliotheken}
-\subsubsection{Bewerkingen}
 \subsection{Hardwarebeschrijving met VHDL}
+
 \subsubsection{Structurele beschrijving}
-\begin{vhdlcode}[hbt]
-\centering
-\begin{lstlisting}
--- 2-naar-1 Multiplexer
---
-architecture Struct of MUX2 is
-  signal U,V,W : bit;
-  component AND2 is
-    port (X,Y: in bit;
-          Z: out bit);
-  end component AND2;
-  component OR2 is
-    port (X,Y: in bit;
-          Z: out bit);
-  end component OR2;
-  component INV is
-    port (X: in bit;
-          Z: out bit);
-    end component INV;
-begin
-  Gate1: component INV  port map (X=>S,Z=>U);
-  Gate2: component AND2 port map (X=>A,Y=>S,Z=>W);
-  Gate3: component AND2 port map (U,B,V);
-  Gate4: component OR2  port map (X=>W,Y=>V,Z=>Y);
-end Struct;
-\end{lstlisting}
-\caption{2-naar-1-multiplexer.}
-\label{vhdl:bToAMultiplexer}
-\end{vhdlcode}
+\importvhdl{comb-struc-mux}{2-naar-1-multiplexer.}
+
 \subsubsection{Gedragsbeschrijving}
-\begin{vhdlcode}[hbt]
-\centering
-\begin{lstlisting}
--- Opteller
---
-library ieee;
-use ieee.std_logic_signed.all;
+\importvhdl{comb-behav-add}{$n$-bit Opteller.}
 
-entity adder is
-  generic(n : positive := 4);
-  port(Cin : in std_logic;
-       X,Y : in std_logic_vector(n-1 downto 0);
-       S   : in std_logic_vector(n-1 downto 0);
-       Cout, Overflow : out std_logic);
-end adder;
-
-architecture behav of adder is
-  signal Sum : std_logic_vector(n downto 0);
-begin
-  Sum <= (X(n-1) & X) + Y + Cin;
-  S <= Sum(n-1 downto 0);
-  Cout <= Sum(n);
-  Overflow <= Sum(n) xor X(n-1) xor Y(n-1) xor Sum(n-1);
-end behav;
-\end{lstlisting}
-\caption{$n$-bit Opteller.}
-\label{vhdl:adder}
-\end{vhdlcode}
 \subsubsection{Repetitieve structuren}
-\label{ss:combinatorischVHDLHardware}
+\ssclab{combinatorischVHDLHardware}
+
+\section{Sequenti\"ele schakelingen in VHDL}
+\seclab{vhdl-seq}
+
+\section{Processoren in VHDL}
+\seclab{vhdl-proc}
+
+\subsection{Leidend voorbeeld: sha1 checksum}
+Als leidend voorbeeld zullen we een specifieke processor bouwen die de sha1 hash van een boodschap kan berekenen. Een hash is een ``samenvatting'' van een sequentie data. In het geval van sha1 is deze samenvatting $160$ bit lang (voor eender welke sequentie aan bits).
+
+\paragraph{}
+Een dergelijke samenvatting kan bijvoorbeeld als handtekening gebruikt worden om te verifi\"eren dat een het bestand wel degelijk gemaakt is door de afzender en niet aangepast is door een ``man-in-the-middle''. Zo kan men een samenvatting van het document genereren en deze bijvoorbeeld via een ander kanaal doorsturen. Wanneer de ontvanger dan ook het originele bestand ontvangt kan deze, door zelf ook de samenvatting uit te rekenen dat men over hetzelfde bestand spreekt. Het is natuurlijk niet uitgesloten dat twee bestanden tot dezelfde samenvatting worden herleid, maar het algoritme is zo opgesteld dat ``reverse engineering''\footnote{Het analyseren van het resultaat om dit vervolgens uit te buiten.} zeer moeilijk is.
+
+\paragraph{}
+Het algoritme in pseudo-code staat beschreven in \algoref{sha1}.
+\importalgorithmicalgorithm{sha1}{Genereren van een sha1 checksum.}
+Technisch gezien moet het bericht dus uit blokken van $512$ bits bestaan en de lengte in bits moet congruent zijn met $448\mod 512$. Dit is natuurlijk niet altijd het geval. In dat geval worden $0$'en bijgevoegd op het einde van het bestand tot aan de voorwaarde is voldaan. De overige $64$ bits in het laatste blok moeten dan worden opgevuld met de lengte van het bestand in bits modulo $2^64$. We gaan er vanuit dat deze stappen al uitgevoerd zijn door de logica die invoer op onze processor aanlegt, we krijgen dus $512$-bit blokken aangeleverd met correcte inhoud. Een laatste opmerking over de invoer is dat indien het bestand bovendien tekst bevat is nog een extra stap nodig, we gaan er hier vanuit dat het bestand binair is, ook deze stappen worden dus niet beschouwd.
+
+\paragraph{}
+Het algoritme leest eerst enkele constanten in $h_0,h_1,\ldots,h_4$. Vervolgens leest het algoritme de verschillende blokken $x$ in. In een eerste stap wordt het blok opgedeeld in items van $32$-bit. Dit impliceert dus $16$ items. Men vult de array $\vec{w}$ echter op tot $80$ items door een functie toe te passen op de vorige data-elementen. Daarna worden op basis van de items, $a$, $b$, $c$, $d$ en $e$ aangepast: grotendeels door de variabelen te permuteren en enkele variabelen op te tellen met constanten en het item. Op basis van $a$, $b$, $c$, $d$ en $e$ worden $h_0,h_1,\ldots,h_4$ aangepast. Wanneer alle blokken zijn behandeld, vormt de aaneenschakeling van $h_0$, $h_1$, $h_2$, $h_3$ en $h_4$ het resultaat.
+
+\paragraph{Voorbeelduitvoer}
+Bij wijze van demonstratie zullen we uit een bestand van $51$ bytes de sha1 checksum berekenen. De binaire code staat op.
+
+\paragraph{}
+Het algoritme die we voorstellen in \algoref{sha1} is natuurlijk niet equivalent met een \tvhdl{}-beschrijving van een proces: er ontbreekt welke instructie we wanneer zullen uitvoeren. Zo is het evident dat we bijvoorbeeld $a\gets h_0$ en $b\gets h_1$ in parallel kunnen uitvoeren. Verder kunnen we er bijvoorbeeld voor opteren om de instructies van de \texttt{if}-lussen in \'e\'en tijdstap uit te voeren: de controller beslist welke instructies moeten worden uitgevoerd en overloopt dus alles \texttt{if}'s tegelijk. We hebben op basis van het algoritme een procesbeschrijving opgesteld die zoveel mogelijk instructies samenneemt. Het proces is niet gegarandeerd het meest effici\"ente, maar dit voorbeeld heeft dit ook niet tot doel. We moeten ook infrastructuur voorzien om aan te duiden 
+
+\importvhdl{process-sha1}{Beschrijving van de procedure om de sha1 uit te rekenen.}
+
+\paragraph{Signalen versus variabelen}
+
+\section{VHDL grammatica}
+\seclab{vhdl-gram}
+Een programmeertaal beschrijft men meestal aan de hand van een (geannoteerde) context-vrije grammatica. Zo'n grammatica bestaat uit ``productieregels''. Een productieregel bestaat aan de linkerkant uit een een ``non-terminal'' en aan de rechterkant uit een sequentie van ``terminals'' en non-terminals. Een non-terminal is een symbool waarop verdere productieregels kunnen worden toegepast. Een terminal is een elementen uit de taal zelf, bijvoorbeeld een sleutelwoord of karakter. Een programma is geldig wanneer men vanuit de start non-terminal een sequentie van terminals kan genereren die equivalent is met dat programma.
+
+\paragraph{}
+Om een grammatica compacter voor te stellen maakt men doorgaans gebruik van extra componenten. Zo zijn elementen aan de rechterkant van een productie-regel tussen vierkante haken optioneel. Ze zijn niet verplicht bij een productieregel. Wel is het zo dat alles wat tussen vierkante haakjes staat samengenomen moet worden: wanneer twee elementen binnen dezelfde vierkante haken staan, worden beide elementen genegeerd, of allebei toegevoegd. Een tweede vorm van syntactische suiker zijn accolades. Deze worden gebruikt bij herhaling van een groep elementen: de elementen binnen acculades worden nul, \'e\'en of meerdere keren herhaald. Doorgaans zal het laatste element binnen de accolades een terminal zijn: het scheidingsteken tussen twee groepen elementen.
+
+\paragraph{}
+In een grammatica komen traditioneel veel identifiers voor: namen van allerhande items die op de \'e\'en of andere manier gerelateerd zijn met het type. Een probleem is echter dat een productie-regel verschillende identifiers kunnen bevatten en daarom de betekenis niet altijd duidelijk is. Daarom zullen we non-terminals die eigenlijk identifiers zijn extra annoteren: de non-terminal eindigt op ``-ident'' en bevat ervoor informatie over het soort identifier. In werkelijkheid staat er dus een identifier.
+
+\paragraph{}
+\grmref{vhdl} beschrijft de belangrijkste delen van de \tvhdl{} taal. Deze grammatica wordt louter ter illustratie gegeven: het is niet de bedoeling deze grammatica te kennen, het kan echter helpen bij het begrijpen van de \tvhdl{} syntax.
+
+\importvhdlgram{vhdl}{De belangrijkste delen van de \tvhdl{}-grammatica.}%TODO: package-definitie
+% 
+\section{Programmeerjargon}
+\seclab{programmingjargon}
+Tijdens het beschrijven van de \tvhdl{} taal zijn we verschillende termen tegengekomen die vaak aan bod komen bij programmeertalen in het algemeen. Voor lezers die minder vertrouwd zijn met programmeren volgt hier een beschrijving van deze concepten. De lijst is niet exhaustief, voor een uitgebreidere Engelstalige lijst, zie \cite{vanonsemglossary}.
+
+\begin{description}
+ \item [Overloading] Overloading betekent dat men verschillende betekenissen kan koppelen aan \'e\'en en dezelfde identifier. Door extra informatie kan de compiler echter zelf bepalen welke betekenis aan een oproep moet worden gekoppeld. Zo is het bijvoorbeeld in \tjava{} toegestaan om verschillende methodes te defini\"eren met eenzelfde naam, wanneer het aantal parameters of de types van deze parameters anders zijn. Op basis van het aantal parameters en het type van deze parameters weet de \tjava{} compiler welke methode moet worden opgeroepen.
+\end{description}

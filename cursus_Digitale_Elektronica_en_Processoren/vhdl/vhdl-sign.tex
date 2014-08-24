@@ -1,0 +1,5 @@
+signal a : bit <= '1';       --Declaratie met assignatie
+signal b : bit;              --Declaratie
+signal y : bit;              --Declaratie
+y <= a and b;                --Assignatie met expressie
+b <= '0', '1' after 100 ns;  --Assignatie met tijdbeperking
