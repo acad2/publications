@@ -1,7 +1,30 @@
 \def\filedate{2014/08/24}
 \def\fileversion{0.1}
-\ProvidesPackage{importsreferences}
+\ProvidesPackage{hexrenderer}
+
+\def\hex@MissingFileError#1#2{%
+    \typeout{^^J! Package HexRenderer Error: File `#1.#2' not found.^^J^^J%
+        Type X to quit or <RETURN> to proceed,^^J%
+        or enter new name. (Default extension: #2)^^J}%
+    \message{Enter file name: }%
+    {\endlinechar\m@ne \global\read\m@ne to\@gtempa}%
+    \ifx\@gtempa\@empty \else
+        \def\reserved@a{x}\ifx\reserved@a\@gtempa\batchmode\@@end\fi
+        \def\reserved@a{X}\ifx\reserved@a\@gtempa\batchmode\@@end\fi
+        \filename@parse\@gtempa
+        \edef\filename@ext{%
+            \ifx\filename@ext\relax#2\else\filename@ext\fi}%
+        \edef\reserved@a{\noexpand\IfFileExists %
+                {\filename@area\filename@base.\filename@ext}%
+            {\noexpand\hex@InputListing %
+                {\filename@area\filename@base.\filename@ext}}%
+            {\noexpand\hex@MissingFileError
+                {\filename@area\filename@base}{\filename@ext}}}%
+        \expandafter\reserved@a %
+    \fi}
 
 \newcommand\hexinputlisting[2][]{
 \IfFileExists{#2}
+{}
+{\filename@parse{#2}\edef\reserved@a{\noexpand\hex@MissingFileError{\filename@area\filename@base}{\ifx\filename@ext\relax tex\else\filename@ext\fi}}\reserved@a}
 }
