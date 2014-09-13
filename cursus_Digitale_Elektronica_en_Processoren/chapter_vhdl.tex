@@ -364,7 +364,7 @@ Als leidend voorbeeld zullen we een specifieke processor bouwen die de sha1 hash
 \paragraph{}
 Een dergelijke samenvatting kan bijvoorbeeld als handtekening gebruikt worden om te verifi\"eren dat een het bestand wel degelijk gemaakt is door de afzender en niet aangepast is door een ``man-in-the-middle''. Zo kan men een samenvatting van het document genereren en deze bijvoorbeeld via een ander kanaal doorsturen. Wanneer de ontvanger dan ook het originele bestand ontvangt kan deze, door zelf ook de samenvatting uit te rekenen dat men over hetzelfde bestand spreekt. Het is natuurlijk niet uitgesloten dat twee bestanden tot dezelfde samenvatting worden herleid, maar het algoritme is zo opgesteld dat ``reverse engineering''\footnote{Het analyseren van het resultaat om dit vervolgens uit te buiten.} zeer moeilijk is.
 
-\paragraph{}
+\subsubsection{Algoritme}
 Het algoritme in pseudo-code staat beschreven in \algoref{sha1}.
 \importalgorithmicalgorithm{sha1}{Genereren van een sha1 checksum.}
 Technisch gezien moet het bericht dus uit blokken van $512$ bits bestaan en de lengte in bits moet congruent zijn met $448\mod 512$. Dit is natuurlijk niet altijd het geval. In dat geval worden $0$'en bijgevoegd op het einde van het bestand tot aan de voorwaarde is voldaan. De overige $64$ bits in het laatste blok moeten dan worden opgevuld met de lengte van het bestand in bits modulo $2^64$. We gaan er vanuit dat deze stappen al uitgevoerd zijn door de logica die invoer op onze processor aanlegt, we krijgen dus $512$-bit blokken aangeleverd met correcte inhoud. Een laatste opmerking over de invoer is dat indien het bestand bovendien tekst bevat is nog een extra stap nodig, we gaan er hier vanuit dat het bestand binair is, ook deze stappen worden dus niet beschouwd.
@@ -372,11 +372,8 @@ Technisch gezien moet het bericht dus uit blokken van $512$ bits bestaan en de l
 \paragraph{}
 Het algoritme leest eerst enkele constanten in $h_0,h_1,\ldots,h_4$. Vervolgens leest het algoritme de verschillende blokken $x$ in. In een eerste stap wordt het blok opgedeeld in items van $32$-bit. Dit impliceert dus $16$ items. Men vult de array $\vec{w}$ echter op tot $80$ items door een functie toe te passen op de vorige data-elementen. Daarna worden op basis van de items, $a$, $b$, $c$, $d$ en $e$ aangepast: grotendeels door de variabelen te permuteren en enkele variabelen op te tellen met constanten en het item. Op basis van $a$, $b$, $c$, $d$ en $e$ worden $h_0,h_1,\ldots,h_4$ aangepast. Wanneer alle blokken zijn behandeld, vormt de aaneenschakeling van $h_0$, $h_1$, $h_2$, $h_3$ en $h_4$ het resultaat.
 
-\paragraph{Voorbeelduitvoer}
-Bij wijze van demonstratie zullen we uit een bestand van $51$ bytes de sha1 checksum berekenen. De binaire code staat op.
-
-\paragraph{}
-Het algoritme die we voorstellen in \algoref{sha1} is natuurlijk niet equivalent met een \tvhdl{}-beschrijving van een proces: er ontbreekt welke instructie we wanneer zullen uitvoeren. Zo is het evident dat we bijvoorbeeld $a\gets h_0$ en $b\gets h_1$ in parallel kunnen uitvoeren. Verder kunnen we er bijvoorbeeld voor opteren om de instructies van de \texttt{if}-lussen in \'e\'en tijdstap uit te voeren: de controller beslist welke instructies moeten worden uitgevoerd en overloopt dus alles \texttt{if}'s tegelijk. We hebben op basis van het algoritme een procesbeschrijving opgesteld die zoveel mogelijk instructies samenneemt. Het proces is niet gegarandeerd het meest effici\"ente, maar dit voorbeeld heeft dit ook niet tot doel. We moeten ook infrastructuur voorzien om aan te duiden 
+\subsubsection{VHDL-proces}
+Het algoritme die we voorstellen in \algoref{sha1} is niet equivalent met een \tvhdl{}-beschrijving van een proces: er ontbreekt welke instructie we wanneer zullen uitvoeren, een duurder datapad kan immers meerdere instructies tegelijk uitvoeren. Het is bijvoorbeeld evident dat we $a\gets h_0$ en $b\gets h_1$ in parallel kunnen uitvoeren. We kunnen er ook voor opteren om de instructies van de \texttt{if}-lussen in \'e\'en tijdstap uit te voeren: de controller beslist welke instructies moeten worden uitgevoerd en overloopt dus alles \texttt{if}'s tegelijk. We hebben op basis van het algoritme een procesbeschrijving opgesteld die een redelijke hoeveelheid instructies samenneemt zonder dat dit tot een duur datapad leidt. Het proces is niet gegarandeerd het meest effici\"ente, maar dit voorbeeld heeft dit ook niet tot doel.
 
 \importvhdl{process-sha1}{Beschrijving van de procedure om de sha1 uit te rekenen.}
 
