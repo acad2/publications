@@ -3,6 +3,11 @@ use ieee.std_logic_1164.all;
 
 entity shacalc is
     port (
+        clk : in std_logic;
+        data : in std_logic_vector(511 downto 0);
+        enable : in std_logic;
+        signature : out std_logic_vector (159 downto 0);
+        done : out std_logic;
     );
 end entity shacalc;
 
