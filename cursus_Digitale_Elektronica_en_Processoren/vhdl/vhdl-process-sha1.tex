@@ -12,11 +12,15 @@ entity shacalc is
 end entity shacalc;
 
 architecture prototype of shacalc
-    signal sFlag: std_logic;
-    signal sD: std_logic;
-    signal sQ: std_logic;
 begin
-    with sFlag select
-	  sQ <= sD  when '1',
-		'0' when others;
+    process(clk,data,enable)
+        variable wvec : std_logic_vector (511 downto 0);
+        variable h0,h1,h2,h3,h4,h5,a,b,c,d,e,f,t : std_logic_vector (31 downto 0);
+        variable i : 
+    begin
+        while enable='0' loop
+	  wait until clk = '1';
+	end loop;
+        signature <= h0 & h1 & h2 & h3 & h4 & h5;
+    end process
 end architecture prototype;
