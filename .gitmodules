@@ -4,3 +4,6 @@
 [submodule "cursus_Digitale_Elektronica_en_Processoren/vhdl-experiments"]
 	path = cursus_Digitale_Elektronica_en_Processoren/vhdl-experiments
 	url = git@github.com:KommuSoft/vhdl-experiments.git
+[submodule "cursus_Digitale_Elektronica_en_Processoren/dep-software"]
+	path = cursus_Digitale_Elektronica_en_Processoren/dep-software
+	url = git@github.com:KommuSoft/dep-software.git
