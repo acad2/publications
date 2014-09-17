@@ -63,6 +63,7 @@ Special thanks to (in alphabetical order):
  - **Jonas Vanthornhout**: for several bug reports, fixing typos and advice during the development of several publications.
  - **Katie Pauwelyn**: for several bug reports regarding several publications.
  - **Lynn Houthuys**: for several bug reports regarding the *course Digitale Elektronica en Processoren*.
+ - **Neline van Ginkel**: for fixing way too much spelling mistakes in the *course Digitale Elektronica en Processoren*.
  - **Pieter-Jan Vuylsteke**: for bug reports regarding the *course Artificiële Intelligentie*
  - **Ruben Lapauw**: for several bug reports regarding several publications.
 
