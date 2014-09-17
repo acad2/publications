@@ -7,5 +7,7 @@
 \maketitle
 \end{titlepage}
 \tableofcontents\newpage
-\input{honeycomb}
+\immediate\write18{bash inputproblems.sh}
+\input{problems.tex}
+\immediate\write18{rm problems.tex}
 \end{document}
