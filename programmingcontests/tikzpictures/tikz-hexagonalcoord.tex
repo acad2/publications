@@ -1,11 +1,10 @@
 \begin{tikzpicture}
-%\pdfsetmatrix{1 0 #1 0.866}
 \begin{scope}[y={(0.5 cm,0.866 cm)}]
 \foreach \x in {1,...,5} {
   \foreach \y in {1,...,5} {
     \ifthenelse{\not\equal{\intcalcMod{\x+2*\y}{3}}{0}} {
     \fill (\x,\y) circle (1 mm);
-    \begin{scope}[thick]
+    \begin{scope}[thick,blue]
     \ifthenelse{\equal{\intcalcMod{\x+2*\y}{3}}{1}} {
       \draw (\x+1,\y) -- (\x,\y) -- (\x,\y-1) (\x-1,\y+1) -- (\x,\y);
     }{
