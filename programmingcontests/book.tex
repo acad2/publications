@@ -1,13 +1,16 @@
 \documentclass{../SharedData/programmingcontests}
 \title{Programming contests}
 \author{Willem Van Onsem}
+\usepackage{intcalc}
 \date{2014-....}
 \begin{document}
 \begin{titlepage}
 \maketitle
 \end{titlepage}
 \tableofcontents\newpage
-\immediate\write18{bash inputproblems.sh}
+\immediate\write18{bash listfiles.sh}
 \input{problems.tex}
-\immediate\write18{rm problems.tex}
+\appendix
+\input{topics.tex}
+\immediate\write18{bash rmlists.sh}
 \end{document}

@@ -1,9 +1,9 @@
 \ProvidesPackage{importsreferences}
 \RequirePackage{tikz,subfigure,float,listings,ifthen,xstring,etoolbox,booktabs}
 
-\newfloat{vhdlcode}{htb}{codes}[chapter]
+\ifdef{\thechapter}{\newfloat{vhdlcode}{htb}{codes}[chapter]}{\newfloat{vhdlcode}{htb}{codes}}
 \floatname{vhdlcode}{VHDL-code}
-\newfloat{listing}{htb}{codes}[chapter]
+\ifdef{\thechapter}{\newfloat{listing}{htb}{codes}[chapter]}{\newfloat{listing}{htb}{codes}}
 \floatname{listing}{Listing}
 \newfloat{gramf}{hbt}{grm}
 \floatname{gramf}{Grammatica}
