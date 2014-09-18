@@ -84,3 +84,7 @@
 *.thm
 *.mx*
 *.glsdefs
+
+#Haskell
+.hi
+.o
