@@ -1,0 +1,24 @@
+\usepackage{xcolor,../SharedData/brackets}
+\title{Combinatorial Optimization Problems Dictionary}
+\author{Willem Van Onsem\\\href{mailto:Willem.VanOnsem@cs.kuleuven.be}{Willem.VanOnsem@cs.kuleuven.be}\and Bart Demoen\and Patrick De Causmaecker}
+\date{KU Leuven\\Department of Computer Science\\Celestijnenlaan 200A, 3001 Heverlee, Belgium\\2013-201.}
+\hypersetup{pdftitle={Combinatorial Optimization Problems Dictionary},pdfauthor={Willem Van Onsem (Willem.VanOnsem@cs.kuleuven.be), Bart Demoen, Patrick De Causmaecker}, pdfsubject={Combinatorial Optimization Problems}, pdfkeywords={Combinatorial, Optimization, Problem, Heuristics}, linktoc=none}
+
+\definecolor{frml-bg}{RGB}{255,247,220}
+\definecolor{frml-fg}{RGB}{224,220,191}
+\definecolor{frml-tx}{RGB}{119,119,119}
+
+\setlength{\abovedisplayshortskip}{-.5\baselineskip plus 3pt}% Original value: 0pt plus 3pt
+
+\newcommand{\nmn}[1]{\index{#1}\emph{#1}}
+\newcommand{\nmns}[1]{\index{#1}\emph{#1s}}
+\newcommand{\frml}[1]{\begin{quote}\fcolorbox{frml-fg}{frml-bg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textcolor{frml-tx}{\textit{formal}}\\#1}}\end{quote}}
+
+\newcommand{\fcopm}{}%helper command
+\newcommand{\fcop}[3][+]{\ifthenelse{\equal{#1}{+}}{\renewcommand{\fcopm}{maximize}}{\renewcommand{\fcopm}{minimize}}\[\begin{array}{lll}\mbox{\fcopm{}}&\multicolumn{2}{l}{#2,}\\\mbox{subject to}&#3\end{array}\]}
+
+\newcommand{\iran}[3][i]{\ensuremath{{#1}={#2}\ldots{#3}}}
+
+\newcommand{\ccnpcomplete}{\textsc{NP-Complete}}
+\newcommand{\ccnphard}{\textsc{NP-Hard}}
+\newcommand{\ccp}{\textsc{P}}

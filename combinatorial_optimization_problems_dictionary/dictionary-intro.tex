@@ -1,0 +1,20 @@
+\clearpage\lettergroup{1}\dictchar{Introduction}
+In this dictionary, we document several combinatorial optimization problems.
+\section*{Exact algorithms}
+Several approaches have been developed to solve a combinatorial optimization problem exactly, regardless of the ``shape of the problem''. Some other techniques can only be applied to cases where the problem itself meets certain criteria. We enumerate the most popular approaches to solve combinatorial optimization problems exactly:
+\begin{description}
+ \item [Brute force] a brute force algorithm enumerates the entire configuration space by assigning every value of the domain to the respective variable. Such approach always results in computation time exponential in the number of variables. The approach is not efficient at all since in most cases -- based on a partial assignment -- one can decide if potential good solutions can be derived from such assignment.
+ \item [Branch-and-bound] In case of a branch-and-bound algorithm, one enumerate the configuration space as well, but one uses a \nmn{bound}: a value for the fitness of the thus far best solution found.
+ \item [Dynamic programming]
+ \item [State space relaxation]
+ \item [Preprocessing]
+\end{description}
+\section*{Approximate algorithms}
+For most optimization problems, a variety of approaches exist. Some of these are specific to a certain problem, others -- like \nmn{metaheuristics} -- are generic approximate algorithms that can solve any kind of problem. The term \nmn{heuristics} is used for such algorithms. For many heuristics an \nmn{error bound} $\epsilon$ can be derived such that in case of a minimization problem:
+\begin{equation}
+\dfrac{z-z^{\star}}{z^{\star}}\leq\epsilon
+\end{equation}
+for every instance with $z$ the fitness-value of the solution proposed by the heuristic for a specific problem instance and $z^{\star}$ the fitness value of the optimal solution for that problem instance.
+\section*{Computational complexity}
+\section*{Resources}
+This dictionary list the different problems and for each concrete optimization problem, a formal description is provided. The mathematical notation is used. This dictionary comes with a website where the problems are specified in the \nmn{MiniZinc} language.

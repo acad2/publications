@@ -60,6 +60,7 @@
 \newcommand{\LLL}{\ensuremath{\mathbb{L}}}
 \newcommand{\MMM}{\ensuremath{\mathbb{M}}}
 \newcommand{\NNN}{\ensuremath{\mathbb{N}}}
+\newcommand{\NNNz}{\ensuremath{\NNN_0}}
 \newcommand{\OOO}{\ensuremath{\mathbb{O}}}
 \newcommand{\PPP}{\ensuremath{\mathbb{P}}}
 \newcommand{\QQQ}{\ensuremath{\mathbb{Q}}}
@@ -117,3 +118,26 @@
 #2\\\midrule
 #3\\\bottomrule
 \end{tabular}}
+
+%Units
+\newcommand{\unmps}[1][]{\ensuremath{\unm[#1]/\uns}}
+\newcommand{\unm}[1][]{\ensuremath{\mbox{m}^{#1}}}
+\newcommand{\uns}[1][]{\ensuremath{\mbox{s}^{#1}}}
+
+%Limits, min/max, and other distribution-based definitions
+\newcommand{\maxv}[2][x]{\fun{\max_{#1}}{#2}}
+
+%Sum, integrals and other default expressions
+\newcommand{\limto}[2][x]{\ensuremath{\displaystyle\lim_{#1\rightarrow #2}}}
+\newcommand{\intdomain}[3][x]{\ensuremath{\displaystyle\int_{#2}{#3}\ \diffd #1}}
+\newcommand{\intlh}[4][x]{\ensuremath{\displaystyle\int_{#2}^{#3}{#4}\ \diffd #1}}
+\newcommand{\sumdomain}[3][x]{\ensuremath{\displaystyle\sum_{{#1}\in{#2}}{#3}}}
+\newcommand{\sumi}[2][i]{\ensuremath{\displaystyle\sum_{#1}{#2}}}
+\newcommand{\sumieqb}[4][i]{\ensuremath{\displaystyle\sum_{{#1}={#2}}^{#3}{#4}}}
+\newcommand{\cupdomain}[3][x]{\ensuremath{\displaystyle\cup_{{#1}\in{#2}}{#3}}}
+\newcommand{\capdomain}[3][x]{\ensuremath{\displaystyle\cap_{{#1}\in{#2}}{#3}}}
+\newcommand{\prddomain}[3][x]{\ensuremath{\displaystyle\prod_{{#1}\in{#2}}{#3}}}
+
+%Special functions
+\newcommand{\average}[2][]{\funf{\EEE_{#1}}{#2}}
+\newcommand{\kronecker}[1]{\funf{\delta}{#1}}
