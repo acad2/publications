@@ -17,9 +17,18 @@
 \begin{df}{Causality}
 \sb{} is a relation between two facts stating that the second fact is true because the first fact was true. Causality also means the first fact took place earlier in time than the second one.
 \end{df}
+\begin{df}{Noun phrase coreferent resolution}
+\sb{} is the combination of \flv{Coreference resolution} and \flv{Anaphor resolution}. The task is to detect which \flv{Noun phrase}s refer to the same item and to which item they are actually refer to. In most implementations the text is processed as one reads it (forwards) and references are searched backward while filtering non-referential pronouns.
+\end{df}
 \begin{df}{Coreference resolution}
-
+\sb{} is a form of resolution where one aims to determine whether two \flv{Noun phrase}s refer to the same entity in the discourse. For instance ``Bill Clinton'' and ``The president''. Coreference resolution is governed by syntactic, semantic and discourse constraints.
 \end{df}
 \begin{df}{Anaphor resolution}
+\sb{} is a form of resolution where one aims to identify an antecedent for an \flv{Anaphoric noun phrase}. This is often an \flv{anaphoric pronoun}.
+\end{df}
+\begin{df}{Pronoun resolution}
 
+\end{df}
+\begin{df}{Hobbs algorithm}
+\sb{} is a syntactical algorithm for \flv{Pronoun resolution} to parse a discourse up to and including the current sentence. The algorithm is given a pronoun to be resolved and walks up the parse tree to the sentence (\postag{S}) level. For each \postag{NP} or \postag{S} node, breadth-first left-to-right search of the node's children is performed. If no candidates are found, the preceding sentence is attempted. A candidate is further verified by grammatical role constraints like gender, person and number.
 \end{df}
