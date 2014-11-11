@@ -30,5 +30,11 @@
 
 \end{df}
 \begin{df}{Hobbs algorithm}
-\sb{} is a syntactical algorithm for \flv{Pronoun resolution} to parse a discourse up to and including the current sentence. The algorithm is given a pronoun to be resolved and walks up the parse tree to the sentence (\postag{S}) level. For each \postag{NP} or \postag{S} node, breadth-first left-to-right search of the node's children is performed. If no candidates are found, the preceding sentence is attempted. A candidate is further verified by grammatical role constraints like gender, person and number.
+\sb{} is a syntactical algorithm for \flv{Pronoun resolution} to parse a discourse up to and including the current sentence. The algorithm is given a pronoun to be resolved and walks up the parse tree to the sentence (\postag{S}) level. For each \postag{NP} or \postag{S} node, breadth-first left-to-right search of the node's children is performed. If no candidates are found, the preceding sentence is attempted. A candidate is further verified by grammatical role constraints like gender, person and number. Gender constraints can be resolved by using ancestor information (with \flv{WordNet}) or a list of personal names with gender.
+\end{df}
+\begin{df}{Centering theory}
+\sb{} states that the single entity is ``centered'' on at a given point of the discourse. In other words entities have a certain focus point in a discourse. Centering theory is thus a form of \flv{Entity based coherence}.
+\end{df}
+\begin{df}{Centering algorithm}
+\sb{} is a syntactical algorithm that given a fully syntactically parsed text with gender, number and person information available. The algorithm looks for two adjacent utterances $U_i$ and $U_{i+1}$ first. And defines two centers: the \flvb{Backwards looking center} $\fun{c_b}{U_i}$ which is the \flv{entity} currently being focused on in the \flv{Discourse} after $U_i$ is interpreted; and the \flvb{Forward looking centers}\footnote{Notice the plural form.} $\fun{c_f}{U_i}$ which is an ordered list containing the entities mentioned in $U_i$. All the entities in $\fun{c_f}{U_i}$ could serve as the backwards looking center of $U_{i+1}$. $\fun{c_f}{U_i}$ is ordered based on a \flvb{Grammatical role hierarchy}: first \flv{Subject}s, then existential \flv{Predicate noun}s, objects, indirect objects or oblique and finally demarcated \flv{Adverbial possessive pronoun}s. $C_p=\argmax \fun{C_f}{U_i}$ is the highest ranked forward looking center.
 \end{df}
