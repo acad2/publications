@@ -940,10 +940,10 @@ order=-1
 
 [item:appendix_software.tex]
 archive=true
-column=247
+column=94
 encoding=UTF-8
 highlight=LaTeX
-line=65
+line=60
 mode=LaTeX
 open=true
 order=7
@@ -3953,10 +3953,10 @@ JumpList=
 ViMarks=.,8,87,[,8,83,],8,87
 
 [view-settings,view=0,item:appendix_software.tex]
-CursorColumn=247
-CursorLine=65
+CursorColumn=94
+CursorLine=60
 JumpList=
-ViMarks=.,65,0,[,0,0,],65,246
+ViMarks=.,65,247,[,65,247,],65,247
 
 [view-settings,view=0,item:chapter_basis_digitaal_ontwerp.tex]
 CursorColumn=442
