@@ -10,6 +10,8 @@ Bij het schrijven van de cursus Digitale Elektronica en Processoren werden enkel
 De software is geschreven in \texttt{Haskell} en kan worden gedownload op volgend adres: \texttt{http://goo.gl/tkyilf}. De code staat onder git-subversiebeheer. Bijdragen aan de software wordt aangemoedigd. Men kan de software gebruiken door de \texttt{Makefile} te draaien. Dit doet men door in de desbetreffende map het commando \texttt{make} te typen. Standaard wordt de software niet ge\"installeerd op het systeem: de commando's kunnen alleen in de map zelf uitgevoerd worden. Indien men de programma's in om het even welke map wenst uit te voeren, kan men \texttt{make install} draaien.
 \subsection{Invoer en Uitvoer}
 Het programma neemt tekst als invoer en geeft tekst of diagrammen als uitvoer. We overlopen in de volgende subsubsecties de verschillende vormen van invoer.
+\subsubsection{Commentaar}
+Om toe te laten de invoer te annoteren met commentaar, worden alle lijnen die beginnen met een hash-symbool (\verb+#+) genegeerd. Dit is conform \emph{Linux Bourne Again Shell} (\texttt{bash}). Het verschil is echter dat enkel lijn die \textbf{beginnen} met het hash-symbool daarvoor in aanmerking komen.
 \subsubsection{Bit}
 Een bit is een logische waarde waarmee doorheen het volledige programma wordt gerekend. Een bit kent drie toestanden: waar (\texttt{1}), onwaar (\texttt{0}) en don't care (\texttt{-}). Het programma is echter in staat op verschillende manieren een bit te lezen. Zo stellen \texttt{t}, \texttt{T} en \texttt{1} alle drie waar voor; \texttt{f}, \texttt{F} en \texttt{0} duiden onwaar aan; en \texttt{d}, \texttt{D}, \texttt{x}, \texttt{X}, \texttt{-} betekenen allemaal don't care.
 \subsubsection{Bit-sequenties (bitstring)}
@@ -19,7 +21,7 @@ In het geval van een Mealy-toestandstabel schrijven we in een cel niet alleen de
 \subsubsection{Tabel}
 Een tabel is een twee dimensionale structuur. Een tabel is onderverdeeld in cellen. Een horizontale groep cellen noemt men een rij, een verticale groep een kolom. De bovenste rij noemt men doorgaans de hoofding en verklaart meestal de inhoud van de cellen eronder.
 \paragraph{}
-Cellen worden verticaal opgedeeld aan de hand van een verticaal streepje (\texttt{|}), horizontaal worden ze van elkaar onderscheiden door een nieuwe lijn. Optioneel kan men tussen twee lijnen ook een reeks streepjes (\texttt{-}) zetten, optioneel aangevuld met plus (\texttt{+}) en asterisk (\texttt{*}), een dergelijke lijn wordt eenvoudigweg genegeerd. De verticale streepjes hoeven niet op elkaar uitgelijnd te zijn: men kan bijvoorbeeld in de ene rij het eerste verticale streepje op positie $2$ zetten terwijl dit in de lijn erna op positie $20$ staat, maar het wordt toch aangeraden consistent te zijn.
+Cellen worden verticaal opgedeeld aan de hand van een verticaal streepje (\texttt{|}), horizontaal worden ze van elkaar onderscheiden door een nieuwe lijn. Optioneel kan men tussen twee lijnen ook een reeks streepjes (\texttt{-}) zetten, optioneel aangevuld met plus (\texttt{+}) en asterisk (\texttt{*}), een dergelijke lijn wordt eenvoudigweg genegeerd. Lijnen die echter enkel horizontale en verticale streepjes bevatten worden niet genegeerd: immers kan met het streepje als een don't care interpreteren en het verticale streepje als een nieuwe kolom. De verticale streepjes hoeven niet op elkaar uitgelijnd te zijn: men kan bijvoorbeeld in de ene rij het eerste verticale streepje op positie $2$ zetten terwijl dit in de lijn erna op positie $20$ staat, maar het wordt toch aangeraden consistent te zijn.
 \paragraph{Voorbeeld}
 Een voorbeeld van een tabel is de volgende code:
 \begin{verbatim}
@@ -33,7 +35,7 @@ moeilijk|  leesbaar |  |        |
 \paragraph{Soorten tabellen}
 Een tabel bevat data die door het programma verwerkt kan worden. Om een tabel te kunnen verwerken dient deze niet alleen syntax-matig in orde te zijn. Het is ook belangrijk wat er waar in de tabellen staat. Hieronder geven we een kort overzicht van de verschillende types tabellen:
 \begin{enumerate}
- \item \emph{Combinatorische tabel}: Een tabel die uit twee kolommen bestaat. Alle cellen bestaan uit bit-sequenties. De lengte van de bit-sequenties van alle linkse cellen moet gelijk zijn, alsook deze uit de rechtse cellen.
+ \item \emph{Combinatorische tabel}: Een tabel die uit twee kolommen bestaat. Alle cellen bestaan uit bit-sequenties. De lengte van de bit-sequenties van alle linkse cellen moet gelijk zijn, alsook deze uit de rechtse cellen. Een combinatorische tabel wordt geparsed van boven naar onder. Alle resultaten worden eerst op don't cares gezet. Telkens wanneer men een rij inleest, wordt de bijbehorende invoer\footnote{Dit kunnen er meerdere zijn in het geval de invoer een don't care bevat.} aangepast aan de overeenkomstige uitvoer. Wanneer dus een invoer tweemaal gespecificeerd wordt - bijvoorbeeld eerst aan de hand van een don't care en daarna voluit - telt de laatste rij. Zoals gezegd tellen horizontale lijnen niet.
  \item \emph{Toestandstabel}: In de eerste kolom staan vanaf de tweede rij toestanden (tekst die geen bitstring voorstelt). Toestandstabellen komen verder in twee gedaantes voor: de \emph{Moore-toestandstabel} en de \emph{Mealy-toestandstabel}.
  \item \emph{Moore-toestandstabel}: Dit is een toestandstabel waarbij vanaf de tweede rij, de tweede tot en met de voorlaatste kolommen uit toestanden (tekst bestaat). In deze tabel staan in de eerste rij vanaf de $2$-de tot en met de voorlaatste kolom bitstrings die invoer weergeven. De toestanden moeten ook gedefinieerd zijn ergens in een rij in de eerste kolom. In de laatste kolom staan vanaf de tweede rij bitstrings.
  \item \emph{Mealy-toestandstabel}: Dit is een toestandstabel waarbij vanaf de tweede rij, de tweede tot en met de laatste kolommen uit toestanden (tekst bestaat) gepaard met bitstrings. De toestand en de bitstring worden van elkaar onderscheiden door middel van een slash (\texttt{/}). De toestanden moeten ook gedefinieerd zijn ergens in een rij in de eerste kolom.
@@ -55,7 +57,7 @@ Assembler-code is een datastructuur die is afgeleid uit het hoofdstuk rond progr
 \subsubsection{Binaire code}
 In hetzelfde hoofdstuk hebben we ook een binair equivalent beschouwd: namelijk per instructie wordt de instructie vertaalt naar een hoeveelheid bits, alsook de argumenten. Binaire code is niets anders dan een lange binaire sequentie.
 \subsection{Uitvoer}
-Standaard wordt de uitvoer in tekstvorm op de \texttt{stdout} geschreven. Andere uitvoer kan worden geregeld met de parameters \texttt{-html}, \texttt{-latex} en \texttt{-svg} om de uitvoer respectievelijk als webpagina, latex-code of vectorgrafiek uit te geven.
+Standaard wordt de uitvoer in tekstvorm op de \texttt{stdout} geschreven. Andere uitvoer kan worden geregeld met de parameters \texttt{--html}, \texttt{--latex} en \texttt{--svg} om de uitvoer respectievelijk als webpagina, latex-code of vectorgrafiek uit te geven.
 
 \subsection{Ondersteunde functies}
 De naam van het programma is \texttt{dep}. Aan de hand van een Linux alias kan men het commando \texttt{dep} ook associ\"eren met dat programma. Men dient het programma op te roepen met een instructie, bijvoorbeeld \texttt{dep showKarnaugh}. Men kan elke instructie ook aanroepen met de \texttt{-help} parameter om een overzicht te krijgen van wat de functie precies doet. Wanneer men geen instructie meegeeft met het programma, maar enkel \texttt{-help}, wordt een overzicht gegenereerd van de beschikbare functies.
@@ -63,7 +65,7 @@ De naam van het programma is \texttt{dep}. Aan de hand van een Linux alias kan m
  \item \texttt{expand}: neemt als invoer een combinatorische tabel en breidt deze uit zodat de don't cares in de linkse kolom verdwijnen.
  \item \texttt{reduce}: neemt als invoer een combinatorische tabel en reduceert deze enigszins. De reductie is niet minimaal maar is computationeel goedkoop en levert redelijke resultaten op.
  \item \texttt{lookup}: neemt als invoer een combinatorische tabel en als query een bitstring en geeft als uitvoer - indien de don't cares in de query geen problemen opleveren - een bitstring van uitvoer terug.
- \item \texttt{showKarnaugh}: toont \'e\'en of meerdere Karnaugh-kaarten aan de hand van een ingegeven tabel. De kaarten worden standaard op de \texttt{stdout} geschreven. Men kan ook gebruik maken van de \texttt{-svg} optie om een grafische uitvoer te genereren.
+ \item \texttt{showKarnaugh}: toont \'e\'en of meerdere Karnaugh-kaarten aan de hand van een ingegeven tabel. De kaarten worden standaard op de \texttt{stdout} geschreven. Men kan ook gebruik maken van de \texttt{--svg} optie om een grafische uitvoer te genereren.
 \end{enumerate}
 
 \section{Andere software}
