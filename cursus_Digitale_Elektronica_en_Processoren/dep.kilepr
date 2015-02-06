@@ -850,10 +850,10 @@ order=-1
 
 [item:../SharedData/hexrenderer.sty]
 archive=true
-column=34
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=12
+line=0
 mode=LaTeX
 open=true
 order=6
@@ -940,10 +940,10 @@ order=-1
 
 [item:appendix_software.tex]
 archive=true
-column=94
+column=173
 encoding=UTF-8
 highlight=LaTeX
-line=60
+line=59
 mode=LaTeX
 open=true
 order=7
@@ -3935,28 +3935,28 @@ JumpList=
 ViMarks=.,4,0,[,4,0,],4,0
 
 [view-settings,view=0,item:../SharedData/hexrenderer.sty]
-CursorColumn=34
-CursorLine=12
+CursorColumn=0
+CursorLine=0
 JumpList=
-ViMarks=.,3,16,[,3,16,],3,16
+ViMarks=.,0,0,[,0,0,],30,0
 
 [view-settings,view=0,item:../SharedData/importsreferences.sty]
 CursorColumn=33
 CursorLine=128
 JumpList=
-ViMarks=.,55,34,[,55,32,],55,34
+ViMarks=.,0,0,[,0,0,],151,33
 
 [view-settings,view=0,item:algorithms/alg-sha1.tex]
 CursorColumn=88
 CursorLine=8
 JumpList=
-ViMarks=.,8,87,[,8,83,],8,87
+ViMarks=.,0,0,[,0,0,],27,16
 
 [view-settings,view=0,item:appendix_software.tex]
-CursorColumn=94
-CursorLine=60
+CursorColumn=173
+CursorLine=59
 JumpList=
-ViMarks=.,65,247,[,65,247,],65,247
+ViMarks=.,59,172,[,59,172,],59,172
 
 [view-settings,view=0,item:chapter_basis_digitaal_ontwerp.tex]
 CursorColumn=442
@@ -4010,19 +4010,19 @@ ViMarks=
 CursorColumn=527
 CursorLine=381
 JumpList=
-ViMarks=.,381,527,[,381,527,],381,527
+ViMarks=.,0,0,[,0,0,],406,16
 
 [view-settings,view=0,item:commusoftScripts.sty]
 CursorColumn=0
 CursorLine=2
 JumpList=
-ViMarks=.,43,76,[,43,76,],43,76
+ViMarks=.,0,0,[,0,0,],985,0
 
 [view-settings,view=0,item:cursus.tex]
 CursorColumn=37
 CursorLine=57
 JumpList=
-ViMarks=.,78,156,[,78,153,],78,156
+ViMarks=.,0,0,[,0,0,],205,11
 
 [view-settings,view=0,item:grammars/gram-vhdl.tex]
 CursorColumn=0
@@ -4070,7 +4070,7 @@ ViMarks=
 CursorColumn=23
 CursorLine=20
 JumpList=
-ViMarks=.,20,22,[,20,22,],20,22
+ViMarks=.,0,0,[,0,0,],25,26
 
 [view-settings,view=0,item:vhdl/vhdl-vector-concat.tex]
 CursorColumn=0
