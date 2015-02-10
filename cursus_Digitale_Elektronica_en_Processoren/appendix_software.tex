@@ -52,23 +52,33 @@ Een schakeling beschrijft op poort-niveau, en soms op hoger niveau hoe verschill
 
 \subsubsection{Karnaugh-kaart}
 Een Karnaugh-kaart is een grafische voorstelling van een booleaanse-functie. Karnaugh-kaarten worden enkel geproduceerd als uitvoer.
+
 \subsubsection{Assembler code}
 Assembler-code is een datastructuur die is afgeleid uit het hoofdstuk rond programmeerbare processoren (zie \chpref{programmableprocessors}).
+
 \subsubsection{Binaire code}
 In hetzelfde hoofdstuk hebben we ook een binair equivalent beschouwd: namelijk per instructie wordt de instructie vertaalt naar een hoeveelheid bits, alsook de argumenten. Binaire code is niets anders dan een lange binaire sequentie.
 
 \subsection{Uitvoer}
-Standaard wordt de uitvoer in tekstvorm op de \texttt{stdout} geschreven. Men kan natuurlijk de . Andere uitvoer kan worden geregeld met de parameters \texttt{--html}, \texttt{--latex} en \texttt{--svg} om de uitvoer respectievelijk als webpagina, latex-code of vectorgrafiek uit te geven.
+Standaard wordt de uitvoer in tekstvorm op de standaard uitvoer (\texttt{stdout}) geschreven. Men kan natuurlijk de shell functionaliteiten gebruiken om de uitvoer naar een bestand of een ander programma te schrijven. Afhankelijk van de functie kan men soms ook een ander formaat specificeren met de \texttt{--ascii} en \texttt{--svg} vlaggen om de uitvoer respectievelijk als webpagina of \LaTeX-code weer te geven.
 
 \subsection{Ondersteunde functies}
-De naam van het programma is \texttt{dep}. Aan de hand van een Linux alias kan men het commando \texttt{dep} ook associ\"eren met dat programma. Men dient het programma op te roepen met een instructie, bijvoorbeeld \texttt{dep showKarnaugh}. Men kan elke instructie ook aanroepen met de \texttt{--help} parameter om een overzicht te krijgen van wat de functie precies doet. Wanneer men geen instructie meegeeft met het programma, maar enkel \texttt{-help}, wordt een overzicht gegenereerd van de beschikbare functies.
+De naam van het programma is \texttt{dep}. Aan de hand van een Linux alias kan men het commando \texttt{dep} ook associ\"eren met dat programma. Men dient het programma op te roepen met een instructie, bijvoorbeeld \texttt{dep showKarnaugh}. Met \texttt{dep --help} schrijft men een pagina met een lijst van ondersteunde functies naar de terminal.
+
+\paragraph{}
+Men kan elke instructie ook aanroepen met de \texttt{--help} parameter om een overzicht te krijgen van wat de functie precies doet en de ondersteunde uitvoerformaten.
+
 \begin{enumerate}
  \item \texttt{expand}: neemt als invoer een combinatorische tabel en breidt deze uit zodat de don't cares in de linkse kolom verdwijnen.
  \item \texttt{reduce}: neemt als invoer een combinatorische tabel en reduceert deze enigszins. De reductie is niet minimaal maar is computationeel goedkoop en levert redelijke resultaten op.
  \item \texttt{lookup}: neemt als invoer een combinatorische tabel en als query een bitstring en geeft als uitvoer - indien de don't cares in de query geen problemen opleveren - een bitstring van uitvoer terug.
  \item \texttt{showKarnaugh}: toont \'e\'en of meerdere Karnaugh-kaarten aan de hand van een ingegeven tabel. De kaarten worden standaard op de \texttt{stdout} geschreven. Men kan ook gebruik maken van de \texttt{--svg} optie om een grafische uitvoer te genereren.
+ \item \texttt{synthesize}: neemt als invoer een combinatorische tabel en genereert een beschrijving een ``sum-of-products'' om deze combinatorische schakeling te bouwen.
  \item \texttt{reduceFSM}: neemt als invoer een toestandstabel of coderingstabel (Moore of Mealy mode) en stelt de minimale variant van de gegeven toestandstabel op. De resulterende toestandstabel is gegarandeerd minimaal in aantal toestanden.
 \end{enumerate}
+
+\subsection{Functiecompositie}
+Wanneer men een lijst van verschillende commando's na elkaar beschrijft, worden de commando's van rechts naar links uitgevoerd en wordt de uitvoer van de eerste (meest rechtse) functie doorgegeven als invoer naar de tweede functie, enzovoort. Een compositie van verschillende functies kan effici\"enter zijn dan de commando's zelf afzonderlijk uit te voeren via ``pipes'' in de Linux shell: allereerst worden de interne structuren niet telkens omgezet naar tekstvorm en terug en bovendien kunnen composities ook sneller worden uitgevoerd omdat een Haskell omgeving enkel termen zal uitrekenen wanneer deze echt nodig zijn.
 
 \section{Andere software}
 Het hoeft niet te verbazen dat gebruikers van het \emph{Linux} besturingssysteem soms ook amateur elektrotechnici zijn, en zelf een omgeving ontwikkelen waarin men elektronica kan ontwikkelen, simuleren tot en met het ontwerpen van een printplaat.
