@@ -14,7 +14,7 @@
    width="365.53824"
    height="478.35281"
    id="svg1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="compass.svg">
   <metadata
      id="metadata134">
@@ -37,12 +37,12 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="484"
-     inkscape:window-height="400"
+     inkscape:window-height="404"
      id="namedview132"
      showgrid="false"
      inkscape:zoom="0.834386"
      inkscape:cx="385.75126"
-     inkscape:cy="16.749422"
+     inkscape:cy="16.749413"
      inkscape:window-x="49"
      inkscape:window-y="31"
      inkscape:window-maximized="0"
@@ -59,7 +59,7 @@
        enabled="true"
        snapvisiblegridlinesonly="true"
        originx="-148.61228px"
-       originy="-74.306275px" />
+       originy="-74.306284px" />
   </sodipodi:namedview>
   <defs
      id="defs3">
@@ -536,7 +536,7 @@
   </defs>
   <g
      id="g3181"
-     transform="translate(0,-5.0484043e-6)"
+     transform="translate(0,-5.048404e-6)"
      clip-path="url(#clipPath3257)">
     <g
        id="g2204"
