@@ -7,3 +7,6 @@
 [submodule "cursus_Digitale_Elektronica_en_Processoren/dep-software"]
 	path = cursus_Digitale_Elektronica_en_Processoren/dep-software
 	url = git@github.com:KommuSoft/dep-software.git
+[submodule "libtex"]
+	path = libtex
+	url = git@github.com:KommuSoft/libtex.git
