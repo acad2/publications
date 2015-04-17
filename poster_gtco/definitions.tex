@@ -24,5 +24,11 @@ bipagr/graph/10/2.5/7 cm/{$\subseteq K_{n,m}$}/{Bipartite graph}/{},
 cbipgr/graph/10/2.5/7 cm/{$K_{n,m}$}/{Complete bipartite graph}/{A bipartite graph is a graph where the vertex set $V$ is subdivided into two disjunctive sets $V_1$ and $V_2$ such that $E=V_1\times V_2$.},
 pathgr/graph/10/2.5/7 cm/{$P_n$}/{Path graph}/{},
 cyclgr/graph/10/2.5/7 cm/{$C_n$}/{Cycle graph}/{},
-
+walk/graph/10/2.5/7 cm/{$\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}$}/{Walk}/{A walk is an alternating sequence of vertices and edges $\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}$ such that $\funm{endpts}{e_i}=\tupl{v_{i-1},v_i}$ for every $e_i$.},
+diwalk/graph/10/2.5/7 cm/{$\tupl{v_0,\vec{e_1},v_1,\ldots,\vec{e_n},v_n}$}/{Directed walk}/{A directed walk is a walk defined on a directed graph such that for every edge $\funm{tail}{e_i}=v_{i-1}$ and $\funm{head}{e_i}=v_i$.},
+lnwalk/graph/10/2.5/7 cm/{$\abs{\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}}$}/{Length of a walk}/{The length of a walk is the number of edge steps in the sequence.},
+clwalk/graph/10/2.5/7 cm/{$\tupl{v_0,e_1,v_1,\ldots,e_n,v_n=v_0}$}/{Closed walk}/{A closed walk is a walk such that the first and the last vertex of the sequence are the same.},
+opwalk/graph/10/2.5/7 cm/{$\tupl{v_0,e_1,v_1,\ldots,e_n,v_n\neq v_0}$}/{Open walk}/{An open walk is a walk such that the first and the last vertex of the sequence or not the same.},
+trvwlk/graph/10/2.5/7 cm/{$\tupl{v_0}$}/{Trivial walk}/{A trivial walk is a walk with one vertex and no edges. A trivial walk has length $0$.},
+dstnc/graph/10/2.5/7 cm/{$\fun{d}{v_i,v_j}$}/{Distance}/{The distance between two vertices $v_i$ and $v_j$ is the length of the shortest walk from $v_i$ to $v_j$.},
 tree/tree/4/2.5/7 cm/Tree/$T$/{A \emph{tree} is a connected graph with no cycles.}

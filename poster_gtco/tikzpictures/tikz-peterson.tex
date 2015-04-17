@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\foreach \i in {1,2,3,4,5} {
+    \node[fill,circle] (ni\i) at (0.5 cm:72*\i) {};
+    \node[fill,circle] (no\i) at (1 cm:72*\i) {};
+}
+\foreach \i/\j/\k in {1/2/3,2/3/4,3/4/5,4/5/1,5/1/2} {
+    \draw (ni\i) -- (no\i);
+    \draw (no\i) -- (no\j);
+    \draw (ni\i) -- (ni\k);
+}
+\end{tikzpicture}
