@@ -20,7 +20,6 @@ cyclgr/graph/10/2.5/7 cm/{$C_n$}/{Cycle graph}/{A cycle graph is a simple connec
 hypergr/graph/10/2.5/7 cm/{$Q_n$}/{Hypercube graph}/{The hypercube graph $Q_n$ is an $n$-regular graph whose vertex-set is the set of all bitstrings of length $n$, and such that there is an edge between two vertices if and only if they differ exactly one bit.},%Grouped
 nwheel/graph/10/2.5/7 cm/{$n$-wheel}/{$W_n$}/{The \emph{$n$-wheel} is the join $K_1+C_n$ of a single vertex and an $n$-cycle.},%Grouped
 graycod/graph/10/2.5/7 cm/{}/{Gray code}/{A \emph{gray code} of order $n$ is an ordering of $2^n$ bitstrings of length $n$ such that consecutive bitstrings differ precisely one bit position.},
-walk/graph/10/2.5/7 cm/{$\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}$}/{Walk}/{A walk is an alternating sequence of vertices and edges $\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}$ such that $\funm{endpts}{e_i}=\tupl{v_{i-1},v_i}$ for every $e_i$.},
 diwalk/graph/10/2.5/7 cm/{$\tupl{v_0,\vec{e_1},v_1,\ldots,\vec{e_n},v_n}$}/{Directed walk}/{A directed walk is a walk defined on a directed graph such that for every edge $\funm{tail}{e_i}=v_{i-1}$ and $\funm{head}{e_i}=v_i$.},
 lnwalk/graph/10/2.5/7 cm/{$\abs{\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}}$}/{Length of a walk}/{The length of a walk is the number of edge steps in the sequence.},
 clwalk/graph/10/2.5/7 cm/{$\tupl{v_0,e_1,v_1,\ldots,e_n,v_n=v_0}$}/{Closed walk}/{A closed walk is a walk such that the first and the last vertex of the sequence are the same.},
@@ -46,9 +45,15 @@ indepset/graph/10/2.5/7 cm/{}/{Independent set}/{A subset $S\subset V_G$ of a gr
 indepnum/graph/10/2.5/7 cm/{}/{Independent number}/{The (vertex) independent number $\fun{\alpha}{G}$ of a graph $G$ is the size of the largest independent set of vertices.},
 matching/graph/10/2.5/7 cm/{}/{Matching}/{A matching of a graph $G$ is a subset $S$ of $E_G$ such that every pair of edges is not adjacent. A \emph{perfect matching} is a matching such that every vertex in $G$ is an endpoint of one of the edges.},
 cpn/graph/10/2.5/7 cm/{$\fun{C_G}{v}$}/{Component}/{A component of a graph $G$ is a maximal connected subgraph of $G$. For a given vertex $v$ there is exactly one component containing $v$ denoted by $\fun{C_G}{v}$.},
-trl/graph/10/2.5/7 cm/{Trail}/{Trail}/{A trail is a walk with no repeating edges.},
-pth/graph/10/2.5/7 cm/{Path}/{Path}/{A path is a trail with no repeating vertices (except the initial and final vertices).},
-cycl/graph/10/2.5/7 cm/{Cycle}/{Cycle}/{A cycle is a nontrivial closed path.},
+walk/graph/10/2.5/7 cm/{$\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}$}/{Walk}/{A walk is an alternating sequence of vertices and edges $\tupl{v_0,e_1,v_1,\ldots,e_n,v_n}$ such that $\funm{endpts}{e_i}=\tupl{v_{i-1},v_i}$ for every $e_i$.},%Grouped
+trl/graph/10/2.5/7 cm/{Trail}/{Trail}/{A trail is a walk with no repeating edges.},%Grouped
+pth/graph/10/2.5/7 cm/{Path}/{Path}/{A path is a trail with no repeating vertices (except the initial and final vertices).},%Grouped
+cycl/graph/10/2.5/7 cm/{Cycle}/{Cycle}/{A cycle is a nontrivial closed path.},%Grouped
+eulert/graph/10/2.5/7 cm/{Eulerian trail}/{}/{a trail that contains every edge of the graph.},%Grouped
+eulertr/graph/10/2.5/7 cm/{Eulerian tour}/{}/{a closed Eulerian trail.},%Grouped
+eulerg/graph/10/2.5/7 cm/{Eulerian graph}/{}/{a graph that contains an Eulerian tour.},%Grouped
+posttour/graph/10/2.5/7 cm/{Postman tour}/{}/{A \emph{postman tour} in a graph $G$ is a closed walk that uses each edge of $G$ at least once. In a weighted graph, the \emph{optimal postman tour} is a postman tour whose total edge-weight is a minimum. Finding such tour is known as the \emph{Chinese Postman Problem}.},%Grouped
+hamilcyc/graph/10/2.5/7 cm/{Hamiltonian cycle}/{}/{A \emph{Hamiltonian cycle} in a graph is a cycle that contains all the vertices of the graph. A graph is a \emph{Hamiltonian graph} if it contains a Hamiltonian cycle.},%Grouped
 trees/tree/4/2.5/7 cm/Tree/$T$/{A \emph{tree} is a connected graph with no cycles.},
 stree/tree/4/2.5/7 cm/{Spanning tree}/$ST$/{A spanning tree of a graph $G$ is a tree that contains all vertices of $G$. A \emph{spanning forest} of a graph $G$ is a graph that consists out of one or more trees such that each vertex belongs to one of the trees. A \emph{full spanning forest} of a graph $G$ is a spanning forest consisting of a collection of trees, such hat each tree is a spanning tree of a different component of $G$.},
 edsg/graph/10/2.5/7 cm/{Edge-deletion subgraph}/{$G-e$}/{The subgraph induced on the edge set $E_G\setminus\accl{e}$. That is $V_{G-e}=V_G$ and $E_{G-e}=E_G\setminus\accl{e}$.},
@@ -58,11 +63,6 @@ edgcut/graph/10/2.5/7 cm/{Edge-cut}/{}/{An edge-cut in a graph $G$ is a set $E\s
 cutedg/graph/10/2.5/7 cm/{Cut-edge}/{}/{A cut-edge (or bridge) is an edge-cut consisting of a single edge.},
 cycedg/graph/10/2.5/7 cm/{cycle-edge}/{}/{An edge $e$ is called a cycle-edge if $e$ lies in some cycle of that graph.},
 weighg/graph/10/2.5/7 cm/{weighted graph}/{}/{A weighted graph is a graph where each edge is assigned a number called its \emph{edge-weight}.},
-eulert/graph/10/2.5/7 cm/{Eulerian trail}/{}/{a trail that contains every edge of the graph.},
-eulertr/graph/10/2.5/7 cm/{Eulerian tour}/{}/{a closed Eulerian trail.},
-eulerg/graph/10/2.5/7 cm/{Eulerian graph}/{}/{a graph that contains an Eulerian tour.},
-posttour/graph/10/2.5/7 cm/{Postman tour}/{}/{A \emph{postman tour} in a graph $G$ is a closed walk that uses each edge of $G$ at least once. In a weighted graph, the \emph{optimal postman tour} is a postman tour whose total edge-weight is a minimum. Finding such tour is known as the \emph{Chinese Postman Problem}.},
-hamilcyc/graph/10/2.5/7 cm/{Hamiltonian cycle}/{}/{A \emph{Hamiltonian cycle} in a graph is a cycle that contains all the vertices of the graph. A graph is a \emph{Hamiltonian graph} if it contains a Hamiltonian cycle.},
 dirtree/tree/10/2.5/7 cm/{Directed tree}/{}/{A digraph whose underlying graph is a tree.},
 rttree/tree/10/2.5/7 cm/{Rooted tree}/{$\tupl{T,r}$}/{A directed tree with a distinguished vertex $r$ called the \emph{root} such that for every other vertex $v$, thee is a directed path from $r$ to $v$.},
 dptree/tree/10/2.5/7 cm/{Depth}/{}/{The \emph{depth} or \emph{level} of a vertex $v$ in a rooted tree is the distance from its root to $v$.},
