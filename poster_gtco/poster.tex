@@ -1,10 +1,10 @@
 \documentclass[draftmode,eclipse]{preziposters}
-\usepackage{brackets,importsreferences,amssymb}
-\title{Graph Theory \& Combinatorial Optimization}
+\usepackage{brackets,importsreferences,amssymb,marvosym,pifont,lipsum}
+\title{Graphs \& Combinatorial Optimization}
 \suptitle{Doctoral course on}
 \author{Willem Van Onsem\\KU Leuven\\Department of Computer Science}
 \logo{../libtex/sedes.pdf}
-\disclaimer{This document is published under the \emph{Beer license 1.1}.}
+\disclaimer{This document is published under the \emph{Beer license revision 42} by \emph{Poul-Henning Kamp}.}
 \begin{document}
 
 \def\dma{5 mm};
@@ -13,7 +13,7 @@
 \def\dylm{5.0 mm};
 \def\dylma{105.0 mm};
 \def\dylhma{65.0 mm};
-\def\dylqma{125.0 mm};
+\def\dylqma{150.0 mm};
 \def\dyw{1100.0 mm};
 \def\dywb{550.0 mm};
 \def\dywt{366.7 mm};
@@ -21,13 +21,21 @@
 \def\dywu{220.0 mm};
 \def\dywh{183.3 mm};
 
-\defgroup[\dma][0][-1.5*\dylma][]{\dyw}{\dylma}{Generic graphs (\S1.1)}{orange}{graph}
-\defgroup[\dma][0][-2.5*\dylma][]{\dyw}{\dylma}{Trees (\S1.10)}{yellow}{tree}
-\defgroup[\dma][0][-3.5*\dylma][]{\dyw}{\dylma}{Legend}{backg}{legen}
+\defgroup[\dma][0][-\dylqma-0.5*\dylma][]{\dywb}{\dylqma}{Basics}{orange}{graph}
+\defgroup[\dma][\dywb][-\dylqma-0.5*\dylma][]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
+\defgroup[\dma][0][-1.5*\dylma-\dylqma][]{\dywt}{\dylma}{Trees}{blue}{tree}
+\defgroup[\dma][\dywt][-1.5*\dylma-\dylqma][]{\dywt}{\dylma}{Graph coloring}{red}{grcl}
+\defgroup[\dma][2*\dywt][-1.5*\dylma-\dylqma][]{\dywt}{\dylma}{Graph families}{purple}{grfa}
+\defgroup[\dma][0][-2.5*\dylma-\dylqma][]{\dywu}{\dylma}{Legend}{backg}{legen}
 \boxfile{definitions.tex}
+\def\pztbtc{red}
 \boxfile{theorems.tex}
 \confile[very thick,open triangle 60-,black!80!white][sloped,above,midway,black]{connections.tex}
-\groupbox{(CCgrph) (CCslfl)}{Vertices and Edges}
-\groupbox{(CCnregg) (CCcompgr) (CCbipagr) (CCcbipgr) (CCpathgr) (CCcyclgr) (CChypergr) (CCnwheel)}{Graph families}
-\groupbox{(CCtrl) (CCpth) (CCcycl) (CCeulert) (CCeulertr) (CCeulerg) (CCposttour) (CChamilcyc) (CCwalk)}{Walks, trails and tours}
+% \groupbox{(CCgrph) (CCslfl)}{Vertices and Edges}
+\groupbox{(CCgraycod) (CChypergr)}{Bitwise graphs}
+\groupbox{(CCcncwl) (CCsubwl)}{Walk operations}
+\groupbox{(CCeulert) (CCposttour) (CChamilcyc)}{Special walks}
+\groupbox{(CCreach) (CCconn) (CCwkconn) (CCedgcut) (CCvercut) (CCcpn)}{Reachability and components}
+% \groupbox{(CCtrees) (CCstree) (CCdirtree) (CCrttree) (CCdptree) (CCprnttree) (CCdscasctree) (CCstdrawtree) (CCmarytree) (CCordtree) (CCbintree)}{Tree variants}
+\groupbox{(CCgruni) (CCgrjoin) (CCvdsg) (CCedsg)}{Operations on graphs}
 \end{document}
