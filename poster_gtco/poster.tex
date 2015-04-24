@@ -1,5 +1,5 @@
 \documentclass[draftmode,eclipse]{preziposters}
-\usepackage{brackets,importsreferences,amssymb,marvosym,pifont,lipsum}
+\usepackage{brackets,importsreferences,amssymb,marvosym,pifont,lipsum,symsabim,dingbat}
 \title{Graphs \& Combinatorial Optimization}
 \suptitle{Doctoral course on}
 \author{Willem Van Onsem\\KU Leuven\\Department of Computer Science}
@@ -23,10 +23,10 @@
 
 \defgroup[\dma][0][-\dylqma-0.5*\dylma][]{\dywb}{\dylqma}{Basics}{orange}{graph}
 \defgroup[\dma][\dywb][-\dylqma-0.5*\dylma][]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
-\defgroup[\dma][0][-1.5*\dylma-\dylqma][]{\dywt}{\dylma}{Trees}{blue}{tree}
-\defgroup[\dma][\dywt][-1.5*\dylma-\dylqma][]{\dywt}{\dylma}{Graph coloring}{red}{grcl}
-\defgroup[\dma][2*\dywt][-1.5*\dylma-\dylqma][]{\dywt}{\dylma}{Graph families}{purple}{grfa}
-\defgroup[\dma][0][-2.5*\dylma-\dylqma][]{\dywu}{\dylma}{Legend}{backg}{legen}
+\defgroup[\dma][0][-0.5*\dylma-2*\dylqma][]{\dywb}{\dylqma}{Trees}{blue}{tree}
+\defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
+\defgroup[\dma][2*\dywt][-0.5*\dylma-2*\dylqma][]{\dywt}{\dylqma}{Graph families}{purple}{grfa}
+\defgroup[\dma][0][-1.5*\dylma-2*\dylqma][]{\dywu}{\dylma}{Legend}{backg}{legen}
 \boxfile{definitions.tex}
 \def\pztbtc{red}
 \boxfile{theorems.tex}
@@ -36,6 +36,8 @@
 \groupbox{(CCcncwl) (CCsubwl)}{Walk operations}
 \groupbox{(CCeulert) (CCposttour) (CChamilcyc)}{Special walks}
 \groupbox{(CCreach) (CCconn) (CCwkconn) (CCedgcut) (CCvercut) (CCcpn)}{Reachability and components}
-% \groupbox{(CCtrees) (CCstree) (CCdirtree) (CCrttree) (CCdptree) (CCprnttree) (CCdscasctree) (CCstdrawtree) (CCmarytree) (CCordtree) (CCbintree)}{Tree variants}
-\groupbox{(CCgruni) (CCgrjoin) (CCvdsg) (CCedsg)}{Operations on graphs}
+\groupbox{(CCprnttree) (CCdscasctree)}{Rooted tree vertex relations}
+\groupbox{(CCstree) (CCfronted) (CCtreegrow)}{Tree growing}
+\groupbox{(CCmarytree) (CCordtree) (CCbintree)}{Tree variants}
+\groupbox{(CCgruni) (CCgrjoin) (CCvdsg) (CCedsg)}{Graph operations}
 \end{document}
