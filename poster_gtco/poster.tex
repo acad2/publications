@@ -5,6 +5,7 @@
 \author{Willem Van Onsem\\KU Leuven\\Department of Computer Science}
 \logo{../libtex/sedes.pdf}
 \disclaimer{This document is published under the \emph{Beer license revision 42} by \emph{Poul-Henning Kamp}.}
+\usetikzlibrary{shapes}
 \begin{document}
 
 \def\dma{5 mm};
@@ -21,9 +22,13 @@
 \def\dywu{220.0 mm};
 \def\dywh{183.3 mm};
 
+\definecolor{treebg}{rgb}{0.93,0.93,0.69}
+
+\tikzset{ptgtcov/.style={circle,inner sep=0pt,fill=black,minimum size=1.414mm}}
+
 \defgroup[\dma][0][-\dylqma-0.5*\dylma][]{\dywb}{\dylqma}{Basics}{orange}{graph}
 \defgroup[\dma][\dywb][-\dylqma-0.5*\dylma][]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
-\defgroup[\dma][0][-0.5*\dylma-2*\dylqma][]{\dywb}{\dylqma}{Trees}{blue}{tree}
+\defgroup[\dma][0][-0.5*\dylma-2*\dylqma][\includegraphics{tree.pdf}]{\dywb}{\dylqma}{Trees}{treebg}{tree}
 \defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
 \defgroup[\dma][2*\dywt][-0.5*\dylma-2*\dylqma][]{\dywt}{\dylqma}{Graph families}{purple}{grfa}
 \defgroup[\dma][0][-1.5*\dylma-2*\dylqma][]{\dywu}{\dylma}{Legend}{backg}{legen}
