@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+\foreach \i/\xi/\yi/\s in {a/0/0/ptsel,b/0.5/0.5/,c/0.5/-0.5/,d/1.5/0.5/,e/1.5/-0.5/ptsel,f/2.5/0.5/ptsel} {
+    \node[ptgtcov,\s] (tmp\i) at (\xi cm,\yi cm) {};
+}
+\foreach \i/\j/\s in {a/b/,a/c/,b/c/,b/d/,c/e/,d/e/,d/f/} {
+    \draw[\s] (tmp\i) -- (tmp\j);
+}
+\end{tikzpicture}
