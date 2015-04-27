@@ -1,6 +1,6 @@
 \documentclass[eclipse]{preziposters}
-\usepackage{brackets,importsreferences,amssymb,marvosym,pifont,lipsum,symsabim,dingbat,linearb,textcomp}
-\title{Graphs \& Combinatorial Optimization}
+\usepackage{brackets,importsreferences,amssymb,marvosym,wasysym,pifont,lipsum,symsabim,dingbat,linearb,textcomp}
+\title{Graphs \& Optimization}
 \suptitle{Doctoral course on}
 \author{Willem Van Onsem\\KU Leuven\\Department of Computer Science}
 \logo{../libtex/sedes.pdf}
@@ -26,14 +26,16 @@
 
 \tikzset{ptgtcov/.style={circle,inner sep=0pt,fill=black,minimum size=1.414mm}}
 \tikzset{ptsel/.style={very thick,red}}
+\tikzset{ptvir/.style={dashed}}
+\tikzset{ptarc/.style={->}}
 
 \defgroup[\dma][0][-\dylqma-0.5*\dylma][\includegraphics{pyramid.pdf}]{\dywb}{\dylqma}{Basics}{orange}{graph}
 \defgroup[\dma][\dywb][-\dylqma-0.5*\dylma][\includegraphics{walk.pdf}]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
 \defgroup[\dma][0][-0.5*\dylma-2*\dylqma][\includegraphics{tree.pdf}]{\dywb}{\dylqma}{Trees}{treebg}{tree}
 \defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
 \defgroup[\dma][2*\dywt][-0.5*\dylma-2*\dylqma][\includegraphics{family.pdf}]{\dywt}{\dylqma}{Graph families}{purple}{grfa}
-\defgroup[\dma][0][-1.5*\dylma-2*\dylqma][]{\dywb}{\dylma}{Optimization problems and Greedy algorithms}{green}{cop}
-\defgroup[\dma][\dyw-\dywu][-1.5*\dylma-2*\dylqma][]{\dywu}{\dylma}{Legend}{backg}{legen}
+\defgroup[\dma][\dyw-\dywu-\dywb][-0.5*\dylma-3*\dylqma][]{\dywb}{\dylqma}{Optimization problems and Greedy algorithms}{green}{cop}
+\defgroup[\dma][\dyw-\dywu][-0.5*\dylma-3*\dylqma][]{\dywu}{\dylqma}{Legend}{backg}{legen}
 \boxfile{definitions.tex}
 \def\pztbtc{red}
 \boxfile{theorems.tex}
@@ -50,5 +52,6 @@
 \groupbox{(CCsubgr) (CCcliq)}{Graph substructures}
 \groupbox{(CCince) (CCadjv) (CCadje)}{Relations between vertices and edges}
 \groupbox{(CCslfl) (CCdegv) (CCeulerthm) (CCmule)}{Edge types and degrees}
-\groupbox{(CCindepset) (CCmatching)}{Independence and Matchings}
+\groupbox{(CCindepset) (CCmatching)}{Independence and matchings}
+\groupbox{(CCherdss) (CCgreed)}{Maximum-weight problem}
 \end{document}
