@@ -1,0 +1,11 @@
+\begin{tikzpicture}
+\foreach \i/\ti/\si in {1/c/{a,c},2/b/{a},3/a/{a,b,c}} {
+  \node[ptgtcov] (tmpa\i) at (0,\i*0.5 cm) {};
+  \draw (tmpa\i) node[anchor=east] {$\ti$};
+  \node[ptgtcov] (tmpb\i) at (2 cm,\i*0.5 cm) {};
+  \draw (tmpb\i) node[anchor=west] {$F_{\i}=\accl{\si}$};
+}
+\foreach \i/\j/\si in {1/1/ptsel,1/3/,2/3/ptsel,3/1/,3/2/ptsel,3/3/} {
+  \draw[\si] (tmpa\i) -- (tmpb\j);
+}
+\end{tikzpicture}

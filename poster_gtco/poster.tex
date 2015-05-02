@@ -1,5 +1,5 @@
 \documentclass[eclipse]{preziposters}
-\usepackage{brackets,importsreferences,amssymb,marvosym,wasysym,pifont,lipsum,symsabim,dingbat,linearb,textcomp}
+\usepackage{brackets,importsreferences,amssymb,marvosym,wasysym,pifont,lipsum,symsabim,dingbat,linearb,textcomp,algpseudocode}
 \title{Graphs \& Optimization}
 \suptitle{Doctoral course on}
 \author{Willem Van Onsem\\KU Leuven\\Department of Computer Science}
@@ -20,6 +20,7 @@
 \def\dywt{366.7 mm};
 \def\dywq{275.0 mm};
 \def\dywu{220.0 mm};
+\def\dywr{110.0 mm};
 \def\dywh{183.3 mm};
 
 \definecolor{treebg}{rgb}{0.93,0.93,0.69}
@@ -28,18 +29,34 @@
 \tikzset{ptsel/.style={very thick,red}}
 \tikzset{ptvir/.style={dashed}}
 \tikzset{ptarc/.style={->}}
+\tikzset{invisible/.style={opacity=0}}
+
+%formal sink
+\definecolor{frml-bg}{RGB}{255,247,220}
+\definecolor{frml-fg}{RGB}{224,220,191}
+\definecolor{frml-tx}{RGB}{119,119,119}
+\newcommand{\frml}[1]{\begin{center}\fcolorbox{frml-fg}{frml-bg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textcolor{frml-tx}{\textit{formal}}\\#1}}\end{center}}
+\newcommand{\fcop}[3][+]{\ifthenelse{\equal{#1}{+}}{\renewcommand{\fcopm}{maximize}}{\renewcommand{\fcopm}{minimize}}\[\begin{array}{lll}\mbox{\fcopm{}}&\multicolumn{2}{l}{#2,}\\\mbox{subject to}&#3\end{array}\]}
 
 \defgroup[\dma][0][-\dylqma-0.5*\dylma][\includegraphics{pyramid.pdf}]{\dywb}{\dylqma}{Basics}{orange}{graph}
 \defgroup[\dma][\dywb][-\dylqma-0.5*\dylma][\includegraphics{walk.pdf}]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
 \defgroup[\dma][0][-0.5*\dylma-2*\dylqma][\includegraphics{tree.pdf}]{\dywb}{\dylqma}{Trees}{treebg}{tree}
-\defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
+\defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][\includegraphics{palette.pdf}]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
 \defgroup[\dma][2*\dywt][-0.5*\dylma-2*\dylqma][\includegraphics{family.pdf}]{\dywt}{\dylqma}{Graph families}{purple}{grfa}
-\defgroup[\dma][\dyw-\dywu-\dywb][-0.5*\dylma-3*\dylqma][]{\dywb}{\dylqma}{Optimization problems and Greedy algorithms}{green}{cop}
-\defgroup[\dma][\dyw-\dywu][-0.5*\dylma-3*\dylqma][]{\dywu}{\dylqma}{Legend}{backg}{legen}
+\defgroup[\dma][0][-0.5*\dylma-3*\dylqma][\includegraphics{barcode.pdf}]{\dyw-\dywu-\dywb}{\dylqma}{Codes \& sequences}{blue}{cseq}
+\defgroup[\dma][\dyw-\dywu-\dywb][-0.5*\dylma-3*\dylqma][\includegraphics{gear.pdf}]{\dywb+\dywr}{\dylqma}{Optimization problems \& greedy algorithms}{green}{cop}
+\defgroup[\dma][\dyw-\dywr][-0.5*\dylma-3*\dylqma][\includegraphics{compass.pdf}]{\dywr}{\dylqma}{Legend}{backg}{legen}
+
 \boxfile{definitions.tex}
 \def\pztbtc{red}
 \boxfile{theorems.tex}
-\confile[very thick,open triangle 60-,black!80!white][sloped,above,midway,black]{connections.tex}
+\def\pztbtc{blue}
+\boxfile{algorithms.tex}
+\def\pztbtc{orange}
+\boxfile{app.tex}
+
+\confile[very thick,open triangle 60-,black!80!white][sloped,above,midway,black]{subs.tex}
+\confile[very thick,black!80!white,bend left][sloped,above,midway,black]{rels.tex}
 % \groupbox{(CCgrph) (CCslfl)}{Vertices and Edges}
 \groupbox{(CCgraycod) (CChypergr)}{Bitwise graphs}
 \groupbox{(CCcncwl) (CCsubwl)}{Walk operations}
@@ -54,4 +71,5 @@
 \groupbox{(CCslfl) (CCdegv) (CCeulerthm) (CCmule)}{Edge types and degrees}
 \groupbox{(CCindepset) (CCmatching)}{Independence and matchings}
 \groupbox{(CCherdss) (CCgreed)}{Maximum-weight problem}
+\groupbox{(CCproj) (CCaoan) (CCcpm)}{Project scheduling}
 \end{document}
