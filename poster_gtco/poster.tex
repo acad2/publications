@@ -38,14 +38,14 @@
 \newcommand{\frml}[1]{\begin{center}\fcolorbox{frml-fg}{frml-bg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textcolor{frml-tx}{\textit{formal}}\\#1}}\end{center}}
 \newcommand{\fcop}[3][+]{\ifthenelse{\equal{#1}{+}}{\renewcommand{\fcopm}{maximize}}{\renewcommand{\fcopm}{minimize}}\[\begin{array}{lll}\mbox{\fcopm{}}&\multicolumn{2}{l}{#2,}\\\mbox{subject to}&#3\end{array}\]}
 
-\defgroup[\dma][0][-\dylqma-0.5*\dylma][\includegraphics{pyramid.pdf}]{\dywb}{\dylqma}{Basics}{orange}{graph}
-\defgroup[\dma][\dywb][-\dylqma-0.5*\dylma][\includegraphics{walk.pdf}]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
+\defgroup[\dma][0][-0.5*\dylma-\dylqma][\includegraphics{pyramid.pdf}]{\dyw-\dywt}{\dylqma}{Basics}{orange}{graph}
+\defgroup[\dma][2*\dywt][-0.5*\dylma-\dylqma][\includegraphics{family.pdf}]{\dywt}{\dylqma}{Graph families}{purple}{grfa}
 \defgroup[\dma][0][-0.5*\dylma-2*\dylqma][\includegraphics{tree.pdf}]{\dywb}{\dylqma}{Trees}{treebg}{tree}
-\defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][\includegraphics{palette.pdf}]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
-\defgroup[\dma][2*\dywt][-0.5*\dylma-2*\dylqma][\includegraphics{family.pdf}]{\dywt}{\dylqma}{Graph families}{purple}{grfa}
+\defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][\includegraphics{walk.pdf}]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
 \defgroup[\dma][0][-0.5*\dylma-3*\dylqma][\includegraphics{barcode.pdf}]{\dyw-\dywu-\dywb}{\dylqma}{Codes \& sequences}{blue}{cseq}
-\defgroup[\dma][\dyw-\dywu-\dywb][-0.5*\dylma-3*\dylqma][\includegraphics{gear.pdf}]{\dywb+\dywr}{\dylqma}{Optimization problems \& greedy algorithms}{green}{cop}
-\defgroup[\dma][\dyw-\dywr][-0.5*\dylma-3*\dylqma][\includegraphics{compass.pdf}]{\dywr}{\dylqma}{Legend}{backg}{legen}
+\defgroup[\dma][\dyw-\dywu-\dywb][-0.5*\dylma-3*\dylqma][\includegraphics{gear.pdf}]{\dywb+\dywu}{\dylqma}{Optimization problems \& greedy algorithms}{green}{cop}
+\defgroup[\dma][0][-0.5*\dylma-4*\dylqma][\includegraphics{compass.pdf}]{\dywr}{\dylqma}{Legend}{backg}{legen}
+\defgroup[\dma][\dywr][-0.5*\dylma-4*\dylqma][\includegraphics{palette.pdf}]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
 
 \boxfile{definitions.tex}
 \def\pztbtc{red}
