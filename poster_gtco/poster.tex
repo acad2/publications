@@ -1,5 +1,6 @@
 \documentclass[eclipse]{preziposters}
-\usepackage{brackets,importsreferences,amssymb,marvosym,wasysym,pifont,lipsum,symsabim,dingbat,linearb,textcomp,algpseudocode}
+\usepackage{brackets,importsreferences,amssymb,marvosym,wasysym,pifont,lipsum,symsabim,dingbat,linearb,textcomp}
+\usepackage[noend]{algpseudocode}
 \title{Graphs \& Optimization}
 \suptitle{Doctoral course on}
 \author{Willem Van Onsem\\KU Leuven\\Department of Computer Science}
@@ -20,7 +21,7 @@
 \def\dywt{366.7 mm};
 \def\dywq{275.0 mm};
 \def\dywu{220.0 mm};
-\def\dywr{110.0 mm};
+\def\dywr{140.0 mm};
 \def\dywh{183.3 mm};
 
 \definecolor{treebg}{rgb}{0.93,0.93,0.69}
@@ -44,20 +45,36 @@
 \defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][\includegraphics{walk.pdf}]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
 \defgroup[\dma][0][-0.5*\dylma-3*\dylqma][\includegraphics{barcode.pdf}]{\dyw-\dywu-\dywb}{\dylqma}{Codes \& sequences}{blue}{cseq}
 \defgroup[\dma][\dyw-\dywu-\dywb][-0.5*\dylma-3*\dylqma][\includegraphics{gear.pdf}]{\dywb+\dywu}{\dylqma}{Optimization problems \& greedy algorithms}{green}{cop}
-\defgroup[\dma][0][-0.5*\dylma-4*\dylqma][\includegraphics{compass.pdf}]{\dywr}{\dylqma}{Legend}{backg}{legen}
-\defgroup[\dma][\dywr][-0.5*\dylma-4*\dylqma][\includegraphics{palette.pdf}]{2*\dywt-\dywb}{\dylqma}{Graph coloring}{red}{grcl}
+\defgroup[\dma][0][-0.5*\dylma-4*\dylqma][\includegraphics{compass.pdf}]{\dywb-0.5*\dywr}{\dylqma}{Maximum flow}{purple}{maflw}
+\defgroup[\dma][\dywb-0.5*\dywr][-0.5*\dylma-4*\dylqma][\includegraphics{palette.pdf}]{\dywb-0.5*\dywr}{\dylqma}{Graph coloring}{red}{grcl}
 
+%Legend
+\defgroup[\dma][\dyw-\dywr][-0.5*\dylma-4*\dylqma][\includegraphics{compass.pdf}]{\dywr}{\dylqma}{Legend}{backg}{legen}
+\subgrouptable[6 cm/ver/Vertices,6 cm/arc/Arcs]{legen}
+
+\arcoverview[(0.25,-1)][5 cm]{legen-arc}{{very thick,black!80!white}//{Related concepts},{very thick,black!80!white,->}//{Reference},{very thick,open triangle 60-,black!80!white}//{Second concept implies first}}
+
+%Definitions
 \boxfile{definitions.tex}
+
+%Theorems
 \def\pztbtc{red}
 \boxfile{theorems.tex}
+
+%Algorithms
 \def\pztbtc{blue}
 \boxfile{algorithms.tex}
+
+%Applications
 \def\pztbtc{orange}
 \boxfile{app.tex}
 
+%Relations
+\confile[very thick,black!80!white][sloped,above,midway,black]{rels.tex}
+
+%Subset relations
 \confile[very thick,open triangle 60-,black!80!white][sloped,above,midway,black]{subs.tex}
-\confile[very thick,black!80!white,bend left][sloped,above,midway,black]{rels.tex}
-% \groupbox{(CCgrph) (CCslfl)}{Vertices and Edges}
+
 \groupbox{(CCgraycod) (CChypergr)}{Bitwise graphs}
 \groupbox{(CCcncwl) (CCsubwl)}{Walk operations}
 \groupbox{(CCeulert) (CCceuler) (CCposttour) (CChamilcyc) (CCtsp)}{Special walks}
