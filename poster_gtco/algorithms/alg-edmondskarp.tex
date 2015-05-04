@@ -1,16 +1,14 @@
 \begin{algorithmic}
-\Function{EdmondsKarp}{$G$,$s$,$t$}
-\State $\vec{f}\gets$\Call{Array}{$E_G$}
+\Function{Label}{$G$,$s$,$t$,$\vec{f},\vec{c}$}
 \State $C\gets\emptyset$; $L\gets\emptyset$
-\Repeat
 \State $\vec{l}\gets$\Call{Array}{$V_G$}
 \State $l_s\gets\tupl{\textunderscore,\infty}$; $L\gets L\cup\accl{s}$
 \While{$l_t=\mbox{\bf null}\wedge L\setminus C=\emptyset$}
 \State $v\gets^{\in}L\setminus C$; $C\gets C\cup\accl{v}$
 \State $\tupl{\alpha,\Delta}\gets l_v$
 \For{$e=\tupl{v,w}\in E_G$}
-\If{$f_e<C_e$}
-\State $l_s\gets\tupl{v,\fun{\min}{\Delta,C_e-f_e}}$; $L\gets L\cup\accl{s}$
+\If{$f_e<c_e$}
+\State $l_s\gets\tupl{v,\fun{\min}{\Delta,c_e-f_e}}$; $L\gets L\cup\accl{s}$
 \EndIf
 \EndFor
 \For{$e=\tupl{w,v}\in E_G$}
@@ -19,11 +17,15 @@
 \EndIf
 \EndFor
 \EndWhile
-\If{$L_t=\mbox{\bf null}$}
-\State $v\gets t$; $S\gets\accl{v}$
-\While{\Call{Snd}{$l_v$}$\neq\textunderscore$}
+\If{$l_t\neq\mbox{\bf null}$}
+\State $w\gets t$; $\Delta\gets\infty$; $W\gets$ walk$\tupl{t}$
+\While{$w\neq s$}
+\State $\tupl{v,\phi}\gets l_v$; $\Delta\gets\funm{min}{\Delta,\phi}$
+\State $W\gets\tupl{v,e_{v,w},w}\circ W$; $w\gets v$
+\EndWhile
+\State \textbf{return} $\tupl{W,\Delta}$
+\Else
+\State \textbf{return} \textbf{null}
 \EndIf
-\Until{$l_t=\mbox{\bf null}$}
-\State \textbf{return} $\vec{f}$
 \EndFunction
 \end{algorithmic}

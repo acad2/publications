@@ -1,0 +1,12 @@
+\begin{algorithmic}
+\Function{Ford-Fulkerson}{$G$,$s$,$t$}
+\State $\vec{f}\gets$\Call{Array}{$E_G$}
+\For{$e\in E_G$}
+\State $f_e\gets 0$
+\EndFor
+\Repeat
+\State $\vec{a}\gets\Call{Label}{G,s,t,\vec{f}}$
+\Until{$l_t=\mbox{\bf null}$}
+\State \textbf{return} $\vec{f}$
+\EndFunction
+\end{algorithmic}
