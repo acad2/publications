@@ -7,5 +7,5 @@ fi
 while true
 do
     make >/dev/null 2>/dev/null
-    sleep "$itv"
+    read -t "$itv"
 done
