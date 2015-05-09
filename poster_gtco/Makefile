@@ -9,6 +9,6 @@ poster.pdf : *.tex tikzpictures/*.tex algorithms/*.tex ../libtex/**.cls
 %.pdf : %.svg Makefile processsvg.sh
 	bash processsvg.sh $<
 loop :
-	bash makeloop.sh
+	bash makeloop.sh 30
 bar.eps : Makefile
 	qrencode -o "bar.eps" -l H -t EPS "http://goo.gl/lqAUrz"

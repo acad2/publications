@@ -3,7 +3,7 @@
 \usepackage[noend]{algpseudocode}
 \title{Graphs \& Optimization}
 \suptitle{Doctoral course on}
-\author{Willem Van Onsem\\KU Leuven\\Department of Computer Science}
+\author{Willem Van Onsem\\KU Leuven\\Department of Computer Science\\Declarative Languages and Artificial Intelligence}
 \logo{../libtex/sedes.pdf}
 \disclaimer{This document is published under the \emph{Beer license revision 42} by \emph{Poul-Henning Kamp}.}
 \usetikzlibrary{shapes}
@@ -38,6 +38,7 @@
 \definecolor{frml-tx}{RGB}{119,119,119}
 \newcommand{\frml}[1]{\begin{center}\fcolorbox{frml-fg}{frml-bg}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\textcolor{frml-tx}{\textit{formal}}\\#1}}\end{center}}
 \newcommand{\fcop}[3][+]{\ifthenelse{\equal{#1}{+}}{\renewcommand{\fcopm}{maximize}}{\renewcommand{\fcopm}{minimize}}\[\begin{array}{lll}\mbox{\fcopm{}}&\multicolumn{2}{l}{#2,}\\\mbox{subject to}&#3\end{array}\]}
+\newcommand{\fsat}[1]{\[\begin{array}{lll}\mbox{satisfy}&#1\end{array}\]}
 
 \defgroup[\dma][0][-0.5*\dylma-\dylqma][\includegraphics{pyramid.pdf}]{\dyw-\dywt}{\dylqma}{Basics}{orange}{graph}
 \defgroup[\dma][2*\dywt][-0.5*\dylma-\dylqma][\includegraphics{family.pdf}]{\dywt}{\dylqma}{Graph families}{purple}{grfa}
@@ -78,16 +79,18 @@
 
 \groupbox{(CCgraycod) (CChypergr)}{Bitwise graphs}
 \groupbox{(CCcncwl) (CCsubwl)}{Walk operations}
-\groupbox{(CCeulert) (CCceuler) (CCposttour) (CChamilcyc) (CCtsp)}{Special walks}
+\groupbox{(CCeulert) (CCceuler) (CCposttour) (CChamilcyc) (CCctreuler)}{Special walks}
 \groupbox{(CCreach) (CCconn) (CCwkconn) (CCedgcut) (CCvercut) (CCcpn)}{Reachability and components}
 \groupbox{(CCprnttree) (CCdscasctree)}{Rooted tree vertex relations}
 \groupbox{(CCstree) (CCfronted) (CCtreegrow)}{Tree growing}
-\groupbox{(CCmarytree) (CCordtree) (CCbintree)}{Tree variants}
+\groupbox{(CCmarytree) (CCordtree) (CCbintree) (CCtreecv)}{Tree variants}
 \groupbox{(CCgruni) (CCgrjoin) (CCvdsg) (CCedsg) (CCsbgiv) (CCsbgie) (CClinegr)}{Graph operations}
 \groupbox{(CCsubgr) (CCcliq)}{Graph substructures}
-\groupbox{(CCince) (CCadjv) (CCadje)}{Relations between vertices and edges}
+\groupbox{(CCince) (CCadjv) (CCadje) (CCongbrh) (CCcngbrh)}{Relations between vertices and edges}
 \groupbox{(CCslfl) (CCdegv) (CCeulerthm) (CCmule)}{Edge types and degrees}
 \groupbox{(CCindepset) (CCmatching)}{Independence and matchings}
 \groupbox{(CCherdss) (CCgreed)}{Maximum-weight problem}
 \groupbox{(CCproj) (CCaoan) (CCcpm)}{Project scheduling}
+\groupbox{(CChungarian) (CCsdr) (CCassg)}{Representation allocation}
+
 \end{document}

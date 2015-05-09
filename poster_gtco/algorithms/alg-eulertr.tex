@@ -1,0 +1,20 @@
+\begin{algorithmic}
+\Function{EulerianTrail}{$G$}
+\State $v\gets^{\in}V_G$; $W\gets\mbox{Walk}\tupl{v}$; $D\gets\emptyset$
+\While{$E_G\setminus D\neq\emptyset$}
+\State $v\gets^{\in}\condset{w}{e\in E_G\setminus W:w\in\funm{endpts}{e}}$
+\State $T\gets\tupl{\ldots,v}\subseteq W$; $V\gets\tupl{v,\ldots}\subseteq W$
+\State $\tupl{D,U}\gets$\Call{Tour}{$G$,$D$,$v$}
+\State $W\gets T\circ U\circ V$
+\EndWhile
+\State \Return $W$
+\EndFunction
+\Function{Tour}{$G$,$D$,$u$}
+\State $W\gets\mbox{Walk}\tupl{u}$; $v\gets u$
+\Repeat
+\State $\tupl{v,w}\gets^{\in}E_G\setminus D$; $W\gets W\circ\tupl{v,\tupl{v,w},w}$
+\State $D\gets D\cup\accl{\tupl{v,w}}$; $v\gets w$
+\Until{$u=v$}
+\State \Return $\tupl{D,W}$
+\EndFunction
+\end{algorithmic}
