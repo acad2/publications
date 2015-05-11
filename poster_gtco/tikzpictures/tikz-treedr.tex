@@ -1,0 +1,25 @@
+\begin{tikzpicture}[
+  baseline,level distance=0.3cm,
+  level 1/.style={sibling distance=1cm},
+  level 2/.style={sibling distance=0.5cm},
+  level 3/.style={sibling distance=0.3cm}]
+\node[ptgtcov] (tmpnr) {}
+  child {node[ptgtcov] (tmpna) {}
+    child {node[ptgtcov] (tmpnd) {}
+      child {node[ptgtcov] (tmpnj) {}}
+    }
+    child {node[ptgtcov] (tmpne) {}}
+  }
+  child {node[ptgtcov] (tmpnb) {}
+    child {node[ptgtcov] (tmpnf) {}}
+  }
+  child {node[ptgtcov] (tmpnc) {}
+    child {node[ptgtcov] (tmpng) {}}
+    child {node[ptgtcov] (tmpnh) {}}
+    child {node[ptgtcov] (tmpni) {}}
+  }
+;
+\foreach \i in {r,a,b,c,d,e,f,g,h,i,j} {
+    \draw (tmpn\i) node[anchor=east]{$\i$};
+}
+\end{tikzpicture}

@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\foreach \i/\ti/\ai in {0/$u$/south,1/$v$/east,2/$w$/north} {
+  \node[ptgtcov] (tmp\i) at (120*\i+90:1.5 cm) {};
+  \draw (tmp\i) node[anchor=\ai]{\ti};
+}
+\foreach \i/\j/\si/\ti in {0/1/$c$,1/2/$f$,1/2/bend left/$g$,1/2/bend right/$h$,0/2//$d$} {
+  \path[-] (tmp\i) edge[\si] node {\ti} (tmp\j);
+}
+\foreach \i/\di/\ti in {0/loop left/$a$,0/loop right/$b$,1/loop below/$k$} { %,0/,1/
+  \path[-] (tmp\i) edge[\di,looseness=40] node{\ti} (tmp\i);
+}
+\end{tikzpicture}
