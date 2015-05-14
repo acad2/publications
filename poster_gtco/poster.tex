@@ -23,6 +23,7 @@
 \def\dywu{220.0 mm};
 \def\dywr{140.0 mm};
 \def\dywh{183.3 mm};
+\def\dywmbt{458.32 mm};
 
 \definecolor{treebg}{rgb}{0.93,0.93,0.69}
 
@@ -46,8 +47,8 @@
 \defgroup[\dma][\dywb][-0.5*\dylma-2*\dylqma][\includegraphics{walk.pdf}]{\dywb}{\dylqma}{Walks and Reachability}{yellow}{move}
 \defgroup[\dma][0][-0.5*\dylma-3*\dylqma][\includegraphics{barcode.pdf}]{\dyw-\dywu-\dywb}{\dylqma}{Codes \& sequences}{blue}{cseq}
 \defgroup[\dma][\dyw-\dywu-\dywb][-0.5*\dylma-3*\dylqma][\includegraphics{gear.pdf}]{\dywb+\dywu}{\dylqma}{Optimization problems \& greedy algorithms}{green}{cop}
-\defgroup[\dma][0][-0.5*\dylma-4*\dylqma][\includegraphics{flow.pdf}]{\dywb-0.5*\dywr}{\dylqma}{Maximum flow}{purple}{maflw}
-\defgroup[\dma][\dywb-0.5*\dywr][-0.5*\dylma-4*\dylqma][\includegraphics{palette.pdf}]{\dywb-0.5*\dywr}{\dylqma}{Graph coloring}{red}{grcl}
+\defgroup[\dma][0][-0.5*\dylma-4*\dylqma][\includegraphics{flow.pdf}]{\dywmbt-0.5*\dywr}{\dylqma}{Maximum flow}{purple}{maflw}
+\defgroup[\dma][\dywmbt-0.5*\dywr][-0.5*\dylma-4*\dylqma][\includegraphics{palette.pdf}]{\dyw-\dywmbt-0.5*\dywr}{\dylqma}{Graph coloring}{red}{grcl}
 
 %Legend
 \defgroup[\dma][\dyw-\dywr][-0.5*\dylma-4*\dylqma][\includegraphics{compass.pdf}]{\dywr}{\dylqma}{Legend}{backg}{legen}
@@ -72,6 +73,7 @@
 
 %Images
 \tikzminibox[(graph)][grphvw][16.75][1]{grph}
+\tikzminibox[(grcl)][grclvw][20.5][10.75]{grcl}
 
 %Relations
 \confile[very thick,black!80!white][sloped,above,midway,black]{rels.tex}
