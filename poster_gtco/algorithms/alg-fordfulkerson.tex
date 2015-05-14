@@ -1,0 +1,22 @@
+\begin{algorithmic}
+\Function{Ford-Fulkerson}{$G$,$s$,$t$,$\vec{c}$}
+\State $\vec{f}\gets$\Call{Array}{$E_G$}
+\For{$e\in E_G$}
+\State $f_e\gets 0$
+\EndFor
+\Repeat
+\State $R\gets\Call{Label}{G,s,t,\vec{f},\vec{c}}$
+\If{$R\neq\mbox{\bf null}$}
+\State $\tupl{W,\Delta}\gets R$
+\For{$\tupl{v,w}\in W$}
+\If{$\tupl{v,w}\in E_G$}
+\State $f_{\tupl{v,w}}\gets f_{\tupl{v,w}}+\Delta$
+\Else
+\State $f_{\tupl{w,v}}\gets f_{\tupl{w,v}}-\Delta$
+\EndIf
+\EndFor
+\EndIf
+\Until{$R=\mbox{\bf null}$}
+\State \textbf{return} $\vec{f}$
+\EndFunction
+\end{algorithmic}

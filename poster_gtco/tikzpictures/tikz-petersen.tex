@@ -1,0 +1,1 @@
+\begin{tikzpicture}\foreach \i in {1,...,5} {\node[ptgtcov] (tmpi\i) at (72*\i+90:0.5 cm) {};\node[ptgtcov] (tmpo\i) at (72*\i+90:1 cm) {};\draw (tmpi\i) -- (tmpo\i);}\foreach \i/\j/\k in {1/2/3,2/3/4,3/4/5,4/5/1,5/1/2} {\draw (tmpo\i) -- (tmpo\j);\draw (tmpi\i) -- (tmpi\k);}\end{tikzpicture}

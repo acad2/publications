@@ -1,0 +1,60 @@
+\begin{tikzpicture}[
+  baseline,level distance=0.5cm,
+  level 1/.style={sibling distance=3.41719cm},
+  level 2/.style={sibling distance=1.51875cm},
+  level 3/.style={sibling distance=0.675cm},
+  level 4/.style={sibling distance=0.3cm}]
+\node[ptgtcov] {}
+  child {
+    node[ptgtcov] {}
+    child {
+      node[ptgtcov] {}
+      child {
+        node[ptgtcov] (tmpna) {} edge from parent node[left] {0}
+      }
+      child {
+        node[ptgtcov] {}
+        child {
+          node[ptgtcov] (tmpnb) {} edge from parent node[left] {0}
+        }
+        child {
+          node[ptgtcov] (tmpnc) {} edge from parent node[right] {1}
+        } edge from parent node[right] {1}
+      } edge from parent node[left] {0}
+    }
+    child {
+      node[ptgtcov] {}
+      child {
+        node[ptgtcov] {}
+        child {
+          node[invisible] {} edge from parent[draw=none]
+        }
+        child {
+          node[ptgtcov] (tmpnd) {} edge from parent node[right] {1}
+        } edge from parent node[left] {0}
+      }
+      child {
+        node[ptgtcov] (tmpne) {} edge from parent node[right] {1}
+      } edge from parent node[right] {1}
+    } edge from parent node[left] {0}
+  }
+  child {
+    node[ptgtcov] {}
+    child {
+      node[ptgtcov] {}
+      child {
+        node[ptgtcov] (tmpnf) {} edge from parent node[left] {0}
+      }
+      child {
+        node[ptgtcov] (tmpng) {} edge from parent node[right] {1}
+      } edge from parent node[left] {0}
+    }
+    child {
+      node[invisible] {} edge from parent[draw=none]
+    } edge from parent node[right] {1}
+  }
+;
+\foreach \i in {a,b,c,d,e,f,g} {
+    \draw (tmpn\i) node[anchor=north]{$\i$};
+}
+\end{tikzpicture}

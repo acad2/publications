@@ -1,0 +1,18 @@
+\begin{tikzpicture}[scale=1.5]
+\foreach \i/\xi/\yi/\ai in {000/0/0/west,001/0.5/-0.5/north,010/1/0/east,011/2.5/-0.5/north,100/0.5/0.5/south,101/2/0/west,110/2.5/0.5/south,111/3/0/east} {
+  \node[ptgtcov,ptsel] (tmp\i) at (\xi cm,\yi cm) {};
+  \draw (tmp\i) node[ptsel,anchor=\ai] {$\i$};
+}
+\foreach \i/\j/\k in {001/010/011,011/110/111,100/000/001,110/100/101} {
+    \draw[ptarc] (tmp\i) to node[midway,sloped]{$0$} (tmp\j);
+    \draw[ptarc] (tmp\i) to node[midway,sloped]{$1$} (tmp\k);
+}
+\foreach \i/\j/\k/\jb/\kb in {010/100/101/0/1,101/011/010/1/0} {
+    \draw[ptarc] (tmp\i) to node[midway,sloped]{$\jb$} (tmp\j);
+    \path[ptarc] (tmp\i) edge[bend left] node[midway,sloped] {$\kb$} (tmp\k);
+}
+\foreach \i/\di/\j/\ib/\jb in {000/left/001/0,111/right/110/1} {
+    \path[ptarc] (tmp\i) edge[loop \di] node[midway,sloped] {$\ib$} (tmp\i);
+    \draw[ptarc] (tmp\i) to node[midway,sloped]{$\jb$} (tmp\j);
+}
+\end{tikzpicture}

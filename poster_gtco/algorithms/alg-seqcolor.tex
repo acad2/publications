@@ -1,0 +1,9 @@
+\begin{algorithmic}
+\Function{SequentialVertexColoring}{$G$}
+\State $\vec{f}\gets$\Call{Array}{$V_G$}
+\For{$v\in V_G$}
+\State $\fun{f}{v}\gets\min\condset{n}{n\in\NNN:\forall w\in\fun{N_G}{v}:n\neq\fun{f}{w}}$
+\EndFor
+\Return $\vec{f}$
+\EndFunction
+\end{algorithmic}

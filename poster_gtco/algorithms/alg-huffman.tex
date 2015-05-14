@@ -1,0 +1,11 @@
+\begin{algorithmic}
+\Function{Encode}{$\accl{\sigma_1\ldots\sigma_l},\accl{w_1\ldots w_l}$}
+\State $Q\gets $priority queue with $\forall i:\tupl{\sigma_i,w_i}$
+\While{\Call{Size}{$Q$}$>1$}
+\State $\tupl{p_a,w_a}\gets$\Call{pop}{$Q$}
+\State $\tupl{p_b,w_b}\gets$\Call{pop}{$Q$}
+\State \Call{Push}{$Q$,$\tupl{\funm{tree}{p_a,p_b},w_a+w_b}$}
+\EndWhile
+\State \textbf{return} \Call{pop}{$Q$}
+\EndFunction
+\end{algorithmic}

@@ -84,3 +84,8 @@
 *.thm
 *.mx*
 *.glsdefs
+*.ecl
+
+#All kinds of temporaries
+tmp/**
+**/tmp/**

@@ -1,0 +1,26 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity shacalc is
+    port (
+        clk : in std_logic;
+        data : in std_logic_vector(511 downto 0);
+        enable : in std_logic;
+        signature : out std_logic_vector (159 downto 0);
+        done : out std_logic;
+    );
+end entity shacalc;
+
+architecture prototype of shacalc
+begin
+    process(clk,data,enable)
+        variable wvec : std_logic_vector (511 downto 0);
+        variable h0,h1,h2,h3,h4,h5,a,b,c,d,e,f,t : std_logic_vector (31 downto 0);
+        variable i : 
+    begin
+        while enable='0' loop
+	  wait until clk = '1';
+	end loop;
+        signature <= h0 & h1 & h2 & h3 & h4 & h5;
+    end process
+end architecture prototype;

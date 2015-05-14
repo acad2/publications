@@ -1,0 +1,8 @@
+\begin{tikzpicture}[scale=2.5]
+\foreach \i/\xi/\yi/\s in {a/0/0/,b/0.5/-0.5/,d/1/0.5/,c/1/0/,e/1.5/-0.5/,f/1.5/0.5/,g/2/0/} {
+    \node[ptgtcov,\s] (tmp\i) at (\xi cm,\yi cm) {};
+}
+\foreach \i/\j/\s/\t in {a/b//{2/3},a/d//{3/3},b/c//{2/4},c/a//{0/3},c/d/below/{1/1},c/e/below/{1/2},d/e//{0/2},d/f//{4/6},e/g//{1/1},f/g//{4/9}} {
+    \draw[ptarc] (tmp\i) to node[sloped,above,midway,\s]{$\t$} (tmp\j);
+}
+\end{tikzpicture}
