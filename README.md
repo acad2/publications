@@ -14,6 +14,7 @@ Posters:
 
  - [*Automaten en Berekenbaarheid* (dutch)](https://github.com/KommuSoft/publications/tree/master/poster_automaten_en_berekenbaarheid)
  - [*Design Patterns* (dutch)](https://github.com/KommuSoft/publications/tree/master/poster_design_patterns)
+ - [*Graph Theory and Combinatorial Optimization* (english)](https://github.com/KommuSoft/publications/tree/master/poster_gtco) [(binary)](http://willemvanonsem.ulyssis.be/poster_gtco.pdf)
 
 Courses:
 
