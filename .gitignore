@@ -76,3 +76,6 @@
 *.bak
 *.kate-swp
 *.sbx
+tmp/**
+**/tmp/*
+*.ecl
