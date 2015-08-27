@@ -5,7 +5,11 @@ poster :
 images : *.svg Makefile *.sh
 	bash makeimages.sh
 card-%.pdf : card-*.tex
-	bash ../libtex/scripts/makepdf.sh $<
+	-bash ../libtex/scripts/makepdf.sh $<
+	-bash runclp.sh
+	-bash ../libtex/scripts/makepdf.sh $<
+clean :
+	rm -rf *.dat
 %.pdf : %.svg Makefile processsvg.sh
 	bash processsvg.sh $<
 loop :
