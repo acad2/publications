@@ -545,9 +545,9 @@ Complexe poorten die in de loop der tijd een eigen symbool kregen zijn onder mee
 \figlab{complexGates}
 \end{figure}
 De waarheidstabellen van deze complexe poorten staan in subsectie \sscref{appendixComplexePoorten}.
-\paragraph{}
+\paragraph{Universi\"ele poorten}
 %   REVIEW
-De reden dat NAND en NOR poorten populair zijn komt hoofdzakelijk omdat het universele poorten zijn. Dat betekent dat iedere basispoort kan ge\"implementeerd worden met behulp van NAND of NOR poorten. In \tblref{nandNorUniversal} staan deze implementaties. Bovendien is het realiseren van NAND en NOR poorten in de meeste technologie\"en goedkoper dan het bouwen van AND en OR poorten.
+De reden dat NAND en NOR poorten populair zijn komt hoofdzakelijk omdat het \gtermen{universi\"ele poorten}{Een poort waarmee men elke functie kan bouwen. In de booleaanse logica komt dit er op neer dat men een NOT en AND moet kunnen bouwen. Voorbeelden van universi\"ele poorten zijn de NAND en NOR.} zijn. Dat betekent dat iedere basispoort kan ge\"implementeerd worden met behulp van NAND of NOR poorten. In \tblref{nandNorUniversal} staan deze implementaties. Bovendien is het realiseren van NAND en NOR poorten in de meeste technologie\"en goedkoper dan het bouwen van AND en OR poorten.
 \begin{table}[htb]
 \centering
 \begin{tabular}{c|c|c|c}
@@ -625,7 +625,8 @@ met NOR&
 \caption{Implementatie van de basispoorten met behulp van NAND en NOR poorten.}
 \label{tbl:nandNorUniversal}
 \end{table}
-\paragraph{Ge\"inverteerde ingangen}Tot slot nog een andere conventie die vaak gebruikt wordt. NOT poorten worden heel vaak gebruikt, ook bij ingangen van andere poorten. De NOT poort neemt nogal wat plaats in, daardoor is het de gewoonte om soms cirkels te tekenen aan de ingangen van een bepaalde poort: \termen{ge\"inverteerde ingangen}. Deze cirkels stellen een NOT poort voor. Concrete voorbeelden staan op \figref{basicGatesInvertedInput}. In het algemeen kunnen we dus zeggen dat een cirkel duidt op het inverteren. Inverteren in het schema betekent echter niet noodzakelijk dat we bij de fysische implementatie gebruik moeten maken van een inverter (meestal is het zelfs omgekeerd).
+\paragraph{Ge\"inverteerde ingangen}
+Tot slot introduceren we nog een andere conventie die vaak gebruikt wordt: \gtermen{ge\"inverteerde ingangen}{Een conventie die wordt gebruikt om het aantal getekende NOT poorten in een schema drastisch te verminderen. Men zet hierbij cirkels  bij de ingangen van een poort. Deze cirkels duiden dan op een invertering (en dus eventueel een NOT poort) voor deze ingang.}. NOT poorten worden heel vaak gebruikt, ook bij ingangen van andere poorten. Het symbool van de NOT poort neemt nogal wat plaats in op een schema. Daardoor is het de gewoonte om soms cirkels te tekenen aan de ingangen van een bepaalde poort: ge\"inverteerde ingangen. Deze cirkels stellen een NOT poort voor. Concrete voorbeelden staan op \figref{basicGatesInvertedInput}. In het algemeen kunnen we dus zeggen dat een cirkel duidt op het inverteren. Inverteren in het schema betekent echter niet noodzakelijk dat we bij de fysische implementatie gebruik moeten maken van een inverter (meestal is het zelfs omgekeerd): men kan vaak de implementatie van de poort zo aanpassen dat er geen extra transistoren nodig zijn voor deze transformatie.
 \begin{figure}[htb]
 \centering
 \subfigure{\begin{tikzpicture}[circuit logic US]
@@ -663,6 +664,7 @@ met NOR&
 \caption{Poorten met ge\"inverteerde ingangen.}
 \figlab{basicGatesInvertedInput}
 \end{figure}
+%REVIEW
 \subsection{Logische schakelingen}
 De vorige subsectie toonde al dat we met deze poorten netwerken kunnen bouwen. Deze netwerken worden \termen{logische schakelingen} genoemd. Deze schakelingen implementeren dan uiteindelijk de functionaliteiten waarvoor we een digitaal circuit ontwerpen. We kunnen logische schakelingen beschrijven door middel van een schema zoals we dat tot nu toe altijd gedaan hebben. Een andere techniek is echter op basis van een taal: VHDL\footnote{VHDL: VHSIC Hardware Design Language; VHSIC: Very High Speed Integrated Circuit.}. Deze taal komt onder meer aan bod in sectie \ref{s:vhdl}, en verder in de verdere hoofdstukken van deze cursus.
 \paragraph{Optimaliseren}
