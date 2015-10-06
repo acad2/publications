@@ -2,7 +2,8 @@
 #Creates a new LaTeX table
 
 #Parameters
-pref="tables/tbl-"
+pref="tables/tbl"
+srcr="template"
 
 #Check if a label is provided
 if [ "$#" -le 0 ]
@@ -12,14 +13,19 @@ else
     lbl="$1"
 fi
 
+if [ "$#" -gt 1 ]
+then
+    srcr="$2"
+fi
+
 #Check if a table with the label already exists
-if [ -f "$pref$lbl.tex" ]
+if [ -f "$pref-$lbl.tex" ]
 then
     echo "The table with the label \"$lbl\" already exists!"
     exit 2
 fi
 
 #Copy the template and start the editor
-cp "tbl/tbl-template.tex" "tbl/tbl-$lbl.tex"
-vim "tbl/tbl-$lbl.tex"
+cp "$pref-$srcr.tex" "$pref-$lbl.tex"
+vim "$pref-$lbl.tex"
 exit 0
