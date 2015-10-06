@@ -1,6 +1,5 @@
 \documentclass[a4paper,10pt,titlepage]{book}
 \usepackage[dutch]{babel}
-\usepackage{glossaries}
 \usepackage{timing}
 \usepackage{fullpage}
 \usepackage{tikz}
@@ -22,6 +21,7 @@
 \usepackage{eurosym}
 \usepackage{circuitikz}
 \usepackage{bnf,commusoftScripts,../SharedData/brackets,../SharedData/importsreferences,../SharedData/lstlibraryciscasmlanguage,../SharedData/lstlibrarybinlanguage}
+\usepackage[toc]{glossaries}
 \usetikzlibrary{circuits.logic.US}
 \usetikzlibrary{DEPcomponents}
 \usetikzlibrary{PCBcomponents}
@@ -66,9 +66,10 @@ title=\lstname,                 % show the filename of files included with \lsti
 
 \makeindex
 \makeglossaries
+\glossarystyle{listgroup}
 
 \newenvironment{chapterintro}{\begin{center}\begin{large}\begin{it}\begin{minipage}{12 cm}}{\end{minipage}\end{it}\end{large}\end{center}}
-\newcommand{\gtermen}[2]{\newglossaryentry{#1}{description={#2}}\termen{#1}}
+\newcommand{\gtermen}[3][]{\ifthenelse{\equal{#1}{}}{\newglossaryentry{#2}{name={#2},description={#3}}}{\newglossaryentry{#1}{name={#2},description={#3}}}\termen{#2}}
 \newcommand{\vhdltermen}[1]{\index{\texttt{VHDL}!\texttt{#1}}\texttt{#1}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\clrsin}{\texttt{Clr$^*$}}
@@ -166,6 +167,7 @@ Indien er fouten gerapporteerd worden, of toevoegingen gedaan worden zullen na v
 \label{reference}
 \end{twocolumn}
 \label{glos}
+\glsaddall{}
 \printglossaries
 \label{idx}
 \printindex
