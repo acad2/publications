@@ -1,27 +1,8 @@
 \documentclass[a4paper,10pt,titlepage]{book}
 \usepackage[dutch]{babel}
-\usepackage{timing}
-\usepackage{fullpage}
-\usepackage{tikz}
-\usepackage{index}
-\usepackage{subfigure}
-\usepackage{graphicx}
-\usepackage{framed}
-\usepackage{tabularx}
-\usepackage{wrapfig}
-\usepackage{listings}
-\usepackage{multicol}
-\usepackage{multicol}
-\usepackage{multirow}
-\usepackage{stmaryrd}
-\usepackage{amsfonts}
-\usepackage{amsmath}
-\usepackage{bbding}
-\usepackage{array}
-\usepackage{eurosym}
-\usepackage{circuitikz}
+\usepackage{timing,fullpage,tikz,index,subfigure,graphicx,framed,tabularx,wrapfig,listings}
+\usepackage{multicol,multirow,stmaryrd,amsfonts,amsmath,bbding,array,eurosym,circuitikz}
 \usepackage{itemyz,bnf,commusoftScripts,../SharedData/brackets,../SharedData/importsreferences,../SharedData/lstlibraryciscasmlanguage,../SharedData/lstlibrarybinlanguage}
-\usepackage[toc]{glossaries}
 \usetikzlibrary{circuits.logic.US}
 \usetikzlibrary{DEPcomponents}
 \usetikzlibrary{PCBcomponents}
@@ -42,8 +23,7 @@ language=VHDL,	                % choose the language of the code
 basicstyle=\footnotesize,       % the size of the fonts that are used for the code
 numbers=left,                   % where to put the line-numbers
 numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
-stepnumber=1,                   % the step between two line-numbers. If it's 1 each line
-                                % will be numbered
+stepnumber=1,                   % the step between two line-numbers. If it's 1 each line will be numbered
 numbersep=5pt,                  % how far the line-numbers are from the code
 backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
 showspaces=false,               % show spaces adding particular underscores
@@ -59,6 +39,7 @@ title=\lstname,                 % show the filename of files included with \lsti
 }
 
 \usepackage[hidelinks,bookmarks]{hyperref}
+\usepackage[toc]{glossaries}
 \usepackage{minitoc}
 \dominitoc
 \setcounter{minitocdepth}{3}
@@ -69,7 +50,7 @@ title=\lstname,                 % show the filename of files included with \lsti
 \glossarystyle{listgroup}
 
 \newenvironment{chapterintro}{\begin{center}\begin{large}\begin{it}\begin{minipage}{12 cm}}{\end{minipage}\end{it}\end{large}\end{center}}
-\newcommand{\gtermen}[3][]{\ifthenelse{\equal{#1}{}}{\newglossaryentry{#2}{name={#2},description={#3}}}{\newglossaryentry{#1}{name={#2},description={#3}}}\termen{#2}}
+\newcommand{\gtermen}[3][]{\ifthenelse{\equal{#1}{}}{\newglossaryentry{#2}{name={#2},description={#3}} \glsadd{#2}}{\newglossaryentry{#1}{name={#2},description={#3}} \glsadd{#1}}\termen{#2}}
 \newcommand{\vhdltermen}[1]{\index{\texttt{VHDL}!\texttt{#1}}\texttt{#1}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\clrsin}{\texttt{Clr$^*$}}
@@ -167,8 +148,7 @@ Indien er fouten gerapporteerd worden, of toevoegingen gedaan worden zullen na v
 \label{reference}
 \end{twocolumn}
 \label{glos}
-\glsaddall{}
-\printglossaries
+\printglossary[title=Woordenlijst,toctitle=Woordenlijst]
 \label{idx}
 \printindex
 % \chapter*{``And Now For Something Completely Different''}
