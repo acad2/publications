@@ -90,3 +90,7 @@
 tmp/**
 **/tmp/**
 *.dat
+
+#But allow
+!*.sh #shell scripts
+!*.pl #perl scripts
