@@ -89,3 +89,4 @@
 #All kinds of temporaries
 tmp/**
 **/tmp/**
+*.dat

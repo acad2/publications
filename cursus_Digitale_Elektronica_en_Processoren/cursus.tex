@@ -1,6 +1,5 @@
 \documentclass[a4paper,10pt,titlepage]{book}
 \usepackage[dutch]{babel}
-\usepackage{glossaries}
 \usepackage{timing}
 \usepackage{fullpage}
 \usepackage{tikz}
@@ -22,6 +21,7 @@
 \usepackage{eurosym}
 \usepackage{circuitikz}
 \usepackage{bnf,commusoftScripts,../SharedData/brackets,../SharedData/importsreferences,../SharedData/lstlibraryciscasmlanguage,../SharedData/lstlibrarybinlanguage}
+\usepackage[toc]{glossaries}
 \usetikzlibrary{circuits.logic.US}
 \usetikzlibrary{DEPcomponents}
 \usetikzlibrary{PCBcomponents}
@@ -66,9 +66,10 @@ title=\lstname,                 % show the filename of files included with \lsti
 
 \makeindex
 \makeglossaries
+\glossarystyle{listgroup}
 
 \newenvironment{chapterintro}{\begin{center}\begin{large}\begin{it}\begin{minipage}{12 cm}}{\end{minipage}\end{it}\end{large}\end{center}}
-\newcommand{\gtermen}[2]{\newglossaryentry{#1}{description={#2}}\termen{#1}}
+\newcommand{\gtermen}[3][]{\ifthenelse{\equal{#1}{}}{\newglossaryentry{#2}{name={#2},description={#3}}}{\newglossaryentry{#1}{name={#2},description={#3}}}\termen{#2}}
 \newcommand{\vhdltermen}[1]{\index{\texttt{VHDL}!\texttt{#1}}\texttt{#1}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\clrsin}{\texttt{Clr$^*$}}
@@ -87,7 +88,7 @@ title=\lstname,                 % show the filename of files included with \lsti
 \tableofcontents
 \chapter*{Notities vooraf}
 \begin{it}
-Deze cursus omvat de volledige inhoud van het onderwerp ``Digitale Elektronica \& Processoren'' gegeven tijdens het academiejaar 2010-2011 door prof. Van Eycken. De cursus is dan ook hoofdzakelijk gebaseerd op de presentaties voor dit onderwerp. Andere bronnen worden vermeld in de referentielijst op pagina \pageref{reference}. Aanbevolen literatuur is \cite{brown2004fundamentals}, \cite{gajski1997principles}, \cite{wakerly2000digital} en \cite{ashenden2008designer}.
+Deze cursus omvat de volledige inhoud van het onderwerp ``Digitale Elektronica \& Processoren'' gegeven tijdens het academiejaar 2010-2011 door prof. Van Eycken. De cursus is dan ook hoofdzakelijk gebaseerd op de presentaties voor dit opleidingsonderdeel. Andere bronnen worden vermeld in de referentielijst op pagina \pageref{reference}. Aanbevolen literatuur is \cite{brown2004fundamentals}, \cite{gajski1997principles}, \cite{wakerly2000digital} en \cite{ashenden2008designer}.
 \paragraph{}
 De cursus wordt uitgegeven onder de \texttt{CopyLeft} licentie, dit betekent dat iedereen de cursus vrij kan aanpassen en herverdelen.
 \paragraph{}
@@ -97,18 +98,18 @@ valt eigenlijk niet veel te zeggen, behalve dat hij geen exemplaren signeert.
 \paragraph{}
 Speciale dank gaat naar (in alfabetische volgorde) ``Amy Winehouse'', ``Harold Budd'', ``Hooverphonic'', ``Moby'', ``Paul Simon'', ``Piknik'', ``Russkij Razmer'' en ``The Beatles'' voor de muziek tijdens de nachten waarin deze cursus tot stand kwam.
 \section*{Betreft het examen}
-Het examen bestond traditioneel tijdens het academiejaar 2010-2011 uit drie delen:
+Het examen bestond tijdens het academiejaar 2010-2011 traditioneel uit drie delen:
 \begin{enumerate}
- \item Theorie: bestaat uit twee vragen, dit zijn meestal termen. Deze termen kunnen achteraan in de index op pagina \pageref{idx} worden teruggevonden. De meeste ook in de woordenlijst op pagina \pageref{glos}.
- \item Synthese van een datapad en controller: De student krijgt een \texttt{VHDL}-code, en wordt gevraagd naar een equivalent ASM-schema. Vervolgens dient hierbij het datapad en de controller gesynthetiseerd te worden. Soms volstaat het echter om bij de controller een toestandsdiagram weer te geven.
- \item Synthese van een toestandsdiagram: Er wordt een toestandsdiagram gegeven (meestal in tabelvorm). De student dient dit diagram te vertalen in hardware. Meestal worden er extra beperkingen opgelegd, zoals het gebruik van een bepaald type flip-flop, en poorten. Ook dient men vaak de Karnaugh-kaarten weer te geven.
+ \itemit{Theorie}: bestaat uit twee vragen, dit zijn meestal termen. Deze termen kunnen achteraan in de index op pagina \pageref{idx} worden teruggevonden. De meeste ook in de woordenlijst op pagina \pageref{glos}.
+ \itemit{Synthese van een datapad en controller}: De student krijgt een \texttt{VHDL}-code, en wordt gevraagd naar een equivalent ASM-schema. Vervolgens dient hierbij het datapad en de controller gesynthetiseerd te worden. Soms volstaat het echter om bij de controller een toestandsdiagram weer te geven.
+ \itemit{Synthese van een toestandsdiagram}: Er wordt een toestandsdiagram gegeven (meestal in tabelvorm). De student dient dit diagram te vertalen in hardware. Meestal worden er extra beperkingen opgelegd, zoals het gebruik van een bepaald type flip-flop, en/of poorten. Ook dient men vaak de Karnaugh-kaarten weer te geven.
 \end{enumerate}
-Het examen is volledig gesloten boek. De eerste twee vragen worden mondeling besproken, dit houdt echter in dat wat op papier staat de basis vormt. De laatste vraag is volledig schriftelijk. Enkel het examenmoment geldt als evaluatie. De student mag een referentieblad meebrengen over VHDL. Dit is te koop bij de VTK CuDi.
+Het examen is volledig gesloten boek. De eerste twee vragen worden mondeling besproken, wat op papier staat vormt echter de basis. De laatste vraag is volledig schriftelijk. Enkel het examenmoment geldt als evaluatie. De student mag een referentieblad meebrengen over VHDL. Dit is te koop bij de \emph{VTK CuDi}.
 \section*{Layout en Stijl}
 \paragraph{}
 Alle pagina's zijn afdrukbaar met een zwart-wit printer. Dit drukt eventuele kosten bij een afdruk van deze cursus. Bovendien verhoogt het de leesbaarheid bij kleurenblinden.
 \paragraph{}
-Deze cursus wordt ge\"illustreerd met talloze afbeeldingen. Deze zijn allemaal tot stand gekomen met het grafisch pakket TikZ\footnote{TikZ: TikZ ist kein Zeichenprogramm.} samen met zelfgeschreven bibliotheken. Alle afbeeldingen zijn bijgevolg vectorieel. En kunnen dus eindeloos uitvergroot worden met een geschikte .pdf viewer.
+Deze cursus is gecompileerd met \LaTeX en wordt ge\"illustreerd met talloze afbeeldingen. Deze afbeeldingen zijn allemaal tot stand gekomen met het grafisch pakket \emph{TikZ}\footnote{TikZ: TikZ ist kein Zeichenprogramm.} samen met zelfgeschreven bibliotheken. Alle afbeeldingen zijn bijgevolg vectorieel. En kunnen dus eindeloos uitvergroot worden met een geschikte .pdf viewer.
 \paragraph{}
 \termenlayout{Terminologie} wordt in het vetjes en zonder schreven\footnote{De zogenoemde ``pootjes'' die sommige letters krijgen. (Engels: serifs)} gezet. Deze terminologie wordt ook herhaald op het einde van de cursus in de index op pagina \pageref{idx}.
 \section*{Kudos}
@@ -119,7 +120,7 @@ Kudos gaan uit naar volgende personen/groepen (in alfabetische volgorde):
  \item[Ingmar Dasseville] Voor enkele Haskell scripts in het kader van geautomatiseerde \LaTeX-code generatie.
  \item[Wina studentenkring] Om overduidelijke redenen... In tegenstelling tot VTK...
  \item[Het revisoren-team] bestaande uit: Ingmar Dasseville, Jonas Vanthornhout, Katie Pauwelyn en Steven Roose.
- \item[Personen die errata indienden] Alex Witteveen, Christophe Van Ginneken, Davy Vanclee, Dennis Degryse, Ingmar Dasseville, Jonas Devlieghere, Jonas Vanthornhout, Katie Pauwelyn, Lynn Houthuys, Neline van Ginkel, Philippe De Croock, Pieter Van Riet , Sander Van Loock
+ \item[Personen die errata indienden] Alex Witteveen, Christophe Van Ginneken, Davy Vanclee, Dennis Degryse, Ingmar Dasseville, Jonas Devlieghere, Jonas Vanthornhout, Katie Pauwelyn, Lynn Houthuys, Neline van Ginkel, Philippe De Croock, Pieter Van Riet, Sander Van Loock.
 \end{description}
 \section*{Link naar deze cursus}
 De meest recente versie van deze cursus is op onderstaande link te vinden:
@@ -166,6 +167,7 @@ Indien er fouten gerapporteerd worden, of toevoegingen gedaan worden zullen na v
 \label{reference}
 \end{twocolumn}
 \label{glos}
+\glsaddall{}
 \printglossaries
 \label{idx}
 \printindex

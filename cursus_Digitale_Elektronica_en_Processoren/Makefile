@@ -1,7 +1,10 @@
 cursus.pdf: *.tex *.bib *.sty */*.tex tables/*.tex tikzpictures/*.tex ../SharedData/*.sty
-	bash ../generatepdfsleep.sh "cursus" > /dev/null 2> /dev/null
+	date
+	date > logger.dat
+	date > error.dat
+	bash ../generatepdfsleep.sh "cursus" >> logger.dat 2>> errors.dat #TODO: remove io redirects
 	make clean
 	echo "[Done]"
 
 clean:
-	rm *.aux *.out *.log *.bbl *.blg *~ *.*~* *.mtc*
+	rm -f *.aux *.out *.log *.bbl *.blg *~ *.*~* *.mtc* *.toc *.xdy *.glg *.glo *.gls *.glsdefs *.idx *.ind *.ist *.lof *.lot *.ilg *.maf
