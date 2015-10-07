@@ -7,4 +7,4 @@ cursus.pdf: *.tex *.bib *.sty */*.tex tables/*.tex tikzpictures/*.tex ../SharedD
 	echo "[Done]"
 
 clean:
-	rm -f *.aux *.out *.log *.bbl *.blg *~ *.*~* *.mtc* *.toc *.xdy *.glg *.glo *.gls *.glsdefs *.idx *.ind *.ist *.lof *.lot *.ilg *.maf
+	rm -f *.aux *.out *.log *.bbl *.blg *~ *.*~* *.mtc* *.toc *.xdy *.glg *.glo *.gls *.glsdefs *.idx *.ind *.ist *.lof *.lot *.ilg *.maf logger.dat errors.dat
