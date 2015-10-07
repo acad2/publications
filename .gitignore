@@ -85,3 +85,7 @@
 *.mx*
 *.glsdefs
 *.dat
+
+#But allow
+!*.sh #shell scripts
+!*.pl #perl scripts
