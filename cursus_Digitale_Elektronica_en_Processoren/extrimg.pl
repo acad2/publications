@@ -8,6 +8,7 @@ my $prefc="";
 my $pstfc="";
 my $tikz=0;
 my $tikzc;
+my @imst = ();
 
 open(my $in,"<",$fli);
 open(my $ou,">",$flo);
@@ -32,7 +33,6 @@ while ( <$in> ) {
   if($tikz) {
     $ln =~ /^(.*?)((\\end{tikzpicture})(.*))?$/;
     $tikzc .= "$1$3";
-    #print STDERR $tikzc;
     if($2) {
       $tikz=0;
       if($3) {
@@ -44,7 +44,22 @@ while ( <$in> ) {
       $tikzc .= "\n";
     }
   } else {
-    if($ln =~ /^(.*)(\\figlab{(?<lbl>[^}]*)}|\\label{fig:(?<lbl>[^}]*)})(.*)$/) {
+    if ($ln =~ /^(.*)(\\begin{figure})(.*)$/) {
+      $prefc .= "$1$2$3\n";
+      print STDERR "push f\n";
+      push @imst,'f'
+    }
+    elsif($ln =~ /^(.*)(\\end{figure)(.*)$/) {
+      $prefc .= "$1$2$3\n";
+      my $t = pop @imst;
+      print STDERR "pop $t\n";
+    }
+    elsif($ln =~ /^(.*)(\\subfigure\[[^\]]*\]\{)(.*)$/) {
+      $prefc .= "$1$2$4\n";
+      push @imst,'s';
+      print STDERR "push s\n"
+    }
+    elsif($ln =~ /^(.*)(\\figlab{(?<lbl>[^}]*)}|\\label{fig:(?<lbl>[^}]*)})(.*)$/) {
       $pstfc .= $1;
       if($tikzc) {
         my $lbl=normLabel($+{lbl});
@@ -86,3 +101,4 @@ while ( <$in> ) {
   }
 }
 print $ou "$prefc$tikzc$pstfc$2$5";
+print STDERR @imst
