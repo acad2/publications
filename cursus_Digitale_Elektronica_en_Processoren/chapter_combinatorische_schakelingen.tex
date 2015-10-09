@@ -1,5 +1,4 @@
 \chapter{Combinatorische Schakelingen (Schakelingen zonder geheugen)}
-\label{ch:combinatoric}
 \chplab{combinatoric}
 \chapterquote{Zelfs al zou er niets nieuws geschapen worden, dan is er nog altijd een nieuwe combinatie.}{Henry Ford, Amerikaans automobielfabrikant (1863-1947)}
 \begin{chapterintro}
@@ -844,7 +843,7 @@ Een standaard om tekst voor te stellen is de American Standard Code for Informat
 \label{s:andereBasis}
 Naast de rekenkundige schakelingen in sectie \ref{s:rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In subsectie \ref{ss:multiplexer} bespreken we de multiplexer. Daarna bespreken we in \ref{ss:decoder} en \ref{ss:demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \ref{ss:encoder}. We eindigen met de vergelijker in \ref{ss:comparator} en de reeds aangehaalde schuifoperatie in subsectie \ref{ss:shiftoperators}.
 \subsection{Multiplexer}
-\label{ss:multiplexer}
+\ssclab{multiplexer}
 Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema wordt deze component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op figuur \ref{fig:multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. Figuren \ref{fig:multiplexerTruthTable} en \ref{fig:multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van deze component.
 \begin{figure}[hbt]
 \centering

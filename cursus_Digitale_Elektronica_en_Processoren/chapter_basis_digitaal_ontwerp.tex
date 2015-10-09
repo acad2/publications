@@ -1234,9 +1234,8 @@ Dikwijls zijn initieel de specificaties onvolledig. De gaten in de specificaties
 \ssclab{synthese}
 De \gtermen{Synthese}{De vertaling van specificaties van een hoog en abstract niveau naar een lager niveau. Er zijn verschillende lagere niveaus. Het gekozen niveau hangt af van de beschikbare componenten in de bibliotheek. Zo is er het RTL niveau, het ASIC niveau, etc.} is niets anders dan de vertaling van de specificaties van een hoog en abstract naar een lager niveau. Hierbij dienen uiteraard concrete beslissingen genomen te worden over de implementatie. Zo kunnen de specificaties bijvoorbeeld vermelden dat $x$ en $y$ bij elkaar opgeteld moeten worden. De synthese moet dan een concrete implementatie voorstellen. Bijvoorbeeld een $16$-bit ripple-carry adder met twee registers.
 
-%REVIEW
 \paragraph{}
-Synthese gebeurt meestal op verschillende niveaus. Zo worden op het laagste niveau componenten gebouwd. Dit zijn bijvoorbeeld de poorten maar ook bijvoorbeeld flipflops of multiplexers. Deze worden op een niveau hoger gebruikt om \termen{Register-Transfer-Level (RTL) Componenten} te bouwen. Deze RTL componenten zijn bijvoorbeeld optellers, schuifregisters en tellers. Schakelingen met deze componenten zijn dan \termen{Application Specific IC (ASIC) componenten}. Deze componenten vormen dan uiteindelijk de bouwblokken voor het systeem. Bij de systeemsynthese worden dan processoren, geheugens en de ASIC componenten gecombineerd. \figref{synthesisPyramid} toont de pyramide van synthese. Elk niveau combineert hierbij de componenten ge\"introduceerd op een niveau lager.
+Synthese gebeurt meestal op verschillende niveaus. Zo worden op het laagste niveau componenten gebouwd: dit zijn bijvoorbeeld de poorten maar ook flipflops of multiplexers\footnote{Zie respectievelijk \sscref{flipflop} en \sscref{multiplexer}.}. Deze worden op een niveau hoger gebruikt om \gtermen{Register-Transfer-Level (RTL) Componenten}{Een laag van componenten voor synthese. Hieronder vallen ondermeer optellers, tellers en schuifregissters vallen.} te bouwen. Deze RTL componenten zijn bijvoorbeeld optellers, schuifregisters en tellers. Schakelingen met deze componenten zijn dan \termen{Application Specific IC (ASIC) componenten}{Een laag van componenten voor synthese. Hieronder vallen de algemene bouwblokken van een systeem zoals processoren en geheugens.}. Deze componenten vormen dan uiteindelijk de bouwblokken voor het systeem. Bij de \gtermen{systeemsynthese}{De hoogste laag van de synthese pyramide. Hier worden processoren, geheugens en ASIC componenten gecombineerd in een volledig systeem.} worden dan processoren, geheugens en de ASIC componenten gecombineerd. \figref{synthesisPyramid} toont de pyramide van synthese. Elk niveau combineert hierbij de componenten ge\"introduceerd op een niveau lager.%TODO: more advanced glossary
 
 \begin{figure}[htb]
 \centering
@@ -1250,28 +1249,30 @@ Synthese gebeurt meestal op verschillende niveaus. Zo worden op het laagste nive
 \caption{De verschillende lagen bij de synthese.}
 \figlab{synthesisPyramid}
 \end{figure}
+
 \subsection{Bibliotheek}
-\label{ss:bibliotheek}
+\ssclab{bibliotheek}
 We dienen niet het volledige stuk hardware vanaf transistor of poortniveau te ontwerpen. Heel wat werk is dan ook al in het verleden door andere ontwerpers gedaan. Het hergebruiken van deze ontwerpen heeft dan ook heel wat voordelen:
 \begin{itemize}
  \item De ontwerpen zijn meestal al door verschillende personen geoptimaliseerd. Het vinden van een nog optimalere implementatie is daardoor quasi onbestaand.
- \item Men streeft naar telkens hogere integratieniveaus waarbij soms volledige systemen op chip te verkrijgen zijn. Bovendien worden deze systemen telkens geavanceerder. Dit komt door de \termen{Wet van Moore}. Deze stelt dat elke 24 maanden het aantal transistoren op een chip verdubbelt.
- \item Vaak kan men componenten kopen die een bepaalde functie vervullen. Dit bespaart veel ontwerpwerk. Bovendien zijn deze componenten vaak veel goedkoper dan ze zelf te ontwerpen en te produceren. Bijvoorbeeld een 16 kB geheugen.
+ \item Men streeft naar telkens hogere integratieniveaus waarbij soms volledige systemen op chip te verkrijgen zijn. Bovendien worden deze systemen telkens geavanceerder. Dit komt door de \gtermen{Wet van Moore}{Een geobserveerde wet dat het aantal transistoren op een chip gemiddeld elke 24 maanden verdubbelt.}. Deze stelt dat elke 24 maanden het aantal transistoren op een chip verdubbelt.
+ \item Vaak kan men componenten kopen die een bepaalde functie vervullen. Dit bespaart veel ontwerpwerk. Bovendien zijn deze componenten vaak veel goedkoper dan ze zelf te ontwerpen en te produceren. Bijvoorbeeld een $16$ kB geheugen.
 \end{itemize}
 Er bestaan bibliotheken op elk syntheseniveau. Dus bijgevolg kan men tot op het niveau dat men zelf kiest putten uit de bibliotheken.
+
 \subsection{Analyse}
-\label{ss:analyse}
-Na elke synthesestap is het belangrijk om te testen of aan de vereiste specificaties voldaan is. Dit wordt gedaan in de \termen{Analyse}. Niet alleen wordt hier getest of de implementatie de functionaliteit levert die gevraagd is, ook allerhande andere parameters worden in rekening gebracht:
+\ssclab{analyse}
+Na elke synthesestap is het belangrijk om te testen of aan de vereiste specificaties voldaan is. Dit wordt gedaan in de \gtermen{Analyse}{Een stap in het ontwerpproces waarbij men test of een synthese voldoet aan alle vereiste specificaties.}. Niet alleen wordt hier getest of de implementatie de functionaliteit levert die gevraagd is, ook allerhande andere parameters worden in rekening gebracht:
 \begin{itemize}
- \item Kostprijs: vaak wordt hier als metriek het aantal pinnen en de oppervlakte van de printplaat (PCB\footnote{PCB: Printed Circuit Board.}) gebruikt.
- \item Vermogengebruik: het vermogenverbruik wordt meestal berekend met de formule $C\cdot f\cdot V^2$ met als parameters:
+ \itemit{Kostprijs}: vaak wordt hier als metriek het aantal pinnen en de oppervlakte van de printplaat (PCB\footnote{PCB: Printed Circuit Board.}) gebruikt.
+ \itemit{Vermogengebruik}: het vermogenverbruik wordt meestal berekend met de formule $C\cdot f\cdot V^2$ met als parameters:
  \begin{itemize}
-  \item $C$ De oppervlakte van de chip. De oppervlakte is in de tijd toegenomen. In 1983 was een gemiddelde chip immers $0.25\mbox{ cm}^2$, in 2000 was dat ongeveer $4\mbox{ cm}^2$.
-  \item $f$ De \termen{klokfrequentie}. De klokfrequentie is in de loop der tijd exponentieel gestegen. Met $1\mbox{ MHz}$ in 1983, en $1\mbox{ GHz}$ in 2000.
-  \item $V$ De spanning die aan de chip geleverd wordt. De spanning is gedaald: van $5\mbox{ V}$ in 1983 tot $1.5\mbox{ V}$ ongeveer 17 jaar later.
- \end{itemize}
- \item Snelheid: de vertraging of \termen{doorvoer} (``\termen{throughput}''). Dit is het aantal resultaten per seconde.
- \item Testbaarheid: kunnen we alle fouten ontdekken met behulp van testvectoren?
+  \item $C$: De oppervlakte van de chip. De oppervlakte is in de tijd toegenomen. In 1983 was een gemiddelde chip immers $0.25\mbox{ cm}^2$, in 2000 was dat ongeveer $4\mbox{ cm}^2$.
+  \item $f$: De \termen{klokfrequentie}. De klokfrequentie is in de loop der tijd exponentieel gestegen. Met $1\mbox{ MHz}$ in 1983, en $1\mbox{ GHz}$ in 2000.
+  \item $V$: De spanning die aan de chip geleverd wordt. De spanning is gedaald: van $5\mbox{ V}$ in 1983 tot $1.5\mbox{ V}$ ongeveer 17 jaar later.
+ \end{itemize}%REVIEW
+ \itemit{Snelheid}: de vertraging of \termen{doorvoer} (``\termen{throughput}''). Dit is het aantal resultaten per seconde.
+ \itemit{Testbaarheid}: kunnen we alle fouten ontdekken met behulp van testvectoren?
 \end{itemize}
 \subsection{Documentatie}
 \label{ss:documentatie}
