@@ -929,10 +929,13 @@ POS: $f=M_0\cdot M_2\cdot M_3\cdot M_7=\left(x+y+z\right)\cdot\left(x+y'+z\right
 \tbllab{truthTableExampleMaxTerms}
 \end{table}
 
-%REVIEW
 \subsection{Canonieke versus standaard realisatie}
 \ssclab{canoniekestandaardrealisatie}
-Wanneer we de Sum-of-Products of Product-of-Sums methodes toepassen, zullen alle min- of maxtermen alle variabelen bevatten. Zo'n implementatie wordt de \termen{Canonieke Vorm} genoemd. Dit is bijgevolg een relatief dure implementatie. Nochtans bestaat er een eenvoudige methode om een groot deel van de poorten te elimineren of te reduceren in aantal ingangen. Deze methode zet de canonieke vorm om in de \termen{Standaard Vorm}. De methode komt er op neer verschillende min- of maxtermen samen te nemen door er de wetten van De Morgan op toe te passen. Op die manier kunnen we dan deelexpressies van de vorm $x+x'$ uitkomen. Omdat deze deelexpressies altijd waar zijn onafhankelijk van $x$ kan bijgevolg $x$ geëlimineerd worden uit de nieuwe min- of maxterm. Op \figref{standardizationMinMaxTerms} herleiden we de canonieke vormen van het voorbeeld naar hun standaard equivalent.
+Wanneer we de Sum-of-Products of Product-of-Sums methodes toepassen, zullen alle min- of maxtermen per definitie alle variabelen bevatten. Deze implementatie wordt de \gtermen{canonieke vorm}{Een implementatie van een logische functie aan de hand van Sum-of-Products of Product-of-Sums waarbij men geen poging doet de min- of maxtermen verder te optimaliseren.} genoemd. Dit is bijgevolg een relatief dure implementatie.
+
+\paragraph{}
+Nochtans bestaat er een eenvoudige methode om een groot deel van de poorten te elimineren of te reduceren in aantal ingangen. Deze methode zet de canonieke vorm om in de \gtermen{standaard vorm}{Een implementatie van een logische functie aan de hand van Sum-of-Products of Products-of-Sum, maar waarbij men aan de hand van de wetten van De Morgan het aantal poorten reduceert. De standaard vorm is altijd goedkoper dan de canonieke vorm.}. De methode komt er op neer verschillende min- of maxtermen samen te nemen door er de wetten van De Morgan (zie \tblref{booleanAlgebraMultiple}) op toe te passen. Op die manier kunnen we dan deelexpressies van de vorm $x+x'$ uitkomen. Omdat deze deelexpressies altijd waar zijn onafhankelijk van $x$ kan bijgevolg $x$ ge\"elimineerd worden uit de nieuwe min- of maxterm\footnote{Strikt genomen is dit dan geen min- of maxterm meer.}. Op \figref{standardizationMinMaxTerms} herleiden we de canonieke vormen van het voorbeeld naar hun standaard equivalent.
+
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}
@@ -1039,11 +1042,13 @@ Wanneer we de Sum-of-Products of Product-of-Sums methodes toepassen, zullen alle
 \end{tikzpicture}};
 \end{scope}
 \end{tikzpicture}
-\caption{Herleiden naar Standaard Vorm van voorbeeld.}
+\caption{Herleiden naar standaard vorm van voorbeeld.}
 \figlab{standardizationMinMaxTerms}
 \end{figure}
+
 \paragraph{}
-De Standaard Vorm is gegarandeerd de meest minimale vorm voor schakelingen met twee lagen. Het is echter wel mogelijk goedkopere schakelingen te ontwerpen die uit meerdere lagen bestaat. In dat geval dient er echter een trade-off gemaakt te worden tussen kosten enerzijds en performantie anderzijds. Zo toont \figref{alternativeStandardForm} een alternatieve implementatie van een standaardvorm. Deze is 8\% goedkoper\footnote{De relatieve kost van een circuit kan berekend worden met vergelijking \ref{eqn:kosten}.}, maar zal slechts aan 66\% van de snelheid werken. In dat geval zal de toepassing vaak uitmaken wat het meest opportuun is.
+Door alle mogelijkheden uit te putten bij de standaard vorm bekomen we gegarandeerd de meest minimale vorm voor schakelingen met twee lagen. Het is echter wel mogelijk goedkopere schakelingen te ontwerpen die uit meerdere lagen bestaat. In dat geval dient er echter een trade-off gemaakt te worden tussen kosten enerzijds en performantie anderzijds. Zo toont \figref{alternativeStandardForm} een alternatieve implementatie van een standaardvorm. Deze is 8\% goedkoper\footnote{De relatieve kost van een circuit kan berekend worden met \eqnref{kosten}.}, maar zal slechts aan 66\% van de snelheid werken. In dat geval zal de toepassing vaak uitmaken wat het meest opportuun is.
+
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}[circuit logic US]
@@ -1082,8 +1087,10 @@ De Standaard Vorm is gegarandeerd de meest minimale vorm voor schakelingen met t
 \caption{Standaard vorm en alternatief.}
 \figlab{alternativeStandardForm}
 \end{figure}
+
 \subsection{Realisaties met NAND en NOR}
-Zoals reeds kort vermeld in subsectie \ref{ss:logischePoorten} zijn NAND en NOR poorten erg populair bij heel wat implementaties. Dit komt omdat ze alle basispoorten kunnen emuleren zoals blijkt uit \tblref{nandNorUniversal} op pagina \pageref{tbl:nandNorUniversal}. Bovendien is hun kostprijs lager dan een AND of OR poort\footnote{Denk aan de formule van de kostprijs: het aantal inverters wordt afgetrokken van de kostprijs.}. NAND en NOR poorten blijken bovendien ook makkelijk implementeerbaar als substituut voor AND en OR poorten in standaard vorm. \figref{standardizationNandNor} toont hoe we ons voorbeeld in standaardvorm verder kunnen optimaliseren. In stap 1 inverteren we de min- en max-termen door van een AND en OR respectievelijk een NAND en NOR te maken. We behouden echter de functie door inverters aan de ingangen van het tweede niveau toe te voegen. Immers is tweemaal inverteren niets anders dan dezelfde waarde behouden. Door vervolgens de wetten van De Morgan toe te passen in stap 2, resulteert dit in een circuit die alleen gebruik maakt van NAND en NOR poorten. Bovendien geldt dat een circuit ge\"implementeerd met NAND en NOR poorten altijd zowel goedkoper en sneller is dan zijn canonisch equivalent.
+Zoals reeds kort vermeld in \sscref{logischePoorten} zijn NAND en NOR poorten erg populair bij heel wat implementaties. Dit komt omdat ze alle basispoorten kunnen emuleren zoals blijkt uit \tblrefpag{nandNorUniversal}. Bovendien is hun kostprijs lager dan een AND of OR poort\footnote{Denk aan de formule van de kostprijs: het aantal inverters wordt afgetrokken van de kostprijs.}. NAND en NOR poorten blijken bovendien ook makkelijk implementeerbaar als substituut voor AND en OR poorten in standaard vorm. \figref{standardizationNandNor} toont hoe we ons voorbeeld in standaardvorm verder kunnen optimaliseren. Eerst inverteren we de min- en max-termen door van een AND en OR respectievelijk een NAND en NOR te maken. We behouden echter de functie door inverters aan de ingangen van het tweede niveau toe te voegen. Immers is tweemaal inverteren niets anders dan dezelfde waarde behouden. Door vervolgens de wetten van De Morgan toe te passen in de tweede stap, resulteert dit in een circuit die alleen gebruik maakt van NAND en NOR poorten. Bovendien geldt dat een circuit ge\"implementeerd met NAND en NOR poorten altijd zowel goedkoper en sneller is dan zijn canonisch equivalent. Een laatste voordeel is dat we de schakelimg met \'e\'en type poort implementeren. Dit kan nuttig zijn omdat we op een chip in massa poorten van eenzelfde type kunnen zetten, en dan later de bedrading ontwerpen.
+
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}[circuit logic US]
@@ -1193,6 +1200,8 @@ Zoals reeds kort vermeld in subsectie \ref{ss:logischePoorten} zijn NAND en NOR 
 \caption{Standaardvorm van het voorbeeld met NAND en NOR's.}
 \figlab{standardizationNandNor}
 \end{figure}
+
+%REVIEW
 \section{Digitaal ontwerp in grote lijnen}
 Nu we de concepten van een digitaal ontwerp in grote lijnen uitgetekend hebben, kunnen we het over de praktische kant van de zaak hebben. Immers komt bij een digitaal ontwerp veel meer kijken dan alleen het bouwen van de juiste schakeling. Een klant zal immers specificaties sturen waaraan de hardware moet voldoen, bovendien wil de klant naast de hardware vaak ook nog documentatie over hoe men het toestel dient te gebruiken. Bovendien willen we vermijden dat we bij het ontwerpen telkens opnieuw het wiel moeten uitvinden. Er bestaan immers al bibliotheken die allerhande schakelingen voor bijvoorbeeld optellingen, testen op gelijke waarde,... bevatten. Deze zijn meestal met de nodige zorg samengesteld zodat het vinden van een nog effici\"entere implementatie moeilijk wordt. \figref{digitalDesignManagement} vat het hele verloop goed samen. Verder zullen we in de volgende subsecties de verschillende stappen want meer in detail bekijken.
 \begin{figure}

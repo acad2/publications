@@ -1,8 +1,8 @@
 #!/bin/bash
-git checkout dep
+git checkout dep >/dev/null 2>/dev/null
 cd "`dirname $0`"
 
-renice -n 19 -p "$$"
+renice -n 19 -p "$$" >/dev/null 2>/dev/null
 
 while true
 do
