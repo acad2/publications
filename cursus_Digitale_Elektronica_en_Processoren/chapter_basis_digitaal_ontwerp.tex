@@ -662,6 +662,7 @@ Tot slot introduceren we nog een andere conventie die vaak gebruikt wordt: \gter
 \caption{Poorten met ge\"inverteerde ingangen.}
 \figlab{basicGatesInvertedInput}
 \end{figure}
+
 \subsection{Logische schakelingen}
 De vorige subsectie toonde al dat we met deze poorten netwerken kunnen bouwen. Deze netwerken worden \gtermen{logische schakelingen}{Een netwerk van logische poorten.} genoemd. Deze schakelingen implementeren dan uiteindelijk de functionaliteiten waarvoor we een digitaal circuit ontwerpen. We kunnen logische schakelingen beschrijven door middel van een schema zoals we dat tot nu toe altijd gedaan hebben. Een andere techniek is echter op basis van een taal: VHDL\footnote{VHDL: VHSIC Hardware Design Language; VHSIC: Very High Speed Integrated Circuit.}. Deze taal komt onder meer aan bod in sectie \secref{vhdl}, en verder in de verdere hoofdstukken van deze cursus.
 
@@ -724,6 +725,7 @@ In de vorige paragraaf hadden we het reeds over performantie. Snelle systemen wo
 \caption{Voorbeeld van het tijdsgedrag van een logische schakeling met een ``glitch''.}
 \figlab{timeBehaviorGlitchExample}
 \end{figure}
+
 \section{Booleaanse algebra}
 \seclab{booleaanseAlgebra}
 De tak van de wiskunde die zich bezighoudt met logische bewerkingen is de \gtermen{booleaanse algebra}{De tak van de wiskunde die zich bezighoudt met logische bewerkingen.}. Deze algebra rekent uitsluitend met de twee logische waarden $\left\{0,1\right\}$ en drie logische operatoren die ons reeds bekend zijn: NOT ($'$), AND ($\cdot$) en OR ($+$). Deze operaties hebben elk een specifieke prioriteit zodat men met een minimum aan haakjes toch een complexe expressie kan beschrijven. Zo heeft de NOT prioriteit over de AND die prioriteit heeft over de OR.\footnote{Een ezelsbruggetje om dit te onthouden is het woord NANO: \underline{N}ot, \underline{AN}d en \underline{O}r.}

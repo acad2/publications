@@ -13,6 +13,11 @@ do
         echo ""
         if [[ "$a" =~ [qQ] ]]
         then
+            fs=$(wc -c cursus.pdf | cut -d' ' -f 1) #obtain the file size
+            if [ "$fs" -gt "2000000" ] #if larger than 2 MB
+            then
+                scp cursus.pdf ulyssis:www/cursus_dep.pdf
+            fi
             exit 0
         fi
     done
