@@ -21,6 +21,6 @@ do
             exit 0
         fi
     done
-    make clean >/dev/null 2>/dev/null
+    make purge >/dev/null 2>/dev/null
     git commit -am 'temporary commit'
 done
