@@ -782,7 +782,6 @@ $(x\cdot y)'=x'+y'$&$(x+y)'=x'\cdot y'$
 \paragraph{Dualiteit}
 Een opmerkelijke eigenschap bij booleaanse algebra is de dualiteit. Indien we bij een van de wetten uit \tblref{booleanAlgebraNone}, \tblref{booleanAlgebraSingle} of \tblref{booleanAlgebraMultiple} de OR operaties door AND operaties vervangen en vice-versa, en de $1$ door $0$ vervangen en vice-versa, bekomen we eenvoudigweg een andere wet uit deze tabellen (meestal dezelfde rij, maar de andere kolom). Deze eigenschap noemen we de \gtermen{dualiteit}{Een eigenschap van de Booleaanse algebra dat elke wet in de booleaanse algebra, door AND met OR te verwisselen en $0$ met $1$, een andere geldige wet uitkomt.} van de booleaanse algebra. Bovendien geldt dus ook dat slechts de helft van de gestelde wetten vereist is. Het andere deel kan met de \gtermen{wetten van De Morgan}{Twee wetten in de booleaanse algebra. De eerste wet stelt dat de negatie van een AND, een OR  is met ge\"inverteerde ingangen. De tweede wet is zijn duale: de negatie van een OR is een AND met ge\"inverteerde ingangen. Formeel schrijven we de wetten als $\brak{x\cdot y}'=x'+y'$ en $\brak{x+y}'=x'\cdot y'$.} afgeleid worden.
 
-%REVIEW
 \paragraph{Verschil met de gewone algebra}
 Omdat ook de booleaanse algebra een optelling en vermenigvuldiging lijkt te defini\"eren en er bovendien ook analogie\"en te trekken zijn, lijkt het soms dat booleaanse algebra niet verschilt van de standaard algebra. Toch zijn er enkele opmerkelijke verschillen. Zo bestaat er geen verschil of deling in de booleaanse algebra. Verder voldoet in de booleaanse algebra volgend stelsel voor iedere $y$:
 \begin{equation}
@@ -790,10 +789,12 @@ Omdat ook de booleaanse algebra een optelling en vermenigvuldiging lijkt te defi
 y+y'=1\\
 y\cdot y=y
 \end{array}\right.
-\end{equation}
-Terwijl in de standaard algebra er geen enkele $y$ is waarvoor dit geldt. Tot slot is bij standaard algebra de optelling ook niet distributief tegenover de vermenigvuldiging, zo is $5+2\cdot4\neq(5+2)\cdot(5+4)$.
+\end{equation}%TODO error?
+Terwijl in de standaard algebra er slechts \'e\'en $y$ is waarvoor dit geldt: $y=1$. Tot slot is bij standaard algebra de optelling ook niet distributief tegenover de vermenigvuldiging, zo is $5+2\cdot4\neq(5+2)\cdot(5+4)$ terwijl in booleaanse algebra $x+\brak{y\cdot z}=\brak{x+y}\cdot\brak{x+z}$ dit wel geldt.
+
+%REVIEW
 \section{Synthese met logische poorten}
-\label{s:synthese}
+\seclab{synthese}
 Nu we weten hoe logische schakelingen werken, en hoe we deze door middel van de booleaanse algebra kunnen uitwerken, wordt het tijd om zelf schakelingen te bouwen. Dit doen we vertrekkend vanuit een waarheidstabel. Soms is het makkelijk om een implementatie af te leiden uit deze waarheidstabellen. Maar indien het aantal variabelen groot wordt of de functie complex is, wordt het vinden van een implementatie moeilijk. In deze cursus stellen we dan ook enkele algemene technieken voor om uit een waarheidstabel een logische functie te genereren. In sectie \ref{s:minimalisatie} zullen we bovendien enkele methodes beschrijven om deze logische implementaties te optimaliseren. Doorheen deze sectie zullen we een logische functie genereren voor de waarheidstabel in \tblref{truthTableExample}.
 \begin{table}[htb]
 \centering
