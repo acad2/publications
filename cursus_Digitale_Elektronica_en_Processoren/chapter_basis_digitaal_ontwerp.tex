@@ -792,10 +792,9 @@ y\cdot y=y
 \end{equation}%TODO error?
 Terwijl in de standaard algebra er slechts \'e\'en $y$ is waarvoor dit geldt: $y=1$. Tot slot is bij standaard algebra de optelling ook niet distributief tegenover de vermenigvuldiging, zo is $5+2\cdot4\neq(5+2)\cdot(5+4)$ terwijl in booleaanse algebra $x+\brak{y\cdot z}=\brak{x+y}\cdot\brak{x+z}$ dit wel geldt.
 
-%REVIEW
 \section{Synthese met logische poorten}
 \seclab{synthese}
-Nu we weten hoe logische schakelingen werken, en hoe we deze door middel van de booleaanse algebra kunnen uitwerken, wordt het tijd om zelf schakelingen te bouwen. Dit doen we vertrekkend vanuit een waarheidstabel. Soms is het makkelijk om een implementatie af te leiden uit deze waarheidstabellen. Maar indien het aantal variabelen groot wordt of de functie complex is, wordt het vinden van een implementatie moeilijk. In deze cursus stellen we dan ook enkele algemene technieken voor om uit een waarheidstabel een logische functie te genereren. In sectie \ref{s:minimalisatie} zullen we bovendien enkele methodes beschrijven om deze logische implementaties te optimaliseren. Doorheen deze sectie zullen we een logische functie genereren voor de waarheidstabel in \tblref{truthTableExample}.
+Nu we weten hoe logische schakelingen werken, en hoe we deze door middel van de booleaanse algebra kunnen uitwerken, wordt het tijd om zelf schakelingen te beginnen bouwen. Dit doen we vertrekkend vanuit een waarheidstabel. Soms is het makkelijk om een implementatie af te leiden uit deze waarheidstabellen. Maar indien het aantal variabelen groot wordt of de functie complex is, wordt het vinden van een implementatie moeilijk. In deze cursus stellen we dan ook enkele algemene technieken voor om uit een waarheidstabel machinaal een logische functie te genereren. In \secref{minimalisatie} zullen we bovendien enkele methodes beschrijven om deze logische implementaties te optimaliseren. Doorheen deze sectie zullen we een logische functie genereren voor de waarheidstabel in \tblref{truthTableExample}.
 \begin{table}[htb]
 \centering
 \begin{tabular}{ccc|c}
@@ -810,9 +809,11 @@ $x$&$y$&$z$&$f$\\\hline
 1&1&1&0\\
 \end{tabular}
 \caption{Waarheidstabel voor het synthese-voorbeeld.}
-\label{tbl:truthTableExample}
+\tbllab{truthTableExample}
 \end{table}
-In de waarheidstabel zien we uitsluitend 0 en 1 staan. In sectie \ref{par:dontcare} zullen we echter kennis maken met een derde toestand: de \termen{don't care}.
+In de waarheidstabel zien we uitsluitend $0$ en $1$ staan. In \secref{dontcare} zullen we echter kennis maken met een derde "waarde"\footnote{De don't care is geen echte waarde, ze duidt eerder op ongespecifeerd.}: de \gtermen{don't care}{Don't care is een derde waarde in een waarheidstabel, die zoveel betekent als: "het maakt niet uit of hier een $0$ of $1$ staat.". Wanneer de don't care bij de ingangen staat, betekent dit dat het rechterlid van deze rij geldt voor zowel $0$ als $1$. Wanneer de don't care aan de rechterkant van de waarheidstabel staat (bij de uitgangen) betekent dit dat we vrij mogen kiezen of we een $0$ of een $1$ gebruiken. De Don't care is nuttig bij het optimaliseren van logische schakelingen.}.
+
+%REVIEW
 \subsection{SOP \& POS}
 \termen{Sum-of-Products (SOP)} en \termen{Product-of-Sums (POS)} zijn twee technieken die op een machinale manier uit een waarheidstabel een logische functie genereren. Ze maken respectievelijk gebruik van \termen{mintermen} en \termen{maxtermen}.
 \paragraph{Sum-of-Products} De Sum-of-Products maakt gebruik van mintermen. Een minterm is een logische functie die slechts waar is voor \'e\'en gegeven rij in een waarheidstabel. Dit bekomen we door het booleaans product te nemen van alle variabelen. Indien de variabelen negatief zijn wordt de negatie in het product verwerkt. De minterm van rij $i$ noteren we als $m_i$. De Sum-of-Products methode neemt de booleaanse som van \termen{1-mintermen}. Een 1-minterm is een minterm die waar is bij een rij waarbij $f$ ook waar is. \tblref{truthTableExampleMinTerms} toont voor iedere rij de minterm. Wanneer $f$ waar is, wordt ook de 1-minterm ingevuld. Vervolgens bepalen we de som van alle 1-mintermen.
