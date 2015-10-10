@@ -21,6 +21,9 @@ do
             exit 0
         fi
     done
+    tim=$(date +%s)
+    gla=$(grep -c '\\gls@defglossaryentry' cursus.glsdefs)
+    echo -e "$tim\t$gla" >> stats.stat
     make purge >/dev/null 2>/dev/null
     git commit -am 'temporary commit'
 done
