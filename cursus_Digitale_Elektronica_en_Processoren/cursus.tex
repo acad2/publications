@@ -49,7 +49,10 @@ title=\lstname,                 % show the filename of files included with \lsti
 \glossarystyle{listgroup}
 
 \newenvironment{chapterintro}{\begin{center}\begin{large}\begin{it}\begin{minipage}{12 cm}}{\end{minipage}\end{it}\end{large}\end{center}}
+
 \newcommand{\gtermen}[3][]{\ifthenelse{\equal{#1}{}}{\newglossaryentry{#2}{name={#2},description={#3}} \glsadd{#2}}{\newglossaryentry{#1}{name={#2},description={#3}} \glsadd{#1}}\termen{#2}}
+\newcommand{\stermen}[3][]{\ifthenelse{\equal{#1}{}}{\newglossaryentry{#2}{name={#2},description={zie \gls{#3}}} \glsadd{#2}}{\newglossaryentry{#1}{name={#2},description={zie \gls{#3}}} \glsadd{#1}}\termen{#2}}
+
 \newcommand{\vhdltermen}[1]{\index{\texttt{VHDL}!\texttt{#1}}\texttt{#1}}
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\clrsin}{\texttt{Clr$^*$}}
