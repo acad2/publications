@@ -3,8 +3,7 @@ cursus.pdf: *.tex *.bib *.sty */*.tex tables/*.tex tikzpictures/*.tex ../SharedD
 	date
 	date > logger.dat
 	date > error.dat
-	bash ../generatepdfsleep.sh "cursus" >> logger.dat 2>> errors.dat #TODO: remove io redirects
-	make clean
+	bash ../generatepdfsleep.sh "cursus" >> logger.dat 2>> errors.dat
 	echo "[Done]"
 
 clean:
