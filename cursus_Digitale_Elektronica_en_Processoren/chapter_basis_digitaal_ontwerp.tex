@@ -1208,11 +1208,11 @@ Nu we de concepten van een digitaal ontwerp in grote lijnen uitgetekend hebben, 
 \begin{figure}
 \centering
 \begin{tikzpicture}[itm/.style={draw=black,rectangle,minimum width=3 cm,minimum height=0.5 cm}]
-\node[itm] (Sp) at (0,0) {Specificatie \S\ref{ss:specificatie}};
-\node[itm] (B) at (-3.5,-0.5) {Bibliotheek \S\ref{ss:bibliotheek}};
-\node[itm] (Sy) at (0,-1) {Synthese \S\ref{ss:synthese}};
-\node[itm] (A) at (0,-2) {Analyse \S\ref{ss:analyse}};
-\node[itm] (D) at (-3.5,-2) {Documentatie \S\ref{ss:documentatie}};
+\node[itm] (Sp) at (0,0) {Specificatie \S\sscrefn{specificatie}};
+\node[itm] (B) at (-3.5,-0.5) {Bibliotheek \S\sscrefn{bibliotheek}};
+\node[itm] (Sy) at (0,-1) {Synthese \S\sscrefn{synthese}};
+\node[itm] (A) at (0,-2) {Analyse \S\sscrefn{analyse}};
+\node[itm] (D) at (-3.5,-2) {Documentatie \S\sscrefn{documentatie}};
 \draw[->] (Sp) -- (Sy);
 \draw[->] (B) |- (Sy);
 \draw[->] (Sy) -- (A);
