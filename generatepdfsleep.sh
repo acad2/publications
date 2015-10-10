@@ -7,22 +7,25 @@ tim=1                   #1 second, the amount of time between two compilation se
 pint="nonstopmode"      #The interaction mode used for pdflatex
 popt="-file-line-error" #additional options for pdflatex
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" || true
-timeout $tmo makeglossaries -q "$1"
-timeout $tmo makeindex -q "$1"
+TEXINPUTS="$TEXINPUTS:../libtex//"
+export TEXINPUTS
+
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
+timeout $tmo makeglossaries -q "$1" >dev/null 2>/dev/null
+timeout $tmo makeindex -q "$1" >dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex"
-timeout $tmo bibtex "$1"
-timeout $tmo makeglossaries -q "$1"
-timeout $tmo makeindex -q "$1"
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
+timeout $tmo bibtex "$1" >dev/null 2>/dev/null
+timeout $tmo makeglossaries -q "$1" >dev/null 2>/dev/null
+timeout $tmo makeindex -q "$1" >dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex"
-timeout $tmo bibtex "$1"
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
+timeout $tmo bibtex "$1" >dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex"
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
 sleep $tim
 
 timeout $tmo pdflatex $popt --interaction $pint "$1.tex"

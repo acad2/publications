@@ -2,7 +2,7 @@
 \usepackage[dutch]{babel}
 \usepackage{timing,fullpage,tikz,index,subfigure,graphicx,framed,tabularx,wrapfig,listings}
 \usepackage{multicol,multirow,stmaryrd,amsfonts,amsmath,bbding,array,eurosym,circuitikz}
-\usepackage{itemyz,bnf,commusoftScripts,../SharedData/brackets,../libtex/importsreferences,../SharedData/lstlibraryciscasmlanguage,../SharedData/lstlibrarybinlanguage}
+\usepackage{itemyz,bnf,commusoftScripts,../SharedData/brackets,importsreferences,../SharedData/lstlibraryciscasmlanguage,../SharedData/lstlibrarybinlanguage}
 \usetikzlibrary{circuits.logic.US}
 \usetikzlibrary{DEPcomponents}
 \usetikzlibrary{PCBcomponents}
@@ -71,7 +71,7 @@ title=\lstname,                 % show the filename of files included with \lsti
 \tableofcontents
 \chapter*{Notities vooraf}
 \begin{it}
-Deze cursus omvat de volledige inhoud van het onderwerp ``Digitale Elektronica \& Processoren'' gegeven tijdens het academiejaar 2010-2011 door prof. Van Eycken. De cursus is dan ook hoofdzakelijk gebaseerd op de presentaties voor dit opleidingsonderdeel. Andere bronnen worden vermeld in de referentielijst op pagina \pageref{reference}. Aanbevolen literatuur is \cite{brown2004fundamentals}, \cite{gajski1997principles}, \cite{wakerly2000digital} en \cite{ashenden2008designer}.
+Deze cursus omvat de volledige inhoud van het onderwerp ``Digitale Elektronica \& Processoren'' gegeven tijdens het academiejaar 2010-2011 door prof. Van Eycken. De cursus is dan ook hoofdzakelijk gebaseerd op de presentaties voor dit opleidingsonderdeel. Andere bronnen worden vermeld in de referentielijst op pagina \pageref{biblio}. Aanbevolen literatuur is \cite{brown2004fundamentals}, \cite{gajski1997principles}, \cite{wakerly2000digital} en \cite{ashenden2008designer}.
 \paragraph{}
 De cursus wordt uitgegeven onder de \texttt{CopyLeft} licentie, dit betekent dat iedereen de cursus vrij kan aanpassen en herverdelen.
 \paragraph{}
@@ -147,7 +147,7 @@ Indien er fouten gerapporteerd worden, of toevoegingen gedaan worden zullen na v
 \nocite{*}
 \bibliographystyle{alpha}
 \bibliography{bibliography}
-\label{reference}
+\label{biblio}
 \end{twocolumn}
 \label{glos}
 \printglossary[title=Woordenlijst,toctitle=Woordenlijst]
