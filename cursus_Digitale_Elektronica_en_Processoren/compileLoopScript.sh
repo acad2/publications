@@ -8,7 +8,7 @@ while true
 do
     for f in `seq 20`
     do
-        make >/dev/null 2>/dev/null
+        make cursus.pdf >/dev/null 2>/dev/null
         read -t 60 -p 'press "q" to quit; any other key to continue ' -n 1 -r a
         echo ""
         if [[ "$a" =~ [qQ] ]]
