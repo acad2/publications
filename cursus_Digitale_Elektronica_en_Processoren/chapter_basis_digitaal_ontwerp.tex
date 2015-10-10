@@ -1405,13 +1405,17 @@ begin
   EQ <= '1' when (A=B) else '0';
 end architecture Behav1;
 \end{lstlisting}
-\caption{8-bit comparator.}
+\caption{$8$-bit comparator.}
 \vhdllab{comp}
 \end{vhdlcode}
 
 %REVIEW
 \subsubsection{Component}
-Nu we een comparator component gebouwd hebben, zullen we deze component importeren in ons testcircuit. Hiervoor gebruiken we code beschreven in \vhdlref{test}. Dit bestand deelt dezelfde structuur als de structuur in \vhdlref{comp}: een \texttt{entity} en \texttt{architecture}. Dit wijst er dus op dat we componenten hi\"erarchisch kunnen gebruiken. We bemerken echter een nieuw token: \vhdltermen{component}. \texttt{component} is een virtuele verwijzing naar een andere entiteit. Wat die entiteit is laten we in de code nog in het midden. Het enige wat we moeten doen is de interface van deze component specificeren. Later zullen we dan in de configuratie (\vhdlref{testConfig}) een binding voorzien tussen ons virtuele component \texttt{comparator} en onze gedefinieerde entiteit \texttt{comp}. Verder merken we ook op dat in het \texttt{architecture} gedeelte eenmaal we de \texttt{component} interface gedefinieerd hebben, we er instanties van kunnen aanmaken. Zo maken we twee instanties aan: \texttt{Comp1} en \texttt{Comp2}. Vervolgens dienen we nog de verbindingen tussen de entiteit \texttt{test} en deze instanties te leggen. Dit doen we met het token \vhdltermen{map}. Hierbij mappen we de variabelen uit \texttt{entity Test} (\texttt{In1}, \texttt{In2}, \texttt{In3}, \texttt{Out1} en \texttt{Out2}) op de in- en uitgangen van het \texttt{component Comparator} (\texttt{X}, \texttt{Y} en \texttt{Z}). Hierbij dient dus opgemerkt te worden dat we het gedrag van \texttt{Test} specificeren aan de hand van reeds gedefinieerde entiteiten. Tot slot dient ook opgemerkt te worden dat in tegenstelling tot klassieke programmeertalen alle componenten tegelijk werken. Het is dus niet zo dat bij het uitrekenen van \texttt{Test} eerst \texttt{Comp1} en dan \texttt{Comp2} uitgerekend zal worden.
+Nu we een comparator component gebouwd hebben, zullen we deze component importeren in ons testcircuit. Hiervoor gebruiken we code beschreven in \vhdlref{test}. Dit bestand deelt dezelfde structuur als de structuur in \vhdlref{comp}: een \texttt{entity} en \texttt{architecture}. Dit wijst er dus op dat we componenten hi\"erarchisch kunnen gebruiken. We bemerken echter een nieuw token: \vhdltermen{component}. \texttt{component} is een virtuele verwijzing naar een andere entiteit. Wat die entiteit is laten we in de code nog in het midden. Het enige wat we moeten doen is de interface van deze component specificeren. Later zullen we dan in de configuratie (\vhdlref{testConfig}) een binding voorzien tussen ons virtuele component \texttt{comparator} en onze gedefinieerde entiteit \texttt{comp}. Verder merken we ook op dat in het \texttt{architecture} gedeelte eenmaal we de \texttt{component} interface gedefinieerd hebben, we er instanties van kunnen aanmaken. Zo maken we twee instanties aan: \texttt{Comp1} en \texttt{Comp2}. Vervolgens dienen we nog de verbindingen tussen de entiteit \texttt{test} en deze instanties te leggen. Dit doen we met het token \vhdltermen{map}. Hierbij mappen we de variabelen uit \texttt{entity Test} (\texttt{In1}, \texttt{In2}, \texttt{In3}, \texttt{Out1} en \texttt{Out2}) op de in- en uitgangen van het \texttt{component Comparator} (\texttt{X}, \texttt{Y} en \texttt{Z}). Hierbij dient dus opgemerkt te worden dat we het gedrag van \texttt{Test} specificeren aan de hand van reeds gedefinieerde entiteiten.
+
+\paragraph{}
+Tot slot dient ook opgemerkt te worden dat in tegenstelling tot klassieke programmeertalen alle componenten tegelijk werken. Het is dus niet zo dat bij het uitrekenen van \texttt{Test} eerst \texttt{Comp1} en dan \texttt{Comp2} uitgerekend zal worden.
+
 \begin{vhdlcode}
 \centering
 \begin{lstlisting}
@@ -1433,9 +1437,12 @@ begin
 end architecture Struct1;
 \end{lstlisting}
 \caption{Voorbeeldcode.}
-\label{vhdl:test}
+\vhdllab{test}
 \end{vhdlcode}
-\paragraph{Configuration} We moeten nu \texttt{Comparator} met de entiteit \texttt{Comp} binden. Dit doen we in een \vhdltermen{con\-fig\-ura\-tion} omgeving. Deze configuratie wordt beschreven in VHDL-code \ref{vhdl:testConfig}. Zoals we zien kunnen we opnieuw verschillende \texttt{configuration}s aanmaken en deze een aparte naam geven. Op die manier kunnen we dus de feitelijke implementatie snel wijzigen. Verder dienen we ook te vermelden welke entiteit we zullen configureren (\texttt{Test}) en om welke architectuur het gaat (\texttt{Struct1}). Vervolgens kunnen we per instantie aangeven welke entiteit we gebruiken. Dit doen we door het token \vhdltermen{use entity}. Ook specifi\"eren we de \texttt{architecture} die we zullen gebruiken van deze \texttt{entity}. Vervolgens mappen we opnieuw met behulp van \texttt{map} de in- en uitgangen van de entiteit op het virtuele \texttt{component}.
+
+\subsubsection{Configuration}
+We moeten nog de component \texttt{Comparator} met de entiteit \texttt{Comp} binden. Dit doen we in een \vhdltermen{con\-fig\-ura\-tion} omgeving. Deze configuratie wordt beschreven in \vhdlref{testConfig}. Zoals we zien kunnen we opnieuw verschillende \texttt{configuration}s aanmaken en deze een aparte naam geven. Op die manier kunnen we dus de feitelijke implementatie snel wijzigen. Verder dienen we ook te vermelden welke entiteit we zullen configureren (\texttt{Test}) en om welke architectuur het gaat (\texttt{Struct1}). Vervolgens kunnen we per instantie aangeven welke entiteit we gebruiken. Dit doen we door het token \vhdltermen{use entity}. Ook specifi\"eren we de \texttt{architecture} die we zullen gebruiken van deze \texttt{entity}. Vervolgens mappen we opnieuw met behulp van \texttt{map} de in- en uitgangen van de entiteit op het virtuele \texttt{component}.
+
 \begin{vhdlcode}
 \begin{lstlisting}
 -- Configuratie: definieer koppeling component met een
@@ -1453,12 +1460,13 @@ configuration Build1 of Test is
 end configuration Build1;
 \end{lstlisting}
 \caption{Configuratie van de voorbeeldcode.}
-\label{vhdl:testConfig}
+\vhdllabel{testConfig}
 \end{vhdlcode}
+
 \subsection{Gelijkenissen en verschillen met klassieke programmeertalen}
-VHDL lijkt in sommige opzichten een beetje op programmeren in klassieke programmeertalen zoals \texttt{Java} en \texttt{C++}. Immers kunnen we de ingangen als parameters bij een methode zien. De methode zelf fungeert ook als een interface die duidelijk maakt welke types er ingevoerd moeten worden, en welke uitvoer verwacht mag worden, zonder de feitelijke implementatie te tonen. We zouden bovendien elk component die we in een circuit gebruiken kunnen zien als een functie-oproep naar de functie van het bijbehorende component. Deze vergelijking heeft echter enkele anomalie\"en.
+VHDL lijkt in sommige opzichten een beetje op programmeren in klassieke programmeertalen zoals Java en C++. Immers kunnen we de ingangen als parameters bij een methode zien. De methode zelf fungeert ook als een interface die duidelijk maakt welke types er ingevoerd moeten worden, en welke uitvoer verwacht mag worden, zonder de feitelijke implementatie te tonen. We zouden bovendien elk component die we in een circuit gebruiken kunnen zien als een functie-oproep naar de functie van het bijbehorende component. Deze vergelijking heeft echter enkele anomalie\"en.
 \begin{itemize}
- \item \termen{Gelijktijdigheid} (``\termen{Concurrency}''): Alle hardwarecomponenten werken in parallel dit in tegenstelling tot klassieke talen waarin alles sequentieel wordt uitgevoerd.
+ \item \gtermen{Gelijktijdigheid}{Het feit dat alle hardwarecompoonenten parallel werken: wanneer de ingang verandert, zullen alle poorten die door deze ingang worden aangestuurd, tegelijk de verandering doorrekenen. Gelijktijdigheid is een eigenschap in VHDL die  niet overeen komt met klassieke programmeertalen.} (``\stermen{Concurrency}{Gelijktijdigheid}''): Alle hardwarecomponenten werken in parallel dit in tegenstelling tot klassieke talen waarin alles sequentieel wordt uitgevoerd.
  \item \termen{Tijdsconcept}: Alle hardware werkt continu en houdt nooit op met werken. Bovendien zal bij een simulatie de tijd uiteraard niet de re\"ele tijd zijn.
  \item \termen{Datatypes}: VHDL heeft nood aan typische hardware-types zoals bitvectoren, getallen met geparametriseerde grootte,... Dit terwijl klassieke talen meestal proberen abstractie te maken van dit hardwareniveau.
 \end{itemize}
