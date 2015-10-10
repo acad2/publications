@@ -7,7 +7,7 @@ tim=1                   #1 second, the amount of time between two compilation se
 pint="nonstopmode"      #The interaction mode used for pdflatex
 popt="-file-line-error" #additional options for pdflatex
 
-TEXINPUTS="$TEXINPUTS:../libtex//"
+TEXINPUTS="$TEXINPUTS:../libtex//:../SharedData//"
 export TEXINPUTS
 
 timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
