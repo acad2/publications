@@ -180,9 +180,12 @@ Indien we echter een positieve spanning aanbrengen op de gate, zullen de negatie
 
 %REVIEW
 \subsection{Basispoorten}
-Nu we automatische schakelaars kunnen gebruiken, wordt het tijd om met behulp van NMOS en PMOS de poorten te implementeren. Eerst zullen we de basispoorten met behulp van NMOS implementeren. Vervolgens zal blijken dat deze implementaties enkele nadelen hebben. Hierdoor zullen we opteren voor implementatie met \termen{CMOS}. CMOS is in feite een combinatie van NMOS en PMOS. We zullen alle schakelingen implementeren in positieve logica. In sectie \ref{s:negativeLogic} behandelen we nog enkele zaken in verband met negatieve logica.
+Nu we automatische schakelaars kunnen gebruiken,  kunnen we met behulp van NMOS en PMOS de basispoorten implementeren. Eerst zullen we de basispoorten met behulp van NMOS implementeren. Vervolgens zal blijken dat deze implementaties enkele nadelen hebben. Hierdoor zullen we opteren voor implementatie met \termen{CMOS}. CMOS is in feite een combinatie van NMOS en PMOS. We zullen alle schakelingen implementeren in positieve logica. In \secref{negativeLogic} behandelen we nog enkele zaken in verband met negatieve logica.
+
 \subsubsection{Implementatie in NMOS}
-\paragraph{NOT} \figref{notNmos} toont de implementatie van een NOT-poort in NMOS. Als ingang beschouwen we $x$, als uitgang $f$ de $V_{\mbox{\tiny DD}}$ en $V_{\mbox{\tiny SS}}$ zijn lijnen voor de voeding van de poort. Indien we een laag voltage aanbrengen op $x$ is de NMOS transistor open. Hierdoor staat er een hoge spanning op $f$. Indien we echter een hoge spanning op $x$ aanbrengen, zal de transistor zich sluiten. Hierdoor vloeit er stroom tussen $V_{\mbox{\tiny DD}}$ en $V_{\mbox{\tiny SS}}$. Omdat de stroom door $f$ nog andere componenten zal aansturen, zal de stroom bijgevolg verkiezen om door de transistor te stromen, en krijgt $f$ dus een laag potentiaal. Het principe van het verlagen van de spanning door stroom door te laten wordt \termen{Pull-Down Network (PDN)} genoemd. Theoretisch gezien mag dit model mooi lijken, de werkelijkheid verschilt echter. Wanneer de NMOS transistor immers gesloten is, zal er immers nog steeds een kleine weerstand over staan. Deze weerstand noteren we als $R_{\mbox{\tiny on}}$. Dit betekent dat $f$ niet volledig gelijk zal zijn aan $L$. We berekenen de spanning op $f$ dan ook met volgende formule:
+\paragraph{NOT}
+\figref{notNmos} toont de implementatie van een NOT-poort in NMOS. Als ingang beschouwen we $x$, als uitgang $f$ de $V_{\mbox{\tiny DD}}$ en $V_{\mbox{\tiny SS}}$ zijn lijnen voor de voeding van de poort. Indien we een laag voltage aanbrengen op $x$ is de NMOS transistor open. Hierdoor staat er een hoge spanning op $f$. Indien we echter een hoge spanning op $x$ aanbrengen, zal de transistor zich sluiten. Hierdoor vloeit er stroom tussen $V_{\mbox{\tiny DD}}$ en $V_{\mbox{\tiny SS}}$. Omdat de stroom door $f$ nog andere componenten zal aansturen, zal de stroom bijgevolg verkiezen om door de transistor te stromen, en krijgt $f$ dus een laag potentiaal. Het principe van het verlagen van de spanning door stroom door te laten wordt \termen{Pull-Down Network (PDN)} genoemd. Theoretisch gezien mag dit model mooi lijken, de werkelijkheid verschilt echter. Wanneer de NMOS transistor immers gesloten is, zal er immers nog steeds een kleine weerstand over staan. Deze weerstand noteren we als $R_{\mbox{\tiny on}}$. Dit betekent dat $f$ niet volledig gelijk zal zijn aan $L$. We berekenen de spanning op $f$ dan ook met volgende formule:
+
 \begin{equation}
 V_{\mbox{\tiny out}}\left(x=1\right)=\displaystyle\frac{R_{\mbox{\tiny on}}}{R+R_{\mbox{\tiny on}}}V_{\mbox{\tiny DD}}
 \end{equation}
@@ -190,7 +193,9 @@ Een tweede groot nadeel is dat we bij $x=H$ statisch vermogen verbruiken:
 \begin{equation}
 P\left(x=1\right)=\displaystyle\frac{V_{\mbox{\tiny DD}}^2}{R+R_{\mbox{\tiny on}}}
 \end{equation}
+
 Dit is op energieniveau een grote kost, vooral omdat er in een gemiddelde processor makkelijk miljoenen transistoren zitten. Bovendien zou dit hoge temperaturen genereren. Dit is dan ook de hoofdreden waarom er nauwelijks elektronica ge\"implementeerd wordt met NMOS.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[x=L, f=H]{\begin{circuitikz}[american resistors]
@@ -214,7 +219,9 @@ Dit is op energieniveau een grote kost, vooral omdat er in een gemiddelde proces
 \caption{NOT poort ge\"implementeerd in NMOS.}
 \figlab{notNmos}
 \end{figure}
-\paragraph{``Open-drain poort''}Indien we de weerstand als een extern component beschouwen, en meer NMOS transistoren in parallel aan de draad hangen, kunnen we het gedrag van een AND poort nabootsen, zoals op \figref{openDrainNmos}. Vanaf het moment dat \'e\'en van de transistoren gesloten wordt, lekt de stroom door die transistor, en krijgt $f$ dus een laag niveau. Alle ingangen moeten dus een lage spanning hebben, om een hoge spanning aan de uitgang te verkrijgen. We kunnen dit principe dus zien als een AND waarbij aan alle ingangen een inverter staat. Dit systeem wordt ``\termen{Open-Drain Poort}'' genoemd. En heeft het voordeel dat we een AND kunnen bouwen aan de hand van draden. Deze implementatie is dus goedkoop indien we een AND-poort willen maken met een zeer groot aantal ingangen. Standaard wordt dit soort implementatie dan ook gebruikt in de reset-functionaliteit van elektronica. Meestal wordt er immers een reset procedure aangeroepen indien \'e\'en van de detectoren een fout registreert. In dat geval zal de detector een hoge spanning aan zijn ingang genereren. Dit resulteert een lage uitgang, bij een lage uitgang treed de reset-procedure dan in werking.
+
+\paragraph{``Open-drain poort''}
+Indien we de weerstand als een extern component beschouwen, en meer NMOS transistoren in parallel aan de draad hangen, kunnen we het gedrag van een AND poort nabootsen, zoals op \figref{openDrainNmos}. Vanaf het moment dat \'e\'en van de transistoren gesloten wordt, lekt de stroom door die transistor, en krijgt $f$ dus een laag niveau. Alle ingangen moeten dus een lage spanning hebben, om een hoge spanning aan de uitgang te verkrijgen. We kunnen dit principe dus zien als een AND waarbij aan alle ingangen een inverter staat. Dit systeem wordt ``\termen{Open-Drain Poort}'' genoemd. En heeft het voordeel dat we een AND kunnen bouwen aan de hand van draden. Deze implementatie is dus goedkoop indien we een AND-poort willen maken met een zeer groot aantal ingangen. Standaard wordt dit soort implementatie dan ook gebruikt in de reset-functionaliteit van elektronica. Meestal wordt er immers een reset procedure aangeroepen indien \'e\'en van de detectoren een fout registreert. In dat geval zal de detector een hoge spanning aan zijn ingang genereren. Dit resulteert een lage uitgang, bij een lage uitgang treed de reset-procedure dan in werking.
 \begin{figure}[hbt]
 \centering
 \begin{circuitikz}[american resistors]
