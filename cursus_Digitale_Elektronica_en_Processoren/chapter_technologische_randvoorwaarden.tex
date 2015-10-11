@@ -178,7 +178,6 @@ Indien we echter een positieve spanning aanbrengen op de gate, zullen de negatie
 \figlab{mosWork}
 \end{figure}
 
-%REVIEW
 \subsection{Basispoorten}
 Met de eerder beschreven NMOS en PMOS transistoren kunnen we de basispoorten implementeren. Eerst zullen we de basispoorten met behulp van NMOS implementeren. Het zal blijken dat deze implementaties enkele nadelen hebben. Hierdoor zullen we opteren voor implementatie met \termen{CMOS}. CMOS is in feite een combinatie van NMOS en PMOS. We zullen alle schakelingen implementeren in positieve logica. In \secref{negativeLogic} bespreken we kort poorten in negatieve logica. %TODO: glossary
 
@@ -224,7 +223,7 @@ Dit is op gebied van energie duur, vooral omdat er in een gemiddelde processor m
 \end{figure}
 
 \paragraph{``Open-drain poort''}
-Indien we de weerstand als een extern component beschouwen, en meerdere NMOS transistoren in parallel aan de draad hangen, kunnen we het gedrag van een AND poort nabootsen. \figref{openDrainNmos} toont een dergelijke realisatie. Vanaf het moment dat \'e\'en van de transistoren gesloten wordt, lekt de stroom door die transistor, en krijgt $f$ dus een laag niveau. Alle ingangen moeten dus een lage spanning hebben, om een hoge spanning aan de uitgang te verkrijgen. We kunnen dit principe dus zien als een AND waarbij aan alle ingangen een inverter staat. Dit systeem wordt ``\termen{Open-Drain Poort}'' genoemd. En heeft het voordeel dat we een AND kunnen bouwen aan de hand van draden. Deze implementatie is dus goedkoop indien we een AND-poort willen maken met een zeer groot aantal ingangen. Standaard wordt dit soort implementatie dan ook gebruikt in de reset-functionaliteit van elektronica. Meestal wordt er immers een reset procedure aangeroepen indien \'e\'en van de detectoren een fout registreert. In dat geval zal de detector een hoge spanning aan zijn ingang genereren. Dit resulteert een lage uitgang, bij een lage uitgang treed de reset-procedure dan in werking. %TODO: nand gate
+Indien we de weerstand als een extern component beschouwen, en meerdere NMOS transistoren in parallel aan de draad hangen, kunnen we het gedrag van een AND poort nabootsen. \figref{openDrainNmos} toont een dergelijke realisatie. Vanaf het moment dat \'e\'en van de transistoren gesloten wordt, lekt de stroom door die transistor, en krijgt $f$ dus een laag niveau. Alle ingangen moeten dus een lage spanning hebben, om een hoge spanning aan de uitgang te verkrijgen. We kunnen dit principe dus zien als een AND waarbij aan alle ingangen een inverter staat. Dit systeem wordt ``\gtermen{Open-Drain Poort}{Een poort die bestaat uit meerdere parallel geschakelde NMOS transistoren. Vanaf het moment dat een van de NMOS transistoren gesloten wordt, vloeit er stroom van de bron naar de grond. Enkel wanneer alle schakelaars open zijn, wordt er dus een hoge spanning op de uitgang aangelegd.}'' genoemd. En heeft het voordeel dat we een AND kunnen bouwen aan de hand van draden. Deze implementatie is goedkoop indien we een AND-poort willen maken met een zeer groot aantal ingangen. Standaard wordt dit soort implementatie dan ook gebruikt in de reset-functionaliteit van elektronica. Meestal wordt er immers een reset procedure aangeroepen indien \'e\'en van de detectoren een fout registreert. In dat geval zal de detector een hoge spanning aan zijn ingang genereren. Dit resulteert een lage uitgang, bij een lage uitgang treed de reset-procedure dan in werking. %TODO: and gate?
 
 \begin{figure}[hbt]
 \centering
@@ -244,8 +243,10 @@ Indien we de weerstand als een extern component beschouwen, en meerdere NMOS tra
 \caption{Open-Drain Poort in NMOS.}
 \figlab{openDrainNmos}
 \end{figure}
+
 \paragraph{NAND en NOR}
-De vorige paragraaf gaf reeds een opzet hoe we een NOR en NAND poort kunnen bouwen. We moeten er eenvoudig weg voor zorgen dat er stroom kan vloeien tussen $V_{\mbox{\tiny DD}}$ en $V_{\mbox{\tiny SS}}$ indien respectievelijk minstens \'e\'en of alle transistoren gesloten worden. \figref{nandNorNmos} toont dan ook de implementaties voor een NAND en NOR poort. Een AND en OR poort kunnen we dan vervolgens synthetiseren door een inverter achter de poort te plaatsen. Deze implementaties maken ook meteen duidelijk waarom een NAND goedkoper is dan een AND.
+De vorige paragraaf gaf reeds een opzet hoe we een NOR en NAND poort kunnen bouwen. We moeten er voor zorgen dat er stroom kan vloeien tussen $V_{\mbox{\tiny DD}}$ en $V_{\mbox{\tiny SS}}$ indien respectievelijk minstens \'e\'en of alle transistoren gesloten worden. \figref{nandNorNmos} toont de implementaties voor een NAND en NOR poort volgens dit concept. Een AND en OR poort kunnen we dan vervolgens synthetiseren door een inverter achter de poort te plaatsen. Deze implementaties maken ook meteen duidelijk waarom een NAND goedkoper is dan een AND\footnote{Dit is geen rigoreus bewijs dat een NAND inderdaad goedkoper is dan een AND, vermits we enkel vanuit een concept werken, en er misschien andere manieren bestaan om een AND en NAND te realiseren.}.
+
 \begin{figure}
 \centering
 \subfigure[NAND poort.]{\begin{circuitikz}[american resistors]
@@ -275,6 +276,8 @@ De vorige paragraaf gaf reeds een opzet hoe we een NOR en NAND poort kunnen bouw
 \caption{NAND en NOR poort ge\"implementeerd met NMOS.}
 \figlab{nandNorNmos}
 \end{figure}
+
+%REVIEW
 \subsubsection{Implementatie in CMOS}
 Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos verbruikt. CMOS biedt hiervoor een oplossing. CMOS is eigenlijk een techniek waarbij we zowel een NMOS als een PMOS transistor gebruiken. Analoog aan het ``Pull-Down Network'' fenomeen van de NMOS, spreken we dan over het ``\termen{Pull-Up Network (PUN)}'' fenomeen bij PMOS.
 \paragraph{NOT}Indien we de uitgang $f$ plaatsen tussen een NMOS en PMOS transistor, die we allebei met dezelfde ingang $x$ verbinden, kunnen we een NOT poort implementeren. De uitwerking hiervan staat op \figref{notCmos}. Op het moment dat we een hoge spanning aanleggen op de ingang sluit de NMOS transistor zich, en opent de PMOS transistor zich, hierdoor krijgt de uitgang dezelfde spanning als de ground. Indien we een lage spanning aan de ingang aanleggen is de configuratie van de transistoren omgekeerd, en wordt komt aan de uitgang een spanning $V_{\mbox{\tiny DD}}$ te liggen.
@@ -305,7 +308,10 @@ Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos
 \caption{NOT poort ge\"implementeerd met CMOS.}
 \figlab{notCmos}
 \end{figure}
-\paragraph{NAND en NOR} Ook NAND en NOR poorten hebben hun equivalent in CMOS. \figref{nandNorCmos} toont hun implementatie. Wat opvalt is dat we redelijk eenvoudig het CMOS equivalent kunnen halen uit een NMOS implementatie. Immers is het onderste gedeelte van de NMOS-schakelaars volledig equivalent met de NMOS-implementatie. We plaatsen eenvoudigweg een PMOS circuit boven de uitgang. Dit circuit werkt met duale logica: indien de NMOS verbindingen parallel zijn, zullen we de PMOS transistoren in serie plaatsen, indien de NMOS transistoren in serie stonden, zetten we de PMOS transistoren in parallel. Verder kunnen we de weerstand ook weglaten. Deze weerstand stond er immers alleen om verschillende poorten aan eenzelfde voeding te kunnen hangen. Nu er echter geen stroom vloeit in om het even welke configuratie van de transistoren, is de weerstand dus nagenoeg nutteloos geworden, en brengt deze hoge kosten met zich mee.
+
+\paragraph{NAND en NOR}
+Ook NAND en NOR poorten hebben hun equivalent in CMOS. \figref{nandNorCmos} toont hun implementatie. Wat opvalt is dat we redelijk eenvoudig het CMOS equivalent kunnen halen uit een NMOS implementatie. Immers is het onderste gedeelte van de NMOS-schakelaars volledig equivalent met de NMOS-implementatie. We plaatsen eenvoudigweg een PMOS circuit boven de uitgang. Dit circuit werkt met duale logica: indien de NMOS verbindingen parallel zijn, zullen we de PMOS transistoren in serie plaatsen, indien de NMOS transistoren in serie stonden, zetten we de PMOS transistoren in parallel. Verder kunnen we de weerstand ook weglaten. Deze weerstand stond er immers alleen om verschillende poorten aan eenzelfde voeding te kunnen hangen. Nu er echter geen stroom vloeit in om het even welke configuratie van de transistoren, is de weerstand dus nagenoeg nutteloos geworden, en brengt deze hoge kosten met zich mee.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[NAND]{\begin{circuitikz}[american resistors]
@@ -351,9 +357,11 @@ Het grote argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos
 \caption{NAND en NOR poorten ge\"implementeerd met CMOS.}
 \figlab{nandNorCmos}
 \end{figure}
+
 \paragraph{Uitgangen verbinden}
 \label{term:kortsluiting}
-Bij NMOS konden we uitgangen met elkaar verbinden, zonder dat dit problemen met zich meebracht, sterker nog, we konden sommige poorten implementeren aan de hand van verbindingen. Een groot nadeel van CMOS is dat dit niet langer mogelijk is. \figref{cmosFail} toont de reden hiervoor. Op het moment dat de ene ingang een hoog potentiaal heeft, en de andere een laag potentiaal ontstaat er immers een kortsluiting. De stroom is in staat om vanaf de $V_{\mbox{\tiny DD}}$ rechtstreeks de aarding te bereiken. Hoewel de transistoren een minimale weerstand hebben, volstaat deze meestal niet. Het gevolg zijn zeer hoge stromen die het elektronische circuit zouden kunnen beschadigen.
+Bij NMOS kunnen we uitgangen met elkaar verbinden, zonder dat dit problemen met zich meebracht, sterker nog, we konden sommige poorten implementeren aan de hand van verbindingen. Een groot nadeel van CMOS is dat dit niet langer mogelijk is. \figref{cmosFail} toont de reden hiervoor. Op het moment dat de ene ingang een hoog potentiaal heeft, en de andere een laag potentiaal ontstaat er immers een kortsluiting. De stroom is in staat om vanaf de $V_{\mbox{\tiny DD}}$ rechtstreeks de aarding te bereiken. Hoewel de transistoren een minimale weerstand hebben, volstaat deze meestal niet. Het gevolg zijn zeer hoge stromen die het elektronische circuit zouden kunnen beschadigen.
+
 \begin{figure}[hbt]
 \centering
 \begin{circuitikz}[american resistors]
