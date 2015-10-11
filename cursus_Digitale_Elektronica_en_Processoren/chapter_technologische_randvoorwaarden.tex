@@ -197,7 +197,7 @@ Een tweede groot nadeel is dat we bij $x=H$ statisch vermogen verbruiken:
 P\left(x=1\right)=\displaystyle\frac{V_{\mbox{\tiny DD}}^2}{R+R_{\mbox{\tiny on}}}
 \end{equation}
 
-Dit is op energieniveau een grote kost, vooral omdat er in een gemiddelde processor makkelijk miljoenen transistoren zitten. Bovendien zou dit hoge temperaturen genereren. Dit is dan ook de hoofdreden waarom er nauwelijks elektronica ge\"implementeerd wordt met NMOS.
+Dit is op gebied van energie duur, vooral omdat er in een gemiddelde processor makkelijk miljoenen transistoren zitten. Bovendien zal dit hoge temperaturen genereren. Dit is dan ook de hoofdreden waarom er nauwelijks elektronica ge\"implementeerd wordt met NMOS.
 
 \begin{figure}[hbt]
 \centering
@@ -224,7 +224,8 @@ Dit is op energieniveau een grote kost, vooral omdat er in een gemiddelde proces
 \end{figure}
 
 \paragraph{``Open-drain poort''}
-Indien we de weerstand als een extern component beschouwen, en meer NMOS transistoren in parallel aan de draad hangen, kunnen we het gedrag van een AND poort nabootsen, zoals op \figref{openDrainNmos}. Vanaf het moment dat \'e\'en van de transistoren gesloten wordt, lekt de stroom door die transistor, en krijgt $f$ dus een laag niveau. Alle ingangen moeten dus een lage spanning hebben, om een hoge spanning aan de uitgang te verkrijgen. We kunnen dit principe dus zien als een AND waarbij aan alle ingangen een inverter staat. Dit systeem wordt ``\termen{Open-Drain Poort}'' genoemd. En heeft het voordeel dat we een AND kunnen bouwen aan de hand van draden. Deze implementatie is dus goedkoop indien we een AND-poort willen maken met een zeer groot aantal ingangen. Standaard wordt dit soort implementatie dan ook gebruikt in de reset-functionaliteit van elektronica. Meestal wordt er immers een reset procedure aangeroepen indien \'e\'en van de detectoren een fout registreert. In dat geval zal de detector een hoge spanning aan zijn ingang genereren. Dit resulteert een lage uitgang, bij een lage uitgang treed de reset-procedure dan in werking.
+Indien we de weerstand als een extern component beschouwen, en meerdere NMOS transistoren in parallel aan de draad hangen, kunnen we het gedrag van een AND poort nabootsen. \figref{openDrainNmos} toont een dergelijke realisatie. Vanaf het moment dat \'e\'en van de transistoren gesloten wordt, lekt de stroom door die transistor, en krijgt $f$ dus een laag niveau. Alle ingangen moeten dus een lage spanning hebben, om een hoge spanning aan de uitgang te verkrijgen. We kunnen dit principe dus zien als een AND waarbij aan alle ingangen een inverter staat. Dit systeem wordt ``\termen{Open-Drain Poort}'' genoemd. En heeft het voordeel dat we een AND kunnen bouwen aan de hand van draden. Deze implementatie is dus goedkoop indien we een AND-poort willen maken met een zeer groot aantal ingangen. Standaard wordt dit soort implementatie dan ook gebruikt in de reset-functionaliteit van elektronica. Meestal wordt er immers een reset procedure aangeroepen indien \'e\'en van de detectoren een fout registreert. In dat geval zal de detector een hoge spanning aan zijn ingang genereren. Dit resulteert een lage uitgang, bij een lage uitgang treed de reset-procedure dan in werking. %TODO: nand gate
+
 \begin{figure}[hbt]
 \centering
 \begin{circuitikz}[american resistors]
