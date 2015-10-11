@@ -277,12 +277,11 @@ De vorige paragraaf gaf reeds een opzet hoe we een NOR en NAND poort kunnen bouw
 \figlab{nandNorNmos}
 \end{figure}
 
-%REVIEW
 \subsubsection{Implementatie in CMOS}
 Een belangrijk argument tegen het gebruik van NMOS is dat het veel vermogen nutteloos verbruikt: wanneer een transistor gesloten is lekt er onophoudelijk stroom van de bron naar de grond. CMOS biedt hiervoor een oplossing. CMOS is een techniek waarbij we zowel een NMOS als een PMOS transistor gebruiken. Analoog aan het ``Pull-Down Network'' fenomeen van de NMOS, spreken we dan over het ``\gtermen{Pull-Up Network (PUN)}{Het principe dat we een hoge spanning aanleggen op een uitgang met behulp van een transistor die zich sluit. Hierdoor wordt de uitgang verbonden met de hoge spanning.}'' fenomeen bij PMOS.
 
 \paragraph{NOT}
-Indien we de uitgang $f$ plaatsen tussen een NMOS en PMOS transistor, die we allebei met dezelfde ingang $x$ verbinden, kunnen we een NOT poort implementeren. De uitwerking hiervan staat op \figref{notCmos}. Op het moment dat we een hoge spanning aanleggen op de ingang sluit de NMOS transistor zich, en opent de PMOS transistor zich, hierdoor krijgt de uitgang dezelfde spanning als de ground. Indien we een lage spanning aan de ingang aanleggen is de configuratie van de transistoren omgekeerd, en wordt komt aan de uitgang een spanning $V_{\mbox{\tiny DD}}$ te liggen.
+Indien we de uitgang $f$ plaatsen tussen een NMOS en PMOS transistor, en beide transistoren aansturen met dezelfde ingang $x$ zoals op \figref{notCmos}, kunnen we een NOT poort implementeren. Op het moment dat we een hoge spanning aanleggen op de ingang sluit de NMOS transistor zich, en opent de PMOS transistor zich, hierdoor krijgt de uitgang dezelfde spanning als de ground. Indien we een lage spanning aan de ingang aanleggen is de configuratie van de transistoren omgekeerd, en wordt komt aan de uitgang een spanning $V_{\mbox{\tiny DD}}$ te liggen.
 
 \begin{figure}[hbt]
 \centering
@@ -363,7 +362,7 @@ Ook NAND en NOR poorten hebben hun equivalent in CMOS. \figref{nandNorCmos} toon
 
 \paragraph{Uitgangen verbinden}
 \label{term:kortsluiting}
-Bij NMOS kunnen we uitgangen met elkaar verbinden, zonder dat dit problemen met zich meebracht, sterker nog, we konden sommige poorten implementeren aan de hand van verbindingen. Een groot nadeel van CMOS is dat dit niet langer mogelijk is. \figref{cmosFail} toont de reden hiervoor. Op het moment dat de ene ingang een hoog potentiaal heeft, en de andere een laag potentiaal ontstaat er immers een kortsluiting. De stroom is in staat om vanaf de $V_{\mbox{\tiny DD}}$ rechtstreeks de aarding te bereiken. Hoewel de transistoren een minimale weerstand hebben, volstaat deze meestal niet. Het gevolg zijn zeer hoge stromen die het elektronische circuit zouden kunnen beschadigen.
+Bij NMOS kunnen we uitgangen met elkaar verbinden, zonder dat dit problemen met zich meebracht, sterker nog, we kunnen sommige poorten implementeren aan de hand van verbindingen. Een groot nadeel van CMOS is dat dit niet langer mogelijk is. \figref{cmosFail} toont de reden hiervoor. Op het moment dat de ene ingang een hoog potentiaal heeft, en de andere een laag potentiaal ontstaat er immers een kortsluiting. De stroom is in staat om vanaf de $V_{\mbox{\tiny DD}}$ rechtstreeks de aarding te bereiken. Hoewel de transistoren een minimale weerstand hebben, volstaat deze meestal niet. Het gevolg zijn zeer hoge stromen die het elektronische circuit zouden kunnen beschadigen.
 
 \begin{figure}[hbt]
 \centering
@@ -566,7 +565,7 @@ Bij NMOS kunnen we uitgangen met elkaar verbinden, zonder dat dit problemen met 
 \caption{AND-OR-Inverter (AOI) en OR-AND-Inverter (OAI) in CMOS.}
 \figlab{aoiOai}
 \end{figure}
-In hoofdstuk \ref{ch:basis} hadden we het reeds over de XOR-poort. Een poort die 1 teruggeeft als de twee ingangen niet gelijk zijn aan elkaar. Deze poort hadden we toen ge\"implementeerd met een ingewikkeld schema van poorten. Omdat we echter op transistor niveau werken, kunnen we verschillende complexe poorten toch relatief simpel implementeren. In de volgende subsecties zullen we eerst de \termen{AND-OR-Invert (AOI)} en \termen{OR-AND-Invert (OAI)} implementeren. Deze schakelingen worden relatief vaak gebruikt, om bijvoorbeeld XOR en \termen{XNOR} poorten te implementeren.
+In \chpref{basis} hadden we het reeds over de XOR-poort. Een poort die $1$ teruggeeft als de twee ingangen niet gelijk zijn aan elkaar. Deze poort hadden we toen ge\"implementeerd met een ingewikkeld schema van basispoorten. Omdat we echter op transistor niveau werken, kunnen we verschillende complexe poorten toch relatief simpel implementeren. In de volgende subsecties zullen we eerst de \gtermen{AND-OR-Invert (AOI)}{Een circuit } en \gtermen{OR-AND-Invert (OAI)}{} implementeren. Deze schakelingen worden relatief vaak gebruikt, om bijvoorbeeld XOR en \gtermen{XNOR}{Een poort met twee ingangen die de ge\"inverteerde is van de XOR poort. $\tupl{0,0}$ en $\tupl{1,1}$ worden afgebeeld op $1$ de overige configuraties op $0$.} poorten te implementeren.
 \subsubsection{AND-OR-Invert (AOI)}
 Een veelgebruikt component is een AND-OR-Inverter. Dit is een component die we op poort-niveau kunnen beschrijven als een tweelagige structuur waarbij de ingangen eerst door een reeks AND-poorten gaan. De uitgangen van de AND-poorten vormen op hun beurt de ingangen van een NOR-poort. Een concreet voorbeeld hiervan staat op \figref{aoiExample}. Indien we echter de schakeling zouden bouwen zoals we dit voorstellen op poortniveau\footnote{We substitueren dus iedere poort door zijn equivalent in CMOS.}, hebben we 18 transistoren nodig. Een effici\"entere manier is het implementeren van een nieuw component de AOI zoals op \figref{aoiCmos}. Hierbij hebben we slechts 10 transistoren nodig. Bovendien hebben we de implementatie gereduceerd tot \'e\'en laag. Hierdoor wordt de vertraging van de component ook teruggedrongen.
 \subsubsection{OR-AND-Invert (OAI)}
