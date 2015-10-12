@@ -10,22 +10,22 @@ popt="-file-line-error" #additional options for pdflatex
 TEXINPUTS="$TEXINPUTS:../libtex//:../SharedData//"
 export TEXINPUTS
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
 timeout $tmo makeglossaries -q "$1" >dev/null 2>/dev/null
 timeout $tmo makeindex -q "$1" >dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
 timeout $tmo bibtex "$1" >dev/null 2>/dev/null
 timeout $tmo makeglossaries -q "$1" >dev/null 2>/dev/null
 timeout $tmo makeindex -q "$1" >dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
 timeout $tmo bibtex "$1" >dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
 sleep $tim
 
 timeout $tmo pdflatex $popt --interaction $pint "$1.tex"

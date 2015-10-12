@@ -16,6 +16,8 @@ do
             fs=$(wc -c cursus.pdf | cut -d' ' -f 1) #obtain the file size
             if [ "$fs" -gt "2000000" ] #if larger than 2 MB
             then
+                make purge
+                make cursus.pdf >/dev/null 2>/dev/null
                 scp cursus.pdf ulyssis:www/cursus_dep.pdf
             fi
             exit 0
