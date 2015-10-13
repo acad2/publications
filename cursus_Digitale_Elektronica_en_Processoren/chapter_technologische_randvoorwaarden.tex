@@ -902,19 +902,24 @@ Naast de NOT, NAND, NOR, AOI en OAI poorten, worden er nog enkele andere poorten
 \figlab{alternativeGatesCmos}
 \end{figure}
 
-%REVIEW
 \paragraph{Buffer}
-Een \gtermen{buffer}{} of \stermen{driver}{buffer} is een speciaal type poort met \'e\'en ingang waarbij de uitgang dezelfde waarde heeft als de ingang. Men zou dus in principe een buffer kunnen vervangen door een draad. Toch wordt een buffer frequent gebruikt, indien een bepaalde draad verbonden wordt met vele ingangen van andere poorten. In dat geval immers, zou de spanning op deze draad verlaagd worden. Een buffer dient dus om bij complexe circuits een signaal over een groot aantal componenten te kunnen verspreiden, waar een eenvoudige vertakking zou falen. \figref{bufferCmos} toont de notatie en de implementatie van een buffer. We implementeren een buffer meestal met twee opeenvolgende inverters.
+Een \gtermen{buffer}{Een poort met \'e\'en ingang waarbij $0$ wordt afgebeeld op $0$; en $1$ op $1$. Een buffer is dus equivalent aan een draad, maar wordt gebruikt om de fan-out onder controle te houden.} of \stermen{driver}{buffer} is een speciaal type poort met \'e\'en ingang waarbij de uitgang dezelfde waarde heeft als de ingang. Men zou dus een buffer kunnen vervangen door een geleider. Een buffer wordt echter frequent gebruikt indien een bepaalde draad verbonden moet worden met een groot aantal ingangen van poorten. Wanneer we dit aan de hand van een draad zouden doen, zou dit betekenen dat spanning op deze draad verlaagd wordt door lekstromen. Men kan dit oplossen aan de hand van een vertakking van de draad naar verschillende buffers die op hun beurt weer verschillende poorten aansturen. Een buffer dient dus - om bij complexe circuits - een signaal over een groot aantal componenten te kunnen verspreiden, waar een eenvoudige vertakking zou falen. \figref{bufferCmos} toont de notatie en de implementatie van een buffer. We implementeren een buffer meestal aan de hand van twee opeenvolgende inverters.
+
 \paragraph{AND-poort}
-We hebben een AND-poort reeds voldoende ge\"introduceerd om te weten wat deze component doet. Als we naar \figref{andCmos} kijken, zien we dat we deze poort implementeren door een NOT-poort aan de uitgang van een NAND-poort te plaatsen. Dit verklaart ook meteen waarom we de voorkeur zullen geven aan inverterende poorten: een NAND werkt sneller en is bovendien twee transistoren goedkoper.
+We hebben een AND-poort reeds voldoende ge\"introduceerd om te weten wat deze component doet. Als we naar \figref{andCmos} kijken, zien we dat we deze poort implementeren door een NOT-poort aan de uitgang van een NAND-poort te plaatsen. Dit verklaart ook meteen waarom we de voorkeur zullen geven aan inverterende poorten: een NAND werkt sneller\footnote{Omdat het signaal niet nog eens door de inverter moet propageren.} en is bovendien twee transistoren goedkoper.
+
 \paragraph{OR-poort}
 Analoog aan een AND-poort implementeren we een OR-poort ook met een inverter na een NOR-poort. \figref{orCmos} toont hierbij de implementatie. De conclusies de we trokken voor AND-poorten gelden uiteraard ook voor een OR-poort.
+
 \paragraph{XOR-poort}
-Ook de XOR-poort werd reeds ge\"implementeerd op poortniveau. Om dit te implementeren werd toen een complex netwerk van poorten opgezet. Hierbij werd echter impliciet een AND-OR-Inverter gebruikt. Dit houdt in dat we een XOR poort relatief goedkoop kunnen implementeren. \figref{xorCmos} toont dat deze implementatie een OR-AND-Inverter vraagt en twee invertoren. In totaal hebben we dus 12 transistoren nodig. Indien we deze schakeling zouden implementeren zoals op \figref{complexGatesXor} op pagina \pageref{fig:complexGatesXor} zouden we 22 transistoren gebruiken.
+De XOR-poort werd reeds ge\"implementeerd aan de hand van NOT, OR en AND poorten, en dit aan de hand van een complex netwerk. We kunnen deze schakeling echter ook realiseren met een AND-OR-Inverter\footnote{Een AOI deelt dezelfde conceptuele structure als deze die we voorstelden bij de poorten.}. Dit houdt in dat we een XOR poort ook relatief goedkoop kunnen implementeren. \figref{xorCmos} toont dat we deze schakeling kunnen realiseren met een OR-AND-Inverter en twee invertoren. In totaal hebben we dus $12$ transistoren nodig. Indien we deze schakeling zouden implementeren zoals op \figrefpag{complexGatesXor} zouden we $22$ transistoren nodig hebben.
+
 \paragraph{XNOR-poort}
-Een laatste populaire poort is de XNOR-poort. Deze poort is niets anders dan de ge\"inverteerde van de XOR-poort. Door eenvoudigweg de AND-OR inverter te vervangen door een OR-AND-Inverter kunnen we deze poort implementeren zoals op \figref{xnorCmos}. De XNOR poort is dan ook de enige poort die even goedkoop is als zijn invers.
+Een laatste populaire poort is de XNOR-poort. Deze poort is niets anders dan de ge\"inverteerde van de XOR-poort. Door eenvoudigweg de AND-OR inverter te vervangen door een OR-AND-Inverter kunnen we deze poort implementeren zoals op \figref{xnorCmos}. De XNOR poort is dan ook de enige hierboven beschouwde poort die even goedkoop is als zijn inverse.
+
+%REVIEW
 \section{Negatieve logica}
-\label{s:negativeLogic}
+\seclab{negativeLogic}
 We hebben reeds kort negatieve logica behandeld. Nu we echter poorten ge\"implementeerd hebben, zijn we beter in staat om te vatten wat negatieve logica doet. Indien we de NAND-poort beschouwen op \figref{nandCmos}, kunnen we rekenen met high en low. Tabel \ref{tbl:positiveNegativeLogicHighLow}
 \begin{table}[hbt]
 \centering
