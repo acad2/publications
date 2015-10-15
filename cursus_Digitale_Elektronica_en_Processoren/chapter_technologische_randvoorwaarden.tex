@@ -1011,10 +1011,9 @@ Prototypes waar nog fouten uitgehaald moeten worden, of elektronica in bijvoorbe
  \item \gtermen{Geheugen-programmeerbaar}{Een techniek voor programmeerbare chips. Hierbij bevat de chip een geheugen, bijvoorbeeld SRAM. Het stuursignaal van sommige transistoren wordt dan gekoppeld aan de toestand van eeen bepaalde bit in dat geheugen. Men kan dit geheugen bijna eindeloos herprogrammeren, en soms zelfs dynamisch aanpasssen. Men dient wel voortdurend spanning op dit geheugen aan te leggen.}: Hierbij bevat de chip een geheugen component, meestal in \termen{SRAM}. De transistoren die de verbindingen bepalen worden dan gekoppeld aan dit geheugen. Het voordeel hierbij is dat we makkelijk en snel de chip kunnen programmeren, en dit kan zelfs dynamisch\footnote{De chip kan tijdens uitvoering zijn gedrag aanpassen.}. Het nadeel is dat dit geheugen telkens bij het aanleggen van voedingsspanning weer opnieuw ingeladen moet worden. Het typevoorbeeld van deze techniek is een \termen{Field Programmable Gate Array (FPGA)}.%TODO: glossary
 \end{itemize}
 
-%REVIEW
 \subsubsection{Programmable Logic Array (PLA)}
-\ssclab{programmableLogicArray}
-In \secref{synthese} zagen we reeds dat we alle logische functies kunnen maken met een \termen{Sum-of-Products (SOP)}. Een \termen{Programmable Logic Array (PLA)} is gebaseerd op dit idee. Deze chip bevat twee rasters van poorten: een \termen{AND-matrix} en een \termen{OR-matrix}. Als ingangen kunnen we vervolgens zowel een variable als zijn inverse aanleggen. \figref{plaSchema}
+\ssslab{programmableLogicArray}
+In \secref{synthese} zagen we reeds dat we alle logische functies kunnen maken met een \termen{Sum-of-Products (SOP)}. Een \gtermen{Programmable Logic Array (PLA)}{Een programmeerbare chip die werkt op basis van zekeringen. Deze chip bevat twee rasters van poorten: een AND- en OR-matrix. Voor elk van item in het raster is er een zekering die doorgebrand kan worden.} is gebaseerd op dit idee. Deze chip bevat twee rasters van poorten: een \gtermen{AND-matrix}{Een raster dat gebruikt wordt voor programmeerbare chips. Men beschouwt $n$ ingangen en $m$ $n$-AND-poorten, voor elke ingang en elke AND poort is er een zekering waardoor men kan beslissen welke ingangen er aan welke AND-poort worden gehangen. Een AND-matrix wordt ondermeer gebruikt bij een programmable logic array (PLA).} en een \gtermen{OR-matrix}{Een raster dat gebruikt wordt voor programmeerbare chips. Men beschouwt $n$ ingangen en $m$ $n$-OR-poorten, voor elke ingang en elke AND poort is er een zekering waardoor men kan beslissen welke ingangen er aan welke OR-poort worden gehangen. Een OR-matrix wordt ondermeer gebruikt bij een programmable logic array (PLA).}. Als ingangen kunnen we vervolgens zowel een variable als zijn inverse aanleggen. \figref{plaSchema}
 
 \begin{figure}[hbt]
 \centering
@@ -1061,13 +1060,17 @@ In \secref{synthese} zagen we reeds dat we alle logische functies kunnen maken m
 \caption{Schematische voorstelling van een Programmable Logic Array (PLA).}
 \figlab{plaSchema}
 \end{figure}
-toont een schematische voorstelling van zo'n PLA. De punten tussen twee verbindingen stellen een zekering door. Door zekeringen door te branden kunnen we dus het model aanpassen. Punten waar een kruisje bij staat zijn in dit voorbeeld doorgebrand. Bij een doorgebrande zekering in de AND-matrix, komt er een 1 op de lijn, bij een doorgebrande zekering op de OR-matrix een 0. Er bestaan nog twee varianten op een PLA:
+
+toont een schematische voorstelling van zo'n PLA. De punten tussen twee verbindingen stellen een zekering door. Door zekeringen door te branden kunnen we dus het model aanpassen. Punten waar een kruisje bij staat zijn in dit voorbeeld doorgebrand. Bij een doorgebrande zekering in de AND-matrix, komt er een $1$ op de lijn, bij een doorgebrande zekering op de OR-matrix een $0$. Er bestaan ook varianten op een PLA:
+
 \begin{itemize}
- \item een \termen{Programmable Array Logic (PAL)} heeft een vaste OR-matrix.
- \item een \termen{Programmable Read Only Memory (PROM)} heeft een vaste AND-matrix. Hierbij fungeert deze matrix als een adresdecoder (zie \ref{ss:decoder}).
+ \item een \gtermen{Programmable Array Logic (PAL)}{Een variant op een programmable logic array (PLA). Hierbij staat de OR-matrix echter vast (deze kan niet geprogrammeerd worden door zekeringen door te branden).} heeft een vaste OR-matrix; en
+ \item een \gtermen{Programmable Read Only Memory (PROM)}{Een variant op een programmable logic array (PLA). Hierbij staat de AND-matrix vast (deze kan dus niet geprogrammeerd worden). De AND-matrix is gestructureerd als een adresdecoder: wanneer de invoer binair het getal $n$ voorstelt, is de $n$-de uitgang actief.} heeft een vaste AND-matrix. Hierbij fungeert deze matrix als een \termen{adresdecoder} (zie \sscref{decoder}).
 \end{itemize}
+
+%REVIEW
 \subsubsection{Programmable Logic Device (PLD)}
-\label{sss:pld}
+\ssslab{pld}
 Een PLA is niet in staat complexe functies te beschrijven zonder de AND- en OR-matrix zeer groot te maken. Omdat immers voor iedere verbinding ook nog lijnen moeten voorzien worden, zou de component al snel te groot worden. Een \termen{Programmable Logic Device (PLD)} probeert hierop een antwoord te bieden. Hierbij wordt meer lagen logica gehanteerd. \figref{pldSchema}
 \begin{figure}[hbt]
 \centering
