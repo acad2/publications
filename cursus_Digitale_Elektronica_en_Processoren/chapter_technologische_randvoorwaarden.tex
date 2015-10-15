@@ -1068,7 +1068,6 @@ toont een schematische voorstelling van zo'n PLA. De punten tussen twee verbindi
  \item een \gtermen{Programmable Read Only Memory (PROM)}{Een variant op een programmable logic array (PLA). Hierbij staat de AND-matrix vast (deze kan dus niet geprogrammeerd worden). De AND-matrix is gestructureerd als een adresdecoder: wanneer de invoer binair het getal $n$ voorstelt, is de $n$-de uitgang actief.} heeft een vaste AND-matrix. Hierbij fungeert deze matrix als een \termen{adresdecoder} (zie \sscref{decoder}).
 \end{itemize}
 
-%REVIEW
 \subsubsection{Programmable Logic Device (PLD)}
 \ssslab{pld}
 Een PLA is niet in staat complexe functies te beschrijven zonder dat de AND- en OR-matrix zeer groot te maken. Omdat immers voor iedere verbinding ook nog lijnen moeten voorzien worden, zou de component al snel te groot worden. Een \gtermen{Programmable Logic Device (PLD)}{Een programmeerbare chip waarbij men een programmable array logic (PAL) gebruikt, maar aangevuld met flipflops bij de uitgangen en een gedeeltelijk feedback-mechanisme: een deel van de uitvoer, wordt terug als invoer hergebruikt.} probeert hierop een antwoord te bieden. Hierbij wordt meer lagen logica gehanteerd. \figref{pldSchema}
@@ -1135,7 +1134,6 @@ Een PLA is niet in staat complexe functies te beschrijven zonder dat de AND- en 
 
 toont het idee achter deze techniek. We beschouwen nog steeds een AND-matrix, alleen is een groot deel van de invoer eigenlijk de uitvoer van geprogrammeerde functies op de chip, er ontstaat dus een feedback-mechanism. Zo zijn $x_1$ en $x_2$ de enig invoerlijnen, de andere lijnen zijn het resultaat van de geprogrammeerde logica. Op de figuur bemerken we verder nog dat er componenten onder de uitgangen staan. Deze componenten komen later in de cursus aan bod. Het vierkant stelt een 1-bit geheugen voor (zie \secref{memory}), meestal een D-flipflop. De trapezium een multiplexer (zie \sscref{multiplexer}). Dit component laat ons dus toe complexere schakelingen te maken, en tegelijk het aantal zekeringen onder controle te houden. Het zal meestal echter een grotere inspanning vragen om een logische functie te realiseren met een programmable logic device.
 
-%REVIEW
 \subsubsection{Complex Programmable Logic Device (CPLD)}
 \begin{figure}[H]%TODO: check alignment, fixed floating environment used [H]
 \centering
@@ -1201,7 +1199,10 @@ toont het idee achter deze techniek. We beschouwen nog steeds een AND-matrix, al
 \caption{Schematische voorstelling van een Complex Programmable Logic Device (CPLD).}
 \figlab{cpldSchema}
 \end{figure}
-Een aantal PLD componenten samen op \'e\'en chip samen met de zogenaamde \termen{Glue Logic} om ze samen te laten werken, noemen we een \termen{Complex Programmable Logic Device (CPLD)}. \figref{cpldSchema} toont dat deze glue eigenlijk neerkomt op een \termen{schakelmatrix} om PLDs te laten samenwerken en \termen{in- en uitvoer modules} om te intrageren met de buitenwereld. Naast de PLDs zelf dient dus ook de schakelmatrix geprogrammeerd te worden. Een ander belangrijk verschil is dat CPLDs niet geprogrammeerd worden met behup van zekeringen. De chip wordt geprogrammeerd door ladingen op transistoren te plaatsen, bijgevolg kunnen de we deze chip enkele keren volledig herprogrammeren.
+
+Een aantal PLD componenten samen op \'e\'en chip samen met de zogenaamde \termen{Glue Logic} om ze samen te laten werken, noemen we een \gtermen{Complex Programmable Logic Device (CPLD)}{Een programmeerbare chip die bestaat uit een aantal programmable logic devices (PLDs) samen met een manier om glue logic uit te drukken, dit aan de hand van een schakelmatrix en in- en uitvoer modules.}. \figref{cpldSchema} toont dat deze glue eigenlijk neerkomt op een \gtermen{schakelmatrix}{Een schakelmatrix is een programmeerbare component waarin verbindingen samenkomen. Afhankelijk van de manier hoe men de matrix programmeert zijn sommige ingangen wel of niet met elkaar verbonden. Men gebruikt schakelmatrices vaak als een deel van programmeerbare chips zoals een complex programmable logic device (CPLD) of een field  programmable gate array (FPGA).} om PLDs te laten samenwerken en \gtermen{in- en uitvoer modules}{Een module die erop gericht is een circuit te laten communiceren met zijn omgeving. Dit zijn bijvoorbeeld modules die signalen in een geheugen klokken, maar soms ook Ethernet of USB interfaces.} om te intrageren met de buitenwereld. Naast de PLDs zelf dient dus ook de schakelmatrix geprogrammeerd te worden. Een ander belangrijk verschil is dat CPLDs niet geprogrammeerd worden met behup van zekeringen. De chip wordt geprogrammeerd door ladingen op transistoren te plaatsen, bijgevolg kunnen de we deze chip enkele keren volledig herprogrammeren.
+
+%REVIEW
 \subsubsection{Field Programmable Gate Array (FPGA)}
 Een nog meer geavanceerde programmeerbare chip is de \termen{Field Programmable Gate Array (FPGA)}. Net zoals bij een CPLD bevat deze chip enkele logische blokken met daartussen ``glue''. Deze ``glue'' uit zich opnieuw in een schakelmatrix, maar ook in korte en lange verbindingen. Deze laatsten worden vaak ook \termen{lange lijnen} genoemd. Daarnaast bevat de chip uiteraard ook opnieuw en- en uitvoer modulen. \figref{fpgaSchemaFull}
 \begin{figure}[hbt]
