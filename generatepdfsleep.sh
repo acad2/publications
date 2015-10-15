@@ -33,4 +33,4 @@ timeout $tmo makeglossaries -q "$1" >/dev/null 2>/dev/null
 timeout $tmo makeindex -q "$1" >/dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex"
+time -f '%S' timeout $tmo pdflatex $popt --interaction $pint "$1.tex"
