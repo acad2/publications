@@ -7,30 +7,41 @@ tim=1                   #1 second, the amount of time between two compilation se
 pint="nonstopmode"      #The interaction mode used for pdflatex
 popt="-file-line-error" #additional options for pdflatex
 
+dts=$(date)
+
+bsf="$1"
+pdff="$bsf.pdf"
+texf="$bsf.tex"
+
 TEXINPUTS="$TEXINPUTS:../libtex//:../SharedData//"
 export TEXINPUTS
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$1" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$1" >/dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
+timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
-timeout $tmo bibtex "$1" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$1" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$1" >/dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
+timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
-timeout $tmo bibtex "$1" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$1" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$1" >/dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
+timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$1.tex" >/dev/null 2>/dev/null
-timeout $tmo bibtex "$1" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$1" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$1" >/dev/null 2>/dev/null
+timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
+timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
-time -f '%S' timeout $tmo pdflatex $popt --interaction $pint "$1.tex"
+time -f '%S' timeout $tmo pdflatex $popt --interaction $pint "$texf"
+
+if [ -f "$pdff" ] #make sure the create/access/modification time is set to the time `make` was called.
+then               #such that modifications while compiling trigger a new compiler run
+    touch -d "$dts" "$pdff"
+fi
