@@ -7,11 +7,11 @@ tim=1                   #1 second, the amount of time between two compilation se
 pint="nonstopmode"      #The interaction mode used for pdflatex
 popt="-file-line-error" #additional options for pdflatex
 
-dts=$(date)
+dts=$(date)             #The date string at which compiling started
 
-bsf="$1"
-pdff="$bsf.pdf"
-texf="$bsf.tex"
+bsf="$1"                #The base file name, used to generate derivative products
+pdff="$bsf.pdf"         #The resulting pdf file
+texf="$bsf.tex"         #The main tex file
 
 TEXINPUTS="$TEXINPUTS:../libtex//:../SharedData//"
 export TEXINPUTS
@@ -42,6 +42,6 @@ sleep $tim
 time -f '%S' timeout $tmo pdflatex $popt --interaction $pint "$texf"
 
 if [ -f "$pdff" ] #make sure the create/access/modification time is set to the time `make` was called.
-then               #such that modifications while compiling trigger a new compiler run
+then              #such that modifications while compiling trigger a new compiler run
     touch -d "$dts" "$pdff"
 fi
