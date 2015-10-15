@@ -46,7 +46,7 @@ Omdat het moeilijk is om een constante spanning aan de uitgangen aan te leggen, 
 \end{figure}
 
 \paragraph{Negatieve logica}
-Het is niet per definitie zo dat $V_{\mbox{\tiny H}}$ geassocieerd wordt met $1$, en $V_{\mbox{\tiny L}}$ met $0$. Dit hangt af van het type logica dat gehanteerd wordt. We onderscheiden twee soorten logica: \gtermen{positieve logica}{Een vorm van implementeren van logica waarbij we een hoge spanning associ\"eren met een $1$ en een lage spanning met een $0$.} en \gtermen{negatieve logica}{Een vorm van implementeren van logica waarbij we een hoge spanning associ\"eren met een $0$ en een lage spanning met een $1$.}. In geval van positieve logica is dit inderdaad het geval. Soms komt het echter voordeliger uit om deze orde om te draaien, in dat geval spreekt men van negatieve logica. Merk op dat bij negatieve logica de poorten fysisch anders ge\"implementeerd moeten worden. Immers kent de fysische poort alleen maar spanningen, en geen $0$ of $1$. De belangrijkste reden om negatieve logica te gebruiken, is dan ook dat de implementatie van een logische functie goedkoper kan zijn in bijvoorbeeld negatieve logica. Bovendien kan men in een circuit op verschillende plaatsen een andere logica gebruiken. Een concreet voorbeeld is de reset-module in veel elektronicasystemen die men vaak in negatieve logica realiseert.
+Het is niet per definitie zo dat $V_{\mbox{\tiny H}}$ geassocieerd wordt met $1$, en $V_{\mbox{\tiny L}}$ met $0$. Dit hangt af van het type logica dat gehanteerd wordt. We onderscheiden twee soorten logica: \gtermen{positieve logica}{Een vorm van implementeren van logica waarbij we een hoge spanning associ\"eren met een $1$ en een lage spanning met een $0$.} en \gtermen{negatieve logica}{Een vorm van implementeren van logica waarbij we een hoge spanning associ\"eren met een $0$ en een lage spanning met een $1$.}. In geval van positieve logica is dit inderdaad het geval. Soms komt het echter voordeliger uit om deze orde om te draaien, in dat geval spreekt men van negatieve logica. Merk op dat bij negatieve logica de poorten fysisch anders ge\"implementeerd moeten worden. Immers kent de fysische poort alleen maar spanningen, en geen $0$ of $1$. De belangrijkste reden om negatieve logica te gebruiken, is dan ook dat de implementatie van een logische functie goedkoper kan zijn in bijvoorbeeld negatieve logica. Bovendien kan men in een circuit op verschillende plaatsen een andere logica gebruiken. Een concreet voorbeeld is de reset-module in veel elektronicasystemen die men vaak in negatieve logica realiseert. We behandelen negatieve logica nog verderop in \secref{negativeLogic}.
 
 \section{Implementatie van poorten}
 \subsection{Schakelaars}
@@ -917,10 +917,10 @@ De XOR-poort werd reeds ge\"implementeerd aan de hand van NOT, OR en AND poorten
 \paragraph{XNOR-poort}
 Een laatste populaire poort is de XNOR-poort. Deze poort is niets anders dan de ge\"inverteerde van de XOR-poort. Door eenvoudigweg de AND-OR inverter te vervangen door een OR-AND-Inverter kunnen we deze poort implementeren zoals op \figref{xnorCmos}. De XNOR poort is dan ook de enige hierboven beschouwde poort die even goedkoop is als zijn inverse.
 
-%REVIEW
 \section{Negatieve logica}
 \seclab{negativeLogic}
-We hebben reeds kort negatieve logica behandeld. Nu we echter poorten ge\"implementeerd hebben, zijn we beter in staat om te vatten wat negatieve logica doet. Indien we de NAND-poort beschouwen op \figref{nandCmos}, kunnen we rekenen met high en low. Tabel \ref{tbl:positiveNegativeLogicHighLow}
+We hebben reeds kort negatieve logica behandeld in \secref{logischeWaarden}. Nu we de poorten op transistor-niveau ge\"implementeerd hebben, zijn we beter in staat om te vatten wat negatieve logica precies doet. Indien we de NAND-poort beschouwen zoals op \figref{nandCmos}, kunnen we rekenen met high en low. \tblref{positiveNegativeLogicHighLow}
+
 \begin{table}[hbt]
 \centering
 \subtable[High en Low]{
@@ -931,7 +931,7 @@ L&H&H\\
 H&L&H\\
 H&H&L
 \end{tabular}
-\label{tbl:positiveNegativeLogicHighLow}
+\tbllab{positiveNegativeLogicHighLow}
 }
 \subtable[Positief]{
 \begin{tabular}{cc|c}
@@ -941,7 +941,7 @@ $x$&$y$&$f$\\\hline
 1&0&1\\
 1&1&0
 \end{tabular}
-\label{tbl:positiveNegativeLogicPositive}
+\tbllab{positiveNegativeLogicPositive}
 }
 \subtable[Negatief]{
 \begin{tabular}{cc|c}
@@ -951,16 +951,23 @@ $x$&$y$&$f$\\\hline
 0&1&0\\
 0&0&1
 \end{tabular}
-\label{tbl:positiveNegativeLogicNegative}
+\tbllab{positiveNegativeLogicNegative}
 }
 \caption{Verschil tussen positieve en negatieve logica.}
-\label{tbl:positiveNegativeLogic}
+\tbllab{positiveNegativeLogic}
 \end{table}
-toont de functie met high en low signalen. Indien we deze signalen interpreteren met positieve logica zoals in tabel \ref{tbl:positiveNegativeLogicPositive} bekomen we zoals verwacht de NAND-poort. Indien we negatieve logica toepassen zoals in tabel \ref{tbl:positiveNegativeLogicNegative} bekomen we een NOR-poort.Bijgevolg kunnen we dus stellen dat positieve en negatieve logica elkaars duale vorm zijn (zie \ref{ss:theoremasPropertiesBooleanAlgebra}).
+
+toont de functie met high en low signalen. Indien we deze signalen interpreteren met positieve logica zoals in \tblref{positiveNegativeLogicPositive} bekomen we inderdaad zoals verwacht de NAND-poort. Indien we echter negatieve logica toepassen zoals in \tblref{positiveNegativeLogicNegative} bekomen we een NOR-poort. Bijgevolg kunnen we dus stellen dat positieve en negatieve logica elkaars duale vorm zijn (zie \sscref{theoremasPropertiesBooleanAlgebra}).
+
+%REVIEW
 \section{Technologie\"en}
-Niet elk toestel wordt volledig ontworpen en ontwikkeld. Voor goedkope toestellen in beperkte oplages zal men vaak geen nieuwe specifieke chips ontwikkelen. Meestal maakt men gebruik van reeds bestaande componenten, die men vervolgens op een printplaat combineert. Nog een alternatief zijn programmeerbare chips. Hierbij wordt de logica in de chip geprogrammeerd. Dit laat toe programmeerbare chips in grote oplages te produceren die dan vervolgens voor allerhande verschillende toepassingen gebruikt worden. Tot slot worden sommige chips ook volledig zelf geassembleerd. We overlopen eerst kort de drie vormen, waarna we ze in detail bespreken in de volgende subsecties.
+Niet elk toestel wordt volledig ontworpen en specifiek geproduceerd: net zoals bij software maken we vaak gebruik van modules waar we onze specifieke applicatie dan inpluggen. Deze sectie geeft een overzicht van de verschillende technologie\"en om een schakeling daadwerkelijk te realiseren.
+
+\paragraph{}
+Voor goedkope toestellen in beperkte oplages zal men vaak geen nieuwe specifieke chips ontwikkelen. Meestal maakt men gebruik van reeds bestaande componenten, die men vervolgens op een printplaat combineert. Nog een alternatief zijn programmeerbare chips. Hierbij wordt de logica in de chip geprogrammeerd, bijvoorbeeld in een geheugen. Het gedrag van de chip hangt dan ondermeer af van de waardes in dat geheugen. Dit laat toe programmeerbare chips in grote oplages te produceren die dan vervolgens voor allerhande verschillende toepassingen gebruikt worden. Tot slot worden sommige chips ook volledig zelf geassembleerd. We overlopen eerst kort de drie vormen, waarna we ze in detail bespreken in de volgende subsecties.
+
 \begin{itemize}
- \item \termen{Specifieke Chips (ASIC)} (\S\ref{ss:specifiekeChips}): Hierbij maken we de chips volledig zelf. Deze techniek is echter duur, omdat er bijvoorbeeld een masker moet aangemaakt worden. Bijgevolg is deze techniek enkel winstgevend bij grote volumes.
+ \item \gtermen{Specifieke Chips (ASIC)}{Een technologie waarbij chips die volledig zelf fysiek gerealiseerd worden. Men maakt een masker aan en belazerde vervolgens de chip zodat er poorten ontstaan. Deze techniek is erg duur en wordt enkel toegepast bij chips met grote oplage.} (\sscref{specifiekeChips}): Hierbij maken we de chips volledig zelf. Deze techniek is echter duur, omdat er bijvoorbeeld een masker moet aangemaakt worden. Bijgevolg is deze techniek enkel winstgevend bij grote volumes.
  \item \termen{Programmeerbare Chips} (\S\ref{ss:programmeerbareChips}): Dit zijn chips waarbij de logica geprogrammeerd kan worden. Meestal is dit echter volgens het ``\termen{Write Once Read Many (WORM)}'' principe. Deze chips kunnen een redelijke complexiteit aan en bevatten anno 2010 2 miljoen logische cellen. Meestal worden deze chips dan ook gebruikt voor prototypes en voor apparaten met kleine tot middelgrote oplages\footnote{minder dan 100 000 stukken per jaar.}.
  \item \termen{Standaard Chips}: Hierbij worden simpele chips gekocht zoals poorten (SSI) en chips die eenvoudige functies vervullen (MSI/LSI). Het enige wat men nog moet doen is deze componenten met elkaar verbinden. De zogenaamde ``\termen{Glue Logic}''. Het gevolg is echter dat we enkel circuits kunnen bouwen met een beperkte complexiteit. Een typevoorbeeld van zo'n chips is bijvoorbeeld de 744 chip. Deze bevat 6 NOT poorten.
 \end{itemize}
