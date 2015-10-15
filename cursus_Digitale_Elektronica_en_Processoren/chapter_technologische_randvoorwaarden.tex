@@ -1071,7 +1071,8 @@ toont een schematische voorstelling van zo'n PLA. De punten tussen twee verbindi
 %REVIEW
 \subsubsection{Programmable Logic Device (PLD)}
 \ssslab{pld}
-Een PLA is niet in staat complexe functies te beschrijven zonder dat de AND- en OR-matrix zeer groot te maken. Omdat immers voor iedere verbinding ook nog lijnen moeten voorzien worden, zou de component al snel te groot worden. Een \gtermen{Programmable Logic Device (PLD)}{Een programmeerbare chip.} probeert hierop een antwoord te bieden. Hierbij wordt meer lagen logica gehanteerd. \figref{pldSchema}
+Een PLA is niet in staat complexe functies te beschrijven zonder dat de AND- en OR-matrix zeer groot te maken. Omdat immers voor iedere verbinding ook nog lijnen moeten voorzien worden, zou de component al snel te groot worden. Een \gtermen{Programmable Logic Device (PLD)}{Een programmeerbare chip waarbij men een programmable array logic (PAL) gebruikt, maar aangevuld met flipflops bij de uitgangen en een gedeeltelijk feedback-mechanisme: een deel van de uitvoer, wordt terug als invoer hergebruikt.} probeert hierop een antwoord te bieden. Hierbij wordt meer lagen logica gehanteerd. \figref{pldSchema}
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US] %yscale=0.8
@@ -1128,10 +1129,13 @@ Een PLA is niet in staat complexe functies te beschrijven zonder dat de AND- en 
   \draw[thick] (B\g -| A\s\x.input \g) -- ++(-0.05,-0.05);
 }
 \end{tikzpicture}%TODO: make more compact + multiplexer input
-\caption{Schematische voorstelling van een Programmable Logic Device (PLD).??}
+\caption{Schematische voorstelling van een Programmable Logic Device (PLD).}
 \figlab{pldSchema}
 \end{figure}
-toont het idee achter deze techniek. We beschouwen nog steeds een matrix, alleen is een groot deel van de invoer eigenlijk de uitvoer van andere geprogrammeerde functies. Zo zijn $x_1$ en $x_2$ de enig invoerlijnen, de andere lijnen zijn het resultaat van geprogrammeerde logica. Op de figuur bemerken we verder nog dat er componenten onder de uitgangen staan. Deze componenten komen later in de cursus aan bod. Het vierkant stelt een 1-bit geheugen voor (zie \ref{s:memory}), meestal een D-Flip Flop. De trapezium een multiplexer (zie \ref{ss:multiplexer}). Dit component laat ons dus toe complexere schakelingen te maken, en tegelijk het aantal zekeringen onder controle te houden.
+
+toont het idee achter deze techniek. We beschouwen nog steeds een AND-matrix, alleen is een groot deel van de invoer eigenlijk de uitvoer van geprogrammeerde functies op de chip, er ontstaat dus een feedback-mechanism. Zo zijn $x_1$ en $x_2$ de enig invoerlijnen, de andere lijnen zijn het resultaat van de geprogrammeerde logica. Op de figuur bemerken we verder nog dat er componenten onder de uitgangen staan. Deze componenten komen later in de cursus aan bod. Het vierkant stelt een 1-bit geheugen voor (zie \secref{memory}), meestal een D-flipflop. De trapezium een multiplexer (zie \sscref{multiplexer}). Dit component laat ons dus toe complexere schakelingen te maken, en tegelijk het aantal zekeringen onder controle te houden. Het zal meestal echter een grotere inspanning vragen om een logische functie te realiseren met een programmable logic device.
+
+%REVIEW
 \subsubsection{Complex Programmable Logic Device (CPLD)}
 \begin{figure}[H]%TODO: check alignment, fixed floating environment used [H]
 \centering
