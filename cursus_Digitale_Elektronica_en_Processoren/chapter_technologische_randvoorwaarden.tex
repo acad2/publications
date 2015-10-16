@@ -231,7 +231,7 @@ Indien we de weerstand als een extern component beschouwen, en meerdere NMOS tra
 \node [nmosc] (T1) at (-1,2.75) {};
 \node [nmosc] (T2) at (-1,0.75) {};
 \draw[<-] (0,4.75) node[anchor=west,scale=0.75]{$V_{\mbox{\tiny DD}}\ (H)$} -- (0,4.5);
-\draw (0,4.5) to [R,size=0.5,l={\small $R$}] (0,3.5) -- (0,-0.25);
+\draw (0,4.5) to [R,size,l={\small $R$}] (0,3.5) -- (0,-0.25);
 \draw (0,3.5) -| (T1.drain);
 \draw (0,1.5) -| (T2.drain);
 \draw (0,2.5) -- ++(1,0) node[anchor=west,scale=0.75]{$f$};
