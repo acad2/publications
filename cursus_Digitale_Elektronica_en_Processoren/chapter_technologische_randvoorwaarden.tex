@@ -1513,7 +1513,7 @@ Dit effect is vooral nadelig voor bijvoorbeeld in- en uitvoer: communicatie van 
 \figlab{dynamicBehavior}
 \end{figure}
 
-Op simulaties zullen we meestal uitgaan van \termen{dynamisch gedrag}. Dit betekent dus dat we veronderstellen dat indien we bijvoorbeeld de spanning aan de ingang van een poort naar een andere spanning brengen, de uitgang na enige vertraging van de oude naar de nieuwe spanning omschakelt. Dit zullen we illustreren met een voorbeeld zoals op \figref{dynamicBehavior} waar we twee NOT-poorten na elkaar plaatsen. We kunnen het gedrag van dit circuit nabootsen bij overgangen, door een lijn als een capaciteit te zien, verder zien we een gesloten transistor als een weerstand, open transistoren zijn open lijnen en worden dus niet beschouwd. We zullen eerst uit de beschreven modellen de spanning in functie van de tijd plaatsen.%TODO: glossaries
+Op simulaties zullen we meestal uitgaan van \gtermen{dynamisch gedrag}{Het gedrag die eigen is aan de fysieke realisatie van een chip. Omdat geleiders kunnen gemodelleerd worden als RC ketenen, betekent dit dat zelfs bij een directe omschakeling van de poort, het signaal traag en geleidelijk door de geleider zal propageren.}. Dit betekent dus dat we veronderstellen dat indien we bijvoorbeeld de spanning aan de ingang van een poort naar een andere spanning brengen, de uitgang na enige vertraging van de oude naar de nieuwe spanning omschakelt. Dit zullen we illustreren met een voorbeeld zoals op \figref{dynamicBehavior} waar we twee NOT-poorten na elkaar plaatsen. We kunnen het gedrag van dit circuit nabootsen bij overgangen, door een lijn als een capaciteit te zien, verder zien we een gesloten transistor als een weerstand, open transistoren zijn open lijnen en worden dus niet beschouwd. We zullen eerst uit de beschreven modellen de spanning in functie van de tijd plaatsen.
 
 \paragraph{Hoog naar laag}
 Bij een overgang van hoog naar laag aan de ingang, zal de spanning op de kabel tussen de twee poorten stijgen. Zoals we op de grafiek zien, zal dit exponentieel gebeuren. We zullen eerst de doelspanning $V_{\infty}$ bepalen, en vervolgens de \gtermen[tijdsconstante]{tijdsconstante $\tau$}{Een parameter die beschrijft hoe snel een systeem zich aanpast aan een nieuwe toestand aan de invoer. Systemen zoals het dynamische systeem van een geleider gedragen zich typisch exponentieel. In dat geval zal het gedrag dus beschreven worden aan de hand van $\fun{V}{t}=V_{\infty}\cdot\brak{1-e^{t/\tau}}$ ofwel $\fun{V}{t}=V_0\cdot e^{-t/\tau}$.}. De doelspanning kunnen we eenvoudig afleiden uit de stroom, indien de condensator volledig opgeladen is, stroomt alle stroom uitsluitend door de twee weerstanden. Hierdoor kunnen we de stroomsterkte afleiden. De spanning over de condensator kunnen we dan berekenen, omdat deze gelijk is aan de spanning op de tweede weerstand $R_{IH}$:
@@ -1549,9 +1549,9 @@ Bij een RC-keten geldt voor het ontladen van een condensator vervolgens deze exp
 \fun{V}{t}=V_0\cdot e^{-t/\tau}
 \end{equation}
 
-%REVIEW
 \paragraph{Tijdsconstante minimaliseren}
-We zien dus dat bij overgangen van laag naar hoog en hoog naar laag, we te maken hebben met exponentieel tijdsgedrag. Deze constante wordt bepaald door de capaciteit, en door de in- en uitgangsimpedanties. Deze parameters stellen we in met de volgende vier doelen:
+We zien dus dat we - bij overgangen van laag naar hoog en hoog naar laag - te maken hebben met exponentieel tijdsgedrag. Deze constante wordt bepaald door de capaciteit, en door de in- en uitgangsimpedanties. We proberen deze parameters zo aan te passen dat ze aan volgende vier doelen voldoen:
+
 \begin{equation}
 \left\{\begin{array}{l|ll}
 \tau\ssearrow&\tau=R_{\mbox{\small{subs.}}}\cdot C&\mbox{lage tijdsconstante}\\
@@ -1559,16 +1559,21 @@ P_{\mbox{\small{stat.}}}??\ssearrow&P_{\mbox{\small{stat.}}}=V^2/\left(R_I+R_O\r
 P_{\mbox{\small{dyn.}}}??\ssearrow&P_{\mbox{\small{dyn.}}}=V^2/R_O&\mbox{minimaal dynamisch vermogenverbruik}\\
 V_{\infty}\approx V_{DD}&V_{\infty}=R_I\cdot V_{DD}/\left(R_I+R_O\right)&\mbox{uitgangsspanning dicht bij de voedingsspanning}\\
 \end{array}\right.
-\label{eqn:PVTsummary}
+\eqnlab{PVTsummary}
 \end{equation}
+
 Hiervoor streven we naar bepaalde waardes voor de verschillende parameters:
 \begin{itemize}
- \item \termen{Ingangsimpedantie $R_I$}: We streven naar een zo hoog mogelijke ingangsimpedantie, immers stelt vergelijking (\ref{eqn:vInfty}) dat indien $R_I\gg R_O$, $V_{\infty}\approx V_{DD}$. Bovendien is het statisch vermogenverbruik lager (zie vergelijking~\ref{eqn:PVTsummary}).
- \item \termen{Uitgangsimpedantie $R_O$}: We proberen de uitgangsimpedantie zo laag mogelijk te houden. Dit haalt de tijdsconstante naar beneden, waardoor de chip sneller schakelt (zie vergelijking (\ref{eqn:tauHL}) en (\ref{eqn:tauLH})). Een nadelig bijeffect is een hoger dynamisch vermogenverbruik (zie vergelijking \ref{eqn:PVTsummary}).
- \item \termen{Capaciteit $C$}: De capaciteit probeert men zo laag mogelijk te houden. Immers verhoogt een hoge capaciteit rechtstreeks de vertraging (zie vergelijking (\ref{eqn:PVTsummary})). Hoge capaciteiten zijn kenmerkend voor lange verbindingen, vandaar dat men deze meestal op chips tot een minimum beperkt.
+ \item \gtermen[ingangsimpedantie]{Ingangsimpedantie $R_I$}{De ingangsimpedantie is de virtuele weerstand die bij een poort tussen een ingang van die poort en de grond staat. Er is een zeker streven naar een hoge ingangsimpedantie omdat dit ervoor zorgt dat een geleider vaak zal opgeladen worden tot aan de spanning die op de drain staat, bovendien perkt dit het statisch vermogensverbruik van de poort in.}: we streven naar een zo hoog mogelijke ingangsimpedantie, immers stelt \eqnref{vInfty} dat indien $R_I\gg R_O$, $V_{\infty}\approx V_{DD}$. Bovendien is het statisch vermogenverbruik lager (zie \eqnref{PVTsummary}).
+ \item \gtermen[uitgangsimpedantie]{Uitgangsimpedantie $R_O$}{De virtuele weerstand die tussen de bron of de grond enerzijds en de uitgang van een poort staat. We streven ernaar de uitgangsimpedantie zo laag mogelijk te houden, zodat de tijdsconstante van de geleider naar andere ingangen lager is en de chip bijgevolg sneller zal schakelen. Een nadeel bij een lage ingangsimpedantie is een hoger dynamisch vermogenverbruik.}: We proberen de uitgangsimpedantie zo laag mogelijk te houden. Dit haalt de tijdsconstante naar beneden, waardoor de chip sneller schakelt (zie \eqnref{tauHL} en \eqnref{tauLH}). Een nadelig bijeffect is een hoger dynamisch vermogenverbruik (zie \eqnref{PVTsummary}).
+ \item \gtermen[capaciteit]{Capaciteit $C$}{De capaciteit van een geleider ontstaat door de geometrie van de chip: de geleider en zijn positie tegenover geleiders van de grond en bron. Men probeert deze capaciteit zo laag mogelijk te houden om de tijdsconstante te verlagen en bijgevolg de chip sneller te laten schakelen. Typisch zal een lange geleider ook een hogere capaciteit hebben. Daarom probeert met het aantal lange lijnen op een geleider tot een minimum te beperken.}: De capaciteit probeert men zo laag mogelijk te houden. Immers verhoogt een hoge capaciteit rechtstreeks de vertraging (zie \eqnref{PVTsummary}). Hoge capaciteiten zijn kenmerkend voor lange verbindingen, vandaar dat men deze meestal op chips tot een minimum beperkt.
 \end{itemize}
-Al deze effecten zorgen ervoor dat een CMOS-implementatie betere karakteristieken heeft dan een NMOS-poort: NMOS heeft een groot statisch vermogenverbruik. Om dit tegen te gaan, kunnen we een sterke weerstand $R$ in de schakeling plaatsen. Dit leidt echter tot een grote uitgangsimpedantie vermits $R\approx R_O$, hierdoor wordt de stijgtijd van de schakeling groter, en dus bijgevolg de algemene vertraging.??%TODO: recheck
+
+Al deze effecten zorgen ervoor dat een CMOS-implementatie betere karakteristieken heeft dan een NMOS-poort: NMOS heeft een groter statisch vermogenverbruik. Om dit tegen te gaan, kunnen we een sterke weerstand $R$ in de schakeling plaatsen. Dit leidt echter tot een grote uitgangsimpedantie vermits geldt dat $R\approx R_O$, wordt de stijgtijd van de schakeling bijgevolg groter, en dus ook de algemene vertraging van de chip.
+
+%REVIEW
 \paragraph{Stijg- en daaltijd}
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -1612,7 +1617,9 @@ Al deze effecten zorgen ervoor dat een CMOS-implementatie betere karakteristieke
 \caption{Het dynamisch gedrag van een NOT-poort.}
 \figlab{dynamicBehaviorNotGate}
 \end{figure}
+
 We hebben het reeds uitvoerig gehad over het dynamisch karakter van een elektronische schakeling. Naast het feit dat het enige tijd duurt alvorens een spanning die op een draad wordt aangelegd daadwerkelijk dit spanningsniveau bereikt, heeft ook een poort een dynamisch karakter. Een interessante eigenschap is dat de stijg- en daaltijd invloed hebben op de vertraging van de poort. We zullen deze drie grootheden nu formaliseren:
+
 \begin{itemize}
  \item \termen{Stijgtijd $t_r$} ofwel \termen{rise time}: de tijd die de spanning nodig heeft om van een lage spanning naar een hoge spanning te stijgen. Men neemt hiervoor de 10\% en 90\% grenzen tussen de basisspanning en de topspanning\footnote{In sommige publicaties wordt 80\% en 20\% gebruikt.}.
  \item \termen{Daaltijd $t_f$} ofwel \termen{fall time}: de tijd die de spanning nodig heeft om van een hoge spanning naar een lage spanning te dalen. Men neemt hiervoor de 90\% en 10\% grenzen tussen de basisspanning en de topspanning.
