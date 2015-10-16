@@ -2,7 +2,7 @@
 \chplab{combinatoric}
 \chapterquote{Zelfs al zou er niets nieuws geschapen worden, dan is er nog altijd een nieuwe combinatie.}{Henry Ford, Amerikaans automobielfabrikant (1863-1947)}
 \begin{chapterintro}
-Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de fysische beperkingen hiervan kennen, wordt het tijd om ook schakelingen te ontwikkelen. \termen{Combinatorische Schakelingen} zijn schakelingen waarbij een bitvector aan uitgangen uitsluitend bepaald wordt aan de hand van een bitvector aan ingangen. We kunnen dus stellen dat het circuit een functie $\vec{f}(\vec{x})$ berekent. In sectie \ref{s:synthese} werd reeds een manier voorgesteld om tot een canonieke vorm te komen. In sectie \ref{s:minimalisatie} zullen we technieken zien om deze implementaties verder te minimaliseren. Verder zullen we in secties \ref{s:rekenkundig} en \ref{s:andereBasis} de implementatie van enkele populaire combinatorische schakelingen zien.% Tot slot zullen we ook combinatorische schakelingen in VHDL bouwen in sectie \ref{s:combinatorischVHDL}.
+Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de fysische beperkingen hiervan kennen, wordt het tijd om ook schakelingen te ontwikkelen. \termen{Combinatorische Schakelingen} zijn schakelingen waarbij een bitvector aan uitgangen uitsluitend bepaald wordt aan de hand van een bitvector aan ingangen. We kunnen dus stellen dat het circuit een functie $\vec{f}(\vec{x})$ berekent. In \secref{synthese} werd reeds een manier voorgesteld om tot een canonieke vorm te komen. In sectie \ref{s:minimalisatie} zullen we technieken zien om deze implementaties verder te minimaliseren. Verder zullen we in secties \ref{s:rekenkundig} en \ref{s:andereBasis} de implementatie van enkele populaire combinatorische schakelingen zien.% Tot slot zullen we ook combinatorische schakelingen in VHDL bouwen in sectie \ref{s:combinatorischVHDL}.
 \end{chapterintro}
 \minitoc[n]
 \section{Minimaliseren van logische functies}
@@ -149,7 +149,7 @@ Een Karnaugh-kaart laat toe tot een sterke implementatie te komen met twee lagen
 \end{itemize}
 Geen enkele van deze methodes levert altijd een beter resultaat op. Het probleem moet dan ook opgelost worden in ``\termen{trial-and-error}'' stijl.
 \subsection{Welke methode kiezen?}
-Samen met de methodes uit subsectie \ref{ss:canoniekestandaardrealisatie} hebben we nu volgende methodes om een schakeling te synthetiseren:
+Samen met de methodes uit \sscref{canoniekestandaardrealisatie} hebben we nu volgende methodes om een schakeling te synthetiseren:
 \begin{itemize}
  \item Canonieke Sum-of-Products
  \item Canonieke Product-of-Sums
@@ -841,7 +841,7 @@ Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het B
 Een standaard om tekst voor te stellen is de American Standard Code for Information Interchange (ASCII). ASCII reserveert 7 bit per karakter. Deze 7 bit zorgen voor 128 mogelijke karakters. De karakterset bestaat uit de Romaanse letters, Arabische cijfers, diverse leestekens en enkele functiesymbolen. De toewijzing van deze symbolen vertoont enige logica om bijvoorbeeld kleine letters naar hoofdletters om te zetten, en binaire getallen in hun ASCII equivalent. Tabel \ref{tbl:aSCIIStandard} toont de ASCII-karakters met hun bijbehorende binaire code. ASCII bevat geen ondersteuning voor cyrillisch, Arabisch,... Unicode is een standaard die 8, 16 of 32 bit per karakter reserveert om dit probleem op te lossen. Anno 2011 is $11\%$ van de binaire waarden toegewezen.
 \section{Andere basisschakelingen}
 \label{s:andereBasis}
-Naast de rekenkundige schakelingen in sectie \ref{s:rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In subsectie \ref{ss:multiplexer} bespreken we de multiplexer. Daarna bespreken we in \ref{ss:decoder} en \ref{ss:demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \ref{ss:encoder}. We eindigen met de vergelijker in \ref{ss:comparator} en de reeds aangehaalde schuifoperatie in subsectie \ref{ss:shiftoperators}.
+Naast de rekenkundige schakelingen in sectie \ref{s:rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In \sscref{multiplexer} bespreken we de multiplexer. Daarna bespreken we in \sscref{decoder} en \sscref{demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \ref{ss:encoder}. We eindigen met de vergelijker in \sscref{comparator} en de reeds aangehaalde schuifoperatie in subsectie \ref{ss:shiftoperators}.
 \subsection{Multiplexer}
 \ssclab{multiplexer}
 Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema wordt deze component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op figuur \ref{fig:multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. Figuren \ref{fig:multiplexerTruthTable} en \ref{fig:multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van deze component.
@@ -980,7 +980,7 @@ We kunnen uiteraard multiplexers met een verschillende parameter $n$ bouwen. Het
 \mbox{aantal multiplexers}=\displaystyle\frac{2^{n\times m}-1}{2^m-1}
 \end{equation}
 \subsection{Decoder}
-\label{ss:decoder}
+\ssclab{decoder}
 Een andere schakeling die sterk gerelateerd is aan een multiplexer is een \termen{decoder}. Een decoder beschikt over een \termen{enable-ingang $e$}, en $n$ \termen{adres-ingangen $a_i$}. De uitvoer bestaat uit $2^n$ \termen{selectie-uitgangen $s_i$}. Een decoder zal indien er een 1 aangelegd wordt op de enable-ingang $e$, een 1 op de uitgang zetten met index $A$. Hierbij staat $A$ voor de binaire waarde die voorgesteld wordt door de adres-ingangen $a_i$. In een blokschema wordt een decoder voorgesteld zoals op figuur \ref{fig:decoderInterface} door een rechthoek. In dit geval een 2-naar-4 decoder. Bovenaan staan de adres-ingangen $a_i$, aan de zijkant de enable-ingang $e$, en onderaan de uitgangen $s_i$.
 \begin{figure}[hbt]
 \centering

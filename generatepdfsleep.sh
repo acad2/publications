@@ -39,7 +39,7 @@ timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
 timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
-time -f '%S' timeout $tmo pdflatex $popt --interaction $pint "$texf"
+time timeout $tmo pdflatex $popt --interaction $pint "$texf"
 
 if [ -f "$pdff" ] #make sure the create/access/modification time is set to the time `make` was called.
 then              #such that modifications while compiling trigger a new compiler run
