@@ -1415,8 +1415,13 @@ Een ruismarge is een spanningsmarge die we beschikbaar stellen door een kleiner 
 \caption{Werking van ruismarge bij CMOS en TTL.}
 \figlab{noiseMargin}
 \end{figure}
-\paragraph{Onlogische Spanningen}
-Wanneer een transistor omschakelt, betekent dit niet dat van het ene moment op het andere er een andere spanning op de uitgang komt te staan, Deze overgang is een continue proces. Dit betekent dus dat op een zeker moment aan de uitgang de spanning in het ongedefinieerde gebied komt te liggen. Ideaal zou uiteraard zijn dat bij een continue verandering aan de ingang er toch een discrete verandering aan de uitgang plaatsvindt. Dit is echter fysisch onmogelijk. De ontwerper dient dus rekening te houden met dit overgangsverschijnsel. Dit vormt bovendien een groot probleem omdat op dat moment beide transistoren\footnote{PMOS en NMOS.} halfopen zijn, en er dus stroom door de componenten vloeit. Verder weet men ook niet altijd welke spanning er aan de uitgang zal staan. De \termen{Transferfunctie} is immers afhankelijk van zowel het productieproces als omgevingsfactoren zoals warmte,... \figref{transferFunctionMOS} toont verschillende realistische transferfuncties samen met de ideale transferfunctie.
+
+\subsubsection{Onlogische Spanningen}
+Wanneer een transistor omschakelt, betekent dit niet dat van het ene moment op het andere er een andere spanning op de uitgang komt te staan, Deze overgang is een continue proces. Dit betekent dus dat op een zeker moment aan de uitgang de spanning in het ongedefinieerde gebied komt te liggen. Ideaal zou uiteraard zijn dat bij een continue verandering aan de ingang er toch een discrete verandering aan de uitgang plaatsvindt. Dit is echter fysisch onmogelijk. De ontwerper dient dus rekening te houden met dit overgangsverschijnsel.
+
+\paragraph{}
+Dit fenomeen een groot probleem omdat op een dergelijk omschakelmoment beide transistoren\footnote{PMOS en NMOS.} halfopen zijn, en er dus stroom door de componenten vloeit. Verder weet men ook niet altijd welke spanning er aan de uitgang zal staan. De \gtermen{Transferfunctie}{Een transfer-functie van een logische poort of circuit mapt de spanning aan de ingang(en) op de spanning die op dat moment aan de uitgang(en). Deze functie hangt af van ondermeer het productieproces om de poort te maken, maar ook van omgevingsfactoren zoals warmte. Idealiter beogen we discreet gedrag aan de uitgang. In werkelijkheid is dit gedrag eerder continu.} is immers afhankelijk van zowel het productieproces als omgevingsfactoren zoals warmte,... \figref{transferFunctionMOS} toont verschillende realistische transferfuncties samen met de ideale transferfunctie.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Transferfuncties bij een inverter]{
@@ -1470,7 +1475,10 @@ Wanneer een transistor omschakelt, betekent dit niet dat van het ene moment op h
 \caption{Transferfuncties en Schmitt-Trigger ingangen.}
 \figlab{transferSchmittTrigger}
 \end{figure}
-\paragraph{Schmitt-trigger ingangen} Dit effect is vooral nadelig voor bijvoorbeeld in- en uitvoer. Deze signalen veranderen doorgaans traag, en bovendien niet strikt stijgend of dalend. Dit heeft tot gevolg dat indien het ingangssignaal van een 0 naar een 1 moet gaan, het meestal verschillende malen van signaal verandert. Een oplossing hiervoor zijn \termen{Schmitt-trigger ingangen}, dit zijn componenten met een \termen{hysteresis}. Dit betekent dat de overgangsspanning bij een overgang van laag naar hoog, hoger is dan de overgangsspanning van hoog naar laag. Deze transferfunctie staat op \figref{transferFunctionSchmittTrigger}, samen met het symbool voor een Schmitt-Trigger ingang: een NOT poort, met een miniatuur van de inverse transferfunctie.
+
+\paragraph{Schmitt-trigger ingangen}
+Dit effect is vooral nadelig voor bijvoorbeeld in- en uitvoer: communicatie van onze chip met de buitenwereld. Deze signalen veranderen doorgaans traag, en zijn bovendien niet strikt stijgend of dalend. Dit heeft tot gevolg dat indien het ingangssignaal van een $0$ naar een $1$ moet gaan, het gemeten digitale signaal meestal verschillende malen van waarde zal veranderen. Een oplossing hiervoor zijn \termen{Schmitt-trigger ingangen}, dit zijn componenten met een \termen{hysteresis}. Dit betekent dat de overgangsspanning bij een overgang van laag naar hoog, hoger is dan de overgangsspanning van hoog naar laag. Deze transferfunctie staat op \figref{transferFunctionSchmittTrigger}, samen met het symbool voor een Schmitt-Trigger ingang: een NOT poort, met een miniatuur van de inverse transferfunctie.
+
 \subsection{Dynamisch gedrag}
 \begin{figure}[hbt]
 \centering
