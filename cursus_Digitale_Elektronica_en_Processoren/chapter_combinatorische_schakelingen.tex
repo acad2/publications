@@ -2,11 +2,11 @@
 \chplab{combinatoric}
 \chapterquote{Zelfs al zou er niets nieuws geschapen worden, dan is er nog altijd een nieuwe combinatie.}{Henry Ford, Amerikaans automobielfabrikant (1863-1947)}
 \begin{chapterintro}
-Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de fysische beperkingen hiervan kennen, wordt het tijd om ook schakelingen te ontwikkelen. \termen{Combinatorische Schakelingen} zijn schakelingen waarbij een bitvector aan uitgangen uitsluitend bepaald wordt aan de hand van een bitvector aan ingangen. We kunnen dus stellen dat het circuit een functie $\vec{f}(\vec{x})$ berekent. In \secref{synthese} werd reeds een manier voorgesteld om tot een canonieke vorm te komen. In sectie \ref{s:minimalisatie} zullen we technieken zien om deze implementaties verder te minimaliseren. Verder zullen we in secties \ref{s:rekenkundig} en \ref{s:andereBasis} de implementatie van enkele populaire combinatorische schakelingen zien.% Tot slot zullen we ook combinatorische schakelingen in VHDL bouwen in sectie \ref{s:combinatorischVHDL}.
+Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de fysische beperkingen hiervan kennen, wordt het tijd om ook schakelingen te ontwikkelen. \termen{Combinatorische Schakelingen} zijn schakelingen waarbij een bitvector aan uitgangen uitsluitend bepaald wordt aan de hand van een bitvector aan ingangen. We kunnen dus stellen dat het circuit een functie $\vec{f}(\vec{x})$ berekent. In \secref{synthese} werd reeds een manier voorgesteld om tot een canonieke vorm te komen. In \secref{minimalisatie} zullen we technieken zien om deze implementaties verder te minimaliseren. Verder zullen we in secties \ref{s:rekenkundig} en \ref{s:andereBasis} de implementatie van enkele populaire combinatorische schakelingen zien.% Tot slot zullen we ook combinatorische schakelingen in VHDL bouwen in sectie \ref{s:combinatorischVHDL}.
 \end{chapterintro}
 \minitoc[n]
 \section{Minimaliseren van logische functies}
-\label{s:minimalisatie}
+\seclab{minimalisatie}
 \subsection{Waarom minimaliseren}
 We willen schakelingen ontwerpen voor de worteltrekking en 7 segment display in een minimale implementatie. Streven naar een minimalisatie is een algemeen probleem en is vergelijkbaar met optimalisatie in de informatica. Minimalisatie levert niet enkel snellere doorvoer op. Hieronder sommen we de meest courante voordelen op, samen met hun metriek:
 \begin{itemize}
@@ -1184,7 +1184,7 @@ Decoders worden ook gebruikt voor de synthese van bijvoorbeeld multiplexers. Fig
 \figlab{decoderMultiplexer}
 \end{figure}
 \subsection{Demultiplexer}
-\label{ss:demultiplexer}
+\ssclab{demultiplexer}
 Het inverse van een $2^n$-naar-1 multiplexer is een 1-naar-$2^n$ \termen{demultiplexer} (ook wel \termen{demux} genoemd). Deze component bestaat dan ook logischerwijs uit 1 \termen{data-ingang $d$} en $n$ \termen{selectie-ingangen $a_i$}. De component beschikt verder over $2^n$ uitgangen $s_i$. Logischerwijs zetten we de waarde van de data-ingang $d$ op de uitgang met de index die wordt voorgesteld door de selectie-ingangen. Een aandachtige lezer zal misschien al opgemerkt hebben dat dit probleem in wezen niet veel verschilt van de constructie van een decoder. Sterker nog, we hoeven niets aan te passen, het is alleen een kwestie van een andere interface. Figuur \ref{fig:demultiplexer} toont de interface van een demultiplexer en de equivalentie met een decoder. In tegenstelling tot de decoder zetten we de selectie-ingangen aan de zijkant en de data-ingang aan de bovenkant.
 \begin{figure}[hbt]
 \centering
