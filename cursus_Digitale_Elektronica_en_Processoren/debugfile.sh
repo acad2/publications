@@ -1,6 +1,6 @@
 #!/bin/bash
 
-lgf="logger.dat"
+lgf="old-logger.dat"
 fle="$1"
 tmo=120
 
