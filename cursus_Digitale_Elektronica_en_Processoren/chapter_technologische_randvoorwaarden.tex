@@ -1707,7 +1707,6 @@ Een oplettend lezer zal zich misschien de vraag gesteld hebben waarom we een buf
 \figlab{badNmosPmos}
 \end{figure}
 
-%REVIEW
 \subsection{Fan-in en fan-out}
 Enkele belangrijke eigenschappen van een poort zijn de \gtermen{fan-in}{Het aantal ingangen van een bepaalde poort in een digitale schakeling.} en \gtermen{fan-out}{Het aantal ingangen van poorten die de uitgang van een bepaalde poort aanstuurt..}. De fan-in is het aantal ingangen die de poort in kwestie heeft. Deze eigenschap is eigen aan het type poort: een $3$-nand poort heeft bijvoorbeeld een fan-in van $3$. De fan-out is het aantal ingangen van andere poorten die de poort kan aansturen, het aantal draden die uit de poort in kwestie komen zeg maar.
 
@@ -1721,7 +1720,7 @@ Een hoge fan-out is ook een voorbode van problemen em moeten we onder controle h
 I_{\mbox{\small{Omax}}}=C\cdot\displaystyle\frac{\partial V}{\partial t}
 \end{equation}
 
-Vermits de snelheid waarmee deze capaciteit op- en ontlaadt op zijn beurt weer invloed heeft op de vertraging, heeft de fan-out ook invloed op de \gtermen{maximale frequentie $f_{\mbox{\small{max}}}$}{De maximale snelheid waarop een elektronische schakeling een cyclus kan uitvoeren: van het veranderen van \'e\'en of meer ingang(en) of het kloksignaal, tot het aanpassen van geheugens en het aanleggen van andere waardes op de uitgangen. De maximale frequentie wordt bepaalt door het logische circuit zelf, maar ook de organisatie van de chip en bijvoorbeeld de fan-out van de poorten.} van de elektronische schakeling:
+Vermits de snelheid waarmee deze capaciteit op- en ontlaadt op zijn beurt weer invloed heeft op de vertraging, heeft de fan-out ook invloed op de \gtermen[maximale frequentie]{maximale frequentie $f_{\mbox{\small{max}}}$}{De maximale snelheid waarop een elektronische schakeling een cyclus kan uitvoeren: van het veranderen van \'e\'en of meer ingang(en) of het kloksignaal, tot het aanpassen van geheugens en het aanleggen van andere waardes op de uitgangen. De maximale frequentie wordt bepaalt door het logische circuit zelf, maar ook de organisatie van de chip en bijvoorbeeld de fan-out van de poorten.} van de elektronische schakeling:
 \begin{equation}
 f_{\mbox{\small{max}}}=\displaystyle\frac{1}{\Delta V}\cdot\displaystyle\frac{\partial V}{\partial t}=\displaystyle\frac{I_{\mbox{\small{Omax}}}}{C\cdot \Delta V}
 \end{equation}

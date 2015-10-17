@@ -4,7 +4,7 @@ git checkout dep >/dev/null 2>/dev/null
 cd "`dirname $0`"
 
 #Time management
-dtz=14400 #Commit and stats every four hours
+dtz=16200 #Commit and stats every four and a half hours
 
 #Files and servers
 pdff="cursus.pdf"
