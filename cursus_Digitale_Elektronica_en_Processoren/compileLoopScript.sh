@@ -22,9 +22,9 @@ tmi=0
 renice -n 19 -p "$$" >/dev/null 2>/dev/null
 
 while true
-do
-    while [ "$tmi" -le "$tmio" ]
     do
+    while [ "$tmi" -le "$tmio" ]
+        do
         make "$pdff" >"$stdo" 2>"$stde"
         cp "$stdo" "$prfx$stdo"
         cp "$stde" "$prfx$stde"
@@ -33,13 +33,13 @@ do
         echo ""
 
         if [[ "$a" =~ [uU] ]]
-        then
+            then
             scp "$pdff" "$pdfu"
         elif [[ "$a" =~ [qQ] ]]
-        then
+            then
             fs=$(wc -c "$pdff" | cut -d' ' -f 1) #obtain the file size
             if [ "$fs" -gt "2000000" ] #if larger than 2 MB
-            then
+                then
                 make purge
                 make "$pdff" >"$stde" 2>"$stde"
                 scp "$pdff" "$pdfu"
@@ -57,4 +57,5 @@ do
     bash generate-stats.sh >> "$stds"
     make purge >/dev/null 2>/dev/null
     git commit -am 'temporary commit'
+
 done
