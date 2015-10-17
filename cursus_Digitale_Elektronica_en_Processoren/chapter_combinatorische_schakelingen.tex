@@ -8,52 +8,73 @@ Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de 
 
 \minitoc[n]
 
-%REVIEW
 \section{Minimaliseren van logische functies}
 \seclab{minimalisatie}
+
+In deze sectie geven we eerst een motivatie waarom het minimaliseren van implementaties een belangrijke taak is. Daarna tonen we een methode om op effici\"ente wijze een minimale implementatie te realiseren. We zullen ook een aantal uitbreidingen op deze methode beschouwen.
+
 \subsection{Waarom minimaliseren}
-We willen schakelingen ontwerpen voor de worteltrekking en 7 segment display in een minimale implementatie. Streven naar een minimalisatie is een algemeen probleem en is vergelijkbaar met optimalisatie in de informatica. Minimalisatie levert niet enkel snellere doorvoer op. Hieronder sommen we de meest courante voordelen op, samen met hun metriek:
+\ssclab{whyMinimize}
+In deze sectie zullen we als leidend voorbeeld schakelingen ontwerpen voor de worteltrekking en $7$-segment display in een minimale implementatie. Streven naar een minimalisatie is een algemeen probleem en is vergelijkbaar met optimalisatie in de informatica. Minimalisatie levert niet enkel snellere doorvoer op. Hieronder sommen we de meest courante voordelen op, samen met hun metriek:
 \begin{itemize}
-\item Minimaliseren van de \termen{kostprijs}. Afhankelijk van de realisatie hanteren we hiervoor 2 metrieken: Voor CMOS verfijnen we hiervoor de oorspronkelijke formule van de kostprijs uit vergelijking \ref{eqn:kosten}. En bekomen:
+\item Minimaliseren van de \termen{kostprijs}. Afhankelijk van de realisatie hanteren we hiervoor twee metrieken: Voor CMOS verfijnen we hiervoor de oorspronkelijke formule van de kostprijs uit \eqnref{kosten}. En bekomen:
+
 \begin{equation}
-\mbox{kostprijs}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{alle}\\\mbox{poorten}\end{array}}{\mbox{kostprijs}\left(\mbox{poort}\right)}
-\label{eqn:kostenCmos}
+\mbox{kostprijs}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{alle}\\\mbox{poorten}\end{array}}{\funm{kostprijs}{\mbox{poort}}}
+\eqnlab{kostenCmos}
 \end{equation}
+
 De kostprijs van een poort wordt dan bepaald met volgende formule:
+
 \begin{equation}
-\mbox{kostprijs}\left(\mbox{poort}\right)=\left\{\begin{array}{lcl}
-\mbox{fan-in}&\mbox{if}&\mbox{poort}\in\left\{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}\right\}\\
-\mbox{fan-in}+1&\mbox{if}&\mbox{poort}\in\left\{\mbox{AND},\mbox{OR}\right\}\\
-\end{array}\right.
-\label{eqn:kostenCmosPoort}
+\funm{kostprijs}{\mbox{poort}}=\acclguard{
+\mbox{fan-in}&\mbox{if}\;\mbox{poort}\in\accl{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}}\\
+\mbox{fan-in}+1&\mbox{if}\;\mbox{poort}\in\accl{\mbox{AND},\mbox{OR}}
+}
+\eqnlab{kostenCmosPoort}
 \end{equation}
-We zien dus dat alle \termen{inverterende poorten} relatief 1 goedkoper zijn dat de \termen{niet-inverterende poorten}. Bij een FPGA bepalen we de kostprijs aan de hand van het aantal logische cellen:
+
+We zien dus dat alle \gtermen{inverterende poorten}{Poorten waar conceptueel op het einde een inverter staat. Inverterende poorten zijn INV, NAND, NOR, AOI en OAI.} relatief $1$ goedkoper zijn dat de \gtermen{niet-inverterende poorten}{Poorten waar conceptueel op het einde geen inverter staat. Niet-inverterende poorten zijn AND en OR.}. Bij een FPGA bepalen we de kostprijs aan de hand van het aantal logische cellen:
+
 \begin{equation}
 \mbox{kostprijs}=\#\mbox{LB's}
 \end{equation}
-Uiteraard dient hierbij de kanttekening gemaakt te worden, dat niet voor elk aantal logische cellen, er een FPGA bestaat. Indien er voldoende logische cellen op de FPGA aanwezig zijn, is de kostprijs dan ook van minder belang. We zullen immers toch dezelfde FPGA gebruiken.
-\item Snelheid: We maximaliseren de snelheid door de maximale vertraging te minimaliseren. Deze vertraging is afhankelijk van de poorten in het \termen{Kritische Pad}. Het kritische pad is een pad van de ingang naar de uitgang met de grootste vertraging. Deze vertraging is afhankelijk van twee parameters:
+
+Uiteraard dient hierbij de kanttekening gemaakt te worden, dat niet voor elk gegeven aantal logische cellen, er een FPGA bestaat. Indien er voldoende logische cellen op de FPGA aanwezig zijn, is de kostprijs dan ook van minder belang. We zullen immers toch dezelfde FPGA gebruiken.
+\item Snelheid: We maximaliseren de snelheid door de maximale vertraging te minimaliseren. Deze vertraging is afhankelijk van de poorten in het \gtermen{kritische pad}{Een pad van ingang tot uitgang in een schakeling die de grootste vertraging heeft. Het is mogelijk dat een schakeling verschillende kritische paden heeft, al deze paden hebben dan dezelfde (theoretische) vertraging.}. Het kritische pad is een pad van de ingang naar de uitgang met de grootste vertraging. Deze vertraging is afhankelijk van twee parameters:
 \begin{itemize}
-\item Vertraging van de poorten: een poort heeft tijd nodig om bij verandering van de ingang ook de uitgang te veranderen. Deze vertraging is afhankelijk van de technologie en evenredig met de fan-in. We zullen deze benaderen met volgende formule:
+\item Vertraging van de poorten: een poort heeft tijd nodig om bij verandering van de ingang ook de uitgang te veranderen. Deze vertraging is afhankelijk van de technologie en evenredig met de fan-in. We zullen deze benaderen met de volgende formule:
+
 \begin{equation}
-\mbox{vertraging}\left(\mbox{poort}\right)=\left\{\begin{array}{lcl}
-0.6+0.4\cdot\mbox{fan-in}&\mbox{if}&\mbox{poort}\in\left\{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}\right\}\\
-1.6+0.4\cdot\mbox{fan-in}&\mbox{if}&\mbox{poort}\in\left\{\mbox{AND},\mbox{OR}\right\}\\
-\end{array}\right.
-\label{eqn:speedPoort}
+\funm{vertraging}{\mbox{poort}}=\acclguard{
+0.6+0.4\cdot\mbox{fan-in}&\mbox{if}\;\mbox{poort}\in\accl{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}}\\
+1.6+0.4\cdot\mbox{fan-in}&\mbox{if}\;\mbox{poort}\in\accl{\mbox{AND},\mbox{OR}}
+}
+\eqnlab{speedPoort}
 \end{equation}
+
 Deze formule toont dus dat opnieuw de fan-in een belangrijke factor is, en dat niet-inverterende poorten opnieuw een nadeel hebben tegenover inverterende poorten.
 \item (capacitieve) belasting: dit hangt hoofdzakelijk af van de geometrische implementatie van de printplaat. Deze vertraging is dan ook zeer moeilijk te berekenen en wordt niet beschouwd.
 \end{itemize}
-Bijgevolg berekenen we de vertraging als volgt:
+
+We berekenen dan de formule met volgende formule:
+
 \begin{equation}
-\mbox{vertraging}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{kritisch}\\\mbox{pad}\end{array}}{\mbox{vertraging}\left(\mbox{poort}\right)}
-\label{eqn:speed}
+\mbox{vertraging}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{kritisch}\\\mbox{pad}\end{array}}{\funm{vertraging}{\mbox{poort}}}
+\eqnlab{speed}
 \end{equation}
+
 \end{itemize}
-\paragraph{Hoe minimaliseren?}Om te minimaliseren hebben we een methode nodig, deze methode manipuleert de logische uitdrukking van $\vec{f}(\vec{x})$ tot een uitdrukking die equivalent maar voordeliger is, rekening houdend met de metrieken van vergelijkingen \ref{eqn:kostenCmos} en \ref{eqn:speed}. Het probleem is dat er geen methodes bestaan die ons een reeks manipulaties voorstellen, waardoor we altijd tot de meest optimale implementatie komen. We moeten dus bijgevolg methodes bedenken waardoor we in staat zijn tot een redelijk optimale oplossingen te komen. Hiervoor zullen we methodes gebruiken zoals Karnaugh-kaarten. Computers bieden bovendien de mogelijkheid een groot aantal implementaties te simuleren. Bij een groot probleem volstaat deze rekenkracht echter ook niet om tot de beste implementatie te komen\footnote{Wat is \"uberhaupt de beste oplossing, in veel gevallen zal de ene metriek verbeteren ten koste van de tweede.}.
+
+\subsection{Hoe minimaliseren?}
+Om te minimaliseren hebben we een methode nodig. Deze methode manipuleert de logische uitdrukking van $\fun{\vec{f}}{\vec{x}}$ tot een uitdrukking die equivalent maar voordeliger is, rekening houdend met de metrieken van \eqnref{kostenCmos} en \eqnref{speed}.
+
+\paragraph{}
+Een probleem is echter dat er geen methodes bestaan die ons een reeks manipulaties voorstellen, waardoor we altijd tot de meest optimale implementatie komen. We moeten dus bijgevolg methodes bedenken waarmee we in staat zijn een redelijk optimale oplossingen te bekomen. Hiervoor zullen we methodes gebruiken zoals Karnaugh-kaarten. Computers bieden bovendien de mogelijkheid een groot aantal implementaties te simuleren. Bij een groot probleem volstaat ook deze rekenkracht niet meer om tot de beste implementatie te komen\footnote{Wat is \"uberhaupt de beste oplossing, in veel gevallen zal de ene metriek verbeteren ten koste gaan van de tweede.}.
+
+%REVIEW
 \subsection{Karnaugh-kaarten}
-\termen{Karnaugh-kaarten} of \termen{K-kaarten} proberen het aantal nutteloze ingangen tot een minimum te beperken. Het is een visueel hulpmiddel dat gebruik maakt van een vermogen waar mensen goed in zijn: het herkennen en begrijpen van patronen. De basis van een Karnaugh-kaart is dan ook de waarheidstabel. In een waarheidstabel kunnen we vaak door bepaalde rijen te beschouwen verbanden zien.
+\gtermen{Karnaugh-kaarten}{} of \stermen{K-kaarten}{Karnaugh-kaarten} proberen het aantal nutteloze ingangen tot een minimum te beperken. Het is een visueel hulpmiddel dat gebruik maakt van een vermogen waar mensen goed in zijn: het herkennen en begrijpen van patronen. De basis van een Karnaugh-kaart is dan ook de waarheidstabel. In een waarheidstabel kunnen we vaak door bepaalde rijen te beschouwen verbanden zien.
 %Zo zien we in de waarheidtabel op figuur \ref{fig:sevenSegmentDisplay} dat $e=0$ als $w=1$. Uiteraard blijft er onduidelijkheid waarom $e=0$ als $\left(w,x,y,z\right)=\left(0,1,0,0\right)$. Toch kunnen we met dergelijke patronen de expressie al behoorlijk optimaliseren. Zo kunnen we voor $e$ al een expressie maken van de vorm $e=(\mbox{NOT }w)\mbox{ AND }\varphi$ met $\varphi$ een nog onbekende logische expressie. We weten immers dat indien $w=1$ er een 0 aan de ingang van de AND poort verschijnt. Een AND met aan minstens \'e\'en ingang een 0 is per definitie 0. We hebben dus het probleem kunnen reduceren met het zoeken naar een specifiek patroon.
 \paragraph{N-kubus}In feite zijn Karnaugh-kaarten niets anders dan waarheidstabellen waarbij we het aantal dimensies verhogen. Een zogenoemde \termen{$N$-kubus}. We stellen immers een bepaalde ingangstoestand voor als een knooppunt op een kubus. Figuur \ref{fig:nCube} toont een N-kubus voor de dimensies 1 tot 4.
 \begin{figure}[htb]
@@ -192,7 +213,7 @@ Modus&Implementatie&Kosten&Relatief&Vertraging&Relatief\\\hline
 \tbllab{differentImplementationsSSD}
 \end{table}
 \section{Rekenkundige basisschakelingen}
-\label{s:rekenkundig}
+\seclab{rekenkundig}
 In deze sectie defini\"eren we enkele belangrijke schakelingen voor rekenkundige bewerkingen. We hebben het dan over optellen, aftrekken vermenigvuldigen, delen, modulo rekenen en logische berekeningen. Alvorens we echter met getallen kunnen rekenen, moeten we een manier bedenken om getallen voor te stellen met binaire signalen. Doorheen deze sectie zullen we de voorstelling van getallen regelmatig veranderen om extra functionaliteit toe te voegen.
 \subsection{Getallen voorstellen}
 In de wereld wordt bij het voorstellen van getallen meestal het Arabisch getalsysteem gehanteerd. Hierbij stellen we een getal voor door een reeks cijfers. Een cijfer op een bepaalde plaats heeft een gewicht dat $r$ keer groter is, dan het volgende cijfer, met $r$ als de \termen{radix} van het getalstelsel. Om tot een eenduidige voorstelling van elk getal te komen wordt de verzameling mogelijke cijfers beperkt tot $r$ elementen. Een getal $D_r$ wordt dus voorgesteld als:
@@ -844,7 +865,7 @@ Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het B
 \end{table}
 Een standaard om tekst voor te stellen is de American Standard Code for Information Interchange (ASCII). ASCII reserveert 7 bit per karakter. Deze 7 bit zorgen voor 128 mogelijke karakters. De karakterset bestaat uit de Romaanse letters, Arabische cijfers, diverse leestekens en enkele functiesymbolen. De toewijzing van deze symbolen vertoont enige logica om bijvoorbeeld kleine letters naar hoofdletters om te zetten, en binaire getallen in hun ASCII equivalent. Tabel \ref{tbl:aSCIIStandard} toont de ASCII-karakters met hun bijbehorende binaire code. ASCII bevat geen ondersteuning voor cyrillisch, Arabisch,... Unicode is een standaard die 8, 16 of 32 bit per karakter reserveert om dit probleem op te lossen. Anno 2011 is $11\%$ van de binaire waarden toegewezen.
 \section{Andere basisschakelingen}
-\label{s:andereBasis}
+\seclab{andereBasis}
 Naast de rekenkundige schakelingen in sectie \ref{s:rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In \sscref{multiplexer} bespreken we de multiplexer. Daarna bespreken we in \sscref{decoder} en \sscref{demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \ref{ss:encoder}. We eindigen met de vergelijker in \sscref{comparator} en de reeds aangehaalde schuifoperatie in subsectie \ref{ss:shiftoperators}.
 \subsection{Multiplexer}
 \ssclab{multiplexer}
