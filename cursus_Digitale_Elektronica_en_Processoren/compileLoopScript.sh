@@ -14,8 +14,6 @@ stde="errors.dat"
 stds="stats.stat"
 prfx="old-"
 
-makc="make \"$pdff\" >\"$stdo\" 2>\"$stde\""
-
 #Initial time
 tmz=$(date +%s)
 tmio=0
@@ -27,7 +25,7 @@ while true
     do
     while [ "$tmi" -le "$tmio" ]
         do
-        $makec
+        make $pdff >$stdo 2>$stde
         cp "$stdo" "$prfx$stdo"
         cp "$stde" "$prfx$stde"
 
@@ -43,7 +41,7 @@ while true
             if [ "$fs" -gt "2000000" ] #if larger than 2 MB
                 then
                 make purge
-                $makec
+                make $pdff >$stdo 2>$stde
                 scp "$pdff" "$pdfu"
             fi
             exit 0
