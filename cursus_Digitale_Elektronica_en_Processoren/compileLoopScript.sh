@@ -26,8 +26,14 @@ while true
     while [ "$tmi" -le "$tmio" ]
         do
         make $pdff >$stdo 2>$stde
-        cp "$stdo" "$prfx$stdo"
-        cp "$stde" "$prfx$stde"
+
+        grep -q '^make: .* is up to date.$' $stdo
+
+        if [ "$?" -ne "0" ]
+            then
+            cp "$stdo" "$prfx$stdo"
+            cp "$stde" "$prfx$stde"
+        fi
 
         read -t 60 -p 'press "q" to quit; "u" to upload; any other key to continue ' -n 1 -r a
         echo ""
