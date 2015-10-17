@@ -23,7 +23,7 @@ renice -n 19 -p "$$" >/dev/null 2>/dev/null
 
 while true
 do
-    while [ "$tmi" -le "$tmo" ]
+    while [ "$tmi" -le "$tmio" ]
     do
         make "$pdff" >"$stdo" 2>"$stde"
         cp "$stdo" "$prfx$stdo"
