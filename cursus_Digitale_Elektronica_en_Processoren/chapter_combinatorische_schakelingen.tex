@@ -142,18 +142,30 @@ We minimaliseren een functie met behulp van een Karnaugh-kaart in vier stappen, 
 Daarna zullen we nog drie speciale gevallen bestuderen.
 
 \paragraph{}
-We bestuderen deze methode aan de hand van een voorbeeld. We zullen een schakeling synthetiseren die de functies $f$ en $g$ berekent. Functie $f$ geeft 1 terug bij de getallen 0, 1, 3, 7, 5, 8, 10, 11, 14 en 15, en 0 in de andere gevallen, $g$ is waar  als de afgeronde vierkantswortel van het getal even is.
+We bestuderen deze methode aan de hand van een voorbeeld. We zullen een schakeling synthetiseren die de functies $f$ en $g$ berekent. Functie $f$ geeft $1$ terug bij de getallen $0$, $1$, $3$, $5$, $7$, $8$, $10$, $11$, $14$ en $15$, en $0$ in de andere gevallen, $g$ is waar als de afgeronde vierkantswortel van het getal even is. De waarheidstabellen van deze functies staan in \tblref{karnaugh-example}.
 
-
+\begin{table}
+\centering
+\importtabularsubtable{karnaugh-example1}{$f$}
+\importtabularsubtable{karnaugh-example2}{$g$}
+\caption{Waarheidstabellen voor de leidende voorbeelden.}
+\tbllab{karnaugh-example}
+\end{table}
 
 \paragraph{Stap 1: maak de Karnaugh-kaart}
-In de eerste stap bouwen we een Karnaugh-kaart op, op basis van de gegeven functie. We tekenen een Karnaugh-kaart met het juiste aantal ingangsvariabelen (zie figuur \ref{fig:karnaughKaarten}) en vullen vervolgens de uitgangswaarden voor \'e\'en bepaalde uitgang in op de respectievelijke plaatsen. Er dient dus per binaire uitgang zo'n kaart gemaakt te worden. Op figuur \ref{fig:karnaughKaartenVoorbeeldGetekend}
+In de eerste stap bouwen we een Karnaugh-kaart op die de logische functie visueel weergeeft. We tekenen een Karnaugh-kaart met het juiste aantal ingangsvariabelen (zie \figref{karnaughKaarten}) en vullen vervolgens de uitgangswaarden voor \'e\'en bepaalde uitgang in op de respectievelijke plaatsen. per uitgang dienen we een afzonderlijke kaart op te maken: in elke cel dienen we net \'e\'en bit te plaatsen.
+
 \importtikzfigure{karnaughKaartenVoorbeeldGetekend}{Ingevulde Karnaugh-kaarten voor de uitgangen van het leidend voorbeeld.}
-%tonen we de Karnaugh-kaarten voor de eerste 3 uitgangen van het leidend voorbeeld ($a$, $b$ en $c$). De overige uitgangen worden als oefening aan de lezer overgelaten. De oplossing is te vinden op figuur \ref{fig:apxKKaartenFill} op pagina \pageref{fig:apxKKaartenFill}.
-staan de Karnaugh-kaarten voor de functies $f$ en $g$. De variabelen $x_1$, $x_2$, $x_3$ en $x_4$ zijn de binaire voorstelling van het invoergetal.
-\paragraph{Stap 2: bepaal alle priemimplicanten} In de volgende stap bepalen we alle priemimplicanten van de Karnaugh-kaart. Visueel is een implicant niets anders dan een rechthoek waarbij zowel de lengte en breedte een lengte hebben van machten van twee. Deze rechthoeken vallen uiteraard ook onder de modulo-regel op een Karnaugh-kaart. Deze priemimplicanten kunnen we dan ook vinden door vanuit een cel waar de uitgangswaarde 1 is, telkens ofwel de lengte ofwel de breedte te verdubbelen, uiteraard mogen er wel geen nullen onder de rechthoek vallen. Indien er verschillende uitbreidingen mogelijk zijn, dienen al de uitbreidingen gevolgd te worden. Figuur \ref{fig:karnaughKaartenVoorbeeldPriemimplicanten} toont de priemimplicanten voor de twee uitgangen van het leidend voorbeeld.
+
+Op \figref{karnaughKaartenVoorbeeldGetekend} staan de Karnaugh-kaarten voor de functies $f$ en $g$. De variabelen $\tupl{x_1,x_2,x_3,x_4}$ vormen de binaire voorstelling van het invoergetal\footnote{Volgens de little-endian conventie.}.
+
+\paragraph{Stap 2: bepaal alle priemimplicanten}
+In de volgende stap bepalen we alle priemimplicanten van de Karnaugh-kaart. Visueel is een implicant niets anders dan een rechthoek waarbij zowel de lengte en breedte een lengte hebben van machten van twee. Deze rechthoeken vallen uiteraard ook onder de modulo-regel op een Karnaugh-kaart. Deze priemimplicanten kunnen we dan ook vinden door vanuit een cel waar de uitgangswaarde 1 is, telkens ofwel de lengte ofwel de breedte te verdubbelen, uiteraard mogen er wel geen nullen onder de rechthoek vallen. Indien er verschillende uitbreidingen mogelijk zijn, dienen al de uitbreidingen gevolgd te worden. Figuur \ref{fig:karnaughKaartenVoorbeeldPriemimplicanten} toont de priemimplicanten voor de twee uitgangen van het leidend voorbeeld.
+
 \importtikzfigure{karnaughKaartenVoorbeeldPriemimplicanten}{Karnaugh-kaarten met priemimplicanten van het leidend voorbeeld.}
-\paragraph{Stap 3: Bepaal alle essenti\"ele priemimplicanten} Nadat we de priemimplicanten bepaald hebben, zullen we uit deze verzameling de essenti\"ele priemimplicanten halen. Deze stap is dan ook heel eenvoudig: als een priemimplicant \'e\'en of meer cellen omvat die geen enkele andere priemimplicant omvat is het een essenti\"ele priemimplicant. Deze implicanten zullen sowieso al tot de resulterende functie behoren. Op figuur \ref{fig:karnaughKaartenVoorbeeldEssentielePriemimplicanten} staan de essenti\"ele priemimplicanten voor $f$ en $g$. We zien duidelijk dat in beide gevallen de priemimplicanten onvoldoende zijn om de volledige functie te beschrijven daar er nog enen niet niet gedekt worden.
+
+\paragraph{Stap 3: Bepaal alle essenti\"ele priemimplicanten}
+Nadat we de priemimplicanten bepaald hebben, zullen we uit deze verzameling de essenti\"ele priemimplicanten halen. Deze stap is dan ook heel eenvoudig: als een priemimplicant \'e\'en of meer cellen omvat die geen enkele andere priemimplicant omvat is het een essenti\"ele priemimplicant. Deze implicanten zullen sowieso al tot de resulterende functie behoren. Op figuur \ref{fig:karnaughKaartenVoorbeeldEssentielePriemimplicanten} staan de essenti\"ele priemimplicanten voor $f$ en $g$. We zien duidelijk dat in beide gevallen de priemimplicanten onvoldoende zijn om de volledige functie te beschrijven daar er nog enen niet niet gedekt worden.
 \importtikzfigure{karnaughKaartenVoorbeeldEssentielePriemimplicanten}{Karnaugh-kaarten met essenti\"ele priemimplicanten van het leidend voorbeeld.}
 \paragraph{Stap 4: Zoek de minimale dekking}
 De essenti\"ele priemimplicanten zijn de goedkoopste manier om de cellen die ze dekken te implementeren, we zien echter dat dit in de meeste gevallen onvoldoende is om de volledige functie te beschrijven. We dienen nog extra priemimplicanten toe te voegen om tot volledige dekking te komen. In het ideale geval doen we dit door alle mogelijke toevoegingen van priemimplicanten na te gaan. Dit is echter een erg arbeidsintensief proces. Men lost dit probleem dan ook meestal op met een ``\termen{gulzige strategie}'' ofwel ``\termen{greedy algorithm}''. Hierbij beschouwen we initieel de set van essenti\"ele priemimplicanten, per iteratie voegen we de priemimplicant toe die het meeste aantal cellen dekt die tot dan toe ongedekt bleven. We stoppen op het moment dat de set van implicanten de volledige functie dekt. We illustreren dit proces op figuur \ref{fig:karnaughKaartenVoorbeeldGreedySearch} waarbij we elke iteratiestap tonen.
