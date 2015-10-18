@@ -44,4 +44,7 @@ time timeout $tmo pdflatex $popt --interaction $pint "$texf"
 if [ -f "$pdff" ] #make sure the create/access/modification time is set to the time `make` was called.
 then              #such that modifications while compiling trigger a new compiler run
     touch -d "$dts" "$pdff"
+
+    fls=$(wc -c "$pdff" | cut -d' ' -f 1)
+    echo 1>&2 "filesize: $fls"
 fi
