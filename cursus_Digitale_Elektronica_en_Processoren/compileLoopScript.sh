@@ -61,7 +61,10 @@ while true
     tmio="$tmi"
 
     bash generate-stats.sh >> "$stds"
+    gnuplot diagnostics.gnplt
+
     make purge >/dev/null 2>/dev/null
+
     git commit -am 'temporary commit'
 
 done
