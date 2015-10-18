@@ -16,29 +16,34 @@ texf="$bsf.tex"         #The main tex file
 TEXINPUTS="$TEXINPUTS:../libtex//:../SharedData//"
 export TEXINPUTS
 
+echo 1>&2 "run 1"
 timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
 timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
 timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
-timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
-timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
-sleep $tim
-
+echo 1>&2 "run 2"
 timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
 timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
 timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
 timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
+echo 1>&2 "run 3"
 timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
 timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
 timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
 timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
 sleep $tim
 
+echo 1>&2 "run 4"
+timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
+timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
+timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
+sleep $tim
+
+echo 1>&2 "final run"
 time timeout $tmo pdflatex $popt --interaction $pint "$texf"
 
 if [ -f "$pdff" ] #make sure the create/access/modification time is set to the time `make` was called.
