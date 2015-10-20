@@ -397,21 +397,28 @@ $5$&$0$&$-$&$-$&$-$
 
 We kunnen dus concluderen dat: $\mbox{8C989}_{16}=\mbox{CCCP}_{36}$.
 
-%REVIEW
 \subsection{Optellen}
 \ssclab{add}
-Hoe tellen we nu twee getallen op? In het decimaal stelsel tellen we twee getallen op door middel van cijferen. Hieronder geven we een illustrerend voorbeeld waarbij we $1425+1917$ uitrekenen:
+
+Hoe tellen we nu twee getallen op? In het decimaal stelsel kunnen we twee (grote) getallen optellen door middel van \gtermen{cijferen}{Een verzameling van technieken die in het lager onderwijs worden aangeleerd om bewerkingen zoals optellen, aftrekken, vermenigvuldigen en delen uit te voren op grote getallen. In plaats van de bewerking in \'e\'en keer op de twee getallen uit te voeren, wordt een bepaalde methode cijfer per cijfer uitgevoerd. Cijferen komt ook terug in digitale logica wanneer men rekenkundige circuits implementeert.}. Hieronder geven we een illustrerend voorbeeld waarbij we $1425+1917$ uitrekenen:
+
 \begin{equation}
-\begin{array}{l|lcccc}
+\begin{array}{r|lcccc}
 \mbox{overdracht $c$}&&1&0&1&\\
 x&&1&4&2&5\\
 y&+&1&9&1&7\\\hline
 \mbox{som $s$}&&3&3&4&2
 \end{array}
 \end{equation}
-Om getallen in het decimaal stelsel te kunnen optellen gebruiken we een repetitieve structuur, waarbij we 200 basisregels moeten onthouden. Zo'n basisregel $f\left(c_i,x_i,y_i\right)=\left(s_i,c_{i+1}\right)$ is een functie die de eventuele \termen{overdracht} of \termen{carry}, en de cijfers van de twee getallen in een bepaalde kolom omzet naar de overdracht van de volgende kolom en de som van deze kolom. Een voorbeeld van zo'n basisregel is $f\left(0,4,9\right)=\left(3,1\right)$. Deze regel wordt in ons voorbeeld gebruikt in de derde kolom vanaf rechts\footnote{We nummeren de kolommen vanaf rechts, analoog aan de getalvoorstelling van vergelijking (\ref{eqn:numberRepresentation})}. Binair optellen gebeurt volledig analoog, we hebben opnieuw met een repetitieve structuur te maken, alleen dienen we nu slechts 8 verschillende regels te onthouden.
+
+Om getallen in het decimaal stelsel te kunnen optellen gebruiken we een repetitieve structuur, waarbij we 200 basisregels moeten onthouden. Een dergelijke basisregel $\fun{f}{c_i,x_i,y_i}=\tupl{s_i,c_{i+1}}$ is een functie die de eventuele \gtermen{overdracht}{Een restproduct dat ontstaat wanneer we twee cijfers $x$ en $y$ optellen, en de het resultaat is groter dan de radix $r$. In dat geval is de overdracht $\floor{\brak{x+y}/r}$. De overdracht wordt gebruikt als toevoeging bij de optelling van het volgend cijfer.} of \stermen{carry}{overdracht}, en de cijfers van de twee getallen $x$ en $y$ in een bepaalde kolom omzet naar de overdracht van de volgende kolom en de som van deze kolom. Een voorbeeld van zo'n basisregel is $\fun{f}{0,4,9}=\tupl{3,1}$. Deze regel wordt in ons voorbeeld gebruikt in de derde kolom vanaf rechts\footnote{We nummeren de kolommen vanaf rechts, analoog aan de getalvoorstelling van \eqnref{eqn:numberRepresentation}.}. De overdracht is hierbij een restproduct van de optelling van twee cijfers (eventueel ook met de overdracht van de vorige optelling). Het is immers mogelijk dat het resultaat van de optelling groter of gelijk is aan de radix $r$. In dat geval is het cijfer die we onderaan schrijven, gelijk aan $s_i=c_i+x_i+y_i-r$, de overdracht is dan gelijk aan $c_{i+1}=1$. In het geval $c_i+x_i+y_i<r$, is het resultaat $s_i=c_i+x_i+y_i$ en $c_{i+1}=0$.
+
+\paragraph{}
+Binair optellen gebeurt volledig analoog, we hebben opnieuw met een repetitieve structuur te maken, alleen dienen we nu slechts 8 verschillende regels te onthouden: immers zijn alle variabelen $c_i$, $x_i$ en $y_i$ binair.
+
+%REVIEW
 \subsubsection{Half adder}
-In deze paragraaf synthetiseren we een \termen{half adder (HA)}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in figuur \ref{fig:halfAdder}.
+In deze paragraaf synthetiseren we een \gtermen[half adder]{half adder (HA)}{.}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in figuur \ref{fig:halfAdder}.
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{\importtikz{halfadder-truthtable}}
