@@ -452,24 +452,30 @@ We kunnen ook een implementatie synthetiseren met behulp van functionele ontbind
 
 %REVIEW
 \subsubsection{Ripple-carry opteller}
-Met behulp van een half adder en $n$ full adders kunnen we vervolgens een opteller realiseren die twee $n+1$ bit getallen optelt. Dit doen we met behulp van een \termen{Ripple-carry opteller}. Figuur \ref{fig:rippleCarryAdder}%
+Met behulp van een half adder en $n$ full adders kunnen we vervolgens een opteller realiseren die twee $n+1$ bit getallen optelt. Dit doen we met behulp van een \gtermen{Ripple-carry opteller}{Een component die aan de hand van full adders en optioneel een half adder, twee getallen in binaire notatie optelt. Dit doen men door de full adders aan elkaar te schakelen zodat elke adder twee bits van de getallen op dezelfde positie verwerkt, en de carry van bits op positie $i$ als carry ingang voor de volgende bit wordt gebruikt.}.
 \importtikzfigure{rippleCarryAdder}{Schematische voorstelling van een $n$-bit Ripple-carry opteller.}
-toont hoe dit in z'n werk gaat: we tellen de laatste twee bits op met een half adder, de overige bits tellen we op met full adders. De carry uitgang van elke adder gaat naar de de ingang van de volgende adder. De allerlaatste carry uitgang $c_n$, kan men gebruiken als een \termen{overflow} uitgang. Indien we immers twee $n$-bit getallen met elkaar optellen, kunnen sommige resultaten $n+1$-bit getallen vereisen om nog voorgesteld te kunnen worden. In een ander geval wordt deze uitgang gebruikt om de waarde van de $n+1$-ste bit te bepalen. In dat geval heeft de uitgang meer bits dan de operanden. Uiteraard kunnen we de half adder vervangen door een full adder met als carry ingang 0.
+\figref{rippleCarryAdder} toont hoe dit in z'n werk gaat: we tellen de laatste twee bits op met een half adder\footnote{Op de figuur gebruiken we hiervoor een full adder $\mbox{FA}_0$, maar met carry ingang $c_0=0$, wat op hetzelfde neerkomt. Later zullen we zien dat door een full adder te gebruiken, we meer kunnen doen met een ripple-carry opteller.}, de overige bits tellen we op met full adders. De carry uitgang van elke adder gaat naar de de ingang van de volgende adder. De allerlaatste carry uitgang $c_n$, kan men gebruiken als een \gtermen{overflow}{Een signaal dat na een bewerking - bijvoorbeeld een optelling - het resultaat niet meer volledig voor te stellen valt op de gegeven bits. Dit is bijvoorbeeld het geval bij een $8$-bit opteller, waarbij het resultaat groter is dan $255$.} uitgang. Indien we immers twee $n$-bit getallen met elkaar optellen, kan dit resulteren in getallen waarvoor die we enkel met $n+1$ bits kunnen voorstellen. In een ander geval wordt deze uitgang gebruikt om de waarde van de $n+1$-ste bit te bepalen. We kunnen ook - zoals op de figuur - de half adder vervangen door een full adder met als carry ingang $c_0=0$.
 
 \paragraph{}
-Omdat we meestal getallen met een groot aantal bit optellen\footnote{Op de meeste processoren is dat 32 of 64 bit.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen 1 XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
+Omdat we meestal getallen met een groot aantal bits optellen\footnote{Op de meeste processoren spreken we over $32$ of $64$ bits.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen \'e\en XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
+
 \begin{equation}
 \mbox{vertraging}=2.4n+2.4n+3.2=4.8n+3.2
 \end{equation}
-Het is mogelijk dat we deze vertraging verder kunnen reduceren, een probleem is echter dat de vertraging een orde $n$ blijft. Voor berekeningen met grote getallen zijn ripple-carry adders dan ook onaanvaardbaar.
+
+Het is mogelijk dat we deze vertraging verder kunnen reduceren, een probleem is echter dat de vertraging van een orde $\bigoh{n}$ blijft. Voor berekeningen met grote getallen zijn ripple-carry adders dan ook onaanvaardbaar. Om dit euvel te verhelpen introduceren we de carry-lookahead opteller.
+
 \subsubsection{Carry-lookahead opteller}
-Een \termen{Carry-lookahead opteller (CLA)} is een component ter vervanging van een full adder. Het is de bedoeling om met behulp van deze component rechtstreeks $c_i$ te berekenen als een functie $c_i\left(c_0,x_0,x_1,\ldots,x_{i-1},y_0,y_1,\ldots,y_{i-1}\right)$. De Carry-lookahead opteller heeft dezelfde ingangen als een full adder: $(x_i,y_i,c_i)$, maar meer uitgangen $(c_{i+1},g_i,p_i,s_i)$. Deze uitgangssignalen hebben volgende functie:
+Een \gtermen[carry-lookahead opteller]{Carry-lookahead opteller (CLA)}{Een uitbreiding op de full adder. In plaats van een carry uitgang $c_i$, heeft de carry-lookahead opteller een generate uitgang $g_i$ en een popagate uitgang $p_i$. Deze uitgangen berekenen of er op deze bit een carry zal gegenereerd worden - wanneer zowel $x_i$ als $y_i$ $1$ zijn, of wanneer een carry van de vorige bit zal gepropageerd worden: wanneer minstens \'e\'en van de twee ingangen $x_i$ of $y_i$ $1$ is.} is een component ter vervanging van een full adder. Het is de bedoeling om met behulp van deze component rechtstreeks $c_i$ te berekenen als een functie $\fun{c_i}{c_0,x_0,x_1,\ldots,x_{i-1},y_0,y_1,\ldots,y_{i-1}}$. De Carry-lookahead opteller heeft dezelfde ingangen als een full adder: $\tupl{x_i,y_i,c_i}$, maar meer en andere uitgangen $\tupl{c_{i+1},g_i,p_i,s_i}$. Deze uitgangssignalen hebben volgende functie:
+
 \begin{itemize}
- \item \termen{carry-generate $g_i$}: 1 indien er bij het optellen van $x_i$ en $y_i$ overdracht gegenereerd wordt. Bijgevolg is $g_i=x_iy_i$.
- \item \termen{carry-propagate $p_i$}: 1 indien bij de optelling de overdracht verder gepropageerd zal worden. Bijgevolg $p_i=x_iy_i'+x_i'y_i$.
- \item som $s_i$: het resultaat van de optelling: $s_i=c_ip_i'+c_i'p_i$.
+ \item \gtermen[carry-generate]{carry-generate $g_i$}{Een uitgang van een carry-lookahead opteller; $1$ indien er carry gengereerd zal worden door $x_i$ en $y_i$. Dit is het geval wanneer beide ingangen een $1$ aanleggen. In het andere geval staat er $0$ op deze uitgang.}: $1$ indien er bij het optellen van $x_i$ en $y_i$ overdracht gegenereerd wordt; $0$ in het andere geval. Bijgevolg is $g_i=x_i\cdot y_i$.
+ \item \gtermen[carry-propagate]{carry-propagate $p_i$}{Een uitgang van een carry-lookahead opteller; $1$ indien er carry gepropageerd zal worden door $x_i$ en $y_i$ en niet gegenereerd. Dit is het geval wanneer \'e\'en van de twee ingangen $1$ aanlegt. In het andere geval staat er $0$ op de uitgang.}: $1$ indien bij de optelling de overdracht van de vorige bit verder gepropageerd zal worden, en deze overdracht niet gegenereerd wordt; $0$ in het andere geval. Bijgevolg $p_i=x_i\cdot y_i'+x_i'\cdot y_i=x_i\oplus y_i$.
+ \item som $s_i$: het resultaat van de optelling $s_i=c_i\oplus\brak{x_i\oplus y_i}$, wat equivalent is met $s_i=c_ip_i'+c_i'p_i=c_i\oplus p_i$.
 \end{itemize}
-De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementatie; de waarheidstabellen, interface en een mogelijke implementatie staan op figuur~\ref{fig:carryLookaheadAdder}.
+
+De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementatie; de waarheidstabellen, interface en een mogelijke implementatie staan op \figref{carryLookaheadAdder}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{\importtikz{cla-truthtable}}
@@ -479,9 +485,11 @@ De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementati
 \caption{Carry-Lookahead Opteller (CLA).}
 \figlab{carryLookaheadAdder}
 \end{figure}
-Een belangrijke opmerking bij deze component is dat we de overdracht $c_{i+1}$ vervolgens kunnen berekenen als $c_{i+1}=g_i+c_ip_i$. De overdacht hangt dus niet rechtstreeks af van $x_i$ of $y_i$, deze eigenschap is belangrijk voor de synthese van een ander component: de CLA-generator.
+
+We kunnen de overdracht van de carry-lookahead opteller $c_{i+1}$ vervolgens berekenen met de formule $c_{i+1}=g_i+c_ip_i$: er is overdracht wanneer deze ofwel gegenereerd wordt, ofwel wanneer er al overdracht is en deze gepropageerd wordt. De overdacht hangt dus niet langer rechtstreeks af van $x_i$ of $y_i$. Deze eigenschap zal belangrijk blijken voor de synthese van het volgende component: de CLA-generator.
+
 \subsubsection{CLA-generator}
-Om een opteller te realiseren moeten we, net zoals bij de Ripple-carry opteller, alleen nog de glue voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \termen{CLA-generator}. Een $n$-bit CLA-generator is een component met ingangen $\left(c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}\right)$. De component heeft tot doel om de overdracht (carry) te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\left(c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}\right)$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
+Om een opteller te realiseren moeten we, net zoals bij de ripple-carry opteller, nog de glue logic voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \gtermen{CLA-generator}{.}. Een $n$-bit CLA-generator is een component met ingangen $\left(c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}\right)$. De component heeft tot doel om de overdracht (carry) te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\left(c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}\right)$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
 \begin{figure}[hbt]
 \centering
 \subfigure[Structuur van de CLA-generator.]{\importtikz{clag-structure}}
