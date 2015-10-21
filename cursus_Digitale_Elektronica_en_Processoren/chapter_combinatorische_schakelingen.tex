@@ -419,9 +419,8 @@ Binair optellen gebeurt volledig analoog, we hebben opnieuw met een repetitieve 
 Nu we weten hoe we twee getallen kunnen optellen, zullen we digitale circuits voorzien om de binaire signalen van twee getallen
 daadwerkelijk om te zetten in binaire signalen die de som voorstellen. Hiervoor zullen we eerst twee nieuwe componenten voorstellen waarmee we een opteller kunnen realiseren. We zullen later deze implementatie verder verfijnen om sneller te kunnen optellen.
 
-%REVIEW
 \subsubsection{Half adder}
-In deze paragraaf synthetiseren we een \gtermen[half adder]{half adder (HA)}{.}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in \figref{halfAdder}.
+In deze paragraaf synthetiseren we een \gtermen[half adder]{half adder (HA)}{Een component die voor twee gegeven bits $x$ en $y$ het binaire cijfer van de som $s=x\oplus y$ uitrekent, en de overdracht $c=x\cdot y$. Een half-adder wordt soms gebruikt om de laatste bit bij een optelling van twee getallen te berekenen. De rest van de bits worden met een full adder berekend.}, die de laatste bit van de twee getallen optelt. Bij het laatste cijfer is de overdracht $c_0$ sowieso $0$\footnote{Dit geldt enkel bij een optelling, later zullen we optellers ook gebruiken om het verschil tussen twee getallen uit te rekenen.}, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de bit die het laatste cijfer van de som bepaalt. We stellen hiervoor een waarheidstabel en de bijbehorende Karnaugh-kaarten op in \figref{halfAdder}.
 
 \begin{figure}[hbt]
 \centering
@@ -432,10 +431,12 @@ In deze paragraaf synthetiseren we een \gtermen[half adder]{half adder (HA)}{.},
 \caption{Half adder (HA).}
 \figlab{halfAdder}
 \end{figure}
-Deze combinatorische functies kunnen we verwezenlijken met een AND en XOR poort.
+We zien dat we de som-bit $s_i$ kunnen berekenen aan de hand van een XOR operatie tussen $x_i$ en $y_i$, de carry $c_{i+1}$ is enkel $1$ wanneer beide cijfers $x_i$ en $y_i$ op $1$ staan, dit gedrag kunnen we dus realiseren aan de hand van een AND-poort. Deze implementatie staat in \figref{halfadder-implementation}
+
 \subsubsection{Full adder}
-\label{sss:fulladder}
-Met een Half adder kunnen we echter geen optellingen uitrekenen. Hiervoor dienen we een component te ontwikkelen die meer functionaliteit biedt: de \termen{full adder (FA)}. Een full adder bevat slechts \'e\'en ingang extra: de overdracht van de vorige opteller $c_i$. Een full adder telt op door een XOR operatie toe te passen op de drie ingangen: $x_i$, $y_i$ en $c_i$, verder is er sprake van overdracht indien twee of meer ingangen 1 zijn. Dit kunnen we eenvoudig implementeren met tweelagen-logica. De waarheidstabellen en Karnaugh-kaarten staan samen met een mogelijke implementatie op figuur \ref{fig:fullAdder}.
+\ssslab{fulladder}
+Met een half adder kunnen we geen optellingen uitrekenen: immers houdt de half adder geen rekening met de carry die eventueel wordt gegenereerd uit de cijfers rechts van de plaats waar de half adder staat. We ontwikkelen dus een component die deze functionaliteit wel aanbiedt: de \gtermen[full adder]{full adder (FA)}{Een component die voor drie gegeven bits $x_i$, $y_i$ en $c_i$ - twee echte bits en meestal de overdracht van de vorige opteller - de bit $s_i=x_i\oplus y_i\oplus c_i$ uitrekent die onder de som moet komen te staan, samen met de overdracht voor de volgende bit $c_{i+1}$. Een full adder wordt gebruikt bij het optellen en aftrekken van twee getallen.}. Een full adder bevat \'e\'en ingang extra tegenover een half adder: de overdracht van de vorige opteller $c_i$. Een full adder telt op door XOR-operaties toe te passen op de drie ingangen: $x_i$, $y_i$ en $c_i$. Er is sprake van overdracht naar de volgende bit indien twee of meer ingangen op dat moment op $1$ staan. Dit kunnen we implementeren met tweelagen-logica. De waarheidstabellen en Karnaugh-kaarten voor deze schakelingen staan samen met een mogelijke implementatie op \figref{fullAdder}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{\importtikz{fulladder-truthtable}}
@@ -446,11 +447,15 @@ Met een Half adder kunnen we echter geen optellingen uitrekenen. Hiervoor dienen
 \caption{Full adder (FA).}
 \figlab{fullAdder}
 \end{figure}
-We kunnen ook een implementatie synthetiseren met behulp van functionele ontbinding. Bij een full adder voeren we immers twee optellingen uit, de volgorde speelt hierbij geen rol. Indien minstens \'e\'en van de twee optellingen overdracht genereert, is er sprake van overdracht bij de full adder. We kunnen een full adder dus ook implementeren zoals op figuur \ref{fig:fulladder-functional}. Indien we de half adders dan implementeren zoals op figuur \ref{fig:halfadder-implementation}, zien we dat we \'e\'en poort uitsparen. Dit betalen we echter met grotere vertragingen, iets wat bij optellingen met grote getallen niet gewenst is.
+
+We kunnen ook een implementatie synthetiseren met behulp van functionele ontbinding. Bij een full adder voeren we immers twee optellingen uit, de volgorde speelt hierbij geen rol. Indien minstens \'e\'en van de twee optellingen van de half adders overdracht genereert, is er sprake van overdracht bij de full adder. Daarom plaatsen we een OR-poort tussen de twee carries. We kunnen een full adder dus ook implementeren zoals op \figref{fulladder-functional}. Tegenover de implementatie op \figref{halfadder-implementation}, zien we dat we \'e\'en poort uitsparen. Dit betalen we echter met grotere vertragingen, iets wat bij optellingen met grote getallen niet gewenst is.
+
+%REVIEW
 \subsubsection{Ripple-carry opteller}
 Met behulp van een half adder en $n$ full adders kunnen we vervolgens een opteller realiseren die twee $n+1$ bit getallen optelt. Dit doen we met behulp van een \termen{Ripple-carry opteller}. Figuur \ref{fig:rippleCarryAdder}%
 \importtikzfigure{rippleCarryAdder}{Schematische voorstelling van een $n$-bit Ripple-carry opteller.}
 toont hoe dit in z'n werk gaat: we tellen de laatste twee bits op met een half adder, de overige bits tellen we op met full adders. De carry uitgang van elke adder gaat naar de de ingang van de volgende adder. De allerlaatste carry uitgang $c_n$, kan men gebruiken als een \termen{overflow} uitgang. Indien we immers twee $n$-bit getallen met elkaar optellen, kunnen sommige resultaten $n+1$-bit getallen vereisen om nog voorgesteld te kunnen worden. In een ander geval wordt deze uitgang gebruikt om de waarde van de $n+1$-ste bit te bepalen. In dat geval heeft de uitgang meer bits dan de operanden. Uiteraard kunnen we de half adder vervangen door een full adder met als carry ingang 0.
+
 \paragraph{}
 Omdat we meestal getallen met een groot aantal bit optellen\footnote{Op de meeste processoren is dat 32 of 64 bit.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen 1 XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
 \begin{equation}
