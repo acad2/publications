@@ -450,7 +450,6 @@ Met een half adder kunnen we geen optellingen uitrekenen: immers houdt de half a
 
 We kunnen ook een implementatie synthetiseren met behulp van functionele ontbinding. Bij een full adder voeren we immers twee optellingen uit, de volgorde speelt hierbij geen rol. Indien minstens \'e\'en van de twee optellingen van de half adders overdracht genereert, is er sprake van overdracht bij de full adder. Daarom plaatsen we een OR-poort tussen de twee carries. We kunnen een full adder dus ook implementeren zoals op \figref{fulladder-functional}. Tegenover de implementatie op \figref{halfadder-implementation}, zien we dat we \'e\'en poort uitsparen. Dit betalen we echter met grotere vertragingen, iets wat bij optellingen met grote getallen niet gewenst is.
 
-%REVIEW
 \subsubsection{Ripple-carry opteller}
 Met behulp van een half adder en $n$ full adders kunnen we vervolgens een opteller realiseren die twee $n+1$ bit getallen optelt. Dit doen we met behulp van een \gtermen{Ripple-carry opteller}{Een component die aan de hand van full adders en optioneel een half adder, twee getallen in binaire notatie optelt. Dit doen men door de full adders aan elkaar te schakelen zodat elke adder twee bits van de getallen op dezelfde positie verwerkt, en de carry van bits op positie $i$ als carry ingang voor de volgende bit wordt gebruikt.}.
 \importtikzfigure{rippleCarryAdder}{Schematische voorstelling van een $n$-bit Ripple-carry opteller.}
@@ -504,35 +503,45 @@ Eerst zullen we een methode ontwikkelen om een overdracht $c_i$ te berekenen. Ee
 
 \begin{equation}
 c_i=g_{0,i-1}+p_{0,i-1}\cdot c_0
+\eqnlab{cla-ci}
 \end{equation}
 
 Een oplettende lezer zal gemerkt hebben dat we hierbij $g$ en $p$ twee indices geven. De indices wijzen dan ook op een bereik: alle getallen tussen $0$ en (inclusief) $i-1$. $g_{0,i-1}$ betekent dus zoveel als: ``er wordt ergens tussen $0$ en $i-1$ een overdracht gegenereerd, en deze wordt dan verder gepropageerd tot $i$. $p_{0,i-1}$ betekent dat er een propagatie-pad is tussen index $0$ en $i$. Een dergelijk propagatie-pad bestaat uitsluitend tot de $i$-de bit indien voor alle posities tot $i$ er geprogageerd wordt. Bijgevolg stellen we dat:
 
 \begin{equation}
 p_{i,j}=\displaystyle\prod_{k=i}^j{p_k}
+\eqnlab{cla-pij}
 \end{equation}
 
-Merk op dat we hier een booleaans product bedoelen, er staat dus tussen elk element van de deelexpressie een AND.
+Merk op dat we hier een booleaans product bedoelen, er staat dus tussen elk element van de deelexpressie een AND. Er wordt soms ook overdacht gegenereerd. Dit is bijvoorbeeld het geval indien de vorige bit een overdacht genereerde, of een willekeurige bit ervoor, die deze dan tot de $i$-de bit weet te propageren. Of meer formeel:
 
-\paragraph{}
-Er wordt er overdacht gegenereerd indien de vorige bit een overdacht genereerde, of een willekeurige bit ervoor, die deze dan tot de $i$-de bit weet te propageren. Dit formaliseren we als:
 \begin{equation}
-g_{i,j}=g_j+\displaystyle\sum_{k=i}^{j-1}{g_kp_{k+1,j}}=g_j+\displaystyle\sum_{k=i}^{j-1}{\left(g_k\cdot\displaystyle\prod_{l=k+1}^j{p_l}\right)}
+g_{i,j}=g_j+\displaystyle\sum_{k=i}^{j-1}{g_kp_{k+1,j}}=g_j+\displaystyle\sum_{k=i}^{j-1}{\brak{g_k\cdot\displaystyle\prod_{l=k+1}^j{p_l}}}
+\eqnlab{cla-gij}
 \end{equation}
-De volledige berekening voor het bepalen van overdacht $c_i$ wordt dan:
+
+Merk op dat we hier met het sommatie-teken de booleaanse som bedoelen, wat dus neerkomt op OR-poorten. Wanneer we \eqnref{cla-pij} en \eqnref{cal-gij} in \eqnref{cal-ci} schuiven, dan bekomen we een formule waarmee we de overdacht $c_i$ kunnen berekenen, enkel op basis van de invoer van de CLA-generator:
+
 \begin{equation}
 c_i=g_{i-1}+\displaystyle\sum_{k=0}^{i-2}{\left(g_k\cdot\displaystyle\prod_{l=k+1}^{i-1}{p_l}\right)}+c_0\cdot\displaystyle\prod_{k=0}^{i-1}{p_k}
 \end{equation}
-De berekening voor $c_i$ kost dus een $i+1$-OR poort, en $i+1$ AND poorten, elk van deze poorten heeft een ander aantal ingangen vari\"erend van 2 tot $i+1$. We kunnen nu opnieuw het kritische pad analyseren. Dit pad is $x_0\rightarrow c_n$. Hierbij gaat het signaal doorheen \'e\'en XOR poort, \'e\'en $n+1$-input AND poort en \'e\'en $n+1$-OR poort. De totale vertraging is dus:
+
+De berekening voor $c_i$ kost dus een $i+1$-OR poort, en $i+1$ AND poorten, elk van deze poorten heeft een ander aantal ingangen vari\"erend van twee tot $i+1$. We kunnen nu opnieuw het kritische pad analyseren. Dit pad is $x_0\rightarrow c_n$. Hierbij gaat het signaal doorheen \'e\'en XOR poort, \'e\'en $n+1$-input AND poort en \'e\'en $n+1$-OR poort. De totale vertraging is dus:
 \begin{equation}
-\mbox{vertraging}=3.2+2\left(2+0.4n\right)=0.8n+7.2
-\label{eqn:delayCLAGenerator}
+\mbox{vertraging}=3.2+2\cdot\brak{2+0.4\cdot n}=0.8\cdot n+7.2
+\eqnlab{delayCLAGenerator}
 \end{equation}
-Toegegeven dat de orde van de vertraging nog steeds linear is, maar de factor voor $n$ is met de CLA-generator sterk gereduceerd. We kunnen echter ook een cascade van CLA-generators maken. Indien we twee $n$-bit getallen willen optellen, en we groeperen elke $k$ componenten tot een niveau hoger, hebben we $\left\lceil\log_kn\right\rceil$ niveaus nodig. We kunnen in dat geval vergelijking (\ref{eqn:delayCLAGenerator}) gebruiken om de vertraging te berekenen:
+
+Toegegeven dat de orde van de vertraging nog steeds linear is, maar de factor voor $\bigoh{n}$ is met de CLA-generator sterk gereduceerd. De CLA-generator laat ons echter ook toe om toch logaritmisch gedrag te bereiken, en dit met een cascade van CLA-generatoren. Indien we twee $n$-bit getallen willen optellen, en we groeperen elke $k$ carry-lookahead optellers met een CLA-generator, en vervolgens groeperen we elke $k$ CLA-generatoren tot een niveau hoger, dan hebben we $\ceil{\log_kn}$ niveaus nodig. We kunnen in dat geval (\eqnref{delayCLAGenerator}) gebruiken om de vertraging te berekenen:
+
 \begin{equation}
-\mbox{vertraging}=3.2+\left(2\left\lceil\log_kn\right\rceil-1\right)\times\left(4+0.8k\right)
+\mbox{vertraging}=3.2+\brak{2\cdot\ceil{\log_kn}-1}\cdot\brak{4+0.8\cdot k}
 \end{equation}
-Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. Figuur \ref{fig:clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de reden van de twee extra ingangen duidelijk.
+
+Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. \figref{clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de reden van de twee extra ingangen duidelijk: het zijn de propagate en generate ingangen voor de CLA-generator een niveau hoger, die dus enkel kijkt of een blok van bits overdracht zullen genereren en propageren. De bijbehorende formule voor $g_{0,k-1}$ en $p_{0,k-1}$ kunnen we respectievelijk afleiden uit \eqnref{cal-gij} en \eqnref{cla-pij}.
+%TODO: implementation of clag?
+
+%REVIEW
 \subsection{Negatieve getallen}
 Om getallen te kunnen aftrekken, zullen we het getalbegrip uitbreiden, zodat deze ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. Hierbij moeten we in gedachten houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen.
 \subsubsection{`Sign-Magnitude'-voorstelling}
