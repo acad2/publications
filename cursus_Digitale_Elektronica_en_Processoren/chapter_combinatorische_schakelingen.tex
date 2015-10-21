@@ -489,7 +489,8 @@ De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementati
 We kunnen de overdracht van de carry-lookahead opteller $c_{i+1}$ vervolgens berekenen met de formule $c_{i+1}=g_i+c_ip_i$: er is overdracht wanneer deze ofwel gegenereerd wordt, ofwel wanneer er al overdracht is en deze gepropageerd wordt. De overdacht hangt dus niet langer rechtstreeks af van $x_i$ of $y_i$. Deze eigenschap zal belangrijk blijken voor de synthese van het volgende component: de CLA-generator.
 
 \subsubsection{CLA-generator}
-Om een opteller te realiseren moeten we, net zoals bij de ripple-carry opteller, nog de glue logic voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \gtermen{CLA-generator}{.}. Een $n$-bit CLA-generator is een component met ingangen $\left(c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}\right)$. De component heeft tot doel om de overdracht (carry) te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\left(c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}\right)$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
+Om een opteller te realiseren moeten we, net zoals bij de ripple-carry opteller, nog de glue logic voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \gtermen{CLA-generator}{Een component met ingangen $\tupl{c_0,g_0,\ldots,g_{n-1},p_0,\ldots,p_{n-1}}$ die overdracht doorrekent en die de carry-lookahead optellers van de waarde voor de overdracht-ingang voorziet. De uitgangen zijn dan ook $\tupl{c_1,\ldots,c_n,g_{0,n-1},p_{0,n-1}}$. Door een cascade van CLA-generatoren te beschouwen, kan men een optelling realiseren die in \bigoh{\log n} werkt, in plaats van in \bigoh{n}.}. Een $n$-bit CLA-generator is een component met ingangen $\tupl{c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}}$. De component heeft tot doel om de overdracht voor een reeks carry-lookahead optellers te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\tupl{c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}}$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Structuur van de CLA-generator.]{\importtikz{clag-structure}}
@@ -497,15 +498,24 @@ Om een opteller te realiseren moeten we, net zoals bij de ripple-carry opteller,
 \caption{CLA-generator.}
 \figlab{CLAGenerator}
 \end{figure}
+
+\paragraph{}
 Eerst zullen we een methode ontwikkelen om een overdracht $c_i$ te berekenen. Een overdracht kan maar op twee manieren tot stand komen: ofwel wordt deze gegenereerd, ofwel wordt deze gepropageerd. Dit formaliseren we als:
+
 \begin{equation}
 c_i=g_{0,i-1}+p_{0,i-1}\cdot c_0
 \end{equation}
-Een oplettende lezer zal gemerkt hebben dat we hierbij $g$ en $p$ twee indices geven. De reden hiervoor is, dat de overdracht overal kan gegenereerd of gepropageerd worden. We moeten de twee indices dus als de definitie van een bereik zien. De overdacht kan uitsluitend tot de $i$-de bit gepropageerd worden, indien alle bits voor de $i$-de bit propageren, bijgevolg kunnen we stellen:
+
+Een oplettende lezer zal gemerkt hebben dat we hierbij $g$ en $p$ twee indices geven. De indices wijzen dan ook op een bereik: alle getallen tussen $0$ en (inclusief) $i-1$. $g_{0,i-1}$ betekent dus zoveel als: ``er wordt ergens tussen $0$ en $i-1$ een overdracht gegenereerd, en deze wordt dan verder gepropageerd tot $i$. $p_{0,i-1}$ betekent dat er een propagatie-pad is tussen index $0$ en $i$. Een dergelijk propagatie-pad bestaat uitsluitend tot de $i$-de bit indien voor alle posities tot $i$ er geprogageerd wordt. Bijgevolg stellen we dat:
+
 \begin{equation}
 p_{i,j}=\displaystyle\prod_{k=i}^j{p_k}
 \end{equation}
-Tenslotte wordt er overdacht gegenereerd indien de vorige bit een overdacht genereerde, of een willekeurige bit ervoor, die deze dan tot de $i$-de bit weet te propageren. Dit formaliseren we als:
+
+Merk op dat we hier een booleaans product bedoelen, er staat dus tussen elk element van de deelexpressie een AND.
+
+\paragraph{}
+Er wordt er overdacht gegenereerd indien de vorige bit een overdacht genereerde, of een willekeurige bit ervoor, die deze dan tot de $i$-de bit weet te propageren. Dit formaliseren we als:
 \begin{equation}
 g_{i,j}=g_j+\displaystyle\sum_{k=i}^{j-1}{g_kp_{k+1,j}}=g_j+\displaystyle\sum_{k=i}^{j-1}{\left(g_k\cdot\displaystyle\prod_{l=k+1}^j{p_l}\right)}
 \end{equation}
@@ -513,7 +523,7 @@ De volledige berekening voor het bepalen van overdacht $c_i$ wordt dan:
 \begin{equation}
 c_i=g_{i-1}+\displaystyle\sum_{k=0}^{i-2}{\left(g_k\cdot\displaystyle\prod_{l=k+1}^{i-1}{p_l}\right)}+c_0\cdot\displaystyle\prod_{k=0}^{i-1}{p_k}
 \end{equation}
-De berekening voor $c_i$ kost dan ook een $i+1$-input OR poort, en $i+1$ AND poorten, elk van deze poorten heeft een ander aantal ingangen vari\"erend van 2 tot $i+1$. We kunnen nu opnieuw het kritische pad analyseren. Dit pad is $x_0\rightarrow c_n$. Hierbij gaat het signaal doorheen 1 XOR poort, 1 $n+1$-input AND poort en 1 $n+1$ input OR poort. De totale vertraging is dus:
+De berekening voor $c_i$ kost dus een $i+1$-OR poort, en $i+1$ AND poorten, elk van deze poorten heeft een ander aantal ingangen vari\"erend van 2 tot $i+1$. We kunnen nu opnieuw het kritische pad analyseren. Dit pad is $x_0\rightarrow c_n$. Hierbij gaat het signaal doorheen \'e\'en XOR poort, \'e\'en $n+1$-input AND poort en \'e\'en $n+1$-OR poort. De totale vertraging is dus:
 \begin{equation}
 \mbox{vertraging}=3.2+2\left(2+0.4n\right)=0.8n+7.2
 \label{eqn:delayCLAGenerator}
