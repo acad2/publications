@@ -539,32 +539,35 @@ Toegegeven dat de orde van de vertraging nog steeds linear is, maar de factor vo
 \end{equation}
 
 Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. \figref{clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de reden van de twee extra ingangen duidelijk: het zijn de propagate en generate ingangen voor de CLA-generator een niveau hoger, die dus enkel kijkt of een blok van bits overdracht zullen genereren en propageren. De bijbehorende formule voor $g_{0,k-1}$ en $p_{0,k-1}$ kunnen we respectievelijk afleiden uit \eqnref{cal-gij} en \eqnref{cla-pij}.
-%TODO: implementation of clag?
+%TODO: figure of implementation of clag?
 
-%REVIEW
 \subsection{Negatieve getallen}
-Om getallen te kunnen aftrekken, zullen we het getalbegrip uitbreiden, zodat deze ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. Hierbij moeten we in gedachten houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen.
+Om getallen te kunnen aftrekken, zullen we eerst ons getalbegrip uitbreiden, zodat we ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. We moeten hierbij in gedachten houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen. Het is dus aan te raden niet eender welke voorstelling te kiezen, maar een voorstelling waarvan we verwachten dat we hiermee effici\"ent berekeningen kunnen voorstellen.
+
 \subsubsection{`Sign-Magnitude'-voorstelling}
-Het arabische getalstelsel lost dit probleem op door middel van een teken. Een getal bestaat dan uit twee delen: een teken (+ of -) en een grootte. Bij positieve getallen wordt dit teken zelfs meestal niet geplaatst. Deze voorstelling is gekend als de `\termen{sign-magnitude}' voorstelling. Aangezien een getal ofwel positief of negatief is, kunnen we bij een binaire voorstelling een extra bit bij het getal plaatsen. Deze bit is $0$ bij een positief getal, en $1$ bij een negatief getal. In dat geval wordt dus $\underline{0}1100_2=\underline{+}12_{10}$ en $\underline{1}1100_2=\underline{-}12_{10}$. Een getal met $n$ bits kan dus alle gehele waarden aannemen tussen $-2^{n-1}+1$ en $2^{n-1}-1$. Er zijn echter enkele problemen met deze voorstelling. Allereerst is er nu sprake van twee voorstellingen van $0$: $-0$ en $+0$. Dit leidt tot extra complexiteit bij bijvoorbeeld het vergelijken van twee getallen. Verder wordt optellen en aftrekken van twee getallen gecompliceerd. Er zijn veel testen nodig alvorens we de waardes van de getallen kunnen optellen of aftrekken, wat tot grote vertragingen leidt.
+Het arabische getalstelsel lost het probleem van het voorstellen van negatieve getallen op aan de hand van een teken. Een getal bestaat dan uit twee delen: een teken ($+$ of $-$) en een grootte. Bij positieve getallen wordt dit teken zelfs meestal niet geplaatst. Deze voorstelling is gekend als de `\gtermen{sign-magnitude}{Een manier om negatieve getallen voor te stellen. Men plaatst hierbij een bit voor het getal - de tekenbit - en indien deze $1$ is, dienen we het getal als zijn negatie te interpreteren. Wanneer de bit $0$ is, is het getal positief.}' voorstelling. Aangezien een getal ofwel positief of negatief is, kunnen we bij een binaire voorstelling een extra bit bij het getal plaatsen, bijvoorbeeld ervoor. Deze bit is $0$ bij een positief getal, en $1$ bij een negatief getal. In dat geval wordt dus $\underline{0}1100_2=\underline{+}12_{10}$ en $\underline{1}1100_2=\underline{-}12_{10}$. Een getal met $n$ bits kan dus alle gehele waarden aannemen tussen $-2^{n-1}+1$ en $2^{n-1}-1$. Er zijn echter enkele problemen met deze voorstelling. Zo zijn er bijvoorbeeld twee voorstellingen van $0$: $-0$ en $+0$. Dit leidt tot extra complexiteit bij bijvoorbeeld het vergelijken van twee getallen. Optellen en aftrekken van twee getallen wordt bovendien gecompliceerder: er zijn verschillende testen nodig alvorens we de waardes van de getallen kunnen optellen of aftrekken, wat tot grote vertragingen leidt. De sign-magnitude voorstelling is dan ook niet populair bij het voorstellen van gehele getallen. Wel is het een populaire manier om positieve en negatieve getallen met vlottende komma voor te stellen zoals we zullen zien in \sscref{floatingpoint}.
+
 \subsubsection{Complement-voorstellingen}
-De meeste voorstellingen van negatieve getallen zijn gebaseerd op complement voorstellingen. Er bestaan twee soorten complement voorstellingen voor een getal $D$ met $m$ cijfers en radix $r$:
+De meeste voorstellingen van negatieve getallen zijn gebaseerd op \gtermen{complement voorstellingen}{Een reeks voorstellingen voor negatieve getallen. Bij elk van deze complement voorstellingen neemt men de bit-gewijze negatie van het getal, eventueel wordt er nog een $1$ opgeteld omdat we anders twee voorstellingen voor het getal $0$ hebben. Er zijn twee soort complement voorstelling: $1$-complement en $2$-complement.}. Er bestaan twee soorten complement voorstellingen voor een getal $D$ met $m$ cijfers en radix $r$:
 \begin{itemize}
- \item \termen{cijfer-complement} of \termen{diminished-radix complement} $D'$: hierbij wordt elk cijfer $i$ vervangen door zijn complement $r-i-1$. Bijvoorbeeld:
+ \item \gtermen{cijfer-complement}{Een complement voorstelling waarbij men negatieve getallen voorstelt door elk cijfer $i$ te vervangen door het complement $r-i-1$ met radix $r$.} of \stermen{diminished-radix complement}{cijfer-complement} $D'$: hierbij wordt elk cijfer $i$ vervangen door zijn complement $r-i-1$. Bijvoorbeeld:
  \begin{itemize}
     \item Het $9$-complement van $1337_{10}$ is $8662_{10}$.
     \item Het $1$-complement van $01001011\ 01010011_2$ is $10110100\ 10101100_2$.
  \end{itemize}
- Het \termen{1-complement} wordt soms gebruikt voor het voorstellen van negatieve getallen in het binaire stelsel.
- \item \termen{radix-complement} $D^*=r^m-D$. Bijvoorbeeld:
+ Het \stermen{1-complement}{cijfer-complement} wordt soms gebruikt voor het voorstellen van negatieve getallen in het binaire stelsel. Een belangrijk nadeel is echter dat er opnieuw twee voorstellingen van $0$ bestaan. Om dit probleem op te lossen, bestaat er een andere complement voorstelling.
+ \item \gtermen{radix-complement}{Een complement voorstelling waarbij men negatieve getallen voorstelt door ze voor te stellen als het getal $D^*=r^m-D$ met $D$ de absolute waarde van het getal, $r$ de radix van de getalvoorstelling, en $m$ het aantal cijfers van het getal.} $D^*=r^m-D$. Bijvoorbeeld:
  \begin{itemize}
     \item Het radix-complement van $1337_{10}$ is $8663_{10}$.
     \item Het radix-complement van $01001011\ 01010011_2$ is $10110100\ 10101101_2$.
  \end{itemize}
- Voor binaire getallen is dit het \termen{2-complement}. Dit is veruit de meest populaire voorstellingswijze.
+ Voor binaire getallen is dit het \stermen{2-complement}{radix-complement}. Dit is veruit de meest populaire voorstellingswijze.
 \end{itemize}
-Een belangrijke eigenschap die ook al blijkt uit de voorbeelden is dat $D^*=D'+1$. Deze eigenschap is interessant, omdat het ons helpt snel het 2-complement te berekenen. Immers is het 1-complement niets anders dan het toepassen van een NOT operatie op alle bits.
+Een eigenschap waar we later nog op zullen terugkomen is dat $D^*=D'+1$. De voorstelling van het radix-complement is dus altijd \'e\'en groter dan de voorstelling van dat getal in cijfer-complement. Immers zal blijken dat - omdat het $1$-complement snel uit te rekenen valt - het $2$ complement ook snel uit te rekenen zijn. Immers is het $1$-complement niets anders dan het toepassen van een NOT operatie op alle bits.
+
+%REVIEW
 \subsubsection{Twee-complement voorstelling}
-Omdat de 2-complement voorstelling vrij populair is, zullen we deze verder bespreken. Stel we beschikken over $n$ cijfers in een getalstelsel met radix $r$. In dat geval kunnen we $r^n$ in principe niet voorstellen. Logisch gezien stellen we dit voor door $r^n\equiv 0$. Immers kunnen we stellen dat in dat geval het $n+1$-de cijfer een 1 is, en de andere cijfers 0. Aangezien $D^*=r^n-D$ geldt: $D^*=-D$. Het gevolg is dat we de traditionele optelling kunnen gebruiken, indien we 2-complement getallen met elkaar optellen. Of deze getallen nu een teken bevatten of niet, is een kwestie van interpretatie, de opteller is hiervan niet afhankelijk. Bovendien kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op.
+Omdat de 2-complement voorstelling vrij populair is, zullen we deze verder bespreken. Stel we beschikken over $n$ cijfers in een getalstelsel met radix $r$. In dat geval kunnen we $r^n$ niet voorstellen. Logisch gezien stellen we dit voor door $r^n\equiv 0$. Immers kunnen we stellen dat in dat geval het $n+1$-de cijfer een 1 is, en de andere cijfers 0. Aangezien $D^*=r^n-D$ geldt: $D^*=-D$. Het gevolg is dat we de traditionele optelling kunnen gebruiken, indien we 2-complement getallen met elkaar optellen. Of deze getallen nu een teken bevatten of niet, is een kwestie van interpretatie, de opteller is hiervan niet afhankelijk. Bovendien kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op.
 \paragraph{}
 Een ander voordeel van de 2-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal 0 is. Indien we immers het negatief van 0 berekenen bekomen we:
 \begin{equation}
@@ -875,7 +878,8 @@ Of algemener:
 \displaystyle\prod_{k=1}^{n}{\fix\left<i_k,f_k\right>}=\fix\left<\displaystyle\sum_{k=1}^{n}{i_k},\displaystyle\sum_{k=1}^{n}{f_k}\right>
 \end{equation}
 \subsection{Vlottende komma getallen}
-\label{ss:floatingPoints}
+\ssclab{floatingPoints}
+\ssclab{floatingpoint}
 Het kan voorkomen dat we echter niet weten tot welke grootorde het getal in kwestie zal behoren. In dat geval zouden we vaste getallen met een groot aantal bits moeten gebruiken, waarbij bovendien in de meeste gevallen slechts een kleine hoeveelheid bits nuttig blijkt. In deze gevallen gebruiken we \termen{vlottende komma voorstelling} (ook wel \termen{zwevendekommagetal}, \termen{drijvendekommagetal} of \termen{floating-point number} genoemd). Vlottende komma getallen worden voorgesteld door een sequentie van bits die in drie groepen worden onderverdeeld:
 \begin{itemize}
  \item \termen{sign-bit $s$}: 1-bit die het teken van het getal bepaalt. De vlottende kommavoorstelling is dus vergelijkbaar met de signed-magnitude voorstelling.
