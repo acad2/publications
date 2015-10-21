@@ -416,9 +416,13 @@ Om getallen in het decimaal stelsel te kunnen optellen gebruiken we een repetiti
 \paragraph{}
 Binair optellen gebeurt volledig analoog, we hebben opnieuw met een repetitieve structuur te maken, alleen dienen we nu slechts 8 verschillende regels te onthouden: immers zijn alle variabelen $c_i$, $x_i$ en $y_i$ binair.
 
+Nu we weten hoe we twee getallen kunnen optellen, zullen we digitale circuits voorzien om de binaire signalen van twee getallen
+daadwerkelijk om te zetten in binaire signalen die de som voorstellen. Hiervoor zullen we eerst twee nieuwe componenten voorstellen waarmee we een opteller kunnen realiseren. We zullen later deze implementatie verder verfijnen om sneller te kunnen optellen.
+
 %REVIEW
 \subsubsection{Half adder}
-In deze paragraaf synthetiseren we een \gtermen[half adder]{half adder (HA)}{.}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in figuur \ref{fig:halfAdder}.
+In deze paragraaf synthetiseren we een \gtermen[half adder]{half adder (HA)}{.}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in \figref{halfAdder}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{\importtikz{halfadder-truthtable}}
