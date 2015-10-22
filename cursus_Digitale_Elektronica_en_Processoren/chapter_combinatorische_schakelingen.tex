@@ -567,7 +567,11 @@ Een eigenschap waar we later nog op zullen terugkomen is dat $D^*=D'+1$. De voor
 
 %REVIEW
 \subsubsection{Twee-complement voorstelling}
-Omdat de 2-complement voorstelling vrij populair is, zullen we deze verder bespreken. Stel we beschikken over $n$ cijfers in een getalstelsel met radix $r$. In dat geval kunnen we $r^n$ niet voorstellen. Logisch gezien stellen we dit voor door $r^n\equiv 0$. Immers kunnen we stellen dat in dat geval het $n+1$-de cijfer een 1 is, en de andere cijfers 0. Aangezien $D^*=r^n-D$ geldt: $D^*=-D$. Het gevolg is dat we de traditionele optelling kunnen gebruiken, indien we 2-complement getallen met elkaar optellen. Of deze getallen nu een teken bevatten of niet, is een kwestie van interpretatie, de opteller is hiervan niet afhankelijk. Bovendien kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op.
+Omdat de $2$-complement voorstelling vrij populair is, zullen we deze verder bespreken. Indien we beschikken over $n$ cijfers in een getalstelsel met radix $r$, kunnen we getallen groter of gelijk aan $r^n$ niet voorstellen. We stellen dit getal voor als $r^n\equiv 0$. We kunnen $r^n$ immer voorstellen door \'e\'en $1$ gevolgd door $n$ cijfers met $0$. Omdat we maar $n$ bits beschikbaar hebben, weerhouden we de laatste $n$.
+
+\paragraph{}
+Aangezien $D^*=r^n-D$ geldt: $D^*=-D$. Het gevolg is dat we de traditionele optelling kunnen gebruiken, indien we 2-complement getallen met elkaar optellen. Of deze getallen nu een teken bevatten of niet, is een kwestie van interpretatie, de opteller is hiervan niet afhankelijk. Bovendien kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op.
+
 \paragraph{}
 Een ander voordeel van de 2-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal 0 is. Indien we immers het negatief van 0 berekenen bekomen we:
 \begin{equation}
