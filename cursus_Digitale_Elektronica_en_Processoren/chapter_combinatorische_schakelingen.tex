@@ -548,7 +548,7 @@ Om getallen te kunnen aftrekken, zullen we eerst ons getalbegrip uitbreiden, zod
 Het arabische getalstelsel lost het probleem van het voorstellen van negatieve getallen op aan de hand van een teken. Een getal bestaat dan uit twee delen: een teken ($+$ of $-$) en een grootte. Bij positieve getallen wordt dit teken zelfs meestal niet geplaatst. Deze voorstelling is gekend als de `\gtermen{sign-magnitude}{Een manier om negatieve getallen voor te stellen. Men plaatst hierbij een bit voor het getal - de tekenbit - en indien deze $1$ is, dienen we het getal als zijn negatie te interpreteren. Wanneer de bit $0$ is, is het getal positief.}' voorstelling. Aangezien een getal ofwel positief of negatief is, kunnen we bij een binaire voorstelling een extra bit bij het getal plaatsen, bijvoorbeeld ervoor. Deze bit is $0$ bij een positief getal, en $1$ bij een negatief getal. In dat geval wordt dus $\underline{0}1100_2=\underline{+}12_{10}$ en $\underline{1}1100_2=\underline{-}12_{10}$. Een getal met $n$ bits kan dus alle gehele waarden aannemen tussen $-2^{n-1}+1$ en $2^{n-1}-1$. Er zijn echter enkele problemen met deze voorstelling. Zo zijn er bijvoorbeeld twee voorstellingen van $0$: $-0$ en $+0$. Dit leidt tot extra complexiteit bij bijvoorbeeld het vergelijken van twee getallen. Optellen en aftrekken van twee getallen wordt bovendien gecompliceerder: er zijn verschillende testen nodig alvorens we de waardes van de getallen kunnen optellen of aftrekken, wat tot grote vertragingen leidt. De sign-magnitude voorstelling is dan ook niet populair bij het voorstellen van gehele getallen. Wel is het een populaire manier om positieve en negatieve getallen met vlottende komma voor te stellen zoals we zullen zien in \sscref{floatingpoint}.
 
 \subsubsection{Complement-voorstellingen}
-De meeste voorstellingen van negatieve getallen zijn gebaseerd op \gtermen{complement voorstellingen}{Een reeks voorstellingen voor negatieve getallen. Bij elk van deze complement voorstellingen neemt men de bit-gewijze negatie van het getal, eventueel wordt er nog een $1$ opgeteld omdat we anders twee voorstellingen voor het getal $0$ hebben. Er zijn twee soort complement voorstelling: $1$-complement en $2$-complement.}. Er bestaan twee soorten complement voorstellingen voor een getal $D$ met $m$ cijfers en radix $r$:
+De meeste voorstellingen van negatieve getallen zijn gebaseerd op \gtermen{complement voorstellingen}{Een reeks voorstellingen voor negatieve getallen. Bij elk van deze complement voorstellingen neemt men de bit-gewijze negatie van het getal, eventueel wordt er nog een $1$ opgeteld om te vermijden dat er twee voorstellingen voor het getal $0$ bestaan. Er zijn twee soort complement voorstelling: $1$-complement en $2$-complement.}. Bij deze twee voorstellingen zal men negatieve getallen voorstellen door het complement van de cijfers te nemen. Wanneer het eerste cijfer van het getal dus groter is dan de helft van de radix spreken we over een negatief getal. Er bestaan twee soorten complement voorstellingen voor een getal $D$ met $m$ cijfers en radix $r$:
 \begin{itemize}
  \item \gtermen{cijfer-complement}{Een complement voorstelling waarbij men negatieve getallen voorstelt door elk cijfer $i$ te vervangen door het complement $r-i-1$ met radix $r$.} of \stermen{diminished-radix complement}{cijfer-complement} $D'$: hierbij wordt elk cijfer $i$ vervangen door zijn complement $r-i-1$. Bijvoorbeeld:
  \begin{itemize}
@@ -565,25 +565,28 @@ De meeste voorstellingen van negatieve getallen zijn gebaseerd op \gtermen{compl
 \end{itemize}
 Een eigenschap waar we later nog op zullen terugkomen is dat $D^*=D'+1$. De voorstelling van het radix-complement is dus altijd \'e\'en groter dan de voorstelling van dat getal in cijfer-complement. Immers zal blijken dat - omdat het $1$-complement snel uit te rekenen valt - het $2$ complement ook snel uit te rekenen zijn. Immers is het $1$-complement niets anders dan het toepassen van een NOT operatie op alle bits.
 
-%REVIEW
 \subsubsection{Twee-complement voorstelling}
-Omdat de $2$-complement voorstelling vrij populair is, zullen we deze verder bespreken. Indien we beschikken over $n$ cijfers in een getalstelsel met radix $r$, kunnen we getallen groter of gelijk aan $r^n$ niet voorstellen. We stellen dit getal voor als $r^n\equiv 0$. We kunnen $r^n$ immer voorstellen door \'e\'en $1$ gevolgd door $n$ cijfers met $0$. Omdat we maar $n$ bits beschikbaar hebben, weerhouden we de laatste $n$.
+Omdat de $2$-complement voorstelling vrij populair is, gaan we er nog wat dieper op in. Bij een getalstelsl met radix $r$ en een getal met $n$ cijfers, kunnen we $r^n$ getallen voorstellen. Een logisch gevolg is dat we getallen groter of gelijk aan $r^n$ niet voorstellen: $0$ wordt immers ook voorgesteld. Daarom stellen we dat $r^n\equiv 0$. We kunnen $r^n$ immer voorstellen door \'e\'en $1$ gevolgd door $n$ cijfers met $0$. Omdat we maar $n$ bits beschikbaar hebben, weerhouden we de laatste $n$ bits: de $1$ valt er dus zogezegd af. Omdat $D^*=r^n-D$ geldt, kunnen we stellen dat $D^*\equiv 0-D=-D$. Wanneer we dus de 2-complement voorstelling voor negatieve getallen gebruiken, kunnen we onze opteller van de vorige subsectie gebruiken, zonder enige aanpassing.
 
 \paragraph{}
-Aangezien $D^*=r^n-D$ geldt: $D^*=-D$. Het gevolg is dat we de traditionele optelling kunnen gebruiken, indien we 2-complement getallen met elkaar optellen. Of deze getallen nu een teken bevatten of niet, is een kwestie van interpretatie, de opteller is hiervan niet afhankelijk. Bovendien kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op.
+Of een getal positief is of negatief, is natuurlijk een kwestie van interpretatie. De opteller weet niet of het met een geheel getal voorstelling of een $2$-complement voorstelling te maken heeft, maar dat maakt niets uit. We dienen zelf bij te houden welk soort getallen onze voorstelling kan bevatten. We kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op. Later zullen we zien dat we door een eenvoudige ingreep op onze eerder ontwikkelde opteller, deze optelling kunnen realiseren met een minimum aan extra hardware.
 
 \paragraph{}
-Een ander voordeel van de 2-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal 0 is. Indien we immers het negatief van 0 berekenen bekomen we:
+Een ander voordeel van de 2-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal $0$ is. Indien we immers het negatief van $0$ berekenen bekomen we:
+
 \begin{equation}
 D=0000_2\Rightarrow -D\equiv D^*=1111_2+0001_2=\underline{1}0000_2=0000_2
 \end{equation}
-Tot slot heeft een getal met $n$ bits een bereik van $-2^{n-1}$ tot $2^{n-1}-1$, wat exact \'e\'en element groter is dan de 1-complement tegenhanger\footnote{Dit is uiteraard de plaats die vrijkomt omdat de 2-complement voorstelling slechts \'e\'en voorstelling van 0 heeft.}.
+
+Dit resulteert in het feit een getal met $n$ bits een bereik van $-2^{n-1}$ tot $2^{n-1}-1$, wat exact \'e\'en element groter is dan de 1-complement tegenhanger\footnote{Dit is de plaats die vrijkomt omdat de 2-complement voorstelling slechts \'e\'en voorstelling van 0 heeft.}.
+
 \subsubsection{Betekenis van binaire getallen}
-Bij wijze van voorbeeld om het verschil tussen de verschillende voorstellingen duidelijk te maken, zetten we de betekenis van elke $4$-bit getal naast elkaar in tabel \ref{tbl:binaryMeaningSigned}.
+Om het verschil tussen de verschillende voorstellingen duidelijk te maken, zetten we de betekenis van de verschillende voorstellingen voor elke $4$-bit getal naast elkaar in \ref{binaryMeaningSigned}.
+
 \begin{table}[hbt]
 \centering
-\begin{tabular}{r|rrrr}
-Binair&Unsigned&Sign-Magnitude&1-Complement&2-Complement\\\hline
+\defaulttable{r|rrrr}{
+\bf Binair&Unsigned&Sign-Magnitude&1-Complement&2-Complement}{
 $0000$&$+0$&$+0$&$+0$&$+0$\\
 $0001$&$+1$&$+1$&$+1$&$+1$\\
 $0010$&$+2$&$+2$&$+2$&$+2$\\
@@ -600,11 +603,13 @@ $1100$&$+12$&$-4$&$-3$&$-4$\\
 $1101$&$+13$&$-5$&$-2$&$-3$\\
 $1110$&$+14$&$-6$&$-1$&$-2$\\
 $1111$&$+15$&$-7$&$-0$&$-1$
-\end{tabular}
+}
 \caption{Betekenis van de binaire getallen.}
 \tbllab{binaryMeaningSigned}
 \end{table}
-\subsection{Optellen en aftrekken}
+
+%REVIEW
+\subsection{Optellen en aftrekken van negatieve getallen}
 Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, zullen we voor ieder van deze voorstellingen een schema uitwerken hoe we getallen kunnen optellen en aftrekken. Deze schema's worden weergegeven in figuur \ref{fig:addSubNegSchematic}.
 \begin{figure}[hbt]
 \centering

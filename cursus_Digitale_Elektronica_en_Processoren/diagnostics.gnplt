@@ -5,7 +5,7 @@ set timefmt '%s'
 set xlabel 'time'
 set xtics 604800
 
-f(x) = a*(x-497746800)+b+1e-9
+f(x) = a*(x-497746800)/86400+b+1e-9
 
 set term pdf size 40cm,60cm
 set output 'diagnostics.pdf'
