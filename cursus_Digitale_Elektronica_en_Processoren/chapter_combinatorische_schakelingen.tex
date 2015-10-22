@@ -572,7 +572,7 @@ Omdat de $2$-complement voorstelling vrij populair is, gaan we er nog wat dieper
 Of een getal positief is of negatief, is natuurlijk een kwestie van interpretatie. De opteller weet niet of het met een geheel getal voorstelling of een $2$-complement voorstelling te maken heeft, maar dat maakt niets uit. We dienen zelf bij te houden welk soort getallen onze voorstelling kan bevatten. We kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op. Later zullen we zien dat we door een eenvoudige ingreep op onze eerder ontwikkelde opteller, deze optelling kunnen realiseren met een minimum aan extra hardware.
 
 \paragraph{}
-Een ander voordeel van de 2-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal $0$ is. Indien we immers het negatief van $0$ berekenen bekomen we:
+Een ander voordeel van de $2$-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal $0$ is. Indien we immers het negatief van $0$ berekenen bekomen we:
 
 \begin{equation}
 D=0000_2\Rightarrow -D\equiv D^*=1111_2+0001_2=\underline{1}0000_2=0000_2
@@ -608,9 +608,9 @@ $1111$&$+15$&$-7$&$-0$&$-1$
 \tbllab{binaryMeaningSigned}
 \end{table}
 
-%REVIEW
 \subsection{Optellen en aftrekken van negatieve getallen}
-Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, zullen we voor ieder van deze voorstellingen een schema uitwerken hoe we getallen kunnen optellen en aftrekken. Deze schema's worden weergegeven in figuur \ref{fig:addSubNegSchematic}.
+Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, werken we voor iedere voorstellingen een schema uit hoe we getallen kunnen optellen en aftrekken. Deze schema's worden weergegeven in \figref{addSubNegSchematic}. We bespreken in de volgende subsubsecties deze voorstellingen.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Sign-magnitude]{\importtikz{signedmagnitude}}
@@ -619,10 +619,13 @@ Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, z
 \caption{Optelling en aftrekking van gehele getallen.}
 \figlab{addSubNegSchematic}
 \end{figure}
+
 \subsubsection{Signed-magnitude voorstelling}
-Bij een signed-magnitude voorstelling moeten eerst heel wat testen uitgevoerd worden alvorens we getallen kunnen optellen of aftrekken. In eerste instantie moeten we bij het aftrekken van twee getallen het teken van de tweede operand veranderen, om daarna de bewerking als een optelling verder te verwerken. Bij deze optelling moeten we eerst testen of beide getallen hetzelfde teken hebben. Indien dit niet het geval is, bepaalt het getal met de grootste magnitude $m$ het teken van het getal, en moeten de magnitudes van elkaar afgetrokken worden, in het andere geval is er sprake van een gewone optelling. Al deze testen zorgen voor complexe hardware die bovendien ook nog traag werkt, dit maakt signed-magnitude tot een weinig populaire voorstelling. Figuur \ref{fig:signedmagnitude} geeft de werkwijze schematisch weer.
-\subsubsection{1-complement voorstelling}
-Optellen en aftrekken met de 1-complement voorstelling is heel wat eenvoudiger. Bij een aftrekking berekenen we ook eerst de negatie van de tweede operand, wat een NOT operatie is. Vervolgens kunnen we de twee getallen eenvoudig optellen met onze eerder ge\"implementeerde opteller. Deze optelling volstaat soms echter niet, met het volgende voorbeelden kunnen we illustreren wat er kan fout lopen:
+Bij een sign-magnitude voorstelling moeten we eerst een reeks testen uitgevoeren alvorens we getallen kunnen optellen of aftrekken. In eerste instantie moeten we bij het aftrekken van twee getallen het teken van de tweede operand veranderen: we maken het getal dus negatief. Daarna kunnen we een optelling uitvoeren die rekening houdt met het aangepaste teken. Bij deze optelling moeten we eerst testen of beide getallen hetzelfde teken hebben. Indien dit het geval is, tellen we de magnitudes van de twee getallen op, en dit wordt de magnitude van het uiteindelijke getal. Het teken blijft dan gelijk aan dat van de twee oorspronkelijke getallen. Indien het teken niet gelijk is, zal het getal met de grootste magnitude $m$ het teken van het getal bepalen, en moeten de magnitudes van elkaar afgetrokken worden. We vergelijken dus de magnitudes. In het geval dat beide gelijk zijn, is het resultaat $0$, en is de teken-bit is vrij te kiezen\footnote{Op de figuur hebben we voor $0$ gekozen.}. Zijn de magnitudes verschillende dan trekken we de kleinste magnitude af van de grootste, en bepaalt de grootste ook de teken-bit. Deze reeks testen - drie in totaal - zorgen voor complexe hardware die bovendien ook nog traag werkt, dit maakt sign-magnitude tot een weinig populaire voorstelling. \figref{signedmagnitude} geeft de werkwijze schematisch weer.
+
+\subsubsection{$1$-complement voorstelling}
+Optellen en aftrekken met de $1$-complement voorstelling is eenvoudiger. Bij een aftrekking berekenen we ook eerst de negatie van de tweede operand. Dit komt neer op een bitgewijze\footnote{Met bitgewijs bedoelen we dat we de beschreven operatie op elke bit toepassen. In dit geval betekent dit dus dat we op iedere bit afzonderlijk de NOT operatie toepassen.} NOT operatie. Vervolgens kunnen we de twee getallen optellen met onze eerder ge\"implementeerde opteller. Deze optelling volstaat niet altijd: met het volgende voorbeelden kunnen we illustreren wat er kan fout lopen:
+
 \begin{equation}
 \begin{array}{rl|rl|rl}
 \begin{array}{rr}
@@ -646,7 +649,7 @@ Optellen en aftrekken met de 1-complement voorstelling is heel wat eenvoudiger. 
 \begin{array}{rr}
 &+6\\
 +&-2\\\hline
-&3
+&+3
 \end{array}
 &
 \begin{array}{rr}
@@ -661,9 +664,11 @@ Optellen en aftrekken met de 1-complement voorstelling is heel wat eenvoudiger. 
 &-1
 \end{array}
 \end{array}
-\label{eqn:oneComplementFaultExample}
+\eqnlab{oneComplementFaultExample}
 \end{equation}
-Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst positief is, zien we dat het resultaat altijd 1 lager uitkomt dan het juiste resultaat. Dit komt omdat de 1-complement voorstelling twee representaties heeft voor 0. Zoals we zien in het eerste voorbeeld, komen we altijd -0 uit bij het optellen van twee tegengestelde getallen. Bijgevolg zal een resultaat van 1 uitkomen op de voorstelling die 1 hoger is dan $-0$: $+0$. Indien de carry $c_n$ dus 1 is, moeten we nog 1 optellen bij het resultaat. Dit kunnen we toepassen op de voorbeelden in vergelijking (\ref{eqn:oneComplementFaultExample}):
+
+Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst positief is, zien we dat het resultaat altijd $1$ lager uitvalt dan het correcte resultaat. Dit komt omdat de $1$-complement voorstelling twee representaties voor $0$ heeft. Zoals we zien in het eerste voorbeeld, komen we $-0$ uit bij het optellen van twee tegengestelde getallen. Omdat het ophogen van $-0$, $+0$ oplevert betekent dit dus dat het ``twee stappen kost'' om een waarde boven de $0$ uit te komen. Wanneer we dus een resltaat $1$ zouden moeten uitkomen, zal de opteller de voorstelling die bereken die $1$ hoger is dan $-0$: $+0$. We kunnen dit probleem oplossen aan de hand van de carry $c_n$. Indien deze carry gelijk is aan $1$, moeten we nog $1$ optellen bij het resultaat. Wanneer we dit toepassen op de voorbeelden in \eqnref{oneComplementFaultExample} bekomen we wel correcte resultaten:
+
 \begin{equation}
 \begin{array}{rl|rl|rl}
 \begin{array}{rr}
@@ -714,11 +719,15 @@ Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst p
 &-1
 \end{array}
 \end{array}
-\label{eqn:oneComplementCorrectExample}
+\eqnlab{oneComplementCorrectExample}
 \end{equation}
-Het grote nadeel bij deze implementatie is dat we de optelling-aftrekking dus in twee tijden moeten uitvoeren: eerst tellen we ze op en bepalen we de hoogste carry $c_n$, vervolgens tellen we deze carry nog eens bij het resultaat op. Dit veroorzaakt dus een verdubbeling van de vertraging. Figuur \ref{fig:onecomplement} geeft het hele proces schematisch weer.
-\subsubsection{2-complement voorstelling}
+
+Deze aanpassing resulteert in een belangrijk nadeel: we de optelling-aftrekking dus in twee tijden moeten uitvoeren: eerst tellen we ze op en bepalen we de hoogste carry $c_n$, vervolgens tellen we deze carry nog eens bij het resultaat op. Dit veroorzaakt dus een verdubbeling van de vertraging. \figref{onecomplement} geeft het hele proces schematisch weer.
+
+%REVIEW
+\subsubsection{$2$-complement voorstelling}
 De 2-complement voorstelling is de beste voor de implementatie van een opteller-aftrekker. Immers kunnen we een optelling eenvoudigweg uitvoeren zoals we die reeds hebben beschreven in subsectie \ref{ss:add}. Bij een optelling dienen we dus eenvoudigweg de twee operatoren optellen: $B_r=B_1+B_2$. Bij een aftrekking moeten we dan eenvoudigweg de negatie van de tweede operand berekenen. De berekening wordt in dat geval $B_r=B_1+B_2'+1$. Deze optelling lijkt misschien tot hetzelfde probleem te leiden als bij de 1-complement voorstelling. Maar we kunnen eenvoudigweg de carry van de laagste bit $c_0$ op 1 zetten. We kunnen vervolgens $B_2'$ berekenen met behulp van XOR poorten. Een XOR poort is dan ook een geprogrammeerde NOT poort. Indien \'e\'en van de ingangen van de XOR poorten 1 is, zal de andere de negatie zijn van de andere ingang. Indien de ingang 0 is, laat de XOR poort de andere ingang door. We kunnen dus een opteller-aftrekker realiseren zoals op figuur \ref{fig:addsub-twocomplement-implementation}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{\importtikz{addsub-twocomplement-interface}}

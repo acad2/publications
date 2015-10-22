@@ -50,6 +50,7 @@ if [ -f "$pdff" ] #make sure the create/access/modification time is set to the t
 then              #such that modifications while compiling trigger a new compiler run
     touch -d "$dts" "$pdff"
 
-    fls=$(wc -c "$pdff" | cut -d' ' -f 1)
+    fls=$(wc -c "$pdff" | cut -d' ' -f 1) #print additional information about the file to stderr
     echo 1>&2 "filesize: $fls"
+    pdfinfo 1>&2 "$pdff"
 fi
