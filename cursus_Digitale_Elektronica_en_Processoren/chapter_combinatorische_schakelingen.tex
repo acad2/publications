@@ -737,45 +737,54 @@ De 2-complement voorstelling is de beste voor de implementatie van een opteller-
 
 Deze component bevat een extra ingang $s$ waarmee men kan aangeven of we een optelling of aftrekking willen uitvoeren. Indien $s=0$ tellen we de twee getallen met elkaar op, anders trekken we de twee getallen van elkaar af. Door een XOR poort op de laatste twee carry-uitgangen $c_{n-1}$ en $c_n$ te plaatsen, kunnen we een controle op overflow inbouwen. Deze component wordt meestal samengevat tot een interface zoals op \figref{addsub-twocomplement-interface}\footnote{Bemerk op de figuur dat variabelen met hoofdletters een rij van in- of uitgangen voorstellen.}. Een schematische werkwijze van optellen en aftrekken met 2-complement voorstelling staat op \figref{twocomplement}. De 2-complement voorstelling is dan ook populair omdat deze weinig bewerkingen en testen vergt om sommen en verschillen te berekenen. Bovendien is er weinig extra hardware - een XOR poort per bit en mogelijk een full adder in plaats van een half adder - nodig om een opteller om te bouwen tot een opteller-aftrekker.
 
-%REVIEW
 \subsection{Arithmetic-Logic Unit (ALU)}
 \ssclab{alu}
 
 \importtikzfigure{alu-structure}{Schematisch implementatie van een arithmetic-logic unit (ALU).}
 
-Hoewel veel processoren in staat zijn om sommen en verschillen te berekenen zal men meestal geen directe opteller of opteller-aftrekker vinden. Meestal gebruikt men hiervoor een \gtermen[arithmetic logic unit]{Arithmetic-Logic Unit (ALU)}{.}. Een ALU is een component die, gebaseerd op een opteller, allerlei instructies\footnote{Welke instructies is niet echt gespecificeerd. Er bestaan dan ook boeken over het ontwerpen van een goede ALU.} kan uitvoeren. In ons geval beschouwen we 4 rekenkundige (optellen, aftrekken, \termen{increment} en \termen{decrement}) en 4 logische bewerkingen (AND, OR, NOT en identiteit). We bouwen een ALU op ongeveer dezelfde manier zoals we een opteller-aftrekker bouwden uit een opteller. In plaats van XOR poorten gebruiken we een nieuw component: een \termen{Arithmetic-Logic Extender (ALE)}. Een ander component -- de CIG -- berekent welke ingang aan de carry $c_0$ moet worden gegeven. In het algemeen heeft een ALU dus een structuur zoals op figuur \ref{fig:alu-structure} waarbij de ALE en CIG vrij ge\"implementeerd kunnen worden.
+Hoewel veel processoren in staat zijn om sommen en verschillen te berekenen zal men meestal geen directe opteller of opteller-aftrekker vinden. Meestal gebruikt men hiervoor een \gtermen[arithmetic logic unit]{Arithmetic-Logic Unit (ALU)}{Een component die op basis van een opteller en een arithmetic-logic extender in staat is een reeks populaire instructies uit te voeren zoals optellen, aftrekken, increment, decrement samen met bitgewijze logische operaties (NOT, AND, OR,...). Veel processoren beschikken over \'e\'en of meerdere ALUs.}. Een ALU is een component die, gebaseerd op een opteller, allerlei instructies\footnote{Welke instructies is niet echt gespecificeerd. Er bestaan dan ook boeken over het ontwerpen van een goede ALU.} kan uitvoeren. In ons geval beschouwen we vier rekenkundige (optellen, aftrekken, \gtermen{increment}{Het ophogen van een getal met $1$.} en \gtermen{decrement}{Het aftellen van een getal met $1$.}) en vier logische bewerkingen (AND, OR, NOT en identiteit). We bouwen een ALU op ongeveer dezelfde manier zoals we een opteller-aftrekker bouwden uit een opteller. In plaats van XOR poorten gebruiken we een nieuw component: een \gtermen{Arithmetic-Logic Extender (ALE)}{Een deelcomponent van een arithmetic logic unit (ALU). Een ALE mapt telkens twee bits van de operanden $a_i$ en $b_i$ en het instructiewoord naar twee nieuwe bits $x_i$ en $y_i$, vaak door logische bewerkingen toe te passen. De resulterende getallen $A$ en $B$ gaan dan door een opteller om tot een finaal resultaat te komen.}. Een ander component -- de \gtermen[carry input generator]{Carry Input Generator (CIG)}{Een deelcomponent van een arithmetic logic unit (ALU). Een CIG berekent welke overdracht $c_0$ er voor de opteller moet worden gegenereerd, en doet dit op basis van het instructiewoord.} -- berekent welke ingang aan de carry $c_0$ moet worden gegeven. In het algemeen heeft een ALU dus een structuur zoals op \figref{alu-structure} waarbij de ALE en CIG vrij ge\"implementeerd kunnen worden op basis van een instructieset.
+
 \subsubsection{Instructieset}
-\label{sss:aLUInstructionSet}
-Alvorens we in staat zijn een ALU te maken moeten we een instructieset defini\"eren. Onze instructieset heeft drie\footnote{Omdat we 8 opdrachten gedefinieerd hebben, hebben we een $\log_28=3$ bit instructiewoord nodig.} ingangssignalen die bepalen welke opdracht er moet worden uitgevoerd. Bovendien zijn de 8 opdrachten in te delen in 2 groepen van 4: aritmetisch en logisch. Daarom noemen we de eerste bit van het instructiewoord $m$ voor mode\footnote{0=logisch, 1=aritmetisch.}. Verder wijzen we dan elke opdracht toe aan een bepaald instructiewoord zoals in tabel \ref{tbl:aLUInstructionSet}.
+\ssslab{aLUInstructionSet}
+Alvorens we in staat zijn een ALU te maken moeten we een \gtermen{instructieset}{Een verzameling instructies die een arithmetic logic unit (ALU) of processor moet kunnen uitvoeren. Een instructieset dient voor elke instructie, de semantische betekenis van de instructie te beschrijven. Men dient ook deze instructies te encoderen op een instructiewoord: een sequentie bits waarmee we aan de processor of ALU duidelijk maken welke instructie op dat moment moet worden uitgevoerd.} defini\"eren. Onze instructieset heeft drie\footnote{Omdat we acht opdrachten gedefinieerd hebben, hebben we een $\log_28=3$ bit instructiewoord nodig.} ingangssignalen die bepalen welke opdracht er moet worden uitgevoerd. We delen de acht opdrachten in in twee groepen van vier: aritmetisch en logisch. Daarom noemen we de eerste bit van het instructiewoord $m$ voor mode\footnote{0=logisch, 1=aritmetisch.}. Verder wijzen we dan elke opdracht toe aan een bepaald \gtermen{instructiewoord}{Een reeks bits die bepalen welke instructie een processor of een arithmetic logic unit (ALU) uit moet voeren.} zoals in \tblref{aLUInstructionSet}.
+
 \begin{table}[hbt]
 \centering
-\begin{tabular}{ccc|c|ccc|l}
-$m$&$i_1$&$i_0$&$F$&$X$&$Y$&$c_0$&\\\hline
-0&0&0&$A'$&$A'$&0&0&NOT\\
-0&0&1&$A\mbox{ AND }B$&$A\mbox{ AND }B$&0&0&AND\\
-0&1&0&$A$&$A$&0&0&Identiteit\\
-0&1&1&$A\mbox{ OR }B$&$A\mbox{ OR }B$&0&0&OR\\
-1&0&0&$A-1$&$A$&-1&0&Decrement\\
-1&0&1&$A+B$&$A$&$B$&0&Optelling\\
-1&1&0&$A-B$&$A$&$B'$&1&Aftrekking\\
-1&1&1&$A+1$&$A$&$0$&1&Increment\\
-\end{tabular}
+\defaulttable{ccc|c|ccc|l}{
+\bf $m$&$i_1$&$i_0$&$F$&$X$&$Y$&$c_0$&Instructie}{
+$0$&$0$&$0$&$A'$&$A'$&0&0&NOT\\
+$0$&$0$&$1$&$A\mbox{ AND }B$&$A\mbox{ AND }B$&0&0&AND\\
+$0$&$1$&$0$&$A$&$A$&0&0&Identiteit\\
+$0$&$1$&$1$&$A\mbox{ OR }B$&$A\mbox{ OR }B$&0&0&OR\\
+$1$&$0$&$0$&$A-1$&$A$&-1&0&Decrement\\
+$1$&$0$&$1$&$A+B$&$A$&$B$&0&Optelling\\
+$1$&$1$&$0$&$A-B$&$A$&$B'$&1&Aftrekking\\
+$1$&$1$&$1$&$A+1$&$A$&$0$&1&Increment
+}
 \caption{Instructieset van een typische arithmetic-logic unit (ALU).}
 \tbllab{aLUInstructionSet}
 \end{table}
-Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE implementeert een functie die $\left(A,B\right)$-waardes afbeeldt op $\left(X,Y\right)$-waardes. Deze laatste waardes dienen als invoer  voor de optellers. De CIG ten slotte geeft gebaseerd op het instructiewoord een waarde voor $c_0$. Deze functies staan ook in de instructietabel.
+
+Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE implementeert een functie die $\tupl{A,B}$-waardes afbeeldt op $\tupl{X,Y}$-waardes. Deze laatste waardes dienen als invoer  voor de opteller. De CIG ten slotte geeft -- gebaseerd op het instructiewoord -- een waarde voor $c_0$. Deze functies staan ook in het derde deel van instructietabel (\tblref{aLUInstructionSet}).
+
 \subsubsection{Synthese van de ALE en CIG}
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Karnaugh-kaarten]{\importtikz{ale-cig-karnaugh}}
 \subfigure[Implementatie ALE]{\importtikz{ale-implementation}}
 \subfigure[Implementatie CIG]{\importtikz{cig-implementation}}
-\caption{Synthese van de ALE en CIG}
+\caption{Synthese van de ALE en CIG.}
 \end{figure}
-Eenmaal we de instructieset hebben, dienen we enkel nog de ALE en CIG te implementeren. Een ALE is een component met als ingangen het instructiewoord en van elke operand een bit. In ons geval wordt dit dus $\left(m,i_1,i_0,a_j,b_j\right)$. Als uitgangen hebben we de ingangen van \'e\'en van de optellers $\left(x_j,y_j\right)$. We zijn dus in staat om een waarheidstabel en Karnaugh-kaart op te stellen van de ALE. Zoals op figuur \ref{fig:ale-cig-karnaugh}. Vervolgens is het enkel een kwestie van implementatie. Op basis van de Karnaugh-kaaren hebben we op figuur \ref{fig:ale-implementation} een AND-OR implementatie gesynthetiseerd.
+
+Eenmaal we de instructieset hebben bepaald, dienen we enkel nog de ALE en CIG te implementeren. Een ALE is een component met als ingangen het instructiewoord en van elke operand een bit. In ons geval wordt dit dus $\tupl{m,i_1,i_0,a_j,b_j}$. Als uitgangen hebben we de ingangen van \'e\'en van de full adders $\tupl{x_j,y_j}$. We zijn dus in staat om een waarheidstabel en Karnaugh-kaart op te stellen van de ALE. Zoals op \figref{ale-cig-karnaugh}. Op basis van de Karnaugh-kaart kunnen we dan een logisch circuit bouwen zoals is te zien op \figref{ale-implementation}. Op de figuur hebben we dat gedaan met AND-OR lagen, maar zoals reeds gezegd zijn equivalente NAND-NAND lagen goedkoper en sneller.
+
 \paragraph{}
-De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op tabel \ref{tbl:aLUInstructionSet} is dit $\left(m,i_1,i_0\right)$. Een CIG heeft slechts \'e\'en uitgang: carry $c_0$. Op basis van deze instructieset staat op figuur \ref{fig:ale-cig-karnaugh} de bijbehorende Karnaugh-kaart. Deze blijkt een eenvoudige AND-operatie te zijn zoals op figuur \ref{fig:cig-implementation}.
+De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op \tblref{aLUInstructionSet} is dit $\tupl{m,i_1,i_0}$. Een CIG heeft slechts \'e\'en uitgang: de carry $c_0$. Op basis van deze instructieset staat op \figref{ale-cig-karnaugh} de bijbehorende Karnaugh-kaart. Deze blijkt een eenvoudige AND-operatie te zijn zoals op \figref{cig-implementation}. De waarde van $i_0$ blijkt zelfs geen effect te hebben op de carry.
+
+%REVIEW
 \subsection{Vermenigvuldigen}
+
 \begin{figure}[htb]
 \centering
 \subfigure[$1\times 1$-bit]{\importtikz{mul1x1}}
@@ -784,6 +793,7 @@ De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op tab
 \caption{Parallelle vermenigvuldigers.}
 \figlab{parallelMultipliers}
 \end{figure}
+
 In deze subsectie bouwen we een vermenigvuldiger gebaseerd op de manier hoe men met behulp van cijferen twee getallen vermenigvuldigt. We zullen hierbij enkel natuurlijke getallen beschouwen, later breiden we dit uit naar gehele getallen. Vergelijking (\ref{eqn:multiplyNormal}) toont de vermenigvuldiging van twee decimale getallen:
 \begin{equation}
 \begin{array}{lcccccc}
