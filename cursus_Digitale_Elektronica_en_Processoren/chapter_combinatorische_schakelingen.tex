@@ -869,22 +869,27 @@ De oplossing bestaat eruit om $-2\equiv 1110_2$ te zien in zijn binaire vorm als
 
 %REVIEW
 \subsection{Andere courante bewerkingen}
+Om het gedeelte van de gehele getallen af te sluiten beschouwen we nog enkele populaire bewerkingen op de gehele getallen. We geven voor deze bewerkingen geen concrete implementatie, al kan de beschrijving op hoog niveau misschien volstaan om zelf een component hiervoor te ontwikkelen.
+
 \subsubsection{Delen}
 Analoog aan vermenigvuldigen kunnen we ook een \termen{deling} in een binaire voorstelling gebaseerd op cijferen. We geven een voorbeeld van een binaire deling maar vermelden geen details over het realiseren van een schakeling:
+
 \begin{equation}
 \begin{array}{r|l}
 1011\ 1010&1110\\\hline
-\underline{111\ 0}\textcolor{white}{000}&1101\\
+\underline{-\ 111\ 0}\textcolor{white}{000}&1101\\
 100\ 1010&\\
-\underline{11\ 10}\textcolor{white}{00}&\\
+\underline{-\ 11\ 10}\textcolor{white}{00}&\\
 1\ 0010&\\
-\underline{0\ 000}\textcolor{white}{0}&\\
+\underline{-\ 0\ 000}\textcolor{white}{0}&\\
 1\ 0010&\\
-\underline{11\ 10}&\\
+\underline{-\ 1110}&\\
 100&
 \end{array}
 \end{equation}
-Door dus herhaaldelijk het resterende deeltal te vergelijken met een verschuifde deler en indien deze groter is, deze af te trekken, kunnen we de rest en de het quoti\"ent berekenen. Het aantal cycli is dus ook tevens het aantal bits van het quoti\"ent. Deze manier van implementatie is dan ook de meest populaire, en wordt vaak gebruikt. Indien we delen door een macht van 2, kunnen we het getal berekenen met een schuifoperatie (zie subsectie \ref{ss:shiftoperators}).
+
+Door dus herhaaldelijk het resterende deeltal te vergelijken met een verschuifde deler en indien deze groter is, deze af te trekken, kunnen we de rest en de het quoti\"ent berekenen. Het aantal cycli is dus ook tevens het aantal bits van het quoti\"ent. Deze manier van implementatie is dan ook de meest populaire, en wordt vaak gebruikt. Indien we delen door een macht van 2, kunnen we het getal berekenen met een schuifoperatie (zie \sscref{shiftoperators}).
+
 \subsubsection{Modulo rekenen}
 Een andere populaire berekening is \termen{modulo} (ook wel bekend als \termen{$\mod$}). Modulo-rekening is sterk gerelateerd aan, maar niet equivalent aan \termen{remainder}-rekenen (ofwel \termen{$\rem$}). We defini\"eren de remainder als:
 \begin{equation}
@@ -892,10 +897,10 @@ a\rem b\equiv a-\left\lfloor a/b\right\rfloor\times b
 \end{equation}
 De modulo-operatie daarentegen houdt rekening met het teken van zowel $a$ als $b$:
 \begin{equation}
-a\mod b\equiv \left\{\begin{array}{lcl}
-a\rem b&\ifun&a\cdot b>0\\
-\left(a\rem b\right)+b&\ifun&a\cdot b<0
-\end{array}\right.
+a\mod b\equiv\acclguard{
+a\rem b&\ifun a\cdot b>0\\
+\left(a\rem b\right)+b&\ifun a\cdot b<0
+}
 \end{equation}
 Net als bij andere operaties, heeft ook de modulo-operatie een speciaal geval bij een macht van 2: in dat geval kunnen we een AND operatie uitvoeren op het getal en de macht gedecrementeerd. Bijvoorbeeld:
 \begin{equation}
