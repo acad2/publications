@@ -7,10 +7,10 @@ set xtics 604800
 
 f(x) = a*(x-497746800)/86400+b+1e-9
 
-set term pdf size 40cm,60cm
+set term pdf size 60cm,60cm
 set output 'diagnostics.pdf'
 
-set multiplot layout 3,2 title "Cursus DEP - review diagnostics"
+set multiplot layout 3,3 title "Cursus DEP - review diagnostics"
 
 set title "Errors in time"
 set ylabel "Errors (#)"
@@ -41,5 +41,10 @@ set title "File size"
 set ylabel "File size (bytes)"
 fit f(x) 'stats.stat' u 1:7 via a,b
 plot 'stats.stat' u 1:7 w lp t "File size", f(x) t "Linear regression"
+
+set title "Pagecount"
+set ylabel "Pages (#)"
+fit f(x) 'stats.stat' u 1:8 via a,b
+plot 'stats.stat' u 1:8 w lp t "Pagecount", f(x) t "Linear regression"
 
 unset multiplot

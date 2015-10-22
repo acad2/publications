@@ -15,4 +15,7 @@ prds=$(echo "$prd" | cut -d m -f 2)
 prd=$(calc -p "60*$prdm+$prds")
 
 fls=$(grep -m 1 -i '^filesize' $erf | grep -o -P '\d*')
-echo -e "$tim\t$err\t$wrn\t$msl\t$gla\t$prd\t$fls"
+
+pgs=$(grep -m 1 -i 'pages' old-errors.dat | grep -P '\d*' -o)
+
+echo -e "$tim\t$err\t$wrn\t$msl\t$gla\t$prd\t$fls\t$pgs"
