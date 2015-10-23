@@ -943,7 +943,6 @@ Of algemener:
 \displaystyle\prod_{k=1}^{n}{\fix\tupl{i_k,f_k}}=\fix\tupl{\displaystyle\sum_{k=1}^{n}{i_k},\displaystyle\sum_{k=1}^{n}{f_k}}
 \end{equation}
 
-%REVIEW
 \subsection{Vlottende komma getallen}
 \ssclab{floatingPoints}
 \ssclab{floatingpoint}
@@ -961,11 +960,14 @@ Het getal dat we hierbij willen voorstellen is gelijk aan:
 N=\brak{-1}^s\cdot\mbox{mantisse}\cdot r^{\mbox{\tiny{exponent}}}
 \end{equation}
 
-met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen met \gtermen[float m e]{$\float\tupl{m,e}$}{.} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. Verder onderscheiden we nog twee families van vlottende komma voorstellingen:
+met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen met \gtermen[float m e]{$\float\tupl{m,e}$}{De notatie voor een vlottende komma voorstelling met $m$ cijfers voor de mantisse, en $e$ cijfers voor de exponent. Deze notatie wordt gebruikt om te redeneren over het aantal cijfers die men voor beide delen moet reserveren om bijvoorbeeld een vermenigvuldiging foutloos te kunnen berekenen.} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. We maken ook een onderscheid tussen twee families van vlottende komma voorstellingen:
+
 \begin{itemize}
- \item \termen{Genormaliseerde vlottende komma voorstelling}: hierbij leggen we een extra constraint betreffende de mantisse: $1\leq\mbox{mantisse}<r$. Omdat in dat geval de eerste bit dus altijd gelijk is aan 1, behoren enkel de bits na de komma tot de voorstelling. In dat geval denken we er de 1 dus bij.
- \item \termen{Niet-genormaliseerde vlottende komma voorstelling}: hierbij is deze bovengenoemde constraint dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, maar hebben een groot nadeel: men kan een getal op verschillende manieren voorstellen: eenzelfde getal kan op verschillende manieren voorgesteld worden.
+ \item \gtermen{Genormaliseerde vlottende komma voorstelling}{Een familie van vlottende komma voorstellingen. Bij deze familie geldt een extra beperking dat de waarde van de mantisse $M$ ligt tussen $1\leq M<r$ met radix $r$. Bij het binaire systeem impliceert dit dat de eerste bit van de mantisse dus altijd op $1$ zo staan. Daarom wordt deze bit weggelaten, maar bestaat ze wel nog virtueel. Deze bit wordt dan vervangen door een extra bit in het fractionele gedeelte.}: hierbij leggen we een extra voorwaarde op betreffende de mantisse: $1\leq\mbox{mantisse}<r$. In het geval van binaire notatie ($r=2$) impliceert dit dus dat de eerste bit altijd $1$ is. Daarom wordt in dat geval de eerste bit van de mantisse weggelaten: deze staat er impliciet. In dat geval wordt de mantisse dus voorgesteld als $\fix\tupl{0,m}$, maar dient men altijd de virtuele bit $1$ tot het gehele gedeelte te rekenen. Deze aanpassing maakt de voorstelling efficienter: de extra bit bij de mantisse bij het fractionele gedeelte drijft de precisie van het formaat op.
+ \item \gtermen{Niet-genormaliseerde vlottende komma voorstelling}{Een familie van vlottende komma voorstellingen. Hierbij wordt de waarde van de mantisse $M$ niet begrensd. De niet-genormaliseerde vlottende komma voorstelling kan meer getallen voorstellen, maar veel getallen kunnen ook op verschillende manieren worden voorgesteld. Dit levert complexere logica op bij bijvoorbeeld het implementeren van een vergelijker.}: hierbij is de bovengenoemde beperking dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, omdat het geheel gedeelte op $0$ kan worden gezet. Men betaalt hiervoor echter omdat voor veel getallen er verschillende voorstellingen bestaan. Het gevolg is dat het implementeren van bijvoorbeeld een vergelijker complexer wordt.
 \end{itemize}
+
+%REVIEW
 \subsubsection{Underflow en overflow}
 Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\termen{underflow}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. Figuur \ref{fig:floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
 \importtikzfigure{floatingpoint-underflow}{Underflow van een vlottende komma voorstelling.}
