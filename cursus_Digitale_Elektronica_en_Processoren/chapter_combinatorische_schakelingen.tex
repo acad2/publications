@@ -947,17 +947,21 @@ Of algemener:
 \subsection{Vlottende komma getallen}
 \ssclab{floatingPoints}
 \ssclab{floatingpoint}
-Het kan voorkomen dat we echter niet weten tot welke grootorde het getal in kwestie zal behoren. In dat geval zouden we vaste getallen met een groot aantal bits moeten gebruiken, waarbij bovendien in de meeste gevallen slechts een kleine hoeveelheid bits nuttig blijkt te zijn. In deze gevallen kan men beter een getal met \gtermen{vlottende komma voorstelling}{} gebruiken, ook wel \stermen{zwevendekommagetal}, \stermen{drijvendekommagetal}{vlottende komma voorstelling} of \stermen{floating-point number}{vlottende komma voorstelling} genoemd. Vlottende komma getallen worden voorgesteld door een sequentie van bits die in drie groepen worden onderverdeeld:
+Het kan voorkomen dat we niet weten tot welke grootorde een getal in kwestie zal behoren: het kan bijvoorbeeld tussen $0.000\ 000\ 001$ en $1\ 000\ 000\ 000$ liggen. In dat geval zouden we vaste kommagetallen met een groot aantal bits kunnen gebruiken. Maar in de meeste gevallen zullen slechts een beperkt aantal bits nuttig blijken. In dit soort gevallen kan men beter een getal met \gtermen{vlottende komma voorstelling}{Een manier om een kommagetal voor te stellen met een bereik tussen zeer kleine en zeer grote getallen. Men encodeert het getal op een wetenschappelijke manier in bits met een tekenbit $s$, een mantisse $M$ en een exponent. Getallen met drijvende komma zijn gestandaardiseerd in IEEE-754.} gebruiken, ook wel \stermen{zwevendekommagetal}{vlottende komma voorstelling}, \stermen{drijvendekommagetal}{vlottende komma voorstelling} of \stermen{floating-point number}{vlottende komma voorstelling} genoemd. Vlottende komma getallen worden voorgesteld door een sequentie van bits die in drie groepen worden onderverdeeld:
+
 \begin{itemize}
- \item \termen{sign-bit $s$}: 1-bit die het teken van het getal bepaalt. De vlottende kommavoorstelling is dus vergelijkbaar met de signed-magnitude voorstelling.
- \item \termen{exponent $E$}: een getal die bepaalt met hoeveel plaatsen het getal moet worden opgeschoven. Dit deel wordt voorgesteld in `\termen{excess}'-formaat.
- \item \termen{mantisse $M$}: het getal onafhankelijk van het schuiven van plaatsen. De voorstelling van de mantisse zelf is $\fix\left<1,m-1\right>$.
+ \item \gtermen[sign-bit]{sign-bit $s$}{Een bit bij de vlottende komma voorstelling. De tekenbit geeft - zoals bij een sign-magnitude voorstelling - aan of we de rest van het getal als positief ($0$) of negatief ($1$) moeten interpreteren.} ofwel \stermen[tekenbit]{tekenbit $s$}{sign-bit}: \'e\'en bit die het teken van het getal bepaalt. De vlottende kommavoorstelling werkt dus met de sign-magnitude voorstelling.
+ \item \gtermen[exponent]{exponent $E$}{Een reeks bits bij de vlottende komma voorstelling. De exponent $E$ geeft aan dat we het getal van de mantisse $M$ (vereikt met de sign-bit $s$) moeten vermenigvuldigen met $r^E$ met $r$ de radix van het getalstelsel.}: een getal die bepaalt met hoeveel plaatsen het getal moet worden opgeschoven. Dit deel wordt voorgesteld in `\gtermen{excess}{.}'-formaat. We leggen dit formaat verderop uit.%TODO: glossary
+ \item \gtermen[mantisse]{mantisse $M$}{Een reeks bits bij de vlottende komma voorstelling. De mantisse zelf wordt voorgesteld als een vlottend komma getal. Dit getal wordt vermenigvuldigt met het teken dat wordt bepaald door de sign-bit en de exponent.}: het getal onafhankelijk van het schuiven van plaatsen. De voorstelling van een mantisse $M$ met $m$ bits is een $\fix\tupl{1,m-1}$ vast komma getal.
 \end{itemize}
+
 Het getal dat we hierbij willen voorstellen is gelijk aan:
+
 \begin{equation}
-N=\left(-1\right)^s\times\mbox{mantisse}\times r^{\mbox{\tiny{exponent}}}
+N=\brak{-1}^s\cdot\mbox{mantisse}\cdot r^{\mbox{\tiny{exponent}}}
 \end{equation}
-met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen als \termen{$\float\left<m,e\right>$} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. Verder onderscheiden we nog twee families van vlottende komma voorstellingen:
+
+met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen met \gtermen[float m e]{$\float\tupl{m,e}$}{.} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. Verder onderscheiden we nog twee families van vlottende komma voorstellingen:
 \begin{itemize}
  \item \termen{Genormaliseerde vlottende komma voorstelling}: hierbij leggen we een extra constraint betreffende de mantisse: $1\leq\mbox{mantisse}<r$. Omdat in dat geval de eerste bit dus altijd gelijk is aan 1, behoren enkel de bits na de komma tot de voorstelling. In dat geval denken we er de 1 dus bij.
  \item \termen{Niet-genormaliseerde vlottende komma voorstelling}: hierbij is deze bovengenoemde constraint dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, maar hebben een groot nadeel: men kan een getal op verschillende manieren voorstellen: eenzelfde getal kan op verschillende manieren voorgesteld worden.
