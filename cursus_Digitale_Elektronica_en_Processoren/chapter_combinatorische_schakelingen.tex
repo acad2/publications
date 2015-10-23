@@ -911,30 +911,39 @@ Het gevolg is dat het resultaat van een modulo altijd positief is: tussen $0$ en
 1653\mod 16=1653\mbox{ AND }15=5
 \end{equation}
 
-%REVIEW
 \subsection{Vaste komma getallen}
 
 We zullen het getal verder uitbreiden naar getallen met vaste komma en later met getallen vlottende komma. In \sscref{otherRepresentations} zullen we ten slotte nog andere voorstellingen van gegevens bespreken.
 
 \paragraph{}
-\gtermen[vaste komma voorstelling]{Vaste komma voorstelling}{Een voorstellingswijze voor kommagetallen. De voorstelling van een getal bestaat in dat geval uit twee delen: een geheel deel een fractioneel deel. Tussen de twee delen wordt een punt (.) gezet. Beide delen krijgen een vast aantal cijfers, wat we noteren met $\fix\tupl{i,f}$: $i$ bits voor het geheel deel, $f$ voor het fractioneel deel. Omdat het aantal bits vast staat kunnen getallen met vaste komma maar een beperkte hoeveelheid getallen voorstellen. Het voordeel is echter dat men optellers en andere componenten niet hoeft aan te passen.} (ofwel \stermen{fixed point}{vaste komma voorstelling}) lost het probleem van het zetten van een komma op door gewoon een bit af te spreken waarna men een komma plaatst, deze positie staat vast. Bijgevolg is er geen voorstelling van de komma zelf nodig. Indien we dus bijvoorbeeld een 8-bit getal beschouwen, kunnen we de eerste vier bit voorstellen als het \termen{geheel deel}, de overige vier bit behoren dan tot het \termen{fractionele gedeelte}. Dit formaliseren we met de notatie \termen{$\fix\left<i,f\right>$} waarbij $i$ het aantal bits voorstellen behorend tot het gehele deel, en $f$ het aantal bits tot het fractionele gedeelte. Zo stelt $1110010$ in $\fix\left<4,3\right>$, $14.25$ voor. De eerste vier bits stellen immers $14$ voor, de laatste drie stellen $2$ voor, deze delen we vervolgens door $2^f$.
+\gtermen[vaste komma voorstelling]{Vaste komma voorstelling}{Een voorstellingswijze voor kommagetallen. De voorstelling van een getal bestaat in dat geval uit twee delen: een geheel deel een fractioneel deel. Tussen de twee delen wordt een punt (.) gezet. Beide delen krijgen een vast aantal cijfers, wat we noteren met $\fix\tupl{i,f}$: $i$ bits voor het geheel deel, $f$ voor het fractioneel deel. Omdat het aantal bits vast staat kunnen getallen met vaste komma maar een beperkte hoeveelheid getallen voorstellen. Het voordeel is echter dat men optellers en andere componenten niet hoeft aan te passen.} (ofwel \stermen{fixed point}{vaste komma voorstelling}) lost het probleem van het zetten van een komma op, door gewoon een bit af te spreken waarna men een komma plaatst, deze positie staat vast. Er is dan ook geen voorstelling van de komma zelf nodig. Indien we dus bijvoorbeeld een $8$-bit getal beschouwen, kunnen we de eerste vier bit voorstellen als het \gtermen{geheel deel}{Een deel van een getal bij vaste komma voorstelling. Het geheel deel is de reeks cijfers die voor de komma staan. Het aantal cijfers staat vooraf vast.}, de overige vier bit behoren dan tot het \gtermen{fractionele gedeelte}{Een deel van een getal bij vaste komma voorstell. Het fractioneel deel is de reeks cijfers die na de komma staat. Het aantal cijfers staat vooraf vast.}. Dit formaliseren we met de notatie \gtermen[fix i f]{$\fix\tupl{i,f}$}{De notatie voor een vaste komma voorstelling met $i$ cijfers voor het gehele gedeelte, en $f$ cijfers voor het fractionele gedeelte. Deze notatie wordt gebruikt om te redeneren over het aantal cijfers die men voor beide delen moet reserveren om bijvoorbeeld een optelling volledig te kunnen berekenen.} waarbij $i$ het aantal bits voorstellen die tot het gehele deel behoren, en $f$ het aantal bits die men aan het fractionele gedeelte toekent. Zo stelt $1110010_2$ in $\fix\tupl{4,3}$, $14.25$ voor. De eerste vier bits stellen immers binair het getal $14$ voor, de laatste drie stellen $2$ voor, deze delen we vervolgens door $2^f$ wat hier $2^3$ is, bijgevolg heeft het komma-gedeelte de waarde: $2/2^f=2/2^3=2/8=1/4=0.25$.
+
+%REVIEW
 \subsubsection{Aantal bits voor fouteloze voorstelling}
 In de vorige secties hebben we al aandacht besteed aan het aantal bits die we moeten reserveren om de resultaten van bewerkingen zonder verlies te kunnen blijven voorstellen. Bij een optelling van 2 vaste komma getallen moet het resultaat voorgesteld worden op een vaste komma voorstelling waarbij we het geheel en fractioneelgedeelte voorstellen met het maximum aantal bits van de operanden. Bovendien dienen we \'e\'en bit toe te voegen aan het geheel gedeelte, ofwel formeler:
+
 \begin{equation}
 \fix\left<i_1,f_1\right>+\fix\left<i_2,f_2\right>=\fix\left<\max\left(i_1,i_2\right)+1,\max\left(f_1,f_2\right)\right>
 \end{equation}
+
 Wat we verder kunnen veralgemenen tot:
+
 \begin{equation}
 \displaystyle\sum_{k=1}^{n}{\fix\left<i_k,f_k\right>}=\fix\left<\left\lceil\log_2n\right\rceil+\max_{k=1}^{n}{i_k},\max_{k=1}^{n}{f_k}\right>
 \end{equation}
+
 Bij vermenigvuldigingen moeten we het aantal bits optellen van zowel het gehele als fractionele gedeelte:
+
 \begin{equation}
 \fix\left<i_1,f_1\right>\times\fix\left<i_2,f_2\right>=\fix\left<i_1+i_2,f_1+f_2\right>
 \end{equation}
+
 Of algemener:
+
 \begin{equation}
 \displaystyle\prod_{k=1}^{n}{\fix\left<i_k,f_k\right>}=\fix\left<\displaystyle\sum_{k=1}^{n}{i_k},\displaystyle\sum_{k=1}^{n}{f_k}\right>
 \end{equation}
+
 \subsection{Vlottende komma getallen}
 \ssclab{floatingPoints}
 \ssclab{floatingpoint}
