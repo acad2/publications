@@ -788,7 +788,7 @@ De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op \tb
 \centering
 \subfigure[$1\times 1$-bit]{\importtikz{mul1x1}}
 \subfigure[$3\times 2$-bit]{\importtikz{mul3x2}}
-\subfigure[$n\times m$-bit]{\importtikz{mulmxn}}
+%\subfigure[$n\times m$-bit]{\importtikz{mulmxn}}
 \caption{Parallelle vermenigvuldigers.}
 \figlab{parallelMultipliers}
 \end{figure}
@@ -969,8 +969,10 @@ met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlot
 
 %REVIEW
 \subsubsection{Underflow en overflow}
-Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\termen{underflow}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. Figuur \ref{fig:floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
+Naast het eerder ge\"introduceerde overflow -- het niet voor te stellen van grote getallen -- introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\gtermen{underflow}{Het fenomeen dat kleine getallen -- in de zin van te dicht bij $0$ -- niet voor te stellen zijn door alle getalvoorstellingen, dit is bijvoorbeeld een belangrijk fenomeen bij vlottende kommagetallen.}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. \figref{floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
+
 \importtikzfigure{floatingpoint-underflow}{Underflow van een vlottende komma voorstelling.}
+
 \subsubsection{IEEE-formaat voor vlottende komma getallen}
 Nu we de vlottende komma voorstelling theoretisch beschreven hebben, zullen we het formaat gedefinieerd door IEEE bespreken. De floating point wordt beschreven in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. Hierbij worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Hierbij maakt met een onderscheid tussen vlottende komma getallen met \termen{enkele precisie} (32-bit en beter bekend onder de term \termen{\texttt{float}} of \termen{\texttt{Single}}) en \termen{dubbele precisie} (64-bit en beter bekend als \termen{\texttt{double}}). Tabel \ref{tbl:iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
 \begin{table}[hbt]
