@@ -69,7 +69,7 @@
 \draw (c3) -- (HA2.s);
 \draw (c4) |- (HA2.co);
 \draw (HA0.co) -- (FA1.ci);
-\draw (FA1.co) -| ++(-0.2,0.6) -| (HA2.x);
+\draw (FA1.co) -- ($0.5*(FA1.co)+0.5*(HA2.ci)$) -- ++(0,0.6) -| (HA2.x);
 
 \end{scope}
 \end{tikzpicture}

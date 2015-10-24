@@ -35,10 +35,13 @@ while true
             cp "$stde" "$prfx$stde"
         fi
 
-        read -t 60 -p 'press "q" to quit; "u" to upload; any other key to continue ' -n 1 -r a
+        read -t 60 -p 'press "p" to purge, "q" to quit; "u" to upload; any other key to continue ' -n 1 -r a
         echo ""
 
-        if [[ "$a" =~ [uU] ]]
+        if [[ "$a" =~ [pP] ]]
+            then
+            make purge
+        elif [[ "$a" =~ [uU] ]]
             then
             scp "$pdff" "$pdfu"
         elif [[ "$a" =~ [qQ] ]]

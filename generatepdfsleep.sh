@@ -16,32 +16,14 @@ texf="$bsf.tex"         #The main tex file
 TEXINPUTS="$TEXINPUTS:../libtex//:../SharedData//"
 export TEXINPUTS
 
-echo 1>&2 "run 1"
-timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
-sleep $tim
-
-echo 1>&2 "run 2"
-timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
-timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
-sleep $tim
-
-echo 1>&2 "run 3"
-timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
-timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
-sleep $tim
-
-echo 1>&2 "run 4"
-timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
-timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
-timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
-sleep $tim
+for i in {1..4}
+  do
+  echo 1>&2 "run $i"
+  timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
+  timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
+  timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
+  sleep $tim
+done
 
 echo 1>&2 "final run"
 time timeout $tmo pdflatex $popt --interaction $pint "$texf"
