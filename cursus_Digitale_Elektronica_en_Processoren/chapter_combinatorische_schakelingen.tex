@@ -969,30 +969,34 @@ met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlot
 
 %REVIEW
 \subsubsection{Underflow en overflow}
-Naast het eerder ge\"introduceerde overflow -- het niet voor te stellen van grote getallen -- introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\gtermen{underflow}{Het fenomeen dat kleine getallen -- in de zin van te dicht bij $0$ -- niet voor te stellen zijn door alle getalvoorstellingen, dit is bijvoorbeeld een belangrijk fenomeen bij vlottende kommagetallen.}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. \figref{floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
+Naast het eerder ge\"introduceerde overflow -- het niet voor te stellen van grote getallen -- introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\gtermen{underflow}{Het fenomeen dat kleine getallen -- in de zin van te dicht bij $0$ -- niet voor te stellen zijn door alle getalvoorstellingen, dit is bijvoorbeeld een belangrijk fenomeen bij vlottende kommagetallen.}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. \figref{floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{single} (zie volgende paragraaf).
 
 \importtikzfigure{floatingpoint-underflow}{Underflow van een vlottende komma voorstelling.}
 
+Op de figuur worden de getallen die we kunnen voorstellen gemarkeerd met de grijze zone. Bij genormaliseerde vlottende komma getallen, kunnen we enkel getallen tussen $-2^{128}$ en $2^{128}$ voorstellen. Tussen $-2^{-149}$ en $2^{-149}$ kunnen we slechts \'e\'en getal voorstellen: $0$. Merk op dat de gemarkeerde zone niet continu is: we kunnen bijvoorbeeld constanten zoals $\pi$ en $e$ niet exact voorstellen, de nauwkeurigheid hangt af van het aantal bits in de mantisse.
+
 \subsubsection{IEEE-formaat voor vlottende komma getallen}
-Nu we de vlottende komma voorstelling theoretisch beschreven hebben, zullen we het formaat gedefinieerd door IEEE bespreken. De floating point wordt beschreven in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. Hierbij worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Hierbij maakt met een onderscheid tussen vlottende komma getallen met \termen{enkele precisie} (32-bit en beter bekend onder de term \termen{\texttt{float}} of \termen{\texttt{Single}}) en \termen{dubbele precisie} (64-bit en beter bekend als \termen{\texttt{double}}). Tabel \ref{tbl:iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
+Nu we de vlottende komma voorstelling algemeen beschreven hebben, introduceren we enkele concrete getalvoorstellingen met vlottende komma zoals voorgesteld door IEEE\footnote{IEEE: Institute for Electrical and Electronics Engineers.}. IEEE beschrijft hun floating point getallen in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. In deze standaard worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Men maakt er een onderscheid tussen vlottende komma getallen met \gtermen{enkele precisie}{Een voorstelling voor vlottende kommagetallen met $32$-bit beschreven in IEEE 754 met $8$ bit voor de exponent en $23$ bit voor de mantisse. Enkele precisie wordt ook single of float genoemd.} ($32$-bit en beter bekend onder de term \stermen[float]{\texttt{float}}{enkele precisie} of \stermen[single]{\texttt{single}}{enkele precisie}) en \gtermen{dubbele precisie}{Een voorstelling voor vlottende kommagetallen met $64$-bit beschreven in IEEE 754 met $11$ bit voor de exponent en $52$ bit voor de mantisse. Enkele precisie wordt ook double genoemd.} ($64$-bit en beter bekend als \stermen[double]{\texttt{double}}{dubbele precisie}). \tblref{iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
+
 \begin{table}[hbt]
 \centering
-\subtable[Bit-indeling]{\begin{tabular}{l|crrr}
-Precisie&grootte&$e$&$m$&$B$\\\hline
+\subtable[Bit-indeling]{\defaulttable{l|crrr}{
+\bf Precisie&grootte&$e$&$m$&$B$}{
 \texttt{float}&32-bit&8&23&127\\
-\texttt{double}&64-bit&11&52&1023\\
-\end{tabular}
+\texttt{double}&64-bit&11&52&1023
+}
 \tbllab{iEEEFloatingPointFormat}}
-\subtable[Getalvoorstelling]{\begin{tabular}{l|ccc}
-&$E=0$&$0<E<2^e-1$&$E=2^e-1$\\\hline
+\subtable[Getalvoorstelling]{\defaulttable{l|ccc}{
+\bf &$E=0$&$0<E<2^e-1$&$E=2^e-1$}{
 $M=0$&$0$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&$\left(-1\right)^s\times\infty$\\
-$M\neq 0$&$\left(-1\right)^s\times\underline{0}.M\times2^{1-B}$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&NaN\\
-\end{tabular}
+$M\neq 0$&$\left(-1\right)^s\times\underline{0}.M\times2^{1-B}$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&NaN
+}
 \tbllab{iEEEFloatingNumberRepresentation}}
 \caption{IEEE 754-1985 Floating Point.}
 \tbllab{iEEEFloatingPoint}
 \end{table}
-Elk van deze formaten heeft uiteraard radix $r=2$. IEEE 754-1985 vermeldt ook hoe een vlottende komma moet worden uitgelezen. Tabel \ref{tbl:iEEEFloatingNumberRepresentation} geeft hierbij weer hoe we het getal moeten interpreteren afhankelijk van de waarde van de exponent $E$ en mantisse $M$. Bovendien wordt bij de IEEE 754 een extra variabele ingevoerd: \termen{excess-bias $B$}. Tot op heden is $B=2^{e-1}-1$, en is de range van de exponent dus van $-2^{e-1}+2$ tot $2^{e-1}-1$. Eventueel zou men later kunnen afwijken en bijvoorbeeld meer positieve exponenten dan negatieve kunnen toelaten. Verder definieert het formaat nog enkele speciale variabelen:
+
+Elk van deze formaten werkt natuurlijk met radix $r=2$. IEEE 754-1985 vermeldt ook hoe een vlottende komma moet worden uitgelezen. \tblref{iEEEFloatingNumberRepresentation} geeft hierbij weer hoe we het getal moeten interpreteren afhankelijk van de waarde van de exponent $E$ en mantisse $M$. Bovendien wordt bij de IEEE 754 een extra variabele ingevoerd: de \gtermen[excess-bias]{excess-bias $B$}{}. We hebben al eerder gesteld dat de exponent in excess formaat staat. Tot op heden is $B$ altijd $B=2^{e-1}-1$, en is de range van de exponent dus van $-2^{e-1}+2$ tot $2^{e-1}-1$. Eventueel zou men later kunnen afwijken en bijvoorbeeld meer positieve exponenten dan negatieve kunnen toelaten. Verder definieert het formaat nog enkele speciale variabelen:
 \begin{itemize}
  \item Nul (0): dit getal kan eigenlijk niet weergegeven worden met ons eerdere definitie van een genormaliseerde vlottende komma. De getalexperts bij Intel bedachten dan ook de regel dat indien $E=0$, we het getal in niet genormaliseerde getalvoorstelling zien.
  \item \termen{Negatief oneindig $-\infty$}/\termen{Positief oneindig $+\infty$}: Indien een operatie tot een overflow leidt, zal het resultaat worden voorgesteld als oneindig. Oneindig gedraagt zich ongeveer hetzelfde als zijn wiskundig equivalent.
