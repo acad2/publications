@@ -1004,27 +1004,33 @@ Elk van deze formaten werkt natuurlijk met radix $r=2$. IEEE 754-1985 vermeldt o
  \item \gtermen[negatief oneindig]{Negatief oneindig $-\infty$}{Een element bij de vlottende komma voorstelling van IEEE 754. Negatief oneindig wordt voorgesteld met de tekenbit op $1$, $0$ voor de mantisse, en het hoogst mogelijk voor te stellen getal van de exponent. Berwerkingen die tot overflow leiden in het negatieve, geven negatief oneindig.}/\gtermen[positief oneindig]{Positief oneindig $+\infty$}{Een element bij de vlottende komma voorstelling van IEEE 754. Positief oneindig wordt voorgesteld met de tekenbit op $0$, $0$ voor de mantisse, en het hoogst mogelijk voor te stellen getal van de exponent. Berwerkingen die tot overflow leiden in het positieve, geven positief oneindig.}: Indien een operatie tot een overflow leidt, zal het resultaat worden voorgesteld als oneindig. Indien de bewerking een teken heeft,kan men dit teken ook worden overge\"erfd in het oneindig resultaat. Oneindig gedraagt zich ongeveer hetzelfde als zijn wiskundig equivalent: bijvoorbeeld het optellen van eender welk getal - behalve oneindig en NaN - met positief oneindig, levert positief oneindig op.
  \item \gtermen[not a number]{Not a Number (NaN)}{Een speciaal getal bij getallen met vlottende komma volgens IEEE 754. NaN stelt het resultaat voor van een bewerking die wiskundig niet correct is. Bijvoorbeeld het delen door nul, het verschil tussen twee oneindige getallen, de vierkantswortel van een negatief getal, enzovoort.}: In tegenstelling tot gehele getallen die bij bijvoorbeeld een deling door nul een fout\footnote{En een interrupt bij de meeste processoren.} veroorzaken, zullen ongeldige bewerkingen bij de vlottende kommavoorstelling van IEEE 754 resulteren in NaN. We denken dan aan delen door nul, en het verschil van oneindig en oneindig en de vierkantswortel van een negatief getal trekken.
 \end{itemize}
-In tabel \ref{tbl:iEEEFloatingNumberRepresentation} zien we ten slotte ook dat enkele bits onderlijnd worden. Dit zijn de zogenaamde \termen{verborgen bits}. Deze bits zijn geen onderdeel van de mantisse, maar dienen we er wel denkbeeldig aan toe te voegen om het getal te kunnen interpreteren.
+In \tblref{iEEEFloatingNumberRepresentation} zien we ten slotte ook dat enkele bits onderlijnd worden. Dit zijn de zogenaamde \gtermen{verborgen bits}{Bits die alleen virtueel bestaan, bijvoorbeeld bij de interpretatie van een getal. In het geval van IEEE 754 is de eerste bit in de ``semantisch'' interpretatie van de mantisse verboren: deze wordt niet expliciet voorgesteld.}. Deze bits zijn geen onderdeel van de mantisse, maar dienen we er wel denkbeeldig aan toe te voegen om het getal te kunnen interpreteren.
 
 %REVIEW
 \subsubsection{Rekenen met vlottende komma}
-In deze subsubsectie bespreken we kort hoe we kunnen rekenen met getallen met vlottende komma. De details kan men vinden in \cite[\S4]{hyde2004write} maar enkel een korte introductie behoort tot dit vak.
+Het ge\"introduceerde formaat is relatief complex. Het bouwen van optellers en andere bewerkingen voor deze vlottende-komma voorstellingen, valt dus uit het bereik van deze cursus. We bespreken enkel op hoog niveau hoe we met deze getallen kunnen rekenen. De details kan men vinden in \cite[\S4]{hyde2004write}.
+
 \paragraph{Optelling}
 Het optellen van twee vlottende komma getallen verloopt in drie stappen:
+
 \begin{enumerate}
- \item Eerst denormaliseren we de twee getallen door de exponenten gelijk te maken. Deze stap is geen sinecure omdat we bij dit proces zoveel mogelijk informatie willen blijven behouden (Indien we dus enkel bij \'e\'en van de twee getallen de exponent aanpassen, lopen we kans dat zijn mantisse alle informatie verliest).
+ \item Eerst denormaliseren we de twee getallen door de exponenten gelijk te maken. Deze stap is geen sinecure omdat we bij dit proces zoveel mogelijk informatie willen blijven behouden: indien we dus enkel bij \'e\'en van de twee getallen de exponent aanpassen, lopen we kans dat zijn mantisse alle informatie verliest.
  \item Vervolgens tellen we de twee mantisses met elkaar op.
- \item Het resultaat dienen we vervolgens weer te normaliseren.
+ \item Het resultaat dienen we vervolgens weer te normaliseren: het is immers mogelijk dat het resultaat groter is dan voorstellbaar op de mantisse (of kleiner) in dat geval passen we de exponent aan en schuiven we met de bits op de mantisse.
 \end{enumerate}
-IEEE 754 definieert het formaat van een vlottende komma, de wiskundige operaties zelf behoren hier echter niet bij. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij het getal eerst wordt omgezet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
+
+IEEE 754 definieert het formaat van een vlottende komma, de wiskundige operaties zelf behoren hier niet bij. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij het getal eerst wordt omgezet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
+
 \paragraph{Vermenigvuldiging}
 Vermenigvuldigen is bij vlottende komma simpeler dan optellen:
+
 \begin{enumerate}
  \item We vermenigvuldigen de mantisse zoals we dit hebben gedaan bij vermenigvuldigen van natuurlijke getallen. We passen een XOR-operatie toe op de tekenbit van de twee getallen, en we tellen de exponenten met elkaar op\footnote{Optellen bij het excess-formaat verloopt anders, we dienen immers \'e\'enmaal de excess-bias van de som af te trekken.}.
  \item We normaliseren het resultaat. Dit betekent dat ofwel de exponent hetzelfde blijft, ofwel met \'e\'en moet worden opgehoogd.
 \end{enumerate}
+
 \subsection{Andere voorstellingen van gegevens}
-\label{ss:otherRepresentations}
+\ssclab{otherRepresentations}
 Naast de hierboven beschreven voorstellingen voor natuurlijke-, gehele- en kommagetallen bestaan er nog andere voorstellingen. We stellen er in deze subsectie twee voor: \termen{Binary Coded Decimal (BCD)} is een alternatief formaat om natuurlijke getallen voor te stellen. Dit kan eventueel uitgebreid worden tot gehele- en kommagetallen. De \termen{American Standard Code for Information Interchange (ASCII)} is een formaat dat hoofdzakelijk bedoeld is om tekst op te slaan.
 \subsubsection{Binary Coded Decimal (BCD)}
 \label{ss:bcd}
