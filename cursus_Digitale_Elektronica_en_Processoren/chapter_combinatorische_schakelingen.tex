@@ -520,7 +520,7 @@ g_{i,j}=g_j+\displaystyle\sum_{k=i}^{j-1}{g_kp_{k+1,j}}=g_j+\displaystyle\sum_{k
 \eqnlab{cla-gij}
 \end{equation}
 
-Merk op dat we hier met het sommatie-teken de booleaanse som bedoelen, wat dus neerkomt op OR-poorten. Wanneer we \eqnref{cla-pij} en \eqnref{cal-gij} in \eqnref{cal-ci} schuiven, dan bekomen we een formule waarmee we de overdacht $c_i$ kunnen berekenen, enkel op basis van de invoer van de CLA-generator:
+Merk op dat we hier met het sommatie-teken de booleaanse som bedoelen, wat dus neerkomt op OR-poorten. Wanneer we \eqnref{cla-pij} en \eqnref{cla-gij} in \eqnref{cla-ci} schuiven, dan bekomen we een formule waarmee we de overdacht $c_i$ kunnen berekenen, enkel op basis van de invoer van de CLA-generator:
 
 \begin{equation}
 c_i=g_{i-1}+\displaystyle\sum_{k=0}^{i-2}{\left(g_k\cdot\displaystyle\prod_{l=k+1}^{i-1}{p_l}\right)}+c_0\cdot\displaystyle\prod_{k=0}^{i-1}{p_k}
@@ -532,13 +532,19 @@ De berekening voor $c_i$ kost dus een $i+1$-OR poort, en $i+1$ AND poorten, elk 
 \eqnlab{delayCLAGenerator}
 \end{equation}
 
-Toegegeven dat de orde van de vertraging nog steeds linear is, maar de factor voor $\bigoh{n}$ is met de CLA-generator sterk gereduceerd. De CLA-generator laat ons echter ook toe om toch logaritmisch gedrag te bereiken, en dit met een cascade van CLA-generatoren. Indien we twee $n$-bit getallen willen optellen, en we groeperen elke $k$ carry-lookahead optellers met een CLA-generator, en vervolgens groeperen we elke $k$ CLA-generatoren tot een niveau hoger, dan hebben we $\ceil{\log_kn}$ niveaus nodig. We kunnen in dat geval (\eqnref{delayCLAGenerator}) gebruiken om de vertraging te berekenen:
+Toegegeven dat de orde van de vertraging nog steeds lineair is, maar de factor voor $\bigoh{n}$ is met de CLA-generator sterk gereduceerd. De CLA-generator laat ons echter ook toe om toch logaritmisch gedrag te bereiken, en dit met een cascade van CLA-generatoren. Indien we twee $n$-bit getallen willen optellen, en we groeperen elke $k$ carry-lookahead optellers met een CLA-generator, en vervolgens groeperen we elke $k$ CLA-generatoren tot een niveau hoger, dan hebben we $\ceil{\log_kn}$ niveaus nodig. We kunnen in dat geval \eqnref{delayCLAGenerator} gebruiken om de vertraging te berekenen:
 
 \begin{equation}
 \mbox{vertraging}=3.2+\brak{2\cdot\ceil{\log_kn}-1}\cdot\brak{4+0.8\cdot k}
 \end{equation}
 
-Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. \figref{clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de reden van de twee extra ingangen duidelijk: het zijn de propagate en generate ingangen voor de CLA-generator een niveau hoger, die dus enkel kijkt of een blok van bits overdracht zullen genereren en propageren. De bijbehorende formule voor $g_{0,k-1}$ en $p_{0,k-1}$ kunnen we respectievelijk afleiden uit \eqnref{cal-gij} en \eqnref{cla-pij}.
+Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. \figref{clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de reden van de twee extra ingangen duidelijk: het zijn de propagate en generate ingangen voor de CLA-generator een niveau hoger, die dus enkel kijkt of een blok van bits overdracht zullen genereren en propageren. De bijbehorende formule voor $g_{0,k-1}$ en $p_{0,k-1}$ kunnen we respectievelijk afleiden uit \eqnref{cla-gij} en \eqnref{cla-pij}.
+
+\paragraph{}
+Bij wijze van afsluiter stellen we op \figref{clag-implement} een mogelijke implementatie van een CLA-generator voor. Deze implementatie is ver van optimaal, en bovendien met een kleine $k$.
+
+\importtikzfigure{clag-implement}{Een mogelijke implementatie voor een CLA-generator.}
+
 %TODO: figure of implementation of clag?
 
 \subsection{Negatieve getallen}
