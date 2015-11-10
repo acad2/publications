@@ -1,0 +1,123 @@
+\begin{tikzpicture}[circuit logic US]
+\def\dw{10.5};
+\def\dh{3.25};
+\def\dp{0.5};
+\def\ddp{1};
+\def\dl{0.125};
+% \def\dgh{0.75};
+\def\dgw{0.75};
+\def\kj{2};
+\def\kk{3};
+
+\coordinate (CLB) at (-0.5*\dw,-0.5*\dh);
+\coordinate (CRT) at (0.5*\dw,0.5*\dh);
+\coordinate (CRB) at (CRT |- CLB);
+\coordinate (CLT) at (CRT -| CLB);
+
+%Outer box
+\draw (CLB) rectangle (CRT);
+
+%I/O
+\begin{scope}[dashed]
+  \coordinate (CIC0) at (0,0 -| CRT);
+  \coordinate (COG02) at (0,0.166*\dh -| CLB);
+  \coordinate (COP02) at (0,-0.166*\dh -| CLB);
+  \foreach \i/\j in {1/0,2/1,3/2} {
+    \coordinate (COC\i) at (CLB -| 0.5*\dw-0.25*\i*\dw,0);
+    \draw (COC\i) -- ++(0,-\dp) node[anchor=north]{$c_{\i}$};
+    \coordinate (CIP\j) at (CRT -| 0.5*\dw+0.5*\ddp-0.25*\i*\dw,0);
+    \coordinate (CIG\j) at (CRT -| 0.5*\dw-0.5*\ddp-0.25*\i*\dw,0);
+    \draw (CIP\j) -- ++(0,\dp) node[anchor=south]{$p_{\j}$};
+    \draw (CIG\j) -- ++(0,\dp) node[anchor=south]{$g_{\j}$};
+  }
+
+  \draw (CIC0) -- ++(\dp,0) node[anchor=west]{$c_0$};
+  \draw (COG02) -- ++(-\dp,0) node[anchor=east]{$g_{0,2}$};
+  \draw (COP02) -- ++(-\dp,0) node[anchor=east]{$p_{0,2}$};
+\end{scope}
+
+%hline coordinates
+\coordinate (lpe) at ($(CRT)-(\dl,0)$);
+\foreach \i in {0,1,2} {
+  \coordinate (lp\i) at ($(CLT)+(\dl,-\dl-\i*\dl)$);
+  \draw (lp\i) -- (lp\i -| lpe);
+  \draw (CIP\i) -- (CIP\i |- lp\i);
+  \pdot{CIP\i |- lp\i};
+}
+\coordinate (lg) at ($(CLT)+(\dl,-4*\dl)$);
+\coordinate (lc) at ($(CLB)+(\dl,\dl)$);
+\coordinate (lcr) at (0,-4*\dl);
+
+%P02 output
+\node[and gate,rotate=-90,inputs={nnn},anchor=output] (PA) at ($(COP02)+(0.5*\dgw,\dl)$) {};
+\draw (COP02) -| (PA.output);
+\foreach \i in {0,1,2} {
+  \pgfmathparse{int(\i+1)}
+  \edef\v{\pgfmathresult}
+  \draw (PA.input \v) -- (lp\i -| PA.input \v);
+  \pdot{lp\i -| PA.input \v};
+}
+
+%CO transfers
+\foreach \i/\gt in {1/nn,2/nnn,3/nnnn} {
+  \node[and gate,inputs={\gt},rotate=-90,anchor=input 1] (T\i) at ($(lg -| CRT)-(\i*\dgw+\dl-0.5*\dgw,\dl)$) {};
+  \draw (T\i.input 1) -- (lg -| T\i.input 1);
+}
+\foreach \i in {1,2} {
+  \pdot{lg -| T\i.input 1};
+}
+\draw (CIC0) -| (lg -| lpe) -| (T3.input 1);
+\foreach \j/\pi in {1/0,2/0,3/0,2/1,3/1,3/2} {
+  \pgfmathparse{int(\pi+2)}
+  \edef\v{\pgfmathresult}
+  \draw (T\j.input \v) -- (lp\pi -| T\j.input \v);
+  \pdot{lp\pi -| T\j.input \v};
+}
+
+%Pipe gates
+\foreach \i/\k/\gt in {0/1/nn,0/2/nnn,1/2/nn} {
+  \pgfmathparse{int(\k+1)}
+  \edef\l{\pgfmathresult}
+  \node[and gate,inputs={\gt},rotate=-90,anchor=input 1] (P\i\l) at ($(lg -| CIG\i)-(\k*\dgw-\i*\dgw-\dgw,\dl)$) {};
+  \draw (P\i\l.input 1) -- (lg -| P\i\l.input 1);
+}
+\draw (lg -| P02.input 1) -- (lg -| P03.input 1);
+
+\foreach\i in {0,1} {
+  \draw (CIG\i) -- (lg -| CIG\i);
+  \pdot{lg -| CIG0};
+}
+
+\pdot{P02.input 1 |- lg};
+\foreach \i/\j/\pi in {0/2/1,0/3/1,0/3/2,1/3/2} {
+  \pgfmathparse{int(\pi-\i+1)}
+  \edef\v{\pgfmathresult}
+  \draw (P\i\j.input \v) -- (lp\pi -| P\i\j.input \v);
+  \pdot{lp\pi -| P\i\j.input \v};
+}
+
+%Ci output and connections to producers
+\foreach \i/\gt/\v/\l in {1/nn/2/0,2/nnn/3/1,3/nnnn/4/3} {
+  \pgfmathparse{int(\i-1)}
+  \edef\j{\pgfmathresult}
+  \node[or gate,inputs={\gt},rotate=-90,anchor=output] (C\i) at (lc -| COC\i) {};
+  \draw (C\i.output) -- (COC\i);
+  \draw (T\i.output) -- ($(T\i.output |- lcr)+(0,\l*\dl)$) -| (C\i.input 1);
+  \draw (CIG\j |- lg) -| (C\i.input \v);
+}
+\draw (CIG2 |- lg) -- (CIG2);
+\pdot{CIG1 |- lg};
+\foreach \i/\j/\v/\l in {0/2/2/2,0/3/2/4,1/3/3/5} {
+  \draw (P\i\j.output) -- ($(P\i\j.output |- lcr)+(0,\l*\dl)$) -| (C\j.input \v);
+}
+
+%G02 output
+\node[or gate,rotate=180,inputs={nnn},anchor=output] (GA) at ($(COG02)+(\dgw,0)$);
+\draw (GA.output) -- (COG02);
+\draw (GA.input 3) -- (C3.input 4 |- GA.input 3);
+\pdot{C3.input 4 |- GA.input 3};
+\foreach \i/\j/\l in {2/2/4,1/3/5} {
+  \draw (GA.input \i) -| ($(lcr -| C3.input \j)+(0,\l*\dl)$);
+  \pdot{$(lcr -| C3.input \j)+(0,\l*\dl)$};
+}
+\end{tikzpicture}

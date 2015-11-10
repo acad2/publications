@@ -15,7 +15,7 @@ Een \termen{Niet-programmeerbare processor}, ofwel \termen{Finite State Machine 
  \item Een \termen{datapad}: een component die bewerkingen (rekenkundig, aritmetisch,...) uitvoert en de resultaten opslaat in tijdelijk geheugen.
  \item Een \termen{controller}: een component die het datapad aanstuurt. Het zegt welke actie op welk moment moet ondernomen worden.
 \end{itemize}
-In dit hoofdstuk is de controller niet programmeerbaar. Dat wil zeggen dat de controller telkens hetzelfde programma uitvoert. Dit betekent echter niet dat er een vaste cyclus in de controller zit. De controller kan afhankelijk van de waarden die in de geheugens van het datapad zitten, of van ingangen van de processor beslissen om andere acties te ondernemen. Een controller is dus een sequenti\"ele schakeling ofwel finite state machine. De synthese van een finite state machine werd in het hoofdstuk \ref{ch:SeqComp} reeds besproken. Uiteraard zullen we de karakteristieken die eigen zijn aan controllers in dit hoofdstuk bespreken.
+In dit hoofdstuk is de controller niet programmeerbaar. Dat wil zeggen dat de controller telkens hetzelfde programma uitvoert. Dit betekent echter niet dat er een vaste cyclus in de controller zit. De controller kan afhankelijk van de waarden die in de geheugens van het datapad zitten, of van ingangen van de processor beslissen om andere acties te ondernemen. Een controller is dus een sequenti\"ele schakeling ofwel finite state machine. De synthese van een finite state machine werd in het \chpref{SeqComp} reeds besproken. Uiteraard zullen we de karakteristieken die eigen zijn aan controllers in dit hoofdstuk bespreken.
 \paragraph{}
 Het spreekt voor zich dat de controller en het datapad continu data met elkaar uitwisselen. Enerzijds geeft de controller instructies aan het datapad. De groep signalen waarmee een controller een datapad aanstuurt noemen we het ``\termen{instructiewoord}'' ofwel ``\termen{controle-signalen}''. Anderzijds zullen de instructies vaak afhangen van de toestand van variabelen opgeslagen in het datapad. De verzameling van signalen die het datapad over zijn variabelen doorstuurt naar de controller noemen we ``\termen{statussignalen}''.
 \paragraph{}
@@ -70,7 +70,7 @@ Door de controle-ingangen wordt de definitie van ``niet-programmeerbaar'' natuur
 \subsection{Het Datapad}
 Zoals we reeds hebben vermeld, kunnen we een controller modelleren als een eindige toestandsautomaat ofwel finite state machine. Een datapad daarentegen bestaat uit verschillende componenten:
 \begin{itemize}
- \item \termen{Functionele Eenheden} ofwel \termen{Functional Units (FU)}: dit zijn schakelingen die berekeningen en aritmetische operaties uitvoeren. Dit zijn dus de componenten die we in hoofdstuk \ref{ch:combinatoric} hebben besproken: optellers, ALU, schuifoperator,... Uiteraard kunnen we ook zelf functionele eenheden bouwen op de manier die we gezien hebben.
+ \item \termen{Functionele Eenheden} ofwel \termen{Functional Units (FU)}: dit zijn schakelingen die berekeningen en aritmetische operaties uitvoeren. Dit zijn dus de componenten die we in \chpref{combinatoric} hebben besproken: optellers, ALU, schuifoperator,... Uiteraard kunnen we ook zelf functionele eenheden bouwen op de manier die we gezien hebben.
  \item \termen{Tijdelijke geheugens}: dit zijn componenten die de waarden waarop we bewerkingen uitvoeren voor enkele klokcycli kunnen vasthouden. Dit zijn bijvoorbeeld de registerbanken en RAM die we in sectie \ref{s:memoryFSMD} zullen invoeren. Het zijn groepen van flipflops die ons toelaten om op een hoger niveau te redeneren.
  \item \termen{Verbindingen}: de tijdelijke geheugens en de functionele eenheden wisselen informatie uit. Daarom hebben we twee types verbindingen nodig:
  \begin{itemize}
@@ -1130,7 +1130,7 @@ In de volgende subsecties zullen we een groot deel van deze problemen bespreken 
 \subsection{Ontwerp Controller}
 \label{ss:syntheseFSMDController}
 \subsubsection{Patronen in een algoritme}
-Het ontwerp van een controller is in wezen equivalent met de implementatie van een Finite State Machine (FSM). De controller in het leidende voorbeeld is dan ook vrij eenvoudig te implementeren met behulp van de methodes uit hoofdstuk \ref{ch:SeqComp}. Bij complexe programma's is een implementatie van een controller echter niet meer zo triviaal: deze kennen een groot aantal toestanden en tests, en doorgaans een groot instructiewoord. Daarom werd al snel naar een methode gezocht om snel complexe controllers te bouwen. Dit doen we door volgende patronen in een ontwerp (ASM-schema) te zoeken:
+Het ontwerp van een controller is in wezen equivalent met de implementatie van een Finite State Machine (FSM). De controller in het leidende voorbeeld is dan ook vrij eenvoudig te implementeren met behulp van de methodes uit \chpref{SeqComp}. Bij complexe programma's is een implementatie van een controller echter niet meer zo triviaal: deze kennen een groot aantal toestanden en tests, en doorgaans een groot instructiewoord. Daarom werd al snel naar een methode gezocht om snel complexe controllers te bouwen. Dit doen we door volgende patronen in een ontwerp (ASM-schema) te zoeken:
 \begin{itemize}
  \item \termen{Natuurlijke volgorde} van toestanden.
  \item Terugkerende sets van toestanden veroorzaakt door een \termen{subroutine}.
@@ -1172,7 +1172,7 @@ Elk van deze elementen wordt in de volgende subsubsecties verder uitgewerkt. Op 
 \caption{Algemene vorm van een controller.}
 \figlab{generalStructureController}
 \end{figure}
-Allereerst grijpen we terug naar de definitie van een controller en combineren we deze met de defintie van een sequenti\"ele schakeling. In subsectie \ref{ss:specialProcessorGeneralStructure} hebben we reeds de invoer en uitvoer van een controller besproken. We zien dezelfde structuur op figuur \ref{fig:generalStructureController}. Daarnaast weten we uit hoofdstuk \ref{ch:SeqComp} hoe de algemene sequenti\"ele structuur eruit ziet:
+Allereerst grijpen we terug naar de definitie van een controller en combineren we deze met de defintie van een sequenti\"ele schakeling. In subsectie \ref{ss:specialProcessorGeneralStructure} hebben we reeds de invoer en uitvoer van een controller besproken. We zien dezelfde structuur op figuur \ref{fig:generalStructureController}. Daarnaast weten we uit \chpref{SeqComp} hoe de algemene sequenti\"ele structuur eruit ziet:
 \begin{itemize}
  \item \termen{State Register} ofwel \termen{toestandsregister}: een register die de huidige toestand bijhoudt.
  \item \termen{Next State Logic}: combinatorische logica die de volgende toestand berekent.

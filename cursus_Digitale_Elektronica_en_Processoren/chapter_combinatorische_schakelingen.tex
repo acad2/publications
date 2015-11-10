@@ -1,71 +1,103 @@
 \chapter{Combinatorische Schakelingen (Schakelingen zonder geheugen)}
-\label{ch:combinatoric}
 \chplab{combinatoric}
 \chapterquote{Zelfs al zou er niets nieuws geschapen worden, dan is er nog altijd een nieuwe combinatie.}{Henry Ford, Amerikaans automobielfabrikant (1863-1947)}
+
 \begin{chapterintro}
-Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de fysische beperkingen hiervan kennen, wordt het tijd om ook schakelingen te ontwikkelen. \termen{Combinatorische Schakelingen} zijn schakelingen waarbij een bitvector aan uitgangen uitsluitend bepaald wordt aan de hand van een bitvector aan ingangen. We kunnen dus stellen dat het circuit een functie $\vec{f}(\vec{x})$ berekent. In sectie \ref{s:synthese} werd reeds een manier voorgesteld om tot een canonieke vorm te komen. In sectie \ref{s:minimalisatie} zullen we technieken zien om deze implementaties verder te minimaliseren. Verder zullen we in secties \ref{s:rekenkundig} en \ref{s:andereBasis} de implementatie van enkele populaire combinatorische schakelingen zien.% Tot slot zullen we ook combinatorische schakelingen in VHDL bouwen in sectie \ref{s:combinatorischVHDL}.
+Nu we de basis van het bouwen van digitale circuits onder de knie hebben, en de fysische beperkingen hiervan kennen, kunnen we nuttige schakeling zoals optellers en vergelijkers ontwikkelen. \gtermen{Combinatorische Schakelingen}{Schakelingen waarbij een bitvector aan de uitgangen uitsluitend wordt bepaald aan de hand van een bitvector aan de ingangen. Er zijn met andere woorden geen geheugencomponenten en de schakeling houdt bijgevolg geen toestand bij. Onder combinatorische schakelingen vinden we bijvoorbeeld optellers, vergelijkers en multiplexers.} zijn schakelingen waarbij een bitvector aan uitgangen uitsluitend bepaald wordt aan de hand van een bitvector aan ingangen. We kunnen dus stellen dat het circuit een functie $\vec{f}(\vec{x})$ berekent. In \secref{synthese} werd reeds een manier voorgesteld om voor een gegeven functie tot een schakeling van canonieke vorm te komen. In \secref{minimalisatie} zullen we kennismaken met technieken zien om deze implementaties verder te minimaliseren. In \secref{rekenkundig} en \secref{andereBasis} bespreken we de implementatie van enkele populaire combinatorische schakelingen.
 \end{chapterintro}
+
 \minitoc[n]
+
 \section{Minimaliseren van logische functies}
-\label{s:minimalisatie}
+\seclab{minimalisatie}
+
+In deze sectie geven we eerst een motivatie waarom het minimaliseren van implementaties een belangrijke taak is. Daarna tonen we een methode om op effici\"ente wijze een minimale implementatie te realiseren. We zullen ook een aantal uitbreidingen op deze methode beschouwen.
+
 \subsection{Waarom minimaliseren}
-We willen schakelingen ontwerpen voor de worteltrekking en 7 segment display in een minimale implementatie. Streven naar een minimalisatie is een algemeen probleem en is vergelijkbaar met optimalisatie in de informatica. Minimalisatie levert niet enkel snellere doorvoer op. Hieronder sommen we de meest courante voordelen op, samen met hun metriek:
+\ssclab{whyMinimize}
+In deze sectie zullen we als leidend voorbeeld schakelingen ontwerpen voor de worteltrekking en $7$-segment display in een minimale implementatie. Streven naar een minimalisatie is een algemeen probleem en is vergelijkbaar met optimalisatie in de informatica. Minimalisatie levert niet enkel snellere doorvoer op. Hieronder sommen we de meest courante voordelen op, samen met hun metriek:
 \begin{itemize}
-\item Minimaliseren van de \termen{kostprijs}. Afhankelijk van de realisatie hanteren we hiervoor 2 metrieken: Voor CMOS verfijnen we hiervoor de oorspronkelijke formule van de kostprijs uit vergelijking \ref{eqn:kosten}. En bekomen:
+\item Minimaliseren van de \termen{kostprijs}. Afhankelijk van de realisatie hanteren we hiervoor twee metrieken: Voor CMOS verfijnen we hiervoor de oorspronkelijke formule van de kostprijs uit \eqnref{kosten}. En bekomen:
+
 \begin{equation}
-\mbox{kostprijs}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{alle}\\\mbox{poorten}\end{array}}{\mbox{kostprijs}\left(\mbox{poort}\right)}
-\label{eqn:kostenCmos}
+\mbox{kostprijs}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{alle}\\\mbox{poorten}\end{array}}{\funm{kostprijs}{\mbox{poort}}}
+\eqnlab{kostenCmos}
 \end{equation}
+
 De kostprijs van een poort wordt dan bepaald met volgende formule:
+
 \begin{equation}
-\mbox{kostprijs}\left(\mbox{poort}\right)=\left\{\begin{array}{lcl}
-\mbox{fan-in}&\mbox{if}&\mbox{poort}\in\left\{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}\right\}\\
-\mbox{fan-in}+1&\mbox{if}&\mbox{poort}\in\left\{\mbox{AND},\mbox{OR}\right\}\\
-\end{array}\right.
-\label{eqn:kostenCmosPoort}
+\funm{kostprijs}{\mbox{poort}}=\acclguard{
+\mbox{fan-in}&\mbox{if}\;\mbox{poort}\in\accl{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}}\\
+\mbox{fan-in}+1&\mbox{if}\;\mbox{poort}\in\accl{\mbox{AND},\mbox{OR}}
+}
+\eqnlab{kostenCmosPoort}
 \end{equation}
-We zien dus dat alle \termen{inverterende poorten} relatief 1 goedkoper zijn dat de \termen{niet-inverterende poorten}. Bij een FPGA bepalen we de kostprijs aan de hand van het aantal logische cellen:
+
+We zien dus dat alle \gtermen{inverterende poorten}{Poorten waar conceptueel op het einde een inverter staat. Inverterende poorten zijn INV, NAND, NOR, AOI en OAI.} relatief $1$ goedkoper zijn dat de \gtermen{niet-inverterende poorten}{Poorten waar conceptueel op het einde geen inverter staat. Niet-inverterende poorten zijn AND en OR.}. Bij een FPGA bepalen we de kostprijs aan de hand van het aantal logische cellen:
+
 \begin{equation}
 \mbox{kostprijs}=\#\mbox{LB's}
 \end{equation}
-Uiteraard dient hierbij de kanttekening gemaakt te worden, dat niet voor elk aantal logische cellen, er een FPGA bestaat. Indien er voldoende logische cellen op de FPGA aanwezig zijn, is de kostprijs dan ook van minder belang. We zullen immers toch dezelfde FPGA gebruiken.
-\item Snelheid: We maximaliseren de snelheid door de maximale vertraging te minimaliseren. Deze vertraging is afhankelijk van de poorten in het \termen{Kritische Pad}. Het kritische pad is een pad van de ingang naar de uitgang met de grootste vertraging. Deze vertraging is afhankelijk van twee parameters:
+
+Uiteraard dient hierbij de kanttekening gemaakt te worden, dat niet voor elk gegeven aantal logische cellen, er een FPGA bestaat. Indien er voldoende logische cellen op de FPGA aanwezig zijn, is de kostprijs dan ook van minder belang. We zullen immers toch dezelfde FPGA gebruiken.
+\item Snelheid: We maximaliseren de snelheid door de maximale vertraging te minimaliseren. Deze vertraging is afhankelijk van de poorten in het \gtermen{kritische pad}{Een pad van ingang tot uitgang in een schakeling die de grootste vertraging heeft. Het is mogelijk dat een schakeling verschillende kritische paden heeft, al deze paden hebben dan dezelfde (theoretische) vertraging.}. Het kritische pad is een pad van de ingang naar de uitgang met de grootste vertraging. Deze vertraging is afhankelijk van twee parameters:
 \begin{itemize}
-\item Vertraging van de poorten: een poort heeft tijd nodig om bij verandering van de ingang ook de uitgang te veranderen. Deze vertraging is afhankelijk van de technologie en evenredig met de fan-in. We zullen deze benaderen met volgende formule:
+\item Vertraging van de poorten: een poort heeft tijd nodig om bij verandering van de ingang ook de uitgang te veranderen. Deze vertraging is afhankelijk van de technologie en evenredig met de fan-in. We zullen deze benaderen met de volgende formule:
+
 \begin{equation}
-\mbox{vertraging}\left(\mbox{poort}\right)=\left\{\begin{array}{lcl}
-0.6+0.4\cdot\mbox{fan-in}&\mbox{if}&\mbox{poort}\in\left\{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}\right\}\\
-1.6+0.4\cdot\mbox{fan-in}&\mbox{if}&\mbox{poort}\in\left\{\mbox{AND},\mbox{OR}\right\}\\
-\end{array}\right.
-\label{eqn:speedPoort}
+\funm{vertraging}{\mbox{poort}}=\acclguard{
+0.6+0.4\cdot\mbox{fan-in}&\mbox{if}\;\mbox{poort}\in\accl{\mbox{INV},\mbox{NAND},\mbox{NOR},\mbox{AOI},\mbox{OAI}}\\
+1.6+0.4\cdot\mbox{fan-in}&\mbox{if}\;\mbox{poort}\in\accl{\mbox{AND},\mbox{OR}}
+}
+\eqnlab{speedPoort}
 \end{equation}
+
 Deze formule toont dus dat opnieuw de fan-in een belangrijke factor is, en dat niet-inverterende poorten opnieuw een nadeel hebben tegenover inverterende poorten.
 \item (capacitieve) belasting: dit hangt hoofdzakelijk af van de geometrische implementatie van de printplaat. Deze vertraging is dan ook zeer moeilijk te berekenen en wordt niet beschouwd.
 \end{itemize}
-Bijgevolg berekenen we de vertraging als volgt:
+
+We berekenen dan de formule met volgende formule:
+
 \begin{equation}
-\mbox{vertraging}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{kritisch}\\\mbox{pad}\end{array}}{\mbox{vertraging}\left(\mbox{poort}\right)}
-\label{eqn:speed}
+\mbox{vertraging}=\displaystyle\sum_{\tiny\begin{array}{c}\mbox{kritisch}\\\mbox{pad}\end{array}}{\funm{vertraging}{\mbox{poort}}}
+\eqnlab{speed}
 \end{equation}
+
 \end{itemize}
-\paragraph{Hoe minimaliseren?}Om te minimaliseren hebben we een methode nodig, deze methode manipuleert de logische uitdrukking van $\vec{f}(\vec{x})$ tot een uitdrukking die equivalent maar voordeliger is, rekening houdend met de metrieken van vergelijkingen \ref{eqn:kostenCmos} en \ref{eqn:speed}. Het probleem is dat er geen methodes bestaan die ons een reeks manipulaties voorstellen, waardoor we altijd tot de meest optimale implementatie komen. We moeten dus bijgevolg methodes bedenken waardoor we in staat zijn tot een redelijk optimale oplossingen te komen. Hiervoor zullen we methodes gebruiken zoals Karnaugh-kaarten. Computers bieden bovendien de mogelijkheid een groot aantal implementaties te simuleren. Bij een groot probleem volstaat deze rekenkracht echter ook niet om tot de beste implementatie te komen\footnote{Wat is \"uberhaupt de beste oplossing, in veel gevallen zal de ene metriek verbeteren ten koste van de tweede.}.
+
+\subsection{Hoe minimaliseren?}
+Om te minimaliseren hebben we een methode nodig. Deze methode manipuleert de logische uitdrukking van $\fun{\vec{f}}{\vec{x}}$ tot een uitdrukking die equivalent maar voordeliger is, rekening houdend met de metrieken van \eqnref{kostenCmos} en \eqnref{speed}.
+
+\paragraph{}
+Een probleem is echter dat er geen methodes bestaan die ons een reeks manipulaties voorstellen, waardoor we altijd tot de meest optimale implementatie komen. We moeten dus bijgevolg methodes bedenken waarmee we in staat zijn een redelijk optimale oplossingen te bekomen. Hiervoor zullen we methodes gebruiken zoals Karnaugh-kaarten. Computers bieden bovendien de mogelijkheid een groot aantal implementaties te simuleren. Bij een groot probleem volstaat ook deze rekenkracht niet meer om tot de beste implementatie te komen\footnote{Wat is \"uberhaupt de beste oplossing, in veel gevallen zal de ene metriek verbeteren ten koste gaan van de tweede.}.
+
 \subsection{Karnaugh-kaarten}
-\termen{Karnaugh-kaarten} of \termen{K-kaarten} proberen het aantal nutteloze ingangen tot een minimum te beperken. Het is een visueel hulpmiddel dat gebruik maakt van een vermogen waar mensen goed in zijn: het herkennen en begrijpen van patronen. De basis van een Karnaugh-kaart is dan ook de waarheidstabel. In een waarheidstabel kunnen we vaak door bepaalde rijen te beschouwen verbanden zien.
+\gtermen{Karnaugh-kaarten}{De projectie van een $N$-kubus in twee dimensies. Karnaugh-kaarten vormen een visueel hulpmiddel bij de synthese van een combinatorische schakeling voor een gegeven booleaanse functie met twee lagen.} of \stermen{K-kaarten}{Karnaugh-kaarten} proberen het aantal nutteloze ingangen tot een minimum te beperken. Het is een visueel hulpmiddel dat gebruik maakt van een vermogen waar mensen goed in zijn: het herkennen en begrijpen van patronen. De basis van een Karnaugh-kaart is dan ook de waarheidstabel. In een waarheidstabel kunnen we vaak door bepaalde rijen te beschouwen verbanden zien.
 %Zo zien we in de waarheidtabel op figuur \ref{fig:sevenSegmentDisplay} dat $e=0$ als $w=1$. Uiteraard blijft er onduidelijkheid waarom $e=0$ als $\left(w,x,y,z\right)=\left(0,1,0,0\right)$. Toch kunnen we met dergelijke patronen de expressie al behoorlijk optimaliseren. Zo kunnen we voor $e$ al een expressie maken van de vorm $e=(\mbox{NOT }w)\mbox{ AND }\varphi$ met $\varphi$ een nog onbekende logische expressie. We weten immers dat indien $w=1$ er een 0 aan de ingang van de AND poort verschijnt. Een AND met aan minstens \'e\'en ingang een 0 is per definitie 0. We hebben dus het probleem kunnen reduceren met het zoeken naar een specifiek patroon.
-\paragraph{N-kubus}In feite zijn Karnaugh-kaarten niets anders dan waarheidstabellen waarbij we het aantal dimensies verhogen. Een zogenoemde \termen{$N$-kubus}. We stellen immers een bepaalde ingangstoestand voor als een knooppunt op een kubus. Figuur \ref{fig:nCube} toont een N-kubus voor de dimensies 1 tot 4.
+
+\paragraph{N-kubus}
+Karnaugh-kaarten zijn niets anders dan de projectie van waarheidstabellen naar een tweedimensionele figuur. Wanneer we een waarheidstabel met $N$ variabelen beschouwen, kunnen we dit in $N$ dimensies projecteren op een zogenoemde \termen{$N$-kubus}. Een $N$-kubus construeren we door booleaanse punten te beschouwen in $N$ dimensies: $\accl{0,1}^n$; en vervolgens bogen te trekken tussen elke twee punten waar er hoogstens \'e\'en variabele verschilt. De \gtermen{buren}{De buren van een knoop $k$ in een graaf is de verzameling van knopen zodat er een boog bestaat tussen $k$ en de knoop in kwestie.} van een knoop $K$ is de verzameling knopen waarvoor er een boog bestaat van of naar $K$. \figref{nCube} toont $N$-kubussen voor $1$ tot $4$ dimensies.
+
 \begin{figure}[htb]
 \centering
 \subfigure[1D]{\importtikz{kubus1d}}
 \subfigure[2D]{\importtikz{kubus2d}}
 \subfigure[3D]{\importtikz{kubus3d}}
 \subfigure[4D]{\importtikz{kubus4d}}
-\caption{N-kubus voor dimensies 1 tot 4.}
+\caption{N-kubus voor dimensies $1$ tot $4$.}
 \figlab{nCube}
 \end{figure}
-Hierbij is elke knoop van de kubus een bitvector van waarden aan de ingang. We kunnen dan vervolgens op deze knooppunten de waarde die we aan de uitgang verwachten plaatsen. De $N$-kubus toont ook de buren van deze toestanden. Dit zijn toestanden waarbij exact \'e\'en bit aan de ingang veranderd is. Buren zijn cruciaal, indien de uitgang niet verandert tussen twee buren, kunnen we zeggen dat de veranderde ingangsbit irrelevant is voor de uitgang.
-\paragraph{Karnaugh-Kaarten}Karnaugh-kaarten zijn in feite niets anders dan 2D projecties van de $N$-kubus. Uiteraard is deze omvorming tot 2 dimensies helemaal niet moeilijk: het is gewoon de $N$-kubus zelf. Vanaf dimensies hoger dan 2 wordt het moeilijker. Figuur \ref{fig:nCubeKarnaugh}
+
+Elke knoop van de $N$-kubus beschrijft bitvector van waarden aan de ingang. We kunnen dan vervolgens op deze knooppunten de waarde die we aan de uitgang verwachten plaatsen. Buren zijn cruciaal, indien de uitgang niet verandert tussen twee buren, kunnen we zeggen dat de veranderde ingangsbit irrelevant is voor de uitgang.
+
+\paragraph{Karnaugh-Kaarten}
+Zoals eerder gesteld zijn Karnaugh-kaarten zijn in feite niets anders dan 2D projecties van de hierboven beschreven $N$-kubus. De projectie van een $N$-kubus naar twee dimensies is eenvoudig voor $N\leq 2$: het is gewoon de $N$-kubus zelf. Vanaf dimensies hoger dan 2 wordt het moeilijker.
+
 \importtikzfigure{nCubeKarnaugh}{Van $N$-kubus naar Karnaugh-kaart.}
-toont de overgang van een 3-kubus naar de respectievelijke Karnaugh-kaart. Bij een $N$-kubus heeft elke toestand $N$ buren. Nochtans zien we op de figuur dat de linkse en rechtse toestanden slechts 2 buren hebben in plaats van 3. We moeten dan ook op een Karnaugh-kaart modulo rekenen. De linkse buur van het meest linkse veld is het rechtse veld. Verder omvat elke cel in de Karnaugh-kaart een bepaalde configuratie aan de ingang. Aan de rand van de Karnaugh-kaart staan de variabelen, en een lijn. De cellen die deze lijn omvatten zijn de cellen waar deze specifieke variabele 1 is. Logischerwijs zijn de cellen die niet omvat worden, de cellen waar deze variabele 0 is. Figuur \ref{fig:karnaughKaarten}
+
+\figref{nCubeKarnaugh} toont de overgang van een $3$-kubus naar de respectievelijke Karnaugh-kaart. Bij een $N$-kubus heeft elke toestand $N$ buren. Nochtans zien we op de figuur dat de linkse en rechtse toestanden slechts 2 buren hebben in plaats van 3. We moeten dan ook op een Karnaugh-kaart modulo rekenen: de linkse buur van het meest linkse veld is het rechtse veld. Hetzelfde geldt in de andere richtingen. Elke cel in de Karnaugh-kaart beschrijft een bepaalde configuratie aan de ingangen. Aan de rand van de Karnaugh-kaart noteren we de naam van deze ingangen, en duiden we met een lijn bij welke cellen deze ingang $1$ is. Voor cellen die niet omvat worden door deze lijn, zal de bijbehorende ingang op dat moment $0$ zijn. Zo komt de cel linksboven op de figuur overeen met de configuratie $\tupl{x,y,z}=\tupl{0,0,0}$: alle ingangen zijn $0$. De cel rechtsonder komt dan weer overeen met de configuratie $\tupl{x,y,z}=\tupl{1,1,0}$: alleen ingang $z$ legt in dat geval een $0$ aan.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[1D]{\importtikz{karnaugh1d}}
@@ -77,9 +109,18 @@ toont de overgang van een 3-kubus naar de respectievelijke Karnaugh-kaart. Bij e
 \caption{Karnaugh-kaarten voor verschillende dimensies met binaire waarden.}
 \figlab{karnaughKaarten}
 \end{figure}
-toont Karnaugh-kaarten voor een verschillend aantal variabelen. In de cellen staat de decimale waarde van de ingang die deze cel vertegenwoordigt. Hierbij gebruiken we de variabelen in de volgende volgorde: $\left(v,w,x,y,z\right)$. We kunnen in principe blijven uitbreiden. Vanaf 6 dimensies wordt het echter moeilijk om nog patronen te herkennen. Karnaugh-kaarten hebben bijgevolg maar een beperkt vermogen. Vanaf 5 dimensies groepeert men meestal cellen in groepen van $4\times 4$. Men gebruikt hierbij 2 varianten: ofwel spiegelt men \'e\'en van de twee tabellen zoals op figuur \ref{fig:karnaughKaarten5DMirror}, ofwel zijn de tabellen exacte kopies (op enkele variabelen na) zoals op figuur \ref{fig:karnaughKaarten5DCopy}. Het spiegelen van variabelen is intu\"itiever omdat dit consistent is met lagere dimensies.
+
+\figref{karnaughKaarten} toont Karnaugh-kaarten voor een verschillend aantal variabelen. In de cellen staat de decimale waarde van de ingang die deze cel vertegenwoordigt. Daarvoor gebruiken we de variabelen in de volgende volgorde: $\tupl{v,w,x,y,z}$. We kunnen in principe blijven uitbreiden. Vanaf zes dimensies wordt het echter moeilijk om nog patronen te herkennen. Karnaugh-kaarten hebben bijgevolg maar een beperkt vermogen.
+
+\paragraph{Spiegelen of kopi\"eren}
+Vanaf vijf dimensies groepeert men meestal cellen in rasters van $4\times 4$. Men gebruikt hierbij twee varianten: ofwel \gtermen{spiegelt}{Een manier om Karnaugh-kaarten voor te stellen indien het aantal dimensies stijgt boven de vier. In dat geval worden twee $4\times 4$ rasters beschouwd. Het tweede raster spiegelt de variabelen over de as tussen de twee rasters.} men \'e\'en van de twee tabellen zoals op \figref{karnaughKaarten5DMirror}, ofwel zijn de tabellen exacte \gtermen{kopies}{Een manier om Karnaugh-kaarten voor te stellen indien het aantal dimensies stijgt boven de vier. In dat geval worden er twee $4\times 4$ rasters beschouwd. Beide rasters gebruiken dezelfde positionering van de variabelen.} (op de waarde van \'e\'en enkele variabelen na) zoals op \figref{karnaughKaarten5DCopy}. Het spiegelen van variabelen is intu\"itiever omdat dit consistent is met lagere dimensies.
+
 \subsubsection{Optimaliseren met behulp van Karnaugh-kaarten}
-\paragraph{Terminologie} Alvorens we aan het optimalisatiewerk kunnen beginnen, hebben we nood aan enige terminologie. Een \termen{implicant} is een productterm waarvoor de functie 1 is. Deze definitie heeft nauwe banden met de 1-minterm, het verschil is echter dat bij een implicant niet alle variabelen aanwezig moeten zijn. Zo zien we op figuur \ref{fig:karnaughKaartenImplicanten} verschillende implicanten met een verschillend aantal variabelen. Een \termen{priemimplicant} is een implicant die geen onderdeel is van een andere implicant met strikt minder variabelen. De priemimplicanten van figuur \ref{fig:karnaughKaartenImplicanten} worden weergegeven op figuur \ref{fig:karnaughKaartenPriemimplicanten}. Een verdere uitbreiding is de \termen{essenti\"ele priemimplicant}, dit is een priemimplicant die minstens \'e\'en 1-minterm omvat die niet in een andere priemimplicant verweven zit. Tenslotte defini\"eren we de \termen{dekking} of \termen{cover} als een verzameling van implicanten die in alle mogelijkheden voorziet waar de functie 1 is.
+Nu we weten wat een Karnaugh-kaart is, bespreken we een methode om een optimale implementatie uit deze Karnaugh-kaarten af te leiden. We introduceren eerst terminologie, daarna bespreken we het stappenplan van de methode in detail met een voorbeeld. Tot slot beschouwen we enkele uitbreidingen op dit stappenplan.
+
+\paragraph{Terminologie}
+Alvorens we aan het optimalisatiewerk kunnen beginnen, hebben we nood aan enige terminologie. Een \gtermen{implicant}{Een implicant is een productterm, zodat er minstens \'e\'en cel op de Karnaugh-kaart is die zelf $1$ is en waarvoor de functie - beschreven door deze productterm - ook $1$ is. De functie-waarde voor cellen die $0$ zijn op de Karnaugh-kaart horen ook $0$ te zijn. De cellen op de Karnaugh-kaart die $1$ zijn, hoeven niet - op \'e\'en cel na - een functie-waarde $1$ te hebben.} is een productterm zodat de functie die ontstaat uit deze productterm $1$ is voor minstens \'e\'en cel op de Karnaugh kaart, die zelf ook $1$ is. De priemimplicant dient ook $0$ te zijn voor de cellen op de Karnaugh-kaart die zelf ook $0$ zijn. Voor alle overige cellen op de Karnaugh-kaart maakt het niet uit of de functie $0$ of $1$. Deze definitie heeft nauwe banden met de 1-minterm, het verschil is dat bij een implicant niet alle variabelen aanwezig moeten zijn. Zo zien we op \figref{karnaughKaartenImplicanten} verschillende implicanten met een verschillend aantal variabelen. Bij $1$-minterm - zoals we bespraken in \sscref{1minterm} - zijn altijd alle variabelen aanwezig in het product. Een \gtermen{priemimplicant}{Een implicant die geen onderdeel is van een andere implicant met strikt minder variabelen.} is een implicant die geen onderdeel is van een andere implicant met strikt minder variabelen. De priemimplicanten van \figref{karnaughKaartenImplicanten} worden weergegeven op \figref{karnaughKaartenPriemimplicanten}. Zo zien we op de figuur dat de implicant $x_1\cdot x_2\cdot x_3\cdot x_4'$ geen priemimplicant is: de implicant $x_1\cdot x_3\cdot x_4'$ is immers altijd waar wanneer $x_1\cdot x_2\cdot x_3\cdot x_4'$ waar is, en bestaat uit minder variabelen. Een verdere uitbreiding is de \gtermen[essentiele priemimplicant]{essenti\"ele priemimplicant}{Een priemimplicant die voor \'e\'en cel in de Karnaugh-kaart $1$ bevat, en waar er geen enkele andere priemimplicant voor deze cel $1$ geeft.}, dit is een priemimplicant die minstens \'e\'en 1-minterm omvat die niet in een andere priemimplicant verweven zit. Visueel is dit een priemimplicant die minstens \'e\'en cel omvat met $1$; en er bestaat geen enkele priemimplicant die deze cel omvat. Tenslotte defini\"eren we nog de \gtermen{dekking}{Een verzameling van implicanten voor een gegeven functie (en bijbehorende Karnaugh-kaart) zodat voor elke cel waar de functie $1$ is, deze cel minstens wordt omvat door een implicant in de verzameling. Bovendien is er geen enkele cel waar de functie $0$ is die omvat wordt door een implicant in de verzameling.} of \stermen{cover}{dekking} als een verzameling van implicanten zodat voor elke cel waar functie $1$ is, deze cel door minstens \'e\'en implicant in de verzameling wordt omvat. Daarnaast mag geen enkele implicant een cel omvatten waar de functie $0$ is.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Implicanten]{\importtikz{karnaughKaartenImplicanten}}
@@ -88,8 +129,9 @@ toont Karnaugh-kaarten voor een verschillend aantal variabelen. In de cellen sta
 \caption{Terminologie van een Karnaugh-kaart.}
 \figlab{karnaughKaartTerminologie}
 \end{figure}
+
 \paragraph{Stappenplan}
-We minimaliseren een functie met behulp van een Karnaugh-kaart in 4 stappen, deze stappen zullen we in de volgende paragrafen besproken:
+We minimaliseren een functie met behulp van een Karnaugh-kaart in vier stappen, deze stappen zullen we in de volgende paragrafen bespreken:
 \begin{enumerate}
  \item Maak de Karnaugh-kaart.
  \item Bepaal alle priemimplicanten.
@@ -97,60 +139,98 @@ We minimaliseren een functie met behulp van een Karnaugh-kaart in 4 stappen, dez
  \item Zoek de minimale dekking.
 \end{enumerate}
 Daarna zullen we nog drie speciale gevallen bestuderen.
+
 \paragraph{}
-We bestuderen deze methode aan de hand van een voorbeeld. We zullen een schakeling synthetiseren die de functies $f$ en $g$ berekent. Functie $f$ geeft 1 terug bij de getallen 0, 1, 3, 7, 5, 8, 10, 11, 14 en 15, en 0 in de andere gevallen, $g$ is waar  als de afgeronde vierkantswortel van het getal even is.
+We bestuderen deze methode aan de hand van een voorbeeld. We zullen een schakeling synthetiseren die de functies $f$ en $g$ berekent. Functie $f$ geeft $1$ terug bij de getallen $0$, $1$, $3$, $5$, $7$, $8$, $10$, $11$, $14$ en $15$, en $0$ in de andere gevallen, $g$ is waar als de afgeronde vierkantswortel van het getal even is. De waarheidstabellen van deze functies staan in \tblref{karnaugh-example}.
+
+\begin{table}
+\centering
+\importtabularsubtable{karnaugh-example1}{$f$}
+\importtabularsubtable{karnaugh-example2}{$g$}
+\caption{Waarheidstabellen voor de leidende voorbeelden.}
+\tbllab{karnaugh-example}
+\end{table}
+
 \paragraph{Stap 1: maak de Karnaugh-kaart}
-In de eerste stap bouwen we een Karnaugh-kaart op, op basis van de gegeven functie. We tekenen een Karnaugh-kaart met het juiste aantal ingangsvariabelen (zie figuur \ref{fig:karnaughKaarten}) en vullen vervolgens de uitgangswaarden voor \'e\'en bepaalde uitgang in op de respectievelijke plaatsen. Er dient dus per binaire uitgang zo'n kaart gemaakt te worden. Op figuur \ref{fig:karnaughKaartenVoorbeeldGetekend}
+In de eerste stap bouwen we een Karnaugh-kaart op die de logische functie visueel weergeeft. We tekenen een Karnaugh-kaart met het juiste aantal ingangsvariabelen (zie \figref{karnaughKaarten}) en vullen vervolgens de uitgangswaarden voor \'e\'en bepaalde uitgang in op de respectievelijke plaatsen. per uitgang dienen we een afzonderlijke kaart op te maken: in elke cel dienen we net \'e\'en bit te plaatsen.
+
 \importtikzfigure{karnaughKaartenVoorbeeldGetekend}{Ingevulde Karnaugh-kaarten voor de uitgangen van het leidend voorbeeld.}
-%tonen we de Karnaugh-kaarten voor de eerste 3 uitgangen van het leidend voorbeeld ($a$, $b$ en $c$). De overige uitgangen worden als oefening aan de lezer overgelaten. De oplossing is te vinden op figuur \ref{fig:apxKKaartenFill} op pagina \pageref{fig:apxKKaartenFill}.
-staan de Karnaugh-kaarten voor de functies $f$ en $g$. De variabelen $x_1$, $x_2$, $x_3$ en $x_4$ zijn de binaire voorstelling van het invoergetal.
-\paragraph{Stap 2: bepaal alle priemimplicanten} In de volgende stap bepalen we alle priemimplicanten van de Karnaugh-kaart. Visueel is een implicant niets anders dan een rechthoek waarbij zowel de lengte en breedte een lengte hebben van machten van twee. Deze rechthoeken vallen uiteraard ook onder de modulo-regel op een Karnaugh-kaart. Deze priemimplicanten kunnen we dan ook vinden door vanuit een cel waar de uitgangswaarde 1 is, telkens ofwel de lengte ofwel de breedte te verdubbelen, uiteraard mogen er wel geen nullen onder de rechthoek vallen. Indien er verschillende uitbreidingen mogelijk zijn, dienen al de uitbreidingen gevolgd te worden. Figuur \ref{fig:karnaughKaartenVoorbeeldPriemimplicanten} toont de priemimplicanten voor de twee uitgangen van het leidend voorbeeld.
+
+Op \figref{karnaughKaartenVoorbeeldGetekend} staan de Karnaugh-kaarten voor de functies $f$ en $g$. De variabelen $\tupl{x_1,x_2,x_3,x_4}$ vormen de binaire voorstelling van het invoergetal\footnote{Volgens de little-endian conventie.}.
+
+\paragraph{Stap 2: bepaal alle priemimplicanten}
+De volgende stap is het bepalen van alle priemimplicanten van de Karnaugh-kaart. Visueel is een implicant niets anders dan een rechthoek zodat zowel de lengte en de breedte een lengte hebben van - mogelijk verschillende - machten van twee\footnote{Niet te verwarren met veelvouden van twee.}. Deze rechthoeken vallen ook onder de modulo-regel op een Karnaugh-kaart: een rechthoek kan dus beginnen op de meest rechtse kolom, en doorlopen tot de meest linkse, zodat de kolommen in het midden worden overgeslagen. Een priemimplicant is een rechthoek zoals hierboven beschreven, maar waarbij een verdubbeling van de lengte of de breedte - in welke richting dan ook - niet langer mogelijk is. We kunnen priemimplicanten opsporen door eerst een cel met waarde $1$ te beschouwen, en dan telkens ofwel de lengte ofwel de breedte te verdubbelen tot dit niet langer mogelijk is. Dit is dus het geval wanneer er nullen bij een dergelijke verdubbeling in de rechthoek dreigen te komen liggen. doen. Indien er verschillende uitbreidingen mogelijk zijn, dienen al de uitbreidingen gevolgd te worden. \figref{karnaughKaartenVoorbeeldPriemimplicanten} toont de priemimplicanten voor de twee uitgangen van het leidend voorbeeld.
+
 \importtikzfigure{karnaughKaartenVoorbeeldPriemimplicanten}{Karnaugh-kaarten met priemimplicanten van het leidend voorbeeld.}
-\paragraph{Stap 3: Bepaal alle essenti\"ele priemimplicanten} Nadat we de priemimplicanten bepaald hebben, zullen we uit deze verzameling de essenti\"ele priemimplicanten halen. Deze stap is dan ook heel eenvoudig: als een priemimplicant \'e\'en of meer cellen omvat die geen enkele andere priemimplicant omvat is het een essenti\"ele priemimplicant. Deze implicanten zullen sowieso al tot de resulterende functie behoren. Op figuur \ref{fig:karnaughKaartenVoorbeeldEssentielePriemimplicanten} staan de essenti\"ele priemimplicanten voor $f$ en $g$. We zien duidelijk dat in beide gevallen de priemimplicanten onvoldoende zijn om de volledige functie te beschrijven daar er nog enen niet niet gedekt worden.
+
+\paragraph{Stap 3: Bepaal alle essenti\"ele priemimplicanten}
+Nadat we de priemimplicanten bepaald hebben, zullen we uit deze verzameling de essenti\"ele priemimplicanten halen. Deze stap is eenvoudig: als een priemimplicant \'e\'en of meer cellen omvat die door geen enkele andere priemimplicant omvat worden, is dit een essenti\"ele priemimplicant. Deze implicanten zullen sowieso al tot de resulterende functie behoren. Op \figref{karnaughKaartenVoorbeeldEssentielePriemimplicanten} staan de essenti\"ele priemimplicanten voor $f$ en $g$. We zien duidelijk dat in beide gevallen de priemimplicanten onvoldoende zijn om de volledige functie te beschrijven daar er nog enen niet niet gedekt worden: dit komt omdat voor al deze cellen, er minstens twee priemimplicanten de cel bedekten.
+
 \importtikzfigure{karnaughKaartenVoorbeeldEssentielePriemimplicanten}{Karnaugh-kaarten met essenti\"ele priemimplicanten van het leidend voorbeeld.}
+
 \paragraph{Stap 4: Zoek de minimale dekking}
-De essenti\"ele priemimplicanten zijn de goedkoopste manier om de cellen die ze dekken te implementeren, we zien echter dat dit in de meeste gevallen onvoldoende is om de volledige functie te beschrijven. We dienen nog extra priemimplicanten toe te voegen om tot volledige dekking te komen. In het ideale geval doen we dit door alle mogelijke toevoegingen van priemimplicanten na te gaan. Dit is echter een erg arbeidsintensief proces. Men lost dit probleem dan ook meestal op met een ``\termen{gulzige strategie}'' ofwel ``\termen{greedy algorithm}''. Hierbij beschouwen we initieel de set van essenti\"ele priemimplicanten, per iteratie voegen we de priemimplicant toe die het meeste aantal cellen dekt die tot dan toe ongedekt bleven. We stoppen op het moment dat de set van implicanten de volledige functie dekt. We illustreren dit proces op figuur \ref{fig:karnaughKaartenVoorbeeldGreedySearch} waarbij we elke iteratiestap tonen.
+De essenti\"ele priemimplicanten zijn de goedkoopste manier om de cellen die ze dekken te implementeren, we zien echter dat dit in de meeste gevallen onvoldoende is om de volledige functie te beschrijven: er blijven cellen met waarde $1$ ongedekt. We dienen nog extra priemimplicanten toe te voegen om tot volledige dekking te komen. In het ideale geval doen we dit door alle mogelijke toevoegingen van priemimplicanten na te gaan. Dit is echter een erg arbeidsintensief proces. Men lost dit probleem dan ook meestal op met een ``\gtermen{gulzige strategie}{Een methode om een probleem op te lossen door het op te delen in verschillende beslissingen. Bij elke beslissing kiezen we de optie die ons onmiddellijk het meeste oplevert. Het is echter niet gezegd dat dit tot de uiteindelijke beste oplossing zal leiden, omdat een eerste beslissing er voor kan zorgen dat een tweede beslissing tot minder winst kan worden.}'' ofwel ``\stermen{greedy algorithm}{gulzige strategie}''. We beschouwen initieel de verzameling van essenti\"ele priemimplicanten, iedere iteratie voegen we de priemimplicant toe die het meeste aantal cellen dekt die tot dan toe ongedekt bleven. We stoppen op het moment dat de set van implicanten de volledige functie dekt. We illustreren dit proces op \figref{karnaughKaartenVoorbeeldGreedySearch} waarbij we elke iteratiestap tonen.
+
 \importtikzfigure{karnaughKaartenVoorbeeldGreedySearch}{Werking van het greedy algoritme bij het leidend voorbeeld.}
+
 \paragraph{Synthese}
 Elk van de priemimplicanten die we geselecteerd hebben stelt het product voor van enkele variabelen. We implementeren de functie door de som te nemen van deze priemimplicanten. Voor het voorbeeld wordt dit dus:
+
 \begin{equation}
 \begin{array}{ll}
-\left\{
+\acclguard{
 \begin{array}{l}
 f=x_2'x_3'x_4'+x_1'x_4+x_1x_3\\
 g=x_1'x_3'x_4'+x_1'x_2'x_3x_4+x_2x_3x_4'+x_2x_3'x_4+x_1x_2x_3
-\end{array}\right.&\mbox{(Leidend voorbeeld)}
+}&\leaex
 \end{array}
 \end{equation}
+
 \paragraph{Uitbreiding: Dambordpatroon}
-Een patroon dat men vaak tegenkomt in Karnaugh-kaarten is het \termen{dambordpatroon}. Dit dambordpatroon hoeft niet noodzakelijk uit vierkanten te bestaan, rechthoeken zijn ook mogelijk. Indien we dit patroon met de klassieke Karnaugh-methode implementeren bekomen we een groot aantal priemimplicanten wat leidt tot kostelijke implementaties, we kunnen in dat geval gebruik maken van XOR-operaties die we achter elkaar schakelen. Een aaneenschakeling van XOR-operaties heeft een grotere vertraging maar heeft een grote invloed op de kostprijs. Figuur \ref{fig:dambordpatronen} toont enkele dambordpatronen en hun implementatie met XOR-logica.
+Een patroon dat men vaak tegenkomt in Karnaugh-kaarten is het \gtermen{dambordpatroon}{Een veel voorkomend patroon waarbij wisselend in een ene rij men $0$ en $1$ tegenkomt, na enkele rijen wisselt het patroon naar $1$ en $0$. Wanneer het dambordpatroon voorkomt op een Karnaugh-kaart kan dit vaak effectief worden gerealiseerd met behulp van XOR poorten. De grootte van de vlakken bepaalt welke ingangen aan deze XOR poorten moeten worden gezet.}. Dit dambordpatroon hoeft niet noodzakelijk uit vierkanten te bestaan, rechthoeken zijn ook mogelijk. Indien we dit patroon met de klassieke Karnaugh-methode implementeren bekomen we een groot aantal priemimplicanten wat leidt tot dure implementaties, we kunnen in dat geval gebruik maken van XOR-operaties die we achter elkaar schakelen. Een aaneenschakeling van XOR-operaties impliceert een grotere vertraging maar heeft een grote invloed op de kostprijs. \figref{dambordpatronen} toont enkele dambordpatronen en hun implementatie met XOR-logica.
+
 \importtikzfigure{dambordpatronen}{Voorbeelden van dambordpatronen in Karnaugh-kaarten.}
+
 \paragraph{Uitbreiding: Don't cares}
-\label{par:dontcare}
-In sommige gevallen dienen we slechts een beperkte set van invoer-configuraties te beschouwen. Stel bijvoorbeeld dat we een digitale display implementeren die getallen van 0 tot en met 9 voorstelt. In dat geval hebben we 4 ingangen nodig. Maar we zullen bijvoorbeeld nooit de ingang $1011_2=11_{10}$ tegenkomen. Er is echter wel een plaats gereserveerd op de Karnaugh-kaart voor deze configuratie. In dat geval maken we gebruik van de zogenaamde \termen{don't care}. Dit wordt genoteerd met een horizontale streep\footnote{Engels: dash.}, een ``X'' of ``d''. Een don't care is geen speciale vorm van uitvoer. We kunnen enkel nullen of enen teruggeven. Een don't care wordt enkel gebruikt om aan te geven dat we vrij mogen kiezen of de uitvoer een 0 of 1 wordt. Uiteraard proberen we een keuze te maken die de implementatie goedkoper maakt. We kunnen tot betere implementaties komen door een don't care als een 1 te zien indien dit de priemimplicanten kan vergroten. Op die manier bereiken deze priemgetallen immers een groter gebied waardoor ze minder variabelen bevatten. Op figuur \ref{fig:sevenDigitDisplay} geven we de Karnaugh-kaart van led $A$ en $B$ bij een \termen{seven-segment display}, samen met de priemimplicanten die we bekomen na het toewijzen van de don't cares. In appendix ?? staan de Karnaugh-kaarten van de andere leds. Deze kaarten zijn een goede oefening om het volledige proces te leren.
+\ssslab{dontcare}
+In sommige gevallen dienen we slechts een beperkte set van invoer-configuraties te beschouwen. Stel bijvoorbeeld dat we een seven segment digitale display\footnote{Dit is een verzameling leds die zo georganiseerd is dat we met zeven leds, alle cijfers van $0$ to $9$ kunnen weergeven.} implementeren die getallen van $0$ tot en met $9$ voorstelt. In dat geval hebben we vier ingangen nodig. Maar we zullen bijvoorbeeld nooit de configuratie $1011_2=11_{10}$ aan de ingang tegenkomen. Er is echter wel een plaats gereserveerd op de Karnaugh-kaart voor deze configuratie. In dat geval maken we gebruik van de zogenaamde \gtermen{don't care}{Met een don't care duidt men aan dat de waarde hier vrij te kiezen valt. Dit is bijvoorbeeld mogelijk in een waarheidstabel waarbij een bepaalde configuratie aan de ingang nooit zal voorkomen. Men gebruikt don't cares ook bij de ingangen van een waarheidstabel om aan te duiden dan deze rij zowel relevant is voor configuraties waarbij de bijbehorende waarde $0$ is; als in het geval waar deze variabele $1$ is.}. Dit wordt genoteerd met een horizontale streep\footnote{Engels: dash.}, een ``X'' of ``d'' zijn alternatieve voorstellingswijzen, maar zullen we in deze cursus niet verder gebruiken. Een don't care is geen speciale vorm van uitvoer: we kunnen enkel nullen of enen op de uitvoer plaatsen. Een don't care wordt enkel gebruikt om aan te geven dat we vrij mogen kiezen of de uitvoer een $0$ of $1$ wordt, iets wat dus het geval is bij een configuratie aan de invoer die nooit zal voorkomen. We proberen dan natuurlijk een keuze te maken tussen $0$ of $1$ zodat de implementatie van de schakeling goedkoper wordt. We kunnen tot betere implementaties komen door een don't care als een $1$ te zien indien dit de priemimplicanten kan vergroten. Op die manier bereiken deze priemgetallen immers een groter gebied waardoor ze minder variabelen bevatten. Op \figref{sevenDigitDisplay} geven we de Karnaugh-kaart van led $A$ en $B$ bij een \gtermen{seven-segment display}{Een component die zeven leds plaatst in de vorm van een acht. Men kan aan de hand van een seven-segment display elk cijfer van $0$ tot $9$ weergeven.}, samen met de priemimplicanten die we bekomen na het toewijzen van de don't cares. In \appref{solutions} staan de Karnaugh-kaarten van de andere leds. Deze kaarten zijn een goede oefening om het volledige proces te leren beheersen.
+
 \importtikzfigure{sevenDigitDisplay}{Karnaugh-kaart met don't cares van led $A$ en $B$ van een seven-segment display.}
+
 \paragraph{Uitbreiding: Meerdere uitgangen}
-Tot dusver hebben we steeds aangenomen dat we de functie voor \'e\'en signaaluitgang optimaliseren, uit de voorbeelden die we beschouwd hebben blijkt echter dat een component verschillende uitgangen moet uitrekenen (de seven-segment display). Daar we de functies implementeren met AND-OR logica is het mogelijk dat de AND-poorten van \'e\'en uitgang ook nuttig kunnen zijn voor de uitgang van een andere uitgang. Dit leidt misschien niet tot de goedkoopste schakeling per uitgang maar globaal kunnen we eventueel kosten besparen. We zullen hieronder een procedure bespreken die gebruik maakt van de priemimplicanten, er is echter geen garantie dat deze de globale goedkoopste schakeling realiseert. Soms is het zelfs goedkoper om met niet-priemimplicanten te werken. Met trial-and-error kunnen we dus soms tot nog goedkopere implementaties komen. Volgende procedure bekomt echter meestal een goed resultaat:
+Tot dusver hebben we steeds aangenomen dat we de functie voor \'e\'en uitgang optimaliseren, uit het voorbeeld van de seven-segment display blijkt echter dat een component verschillende uitgangen kan hebben. Een na\"ive manier kan erin bestaan al deze uitgangen los van elkaar te zien, en dus voor elke uitgang het proces van de Karnaugh-kaart doorlopen. Het is echter mogelijk dat een (priem)implicant in een dekking voor \'e\'en van de uitgangen, ook nuttig kan zijn voor een andere uitgang. Men kan eerst een synthese apart maken, en dan kijken of er gemeenschappelijke implicanten in de bekomen dekkingen zitten, maar dit is weinig waarschijnlijk. Het is immers mogelijk dat een minder goedkope dekking voor de uitgangen apart, wel tot de globaal goedkoopste oplossing leidt.
+
+\paragraph{}
+Hieronder een procedure bespreken die gebruik maakt van de priemimplicanten, er is echter geen garantie dat deze tot de globaal goedkoopste schakeling komt. Met trial-and-error kunnen we dus soms tot nog goedkopere implementaties komen. De volgende procedure bekomt echter meestal een goed resultaat:
+
 \begin{enumerate}
- \item We realiseren eerst bij elke uitgang de essenti\"ele priemimplicanten.
- \item Selecteer vervolgens priemimplicanten die essenti\"ele priemimplicanten zijn bij een andere uitgang. Bij deze keuze is het ook belangrijk om de priemimplicant te selecteren die in het kleinste aantal functies voorkomt, dit doen we om de fan-out laag te houden waardoor we minder vertraging induceren. Merk op dat deze operatie ons niets kost: we hebben immers deze implicanten al gerealiseerd.
- \item De overige priemimplicaten realiseren we per uitvoer zoals op de klassieke manier. Indien een priemimplicant in verschillende uitgangen voorkomt, kunnen we deze eventueel bevoordelen.
+ \item Realiseer eerst bij elke uitgang de essenti\"ele priemimplicanten;
+ \item selecteer vervolgens priemimplicanten die essenti\"ele priemimplicanten zijn bij een andere uitgang. Bij deze keuze is het ook belangrijk om de priemimplicant te selecteren die in het kleinste aantal functies voorkomt, dit doen we om de fan-out laag te houden waardoor we minder vertraging induceren. Merk op dat deze operatie ons niets kost: we hebben immers deze implicanten al gerealiseerd; en
+ \item de overige priemimplicaten realiseren we per uitvoer zoals op de klassieke manier. Indien een priemimplicant in verschillende uitgangen voorkomt, kunnen we deze eventueel bevoordelen.
 \end{enumerate}
+
 \paragraph{Duale vorm}
-Tot dusver hebben we telkens met behulp van Karnaugh-kaarten een AND-OR implementatie gerealiseerd. Zoals we al vaak zijn tegengekomen hebben quasi alle logische methodes een duale vorm. Ook de Karnaugh-kaarten kunnen we gebruiken om een minimale OR-AND implementatie te realiseren. In tegenstelling tot de AND-OR vorm draait alles hier rond nullen en niet rond enen. De priemimplicaten zijn hierbij gerelateerd aan 0-maxtermen: functies die overal 1 teruggeven behalve op een bepaald patroon. Verder werkt deze methode volledig analoog: we bepalen eerst de essenti\"ele priemimplicanten en voegen vervolgens andere priemimplicanten toe. We synthetiseren vervolgens de schakeling door een AND tussen alle gekozen priemimplicanten te plaatsen. Op figuur \ref{fig:karnaughKaartenVoorbeeldDualeVorm} voeren we deze methode uit op de $f$-functie van het leidend voorbeeld.
+Tot dusver hebben we telkens met behulp van Karnaugh-kaarten een AND-OR implementatie gerealiseerd: analoog aan de eerder gerealiseerd sum-of-products (SOP). De conclusie dat bijna alle logische methodes en duale vorm hebben, geldt hier opniew: ook de Karnaugh-kaarten kunnen we gebruiken om een minimale OR-AND implementatie te realiseren. In tegenstelling tot de AND-OR vorm draait alles hier rond nullen en niet rond enen. De priemimplicaten zijn hierbij gerelateerd aan $0$-maxtermen: functies die overal $1$ teruggeven behalve voor een bepaalde rechthoek, opnieuw met machten van twee voor de lengte en de breedte. Verder werkt deze methode volledig analoog: we bepalen eerst de essenti\"ele priemimplicanten en voegen vervolgens andere priemimplicanten toe. We synthetiseren vervolgens de schakeling door een AND tussen alle gekozen priemimplicanten te plaatsen. Op \figref{karnaughKaartenVoorbeeldDualeVorm} voeren we deze methode uit op de $f$-functie van het leidend voorbeeld.
+
 \importtikzfigure{karnaughKaartenVoorbeeldDualeVorm}{Duale methode met Karnaugh-kaarten.}
+
 \subsection{Quine-McCluskey}
-Een alternatieve methode voor Karnaugh-kaarten is het \termen{Quine-McCluskey algoritme}. Dit algoritme wordt gebruikt in CAD-pakketten voor booleaanse optimalisatie en werkt op basis van tabellen. Het algoritme zoekt ook naar priemimplicanten en essenti\"ele priemimplicanten om een functie te optimaliseren en is dus het tabel-equivalent van de methode met de Karnaugh-kaarten. Het algoritme werkt in exponenti\"ele tijd, namelijk \bigoh{3^n} met $n$ het aantal variabelen. In de meeste gevallen is het aantal variabelen te groot om deze functie te optimaliseren, in dat geval wordt er gewerkt met de Espresso heuristic logic minimizer.
+Een alternatieve methode voor het synthetiseren van minimale logische functies is het \gtermen{Quine-McCluskey algoritme}{Een algoritme die voor een gegeven logische functie - bijvoorbeeld aan de hand van een waarheidstabel - een minimale implementatie zoekt. Het algoritme is grotendeels equivalent aan minimalisatie met behulp van Karnaugh-kaarten, maar werkt aan de hand van patronen, in plaats van visuele hulpmiddelen. Het algoritme is aanwezig in de meeste CAD-paketten.}. Dit algoritme wordt gebruikt in CAD-pakketten voor booleaanse optimalisatie en werkt op basis van tabellen. Het algoritme zoekt ook naar priemimplicanten en essenti\"ele priemimplicanten om een functie te optimaliseren en is dus het tabel-equivalent van de methode met de Karnaugh-kaarten. Het algoritme werkt in exponenti\"ele tijd: \bigoh{3^n} met $n$ het aantal variabelen. In de meeste gevallen is het aantal variabelen te groot om een gegeven functie te optimaliseren, in dat geval wordt er gewerkt met de \gtermen{Espresso heuristic logic minimizer}{Een algoritme die voor een gegeven logische functie - bijvoorbeeld aan de hand van een waarheidstabel - een implementatie zoekt die vrij effici\"ent is. Een heuristiek garandeert niet dat de oplossing optimaal is, maar vaak wel dicht genoeg bij het optimum voor praktische doeleinden.}.
+
 \subsection{Realisatie in meer dan 2 lagen}
-Een Karnaugh-kaart laat toe tot een sterke implementatie te komen met twee lagen (een AND- en OR-laag). Zoals we echter in de volgende secties zullen zien, zullen complexe schakelingen bij twee lagen toch een hoge kost met zich meebrengen. Daarom is het soms aangewezen om de logica in meer lagen te implementeren. Dit veroorzaakt tragere schakelingen maar aan een goedkopere kostprijs. Hieronder geven we enkele technieken:
+Een Karnaugh-kaart laat toe tot een sterke implementatie te komen wanneer we met twee lagen werken: bijvoorbeeld een AND- en OR-laag. Zoals we echter in de volgende secties zullen zien, zullen complexe schakelingen bij twee lagen toch vrij duur uitpakken. Daarom is het soms aangewezen om de logica in meer lagen te implementeren. Dit veroorzaakt tragere schakelingen maar aan een goedkopere kostprijs. Hieronder geven we enkele technieken:
+
 \begin{itemize}
- \item Specificatie: in heel wat gevallen gaat de specificatie van de component reeds gepaard met een expliciete implementatie. Bijvoorbeeld ``1 indien $x$ en ofwel $y$ ofwel $z$ en $t$'' kunnen we dan rechtstreeks implementeren als: $f=x\wedge\left(y\oplus\left(z\wedge t\right)\right)$.
- \item \termen{Factoranalyse}: We kunnen een expressie ook \termen{algebra\"isch manipuleren} met de wetten uit sectie \ref{s:booleaanseAlgebra}. Factoranalyse wordt ook gebruikt wanneer we een schakeling dienen te implementeren met beperkte fan-in: stel dat we enkel NAND-poorten met 2 ingangen ter beschikking hebben. Bij realisaties met beperkte fan-in moet men altijd proberen deze te implementeren in een boomstructuur. Indien we dus $f=x+y+z+t$ moeten implementeren converteren we dit naar $f=\left(x+y\right)+\left(z+t\right)$ en niet naar $f=x+\left(y+\left(z+t\right)\right)$. De boomstructuur laat toe schakelingen te realiseren die een vertraging van \bigoh{\log n} hebben tegenover de lineare implementatie met een vertraging van \bigoh{n}.
- \item \termen{Functionele ontbinding}: Soms zijn we ook in staat om een functie op te delen in verschillende deelfuncties. In subsectie \ref{sss:fulladder} zullen we bijvoorbeeld een volledige opteller beschouwen. In plaats van een optelling van drie bits rechtstreeks te implementeren kunnen we twee optellingen van twee bits realiseren. In het algemeen betekent dit dat we de functie $\vec{f}\left(\vec{x}\right)$ soms kunnen herschrijven als $\vec{h}\left(\vec{g}\left(\vec{x}\right),\vec{x}\right)$ waarbij $\vec{g}$ en $\vec{h}$ meestal eenvoudiger en goedkoper zijn.
+ \item Specificatie: in heel wat gevallen gaat de specificatie van de component reeds gepaard met een expliciete implementatie. Bijvoorbeeld ``1 indien $x$ en ofwel $y$ ofwel $z$ en $t$'' kunnen we dan rechtstreeks implementeren als: $f=x\wedge\brak{y\oplus\brak{z\wedge t}}$.
+ \item \gtermen{Factoranalyse}{Het algebra\"ische manipuleren van een (booleaanse) expressie met bijvoorbeeld de wetten van De Morgan. We gaan op zoek naar variabelen die verschillende keren voorkomen in de expressie en proberen deze af te zonderen. Factoranalyse wordt soms gebruikt in een zoektocht naar een goedkope implementatie van een booleaanse functie. Vaak bekoment men implementaties met een beperkte fan-in.}: We kunnen een expressie ook \gtermen[algebraische manipulatie]{algebra\"isch manipuleren}{Het aanpassen van een gegeven algebra\"ische expressie zodat het resultaat equivalent is met het origineel. Aan de hand van algebra\"ische manipulatie kan men een expressie echter in een meer wenselijke vorm brengen. Algebra\"ische manipulatie wordt soms gebruikt in de zoektocht naar een goedkope implementatie voor een booleaanse functie.} met de wetten uit \secref{booleaanseAlgebra}. Factoranalyse wordt ook gebruikt wanneer we een schakeling dienen te implementeren met beperkte fan-in: stel dat we enkel NAND-poorten met twee ingangen ter beschikking hebben. Bij realisaties met beperkte fan-in moet men altijd proberen deze te implementeren in een boomstructuur. Indien we dus $f=x+y+z+t$ moeten implementeren, converteren we dit naar $f=\brak{x+y}+\brak{z+t}$, en niet naar $f=x+\brak{y+\brak{z+t}}$. De boomstructuur laat toe schakelingen te realiseren die een vertraging van \bigoh{\log n} hebben tegenover de lineare implementatie met een vertraging van \bigoh{n}, dit met dezelfde kostprijs.
+ \item \gtermen{Functionele ontbinding}{Het zoeken van deelfuncties in een functie en deze er vervolgens uit wegsubstitueren. Gegeven een functie $\fun{\vec{f}}{\vec{x}}$ zoeken we dus naar een equivalente functie $\fun{\vec{h}}{\fun{\vec{g}}{\vec{x}},\vec{x}}$. Functionele ontbinding wordt vaak toegepast in de zoektocht naar een goedkope en effici\"ente implementatie: men zoekt structuren die verschillende keren terugkomen in de originele functie en deze dienen we dan slechts \'e\'enmaal te berekenen.}: Soms zijn we ook in staat om een functie op te delen in verschillende deelfuncties. In \sssref{fulladder} zullen we bijvoorbeeld een volledige opteller beschouwen. In plaats van een optelling van drie bits rechtstreeks te implementeren kunnen we twee optellingen van twee bits realiseren. In het algemeen betekent dit dat we de functie $\fun{\vec{f}}{\vec{x}}$ soms kunnen herschrijven als $\fun{\vec{h}}{\fun{\vec{g}}{\vec{x}},\vec{x}}$ waarbij $\vec{g}$ en $\vec{h}$ meestal eenvoudigere en dus goedkopere functies zijn.
 \end{itemize}
-Geen enkele van deze methodes levert altijd een beter resultaat op. Het probleem moet dan ook opgelost worden in ``\termen{trial-and-error}'' stijl.
+
+Geen enkele van deze methodes levert altijd een beter resultaat op. Het probleem moet dan ook opgelost worden in ``\gtermen{trial-and-error}{Een strategie waarbij men een probleem oplost door een reeks - al dan niet populaire - methodes op het probleem toepast en vervolgens de resultaten van deze methodes vergelijkt. Daarna kiest men de meest voordelige oplossing. Ervaring laat toe om vaak niet alle methodes te moeten uitproberen, en dus op voorhand te weten welke methodes zeker niet tot een betere oplossing zullen leiden.}'' stijl.
+
 \subsection{Welke methode kiezen?}
-Samen met de methodes uit subsectie \ref{ss:canoniekestandaardrealisatie} hebben we nu volgende methodes om een schakeling te synthetiseren:
+Samen met de methodes uit \sscref{canoniekestandaardrealisatie} hebben we nu volgende methodes om een schakeling te synthetiseren:
+
 \begin{itemize}
  \item Canonieke Sum-of-Products
  \item Canonieke Product-of-Sums
@@ -158,10 +238,19 @@ Samen met de methodes uit subsectie \ref{ss:canoniekestandaardrealisatie} hebben
  \item Minimale Product-of-Sums (Karnaugh-kaarten)
  \item Meerlagenlogica
 \end{itemize}
-\paragraph{}Verder kunnen we ook vrij kiezen tussen AND-OR en NAND-NAND in het geval van Sum-of-Products, en voor OR-AND en NOR-NOR bij Product-of-Sums. Het is altijd voordeliger om voor NAND-NAND en NOR-NOR te kiezen. Deze schakelingen zijn altijd goedkoper en sneller. Het aantal poorten en de structuur blijft immers gelijk en uit vergelijkingen (\ref{eqn:kostenCmosPoort}) en (\ref{eqn:speedPoort}) blijkt duidelijk dat dit een betere keuze is. Een andere mogelijkheid is om de Minimale AND-OR implementatie om te zetten naar een AND-OR-Invert en een OR-AND implementatie naar zijn OR-AND-Invert equivalent.
-\paragraph{}Ook kunnen we in het algemeen bewijzen dat de implementatie met Karnaugh-kaarten altijd goedkoper en sneller is. Immers in het slechtste geval komt dit neer op dezelfde implementatie als de canonieke sum-of-products. In de meeste gevallen zal meerlagenlogica verder een grotere vertraging induceren dan de implementatie met Karnaugh-kaarten, dit is echter niet algemeen en bovendien kan meerlagenlogica gepaard gaan met grote kostenbesparingen. Veel rekenkundige schakelingen die we in de volgende sectie zullen tegenkomen maken dan ook gebruik van meerdere functionele lagen.
-\paragraph{}Tot slot is het niet altijd belangrijk om tot de meest optimale implementatie te komen. Indien we bijvoorbeeld de logica op een FPGA programmeren hebben we per functie een logic block ter beschikking. Het aantal poorten in dit blok staat al vast. Indien we dus onder dat aantal blijven levert het ons niks op om de functie verder te minimaliseren. We hebben immers toch reeds voor deze poorten betaald. Deze realisatie van de schakeling naar de beschikbare elementen (poorten, logic blocks,...) wordt dan ook de ``\termen{technology mapping}'' genoemd.
-\paragraph{}Om de verschillende implementaties te illustreren zullen we tot slot een schakeling implementeren in de verschillende vormen van logica. De Karnaugh-kaart en de implementaties staan op figuur \ref{fig:differentImplementationsSSD}. Een samenvatting van deze implementaties in termen van kosten en vertraging staan in tabel \ref{tbl:differentImplementationsSSD}.
+
+\paragraph{}
+We kunnen ook vrij kiezen tussen AND-OR en NAND-NAND in het geval van Sum-of-Products, en voor OR-AND en NOR-NOR bij Product-of-Sums. Het is altijd voordeliger om respectievelijk voor NAND-NAND en NOR-NOR te kiezen: deze schakelingen zijn altijd goedkoper en sneller. Immers blijft bij een omzetten het aantal poorten en de structuur dezelfde, en uit \eqnref{kostenCmosPoort}) en \eqnref{speedPoort} blijkt duidelijk dat dit een betere keuze is. Men kan ook beslissen om de bekomen minimale AND-OR implementatie om te zetten naar een AND-OR-Invert en een OR-AND implementatie naar zijn OR-AND-Invert equivalent.
+
+\paragraph{}
+Ook kunnen we in het algemeen bewijzen dat de implementatie met Karnaugh-kaarten altijd goedkoper en sneller is dan de implementatie van hun canonieke tegenhangers. Immers komt in het slechtste geval een implementatie met behulp van karnaugh-kaarten neer op dezelfde implementatie als de canonieke sum-of-products. In de meeste gevallen zal meerlagenlogica verder een grotere vertraging induceren dan de implementatie met Karnaugh-kaarten, dit is echter niet algemeen en bovendien kan meerlagenlogica gepaard gaan met grote kostenbesparingen. Veel rekenkundige schakelingen die we in de volgende sectie zullen tegenkomen maken dan ook gebruik van meerdere functionele lagen.
+
+\paragraph{}
+Het is niet altijd belangrijk om tot de meest optimale implementatie te komen. Indien we bijvoorbeeld de logica op een FPGA programmeren hebben we per functie een logic block ter beschikking. Het aantal poorten in een logisch blok staat al op voorhand vast. Indien we dus onder dat aantal blijven levert het ons niks op om de functie verder te minimaliseren. We hebben immers toch reeds voor deze poorten betaald. Deze realisatie van de schakeling naar de beschikbare elementen (poorten, logic blocks,...) wordt dan ook de ``\gtermen{technology mapping}{Het realiseren van een gegeven schakeling in een bepaalde technologie. Bijvoorbeeld met behulp van poorten, logische blokken,... Afhankelijk van de gekozen technologie verschilt de kostprijs en ook de doelen bij een implementatie. Bij een FPGA bijvoorbeeld staat het aantal poorten in een logisch blok vast, en proberen we enkel de implementatie te optimaliseren tot deze in de beschikbare logische blokken past.}'' genoemd.
+
+\paragraph{}
+Om de verschillende implementaties te illustreren zullen we tot slot een schakeling implementeren in de verschillende vormen van logica. De Karnaugh-kaart en de implementaties voor de hierboven beschreven methodes staan op \figref{differentImplementationsSSD}. Een samenvatting van deze implementaties in termen van kosten en vertraging staan in \tblref{differentImplementationsSSD}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Karnaugh-kaart]{\importtikz{karnaughKaartSopPos}}
@@ -172,6 +261,7 @@ Samen met de methodes uit subsectie \ref{ss:canoniekestandaardrealisatie} hebben
 \caption{Verschillende implementaties van dezelfde logische functie.}
 \figlab{differentImplementationsSSD}
 \end{figure}
+
 \begin{table}[hbt]
 \centering
 \begin{tabular}{l|l|rr|rr}
@@ -188,65 +278,109 @@ Modus&Implementatie&Kosten&Relatief&Vertraging&Relatief\\\hline
 \caption{Samenvatting van de verschillende implementaties.}
 \tbllab{differentImplementationsSSD}
 \end{table}
+
 \section{Rekenkundige basisschakelingen}
-\label{s:rekenkundig}
-In deze sectie defini\"eren we enkele belangrijke schakelingen voor rekenkundige bewerkingen. We hebben het dan over optellen, aftrekken vermenigvuldigen, delen, modulo rekenen en logische berekeningen. Alvorens we echter met getallen kunnen rekenen, moeten we een manier bedenken om getallen voor te stellen met binaire signalen. Doorheen deze sectie zullen we de voorstelling van getallen regelmatig veranderen om extra functionaliteit toe te voegen.
+\seclab{rekenkundig}
+
+In deze sectie defini\"eren we enkele belangrijke schakelingen voor rekenkundige bewerkingen. We hebben het dan over optellen, aftrekken vermenigvuldigen, delen, modulo rekenen en logische berekeningen. Alvorens we echter met getallen kunnen rekenen, moeten we een manier bedenken om getallen voor te stellen met behulp van binaire signalen. Doorheen deze sectie zullen we de voorstelling van getallen regelmatig veranderen om extra functionaliteit toe te voegen.
+
 \subsection{Getallen voorstellen}
-In de wereld wordt bij het voorstellen van getallen meestal het Arabisch getalsysteem gehanteerd. Hierbij stellen we een getal voor door een reeks cijfers. Een cijfer op een bepaalde plaats heeft een gewicht dat $r$ keer groter is, dan het volgende cijfer, met $r$ als de \termen{radix} van het getalstelsel. Om tot een eenduidige voorstelling van elk getal te komen wordt de verzameling mogelijke cijfers beperkt tot $r$ elementen. Een getal $D_r$ wordt dus voorgesteld als:
+Bij het voorstellen van getallen gebruiken de meeste mensen het \gtermen{Arabisch getalsysteem}{Een manier om getallen voor te stellen. Met het Arabisch getalsysteem stellen we getallen voor als een opeenvolging van cijfers. Elk cijfer heeft een bepaald gewicht dat afhangt van de plaats van dat cijfer in de sequentie: de waarde van het $i$-de getal van rechts - inclusief $0$ - is $r^i$ met $r$ de radix.}. Hierbij stellen we een getal voor door een reeks cijfers. Een cijfer op een bepaalde plaats heeft een gewicht dat $r$ keer groter is, dan het volgende cijfer, met de \gtermen[radix]{radix $r$}{Een eigenschap van een Arabisch getalsysteem. De radix wijst op het gewicht die een cijfer in een getal heeft ten opzichte van het volgende cijfer. Het $i$-de cijfer van rechts - inclusief $0$ - heeft een waarde van $r^i$.} van het getalstelsel. Om tot een eenduidige voorstelling van elk getal te komen wordt de verzameling mogelijke cijfers beperkt tot $r$ elementen: meestal zijn dat de cijfers $0$ tot $9$, en daarna volgen de letters $a$, $b$, ... Een getal $D_r$ wordt dus voorgesteld als:
+
 \begin{equation}
 D_r=d_{m-1}d_{m-2}\ldots d_0,d_{-1}\ldots d_{-n}=\displaystyle\sum_{i=-n}^{m-1}{r^i\times d_i}
-\label{eqn:numberRepresentation}
+\eqnlab{numberRepresentation}
 \end{equation}
-Hierbij zijn $d_i$ de cijfers van het getal. Wereldwijd gebruikt men het \termen{decimale stelsel}, andere populaire stelsel zijn het \termen{binair} ($r=2$), \termen{octaal} ($r=8$) en \termen{hexadecimaal} ($r=16$) stelsel. Het binaire stelsel heeft logischerwijs twee mogelijke cijfers. Deze kunnen we voorstellen door $0$ of $1$ op een lijn te zetten. Indien we meer cijfers nodig hebben, zullen we eenvoudigweg meer lijnen voorzien, die elk een cijfer van het getal voorstellen. In de informatica en elektronica maakt men theoretisch vaak gebruik van andere getalstelsel. Dit komt omdat binaire getallen niet bepaald compact zijn\footnote{Een binair getal bestaat uit $3.3$ keer het aantal cijfers van zijn decimale tegenhanger.}. Immers is het omzetten van binaire getallen naar hexadecimale getallen niets anders dan het groeperen van cijfers. Indien men getallen noteert met een andere radix dan de decimale, wordt de radix in decimale notatie als subscript toegevoegd. Zo is $\mbox{2A}_{16}$ het equivalent van $42$.
+
+Hierbij zijn $d_i$ de cijfers van het getal. Wereldwijd gebruikt men het \gtermen{decimale stelsel}{Een Arabisch getalstelsel met radix $r=10$.} met radix $r=10$. Andere populaire stelsel zijn het \gtermen{binair stelsel}{Een Arabisch getalstelsel met radix $r=2$.} ($r=2$), het \gtermen{octaal stelsel}{Een Arabisch getalstelsel met radix $r=8$.} ($r=8$) en het \gtermen{hexadecimaal stelsel}{Een Aratisch getalstelsel met radix $r=16$.} ($r=16$).
+
+\paragraph{}
+Het binaire getalstelsel heeft logischerwijs twee mogelijke cijfers, bij conventie meestal $0$ en $1$. We kunnen deze cijfers voorstellen door $0$ of $1$ op een lijn te zetten. Indien we meer cijfers nodig hebben, kunnen we meerdere lijnen voorzien, die elk een cijfer van het getal voorstellen. In de informatica en elektronica zal men getallen vaak niet binair uitschrijven: men gebruik van andere getalstelsel. Dit komt omdat binaire getallen nogal langdradig zijn\footnote{Een binair getal bestaat gemiddeld uit $3.3$ keer het aantal cijfers van zijn decimale tegenhanger.}. Immers is het omzetten van binaire getallen naar hexadecimale getallen niets anders dan het groeperen van vier cijfers. Indien men getallen noteert met een andere radix dan de decimale, wordt de radix in decimale notatie als subscript toegevoegd. Zo zijn $\mbox{2A}_{16}$ en $\mbox{101010}_{2}$ het equivalent van $42$.
+
 \subsection{Radix-conversie}
+Omdat de meeste mensen met decimale cijfers werken, zullen we regelmatig decimale cijfers moeten kunnen omzetten naar hun binair (en soms ook ander) equivalent. We spreken hier van een \gtermen{bronradix}{Bij omzetting van een getal tussen twee Arabische getalstelsels de radix van het originele getalstelsel.} en een \gtermen{doelradix}{Bij omzetting van een getal tussen twee Arabische getalstelsels de radix van het getalstelsel naar waar we de omzetting willen doen.}. We maken hier een onderscheid tussen vier gevallen:
+
+\begin{enumerate}
+ \item De bronradix is een macht is van de doelradix;
+ \item de doelradix is een macht van de bronmatrix;
+ \item de bron en doelradix delen een macht met elkaar; en
+ \item een algemene methode voor omzettingen.
+\end{enumerate}
+
+Een algemene methode is natuurlijk nuttig, maar het is belangrijk ook de andere methodes te beschouwen, omdat deze vaak veel sneller uit te rekenen vallen.
+
 \subsubsection{$r_1\rightarrow r_2$ omzetting met $r_1=r_2^p$}
-Een speciaal geval van omzetting treedt op indien de bronradix een macht is van de doel radix. In dat geval kunnen we de omzetting eenvoudig doen door alfabetomzetting. Immers betekent dit dat we elk broncijfer kunnen omzetten naar $p$ doelcijfers. Hierbij dient de sequentie doelcijfers het wiskundig equivalent te zijn van de broncijfers. Een concreet voorbeeld is het omzetten van een hexadecimaal getal in het binair stelsel ($r_1=16=2^4=r_2^4$). Tabel \ref{tbl:radixConversionHexOctBin}
+Een speciaal geval van omzetting treedt op indien de bronradix een macht is van de doelradix. In dat geval kunnen we de omzetting doen aan de hand van alfabetomzetting. Immers betekent dit dat we elk broncijfer kunnen omzetten naar $p$ doelcijfers. De sequentie van doelcijfers dienen wiskundig equivalent te zijn aan het broncijfer. Een concreet voorbeeld is het omzetten van een hexadecimaal getal in het binair stelsel ($r_1=16=2^4=r_2^4$).
+
 \begin{table}[hbt]
 \centering
 \subtable[Hex $\leftrightarrow$ Binair]{
-\begin{tabular}{r|r||r|r||r|r||r|r}
-Hex&Bin&Hex&Bin&Hex&Bin&Hex&Bin\\\hline
+\defaulttable{r|r||r|r||r|r||r|r}{
+\bf Hex&Bin&Hex&Bin&Hex&Bin&Hex&Bin}{
 0&0000&4&0100&8&1000&C&1100\\
 1&0001&5&0101&9&1001&D&1101\\
 2&0010&6&0110&A&1010&E&1110\\
-3&0011&7&0111&B&1011&F&1111\\
-\end{tabular}
-}
+3&0011&7&0111&B&1011&F&1111
+}}
 \subtable[Octaal $\leftrightarrow$ Binair]{
-\begin{tabular}{r|r||r|r}
-Oct&Bin&Oct&Bin\\\hline
+\defaulttable{r|r||r|r}{
+\bf Oct&Bin&Oct&Bin}{
 0&000&4&100\\
 1&001&5&101\\
 2&010&6&110\\
-3&011&7&111\\
-\end{tabular}
-}
+3&011&7&111
+}}
 \caption{Radix-conversie van hexadecimaal en octaal naar binair.}
 \tbllab{radixConversionHexOctBin}
 \end{table}
-toont de omzetting van hexadecimale en octale cijfers naar binaire cijfers. Bij wijzen van voorbeeld zetten we $\mbox{B4F}_{16}$ om naar het binaire stelsel\footnote{De verticale strepen ($|$) dienen uitsluitend om educatieve doeleinden, en zijn niet verplicht.}:
+
+\tblref{radixConversionHexOctBin} toont de omzetting van hexadecimale en octale cijfers naar sequenties van binaire cijfers. Bij wijze van voorbeeld zetten we $\mbox{B4F}_{16}$ om naar het binaire stelsel\footnote{De verticale strepen ($|$) dienen uitsluitend om educatieve doeleinden, en zijn niet verplicht.}:
+
 \begin{equation}
 \mbox{B4F}_{16}=1011|0100|1111=101101001111_2
 \end{equation}
+
+Elk cijfer in $\mbox{B4F}_{16}$ vervangen we dus door het binair equivalent, vervolgens nemen we al deze cijfers samen.
+
 \subsubsection{$r_1\rightarrow r_2$ omzetting met $r_1^q=r_2$}
-In de omgekeerde situatie willen we een getal van een radix $r_1$ omzetten naar een macht van deze radix. De oplossing ligt dan ook voor de hand: we vertalen groepjes van $q$ broncijfers naar 1 doelcijfer. Een belangrijke opmerking is hoe we de voorstelling met de bronradix onderverdelen in groepen: dit doen we vanaf de komma voor het gehele gedeelte naar links, voor het kommagedeelte naar rechts. Aan de uiteinden van de voorstelling kunnen er soms onvoldoende cijfers aanwezig zijn. In dat geval dienen nullen toegevoegd te worden. Bij wijze van voorbeeld zetten we $1011011111.10001_2$ om naar zijn octale equivalent (zie hiervoor tabel \ref{tbl:radixConversionHexOctBin}):
+In de omgekeerde situatie willen we een getal met een bronradix $r_1$ omzetten naar een getal met een radix die een macht is van de bronradix. De oplossing bestaat erin dat we groepjes van $q$ broncijfers naar \'e\'en doelcijfer omzetten. De vraag is hoe we de voorstelling met de bronradix onderverdelen in groepen? Dit doen we vanaf de komma van het originele getal: voor het gehele gedeelte maken we groepjes van $q$ cijfers naar links; na de komma maken we groepjes van cijfers naar rechts. Aan de uiteinden van de voorstelling kunnen er soms onvoldoende cijfers aanwezig zijn deze groepjes te maken. In dat geval dienen nullen toegevoegd te worden. Eenmaal we deze groepjes hebben geconstrueerd, vertalen we elk van deze sequenties van cijfers naar hun equivalent cijfer in het nieuwe getalstelsel (dit is dus de omgekeerde richting voor \tblref{radixConversionHexOctBin}). Bij wijze van voorbeeld zetten we $1011011111.10001_2$ om naar zijn octale equivalent:
+
 \begin{equation}
 1011011111.10001_2=1|011|011|111.100|01_2=\underline0\underline01|011|011|111.100|01\underline0_2=1337.42_8
 \end{equation}
+
+Nullen die we bijvoegen om groepjes te kunnen maken hebben we onderlijnd.
+
 \subsubsection{$r_1\rightarrow r_2$ omzetting met $r_1^q=r_2^p$}
-Een logisch gevolg van de voorgaande omzettingen, is dat we ook de mogelijkheid hebben om getallen makkelijk tussen 2 radixen om te zetten indien ze een gemeenschappelijke macht hebben. In dat geval laten we de conversie verlopen langs een derde radix: $r'$. $r'$ vormt een basis waarvan de bron- en doelradix machten zijn. Er geldt dan ook: $r_1=r'^p$ en $r'^q=r_2$. Een concreet voorbeeld is het binaire stelsel die als een tolk kan functioneren tussen het hexadecimale en octale stelsel. Dit illustreren we door $157255_8$ om te zetten naar het hexadecimaal stelsel:
+Een logisch gevolg van de voorgaande omzettingen, is dat we ook de mogelijkheid hebben om getallen makkelijk tussen twee radixen om te zetten indien ze een macht met elkaar delen. In dat geval bestaat er immers een getal $r'$ zodat $r_1=s^p$ en $r_2=s^q$. We kunnen in dat geval de conversie laten verlopen langs een getalstelsel met radix $s$. Een concreet voorbeeld is het binaire stelsel die als een tolk kan functioneren tussen het hexadecimale en octale stelsel. Dit illustreren we door $157255_8$ om te zetten naar het hexadecimaal stelsel:
+
 \begin{equation}
 \begin{array}{ll}
 \mbox{Oct$\rightarrow$Bin}&157255_8=001|101|111|010|101|101_2=1101111010101101_2\\
 \mbox{Bin$\rightarrow$Hex}&1101111010101101_2=1101|1110|1010|1101_2=\mbox{DEAD}_{16}
 \end{array}
 \end{equation}
+
+We maken dus gebruik van de twee hierboven beschreven conversie-methodes om een derde conversie te introduceren.
+
 \subsubsection{Algemene omzetting}
-De vorige methodes werkten enkel onder een fundamentele aanname: de ene radix moest een macht van een andere zijn. In de praktijk is dit meestal niet zo, zo willen we vaak decimale getallen omzetten naar hun binair equivalent, of omgekeerd. In deze subsubsectie behandelen we kort een methode om in het algemeen een radixomzetting uit te voeren. Deze omzettingen zijn relatief arbeidintensief, en vereisen bovendien een getalstel waarin we simpele rekenkundige operaties kunnen uitvoeren. Voor mensen is dit over het algemeen het decimaal stelsel, computers werken doorgaans met het binair stelsel\footnote{Dit is niet altijd zo, in de Sovjet-Unie waren in de jaren '50 ternaire computers populair.}. In deze methode zetten we eerst de representatie om naar de representatie waarop we kunnen rekenen. Indien we bijvoorbeeld $\mbox{8C989}_{16}$ willen omzetten naar een radix 36, zullen we dit getal eerst omzetten naar het decimale stelsel, dit doen we door de waarde van de cijfers te vermenigvuldigen met het gewicht van hun positie en deze vervolgens op te tellen:
+De vorige methoden werken enkel onder een aanname: de ene radix moest een macht van een andere zijn, of er moet een gemeenschappelijk macht zijn. In de praktijk is dit meestal niet zo, zo willen we vaak decimale getallen omzetten naar hun binair equivalent, of omgekeerd. In deze subsubsectie behandelen we kort een methode om in het algemeen een radixomzetting uit te voeren. Deze omzettingen zijn relatief arbeidintensief, en vereisen bovendien een getalstel waarin we simpele rekenkundige operaties kunnen uitvoeren. Voor mensen is dit over het algemeen het decimaal stelsel, computers werken doorgaans met het binair stelsel\footnote{Dit is niet altijd zo, in de Sovjet-Unie waren in de jaren '50 ternaire computers populair: computers die met drie soorten signalen kunnen werken.}.
+
+\paragraph{}
+We dienen dus eerst het getal dat we willen omzetten, omzetten naar een stelsel waarin we makkelijk kunnen rekenen, bijvoorbeeld het decimale getalstelsel. Indien we bijvoorbeeld $\mbox{8C989}_{16}$ willen omzetten naar een getalstelsel een radix $36$, zullen we dit getal eerst omzetten naar het decimale stelsel, dit doen we door de waarde van de cijfers te vermenigvuldigen met het gewicht van hun positie en deze vervolgens op te tellen:
 \begin{equation}
 \mbox{8C989}_{16}=8\cdot 16^4+12\cdot 16^3+9\cdot 16^2+8\cdot 16^1+9\cdot 16^0=575881
 \end{equation}
-Vervolgens bepalen we iteratief elk cijfer, hierbij beginnen we bij het laatste cijfer, dit vinden we door het getal modulo de radix te bereken: $575881\mod36=25=\mbox{P}_{36}$. Hiermee weten we al het laatste cijfers. We trekken vervolgens de bekomen waarde af van het getal, en delen het door de radix. Dit resultaat kunnen we zo verder iteratief manipuleren, om de andere cijfers te berekenen. Indien we 0 uitkomen stopt het algoritme en hebben we de equivalente representatie gevonden. Tabel \ref{tbl:radixConversionExample} illustreert dit principe.
+
+Een mogelijk eenvoudigere methode, is het getal van links naar rechts te lezen en ondertussen een getal in ons geheugen aan te passen. Aanvankelijk is dat getal $0$. Telkens wanneer we een nieuw cijfer tegenkomen, vermenigvuldigen we het getal in ons geheugen met de radix, en tellen er vervolgens de waarde van het cijfer bij op. Dit doen we tot het laatste cijfer. Het getal die dan in ons geheugen zit, is het uiteindelijke getal. Dit komt dus neer op:
+
+\begin{equation}
+\mbox{8C989}_{16}=\brak{\brak{\brak{\brak{0\cdot 16+8}\cdot 16+12}\cdot 16+9}\cdot 16+8}\cdot 16+9=575881
+\end{equation}
+
+\paragraph{}
+Eenmaal we het getal in een voorstelling hebben gezet waarmee we kunnen rekenen, bepalen we iteratief elk cijfer van het getal in de nieuwe voorstelling en dit van rechts naar links. Dit cijfer rekenen we uit door het getal modulo de radix $r$ te bepalen. Wanneer we dus $575881$ modulo $36$ uitrekenen, bekomen we $575881\mod36=25=\mbox{P}_{36}$. Hiermee weten we al het laatste cijfers. We trekken vervolgens de bekomen waarde af van het getal ($575881-25=575856$), en delen het door de radix $r$ ($575856/36=15996$). Dit resultaat manipuleren we iteratief verder, om de andere cijfers van rechts naar links te berekenen. Wanneer we $0$ uitkomen, stopt het algoritme en hebben we de equivalente representatie gevonden. \tblref{radixConversionExample} illustreert dit principe.
+
 \begin{table}[hbt]
 \centering
 \begin{tabular}{r|r|l|l|r}
@@ -260,21 +394,34 @@ $5$&$0$&$-$&$-$&$-$
 \caption{Voorbeeld van algemene radix-omzetting.}
 \tbllab{radixConversionExample}
 \end{table}
+
 We kunnen dus concluderen dat: $\mbox{8C989}_{16}=\mbox{CCCP}_{36}$.
+
 \subsection{Optellen}
-\label{ss:add}
-Hoe tellen we nu twee getallen op? In het decimaal stelsel tellen we twee getallen op door middel van cijferen. Hieronder geven we een illustrerend voorbeeld waarbij we $1425+1917$ uitrekenen:
+\ssclab{add}
+
+Hoe tellen we nu twee getallen op? In het decimaal stelsel kunnen we twee (grote) getallen optellen door middel van \gtermen{cijferen}{Een verzameling van technieken die in het lager onderwijs worden aangeleerd om bewerkingen zoals optellen, aftrekken, vermenigvuldigen en delen uit te voren op grote getallen. In plaats van de bewerking in \'e\'en keer op de twee getallen uit te voeren, wordt een bepaalde methode cijfer per cijfer uitgevoerd. Cijferen komt ook terug in digitale logica wanneer men rekenkundige circuits implementeert.}. Hieronder geven we een illustrerend voorbeeld waarbij we $1425+1917$ uitrekenen:
+
 \begin{equation}
-\begin{array}{l|lcccc}
+\begin{array}{r|lcccc}
 \mbox{overdracht $c$}&&1&0&1&\\
 x&&1&4&2&5\\
 y&+&1&9&1&7\\\hline
 \mbox{som $s$}&&3&3&4&2
 \end{array}
 \end{equation}
-Om getallen in het decimaal stelsel te kunnen optellen gebruiken we een repetitieve structuur, waarbij we 200 basisregels moeten onthouden. Zo'n basisregel $f\left(c_i,x_i,y_i\right)=\left(s_i,c_{i+1}\right)$ is een functie die de eventuele \termen{overdracht} of \termen{carry}, en de cijfers van de twee getallen in een bepaalde kolom omzet naar de overdracht van de volgende kolom en de som van deze kolom. Een voorbeeld van zo'n basisregel is $f\left(0,4,9\right)=\left(3,1\right)$. Deze regel wordt in ons voorbeeld gebruikt in de derde kolom vanaf rechts\footnote{We nummeren de kolommen vanaf rechts, analoog aan de getalvoorstelling van vergelijking (\ref{eqn:numberRepresentation})}. Binair optellen gebeurt volledig analoog, we hebben opnieuw met een repetitieve structuur te maken, alleen dienen we nu slechts 8 verschillende regels te onthouden.
+
+Om getallen in het decimaal stelsel te kunnen optellen gebruiken we een repetitieve structuur, waarbij we 200 basisregels moeten onthouden. Een dergelijke basisregel $\fun{f}{c_i,x_i,y_i}=\tupl{s_i,c_{i+1}}$ is een functie die de eventuele \gtermen{overdracht}{Een restproduct dat ontstaat wanneer we twee cijfers $x$ en $y$ optellen, en de het resultaat is groter dan de radix $r$. In dat geval is de overdracht $\floor{\brak{x+y}/r}$. De overdracht wordt gebruikt als toevoeging bij de optelling van het volgend cijfer.} of \stermen{carry}{overdracht}, en de cijfers van de twee getallen $x$ en $y$ in een bepaalde kolom omzet naar de overdracht van de volgende kolom en de som van deze kolom. Een voorbeeld van zo'n basisregel is $\fun{f}{0,4,9}=\tupl{3,1}$. Deze regel wordt in ons voorbeeld gebruikt in de derde kolom vanaf rechts\footnote{We nummeren de kolommen vanaf rechts, analoog aan de getalvoorstelling van \eqnref{numberRepresentation}.}. De overdracht is hierbij een restproduct van de optelling van twee cijfers (eventueel ook met de overdracht van de vorige optelling). Het is immers mogelijk dat het resultaat van de optelling groter of gelijk is aan de radix $r$. In dat geval is het cijfer die we onderaan schrijven, gelijk aan $s_i=c_i+x_i+y_i-r$, de overdracht is dan gelijk aan $c_{i+1}=1$. In het geval $c_i+x_i+y_i<r$, is het resultaat $s_i=c_i+x_i+y_i$ en $c_{i+1}=0$.
+
+\paragraph{}
+Binair optellen gebeurt volledig analoog, we hebben opnieuw met een repetitieve structuur te maken, alleen dienen we nu slechts 8 verschillende regels te onthouden: immers zijn alle variabelen $c_i$, $x_i$ en $y_i$ binair.
+
+Nu we weten hoe we twee getallen kunnen optellen, zullen we digitale circuits voorzien om de binaire signalen van twee getallen
+daadwerkelijk om te zetten in binaire signalen die de som voorstellen. Hiervoor zullen we eerst twee nieuwe componenten voorstellen waarmee we een opteller kunnen realiseren. We zullen later deze implementatie verder verfijnen om sneller te kunnen optellen.
+
 \subsubsection{Half adder}
-In deze paragraaf synthetiseren we een \termen{half adder (HA)}, die de laatste bit van de twee getallen optelt. Bij het laatste getal is de overdracht sowieso 0, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de som. We stellen een waarheidstabel en de bijbehorende Karnaugh-kaarten op in figuur \ref{fig:halfAdder}.
+In deze paragraaf synthetiseren we een \gtermen[half adder]{half adder (HA)}{Een component die voor twee gegeven bits $x$ en $y$ het binaire cijfer van de som $s=x\oplus y$ uitrekent, en de overdracht $c=x\cdot y$. Een half-adder wordt soms gebruikt om de laatste bit bij een optelling van twee getallen te berekenen. De rest van de bits worden met een full adder berekend.}, die de laatste bit van de twee getallen optelt. Bij het laatste cijfer is de overdracht $c_0$ sowieso $0$\footnote{Dit geldt enkel bij een optelling, later zullen we optellers ook gebruiken om het verschil tussen twee getallen uit te rekenen.}, dus daarmee hoeven we geen rekening te houden. We dienen een functie te ontwikkelen die de overdracht van de volgende kolom berekent, en de bit die het laatste cijfer van de som bepaalt. We stellen hiervoor een waarheidstabel en de bijbehorende Karnaugh-kaarten op in \figref{halfAdder}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{\importtikz{halfadder-truthtable}}
@@ -284,10 +431,12 @@ In deze paragraaf synthetiseren we een \termen{half adder (HA)}, die de laatste 
 \caption{Half adder (HA).}
 \figlab{halfAdder}
 \end{figure}
-Deze combinatorische functies kunnen we verwezenlijken met een AND en XOR poort.
+We zien dat we de som-bit $s_i$ kunnen berekenen aan de hand van een XOR operatie tussen $x_i$ en $y_i$, de carry $c_{i+1}$ is enkel $1$ wanneer beide cijfers $x_i$ en $y_i$ op $1$ staan, dit gedrag kunnen we dus realiseren aan de hand van een AND-poort. Deze implementatie staat in \figref{halfadder-implementation}
+
 \subsubsection{Full adder}
-\label{sss:fulladder}
-Met een Half adder kunnen we echter geen optellingen uitrekenen. Hiervoor dienen we een component te ontwikkelen die meer functionaliteit biedt: de \termen{full adder (FA)}. Een full adder bevat slechts \'e\'en ingang extra: de overdracht van de vorige opteller $c_i$. Een full adder telt op door een XOR operatie toe te passen op de drie ingangen: $x_i$, $y_i$ en $c_i$, verder is er sprake van overdracht indien twee of meer ingangen 1 zijn. Dit kunnen we eenvoudig implementeren met tweelagen-logica. De waarheidstabellen en Karnaugh-kaarten staan samen met een mogelijke implementatie op figuur \ref{fig:fullAdder}.
+\ssslab{fulladder}
+Met een half adder kunnen we geen optellingen uitrekenen: immers houdt de half adder geen rekening met de carry die eventueel wordt gegenereerd uit de cijfers rechts van de plaats waar de half adder staat. We ontwikkelen dus een component die deze functionaliteit wel aanbiedt: de \gtermen[full adder]{full adder (FA)}{Een component die voor drie gegeven bits $x_i$, $y_i$ en $c_i$ - twee echte bits en meestal de overdracht van de vorige opteller - de bit $s_i=x_i\oplus y_i\oplus c_i$ uitrekent die onder de som moet komen te staan, samen met de overdracht voor de volgende bit $c_{i+1}$. Een full adder wordt gebruikt bij het optellen en aftrekken van twee getallen.}. Een full adder bevat \'e\'en ingang extra tegenover een half adder: de overdracht van de vorige opteller $c_i$. Een full adder telt op door XOR-operaties toe te passen op de drie ingangen: $x_i$, $y_i$ en $c_i$. Er is sprake van overdracht naar de volgende bit indien twee of meer ingangen op dat moment op $1$ staan. Dit kunnen we implementeren met tweelagen-logica. De waarheidstabellen en Karnaugh-kaarten voor deze schakelingen staan samen met een mogelijke implementatie op \figref{fullAdder}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{\importtikz{fulladder-truthtable}}
@@ -298,25 +447,34 @@ Met een Half adder kunnen we echter geen optellingen uitrekenen. Hiervoor dienen
 \caption{Full adder (FA).}
 \figlab{fullAdder}
 \end{figure}
-We kunnen ook een implementatie synthetiseren met behulp van functionele ontbinding. Bij een full adder voeren we immers twee optellingen uit, de volgorde speelt hierbij geen rol. Indien minstens \'e\'en van de twee optellingen overdracht genereert, is er sprake van overdracht bij de full adder. We kunnen een full adder dus ook implementeren zoals op figuur \ref{fig:fulladder-functional}. Indien we de half adders dan implementeren zoals op figuur \ref{fig:halfadder-implementation}, zien we dat we \'e\'en poort uitsparen. Dit betalen we echter met grotere vertragingen, iets wat bij optellingen met grote getallen niet gewenst is.
+
+We kunnen ook een implementatie synthetiseren met behulp van functionele ontbinding. Bij een full adder voeren we immers twee optellingen uit, de volgorde speelt hierbij geen rol. Indien minstens \'e\'en van de twee optellingen van de half adders overdracht genereert, is er sprake van overdracht bij de full adder. Daarom plaatsen we een OR-poort tussen de twee carries. We kunnen een full adder dus ook implementeren zoals op \figref{fulladder-functional}. Tegenover de implementatie op \figref{halfadder-implementation}, zien we dat we \'e\'en poort uitsparen. Dit betalen we echter met grotere vertragingen, iets wat bij optellingen met grote getallen niet gewenst is.
+
 \subsubsection{Ripple-carry opteller}
-Met behulp van een half adder en $n$ full adders kunnen we vervolgens een opteller realiseren die twee $n+1$ bit getallen optelt. Dit doen we met behulp van een \termen{Ripple-carry opteller}. Figuur \ref{fig:rippleCarryAdder}%
+Met behulp van een half adder en $n$ full adders kunnen we vervolgens een opteller realiseren die twee $n+1$ bit getallen optelt. Dit doen we met behulp van een \gtermen{Ripple-carry opteller}{Een component die aan de hand van full adders en optioneel een half adder, twee getallen in binaire notatie optelt. Dit doen men door de full adders aan elkaar te schakelen zodat elke adder twee bits van de getallen op dezelfde positie verwerkt, en de carry van bits op positie $i$ als carry ingang voor de volgende bit wordt gebruikt.}.
 \importtikzfigure{rippleCarryAdder}{Schematische voorstelling van een $n$-bit Ripple-carry opteller.}
-toont hoe dit in z'n werk gaat: we tellen de laatste twee bits op met een half adder, de overige bits tellen we op met full adders. De carry uitgang van elke adder gaat naar de de ingang van de volgende adder. De allerlaatste carry uitgang $c_n$, kan men gebruiken als een \termen{overflow} uitgang. Indien we immers twee $n$-bit getallen met elkaar optellen, kunnen sommige resultaten $n+1$-bit getallen vereisen om nog voorgesteld te kunnen worden. In een ander geval wordt deze uitgang gebruikt om de waarde van de $n+1$-ste bit te bepalen. In dat geval heeft de uitgang meer bits dan de operanden. Uiteraard kunnen we de half adder vervangen door een full adder met als carry ingang 0.
+\figref{rippleCarryAdder} toont hoe dit in z'n werk gaat: we tellen de laatste twee bits op met een half adder\footnote{Op de figuur gebruiken we hiervoor een full adder $\mbox{FA}_0$, maar met carry ingang $c_0=0$, wat op hetzelfde neerkomt. Later zullen we zien dat door een full adder te gebruiken, we meer kunnen doen met een ripple-carry opteller.}, de overige bits tellen we op met full adders. De carry uitgang van elke adder gaat naar de de ingang van de volgende adder. De allerlaatste carry uitgang $c_n$, kan men gebruiken als een \gtermen{overflow}{Een signaal dat na een bewerking - bijvoorbeeld een optelling - het resultaat niet meer volledig voor te stellen valt op de gegeven bits. Dit is bijvoorbeeld het geval bij een $8$-bit opteller, waarbij het resultaat groter is dan $255$.} uitgang. Indien we immers twee $n$-bit getallen met elkaar optellen, kan dit resulteren in getallen waarvoor die we enkel met $n+1$ bits kunnen voorstellen. In een ander geval wordt deze uitgang gebruikt om de waarde van de $n+1$-ste bit te bepalen. We kunnen ook - zoals op de figuur - de half adder vervangen door een full adder met als carry ingang $c_0=0$.
+
 \paragraph{}
-Omdat we meestal getallen met een groot aantal bit optellen\footnote{Op de meeste processoren is dat 32 of 64 bit.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen 1 XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
+Omdat we meestal getallen met een groot aantal bits optellen\footnote{Op de meeste processoren spreken we over $32$ of $64$ bits.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen \'e\en XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
+
 \begin{equation}
 \mbox{vertraging}=2.4n+2.4n+3.2=4.8n+3.2
 \end{equation}
-Het is mogelijk dat we deze vertraging verder kunnen reduceren, een probleem is echter dat de vertraging een orde $n$ blijft. Voor berekeningen met grote getallen zijn ripple-carry adders dan ook onaanvaardbaar.
+
+Het is mogelijk dat we deze vertraging verder kunnen reduceren, een probleem is echter dat de vertraging van een orde $\bigoh{n}$ blijft. Voor berekeningen met grote getallen zijn ripple-carry adders dan ook onaanvaardbaar. Om dit euvel te verhelpen introduceren we de carry-lookahead opteller.
+
 \subsubsection{Carry-lookahead opteller}
-Een \termen{Carry-lookahead opteller (CLA)} is een component ter vervanging van een full adder. Het is de bedoeling om met behulp van deze component rechtstreeks $c_i$ te berekenen als een functie $c_i\left(c_0,x_0,x_1,\ldots,x_{i-1},y_0,y_1,\ldots,y_{i-1}\right)$. De Carry-lookahead opteller heeft dezelfde ingangen als een full adder: $(x_i,y_i,c_i)$, maar meer uitgangen $(c_{i+1},g_i,p_i,s_i)$. Deze uitgangssignalen hebben volgende functie:
+Een \gtermen[carry-lookahead opteller]{Carry-lookahead opteller (CLA)}{Een uitbreiding op de full adder. In plaats van een carry uitgang $c_i$, heeft de carry-lookahead opteller een generate uitgang $g_i$ en een popagate uitgang $p_i$. Deze uitgangen berekenen of er op deze bit een carry zal gegenereerd worden - wanneer zowel $x_i$ als $y_i$ $1$ zijn, of wanneer een carry van de vorige bit zal gepropageerd worden: wanneer minstens \'e\'en van de twee ingangen $x_i$ of $y_i$ $1$ is.} is een component ter vervanging van een full adder. Het is de bedoeling om met behulp van deze component rechtstreeks $c_i$ te berekenen als een functie $\fun{c_i}{c_0,x_0,x_1,\ldots,x_{i-1},y_0,y_1,\ldots,y_{i-1}}$. De Carry-lookahead opteller heeft dezelfde ingangen als een full adder: $\tupl{x_i,y_i,c_i}$, maar meer en andere uitgangen $\tupl{c_{i+1},g_i,p_i,s_i}$. Deze uitgangssignalen hebben volgende functie:
+
 \begin{itemize}
- \item \termen{carry-generate $g_i$}: 1 indien er bij het optellen van $x_i$ en $y_i$ overdracht gegenereerd wordt. Bijgevolg is $g_i=x_iy_i$.
- \item \termen{carry-propagate $p_i$}: 1 indien bij de optelling de overdracht verder gepropageerd zal worden. Bijgevolg $p_i=x_iy_i'+x_i'y_i$.
- \item som $s_i$: het resultaat van de optelling: $s_i=c_ip_i'+c_i'p_i$.
+ \item \gtermen[carry-generate]{carry-generate $g_i$}{Een uitgang van een carry-lookahead opteller; $1$ indien er carry gengereerd zal worden door $x_i$ en $y_i$. Dit is het geval wanneer beide ingangen een $1$ aanleggen. In het andere geval staat er $0$ op deze uitgang.}: $1$ indien er bij het optellen van $x_i$ en $y_i$ overdracht gegenereerd wordt; $0$ in het andere geval. Bijgevolg is $g_i=x_i\cdot y_i$.
+ \item \gtermen[carry-propagate]{carry-propagate $p_i$}{Een uitgang van een carry-lookahead opteller; $1$ indien er carry gepropageerd zal worden door $x_i$ en $y_i$ en niet gegenereerd. Dit is het geval wanneer \'e\'en van de twee ingangen $1$ aanlegt. In het andere geval staat er $0$ op de uitgang.}: $1$ indien bij de optelling de overdracht van de vorige bit verder gepropageerd zal worden, en deze overdracht niet gegenereerd wordt; $0$ in het andere geval. Bijgevolg $p_i=x_i\cdot y_i'+x_i'\cdot y_i=x_i\oplus y_i$.
+ \item som $s_i$: het resultaat van de optelling $s_i=c_i\oplus\brak{x_i\oplus y_i}$, wat equivalent is met $s_i=c_ip_i'+c_i'p_i=c_i\oplus p_i$.
 \end{itemize}
-De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementatie; de waarheidstabellen, interface en een mogelijke implementatie staan op figuur~\ref{fig:carryLookaheadAdder}.
+
+De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementatie; de waarheidstabellen, interface en een mogelijke implementatie staan op \figref{carryLookaheadAdder}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Waarheidstabel]{\importtikz{cla-truthtable}}
@@ -326,9 +484,12 @@ De opsomming van de uitgangen geeft dan ook al meteen een mogelijke implementati
 \caption{Carry-Lookahead Opteller (CLA).}
 \figlab{carryLookaheadAdder}
 \end{figure}
-Een belangrijke opmerking bij deze component is dat we de overdracht $c_{i+1}$ vervolgens kunnen berekenen als $c_{i+1}=g_i+c_ip_i$. De overdacht hangt dus niet rechtstreeks af van $x_i$ of $y_i$, deze eigenschap is belangrijk voor de synthese van een ander component: de CLA-generator.
+
+We kunnen de overdracht van de carry-lookahead opteller $c_{i+1}$ vervolgens berekenen met de formule $c_{i+1}=g_i+c_ip_i$: er is overdracht wanneer deze ofwel gegenereerd wordt, ofwel wanneer er al overdracht is en deze gepropageerd wordt. De overdacht hangt dus niet langer rechtstreeks af van $x_i$ of $y_i$. Deze eigenschap zal belangrijk blijken voor de synthese van het volgende component: de CLA-generator.
+
 \subsubsection{CLA-generator}
-Om een opteller te realiseren moeten we, net zoals bij de Ripple-carry opteller, alleen nog de glue voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \termen{CLA-generator}. Een $n$-bit CLA-generator is een component met ingangen $\left(c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}\right)$. De component heeft tot doel om de overdracht (carry) te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\left(c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}\right)$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
+Om een opteller te realiseren moeten we, net zoals bij de ripple-carry opteller, nog de glue logic voorzien tussen de verschillende carry-lookahead optellers. Bij deze optellers is het verhaal echter gecompliceerder: we hebben een extra component nodig om de CLA elementen met elkaar te verbinden: de \gtermen{CLA-generator}{Een component met ingangen $\tupl{c_0,g_0,\ldots,g_{n-1},p_0,\ldots,p_{n-1}}$ die overdracht doorrekent en die de carry-lookahead optellers van de waarde voor de overdracht-ingang voorziet. De uitgangen zijn dan ook $\tupl{c_1,\ldots,c_n,g_{0,n-1},p_{0,n-1}}$. Door een cascade van CLA-generatoren te beschouwen, kan men een optelling realiseren die in \bigoh{\log n} werkt, in plaats van in \bigoh{n}.}. Een $n$-bit CLA-generator is een component met ingangen $\tupl{c_0,g_0,\ldots g_{n-1},p_0,\ldots,p_{n-1}}$. De component heeft tot doel om de overdracht voor een reeks carry-lookahead optellers te berekenen met een zo klein mogelijk kritisch pad, logischerwijs heeft de component dan ook de uitgangen: $\tupl{c_1,\ldots c_n,g_{0,n-1},p_{0,n-1}}$. De laatste twee uitgangen zullen we later bespreken. Op figuur \ref{fig:clag-structure} zien we hoe we een CLA-generator aansluiten op de Carry-lookahead optellers.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Structuur van de CLA-generator.]{\importtikz{clag-structure}}
@@ -336,67 +497,105 @@ Om een opteller te realiseren moeten we, net zoals bij de Ripple-carry opteller,
 \caption{CLA-generator.}
 \figlab{CLAGenerator}
 \end{figure}
+
+\paragraph{}
 Eerst zullen we een methode ontwikkelen om een overdracht $c_i$ te berekenen. Een overdracht kan maar op twee manieren tot stand komen: ofwel wordt deze gegenereerd, ofwel wordt deze gepropageerd. Dit formaliseren we als:
+
 \begin{equation}
 c_i=g_{0,i-1}+p_{0,i-1}\cdot c_0
+\eqnlab{cla-ci}
 \end{equation}
-Een oplettende lezer zal gemerkt hebben dat we hierbij $g$ en $p$ twee indices geven. De reden hiervoor is, dat de overdracht overal kan gegenereerd of gepropageerd worden. We moeten de twee indices dus als de definitie van een bereik zien. De overdacht kan uitsluitend tot de $i$-de bit gepropageerd worden, indien alle bits voor de $i$-de bit propageren, bijgevolg kunnen we stellen:
+
+Een oplettende lezer zal gemerkt hebben dat we hierbij $g$ en $p$ twee indices geven. De indices wijzen dan ook op een bereik: alle getallen tussen $0$ en (inclusief) $i-1$. $g_{0,i-1}$ betekent dus zoveel als: ``er wordt ergens tussen $0$ en $i-1$ een overdracht gegenereerd, en deze wordt dan verder gepropageerd tot $i$. $p_{0,i-1}$ betekent dat er een propagatie-pad is tussen index $0$ en $i$. Een dergelijk propagatie-pad bestaat uitsluitend tot de $i$-de bit indien voor alle posities tot $i$ er geprogageerd wordt. Bijgevolg stellen we dat:
+
 \begin{equation}
 p_{i,j}=\displaystyle\prod_{k=i}^j{p_k}
+\eqnlab{cla-pij}
 \end{equation}
-Tenslotte wordt er overdacht gegenereerd indien de vorige bit een overdacht genereerde, of een willekeurige bit ervoor, die deze dan tot de $i$-de bit weet te propageren. Dit formaliseren we als:
+
+Merk op dat we hier een booleaans product bedoelen, er staat dus tussen elk element van de deelexpressie een AND. Er wordt soms ook overdacht gegenereerd. Dit is bijvoorbeeld het geval indien de vorige bit een overdacht genereerde, of een willekeurige bit ervoor, die deze dan tot de $i$-de bit weet te propageren. Of meer formeel:
+
 \begin{equation}
-g_{i,j}=g_j+\displaystyle\sum_{k=i}^{j-1}{g_kp_{k+1,j}}=g_j+\displaystyle\sum_{k=i}^{j-1}{\left(g_k\cdot\displaystyle\prod_{l=k+1}^j{p_l}\right)}
+g_{i,j}=g_j+\displaystyle\sum_{k=i}^{j-1}{g_kp_{k+1,j}}=g_j+\displaystyle\sum_{k=i}^{j-1}{\brak{g_k\cdot\displaystyle\prod_{l=k+1}^j{p_l}}}
+\eqnlab{cla-gij}
 \end{equation}
-De volledige berekening voor het bepalen van overdacht $c_i$ wordt dan:
+
+Merk op dat we hier met het sommatie-teken de booleaanse som bedoelen, wat dus neerkomt op OR-poorten. Wanneer we \eqnref{cla-pij} en \eqnref{cla-gij} in \eqnref{cla-ci} schuiven, dan bekomen we een formule waarmee we de overdacht $c_i$ kunnen berekenen, enkel op basis van de invoer van de CLA-generator:
+
 \begin{equation}
 c_i=g_{i-1}+\displaystyle\sum_{k=0}^{i-2}{\left(g_k\cdot\displaystyle\prod_{l=k+1}^{i-1}{p_l}\right)}+c_0\cdot\displaystyle\prod_{k=0}^{i-1}{p_k}
 \end{equation}
-De berekening voor $c_i$ kost dan ook een $i+1$-input OR poort, en $i+1$ AND poorten, elk van deze poorten heeft een ander aantal ingangen vari\"erend van 2 tot $i+1$. We kunnen nu opnieuw het kritische pad analyseren. Dit pad is $x_0\rightarrow c_n$. Hierbij gaat het signaal doorheen 1 XOR poort, 1 $n+1$-input AND poort en 1 $n+1$ input OR poort. De totale vertraging is dus:
+
+De berekening voor $c_i$ kost dus een $i+1$-OR poort, en $i+1$ AND poorten, elk van deze poorten heeft een ander aantal ingangen vari\"erend van twee tot $i+1$. We kunnen nu opnieuw het kritische pad analyseren. Dit pad is $x_0\rightarrow c_n$. Hierbij gaat het signaal doorheen \'e\'en XOR poort, \'e\'en $n+1$-input AND poort en \'e\'en $n+1$-OR poort. De totale vertraging is dus:
 \begin{equation}
-\mbox{vertraging}=3.2+2\left(2+0.4n\right)=0.8n+7.2
-\label{eqn:delayCLAGenerator}
+\mbox{vertraging}=3.2+2\cdot\brak{2+0.4\cdot n}=0.8\cdot n+7.2
+\eqnlab{delayCLAGenerator}
 \end{equation}
-Toegegeven dat de orde van de vertraging nog steeds linear is, maar de factor voor $n$ is met de CLA-generator sterk gereduceerd. We kunnen echter ook een cascade van CLA-generators maken. Indien we twee $n$-bit getallen willen optellen, en we groeperen elke $k$ componenten tot een niveau hoger, hebben we $\left\lceil\log_kn\right\rceil$ niveaus nodig. We kunnen in dat geval vergelijking (\ref{eqn:delayCLAGenerator}) gebruiken om de vertraging te berekenen:
+
+Toegegeven dat de orde van de vertraging nog steeds lineair is, maar de factor voor $\bigoh{n}$ is met de CLA-generator sterk gereduceerd. De CLA-generator laat ons echter ook toe om toch logaritmisch gedrag te bereiken, en dit met een cascade van CLA-generatoren. Indien we twee $n$-bit getallen willen optellen, en we groeperen elke $k$ carry-lookahead optellers met een CLA-generator, en vervolgens groeperen we elke $k$ CLA-generatoren tot een niveau hoger, dan hebben we $\ceil{\log_kn}$ niveaus nodig. We kunnen in dat geval \eqnref{delayCLAGenerator} gebruiken om de vertraging te berekenen:
+
 \begin{equation}
-\mbox{vertraging}=3.2+\left(2\left\lceil\log_kn\right\rceil-1\right)\times\left(4+0.8k\right)
+\mbox{vertraging}=3.2+\brak{2\cdot\ceil{\log_kn}-1}\cdot\brak{4+0.8\cdot k}
 \end{equation}
-Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. Figuur \ref{fig:clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de reden van de twee extra ingangen duidelijk.
+
+Hiermee kunnen we de vertraging reduceren tot een logaritmische orde. \figref{clag-cascade} toont hoe we een dergelijke cascade kunnen bouwen. Met deze cascade wordt ook meteen de reden van de twee extra ingangen duidelijk: het zijn de propagate en generate ingangen voor de CLA-generator een niveau hoger, die dus enkel kijkt of een blok van bits overdracht zullen genereren en propageren. De bijbehorende formule voor $g_{0,k-1}$ en $p_{0,k-1}$ kunnen we respectievelijk afleiden uit \eqnref{cla-gij} en \eqnref{cla-pij}.
+
+\paragraph{}
+Bij wijze van afsluiter stellen we op \figref{clag-implement} een mogelijke implementatie van een CLA-generator voor. Deze implementatie is ver van optimaal, en bovendien met een kleine $n$.
+
+\importtikzfigure{clag-implement}{Een mogelijke implementatie voor een CLA-generator met $n=3$.}
+
+We zien rechtsboven een reeks AND-poorten. De meest rechtse AND-poorten berekenen de telkens het product van een reeks propagatoren $p_i$ en $c_0$. Ze bereken dus of de carry $c_0$ kan worden doorgegeven tot een zekere bit. Links van elke generator-ingang $g_i$ staan ook een reeks AND-poorten. Deze poorten berekenen of we deze gegenereerde overdracht tot een zekere bit kunnen verder propageren. Helemaal links staat ook een AND-poort die het product van alle propagatoren $p_i$ berekent, en aanlegt op de $p_{0,2}$ uitgang. Onderaan bevinden zich een aantal OR-poorten die carry $c_i$ berekenen. De poorten nemen telkens de som van hun overeenkomstige generator $g_{i-1}$ alsook de poorten die erin slagen overdracht ver genoeg te propageren. Tot slot staat er nog links een OR-poort. Deze poort komt grotendeels overeen met de OR-poort die voor $c_3$ staat, er ontbreekt echter een ingang van een AND-poort met $c_0$. Immers indien $c_0=1$, wordt de overdracht niet binnen dit bereik gegenereerd.
+
 \subsection{Negatieve getallen}
-Om getallen te kunnen aftrekken, zullen we het getalbegrip uitbreiden, zodat deze ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. Hierbij moeten we in gedachten houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen.
+Om getallen te kunnen aftrekken, zullen we eerst ons getalbegrip uitbreiden, zodat we ook negatieve getallen kunnen voorstellen. Negatieve getallen voorstellen kan op verschillende manieren. In onderstaande subsubsecties zullen we de meest populaire bespreken. We moeten hierbij in gedachten houden dat we eventueel de bovenstaande opteller zullen moeten uitbreiden om ook negatieve getallen te kunnen optellen. Het is dus aan te raden niet eender welke voorstelling te kiezen, maar een voorstelling waarvan we verwachten dat we hiermee effici\"ent berekeningen kunnen uitvoeren.
+
 \subsubsection{`Sign-Magnitude'-voorstelling}
-Het arabische getalstelsel lost dit probleem op door middel van een teken. Een getal bestaat dan uit twee delen: een teken (+ of -) en een grootte. Bij positieve getallen wordt dit teken zelfs meestal niet geplaatst. Deze voorstelling is gekend als de `\termen{sign-magnitude}' voorstelling. Aangezien een getal ofwel positief of negatief is, kunnen we bij een binaire voorstelling een extra bit bij het getal plaatsen. Deze bit is $0$ bij een positief getal, en $1$ bij een negatief getal. In dat geval wordt dus $\underline{0}1100_2=\underline{+}12_{10}$ en $\underline{1}1100_2=\underline{-}12_{10}$. Een getal met $n$ bits kan dus alle gehele waarden aannemen tussen $-2^{n-1}+1$ en $2^{n-1}-1$. Er zijn echter enkele problemen met deze voorstelling. Allereerst is er nu sprake van twee voorstellingen van $0$: $-0$ en $+0$. Dit leidt tot extra complexiteit bij bijvoorbeeld het vergelijken van twee getallen. Verder wordt optellen en aftrekken van twee getallen gecompliceerd. Er zijn veel testen nodig alvorens we de waardes van de getallen kunnen optellen of aftrekken, wat tot grote vertragingen leidt.
+Het arabische getalstelsel lost het probleem van het voorstellen van negatieve getallen op aan de hand van een teken. Een getal bestaat dan uit twee delen: een teken ($+$ of $-$) en een grootte. Bij positieve getallen wordt dit teken zelfs meestal niet geplaatst. Deze voorstelling is gekend als de `\gtermen{sign-magnitude}{Een manier om negatieve getallen voor te stellen. Men plaatst hierbij een bit voor het getal - de tekenbit - en indien deze $1$ is, dienen we het getal als zijn negatie te interpreteren. Wanneer de bit $0$ is, is het getal positief.}' voorstelling. Aangezien een getal ofwel positief of negatief is, kunnen we bij een binaire voorstelling een extra bit bij het getal plaatsen, bijvoorbeeld ervoor. Deze bit is $0$ bij een positief getal, en $1$ bij een negatief getal. In dat geval wordt dus $\underline{0}1100_2=\underline{+}12_{10}$ en $\underline{1}1100_2=\underline{-}12_{10}$. Een getal met $n$ bits kan dus alle gehele waarden aannemen tussen $-2^{n-1}+1$ en $2^{n-1}-1$. Er zijn echter enkele problemen met deze voorstelling. Zo zijn er bijvoorbeeld twee voorstellingen van $0$: $-0$ en $+0$. Dit leidt tot extra complexiteit bij bijvoorbeeld het vergelijken van twee getallen. Optellen en aftrekken van twee getallen wordt bovendien gecompliceerder: er zijn verschillende testen nodig alvorens we de waardes van de getallen kunnen optellen of aftrekken, wat tot grote vertragingen leidt. De sign-magnitude voorstelling is dan ook niet populair bij het voorstellen van gehele getallen. Wel is het een populaire manier om positieve en negatieve getallen met vlottende komma voor te stellen zoals we zullen zien in \sscref{floatingpoint}.
+
+\subsubsection{Excess formaat}
+Een tweede mogelijkheid om getallen voor te stellen is het zogenoemde \gtermen{excess formaat}{Een manier om negatieve getallen voor te stellen. Men beschouwd een parameter: de excess-bias $B$, men encodeert het getal als een natuurlijk getal, maar virtueel trekt men telkens de excess-bias van het getal af. Indien de excess-bias bijvoorbeeld $12$ is, dan betekent $0000_2$ dus $12$, wanneer het getal $0100_2$ mapt dan op $-8$ en $1110_2$ op $2$. Men dient in dat geval optellers aan te passen zodat men de excess-bias ook optelt: wanneer we $0100_2$ optellen met $1110_2$ dienen we dus $0110_2$ uit te komen.}. Hierbij beschouwd men een parameter, de \gtermen[excesss-bias]{excess-bias $B$}{Een parameter bij het excess formaat. Men dient het getal te interpreteren als een positief getal, maar men trekt er vervolgens de excess-bias virtueel vanaf.}. Men stelt ieder getal voor alsof het een positief getal is, maar men trekt er virtueel de excess-bias vanaf. Indien de excess-bias dus bijvoorbeeld $12$ is, dan slaat $0000_2$ op $-12$; $0100_2$ op $-8$ en $1110_2$ op $+2$. Een probleem met het excess formaat is dat men bij het implementeren van optellers en andere componenten de boekhouding op orde moet houden. Men kan dus geen twee getallen in excess formaat zomaar optellen: men dient er de bias terug van af te trekken. Wanneer we dus bij excess-bias $12$ de getallen $1000_2=-4$ en $1110_2=2$ willen optellen, kunnen we deze optellen alsof het natuurlijke getallen zijn, en bekomen we $10110_2=14$, maar daarna dienen we nog $12$ van af te trekken $1100_2=-2$. Het excess formaat wordt wel gebruikt bij de exponent bij getallen met vlottende komma (zie \sscref{floatingpoint}).
+
 \subsubsection{Complement-voorstellingen}
-De meeste voorstellingen van negatieve getallen zijn gebaseerd op complement voorstellingen. Er bestaan twee soorten complement voorstellingen voor een getal $D$ met $m$ cijfers en radix $r$:
+De meeste voorstellingen van negatieve getallen zijn gebaseerd op \gtermen{complement voorstellingen}{Een reeks voorstellingen voor negatieve getallen. Bij elk van deze complement voorstellingen neemt men de bit-gewijze negatie van het getal, eventueel wordt er nog een $1$ opgeteld om te vermijden dat er twee voorstellingen voor het getal $0$ bestaan. Er zijn twee soort complement voorstelling: $1$-complement en $2$-complement.}. Bij deze twee voorstellingen zal men negatieve getallen voorstellen door het complement van de cijfers te nemen. Wanneer het eerste cijfer van het getal dus groter is dan de helft van de radix spreken we over een negatief getal. Er bestaan twee soorten complement voorstellingen voor een getal $D$ met $m$ cijfers en radix $r$:
 \begin{itemize}
- \item \termen{cijfer-complement} of \termen{diminished-radix complement} $D'$: hierbij wordt elk cijfer $i$ vervangen door zijn complement $r-i-1$. Bijvoorbeeld:
+ \item \gtermen{cijfer-complement}{Een complement voorstelling waarbij men negatieve getallen voorstelt door elk cijfer $i$ te vervangen door het complement $r-i-1$ met radix $r$.} of \stermen{diminished-radix complement}{cijfer-complement} $D'$: hierbij wordt elk cijfer $i$ vervangen door zijn complement $r-i-1$. Bijvoorbeeld:
  \begin{itemize}
     \item Het $9$-complement van $1337_{10}$ is $8662_{10}$.
     \item Het $1$-complement van $01001011\ 01010011_2$ is $10110100\ 10101100_2$.
  \end{itemize}
- Het \termen{1-complement} wordt soms gebruikt voor het voorstellen van negatieve getallen in het binaire stelsel.
- \item \termen{radix-complement} $D^*=r^m-D$. Bijvoorbeeld:
+ Het \stermen{1-complement}{cijfer-complement} wordt soms gebruikt voor het voorstellen van negatieve getallen in het binaire stelsel. Een belangrijk nadeel is echter dat er opnieuw twee voorstellingen van $0$ bestaan. Om dit probleem op te lossen, bestaat er een andere complement voorstelling.
+ \item \gtermen{radix-complement}{Een complement voorstelling waarbij men negatieve getallen voorstelt door ze voor te stellen als het getal $D^*=r^m-D$ met $D$ de absolute waarde van het getal, $r$ de radix van de getalvoorstelling, en $m$ het aantal cijfers van het getal.} $D^*=r^m-D$. Bijvoorbeeld:
  \begin{itemize}
     \item Het radix-complement van $1337_{10}$ is $8663_{10}$.
     \item Het radix-complement van $01001011\ 01010011_2$ is $10110100\ 10101101_2$.
  \end{itemize}
- Voor binaire getallen is dit het \termen{2-complement}. Dit is veruit de meest populaire voorstellingswijze.
+ Voor binaire getallen is dit het \stermen{2-complement}{radix-complement}. Dit is veruit de meest populaire voorstellingswijze.
 \end{itemize}
-Een belangrijke eigenschap die ook al blijkt uit de voorbeelden is dat $D^*=D'+1$. Deze eigenschap is interessant, omdat het ons helpt snel het 2-complement te berekenen. Immers is het 1-complement niets anders dan het toepassen van een NOT operatie op alle bits.
+Een eigenschap waar we later nog op zullen terugkomen is dat $D^*=D'+1$. De voorstelling van het radix-complement is dus altijd \'e\'en groter dan de voorstelling van dat getal in cijfer-complement. Immers zal blijken dat - omdat het $1$-complement snel uit te rekenen valt - het $2$ complement ook snel uit te rekenen zijn. Immers is het $1$-complement niets anders dan het toepassen van een NOT operatie op alle bits.
+
 \subsubsection{Twee-complement voorstelling}
-Omdat de 2-complement voorstelling vrij populair is, zullen we deze verder bespreken. Stel we beschikken over $n$ cijfers in een getalstelsel met radix $r$. In dat geval kunnen we $r^n$ in principe niet voorstellen. Logisch gezien stellen we dit voor door $r^n\equiv 0$. Immers kunnen we stellen dat in dat geval het $n+1$-de cijfer een 1 is, en de andere cijfers 0. Aangezien $D^*=r^n-D$ geldt: $D^*=-D$. Het gevolg is dat we de traditionele optelling kunnen gebruiken, indien we 2-complement getallen met elkaar optellen. Of deze getallen nu een teken bevatten of niet, is een kwestie van interpretatie, de opteller is hiervan niet afhankelijk. Bovendien kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op.
+Omdat de $2$-complement voorstelling vrij populair is, gaan we er nog wat dieper op in. Bij een getalstelsl met radix $r$ en een getal met $n$ cijfers, kunnen we $r^n$ getallen voorstellen. Een logisch gevolg is dat we getallen groter of gelijk aan $r^n$ niet voorstellen: $0$ wordt immers ook voorgesteld. Daarom stellen we dat $r^n\equiv 0$. We kunnen $r^n$ immer voorstellen door \'e\'en $1$ gevolgd door $n$ cijfers met $0$. Omdat we maar $n$ bits beschikbaar hebben, weerhouden we de laatste $n$ bits: de $1$ valt er dus zogezegd af. Omdat $D^*=r^n-D$ geldt, kunnen we stellen dat $D^*\equiv 0-D=-D$. Wanneer we dus de 2-complement voorstelling voor negatieve getallen gebruiken, kunnen we onze opteller van de vorige subsectie gebruiken, zonder enige aanpassing.
+
 \paragraph{}
-Een ander voordeel van de 2-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal 0 is. Indien we immers het negatief van 0 berekenen bekomen we:
+Of een getal positief is of negatief, is natuurlijk een kwestie van interpretatie. De opteller weet niet of het met een geheel getal voorstelling of een $2$-complement voorstelling te maken heeft, maar dat maakt niets uit. We dienen zelf bij te houden welk soort getallen onze voorstelling kan bevatten. We kunnen we relatief eenvoudig de negatie van een getal berekenen: we passen op elke bit een NOT operatie toe, en tellen daar vervolgens 1 bij op. Later zullen we zien dat we door een eenvoudige ingreep op onze eerder ontwikkelde opteller, deze optelling kunnen realiseren met een minimum aan extra hardware.
+
+\paragraph{}
+Een ander voordeel van de $2$-complement voorstelling, is dat er slechts \'e\'en voorstelling van het getal $0$ is. Indien we immers het negatief van $0$ berekenen bekomen we:
+
 \begin{equation}
 D=0000_2\Rightarrow -D\equiv D^*=1111_2+0001_2=\underline{1}0000_2=0000_2
 \end{equation}
-Tot slot heeft een getal met $n$ bits een bereik van $-2^{n-1}$ tot $2^{n-1}-1$, wat exact \'e\'en element groter is dan de 1-complement tegenhanger\footnote{Dit is uiteraard de plaats die vrijkomt omdat de 2-complement voorstelling slechts \'e\'en voorstelling van 0 heeft.}.
+
+Dit resulteert in het feit een getal met $n$ bits een bereik van $-2^{n-1}$ tot $2^{n-1}-1$, wat exact \'e\'en element groter is dan de 1-complement tegenhanger\footnote{Dit is de plaats die vrijkomt omdat de 2-complement voorstelling slechts \'e\'en voorstelling van 0 heeft.}.
+
 \subsubsection{Betekenis van binaire getallen}
-Bij wijze van voorbeeld om het verschil tussen de verschillende voorstellingen duidelijk te maken, zetten we de betekenis van elke $4$-bit getal naast elkaar in tabel \ref{tbl:binaryMeaningSigned}.
+Om het verschil tussen de verschillende voorstellingen duidelijk te maken, zetten we de betekenis van de verschillende voorstellingen voor elke $4$-bit getal naast elkaar in \tblref{binaryMeaningSigned}.
+
 \begin{table}[hbt]
 \centering
-\begin{tabular}{r|rrrr}
-Binair&Unsigned&Sign-Magnitude&1-Complement&2-Complement\\\hline
+\defaulttable{r|rrrr}{
+\bf Binair&Unsigned&Sign-Magnitude&1-Complement&2-Complement}{
 $0000$&$+0$&$+0$&$+0$&$+0$\\
 $0001$&$+1$&$+1$&$+1$&$+1$\\
 $0010$&$+2$&$+2$&$+2$&$+2$\\
@@ -413,12 +612,14 @@ $1100$&$+12$&$-4$&$-3$&$-4$\\
 $1101$&$+13$&$-5$&$-2$&$-3$\\
 $1110$&$+14$&$-6$&$-1$&$-2$\\
 $1111$&$+15$&$-7$&$-0$&$-1$
-\end{tabular}
+}
 \caption{Betekenis van de binaire getallen.}
 \tbllab{binaryMeaningSigned}
 \end{table}
-\subsection{Optellen en aftrekken}
-Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, zullen we voor ieder van deze voorstellingen een schema uitwerken hoe we getallen kunnen optellen en aftrekken. Deze schema's worden weergegeven in figuur \ref{fig:addSubNegSchematic}.
+
+\subsection{Optellen en aftrekken van negatieve getallen}
+Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, werken we voor iedere voorstellingen een schema uit hoe we getallen kunnen optellen en aftrekken. Deze schema's worden weergegeven in \figref{addSubNegSchematic}. We bespreken in de volgende subsubsecties deze voorstellingen.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Sign-magnitude]{\importtikz{signedmagnitude}}
@@ -427,10 +628,13 @@ Nu we de belangrijkste voorstellingen van negatieve getallen besproken hebben, z
 \caption{Optelling en aftrekking van gehele getallen.}
 \figlab{addSubNegSchematic}
 \end{figure}
+
 \subsubsection{Signed-magnitude voorstelling}
-Bij een signed-magnitude voorstelling moeten eerst heel wat testen uitgevoerd worden alvorens we getallen kunnen optellen of aftrekken. In eerste instantie moeten we bij het aftrekken van twee getallen het teken van de tweede operand veranderen, om daarna de bewerking als een optelling verder te verwerken. Bij deze optelling moeten we eerst testen of beide getallen hetzelfde teken hebben. Indien dit niet het geval is, bepaalt het getal met de grootste magnitude $m$ het teken van het getal, en moeten de magnitudes van elkaar afgetrokken worden, in het andere geval is er sprake van een gewone optelling. Al deze testen zorgen voor complexe hardware die bovendien ook nog traag werkt, dit maakt signed-magnitude tot een weinig populaire voorstelling. Figuur \ref{fig:signedmagnitude} geeft de werkwijze schematisch weer.
-\subsubsection{1-complement voorstelling}
-Optellen en aftrekken met de 1-complement voorstelling is heel wat eenvoudiger. Bij een aftrekking berekenen we ook eerst de negatie van de tweede operand, wat een NOT operatie is. Vervolgens kunnen we de twee getallen eenvoudig optellen met onze eerder ge\"implementeerde opteller. Deze optelling volstaat soms echter niet, met het volgende voorbeelden kunnen we illustreren wat er kan fout lopen:
+Bij een sign-magnitude voorstelling moeten we eerst een reeks testen uitgevoeren alvorens we getallen kunnen optellen of aftrekken. In eerste instantie moeten we bij het aftrekken van twee getallen het teken van de tweede operand veranderen: we maken het getal dus negatief. Daarna kunnen we een optelling uitvoeren die rekening houdt met het aangepaste teken. Bij deze optelling moeten we eerst testen of beide getallen hetzelfde teken hebben. Indien dit het geval is, tellen we de magnitudes van de twee getallen op, en dit wordt de magnitude van het uiteindelijke getal. Het teken blijft dan gelijk aan dat van de twee oorspronkelijke getallen. Indien het teken niet gelijk is, zal het getal met de grootste magnitude $m$ het teken van het getal bepalen, en moeten de magnitudes van elkaar afgetrokken worden. We vergelijken dus de magnitudes. In het geval dat beide gelijk zijn, is het resultaat $0$, en is de teken-bit is vrij te kiezen\footnote{Op de figuur hebben we voor $0$ gekozen.}. Zijn de magnitudes verschillende dan trekken we de kleinste magnitude af van de grootste, en bepaalt de grootste ook de teken-bit. Deze reeks testen - drie in totaal - zorgen voor complexe hardware die bovendien ook nog traag werkt, dit maakt sign-magnitude tot een weinig populaire voorstelling. \figref{signedmagnitude} geeft de werkwijze schematisch weer.
+
+\subsubsection{$1$-complement voorstelling}
+Optellen en aftrekken met de $1$-complement voorstelling is eenvoudiger. Bij een aftrekking berekenen we ook eerst de negatie van de tweede operand. Dit komt neer op een bitgewijze\footnote{Met bitgewijs bedoelen we dat we de beschreven operatie op elke bit toepassen. In dit geval betekent dit dus dat we op iedere bit afzonderlijk de NOT operatie toepassen.} NOT operatie. Vervolgens kunnen we de twee getallen optellen met onze eerder ge\"implementeerde opteller. Deze optelling volstaat niet altijd: met het volgende voorbeelden kunnen we illustreren wat er kan fout lopen:
+
 \begin{equation}
 \begin{array}{rl|rl|rl}
 \begin{array}{rr}
@@ -454,7 +658,7 @@ Optellen en aftrekken met de 1-complement voorstelling is heel wat eenvoudiger. 
 \begin{array}{rr}
 &+6\\
 +&-2\\\hline
-&3
+&+3
 \end{array}
 &
 \begin{array}{rr}
@@ -469,9 +673,11 @@ Optellen en aftrekken met de 1-complement voorstelling is heel wat eenvoudiger. 
 &-1
 \end{array}
 \end{array}
-\label{eqn:oneComplementFaultExample}
+\eqnlab{oneComplementFaultExample}
 \end{equation}
-Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst positief is, zien we dat het resultaat altijd 1 lager uitkomt dan het juiste resultaat. Dit komt omdat de 1-complement voorstelling twee representaties heeft voor 0. Zoals we zien in het eerste voorbeeld, komen we altijd -0 uit bij het optellen van twee tegengestelde getallen. Bijgevolg zal een resultaat van 1 uitkomen op de voorstelling die 1 hoger is dan $-0$: $+0$. Indien de carry $c_n$ dus 1 is, moeten we nog 1 optellen bij het resultaat. Dit kunnen we toepassen op de voorbeelden in vergelijking (\ref{eqn:oneComplementFaultExample}):
+
+Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst positief is, zien we dat het resultaat altijd $1$ lager uitvalt dan het correcte resultaat. Dit komt omdat de $1$-complement voorstelling twee representaties voor $0$ heeft. Zoals we zien in het eerste voorbeeld, komen we $-0$ uit bij het optellen van twee tegengestelde getallen. Omdat het ophogen van $-0$, $+0$ oplevert betekent dit dus dat het ``twee stappen kost'' om een waarde boven de $0$ uit te komen. Wanneer we dus een resltaat $1$ zouden moeten uitkomen, zal de opteller de voorstelling die bereken die $1$ hoger is dan $-0$: $+0$. We kunnen dit probleem oplossen aan de hand van de carry $c_n$. Indien deze carry gelijk is aan $1$, moeten we nog $1$ optellen bij het resultaat. Wanneer we dit toepassen op de voorbeelden in \eqnref{oneComplementFaultExample} bekomen we wel correcte resultaten:
+
 \begin{equation}
 \begin{array}{rl|rl|rl}
 \begin{array}{rr}
@@ -522,11 +728,14 @@ Indien we twee getallen optellen met een tegengesteld teken, zodat de uitkomst p
 &-1
 \end{array}
 \end{array}
-\label{eqn:oneComplementCorrectExample}
+\eqnlab{oneComplementCorrectExample}
 \end{equation}
-Het grote nadeel bij deze implementatie is dat we de optelling-aftrekking dus in twee tijden moeten uitvoeren: eerst tellen we ze op en bepalen we de hoogste carry $c_n$, vervolgens tellen we deze carry nog eens bij het resultaat op. Dit veroorzaakt dus een verdubbeling van de vertraging. Figuur \ref{fig:onecomplement} geeft het hele proces schematisch weer.
-\subsubsection{2-complement voorstelling}
-De 2-complement voorstelling is de beste voor de implementatie van een opteller-aftrekker. Immers kunnen we een optelling eenvoudigweg uitvoeren zoals we die reeds hebben beschreven in subsectie \ref{ss:add}. Bij een optelling dienen we dus eenvoudigweg de twee operatoren optellen: $B_r=B_1+B_2$. Bij een aftrekking moeten we dan eenvoudigweg de negatie van de tweede operand berekenen. De berekening wordt in dat geval $B_r=B_1+B_2'+1$. Deze optelling lijkt misschien tot hetzelfde probleem te leiden als bij de 1-complement voorstelling. Maar we kunnen eenvoudigweg de carry van de laagste bit $c_0$ op 1 zetten. We kunnen vervolgens $B_2'$ berekenen met behulp van XOR poorten. Een XOR poort is dan ook een geprogrammeerde NOT poort. Indien \'e\'en van de ingangen van de XOR poorten 1 is, zal de andere de negatie zijn van de andere ingang. Indien de ingang 0 is, laat de XOR poort de andere ingang door. We kunnen dus een opteller-aftrekker realiseren zoals op figuur \ref{fig:addsub-twocomplement-implementation}.
+
+Deze aanpassing resulteert in een belangrijk nadeel: we de optelling-aftrekking dus in twee tijden moeten uitvoeren: eerst tellen we ze op en bepalen we de hoogste carry $c_n$, vervolgens tellen we deze carry nog eens bij het resultaat op. Dit veroorzaakt dus een verdubbeling van de vertraging. \figref{onecomplement} geeft het hele proces schematisch weer.
+
+\subsubsection{$2$-complement voorstelling}
+De 2-complement voorstelling is de beste voor de implementatie van een opteller-aftrekker. Immers kunnen we een optelling eenvoudigweg uitvoeren zoals we die reeds hebben beschreven in \sscref{add}. Bij een optelling dienen we dus enkel de twee operatoren optellen: $B_r=B_1+B_2$. Bij een aftrekking moeten we eerst de negatie van de tweede operand berekenen. Wanneer we deze negatie: $-B_2=B_2'+1$ in de berekening bij optelling inschuiven, wordt de volledige berekening dus $B_r=B_1+B_2'+1$. Deze optelling lijkt tot hetzelfde probleem te leiden als bij de $1$-complement voorstelling: we dienen tweemaal een optelling uit te voeren. In \sscref{add} hebben we echter een opteller ge\"introduceerd met een carry-ingang $c_0$ die we altijd op $0$ hebben gezet. Door deze carry bit $c_0$ op $1$ zetten, tellen we automatisch $1$ extra op bij het resultaat, en dit zonder extra hardware te gebruiken, of vertragingen te introduceren. Uit de formule blijkt ook dat we bitgewijze een NOT operatie moeten uitvoeren op $B_2'$, maar enkel in het geval van een aftrekking. Dit kunnen we bewerkstelligen met een XOR poort: Een XOR poort is dan ook een geparametriseerde NOT poort. Indien \'e\'en van de ingangen van de XOR poorten op $1$ staat, fungeert de XOR poort als een NOT poort voor de andere uitgang. Indien de eerste ingang op $0$ staat, laat de XOR poort de andere ingang eenvoudigweg door. We kunnen dus een opteller-aftrekker realiseren zoals op \figref{addsub-twocomplement-implementation}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{\importtikz{addsub-twocomplement-interface}}
@@ -534,44 +743,57 @@ De 2-complement voorstelling is de beste voor de implementatie van een opteller-
 \caption{Opteller-aftrekker voor 2-complement getallen.}
 \figlab{adderSubTwoComplement}
 \end{figure}
-Indien $s=0$ tellen we de twee getallen met elkaar op, anders trekken we de twee getallen van elkaar af. Door een XOR poort op de laatste twee carry-uitgangen $c_{n-1}$ en $c_n$ te plaatsen, kunnen we een controle op overflow inbouwen. Deze component wordt meestal samengevat tot een interface zoals op figuur \ref{fig:addsub-twocomplement-interface}\footnote{Bemerk op de figuur dat variabelen met hoofdletters een rij van in- of uitgangen voorstellen.}. Een schematische werkwijze van optellen en aftrekken met 2-complement voorstelling staat op figuur \ref{fig:twocomplement}. De 2-complement voorstelling is dan ook populair omdat deze weinig bewerkingen en testen vraagt om sommen en verschillen te berekenen. Bovendien is er weinig extra hardware nodig om een opteller om te bouwen.
+
+Deze component bevat een extra ingang $s$ waarmee men kan aangeven of we een optelling of aftrekking willen uitvoeren. Indien $s=0$ tellen we de twee getallen met elkaar op, anders trekken we de twee getallen van elkaar af. Door een XOR poort op de laatste twee carry-uitgangen $c_{n-1}$ en $c_n$ te plaatsen, kunnen we een controle op overflow inbouwen. Deze component wordt meestal samengevat tot een interface zoals op \figref{addsub-twocomplement-interface}\footnote{Bemerk op de figuur dat variabelen met hoofdletters een rij van in- of uitgangen voorstellen.}. Een schematische werkwijze van optellen en aftrekken met 2-complement voorstelling staat op \figref{twocomplement}. De 2-complement voorstelling is dan ook populair omdat deze weinig bewerkingen en testen vergt om sommen en verschillen te berekenen. Bovendien is er weinig extra hardware - een XOR poort per bit en mogelijk een full adder in plaats van een half adder - nodig om een opteller om te bouwen tot een opteller-aftrekker.
+
 \subsection{Arithmetic-Logic Unit (ALU)}
 \ssclab{alu}
+
 \importtikzfigure{alu-structure}{Schematisch implementatie van een arithmetic-logic unit (ALU).}
-Hoewel veel processoren in staat zijn om sommen en verschillen te berekenen zal men meestal geen directe opteller of opteller-aftrekker vinden. Meestal gebruikt men hiervoor een \termen{Arithmetic-Logic Unit (ALU)}. Een ALU is een component die, gebaseerd op een opteller, allerlei instructies\footnote{Welke instructies is niet echt gespecificeerd. Er bestaan dan ook boeken over het ontwerpen van een goede ALU.} kan uitvoeren. In ons geval beschouwen we 4 rekenkundige (optellen, aftrekken, \termen{increment} en \termen{decrement}) en 4 logische bewerkingen (AND, OR, NOT en identiteit). We bouwen een ALU op ongeveer dezelfde manier zoals we een opteller-aftrekker bouwden uit een opteller. In plaats van XOR poorten gebruiken we een nieuw component: een \termen{Arithmetic-Logic Extender (ALE)}. Een ander component -- de CIG -- berekent welke ingang aan de carry $c_0$ moet worden gegeven. In het algemeen heeft een ALU dus een structuur zoals op figuur \ref{fig:alu-structure} waarbij de ALE en CIG vrij ge\"implementeerd kunnen worden.
+
+Hoewel veel processoren in staat zijn om sommen en verschillen te berekenen zal men meestal geen directe opteller of opteller-aftrekker vinden. Meestal gebruikt men hiervoor een \gtermen[arithmetic logic unit]{Arithmetic-Logic Unit (ALU)}{Een component die op basis van een opteller en een arithmetic-logic extender in staat is een reeks populaire instructies uit te voeren zoals optellen, aftrekken, increment, decrement samen met bitgewijze logische operaties (NOT, AND, OR,...). Veel processoren beschikken over \'e\'en of meerdere ALUs.}. Een ALU is een component die, gebaseerd op een opteller, allerlei instructies\footnote{Welke instructies is niet echt gespecificeerd. Er bestaan dan ook boeken over het ontwerpen van een goede ALU.} kan uitvoeren. In ons geval beschouwen we vier rekenkundige (optellen, aftrekken, \gtermen{increment}{Het ophogen van een getal met $1$.} en \gtermen{decrement}{Het aftellen van een getal met $1$.}) en vier logische bewerkingen (AND, OR, NOT en identiteit). We bouwen een ALU op ongeveer dezelfde manier zoals we een opteller-aftrekker bouwden uit een opteller. In plaats van XOR poorten gebruiken we een nieuw component: een \gtermen{Arithmetic-Logic Extender (ALE)}{Een deelcomponent van een arithmetic logic unit (ALU). Een ALE mapt telkens twee bits van de operanden $a_i$ en $b_i$ en het instructiewoord naar twee nieuwe bits $x_i$ en $y_i$, vaak door logische bewerkingen toe te passen. De resulterende getallen $A$ en $B$ gaan dan door een opteller om tot een finaal resultaat te komen.}. Een ander component -- de \gtermen[carry input generator]{Carry Input Generator (CIG)}{Een deelcomponent van een arithmetic logic unit (ALU). Een CIG berekent welke overdracht $c_0$ er voor de opteller moet worden gegenereerd, en doet dit op basis van het instructiewoord.} -- berekent welke ingang aan de carry $c_0$ moet worden gegeven. In het algemeen heeft een ALU dus een structuur zoals op \figref{alu-structure} waarbij de ALE en CIG vrij ge\"implementeerd kunnen worden op basis van een instructieset.
+
 \subsubsection{Instructieset}
-\label{sss:aLUInstructionSet}
-Alvorens we in staat zijn een ALU te maken moeten we een instructieset defini\"eren. Onze instructieset heeft drie\footnote{Omdat we 8 opdrachten gedefinieerd hebben, hebben we een $\log_28=3$ bit instructiewoord nodig.} ingangssignalen die bepalen welke opdracht er moet worden uitgevoerd. Bovendien zijn de 8 opdrachten in te delen in 2 groepen van 4: aritmetisch en logisch. Daarom noemen we de eerste bit van het instructiewoord $m$ voor mode\footnote{0=logisch, 1=aritmetisch.}. Verder wijzen we dan elke opdracht toe aan een bepaald instructiewoord zoals in tabel \ref{tbl:aLUInstructionSet}.
+\ssslab{aLUInstructionSet}
+Alvorens we in staat zijn een ALU te maken moeten we een \gtermen{instructieset}{Een verzameling instructies die een arithmetic logic unit (ALU) of processor moet kunnen uitvoeren. Een instructieset dient voor elke instructie, de semantische betekenis van de instructie te beschrijven. Men dient ook deze instructies te encoderen op een instructiewoord: een sequentie bits waarmee we aan de processor of ALU duidelijk maken welke instructie op dat moment moet worden uitgevoerd.} defini\"eren. Onze instructieset heeft drie\footnote{Omdat we acht opdrachten gedefinieerd hebben, hebben we een $\log_28=3$ bit instructiewoord nodig.} ingangssignalen die bepalen welke opdracht er moet worden uitgevoerd. We delen de acht opdrachten in in twee groepen van vier: aritmetisch en logisch. Daarom noemen we de eerste bit van het instructiewoord $m$ voor mode\footnote{0=logisch, 1=aritmetisch.}. Verder wijzen we dan elke opdracht toe aan een bepaald \gtermen{instructiewoord}{Een reeks bits die bepalen welke instructie een processor of een arithmetic logic unit (ALU) uit moet voeren.} zoals in \tblref{aLUInstructionSet}.
+
 \begin{table}[hbt]
 \centering
-\begin{tabular}{ccc|c|ccc|l}
-$m$&$i_1$&$i_0$&$F$&$X$&$Y$&$c_0$&\\\hline
-0&0&0&$A'$&$A'$&0&0&NOT\\
-0&0&1&$A\mbox{ AND }B$&$A\mbox{ AND }B$&0&0&AND\\
-0&1&0&$A$&$A$&0&0&Identiteit\\
-0&1&1&$A\mbox{ OR }B$&$A\mbox{ OR }B$&0&0&OR\\
-1&0&0&$A-1$&$A$&-1&0&Decrement\\
-1&0&1&$A+B$&$A$&$B$&0&Optelling\\
-1&1&0&$A-B$&$A$&$B'$&1&Aftrekking\\
-1&1&1&$A+1$&$A$&$0$&1&Increment\\
-\end{tabular}
+\defaulttable{ccc|c|ccc|l}{
+\bf $m$&$i_1$&$i_0$&$F$&$X$&$Y$&$c_0$&Instructie}{
+$0$&$0$&$0$&$A'$&$A'$&0&0&NOT\\
+$0$&$0$&$1$&$A\mbox{ AND }B$&$A\mbox{ AND }B$&0&0&AND\\
+$0$&$1$&$0$&$A$&$A$&0&0&Identiteit\\
+$0$&$1$&$1$&$A\mbox{ OR }B$&$A\mbox{ OR }B$&0&0&OR\\
+$1$&$0$&$0$&$A-1$&$A$&-1&0&Decrement\\
+$1$&$0$&$1$&$A+B$&$A$&$B$&0&Optelling\\
+$1$&$1$&$0$&$A-B$&$A$&$B'$&1&Aftrekking\\
+$1$&$1$&$1$&$A+1$&$A$&$0$&1&Increment
+}
 \caption{Instructieset van een typische arithmetic-logic unit (ALU).}
 \tbllab{aLUInstructionSet}
 \end{table}
-Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE implementeert een functie die $\left(A,B\right)$-waardes afbeeldt op $\left(X,Y\right)$-waardes. Deze laatste waardes dienen als invoer  voor de optellers. De CIG ten slotte geeft gebaseerd op het instructiewoord een waarde voor $c_0$. Deze functies staan ook in de instructietabel.
+
+Gebaseerd op deze instructieset moeten we een ALE en CIG implementeren. De ALE implementeert een functie die $\tupl{A,B}$-waardes afbeeldt op $\tupl{X,Y}$-waardes. Deze laatste waardes dienen als invoer  voor de opteller. De CIG ten slotte geeft -- gebaseerd op het instructiewoord -- een waarde voor $c_0$. Deze functies staan ook in het derde deel van instructietabel (\tblref{aLUInstructionSet}).
+
 \subsubsection{Synthese van de ALE en CIG}
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Karnaugh-kaarten]{\importtikz{ale-cig-karnaugh}}
 \subfigure[Implementatie ALE]{\importtikz{ale-implementation}}
 \subfigure[Implementatie CIG]{\importtikz{cig-implementation}}
-\caption{Synthese van de ALE en CIG}
+\caption{Synthese van de ALE en CIG.}
 \end{figure}
-Eenmaal we de instructieset hebben, dienen we enkel nog de ALE en CIG te implementeren. Een ALE is een component met als ingangen het instructiewoord en van elke operand een bit. In ons geval wordt dit dus $\left(m,i_1,i_0,a_j,b_j\right)$. Als uitgangen hebben we de ingangen van \'e\'en van de optellers $\left(x_j,y_j\right)$. We zijn dus in staat om een waarheidstabel en Karnaugh-kaart op te stellen van de ALE. Zoals op figuur \ref{fig:ale-cig-karnaugh}. Vervolgens is het enkel een kwestie van implementatie. Op basis van de Karnaugh-kaaren hebben we op figuur \ref{fig:ale-implementation} een AND-OR implementatie gesynthetiseerd.
+
+Eenmaal we de instructieset hebben bepaald, dienen we enkel nog de ALE en CIG te implementeren. Een ALE is een component met als ingangen het instructiewoord en van elke operand een bit. In ons geval wordt dit dus $\tupl{m,i_1,i_0,a_j,b_j}$. Als uitgangen hebben we de ingangen van \'e\'en van de full adders $\tupl{x_j,y_j}$. We zijn dus in staat om een waarheidstabel en Karnaugh-kaart op te stellen van de ALE. Zoals op \figref{ale-cig-karnaugh}. Op basis van de Karnaugh-kaart kunnen we dan een logisch circuit bouwen zoals is te zien op \figref{ale-implementation}. Op de figuur hebben we dat gedaan met AND-OR lagen, maar zoals reeds gezegd zijn equivalente NAND-NAND lagen goedkoper en sneller.
+
 \paragraph{}
-De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op tabel \ref{tbl:aLUInstructionSet} is dit $\left(m,i_1,i_0\right)$. Een CIG heeft slechts \'e\'en uitgang: carry $c_0$. Op basis van deze instructieset staat op figuur \ref{fig:ale-cig-karnaugh} de bijbehorende Karnaugh-kaart. Deze blijkt een eenvoudige AND-operatie te zijn zoals op figuur \ref{fig:cig-implementation}.
+De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op \tblref{aLUInstructionSet} is dit $\tupl{m,i_1,i_0}$. Een CIG heeft slechts \'e\'en uitgang: de carry $c_0$. Op basis van deze instructieset staat op \figref{ale-cig-karnaugh} de bijbehorende Karnaugh-kaart. Deze blijkt een eenvoudige AND-operatie te zijn zoals op \figref{cig-implementation}. De waarde van $i_0$ blijkt zelfs geen effect te hebben op de carry.
+
 \subsection{Vermenigvuldigen}
-\begin{figure}[htb]
+
+\begin{figure}[ht!b]
 \centering
 \subfigure[$1\times 1$-bit]{\importtikz{mul1x1}}
 \subfigure[$3\times 2$-bit]{\importtikz{mul3x2}}
@@ -579,7 +801,9 @@ De CIG is enkel afhankelijk van het instructiewoord. Met de instructieset op tab
 \caption{Parallelle vermenigvuldigers.}
 \figlab{parallelMultipliers}
 \end{figure}
-In deze subsectie bouwen we een vermenigvuldiger gebaseerd op de manier hoe men met behulp van cijferen twee getallen vermenigvuldigt. We zullen hierbij enkel natuurlijke getallen beschouwen, later breiden we dit uit naar gehele getallen. Vergelijking (\ref{eqn:multiplyNormal}) toont de vermenigvuldiging van twee decimale getallen:
+
+In deze subsectie bouwen we een vermenigvuldiger gebaseerd op de manier hoe men met behulp van cijferen twee getallen vermenigvuldigt. We zullen hierbij enkel natuurlijke getallen beschouwen, later breiden we dit uit naar gehele getallen. \eqnref{multiplyNormal} toont hoe we met behulp van cijferen twee getallen in het decimale getalstelsel vermenigvuldigen:
+
 \begin{equation}
 \begin{array}{lcccccc}
 &&&1&4&2&5\\
@@ -589,9 +813,11 @@ In deze subsectie bouwen we een vermenigvuldiger gebaseerd op de manier hoe men 
 +&4&2&7&5&&\\\hline
 &5&2&0&1&2&5
 \end{array}
-\label{eqn:multiplyNormal}
+\eqnlab{multiplyNormal}
 \end{equation}
-We kunnen dus twee getallen vermenigvuldigen door het eerste getal telkens te vermenigvuldigen met \'e\'en van de cijfers van het onderste getal en na deze op de juiste manier te hebben uitgelijnd op te tellen. Deze methode werkt ook op binaire getallen zoals blijkt uit vergelijking (\ref{eqn:multiplyBinary}):
+
+We kunnen dus twee getallen vermenigvuldigen door het eerste getal telkens te vermenigvuldigen met \'e\'en van de cijfers van het onderste getal en deze -- nadat we ze op de juiste manier hebben uitgelijnd  -- optellen. Deze methode werkt ook op binaire getallen zoals blijkt uit \eqnref{multiplyBinary}:
+
 \begin{equation}
 \begin{array}{lcccccc}
 &&&1&0&1&1\\
@@ -601,11 +827,17 @@ We kunnen dus twee getallen vermenigvuldigen door het eerste getal telkens te ve
 +&1&0&1&1&&\\\hline
 &1&1&0&1&1&1
 \end{array}
-\label{eqn:multiplyBinary}
+\eqnlab{multiplyBinary}
 \end{equation}
-Een groot voordeel van vermenigvuldigingen met binaire getallen is dat een cijfer slechts 1 of 0 kan zijn. Indien het 0 is tellen we niets op bij het resultaat, anders tellen we het eerste getal op, die voldoende naar links is opgeschoven. Deze realisatie noemt men een \termen{parallelle vermenigvuldiger}. Figuur \ref{fig:parallelMultipliers} toont enkele voorbeelden van parallelle vermenigvuldigers. Zo zien we het speciale geval van een $1\times 1$-bit, wat neerkomt op een AND-poort. De $3\times 2$-bit vermenigvuldiger toont een speciale realisatie van het cascaderende effect. Tot slot implementeren we ook het algemeen geval van een $m\times n$-vermenigvuldiger. Naast parallelle vermenigvuldigers bestaan er ook andere implementaties die sneller werken en goedkoper te realiseren zijn. De kostprijs om een getal met $m$ bits te vermenigvuldigen met een getal van $n$ bits is immers $\bigoh{nm}$. Met een sequenti\"ele schakeling kunnen we de kosten sterk reduceren en zelfs de vermenigvuldiging versnellen. Vermenigvuldigen met een macht van 2 kunnen we bovendien berekenen met schuifoperators die in subsectie \ref{ss:shiftoperators} aan bod komen.
+
+Een groot voordeel van vermenigvuldigingen met binaire getallen is dat een cijfer slechts 1 of 0 kan zijn. Indien het 0 is tellen we niets op bij het resultaat; anders dienen we het bovenste getal op te tellen, in dit voldoende naar links opgeschoven. Deze realisatie noemt men een \gtermen{parallelle vermenigvuldiger}{Een component die voor twee getallen het product berekent. Dit doet het op een manier die vergelijkbaar is met cijferen. Voor elke bit van het tweede getal wordt een opteller voorzien. Indien de overeenkomstige bit $1$ is, wordt het eerste getal opgeteld, voldoende opgeschoven naar links. Een parallelle vermenigvuldiger kost veel hardware en is bovendien meestal niet sneller dan andere vormen van vermenigvuldigers.}. \figref{parallelMultipliers} toont enkele voorbeelden van parallelle vermenigvuldigers. Zo zien we het speciale geval van een $1\times 1$-bit, wat neerkomt op een AND-poort. De $3\times 2$-bit vermenigvuldiger toont een speciale realisatie van het cascaderende effect: vermits er maar twee bits zijn, hebben we slechts \'e\'en opteller nodig. Met behulp van AND-poorten kunnen we ofwel $0$ op de opteller plaatsen, of het getal zelf. Tot slot implementeren we ook het algemeen geval van een $m\times n$-vermenigvuldiger.
+
+\paragraph{}
+Naast parallelle vermenigvuldigers bestaan er ook andere implementaties die sneller werken en goedkoper te realiseren zijn. De kostprijs om een getal met $m$ bits te vermenigvuldigen met een getal van $n$ bits is immers $\bigoh{n\cdot m}$. Met een sequenti\"ele schakeling kunnen we de kosten sterk reduceren en vaak zelfs de vermenigvuldiging versnellen. Tot slot is het vermenigvuldigen met een macht van twee een speciaal geval wat we kunnen bewerkstelligen met een schuifoperator. Deze schuifoperator komt aan bod in \sscref{shiftoperators}.
+
 \subsubsection{2-complement vermenigvuldiger}
-Het uitbreiden van deze vermenigvuldiger naar gehele getallen met 2-complement voorstelling is geen sinecure. In de praktijk zal men dan ook eerst de getallen omzetten naar sign-magnitude voorstelling alvorens we de twee getallen vermenigvuldigen. In dat geval kunnen we eenvoudigweg de waardes van de twee getallen vermenigvuldigen en passen we een XOR operatie toe op de tekenbit van de getallen. Het resultaat zetten we vervolgens weer om naar 2-complement voorstelling. Er bestaat uiteraard wel een vermenigvuldiger voor een 2-complement voorstelling. Deze zullen we enkel op hoog niveau beschrijven door middel van een voorbeeld. We rekenen hierbij $-2\times -3$ uit op 4-bit voorstelling en het resultaat stellen we voor op een 8-bit voorstellingen zoals in onderstaande vergelijking:
+Het uitbreiden van deze vermenigvuldiger naar gehele getallen met $2$-complement voorstelling is geen sinecure. In de praktijk zal men dan ook eerst de getallen omzetten naar sign-magnitude voorstelling alvorens we de twee getallen vermenigvuldigen. In dat geval kunnen we de magnitude van de twee getallen vermenigvuldigen -- zoals we hierboven hebben gedemonstreerd -- en passen we een XOR operatie toe op de tekenbit van de getallen. Het resultaat zetten we vervolgens weer om naar 2-complement voorstelling. Er bestaat uiteraard wel een vermenigvuldiger voor een 2-complement voorstelling. Deze zullen we enkel op hoog niveau beschrijven door middel van een voorbeeld. We rekenen hierbij $-2\times -3$ uit op 4-bit voorstelling en het resultaat stellen we voor op een 8-bit voorstellingen zoals in onderstaande vergelijking:
+
 \begin{equation}
 \begin{array}{l|r}
  \begin{array}{lr}
@@ -619,7 +851,9 @@ Het uitbreiden van deze vermenigvuldiger naar gehele getallen met 2-complement v
 \end{array}
 \end{array}
 \end{equation}
-De oplossing bestaat eruit om $-2$ te zien in zijn binaire vorm als $-8+4+2=-2$. Elk van de bits dient afzonderlijk vermenigvuldigd te worden, en vervolgens opgeteld te worden zoals in onderstaande vermenigvuldiging:
+
+De oplossing bestaat eruit om $-2\equiv 1110_2$ te zien in zijn binaire vorm als $-8+4+2=-2$, bemerk het minteken bij de $8$. Elk van de bits dient afzonderlijk vermenigvuldigd te worden, en vervolgens opgeteld te worden zoals in onderstaande vermenigvuldiging:
+
 \begin{equation}
 \begin{array}{lcr}
 \begin{array}{lrcr}
@@ -640,146 +874,185 @@ De oplossing bestaat eruit om $-2$ te zien in zijn binaire vorm als $-8+4+2=-2$.
 \end{array}
 \end{array}
 \end{equation}
+%TODO: strong rewrite?
+
 \subsection{Andere courante bewerkingen}
+Om het gedeelte van de gehele getallen af te sluiten beschouwen we nog enkele populaire bewerkingen op de gehele getallen. We geven voor deze bewerkingen geen concrete implementatie, al kan de beschrijving op hoog niveau misschien volstaan om zelf een component hiervoor te ontwikkelen.
+
 \subsubsection{Delen}
-Analoog aan vermenigvuldigen kunnen we ook een \termen{deling} in een binaire voorstelling gebaseerd op cijferen. We geven een voorbeeld van een binaire deling maar vermelden geen details over het realiseren van een schakeling:
+Analoog aan vermenigvuldigen kunnen we ook een \gtermen{deling}{Een rekenkundige bewerking op twee getallen waarbij men zoekt hoeveel maal het eerste getal in het tweede getal past.} in een binaire voorstelling gebaseerd op cijferen. We geven een voorbeeld van een binaire deling maar vermelden geen details over het realiseren van een schakeling:
+
 \begin{equation}
 \begin{array}{r|l}
 1011\ 1010&1110\\\hline
-\underline{111\ 0}\textcolor{white}{000}&1101\\
+\underline{-\ 111\ 0}\textcolor{white}{000}&1101\\
 100\ 1010&\\
-\underline{11\ 10}\textcolor{white}{00}&\\
+\underline{-\ 11\ 10}\textcolor{white}{00}&\\
 1\ 0010&\\
-\underline{0\ 000}\textcolor{white}{0}&\\
+\underline{-\ 0\ 000}\textcolor{white}{0}&\\
 1\ 0010&\\
-\underline{11\ 10}&\\
+\underline{-\ 1110}&\\
 100&
 \end{array}
 \end{equation}
-Door dus herhaaldelijk het resterende deeltal te vergelijken met een verschuifde deler en indien deze groter is, deze af te trekken, kunnen we de rest en de het quoti\"ent berekenen. Het aantal cycli is dus ook tevens het aantal bits van het quoti\"ent. Deze manier van implementatie is dan ook de meest populaire, en wordt vaak gebruikt. Indien we delen door een macht van 2, kunnen we het getal berekenen met een schuifoperatie (zie subsectie \ref{ss:shiftoperators}).
+
+Door herhaaldelijk het resterende deeltal te vergelijken met een verschuifde deler en indien deze groter is, deze af te trekken, kunnen we de rest en de het quoti\"ent berekenen. Het aantal cycli is dus ook tevens het aantal bits van het quoti\"ent. Deze manier van implementatie is dan ook de meest populaire, meestal zal men echter geen parallelle deler gebruiken. Indien we delen door een macht van twee, kunnen we het getal berekenen met een schuifoperatie (zie \sscref{shiftoperators}).
+
 \subsubsection{Modulo rekenen}
-Een andere populaire berekening is \termen{modulo} (ook wel bekend als \termen{$\mod$}). Modulo-rekening is sterk gerelateerd aan, maar niet equivalent aan \termen{remainder}-rekenen (ofwel \termen{$\rem$}). We defini\"eren de remainder als:
+Een andere populaire berekening is \gtermen{modulo}{Een rekekundige bewerking op twee getallen. Modulo berekent de rest. Indien de rest negatief is, is het resultaat een getal tussen $0$ en $\abs{b-1}$ (inclusief) die equivalent is met de rest.} (ook wel bekend als \stermen[mod]{$\mod$}{modulo}). Modulo-rekening is sterk gerelateerd aan, maar niet equivalent aan \gtermen{remainder}{Een rekenkundig bewerking op twee getallen waarbij het resultaat de rest na deling voorstelt. Voor de getallen $a$ en $b$ betekent dit dus $a\rem b\equiv a-\floor{a/b}\cdot b$.}-rekenen (ofwel \stermen[rem]{$\rem$}{remainder}). We defini\"eren de remainder als:
+
 \begin{equation}
-a\rem b\equiv a-\left\lfloor a/b\right\rfloor\times b
+a\rem b\equiv a-\floor{a/b}\cdot b
 \end{equation}
+
 De modulo-operatie daarentegen houdt rekening met het teken van zowel $a$ als $b$:
+
 \begin{equation}
-a\mod b\equiv \left\{\begin{array}{lcl}
-a\rem b&\ifun&a\cdot b>0\\
-\left(a\rem b\right)+b&\ifun&a\cdot b<0
-\end{array}\right.
+a\mod b\equiv\acclguard{
+a\rem b&\ifun a\cdot b>0\\
+\brak{a\rem b}+b&\ifun a\cdot b<0
+}
 \end{equation}
-Net als bij andere operaties, heeft ook de modulo-operatie een speciaal geval bij een macht van 2: in dat geval kunnen we een AND operatie uitvoeren op het getal en de macht gedecrementeerd. Bijvoorbeeld:
+
+Het gevolg is dat het resultaat van een modulo altijd positief is: tussen $0$ en $\abs{b-1}$. Net als bij andere operaties, is een modulo operatie met een macht van twee een speciaal geval: in dat geval kunnen we een AND operatie uitvoeren op het getal en de macht gedecrementeerd. Bijvoorbeeld:
+
 \begin{equation}
 1653\mod 16=1653\mbox{ AND }15=5
 \end{equation}
+
 \subsection{Vaste komma getallen}
-We zullen het getal verder uitbreiden naar getallen met vaste komma in deze subsectie en getallen met vlottende komma in subsectie \ref{ss:floatingPoints}. Ten slotte zullen we nog enkele andere voorstellingen van gegevens bekijken in subsectie \ref{ss:otherRepresentations}.
+
+We zullen het getal verder uitbreiden naar getallen met vaste komma en later met getallen vlottende komma. In \sscref{otherRepresentations} zullen we ten slotte nog andere voorstellingen van gegevens bespreken.
+
 \paragraph{}
-\termen{Vaste komma voorstelling} (ofwel \termen{fixed point}) lost het probleem van het zetten van een komma op door gewoon een bit af te spreken waarna men een komma plaatst, deze positie staat vast. Bijgevolg is er geen voorstelling van de komma zelf nodig. Indien we dus bijvoorbeeld een 8-bit getal beschouwen, kunnen we de eerste vier bit voorstellen als het \termen{geheel deel}, de overige vier bit behoren dan tot het \termen{fractionele gedeelte}. Dit formaliseren we met de notatie \termen{$\fix\left<i,f\right>$} waarbij $i$ het aantal bits voorstellen behorend tot het gehele deel, en $f$ het aantal bits tot het fractionele gedeelte. Zo stelt $1110010$ in $\fix\left<4,3\right>$, $14.25$ voor. De eerste vier bits stellen immers $14$ voor, de laatste drie stellen $2$ voor, deze delen we vervolgens door $2^f$.
+\gtermen[vaste komma voorstelling]{Vaste komma voorstelling}{Een voorstellingswijze voor kommagetallen. De voorstelling van een getal bestaat in dat geval uit twee delen: een geheel deel een fractioneel deel. Tussen de twee delen wordt een punt (.) gezet. Beide delen krijgen een vast aantal cijfers, wat we noteren met $\fix\tupl{i,f}$: $i$ bits voor het geheel deel, $f$ voor het fractioneel deel. Omdat het aantal bits vast staat kunnen getallen met vaste komma maar een beperkte hoeveelheid getallen voorstellen. Het voordeel is echter dat men optellers en andere componenten niet hoeft aan te passen.} (ofwel \stermen{fixed point}{vaste komma voorstelling}) lost het probleem van het zetten van een komma op, door gewoon een bit af te spreken waarna men een komma plaatst, deze positie staat vast. Er is dan ook geen voorstelling van de komma zelf nodig. Indien we dus bijvoorbeeld een $8$-bit getal beschouwen, kunnen we de eerste vier bit voorstellen als het \gtermen{geheel deel}{Een deel van een getal bij vaste komma voorstelling. Het geheel deel is de reeks cijfers die voor de komma staan. Het aantal cijfers staat vooraf vast.}, de overige vier bit behoren dan tot het \gtermen{fractionele gedeelte}{Een deel van een getal bij vaste komma voorstell. Het fractioneel deel is de reeks cijfers die na de komma staat. Het aantal cijfers staat vooraf vast.}. Dit formaliseren we met de notatie \gtermen[fix i f]{$\fix\tupl{i,f}$}{De notatie voor een vaste komma voorstelling met $i$ cijfers voor het gehele gedeelte, en $f$ cijfers voor het fractionele gedeelte. Deze notatie wordt gebruikt om te redeneren over het aantal cijfers die men voor beide delen moet reserveren om bijvoorbeeld een optelling volledig te kunnen berekenen.} waarbij $i$ het aantal bits voorstellen die tot het gehele deel behoren, en $f$ het aantal bits die men aan het fractionele gedeelte toekent. Zo stelt $1110010_2$ in $\fix\tupl{4,3}$, $14.25$ voor. De eerste vier bits stellen immers binair het getal $14$ voor, de laatste drie stellen $2$ voor, deze delen we vervolgens door $2^f$ wat hier $2^3$ is, bijgevolg heeft het komma-gedeelte de waarde: $2/2^f=2/2^3=2/8=1/4=0.25$.
+
 \subsubsection{Aantal bits voor fouteloze voorstelling}
-In de vorige secties hebben we al aandacht besteed aan het aantal bits die we moeten reserveren om de resultaten van bewerkingen zonder verlies te kunnen blijven voorstellen. Bij een optelling van 2 vaste komma getallen moet het resultaat voorgesteld worden op een vaste komma voorstelling waarbij we het geheel en fractioneelgedeelte voorstellen met het maximum aantal bits van de operanden. Bovendien dienen we \'e\'en bit toe te voegen aan het geheel gedeelte, ofwel formeler:
+In de vorige secties hebben we al aandacht besteed aan het aantal bits die we moeten reserveren om de resultaten van bewerkingen zonder verlies te kunnen blijven voorstellen. Bij een optelling van vaste vaste komma getallen moet het resultaat voorgesteld worden op een vaste komma voorstelling waarbij we het geheel en fractioneelgedeelte voorstellen met het maximum aantal bits van de operanden. Bovendien dienen we \'e\'en bit toe te voegen aan het geheel gedeelte, ofwel formeler:
+
 \begin{equation}
-\fix\left<i_1,f_1\right>+\fix\left<i_2,f_2\right>=\fix\left<\max\left(i_1,i_2\right)+1,\max\left(f_1,f_2\right)\right>
+\fix\tupl{i_1,f_1}+\fix\tupl{i_2,f_2}=\fix\tupl{\fun{\max}{i_1,i_2}+1,\fun{\max}{f_1,f_2}}
 \end{equation}
+
 Wat we verder kunnen veralgemenen tot:
+
 \begin{equation}
-\displaystyle\sum_{k=1}^{n}{\fix\left<i_k,f_k\right>}=\fix\left<\left\lceil\log_2n\right\rceil+\max_{k=1}^{n}{i_k},\max_{k=1}^{n}{f_k}\right>
+\displaystyle\sum_{k=1}^{n}{\fix\tupl{i_k,f_k}}=\fix\tupl{\ceil\log_2n}+\max_{k=1}^{n}{i_k},\max_{k=1}^{n}{f_k}}
 \end{equation}
+
 Bij vermenigvuldigingen moeten we het aantal bits optellen van zowel het gehele als fractionele gedeelte:
+
 \begin{equation}
-\fix\left<i_1,f_1\right>\times\fix\left<i_2,f_2\right>=\fix\left<i_1+i_2,f_1+f_2\right>
+\fix\tupl{i_1,f_1}\cdot\fix\tupl{i_2,f_2}=\fix\tupl{i_1+i_2,f_1+f_2}
 \end{equation}
+
 Of algemener:
+
 \begin{equation}
-\displaystyle\prod_{k=1}^{n}{\fix\left<i_k,f_k\right>}=\fix\left<\displaystyle\sum_{k=1}^{n}{i_k},\displaystyle\sum_{k=1}^{n}{f_k}\right>
+\displaystyle\prod_{k=1}^{n}{\fix\tupl{i_k,f_k}}=\fix\tupl{\displaystyle\sum_{k=1}^{n}{i_k},\displaystyle\sum_{k=1}^{n}{f_k}}
 \end{equation}
+
 \subsection{Vlottende komma getallen}
-\label{ss:floatingPoints}
-Het kan voorkomen dat we echter niet weten tot welke grootorde het getal in kwestie zal behoren. In dat geval zouden we vaste getallen met een groot aantal bits moeten gebruiken, waarbij bovendien in de meeste gevallen slechts een kleine hoeveelheid bits nuttig blijkt. In deze gevallen gebruiken we \termen{vlottende komma voorstelling} (ook wel \termen{zwevendekommagetal}, \termen{drijvendekommagetal} of \termen{floating-point number} genoemd). Vlottende komma getallen worden voorgesteld door een sequentie van bits die in drie groepen worden onderverdeeld:
+\ssclab{floatingPoints}
+\ssclab{floatingpoint}
+Het kan voorkomen dat we niet weten tot welke grootorde een getal in kwestie zal behoren: het kan bijvoorbeeld tussen $0.000\ 000\ 001$ en $1\ 000\ 000\ 000$ liggen. In dat geval zouden we vaste kommagetallen met een groot aantal bits kunnen gebruiken. Maar in de meeste gevallen zullen slechts een beperkt aantal bits nuttig blijken. In dit soort gevallen kan men beter een getal met \gtermen{vlottende komma voorstelling}{Een manier om een kommagetal voor te stellen met een bereik tussen zeer kleine en zeer grote getallen. Men encodeert het getal op een wetenschappelijke manier in bits met een tekenbit $s$, een mantisse $M$ en een exponent. Getallen met drijvende komma zijn gestandaardiseerd in IEEE-754.} gebruiken, ook wel \stermen{zwevendekommagetal}{vlottende komma voorstelling}, \stermen{drijvendekommagetal}{vlottende komma voorstelling} of \stermen{floating-point number}{vlottende komma voorstelling} genoemd. Vlottende komma getallen worden voorgesteld door een sequentie van bits die in drie groepen worden onderverdeeld:
+
 \begin{itemize}
- \item \termen{sign-bit $s$}: 1-bit die het teken van het getal bepaalt. De vlottende kommavoorstelling is dus vergelijkbaar met de signed-magnitude voorstelling.
- \item \termen{exponent $E$}: een getal die bepaalt met hoeveel plaatsen het getal moet worden opgeschoven. Dit deel wordt voorgesteld in `\termen{excess}'-formaat.
- \item \termen{mantisse $M$}: het getal onafhankelijk van het schuiven van plaatsen. De voorstelling van de mantisse zelf is $\fix\left<1,m-1\right>$.
+ \item \gtermen[sign-bit]{sign-bit $s$}{Een bit bij de vlottende komma voorstelling. De tekenbit geeft - zoals bij een sign-magnitude voorstelling - aan of we de rest van het getal als positief ($0$) of negatief ($1$) moeten interpreteren.} ofwel \stermen[tekenbit]{tekenbit $s$}{sign-bit}: \'e\'en bit die het teken van het getal bepaalt. De vlottende kommavoorstelling werkt dus met de sign-magnitude voorstelling.
+ \item \gtermen[exponent]{exponent $E$}{Een reeks bits bij de vlottende komma voorstelling. De exponent $E$ geeft aan dat we het getal van de mantisse $M$ (vereikt met de sign-bit $s$) moeten vermenigvuldigen met $r^E$ met $r$ de radix van het getalstelsel.}: een getal die bepaalt met hoeveel plaatsen het getal moet worden opgeschoven. Dit deel wordt voorgesteld in het excess-formaat.
+ \item \gtermen[mantisse]{mantisse $M$}{Een reeks bits bij de vlottende komma voorstelling. De mantisse zelf wordt voorgesteld als een vlottend komma getal. Dit getal wordt vermenigvuldigt met het teken dat wordt bepaald door de sign-bit en de exponent.}: het getal onafhankelijk van het schuiven van plaatsen. De voorstelling van een mantisse $M$ met $m$ bits is een $\fix\tupl{1,m-1}$ vast komma getal.
 \end{itemize}
+
 Het getal dat we hierbij willen voorstellen is gelijk aan:
+
 \begin{equation}
-N=\left(-1\right)^s\times\mbox{mantisse}\times r^{\mbox{\tiny{exponent}}}
+N=\brak{-1}^s\cdot\mbox{mantisse}\cdot r^{\mbox{\tiny{exponent}}}
 \end{equation}
-met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen als \termen{$\float\left<m,e\right>$} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. Verder onderscheiden we nog twee families van vlottende komma voorstellingen:
+
+met radix $r$. Net als bij een vaste komma getal noteren we een familie van vlottende komma getallen met \gtermen[float m e]{$\float\tupl{m,e}$}{De notatie voor een vlottende komma voorstelling met $m$ cijfers voor de mantisse, en $e$ cijfers voor de exponent. Deze notatie wordt gebruikt om te redeneren over het aantal cijfers die men voor beide delen moet reserveren om bijvoorbeeld een vermenigvuldiging foutloos te kunnen berekenen.} met $m$ het aantal bits van de mantisse en $e$ het aantal bits van de exponent. We maken ook een onderscheid tussen twee families van vlottende komma voorstellingen:
+
 \begin{itemize}
- \item \termen{Genormaliseerde vlottende komma voorstelling}: hierbij leggen we een extra constraint betreffende de mantisse: $1\leq\mbox{mantisse}<r$. Omdat in dat geval de eerste bit dus altijd gelijk is aan 1, behoren enkel de bits na de komma tot de voorstelling. In dat geval denken we er de 1 dus bij.
- \item \termen{Niet-genormaliseerde vlottende komma voorstelling}: hierbij is deze bovengenoemde constraint dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, maar hebben een groot nadeel: men kan een getal op verschillende manieren voorstellen: eenzelfde getal kan op verschillende manieren voorgesteld worden.
+ \item \gtermen{Genormaliseerde vlottende komma voorstelling}{Een familie van vlottende komma voorstellingen. Bij deze familie geldt een extra beperking dat de waarde van de mantisse $M$ ligt tussen $1\leq M<r$ met radix $r$. Bij het binaire systeem impliceert dit dat de eerste bit van de mantisse dus altijd op $1$ zo staan. Daarom wordt deze bit weggelaten, maar bestaat ze wel nog virtueel. Deze bit wordt dan vervangen door een extra bit in het fractionele gedeelte.}: hierbij leggen we een extra voorwaarde op betreffende de mantisse: $1\leq\mbox{mantisse}<r$. In het geval van binaire notatie ($r=2$) impliceert dit dus dat de eerste bit altijd $1$ is. Daarom wordt in dat geval de eerste bit van de mantisse weggelaten: deze staat er impliciet. In dat geval wordt de mantisse dus voorgesteld als $\fix\tupl{0,m}$, maar dient men altijd de virtuele bit $1$ tot het gehele gedeelte te rekenen. Deze aanpassing maakt de voorstelling efficienter: de extra bit bij de mantisse bij het fractionele gedeelte drijft de precisie van het formaat op.
+ \item \gtermen{Niet-genormaliseerde vlottende komma voorstelling}{Een familie van vlottende komma voorstellingen. Hierbij wordt de waarde van de mantisse $M$ niet begrensd. De niet-genormaliseerde vlottende komma voorstelling kan meer getallen voorstellen, maar veel getallen kunnen ook op verschillende manieren worden voorgesteld. Dit levert complexere logica op bij bijvoorbeeld het implementeren van een vergelijker.}: hierbij is de bovengenoemde beperking dus niet van toepassing. Niet-genormaliseerde vlottende komma getallen kunnen meer getallen voorstellen dan hun tegenhanger, omdat het geheel gedeelte op $0$ kan worden gezet. Men betaalt hiervoor echter omdat voor veel getallen er verschillende voorstellingen bestaan. Het gevolg is dat het implementeren van bijvoorbeeld een vergelijker complexer wordt.
 \end{itemize}
+
 \subsubsection{Underflow en overflow}
-Naast overflow introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\termen{underflow}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. Figuur \ref{fig:floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{Single} (zie volgende paragraaf).
+Naast het eerder ge\"introduceerde overflow -- het niet voor te stellen van grote getallen -- introduceert de vlottende kommavoorstelling nog een bijkomend fenomeen: ``\gtermen{underflow}{Het fenomeen dat kleine getallen -- in de zin van te dicht bij $0$ -- niet voor te stellen zijn door alle getalvoorstellingen, dit is bijvoorbeeld een belangrijk fenomeen bij vlottende kommagetallen.}''. Underflow treedt op op het moment dat een getal niet meer voorgesteld kan worden omdat de absolute waarde te klein geworden is. \figref{floatingpoint-underflow} geeft dit fenomeen schematisch weer van een \texttt{single} (zie volgende paragraaf).
+
 \importtikzfigure{floatingpoint-underflow}{Underflow van een vlottende komma voorstelling.}
+
+Op de figuur worden de getallen die we kunnen voorstellen gemarkeerd met de grijze zone. Bij genormaliseerde vlottende komma getallen, kunnen we enkel getallen tussen $-2^{128}$ en $2^{128}$ voorstellen. Tussen $-2^{-149}$ en $2^{-149}$ kunnen we slechts \'e\'en getal voorstellen: $0$. Merk op dat de gemarkeerde zone niet continu is: we kunnen bijvoorbeeld constanten zoals $\pi$ en $e$ niet exact voorstellen, de nauwkeurigheid hangt af van het aantal bits in de mantisse.
+
 \subsubsection{IEEE-formaat voor vlottende komma getallen}
-Nu we de vlottende komma voorstelling theoretisch beschreven hebben, zullen we het formaat gedefinieerd door IEEE bespreken. De floating point wordt beschreven in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. Hierbij worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Hierbij maakt met een onderscheid tussen vlottende komma getallen met \termen{enkele precisie} (32-bit en beter bekend onder de term \termen{\texttt{float}} of \termen{\texttt{Single}}) en \termen{dubbele precisie} (64-bit en beter bekend als \termen{\texttt{double}}). Tabel \ref{tbl:iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
+Nu we de vlottende komma voorstelling algemeen beschreven hebben, introduceren we enkele concrete getalvoorstellingen met vlottende komma zoals voorgesteld door IEEE\footnote{IEEE: Institute for Electrical and Electronics Engineers.}. IEEE beschrijft hun floating point getallen in IEEE 754-1985\footnote{De opvolger van deze standaard is IEEE 754-2008\cite{5976968}. In deze standaard worden ook halve en viervoudige precisie gedefinieerd.}\cite{30711}. Men maakt er een onderscheid tussen vlottende komma getallen met \gtermen{enkele precisie}{Een voorstelling voor vlottende kommagetallen met $32$-bit beschreven in IEEE 754 met $8$ bit voor de exponent en $23$ bit voor de mantisse. Enkele precisie wordt ook single of float genoemd.} ($32$-bit en beter bekend onder de term \stermen[float]{\texttt{float}}{enkele precisie} of \stermen[single]{\texttt{single}}{enkele precisie}) en \gtermen{dubbele precisie}{Een voorstelling voor vlottende kommagetallen met $64$-bit beschreven in IEEE 754 met $11$ bit voor de exponent en $52$ bit voor de mantisse. Enkele precisie wordt ook double genoemd.} ($64$-bit en beter bekend als \stermen[double]{\texttt{double}}{dubbele precisie}). \tblref{iEEEFloatingPointFormat} toont de verdeling van de beschikbare bits onder de mantisse en exponent.
+
 \begin{table}[hbt]
 \centering
-\subtable[Bit-indeling]{\begin{tabular}{l|crrr}
-Precisie&grootte&$e$&$m$&$B$\\\hline
+\subtable[Bit-indeling]{\defaulttable{l|crrr}{
+\bf Precisie&grootte&$e$&$m$&$B$}{
 \texttt{float}&32-bit&8&23&127\\
-\texttt{double}&64-bit&11&52&1023\\
-\end{tabular}
+\texttt{double}&64-bit&11&52&1023
+}
 \tbllab{iEEEFloatingPointFormat}}
-\subtable[Getalvoorstelling]{\begin{tabular}{l|ccc}
-&$E=0$&$0<E<2^e-1$&$E=2^e-1$\\\hline
+\subtable[Getalvoorstelling]{\defaulttable{l|ccc}{
+\bf &$E=0$&$0<E<2^e-1$&$E=2^e-1$}{
 $M=0$&$0$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&$\left(-1\right)^s\times\infty$\\
-$M\neq 0$&$\left(-1\right)^s\times\underline{0}.M\times2^{1-B}$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&NaN\\
-\end{tabular}
+$M\neq 0$&$\left(-1\right)^s\times\underline{0}.M\times2^{1-B}$&$\left(-1\right)^s\times\underline{1}.M\times2^{E-B}$&NaN
+}
 \tbllab{iEEEFloatingNumberRepresentation}}
 \caption{IEEE 754-1985 Floating Point.}
 \tbllab{iEEEFloatingPoint}
 \end{table}
-Elk van deze formaten heeft uiteraard radix $r=2$. IEEE 754-1985 vermeldt ook hoe een vlottende komma moet worden uitgelezen. Tabel \ref{tbl:iEEEFloatingNumberRepresentation} geeft hierbij weer hoe we het getal moeten interpreteren afhankelijk van de waarde van de exponent $E$ en mantisse $M$. Bovendien wordt bij de IEEE 754 een extra variabele ingevoerd: \termen{excess-bias $B$}. Tot op heden is $B=2^{e-1}-1$, en is de range van de exponent dus van $-2^{e-1}+2$ tot $2^{e-1}-1$. Eventueel zou men later kunnen afwijken en bijvoorbeeld meer positieve exponenten dan negatieve kunnen toelaten. Verder definieert het formaat nog enkele speciale variabelen:
+
+Elk van deze formaten werkt natuurlijk met radix $r=2$. IEEE 754-1985 vermeldt ook hoe een vlottende komma moet worden uitgelezen. \tblref{iEEEFloatingNumberRepresentation} geeft hierbij weer hoe we het getal moeten interpreteren afhankelijk van de waarde van de exponent $E$ en mantisse $M$. Bovendien wordt bij de IEEE 754 een extra variabele ingevoerd: de excess-bias $B$. Tot op heden is $B$ altijd $B=2^{e-1}-1$, en is de range van de exponent dus van $-2^{e-1}+2$ tot $2^{e-1}-1$. Eventueel zou men later kunnen afwijken en bijvoorbeeld meer positieve exponenten dan negatieve kunnen toelaten. Men gebruikt de excess voorstelling omdat dit toelaat twee getallen met vlottende komma te vergelijken zoals we een geheel getal vergelijken. We dienen dus geen aparte vergelijker te bouwen voor een vlottend kommagetal. Het formaat definieert ook enkele speciale variabelen:
 \begin{itemize}
- \item Nul (0): dit getal kan eigenlijk niet weergegeven worden met ons eerdere definitie van een genormaliseerde vlottende komma. De getalexperts bij Intel bedachten dan ook de regel dat indien $E=0$, we het getal in niet genormaliseerde getalvoorstelling zien.
- \item \termen{Negatief oneindig $-\infty$}/\termen{Positief oneindig $+\infty$}: Indien een operatie tot een overflow leidt, zal het resultaat worden voorgesteld als oneindig. Oneindig gedraagt zich ongeveer hetzelfde als zijn wiskundig equivalent.
- \item \termen{Not a Number (NaN)}: In tegenstelling tot gehele getallen die bij bijvoorbeeld een deling door 0 een fout\footnote{En een interrupt bij de meeste processoren.} veroorzaken, zullen ongeldige bewerkingen zoals delen door 0, en het verschil van oneindig en oneindig resulteren in Not a Number.
+ \item \gtermen[nul]{Nul ($0$)}{Het kleinste natuurlijke getal. Dit getal is niet voor te stellen bij een genormaliseerde vlottende komma voorstelling. Men introduceerde hiervoor een regel dat indien zowel de exponent als de mantisse nul zijn, het getal ook nul is.}: dit getal kan eigenlijk niet weergegeven worden met ons eerdere definitie van een genormaliseerde vlottende komma. Nul is echter een nuttig getal bij het programmeren: om bijvoorbeeld een neutrale optelling uit te voeren. De getalexperts bij Intel bedachten daarom de regel dat indien $E=0$, we het getal in niet genormaliseerde getalvoorstelling zien. Op die manier wordt $0$ dus wel mogelijk.
+ \item \gtermen[negatief oneindig]{Negatief oneindig $-\infty$}{Een element bij de vlottende komma voorstelling van IEEE 754. Negatief oneindig wordt voorgesteld met de tekenbit op $1$, $0$ voor de mantisse, en het hoogst mogelijk voor te stellen getal van de exponent. Berwerkingen die tot overflow leiden in het negatieve, geven negatief oneindig.}/\gtermen[positief oneindig]{Positief oneindig $+\infty$}{Een element bij de vlottende komma voorstelling van IEEE 754. Positief oneindig wordt voorgesteld met de tekenbit op $0$, $0$ voor de mantisse, en het hoogst mogelijk voor te stellen getal van de exponent. Berwerkingen die tot overflow leiden in het positieve, geven positief oneindig.}: Indien een operatie tot een overflow leidt, zal het resultaat worden voorgesteld als oneindig. Indien de bewerking een teken heeft,kan men dit teken ook worden overge\"erfd in het oneindig resultaat. Oneindig gedraagt zich ongeveer hetzelfde als zijn wiskundig equivalent: bijvoorbeeld het optellen van eender welk getal - behalve oneindig en NaN - met positief oneindig, levert positief oneindig op.
+ \item \gtermen[not a number]{Not a Number (NaN)}{Een speciaal getal bij getallen met vlottende komma volgens IEEE 754. NaN stelt het resultaat voor van een bewerking die wiskundig niet correct is. Bijvoorbeeld het delen door nul, het verschil tussen twee oneindige getallen, de vierkantswortel van een negatief getal, enzovoort.}: In tegenstelling tot gehele getallen die bij bijvoorbeeld een deling door nul een fout\footnote{En een interrupt bij de meeste processoren.} veroorzaken, zullen ongeldige bewerkingen bij de vlottende kommavoorstelling van IEEE 754 resulteren in NaN. We denken dan aan delen door nul, en het verschil van oneindig en oneindig en de vierkantswortel van een negatief getal trekken.
 \end{itemize}
-In tabel \ref{tbl:iEEEFloatingNumberRepresentation} zien we ten slotte ook dat enkele bits onderlijnd worden. Dit zijn de zogenaamde \termen{verborgen bits}. Deze bits zijn geen onderdeel van de mantisse, maar dienen we er wel denkbeeldig aan toe te voegen om het getal te kunnen interpreteren.
+In \tblref{iEEEFloatingNumberRepresentation} zien we ten slotte ook dat enkele bits onderlijnd worden. Dit zijn de zogenaamde \gtermen{verborgen bits}{Bits die alleen virtueel bestaan, bijvoorbeeld bij de interpretatie van een getal. In het geval van IEEE 754 is de eerste bit in de ``semantisch'' interpretatie van de mantisse verboren: deze wordt niet expliciet voorgesteld.}. Deze bits zijn geen onderdeel van de mantisse, maar dienen we er wel denkbeeldig aan toe te voegen om het getal te kunnen interpreteren.
+
 \subsubsection{Rekenen met vlottende komma}
-In deze subsubsectie bespreken we kort hoe we kunnen rekenen met getallen met vlottende komma. De details kan men vinden in \cite[\S4]{hyde2004write} maar enkel een korte introductie behoort tot dit vak.
+Het hierboven ge\"introduceerde formaat is relatief complex. Het bouwen van optellers en andere bewerkingen voor deze vlottende-komma voorstellingen is geen sinecure en valt buiten het bereik van deze cursus. We bespreken enkel op hoog niveau hoe we met deze getallen kunnen rekenen. De details kan men vinden in \cite[\S4]{hyde2004write}. Het is belangrijk te weten dat IEEE 754 enkel het formaat van vlottende getallen beschrijft. Wiskundige operaties behoren niet tot de standaard: het resultaat van bijvoorbeeld het optellen van twee vlottende komma getallen staat niet vast. Het is dus mogelijk dat op de ene processor een sinus uitrekenen een licht afwijkend resultaat zal opleveren tegenover het resultaat bij een andere processor. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij men de operatoren eerst omzet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
+
 \paragraph{Optelling}
 Het optellen van twee vlottende komma getallen verloopt in drie stappen:
+
 \begin{enumerate}
- \item Eerst denormaliseren we de twee getallen door de exponenten gelijk te maken. Deze stap is geen sinecure omdat we bij dit proces zoveel mogelijk informatie willen blijven behouden (Indien we dus enkel bij \'e\'en van de twee getallen de exponent aanpassen, lopen we kans dat zijn mantisse alle informatie verliest).
+ \item Eerst denormaliseren we de twee getallen door de exponenten gelijk te maken. Deze stap is geen sinecure omdat we bij dit proces zoveel mogelijk informatie willen blijven behouden: indien we dus enkel bij \'e\'en van de twee getallen de exponent aanpassen, lopen we kans dat zijn mantisse alle informatie verliest.
  \item Vervolgens tellen we de twee mantisses met elkaar op.
- \item Het resultaat dienen we vervolgens weer te normaliseren.
+ \item Het resultaat dienen we vervolgens weer te normaliseren: het is immers mogelijk dat het resultaat groter is dan voorstellbaar op de mantisse (of kleiner) in dat geval passen we de exponent aan en schuiven we met de bits op de mantisse.
 \end{enumerate}
-IEEE 754 definieert het formaat van een vlottende komma, de wiskundige operaties zelf behoren hier echter niet bij. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij het getal eerst wordt omgezet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
+
 \paragraph{Vermenigvuldiging}
 Vermenigvuldigen is bij vlottende komma simpeler dan optellen:
+
 \begin{enumerate}
  \item We vermenigvuldigen de mantisse zoals we dit hebben gedaan bij vermenigvuldigen van natuurlijke getallen. We passen een XOR-operatie toe op de tekenbit van de twee getallen, en we tellen de exponenten met elkaar op\footnote{Optellen bij het excess-formaat verloopt anders, we dienen immers \'e\'enmaal de excess-bias van de som af te trekken.}.
  \item We normaliseren het resultaat. Dit betekent dat ofwel de exponent hetzelfde blijft, ofwel met \'e\'en moet worden opgehoogd.
 \end{enumerate}
+
 \subsection{Andere voorstellingen van gegevens}
-\label{ss:otherRepresentations}
-Naast de hierboven beschreven voorstellingen voor natuurlijke-, gehele- en kommagetallen bestaan er nog andere voorstellingen. We stellen er in deze subsectie twee voor: \termen{Binary Coded Decimal (BCD)} is een alternatief formaat om natuurlijke getallen voor te stellen. Dit kan eventueel uitgebreid worden tot gehele- en kommagetallen. De \termen{American Standard Code for Information Interchange (ASCII)} is een formaat dat hoofdzakelijk bedoeld is om tekst op te slaan.
+\ssclab{otherRepresentations}
+Naast de hierboven beschreven voorstellingen voor natuurlijke-, gehele- en kommagetallen bestaan er nog een groot aantal andere voorstellingen. We stellen niet noodzakelijk getallen voor, maar tekst, beelden, geluid, enzovoort. We stellen er in deze subsectie twee voor: \gtermen{Binary Coded Decimal (BCD)}{Een formaat om getallen mee voor te stellen. Bij een binary coded decimal wordt elk cijfer in het decimaal stelsel voorgesteld door vier bits. Men zet dus elk cijfer van de decimale voorstelling om in zijn binair equivalent. Rekenen met binary coded decimals is complexer. Het voordeel is dat men elk getal dat decimaal kan worden voorgesteld, ook in bcd notatie exact kan voorstellen. Het formaat is dan ook populair in de financi\"ele wereld.} is een alternatief formaat om natuurlijke getallen voor te stellen. Dit kan eventueel uitgebreid worden tot gehele- en kommagetallen. De \gtermen{American Standard Code for Information Interchange (ASCII)}{Een formaat om tekst voor te stellen. ASCII omvat 128 karakters. Tekst wordt dan karakter per karakter voorgesteld.} is een formaat dat hoofdzakelijk bedoeld is om tekst op te slaan.
+
 \subsubsection{Binary Coded Decimal (BCD)}
-\label{ss:bcd}
-In de vorige subsecties hebben we geen aandacht besteed aan het omzetten van een getal naar tekst. Deze omzetting is vrij arbeidsintensief en kost dus ook veel hardware. Bovendien stuiten we op nog een probleem: heel wat decimale kommagetallen kunnen niet voorgesteld worden in het binair getalstelsel. Zo bestaat er geen enkel binaire vorm die $0.3$ voorstelt. In dat geval moeten we het getal zo goed mogelijk benaderen\footnote{Het is echter niet omdat het binair stelsel er niet in slaagt om alle decimale getallen voor te stellen dat het minder accuraat is, integendeel: het binair stelsel is accurater.}. Een oplossing voor deze twee problemen is het Binary Coded Decimal (BCD) systeem. We kunnen elk decimaal cijfer voorstellen met 4-bit. We kunnen dus een decimaal getal voorstellen, door voor ieder cijfer zijn binair equivalent te gebruiken. Dit betekent dus dat we een decimaal getal met $n$ cijfers voorstellen met $4n$ bit. Elk van deze groepen bits kan dus alleen waardes van $0$ tot $9$ aannemen. Bijvoorbeeld: $1425_{10}=0101\_1001\_0001_2=0001\_0100\_0010\_0101_{\mbox{\tiny{BCD}}}$. Een groot nadeel van BCD voorstelling is dat bewerkingen heel wat complexer worden. Tabel \ref{tbl:bCDConversion} toont de omzetting van een decimaal cijfer naar het BCD equivalent.
+\ssslab{bcd}
+In de vorige subsecties hebben we geen aandacht besteed aan het omzetten van een getal naar tekst. Deze omzetting is vrij arbeidsintensief en kost dus ook veel hardware. Bovendien stuiten we op nog een probleem: heel wat decimale kommagetallen kunnen niet voorgesteld worden in het binair getalstelsel. Zo bestaat er geen enkel binaire voorstelling voor $0.3$. In dat geval moeten we het getal zo goed mogelijk benaderen\footnote{Het is echter niet omdat het binair stelsel er niet in slaagt om alle decimale getallen voor te stellen dat het minder accuraat is, integendeel: het binair stelsel is accurater.}. Een oplossing voor deze twee problemen is het Binary Coded Decimal (BCD) systeem. We kunnen immers elk decimaal cijfer voorstellen met 4-bit. Bijgevolg kunnen we een decimaal getal voorstellen, door voor ieder cijfer van de decimale voorstelling zijn binair equivalent om te zetten. Dit betekent dus dat we een decimaal getal met $n$ cijfers voorstellen met $4\cdot n$ bit. Elk van deze groepen bits kan dus alleen waardes van $0$ tot $9$ aannemen. Bijvoorbeeld: $1425_{10}=0101\_1001\_0001_2=0001\_0100\_0010\_0101_{\mbox{\tiny{BCD}}}$. Een nadeel van BCD voorstelling is dat de meeste bewerkingen complexer worden. \tblref{bCDConversion} toont de omzetting van een decimaal cijfer naar het BCD equivalent.
+
 \begin{table}[hbt]
 \centering
-\begin{tabular}{c|c}
-Decimaal&BCD\\\hline
-0&0000\\
-1&0001\\
-2&0010\\
-3&0011\\
-4&0100\\
-5&0101\\
-6&0110\\
-7&0111\\
-8&1000\\
-9&1001
-\end{tabular}
+\defaulttable{c|c||c|c}{
+\bf Dec.&BCD&Dec.&BCD}{
+0&0000&5&0101\\
+1&0001&6&0110\\
+2&0010&7&0111\\
+3&0011&8&1000\\
+4&0100&9&1000}
 \caption{Decimale cijfers en hun BCD equivalent.}
 \tbllab{bCDConversion}
 \end{table}
+
 \paragraph{Bewerkingen met BCD}
 \begin{figure}[hbt]
 \centering
@@ -810,8 +1083,11 @@ Decimaal&BCD\\\hline
 \caption{Mogelijke implementatie van een BCD opteller.}
 \figlab{bCDAdder}
 \end{figure}
-Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het BCD formaat. Hierbij streven we niet zozeer naar een minimale implementatie, maar tonen we dat een optelling in ieder geval complexer is dan bij zijn binair equivalent. Bij een optelling dienen we immers elke decimaal afzonderlijk op te tellen. Net zoals een half- en full adder bit per bit optelden, dienen we nu per decimaal een 4-bit opteller te realiseren. Indien het resultaat van deze optelling echter groter is dan 9, dienen we dit resultaat verder aan te passen, zodat het resultaat 10 minder is, en we de overdacht (carry) doorgeven. Voor dit eerste hebben we nogmaals een 4-bit opteller nodig. Verder hebben we een component nodig die controleert of het eerste resultaat groter is dan 9. Deze component heeft niet alleen een carry als uitgang, maar moet ook invoer genereren voor de tweede opteller. Indien het eerste resultaat immers groter is dan 9, tellen we er nog eens 6 bij op. Dit betekent dat bij een tussenresultaat van 10, de tweede opteller tot 16 komt wat dus gebaseerd op de laatste 4 bits in 0 resulteert. Figuur \ref{fig:bCDAdderSchematic} toont schematisch hoe we twee decimale cijfers kunnen optellen. Indien we deze structuur voor ieder cijfer herhalen, realiseren we een BCD opteller. De vergelijker synthetiseren we met behulp van Karnaugh-kaarten zoals op figuur \ref{fig:bCDAdderKarnaugh}. Merk op dat het resultaat van de eerste opteller hoogstens 18 is, en we dus voor de andere waarden don't cares kunnen gebruiken. Een mogelijke synthese van deze vergelijker staat op figuur \ref{fig:bCDAdderComparator}. Tot slot merken we op dat we bij het bepalen van het negatieve getal van een BCD niet het 2-complement moeten berekenen, maar het 10-complement. Ook deze stap vereist extra hardware.
+
+Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het BCD formaat. Hierbij streven we niet zozeer naar een minimale implementatie, maar tonen we dat een optelling complexer is tegenover zijn binair equivalent. Bij een optelling dienen we immers elke decimaal afzonderlijk op te tellen. Net zoals een half- en full adder bit per bit optelden, dienen we nu per decimaal een $4$-bit opteller te realiseren. Indien het resultaat van deze optelling bovendien groter is dan $9$, dienen we dit resultaat verder aan te passen: we trekken er $10$ vanaf en we geven overdacht (carry) door. Bij de aftrekking hebben we dus nogmaals een $4$-bit opteller nodig. We dienen ook een component te realiseren dat controleert of het eerste resultaat groter is dan $9$. Deze component heeft niet alleen een carry als uitgang, maar moet ook invoer genereren voor de tweede opteller. Indien het eerste resultaat immers groter is dan $9$, tellen we er nog eens 6 bij op. Dit betekent dat bij een tussenresultaat van $10$, de tweede opteller tot $16$ komt wat dus gebaseerd op de laatste $4$ bits in $0$ resulteert. \figref{bCDAdderSchematic} toont schematisch hoe we twee decimale cijfers kunnen optellen. Indien we deze structuur voor ieder cijfer herhalen, realiseren we een BCD opteller. De vergelijker synthetiseren we met behulp van Karnaugh-kaarten zoals op \figref{bCDAdderKarnaugh}. Merk op dat het resultaat van de eerste opteller hoogstens $18$ is, en we dus voor de andere waarden don't cares kunnen gebruiken. Een mogelijke synthese van deze vergelijker staat op \figref{bCDAdderComparator}. Tot slot merken we op dat we bij het bepalen van het negatieve getal van een BCD niet het $2$-complement moeten berekenen, maar het $10$-complement. Ook deze stap vereist extra hardware.
+
 \subsubsection{American Standard Code for Information Interchange (ASCII)}
+
 \begin{table}[hbt]
 \centering
 \begin{tabular}{c|cccccccc}
@@ -839,13 +1115,17 @@ Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het B
 \caption{ASCII standaard.}
 \tbllab{aSCIIStandard}
 \end{table}
-Een standaard om tekst voor te stellen is de American Standard Code for Information Interchange (ASCII). ASCII reserveert 7 bit per karakter. Deze 7 bit zorgen voor 128 mogelijke karakters. De karakterset bestaat uit de Romaanse letters, Arabische cijfers, diverse leestekens en enkele functiesymbolen. De toewijzing van deze symbolen vertoont enige logica om bijvoorbeeld kleine letters naar hoofdletters om te zetten, en binaire getallen in hun ASCII equivalent. Tabel \ref{tbl:aSCIIStandard} toont de ASCII-karakters met hun bijbehorende binaire code. ASCII bevat geen ondersteuning voor cyrillisch, Arabisch,... Unicode is een standaard die 8, 16 of 32 bit per karakter reserveert om dit probleem op te lossen. Anno 2011 is $11\%$ van de binaire waarden toegewezen.
+Een standaard om tekst voor te stellen is de American Standard Code for Information Interchange (ASCII). ASCII reserveert $7$ bit per karakter in de tekst. Deze zeven bit zorgen dus voor $128$ mogelijke karakters. De karakterset bestaat uit de Romaanse letters, Arabische cijfers, diverse leestekens en enkele functiesymbolen. De toewijzing van deze symbolen vertoont enige logica. Zo is het bijvoorbeeld eenvoudig om kleine letters om te zetten naar de equivalente hoofdletter, of bijvoorbeeld binaire getallen in hun ASCII equivalent. \tblref{aSCIIStandard} toont de ASCII-karakters met hun bijbehorende binaire code. ASCII bevat geen ondersteuning voor karakters in het Cyrillische en Arabische geschrift. Unicode is een standaard die $8$, $16$ of $32$ bit per karakter reserveert om dit probleem op te lossen. Anno $2011$ is $11\%$ van de binaire waarden toegewezen.
+
 \section{Andere basisschakelingen}
-\label{s:andereBasis}
-Naast de rekenkundige schakelingen in sectie \ref{s:rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In subsectie \ref{ss:multiplexer} bespreken we de multiplexer. Daarna bespreken we in \ref{ss:decoder} en \ref{ss:demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \ref{ss:encoder}. We eindigen met de vergelijker in \ref{ss:comparator} en de reeds aangehaalde schuifoperatie in subsectie \ref{ss:shiftoperators}.
+\seclab{andereBasis}
+Naast de rekenkundige schakelingen in \secref{rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In \sscref{multiplexer} bespreken we de multiplexer. Daarna bespreken we in \sscref{decoder} en \sscref{demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \sscef{encoder}. We eindigen met de vergelijker in \sscref{comparator} en de reeds aangehaalde schuifoperatie in subsectie \sscref{shiftoperators}.
+
+%REVIEW
 \subsection{Multiplexer}
-\label{ss:multiplexer}
-Een \termen{multiplexer}, \termen{selector} of \termen{MUX} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema wordt deze component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op figuur \ref{fig:multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. Figuren \ref{fig:multiplexerTruthTable} en \ref{fig:multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van deze component.
+\ssclab{multiplexer}
+Een \gtermen{multiplexer}{Een component dat bestaat uit $n$ selectie-ingangen $s_i$, $2^n$ data-ingangen $d_i$ en een uitgang $f$. Wanneer de binaire waarde van het getal $S$ op de selectie-ingangen wordt aangelegd, wordt de waarde van data-ingang $D_S$ op de uitgang gezet.}, \stermen{selector}{multiplexer} of \stermen{MUX}{multiplexer} is een component die bij $n$ \termen{selectie-ingangen $s_i$} en $2^n$ \termen{data-ingangen $d_i$}, de data-ingang met index $S$ op de uitgang zet. Hierbij is $S$ de waarde die voorgesteld wordt door de selectie-ingangen. In een blokschema wordt deze component voorgesteld door een trapezium, waarbij de data-ingangen aan de lange zijde staan, de uitgangen aan de korte zijde, en de selectie-ingangen aan \'e\'en van de schuine zijden zoals op \figref{multiplexerInterface}. Deze figuur toont een 4-naar-1 MUX. Eventueel worden aan de andere kant ook uitgangen toegevoegd, deze zijn identiek aan de selectie-ingangen aan de ene kant en dienen enkel om het blokschema overzichtelijker te maken. \figref{multiplexerTruthTable} en \figref{multiplexerSchema} tonen respectievelijk de eerder informeel besproken waarheidstabel en een mogelijke implementatie van deze component.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{
@@ -875,26 +1155,6 @@ $s_0$&$s_1$&$f$\\\hline
 \end{tikzpicture}
 \figlab{multiplexerTruthTable}}
 \subfigure[Mogelijke Implementatie]{
-%\begin{tikzpicture}[circuit logic US,scale=1,xscale=0.8]
-%\draw[dashed] (-3.5,2.25) -- (3.5,2.25) -- (2.25,-0.25) -- (-2.25,-0.25) -- cycle;
-%\node[or gate, inputs={normal,normal,normal,normal},scale=0.7,rotate=-90] (O) at (0,0.25) {};
-%\foreach\d/\dga/\dgb in {0/inverted/inverted,1/inverted/normal,2/normal/inverted,3/normal/normal} {
-%  \node[and gate, inputs={\dga,\dgb,normal},scale=0.7,rotate=-90] (A\d) at (2.25-1.5*\d,1.25) {};
-%  \draw (A\d.input 3) -- (A\d.input 3 |- 0,2.25);
-%  \draw (A\d.input 1) -- (A\d.input 1 |- 0,1.75);
-%  \draw (A\d.input 2) -- (A\d.input 2 |- 0,2);
-%  \draw[dashed] (A\d.input 3 |- 0,2.25) -- ++(0,0.25) node[anchor=south]{$d_\d$};
-%}
-%\foreach\s/\g in {0/1,1/2} {
-%  \draw[dashed] (-3-1/6-\s/6,1.75+0.25*\s) -- (-3.75,1.75+0.25*\s) node[anchor=east]{$s_\s$};
-%  \draw (-3-1/6-\s/6,1.75+0.25*\s) -- (A0.input \g |- 0,1.75+0.25*\s);
-%}
-%\foreach\d/\g/\y in {0/1/0,1/2/1,2/3/1,3/4/0} {
-%  \draw (A\d.output) -- ++(0,-0.25+\y*0.1) -| (O.input \g);
-%}
-%\draw (O.output) -- (O.output |- 0,-0.25);
-%\draw[dashed] (O.output |- 0,-0.25) -- (O.output |- 0,-0.5) node[anchor=north]{$f$};
-%\end{tikzpicture}
 \begin{tikzpicture}[circuit logic US,scale=4]
 \draw[dashed] (-0.5,-0.3) -- (-0.8,0.3) -- (0.8,0.3) -- (0.5,-0.3) -- cycle;
 \node[or gate,scale=0.2*0.85,rotate=-90,inputs={normal,normal,normal,normal}] (O) at (0,-0.15) {};
@@ -975,13 +1235,14 @@ $s_0$&$s_1$&$f$\\\hline
 \caption{Multiplexer.}
 \figlab{multiplexer}
 \end{figure}
+
 \subsubsection{Cascade}
 We kunnen uiteraard multiplexers met een verschillende parameter $n$ bouwen. Het probleem is echter dat deze waarden erg kunnen vari\"eren, wat weinig interessant is voor massaproductie. Daarom zal men veelal met een \termen{cascade} werken. Figuur \ref{fig:multiplexerCascade} toont een 16-naar-1 MUX gebouwd met behulp van 5 4-naar-1 multiplexers. We kunnen dit uiteraard veralgemenen: Indien we een $2^{n\times m}$-naar-1 multiplexer willen bouwen, kunnen we dit met $n$ niveaus van $2^m$-naar-1 multiplexers. Het aantal multiplexers die we in dat geval nodig hebben is:
 \begin{equation}
 \mbox{aantal multiplexers}=\displaystyle\frac{2^{n\times m}-1}{2^m-1}
 \end{equation}
 \subsection{Decoder}
-\label{ss:decoder}
+\ssclab{decoder}
 Een andere schakeling die sterk gerelateerd is aan een multiplexer is een \termen{decoder}. Een decoder beschikt over een \termen{enable-ingang $e$}, en $n$ \termen{adres-ingangen $a_i$}. De uitvoer bestaat uit $2^n$ \termen{selectie-uitgangen $s_i$}. Een decoder zal indien er een 1 aangelegd wordt op de enable-ingang $e$, een 1 op de uitgang zetten met index $A$. Hierbij staat $A$ voor de binaire waarde die voorgesteld wordt door de adres-ingangen $a_i$. In een blokschema wordt een decoder voorgesteld zoals op figuur \ref{fig:decoderInterface} door een rechthoek. In dit geval een 2-naar-4 decoder. Bovenaan staan de adres-ingangen $a_i$, aan de zijkant de enable-ingang $e$, en onderaan de uitgangen $s_i$.
 \begin{figure}[hbt]
 \centering
@@ -1185,7 +1446,7 @@ Decoders worden ook gebruikt voor de synthese van bijvoorbeeld multiplexers. Fig
 \figlab{decoderMultiplexer}
 \end{figure}
 \subsection{Demultiplexer}
-\label{ss:demultiplexer}
+\ssclab{demultiplexer}
 Het inverse van een $2^n$-naar-1 multiplexer is een 1-naar-$2^n$ \termen{demultiplexer} (ook wel \termen{demux} genoemd). Deze component bestaat dan ook logischerwijs uit 1 \termen{data-ingang $d$} en $n$ \termen{selectie-ingangen $a_i$}. De component beschikt verder over $2^n$ uitgangen $s_i$. Logischerwijs zetten we de waarde van de data-ingang $d$ op de uitgang met de index die wordt voorgesteld door de selectie-ingangen. Een aandachtige lezer zal misschien al opgemerkt hebben dat dit probleem in wezen niet veel verschilt van de constructie van een decoder. Sterker nog, we hoeven niets aan te passen, het is alleen een kwestie van een andere interface. Figuur \ref{fig:demultiplexer} toont de interface van een demultiplexer en de equivalentie met een decoder. In tegenstelling tot de decoder zetten we de selectie-ingangen aan de zijkant en de data-ingang aan de bovenkant.
 \begin{figure}[hbt]
 \centering
@@ -1338,8 +1599,10 @@ Dit komt overeen met \'e\'en extra AND- en NOT-poort. De interface voor beide sc
 De interface is opnieuw een rechthoek. De data-ingangen staan bovenaan, de selectie-uitgangen onderaan, en de any-uitgang aan de linkerkant.
 \subsubsection{Prioriteitsencoders cascaderen}
 Ook bij prioriteitsencoders gaan we even in het op het cascaderend karakter. Ook encoders laten zich eenvoudig cascaderen, mits we ook extra multiplexers gebruiken. In figuur \ref{fig:encoderCascade} bouwen we een 16-naar-4 prioriteitsencoder met 4 4-naar-2 prioriteitsencoders en 2 4-naar-1 multiplexers.
+
 \subsection{Vergelijker}
-\label{ss:comparator}
+\ssclab{comparator}
+\ssclab{vergelijker}
 Een \termen{vergelijker} of \termen{comparator} is een component die in staat is om uitspraken te doen over hoe twee getallen zich tot elkaar verhouden. Meestal is een vergelijker in staat om een uitspraak te doen over 4 mogelijke verhoudingen van de getallen $X$ en $Y$:
 \begin{equation}
 \left\{\begin{array}{c}

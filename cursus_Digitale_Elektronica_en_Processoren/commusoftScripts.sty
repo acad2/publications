@@ -21,7 +21,7 @@
 
 \tikzset{asmS/.style={draw=black,fill=black!10,rectangle,scale=0.85,minimum width=2cm},asmC/.style={asmS,rounded corners=2mm},asmN/.style={asmS,shape=asmN},asmD/.style={draw=black,fill=black!10,diamond,scale=0.85,minimum width=2cm,aspect=1.5},asmB/.style={dashed,rectangle,draw=black,fill=black!20,inner sep=0.2cm}}
 
-\tikzset{compatibilitynode/.style={draw=black,minimal width=1 cm,minimal height=1cm,thick,circle,fill=white},compatibilitygroup/.style={inner sep=0pt,draw,dashed,rectangle,draw=black,fill=black!60,semitransparent},compatibilitypriority/.style={thick},compatiblityincompatible/.style={thick,dashed}}
+\tikzset{compatibilitynode/.style={draw=black,minimum width=1 cm,minimum height=1cm,thick,circle,fill=white},compatibilitygroup/.style={inner sep=0pt,draw,dashed,rectangle,draw=black,fill=black!60,semitransparent},compatibilitypriority/.style={thick},compatiblityincompatible/.style={thick,dashed}}
 
 \newcommand{\setTrueFalseLabels}[1]{
   \draw (#1.east) node[anchor=south west,scale=0.75]{[False]};
@@ -63,7 +63,6 @@
 \makeatletter
 
 %\newcommand{\termen}[1]{\index{#1}\termenlayout{#1}}
-\newcommand{\bigoh}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
 \newcommand{\chapterquote}[2]{\begin{figure*}[htb]\centering\begin{tikzpicture}\node[text width=13.5 cm,anchor=center] (Q) at (0,0) {\Large\textit{#1}};\node[gray,anchor=north east] (Ql) at (Q.north west) {\Huge\textbf{``}};\node[gray,anchor=north west] (Qr) at (Q.south east) {\Huge\textbf{''}};\node[black!80,anchor=north east] (Qa) at (Qr.north west) {\small - #2};\end{tikzpicture}\end{figure*}}
 \newcommand{\commusoftQuality}[1]{
 \begin{figure}[b!]
@@ -710,7 +709,6 @@
 } -- cycle
 }
 
-\newcommand{\argmax}{\mbox{argmax}}
 
 \newcommand{\genrefs}[3]{
 \setcounter{tmpD}{0}\setcounter{tmpE}{0}\foreach \x in {#3} {\addtocounter{tmpD}{1}}#2\foreach \x in {#3} {\ifthenelse{\value{tmpD}>1}{\ifthenelse{\value{tmpE}>1}{, \ref{#1:\x}}{ \ref{#1:\x}}}{ en \ref{#1:\x}}\addtocounter{tmpD}{-1}\addtocounter{tmpE}{1}}}

@@ -1,6 +1,11 @@
 \ProvidesPackage{brackets}
-\RequirePackage{amsfonts,amsmath,booktabs,tikz}
+\RequirePackage{amsfonts,amsmath,booktabs,tikz,translate}
 \usetikzlibrary{calc}
+
+%Translations
+\DeclareTrans{brksLeadingExample}{leading example}{leidend voorbeeld}
+
+\newcommand{\leaex}{\ensuremath{\mbox{(\GetTranslation{brksLeadingExample})}}}
 
 %Begin Kudos
 %to Heiko Oberdiek for this script.

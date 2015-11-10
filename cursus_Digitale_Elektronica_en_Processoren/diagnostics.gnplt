@@ -1,0 +1,50 @@
+#!/usr/bin/gnuplot
+
+set xdata time
+set timefmt '%s'
+set xlabel 'time'
+set xtics 604800
+
+f(x) = a*(x-497746800)/86400+b+1e-9
+
+set term pdf size 60cm,60cm
+set output 'diagnostics.pdf'
+
+set multiplot layout 3,3 title "Cursus DEP - review diagnostics"
+
+set title "Errors in time"
+set ylabel "Errors (#)"
+fit f(x) 'stats.stat' u 1:2 via a,b
+plot 'stats.stat' u 1:2 w lp t "Errors", f(x) t "Linear regression", 700-(x-497746800)/6048 t "Threshold"
+
+set title "Warnings in time"
+set ylabel "Warnings (#)"
+fit f(x) 'stats.stat' u 1:3 via a,b
+plot 'stats.stat' u 1:3 w lp t "Warnings", f(x) t "Linear regression", 800-1.1428*(x-497746800)/6048 t "Threshold"
+
+set title "Missing labels in time"
+set ylabel "Missing labels (#)"
+fit f(x) 'stats.stat' u 1:4 via a,b
+plot 'stats.stat' u 1:4 w lp t "Missing labels", f(x) t "Linear regression", 550-0.787*(x-497746800)/6048 t "Threshold"
+
+set title "Glossary entries in time"
+set ylabel "Glossary entries (#)"
+fit f(x) 'stats.stat' u 1:5 via a,b
+plot 'stats.stat' u 1:5 w lp t "Glossary entries", f(x) t "Linear regression", 1.28*(x-497746800)/6048 t "Threshold"
+
+set title "Compiletime in time"
+set ylabel "Compiletime (s)"
+fit f(x) 'stats.stat' u 1:6 via a,b
+plot 'stats.stat' u 1:6 w lp t "Compiletime", f(x) t "Linear regression"
+
+set title "File size"
+set ylabel "File size (bytes)"
+fit f(x) 'stats.stat' u 1:7 via a,b
+plot 'stats.stat' u 1:7 w lp t "File size", f(x) t "Linear regression"
+
+set title "Pagecount"
+set ylabel "Pages (#)"
+fit f(x) 'stats.stat' u 1:8 via a,b
+plot 'stats.stat' u 1:8 w lp t "Pagecount", f(x) t "Linear regression"
+
+unset multiplot

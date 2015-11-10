@@ -85,7 +85,20 @@
 *.mx*
 *.glsdefs
 *.ecl
+*.tmp
 
 #All kinds of temporaries
 tmp/**
 **/tmp/**
+*.dat
+
+#Statistics
+*.stt
+*.stat
+
+#Plotters
+*.gnplt
+
+#But allow
+!*.sh #shell scripts
+!*.pl #perl scripts
