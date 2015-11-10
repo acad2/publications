@@ -1012,9 +1012,8 @@ Elk van deze formaten werkt natuurlijk met radix $r=2$. IEEE 754-1985 vermeldt o
 \end{itemize}
 In \tblref{iEEEFloatingNumberRepresentation} zien we ten slotte ook dat enkele bits onderlijnd worden. Dit zijn de zogenaamde \gtermen{verborgen bits}{Bits die alleen virtueel bestaan, bijvoorbeeld bij de interpretatie van een getal. In het geval van IEEE 754 is de eerste bit in de ``semantisch'' interpretatie van de mantisse verboren: deze wordt niet expliciet voorgesteld.}. Deze bits zijn geen onderdeel van de mantisse, maar dienen we er wel denkbeeldig aan toe te voegen om het getal te kunnen interpreteren.
 
-%REVIEW
 \subsubsection{Rekenen met vlottende komma}
-Het ge\"introduceerde formaat is relatief complex. Het bouwen van optellers en andere bewerkingen voor deze vlottende-komma voorstellingen, valt dus uit het bereik van deze cursus. We bespreken enkel op hoog niveau hoe we met deze getallen kunnen rekenen. De details kan men vinden in \cite[\S4]{hyde2004write}.
+Het hierboven ge\"introduceerde formaat is relatief complex. Het bouwen van optellers en andere bewerkingen voor deze vlottende-komma voorstellingen is geen sinecure en valt buiten het bereik van deze cursus. We bespreken enkel op hoog niveau hoe we met deze getallen kunnen rekenen. De details kan men vinden in \cite[\S4]{hyde2004write}. Het is belangrijk te weten dat IEEE 754 enkel het formaat van vlottende getallen beschrijft. Wiskundige operaties behoren niet tot de standaard: het resultaat van bijvoorbeeld het optellen van twee vlottende komma getallen staat niet vast. Het is dus mogelijk dat op de ene processor een sinus uitrekenen een licht afwijkend resultaat zal opleveren tegenover het resultaat bij een andere processor. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij men de operatoren eerst omzet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
 
 \paragraph{Optelling}
 Het optellen van twee vlottende komma getallen verloopt in drie stappen:
@@ -1025,8 +1024,6 @@ Het optellen van twee vlottende komma getallen verloopt in drie stappen:
  \item Het resultaat dienen we vervolgens weer te normaliseren: het is immers mogelijk dat het resultaat groter is dan voorstellbaar op de mantisse (of kleiner) in dat geval passen we de exponent aan en schuiven we met de bits op de mantisse.
 \end{enumerate}
 
-IEEE 754 definieert het formaat van een vlottende komma, de wiskundige operaties zelf behoren hier niet bij. Intel heeft bijvoorbeeld gepatenteerde technologie waarbij het getal eerst wordt omgezet naar een equivalent met grotere mantisse om meer precisie te garanderen. In de praktijk komt het er dus op neer dat IEEE 754 niet specificeert wat het resultaat moet zijn na een wiskundige bewerking.
-
 \paragraph{Vermenigvuldiging}
 Vermenigvuldigen is bij vlottende komma simpeler dan optellen:
 
@@ -1035,30 +1032,28 @@ Vermenigvuldigen is bij vlottende komma simpeler dan optellen:
  \item We normaliseren het resultaat. Dit betekent dat ofwel de exponent hetzelfde blijft, ofwel met \'e\'en moet worden opgehoogd.
 \end{enumerate}
 
+%REVIEW
 \subsection{Andere voorstellingen van gegevens}
 \ssclab{otherRepresentations}
-Naast de hierboven beschreven voorstellingen voor natuurlijke-, gehele- en kommagetallen bestaan er nog andere voorstellingen. We stellen er in deze subsectie twee voor: \termen{Binary Coded Decimal (BCD)} is een alternatief formaat om natuurlijke getallen voor te stellen. Dit kan eventueel uitgebreid worden tot gehele- en kommagetallen. De \termen{American Standard Code for Information Interchange (ASCII)} is een formaat dat hoofdzakelijk bedoeld is om tekst op te slaan.
+Naast de hierboven beschreven voorstellingen voor natuurlijke-, gehele- en kommagetallen bestaan er nog een groot aantal andere voorstellingen. We stellen niet noodzakelijk getallen voor, maar tekst, beelden, geluid, enzovoort. We stellen er in deze subsectie twee voor: \gtermen{Binary Coded Decimal (BCD)}{Een formaat om getallen mee voor te stellen. Bij een binary coded decimal wordt elk cijfer in het decimaal stelsel voorgesteld door vier bits. Men zet dus elk cijfer van de decimale voorstelling om in zijn binair equivalent. Rekenen met binary coded decimals is complexer. Het voordeel is dat men elk getal dat decimaal kan worden voorgesteld, ook in bcd notatie exact kan voorstellen. Het formaat is dan ook populair in de financi\"ele wereld.} is een alternatief formaat om natuurlijke getallen voor te stellen. Dit kan eventueel uitgebreid worden tot gehele- en kommagetallen. De \gtermen{American Standard Code for Information Interchange (ASCII)}{Een formaat om tekst voor te stellen. ASCII omvat 128 karakters. Tekst wordt dan karakter per karakter voorgesteld.} is een formaat dat hoofdzakelijk bedoeld is om tekst op te slaan.
+
 \subsubsection{Binary Coded Decimal (BCD)}
-\label{ss:bcd}
-In de vorige subsecties hebben we geen aandacht besteed aan het omzetten van een getal naar tekst. Deze omzetting is vrij arbeidsintensief en kost dus ook veel hardware. Bovendien stuiten we op nog een probleem: heel wat decimale kommagetallen kunnen niet voorgesteld worden in het binair getalstelsel. Zo bestaat er geen enkel binaire vorm die $0.3$ voorstelt. In dat geval moeten we het getal zo goed mogelijk benaderen\footnote{Het is echter niet omdat het binair stelsel er niet in slaagt om alle decimale getallen voor te stellen dat het minder accuraat is, integendeel: het binair stelsel is accurater.}. Een oplossing voor deze twee problemen is het Binary Coded Decimal (BCD) systeem. We kunnen elk decimaal cijfer voorstellen met 4-bit. We kunnen dus een decimaal getal voorstellen, door voor ieder cijfer zijn binair equivalent te gebruiken. Dit betekent dus dat we een decimaal getal met $n$ cijfers voorstellen met $4n$ bit. Elk van deze groepen bits kan dus alleen waardes van $0$ tot $9$ aannemen. Bijvoorbeeld: $1425_{10}=0101\_1001\_0001_2=0001\_0100\_0010\_0101_{\mbox{\tiny{BCD}}}$. Een groot nadeel van BCD voorstelling is dat bewerkingen heel wat complexer worden. Tabel \ref{tbl:bCDConversion} toont de omzetting van een decimaal cijfer naar het BCD equivalent.
+\ssslab{bcd}
+In de vorige subsecties hebben we geen aandacht besteed aan het omzetten van een getal naar tekst. Deze omzetting is vrij arbeidsintensief en kost dus ook veel hardware. Bovendien stuiten we op nog een probleem: heel wat decimale kommagetallen kunnen niet voorgesteld worden in het binair getalstelsel. Zo bestaat er geen enkel binaire voorstelling voor $0.3$. In dat geval moeten we het getal zo goed mogelijk benaderen\footnote{Het is echter niet omdat het binair stelsel er niet in slaagt om alle decimale getallen voor te stellen dat het minder accuraat is, integendeel: het binair stelsel is accurater.}. Een oplossing voor deze twee problemen is het Binary Coded Decimal (BCD) systeem. We kunnen immers elk decimaal cijfer voorstellen met 4-bit. Bijgevolg kunnen we een decimaal getal voorstellen, door voor ieder cijfer van de decimale voorstelling zijn binair equivalent om te zetten. Dit betekent dus dat we een decimaal getal met $n$ cijfers voorstellen met $4\cdot n$ bit. Elk van deze groepen bits kan dus alleen waardes van $0$ tot $9$ aannemen. Bijvoorbeeld: $1425_{10}=0101\_1001\_0001_2=0001\_0100\_0010\_0101_{\mbox{\tiny{BCD}}}$. Een nadeel van BCD voorstelling is dat de meeste bewerkingen complexer worden. \tblref{bCDConversion} toont de omzetting van een decimaal cijfer naar het BCD equivalent.
+
 \begin{table}[hbt]
 \centering
-\begin{tabular}{c|c}
-Decimaal&BCD\\\hline
-0&0000\\
-1&0001\\
-2&0010\\
-3&0011\\
-4&0100\\
-5&0101\\
-6&0110\\
-7&0111\\
-8&1000\\
-9&1001
-\end{tabular}
+\defaulttable{c|c||c|c}{
+\bf Dec.&BCD&Dec.&BCD}{
+0&0000&5&0101\\
+1&0001&6&0110\\
+2&0010&7&0111\\
+3&0011&8&1000\\
+4&0100&9&1000}
 \caption{Decimale cijfers en hun BCD equivalent.}
 \tbllab{bCDConversion}
 \end{table}
+
 \paragraph{Bewerkingen met BCD}
 \begin{figure}[hbt]
 \centering
@@ -1089,8 +1084,11 @@ Decimaal&BCD\\\hline
 \caption{Mogelijke implementatie van een BCD opteller.}
 \figlab{bCDAdder}
 \end{figure}
-Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het BCD formaat. Hierbij streven we niet zozeer naar een minimale implementatie, maar tonen we dat een optelling in ieder geval complexer is dan bij zijn binair equivalent. Bij een optelling dienen we immers elke decimaal afzonderlijk op te tellen. Net zoals een half- en full adder bit per bit optelden, dienen we nu per decimaal een 4-bit opteller te realiseren. Indien het resultaat van deze optelling echter groter is dan 9, dienen we dit resultaat verder aan te passen, zodat het resultaat 10 minder is, en we de overdacht (carry) doorgeven. Voor dit eerste hebben we nogmaals een 4-bit opteller nodig. Verder hebben we een component nodig die controleert of het eerste resultaat groter is dan 9. Deze component heeft niet alleen een carry als uitgang, maar moet ook invoer genereren voor de tweede opteller. Indien het eerste resultaat immers groter is dan 9, tellen we er nog eens 6 bij op. Dit betekent dat bij een tussenresultaat van 10, de tweede opteller tot 16 komt wat dus gebaseerd op de laatste 4 bits in 0 resulteert. Figuur \ref{fig:bCDAdderSchematic} toont schematisch hoe we twee decimale cijfers kunnen optellen. Indien we deze structuur voor ieder cijfer herhalen, realiseren we een BCD opteller. De vergelijker synthetiseren we met behulp van Karnaugh-kaarten zoals op figuur \ref{fig:bCDAdderKarnaugh}. Merk op dat het resultaat van de eerste opteller hoogstens 18 is, en we dus voor de andere waarden don't cares kunnen gebruiken. Een mogelijke synthese van deze vergelijker staat op figuur \ref{fig:bCDAdderComparator}. Tot slot merken we op dat we bij het bepalen van het negatieve getal van een BCD niet het 2-complement moeten berekenen, maar het 10-complement. Ook deze stap vereist extra hardware.
+
+Ter illustratie zullen we tonen hoe we een opteller kunnen realiseren voor het BCD formaat. Hierbij streven we niet zozeer naar een minimale implementatie, maar tonen we dat een optelling complexer is tegenover zijn binair equivalent. Bij een optelling dienen we immers elke decimaal afzonderlijk op te tellen. Net zoals een half- en full adder bit per bit optelden, dienen we nu per decimaal een $4$-bit opteller te realiseren. Indien het resultaat van deze optelling bovendien groter is dan $9$, dienen we dit resultaat verder aan te passen: we trekken er $10$ vanaf en we geven overdacht (carry) door. Bij de aftrekking hebben we dus nogmaals een $4$-bit opteller nodig. We dienen ook een component te realiseren dat controleert of het eerste resultaat groter is dan $9$. Deze component heeft niet alleen een carry als uitgang, maar moet ook invoer genereren voor de tweede opteller. Indien het eerste resultaat immers groter is dan $9$, tellen we er nog eens 6 bij op. Dit betekent dat bij een tussenresultaat van $10$, de tweede opteller tot $16$ komt wat dus gebaseerd op de laatste $4$ bits in $0$ resulteert. \figref{bCDAdderSchematic} toont schematisch hoe we twee decimale cijfers kunnen optellen. Indien we deze structuur voor ieder cijfer herhalen, realiseren we een BCD opteller. De vergelijker synthetiseren we met behulp van Karnaugh-kaarten zoals op \figref{bCDAdderKarnaugh}. Merk op dat het resultaat van de eerste opteller hoogstens $18$ is, en we dus voor de andere waarden don't cares kunnen gebruiken. Een mogelijke synthese van deze vergelijker staat op \figref{bCDAdderComparator}. Tot slot merken we op dat we bij het bepalen van het negatieve getal van een BCD niet het $2$-complement moeten berekenen, maar het $10$-complement. Ook deze stap vereist extra hardware.
+
 \subsubsection{American Standard Code for Information Interchange (ASCII)}
+
 \begin{table}[hbt]
 \centering
 \begin{tabular}{c|cccccccc}
