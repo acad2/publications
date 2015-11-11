@@ -1487,7 +1487,6 @@ Het inverse van een $2^n$-naar-$1$ multiplexer is een $1$-naar-$2^n$ \gtermen{de
 \paragraph{}
 Demultiplexers worden maar zeer zelden gebruikt, kun doel is immers om data op een bepaalde lijn te plaatsen, terwijl men op de andere lijnen een $0$ aanlegt. In de praktijk is het aanleggen van de data op alle lijnen meestal geen probleem. In dat geval kunnen we dus de demultiplexer eenvoudigweg vervangen door een draad die de data-ingang met alle uitgangen verbindt.
 
-%REVIEW
 \subsection{Encoder en prioriteitsencoder}
 \ssclab{encoder}
 Ook de decoder heeft een inverse: een $2^n$-naar-$n$ \gtermen{encoder}{Een component met $2^n$ data-ingangen, een any-uitgang $a$ en $n$ selectie-uitgangen $f_i$. Indien er op \'e\'en van de data-ingangen een $1$ staat, staat er ook een $1$ op de any-uitgan en vice versa. Wanneer juist \'e\'en data-ingang $d_i$ een $1$ aanlegt, geven de selectie-uitgangen binair de waarde van deze index weer. Indien meer data-ingangen op $1$ staan, is het gedrag onbepaald.}. Een encoder bevat $2^n$ data-ingangen $d_i$, een \gtermen[any-uitgang]{any-uitgang $a$}{Een uitgang van een component die een $1$ aanlegt in het geval \'e\'en of meerdere data-ingangen een $1$ aanleggen. Voorbeelden van componenten met een any-uitgang zijn de encoder en prioriteitsencoder.} en $n$ \gtermen[selectie-uitgangen]{selectie-uitgangen $s_i$}{Een sequentie uitgangen bij componenten die beschrijven op welke data-ingang(en) er op dat moment een $1$ staat. Componenten met selectie-uitgangen zijn bijvoorbeeld encoders en prioriteitsencoders.}. Het is de bedoeling dat de encoder, afhankelijk van de data-ingang waarop een $1$ staat, de index van deze data-ingangg weergeeft op de selectie-uitgangen $f_i$. De any-uitgang is $1$ op het moment dat er \'e\'en data-ingang de waarde $1$ heeft, en $0$ indien er op geen enkele data-ingang een $1$ staat. We kunnen dit gedrag samenvatten in een waarheidstabel zoals in \tblref{truthTableEncoderNormal} voor een $4$-naar-$2$ encoder.
@@ -1621,12 +1620,13 @@ Dit komt overeen met \'e\'en extra AND- en NOT-poort. De interface voor beide sc
 De interface is opnieuw een rechthoek. De data-ingangen staan bovenaan, de selectie-uitgangen onderaan, en de any-uitgang aan de linkerkant.
 
 \subsubsection{Prioriteitsencoders cascaderen}
-Ook bij prioriteitsencoders gaan we even in het op het cascaderend karakter. Ook encoders laten zich eenvoudig cascaderen, mits we ook extra multiplexers gebruiken. In figuur \ref{fig:encoderCascade} bouwen we een 16-naar-4 prioriteitsencoder met 4 4-naar-2 prioriteitsencoders en 2 4-naar-1 multiplexers.
+Ook bij prioriteitsencoders gaan we even in het op het cascaderend karakter. Ook encoders laten zich eenvoudig cascaderen, mits we ook extra multiplexers gebruiken. In \figref{encoderCascade} bouwen we een $16$-naar-$4$ prioriteitsencoder met vier $4$-naar-$2$ prioriteitsencoders en twee $4$-naar-$1$ multiplexers.
 
+%REVIEW
 \subsection{Vergelijker}
 \ssclab{comparator}
 \ssclab{vergelijker}
-Een \termen{vergelijker} of \termen{comparator} is een component die in staat is om uitspraken te doen over hoe twee getallen zich tot elkaar verhouden. Meestal is een vergelijker in staat om een uitspraak te doen over 4 mogelijke verhoudingen van de getallen $X$ en $Y$:
+Een \gtermen{vergelijker}{.} of \stermen{comparator}{vergelijker} is een component die in staat is om uitspraken te doen over hoe twee getallen zich tot elkaar verhouden. Meestal is een vergelijker in staat om een uitspraak te doen over 4 mogelijke verhoudingen van de getallen $X$ en $Y$:
 \begin{equation}
 \left\{\begin{array}{c}
 X<Y\\
