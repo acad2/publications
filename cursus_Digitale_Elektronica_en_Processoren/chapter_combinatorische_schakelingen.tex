@@ -1622,11 +1622,11 @@ De interface is opnieuw een rechthoek. De data-ingangen staan bovenaan, de selec
 \subsubsection{Prioriteitsencoders cascaderen}
 Ook bij prioriteitsencoders gaan we even in het op het cascaderend karakter. Ook encoders laten zich eenvoudig cascaderen, mits we ook extra multiplexers gebruiken. In \figref{encoderCascade} bouwen we een $16$-naar-$4$ prioriteitsencoder met vier $4$-naar-$2$ prioriteitsencoders en twee $4$-naar-$1$ multiplexers.
 
-%REVIEW
 \subsection{Vergelijker}
 \ssclab{comparator}
 \ssclab{vergelijker}
-Een \gtermen{vergelijker}{.} of \stermen{comparator}{vergelijker} is een component die in staat is om uitspraken te doen over hoe twee getallen zich tot elkaar verhouden. Meestal is een vergelijker in staat om een uitspraak te doen over 4 mogelijke verhoudingen van de getallen $X$ en $Y$:
+Een \gtermen{vergelijker}{Een component die als invoer twee getallen krijgt en een reeks testen uitvoert.  Welke testen men concreet bekijkt staat niet vast. Meestal zal men kijken of het ene getal groter is dan het tweede en/of omgekeerd.} of \stermen{comparator}{vergelijker} is een component die in staat is om uitspraken te doen over hoe twee getallen zich tot elkaar verhouden. Meestal is een vergelijker in staat om een uitspraak te doen over vier mogelijke verhoudingen van de getallen $X$ en $Y$:
+
 \begin{equation}
 \left\{\begin{array}{c}
 X<Y\\
@@ -1635,7 +1635,9 @@ X=Y\\
 X\neq Y
 \end{array}\right.
 \end{equation}
-Op basis van de eerste twee relaties, kunnen we uitspraken doen over de laatste twee. Op basis van deze vaststelling synthetiseren we een comparator. Een comparator bevat 4 ingangen ($x_0$ ofwel $g_{\mbox{\tiny{in}}}$, $y_0$ ofwel $l_{\mbox{\tiny{in}}}$, $x_1$ en $y_1$). De twee uitgangen ($g$ en $l$) geven respectievelijk weer of het getal $X>Y$ en $X<Y$. Figuur \ref{fig:comparatorInterface} toont de interface van een vergelijker.
+
+Op basis van de eerste twee relaties, kunnen we uitspraken doen over de laatste twee\footnote{Een getal $X$ is niet gelijk aan een getal $Y$ indien $X<Y$ of $X>Y$.}. We kunnen dus een component bouwen die enkel de eerste twee uitspraken naagaat. Een comparator bevat 4 ingangen ($x_0$ ofwel $g_{\mbox{\tiny{in}}}$, $y_0$ ofwel $l_{\mbox{\tiny{in}}}$, $x_1$ en $y_1$). De twee uitgangen ($g$ en $l$) geven respectievelijk weer of het getal $X>Y$ en $X<Y$. \figref{comparatorInterface} toont de interface van een vergelijker.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Interface]{
@@ -1709,18 +1711,23 @@ Op basis van de eerste twee relaties, kunnen we uitspraken doen over de laatste 
 }
 \caption{Vergelijker}
 \end{figure}
-Op basis van de gedragsbeschrijving kunnen we een waarheidstabel en Karnaugh-kaarten opstellen zoals op figuur \ref{fig:comparatorKarnaugh}. Op basis van deze kaarten synthetiseren we volgende formules\footnote{Merk de dualiteit op: beide formules hebben dezelfde variabelen, alleen zijn alle atomen ge\"inverteerd.}:
+
+Op basis van de gedragsbeschrijving kunnen we een waarheidstabel en Karnaugh-kaarten opstellen zoals op \figref{comparatorKarnaugh}. Op basis van deze kaarten synthetiseren we volgende formules\footnote{Merk de dualiteit op: beide formules hebben dezelfde variabelen, alleen zijn alle atomen ge\"inverteerd.}:
+
 \begin{equation}
 \left\{\begin{array}{l}
 g=x_1y_1'+x_0x_1y_0'+x_0y_0'y_1'\\
 l=x_1'y_1+x_0'x_1'y_0+x_0'y_0y_1
 \end{array}\right.
 \end{equation}
+
 \subsubsection{Vergelijkers cascaderen}
-Hoe vergelijken we nu twee getallen die uit meer dan 2-bit bestaan? Net als bij een ripple-carry opteller, kunnen we door verschillende vergelijkers aan elkaar te schakelen, een vergelijker met een groter aantal bits bouwen. In dat geval bekomen we een structuur zoals op figuur \ref{fig:comparatorCascadeLinear}. Hiermee komen we echter tot hetzelfde probleem als bij een ripple-carry opteller: de vertraging schaalt linear met het aantal bits. We kunnen echter de vergelijkers ook in een hi\"erarchische structuur kunnen we de vertraging beperken tot een logaritmische orde zoals op figuur \ref{fig:comparatorCascadeHierarchical}.
+Deze vergelijker vergelijkt enkel getallen die uit twee bits bestaan. In de praktijk is dit niet nuttig. Net als bij een opteller zullen we echter een methode uitwerken om met deze bouwstenen grotere getallen te vergelijken. Net als bij een ripple-carry opteller, kunnen we door verschillende vergelijkers aan elkaar te schakelen, een vergelijker met een groter aantal bits bouwen. In dat geval bekomen we een structuur zoals op \figref{comparatorCascadeLinear}. Zonder deze schakeling in detail te bestuderen komen we echter tot hetzelfde probleem als bij een ripple-carry opteller: de vertraging schaalt linear met het aantal bits, wat voor getallen met een groot aantal bits onaanvaardbaar is. We kunnen de vergelijkers echter ook in een hi\"erarchische structuur organiseren, waardoor we de vertraging beperken tot een logaritmische orde zoals op \figref{comparatorCascadeHierarchical}. Merk op dat we eenzelfde hoeveelheid hardware gebruiken. Deze schakeling laat echter toe om verschillende delen van het getal tegelijk te vergelijken.
+
 \subsubsection{Speciale gevallen}
 \paragraph{Testen op gelijkheid}
-We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder beschreven. Soms willen we echter twee getallen testen op specifieke eigenschappen. Bijvoorbeeld of twee getallen gelijk zijn. Dit kunnen we natuurlijk realiseren met een vergelijker, maar dit introduceert extra hardware en vertraging. In dat geval kunnen we gebruik maken van een rij van XNOR-poorten waarbij elke poort \'e\'en bit van het ene en het andere getal als invoer krijgt. De uitgangen van al deze XNOR-poorten laten we vervolgens door een OR-poort gaan. De uitvoer van deze OR poort toont ons dan of $X$ gelijk is aan $Y$. Figuur \ref{fig:comparatorEquality} toont een realisatie van dit concept voor 2 $n$-bit getallen.
+We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder beschreven. Soms willen we echter \'e\'en of twee getallen testen op specifieke eigenschappen, bijvoorbeeld of twee getallen gelijk zijn. Dit kunnen we natuurlijk realiseren met een vergelijker, maar dit introduceert extra hardware en vertraging. In het geval van gelijkheid kunnen we dan ook gebruik maken van een rij van XNOR-poorten waarbij elke poort \'e\'en bit van het ene en \'e\'en bit van het andere getal als invoer krijgt. De uitgangen van al deze XNOR-poorten vormen vervolgens de invoer voor een AND-poort gaan. De uitvoer van deze AND poort toont ons dan of $X$ gelijk is aan $Y$. \figref{comparatorEquality} toont een realisatie van dit concept voor twee $n$-bit getallen.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Gelijkheid]{
@@ -1768,8 +1775,11 @@ We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder besc
 \figlab{comparatorConstants}}
 \caption{Speciale gevallen van vergelijkers}
 \end{figure}
+
 \paragraph{Vergelijken met constanten}
-We willen een getal niet altijd vergelijken met andere getal, maar soms met een constante. In dat geval zouden we natuurlijk ook van de vergelijker kunnen gebruikmaken, en de $Y$ zelf samenstellen. Aangezien $Y$ echter op voorhand gekend is spreekt het voor zichzelf dat we de implementatie echter grondig kunnen verbeteren. Bovendien kunnen we ook testen ontwerpen die we niet kunnen uitvoeren met een vergelijker\footnote{Bijvoorbeeld deelbaarheid door 2.}. Dergelijke componenten bouwen getuigt verder ook van enig inzicht. Alle speciale gevallen beschouwen is moeilijk. Op figuur \ref{fig:comparatorConstants} geven we enkele voorbeelden.
+We willen een getal niet altijd vergelijken met andere getal, maar soms met een constante. In dat geval zouden we natuurlijk ook van de vergelijker kunnen gebruikmaken, en de $Y$ zelf samenstellen. Aangezien $Y$ echter op voorhand gekend is spreekt het voor zichzelf dat we de implementatie echter grondig kunnen verbeteren. Bovendien kunnen we ook testen ontwerpen die we niet kunnen uitvoeren met een vergelijker\footnote{Bijvoorbeeld deelbaarheid door $2$.}. Dergelijke componenten kunnen bouwen getuigt ook van enig inzicht. Alle speciale gevallen beschouwen is moeilijk. Op \figref{comparatorConstants} geven we enkele voorbeelden. Deze opsommig is verre van exhaustief en het verklaren van deze schakelingen wordt aan de lezer overgelaten.
+
+%REVIEW
 \subsection{Schuifoperator}
 \ssclab{shiftoperators}
 \label{ss:shiftoperators}
