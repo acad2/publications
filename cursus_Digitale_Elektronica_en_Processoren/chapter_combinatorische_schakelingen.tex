@@ -1782,8 +1782,7 @@ We willen een getal niet altijd vergelijken met andere getal, maar soms met een 
 %REVIEW
 \subsection{Schuifoperator}
 \ssclab{shiftoperators}
-\label{ss:shiftoperators}
-Een laatste set van operaties die vaak gebruikt wordt zijn \termen{schuifoperaties}. Vele processoren implementeren schuifoperaties en bijvoorbeeld de ARM processor laat toe om tijdens elke operatie de operand over enkele plaatsen te schuiven. Een eerste probleem met schuifoperaties is dat er verschillende vormen van schuifoperaties bestaan. In het algemeen houdt een schuifoperatie in dat de waarde van de bit die eerst op plaats $i$ stond, nu op een plaats $i+m$ staat. Of formeler: $Y$ is het resultaat van een schuifoperatie van $X$ over $m$ plaatsen naar links als
+Een laatste set van operaties die vaak gebruikt wordt zijn \gtermen{schuifoperaties}{Een reeks operaties waarbij men . Onder schuifoperaties rekenen we logisch schuiven, aritmetisch schuiven en roteren. Deze operaties komen telkens voor in twee richtingen: links en rechts.}. Vele processoren implementeren schuifoperaties en bijvoorbeeld de ARM processor laat toe om tijdens elke operatie de operand over enkele plaatsen te schuiven. Een eerste probleem met schuifoperaties is dat er verschillende vormen van schuifoperaties bestaan. In het algemeen houdt een schuifoperatie in dat de waarde van de bit die eerst op plaats $i$ stond, nu op een plaats $i+m$ staat. Of formeler: $Y$ is het resultaat van een schuifoperatie van $X$ over $m$ plaatsen naar links als
 \begin{equation}
 \forall i\in\NN:i\in\left[0,n\right]\wedge i+m\in\left[0,n\right]\Rightarrow y_{i+m}=x_i
 \end{equation}
