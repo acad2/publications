@@ -1490,7 +1490,7 @@ Demultiplexers worden maar zeer zelden gebruikt, kun doel is immers om data op e
 %REVIEW
 \subsection{Encoder en prioriteitsencoder}
 \ssclab{encoder}
-Ook de decoder heeft een inverse: een $2^n$-naar-$n$ \gtermen{encoder}{Een component met $2^n$ data-ingangen, een any-uitgang $a$ en $n$ selectie-uitgangen $f_i$. Indien er op \'e\'en van de data-ingangen een $1$ staat, staat er ook een $1$ op de any-uitgan en vice versa. Wanneer juist \'e\'en data-ingang $d_i$ een $1$ aanlegt, geven de selectie-uitgangen binair de waarde van deze index weer. Indien meer data-ingangen op $1$ staan, is het gedrag onbepaald.}. Een encoder bevat $2^n$ data-ingangen $d_i$, een \gtermen[any-uitgang]{any-uitgang $a$}{Een uitgang van een component die een $1$ aanlegt in het geval \'e\'en of meerdere data-ingangen een $1$ aanleggen. Voorbeelden van componenten met een any-uitgang zijn de encoder en prioriteitsencoder.} en $n$ \gtermen[selectie-uitgangen]{selectie-uitgangen $s_i$}{Een sequentie uitgangen bij componenten die beschrijven op welke data-ingang(en) er op dat moment een $1$ staat. Componenten met selectie-uitgangen zijn bijvoorbeeld encoders en prioriteitsencoders.}. Het is de bedoeling dat de encoder afhankelijk van de lijn waarop een $1$ staat de index weergeeft op de \termen{selectie-uitgangen $f_i$}. Verder bevat de encoder ook nog een extra uitgang: de \termen{any-uitgang $a$}, op deze uitgang wordt 1 aangelegd indien \'e\'en van de data-ingangen een 1 vertoont, anders wordt er een $0$ op de any-uitgang aangelegd. We kunnen dit gedrag samenvatten in een waarheidstabel zoals in \tblref{truthTableEncoderNormal} voor een $4$-naar-$2$ encoder.
+Ook de decoder heeft een inverse: een $2^n$-naar-$n$ \gtermen{encoder}{Een component met $2^n$ data-ingangen, een any-uitgang $a$ en $n$ selectie-uitgangen $f_i$. Indien er op \'e\'en van de data-ingangen een $1$ staat, staat er ook een $1$ op de any-uitgan en vice versa. Wanneer juist \'e\'en data-ingang $d_i$ een $1$ aanlegt, geven de selectie-uitgangen binair de waarde van deze index weer. Indien meer data-ingangen op $1$ staan, is het gedrag onbepaald.}. Een encoder bevat $2^n$ data-ingangen $d_i$, een \gtermen[any-uitgang]{any-uitgang $a$}{Een uitgang van een component die een $1$ aanlegt in het geval \'e\'en of meerdere data-ingangen een $1$ aanleggen. Voorbeelden van componenten met een any-uitgang zijn de encoder en prioriteitsencoder.} en $n$ \gtermen[selectie-uitgangen]{selectie-uitgangen $s_i$}{Een sequentie uitgangen bij componenten die beschrijven op welke data-ingang(en) er op dat moment een $1$ staat. Componenten met selectie-uitgangen zijn bijvoorbeeld encoders en prioriteitsencoders.}. Het is de bedoeling dat de encoder, afhankelijk van de data-ingang waarop een $1$ staat, de index van deze data-ingangg weergeeft op de selectie-uitgangen $f_i$. De any-uitgang is $1$ op het moment dat er \'e\'en data-ingang de waarde $1$ heeft, en $0$ indien er op geen enkele data-ingang een $1$ staat. We kunnen dit gedrag samenvatten in een waarheidstabel zoals in \tblref{truthTableEncoderNormal} voor een $4$-naar-$2$ encoder.
 
 \begin{table}[hbt]
 \centering
@@ -1501,7 +1501,8 @@ $d_3$&$d_2$&$d_1$&$d_0$&$a$&$f_1$&$f_0$}{
 0&0&0&1&1&0&0\\
 0&0&1&0&1&0&1\\
 0&1&0&0&1&1&0\\
-1&0&0&0&1&1&1}
+1&0&0&0&1&1&1\\
+-&-&-&-&-&-&-}
 \tbllab{truthTableEncoderNormal}
 }
 \subtable[Prioriteitsencoder]{
@@ -1517,7 +1518,8 @@ $d_3$&$d_2$&$d_1$&$d_0$&$a$&$f_1$&$f_0$}{
 \caption{Waarheidtabellen van een encoder en prioriteitsencoder.}
 \end{table}
 
-Merk op dat de tabel niet alle strikt mogelijke ingangen toont. We nemen aan dat aan de ingang enkel geldige toestanden verschijnen. Indien dit niet zo is, staat het in principe vrij om elke uitgang aan te leggen. De ontbrekende rijen bevatten dus don't cares op alle uitgangen. Op basis van deze tabel kunnen we eventueel Karnaugh-kaarten maken en een implementatie voorstellen:
+Merk op dat de tabel niet alle strikt mogelijke ingangen toont. We nemen aan dat aan de ingangen enkel geldige configuraties verschijnen. Indien dit niet zo is, staat het in principe vrij om te kiezen wat er op de uitgangen verschijnt. De ontbrekende rijen bevatten dus don't cares op alle uitgangen. Op basis van deze tabel kunnen we eventueel Karnaugh-kaarten maken en een implementatie voorstellen:
+
 \begin{equation}
 \left\{
 \begin{array}{l}
@@ -1527,9 +1529,12 @@ f_0=d_3+d_2
 \end{array}
 \right.
 \end{equation}
+
 We kunnen deze schakeling dus eenvoudig realiseren met \'e\'en OR-poort per uitgang.
+
 \paragraph{Prioriteitsencoder}
-Een variant van de encoder is de \termen{prioriteitsencoder}. Een prioriteitsencoder biedt een antwoord op de ongeldige ingangen van de encoder. Hierbij telt niet d\'e index van de data-ingang waarop een 1 wordt aangelegd, maar de hoogste index van alle datalijnen met 1. Tabel \ref{tbl:truthTablePriorityEncoder} formaliseert dit. Deze schakeling kunnen we als volgt implementeren:
+Een variant van de encoder is de \gtermen{prioriteitsencoder}{Een variant van een encoder. Een component met $2^n$ data-ingangen $d_i$, een any-uitgang $a$ en $n$ selectie-uitgangen $f_i$. Indien er op minstens \'e\'en van de data-ingangen een $1$ staat, staat er ook een $1$ op de any-uitgan en vice versa. Wanneer er op \'e\'en of meerdere data-ingang $d_i$ een $1$ staat, geven de selectie-uitgangen binair de waarde van deze index van de hoogste data-ingang met $1$ weer.}. Een prioriteitsencoder biedt een antwoord op de ongeldige ingangen van de encoder. Hierbij telt niet d\'e index van de data-ingang waarop een $1$ wordt aangelegd, maar de hoogste index van alle data-ingangen met $1$. \tblref{truthTablePriorityEncoder} formaliseert dit. Deze schakeling kunnen we dan als volgt implementeren:
+
 \begin{equation}
 \left\{
 \begin{array}{l}
@@ -1539,7 +1544,9 @@ f_0=d_3+d_2
 \end{array}
 \right.
 \end{equation}
-Dit komt overeen met \'e\'en extra AND- en NOT-poort. De interface voor beide schakelingen staat beschreven op figuur \ref{fig:encoderInterface}.
+
+Dit komt overeen met \'e\'en extra AND- en NOT-poort. De interface voor beide schakelingen staat beschreven op \figref{encoderInterface}.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Interfaces]{
@@ -1610,7 +1617,9 @@ Dit komt overeen met \'e\'en extra AND- en NOT-poort. De interface voor beide sc
 }
 \caption{Encoder en Prioriteitsencoder.}
 \end{figure}
+
 De interface is opnieuw een rechthoek. De data-ingangen staan bovenaan, de selectie-uitgangen onderaan, en de any-uitgang aan de linkerkant.
+
 \subsubsection{Prioriteitsencoders cascaderen}
 Ook bij prioriteitsencoders gaan we even in het op het cascaderend karakter. Ook encoders laten zich eenvoudig cascaderen, mits we ook extra multiplexers gebruiken. In figuur \ref{fig:encoderCascade} bouwen we een 16-naar-4 prioriteitsencoder met 4 4-naar-2 prioriteitsencoders en 2 4-naar-1 multiplexers.
 
