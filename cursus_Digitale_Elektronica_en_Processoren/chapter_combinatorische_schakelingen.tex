@@ -1782,25 +1782,36 @@ We willen een getal niet altijd vergelijken met andere getal, maar soms met een 
 %REVIEW
 \subsection{Schuifoperator}
 \ssclab{shiftoperators}
-Een laatste set van operaties die vaak gebruikt wordt zijn \gtermen{schuifoperaties}{Een reeks operaties waarbij men . Onder schuifoperaties rekenen we logisch schuiven, aritmetisch schuiven en roteren. Deze operaties komen telkens voor in twee richtingen: links en rechts.}. Vele processoren implementeren schuifoperaties en bijvoorbeeld de ARM processor laat toe om tijdens elke operatie de operand over enkele plaatsen te schuiven. Een eerste probleem met schuifoperaties is dat er verschillende vormen van schuifoperaties bestaan. In het algemeen houdt een schuifoperatie in dat de waarde van de bit die eerst op plaats $i$ stond, nu op een plaats $i+m$ staat. Of formeler: $Y$ is het resultaat van een schuifoperatie van $X$ over $m$ plaatsen naar links als
+Een laatste set van operaties die vaak gebruikt wordt zijn \gtermen{schuifoperaties}{Een reeks operaties waarbij men bits opschuift in een getal naar links of naar rechts. Afhankelijk van het soort schuifoperaties zal men bepaalde bits op de vrijgekomen plaatsen invullen en bepaalde bewerkingen uitvoeren op de bits die uit de getalvoorstelling vallen. Onder schuifoperaties rekenen we logisch schuiven, aritmetisch schuiven en roteren. Deze operaties komen telkens voor in twee richtingen: links en rechts. Bij een schuifoperatie van $m$ bits naar links zullen de waardes van de bits $x_i$ worden verplaatst naar $y_{i+m}=x_i$, maar enkel indien zowel $i$ als $i+m$ binnen het bereik liggen. Wat er met de overige bits en de vrijgekomen plaatsen zal gebeuren, hangt af van de variant van de schuifoperatie.}. Vele processoren implementeren schuifoperaties. Een ARM processor laat bijvoorbeeld toe om tijdens elke operatie de operand over enkele plaatsen te schuiven.
+
+\paragraph{}
+Er bestaan verschillende vormen van schuifoperaties, Daarom zullen we in deze paragraaf eerst de verschillende varianten bespreken. In het algemeen houdt een schuifoperatie in dat de waarde van de bit die eerst op plaats $i$ stond, nu op een plaats $i+m$ staat. Of formeler: $Y$ is het resultaat van een schuifoperatie van $X$ over $m$ plaatsen naar links indien
+
 \begin{equation}
 \forall i\in\NN:i\in\left[0,n\right]\wedge i+m\in\left[0,n\right]\Rightarrow y_{i+m}=x_i
+\eqnlab{shiftFormal}
 \end{equation}
-Het probleem is wat we doen met de bits die buiten de grenzen vallen, en met wat we de nieuwe plaatsen opvullen. Voor dit probleem bestaan drie populaire oplossingen:
+
+De definitie toont al dat $i$ en $i+m$ beide binnen het bereik moeten liggen. Wat we doen met de bits die buiten de grenzen vallen, en met wat we de nieuwe plaatsen opvullen, wordt niet door \eqnref{shiftFormal} gespecificeerd. Een tweede opmerking is dat $m$ ook negatief kan zijn, in dat geval voeren we een schuifoperatie naar rechts uit. Voor dit probleem bestaan er drie populaire oplossingen, de varianten van de schuifoperaties.
 \begin{itemize}
- \item Bij het \termen{schuiven} negeren we de bits die buiten de grenzen vallen. Er bestaan twee vormen van schuiven die vari\"eren in wat we op de vrijgekomen plaatsen zetten:
+ \item Bij het \gtermen{schuiven}{Een variant van een schuifoperatie waarbij de bits van het originele getal die na schuiven niet langger in het bereik van het resultaat liggen, genegeerd worden. Er is dus verlies aan data. Wat er met de vrijgekomen plaatsen gebeurt is niet gespecificeerd, dit hangt af van de concrete variant. Er zijn twee soort schuiven: logisch schuiven en aritmetisch schuiven.} negeren we de bits die buiten de grenzen vallen. Er bestaan twee vormen van schuiven die vari\"eren in wat we op de vrijgekomen plaatsen zetten:
  \begin{itemize}
-   \item \termen{Logisch schuiven}: indien we logisch schuiven hebben we een extra parameter nodig, namelijk welke waarde we op de nieuwe plaatsen zetten. Soms is dit zelfs een rij van bits. We maken dus de invoer groot genoeg om geen vrije plaatsen meer over te houden.
-   \item \termen{Aritmetisch schuiven}: hierbij willen we eigenlijk een wiskundige functie realiseren namelijk vermenigvuldigen of delen met een macht van 2. Hoe we dus aritmetisch schuiven hangt vooral af van de getalvoorstelling. Indien we naar links schuiven betekent dit meestal dat we de nieuwe plaatsen vullen met nullen. Indien we naar rechts schuiven zal bij een 2-complement voorstelling de hoogste bit (MSB) van het originele getal ingevoegd worden. Bij een ``unsigned'' voorstelling vullen we de vrije plaatsen ook met nullen op. Aritmetisch schuiven is vrij populair in programmeertalen. Talen die behoren tot de \verb|C/C++/C#/Java| familie introduceren daarom 2 functies: voor links (\verb+<<+) en rechts (\verb+>>+) aritmetisch schuiven deze worden gedefinieerd als:
+   \item \gtermen{Logisch schuiven}{Een variant van schuiven. Bij logisch schuiven worden de vrijgekomen plaatsen opgevuld door een constante, meestal $0$. Soms wordt zelfs in detail bepaald welke waarde men op welke vrijgekomen bit zet.}: indien we logisch schuiven hebben we een extra parameter nodig, namelijk welke waarde we op de nieuwe plaatsen zetten. Soms is dit zelfs een rij van bits. We maken dus de invoer groot genoeg om geen vrije plaatsen meer over te houden. Logisch schuiven wordt in de C/C++/Java taalfamilies vaak voorgesteld met de operatoren \verb+<<<+ en \verb+>>>+.
+   \item \gtermen{Aritmetisch schuiven}{Een variant van schuiven waarbij we schuiven zien als een vermenigvuldiging of deling door een macht van twee. Bij bijvoorbeeld de $2$-complement voorstelling leidt dit tot een ander gedrag dan bij logisch schuiven. In dat geval zullen we bij aritmetisch schuiven naar rechts de hoogste bit van het originele getal in rekening brengen, en deze waarde op de vrijgekomen plaatsen invullen.}: hierbij willen we eigenlijk een wiskundige functie realiseren namelijk vermenigvuldigen of delen met een macht van $2$. Hoe we dus aritmetisch schuiven hangt vooral af van de getalvoorstelling. Indien we naar links schuiven betekent dit meestal dat we de nieuwe plaatsen vullen met nullen. Indien we naar rechts schuiven zal bij een $2$-complement voorstelling de hoogste bit (MSB) van het originele getal ingevoegd worden. Bij een ``unsigned'' voorstelling vullen we de vrije plaatsen ook met nullen op. Aritmetisch schuiven is vrij populair in programmeertalen. Programmeertalen die tot de C/C++/Java taalfamilie behoren, introduceren daarom 2 functies: voor links (\verb+<<+) en rechts (\verb+>>+) aritmetisch schuiven deze worden gedefinieerd als:
+
 \begin{equation}
 \left\{\begin{array}{l}
 X\verb+<<+M\equiv X\times 2^M\\
 X\verb+>>+M\equiv X\div 2^M
 \end{array}\right.
 \end{equation}
+
+Men kan meestal niet schuiven met een negatieve $M$. De richting van schuiven dient men dus op voorhand te kennen.
  \end{itemize}
- \item Bij het \termen{roteren} vangen we de bits op die er langs \'e\'en kant afvallen en plaatsen we deze op de vrijgekomen plaatsen aan de andere kant.
+
+ \item Bij het \gtermen{roteren}{Een variant van een schuifoperatie waarbij de bits die buiten het bereik van het nieuwe getal vallen, aan de andere kant op de vrijgekomen plaatsen worden gezet.} vangen we de bits op die er langs \'e\'en kant afvallen en plaatsen we deze op de vrijgekomen plaatsen aan de andere kant.
 \end{itemize}
+
 \subsubsection{Implementatie van schuifoperaties}
 In deze subsubsectie zullen we twee schakelingen realiseren. De eerste is een component die alle schuifoperaties kan realiseren op 4-bit getallen, maar slechts over 1 plaats naar links of rechts. Het tweede component is 8-bit \termen{barrel left rotator}. Dit component roteert 8-bit getallen naar links over een variabel aantal plaatsen. Merk op dat het bij een rotatie het eigenlijk niet uitmaakt in welke richting we roteren: een $n$-bit getal $m$ plaatsen naar links roteren is net hetzelfde als het getal $n-m$ plaatsen naar rechts roteren. Deze tweede component illustreert verder hoe we schuifoperaties effici\"ent over meerdere posities kunnen uitvoeren.
 \paragraph{Schuifoperaties over 1 bit}
