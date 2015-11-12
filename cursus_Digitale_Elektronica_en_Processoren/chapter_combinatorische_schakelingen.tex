@@ -1779,7 +1779,6 @@ We kunnen twee getallen altijd vergelijken met een vergelijker zoals eerder besc
 \paragraph{Vergelijken met constanten}
 We willen een getal niet altijd vergelijken met andere getal, maar soms met een constante. In dat geval zouden we natuurlijk ook van de vergelijker kunnen gebruikmaken, en de $Y$ zelf samenstellen. Aangezien $Y$ echter op voorhand gekend is spreekt het voor zichzelf dat we de implementatie echter grondig kunnen verbeteren. Bovendien kunnen we ook testen ontwerpen die we niet kunnen uitvoeren met een vergelijker\footnote{Bijvoorbeeld deelbaarheid door $2$.}. Dergelijke componenten kunnen bouwen getuigt ook van enig inzicht. Alle speciale gevallen beschouwen is moeilijk. Op \figref{comparatorConstants} geven we enkele voorbeelden. Deze opsommig is verre van exhaustief en het verklaren van deze schakelingen wordt aan de lezer overgelaten.
 
-%REVIEW
 \subsection{Schuifoperator}
 \ssclab{shiftoperators}
 Een laatste set van operaties die vaak gebruikt wordt zijn \gtermen{schuifoperaties}{Een reeks operaties waarbij men bits opschuift in een getal naar links of naar rechts. Afhankelijk van het soort schuifoperaties zal men bepaalde bits op de vrijgekomen plaatsen invullen en bepaalde bewerkingen uitvoeren op de bits die uit de getalvoorstelling vallen. Onder schuifoperaties rekenen we logisch schuiven, aritmetisch schuiven en roteren. Deze operaties komen telkens voor in twee richtingen: links en rechts. Bij een schuifoperatie van $m$ bits naar links zullen de waardes van de bits $x_i$ worden verplaatst naar $y_{i+m}=x_i$, maar enkel indien zowel $i$ als $i+m$ binnen het bereik liggen. Wat er met de overige bits en de vrijgekomen plaatsen zal gebeuren, hangt af van de variant van de schuifoperatie.}. Vele processoren implementeren schuifoperaties. Een ARM processor laat bijvoorbeeld toe om tijdens elke operatie de operand over enkele plaatsen te schuiven.
@@ -1815,21 +1814,21 @@ Men kan meestal niet schuiven met een negatieve $M$. De richting van schuiven di
 \subsubsection{Implementatie van schuifoperaties}
 In deze subsubsectie zullen we twee schakelingen realiseren. De eerste is een component die alle schuifoperaties kan realiseren op $4$-bit getallen, maar slechts over \'e\'en plaats naar links of rechts. Het tweede component is $8$-bit \gtermen{barrel left rotator}{Een component die een rotatie kan uitvoeren over een willekeurig aantal bits. Dit doet men door voor een $n$ bit getal, $\log_2 n$ lagen te beschouwen. Voor elke laag $i$ maakt men aan de hand van multiplexers de keuze om het getal door te laten of $2^i$ posities naar links te rotereren,}. Dit component roteert $8$-bit getallen naar links over een variabel aantal plaatsen. Merk op dat het bij een rotatie het eigenlijk niet uitmaakt in welke richting we roteren: een $n$-bit getal $m$ plaatsen naar links roteren is net hetzelfde als het getal $n-m$ plaatsen naar rechts roteren. Deze tweede component illustreert verder hoe we schuifoperaties effici\"ent over meerdere posities kunnen uitvoeren.
 
-\paragraph{Schuifoperaties over 1 bit}
+\paragraph{Schuifoperaties over $1$ bit}
 Indien we een component maken die meerdere operaties kan uitvoeren moeten we altijd eerst een instructieset defini\"eren, net zoals we dat ook deden in in \sssref{aLUInstructionSet}. De instructieset dient zowel een onderscheid te maken tussen schuiven of roteren, aritmetisch of logisch\footnote{Enkel in geval van schuiven is dit relevant.} en links of rechts. Verder willen we ook een bit voorzien die aangeeft of er \"uberhaupt een schuifoperatie moet worden uitgevoerd: een soort enable-ingang. We zullen dus een $4$-bit instructieset gebruiken. \tblref{shiftInstructionSet} toont de betekenis van elke bit.
 \begin{table}[hbt]
 \centering
-\begin{tabular}{c|cc}
-Signaal&0&1\\\hline
+\defaulttable{c|cc}{
+\bf Signaal&$0$&$1$}{
 $s_3$&geen schuifoperatie&schuifoperatie\\
 $s_2$&links&rechts\\
 $s_1$&schuiven&roteren\\
-$s_0$&aritmetisch&logisch
-\end{tabular}
+$s_0$&aritmetisch&logisch}
 \caption{Instructieset voor de schuifoperaties over 1 bit.}
 \tbllab{shiftInstructionSet}
 \end{table}
-Op basis van deze instructieset kunnen we nu een component bouwen. Voor de berekening van de uitgangsbits gebruiken we multiplexers. Immers kan elke uitgang $y_i$ maar drie mogelijke uitgangen hebben: $x_{i-1}$, $x_i$ en $x_{i+1}$. Bij de uitgangen aan de rand dienen we alleen een andere interpretatie voor sommige $x_j$ te vinden. Welke van deze drie ingangen we kiezen hangt verder alleen af van twee bits uit het instructiewoord: $s_3$ en $s_2$. In het geval dat $s_3=0$ geldt $y_i=x_i$. Bijgevolg zetten we $x_i$ zowel op de $d_0$ en $d_1$ ingang van de multiplexer voor $y_i$. Indien $s_3=1$ en $s_2=0$ schuiven we naar links. We zetten dus $x_{i+1}$ en $x_{i-1}$ respectievelijk op de $d_2$ en $d_3$ ingangen. Vervolgens dienen we nog de randgevallen op te lossen. Deze randgevallen beslaan enkel $x_{i+1}$ voor $y_3$ en  $x_{i-1}$ voor $y_0$. Deze waarden zullen we respectievelijk noteren als $x_4$ en $x_{-1}$ en vallen dus buiten de grenzen van de ingangen. In geval van rotatie geldt:
+Op basis van deze instructieset kunnen we nu een component bouwen. Voor de berekening van de uitgangsbits gebruiken we multiplexers. Immers kan elke uitgang $y_i$ maar drie mogelijke uitgangen hebben: $x_{i-1}$, $x_i$ en $x_{i+1}$. Bij de uitgangen aan de rand dienen we alleen een andere interpretatie voor sommige $x_j$ te vinden. Welke van deze drie ingangen we kiezen hangt verder alleen af van twee bits uit het instructiewoord: $s_3$ en $s_2$. In het geval dat $s_3=0$ geldt $y_i=x_i$. Bijgevolg zetten we $x_i$ zowel op de $d_0$ en $d_1$ ingang van de multiplexer voor $y_i$. Indien $s_3=1$ en $s_2=0$ schuiven we naar links. We zetten dus $x_{i+1}$ en $x_{i-1}$ respectievelijk op de $d_2$ en $d_3$ ingangen. Tot slot dienen we nog de randgevallen op te lossen. Deze randgevallen beslaan enkel $x_{i+1}$ voor $y_3$ en  $x_{i-1}$ voor $y_0$. Deze waarden zullen we respectievelijk noteren als $x_4$ en $x_{-1}$ en vallen dus buiten de grenzen van de ingangen. In geval van rotatie geldt:
+
 \begin{equation}
 \begin{array}{ll}
 \left\{\begin{array}{l}
@@ -1838,7 +1837,9 @@ x_4=x_0
 \end{array}\right.&\mbox{(rotatie)}
 \end{array}
 \end{equation}
-Dit dwingen we af met twee 2-naar-1 multiplexers. Deze multiplexers hebben als schakelelement instructiebit $s_1$. We dienen nu enkel nog het geval te behandelen waarin we schuiven. Indien we logisch schuiven, schuiven we de bits $L_{\mbox{\tiny{in}}}$ en $R_{\mbox{\tiny{in}}}$ in. Bij arithmetisch zullen we aan de rechterzijde een 0 inschuiven. Aan de linkerkant is dit ook het geval tenzij we schuiven met een 2-complement voorstelling. In dat laatste geval bepaalt de hoogste bit immers ook het teken van het getal. In dat geval moeten we de waarde van de hoogste bit dus nogmaals inschuiven. We kunnen bovenstaande beschrijvingen formaliseren tot volgende formules:
+
+Dit dwingen we af met twee $2$-naar-$1$ multiplexers. Deze multiplexers hebben als schakelelement instructiebit $s_1$. We dienen nu enkel nog het geval te behandelen waarin we schuiven. Indien we logisch schuiven, schuiven we de bits $L_{\mbox{\tiny{in}}}$ en $R_{\mbox{\tiny{in}}}$ in. Bij arithmetisch zullen we aan de rechterzijde een $0$ inschuiven. Aan de linkerkant is dit ook het geval tenzij we schuiven met een $2$-complement voorstelling. In dat laatste geval bepaalt de hoogste bit immers ook het teken van het getal. In dat geval moeten we de waarde van de hoogste bit dus nogmaals inschuiven. We kunnen bovenstaande beschrijvingen formaliseren tot volgende formules:
+
 \begin{equation}
 \begin{array}{ll}
 \left\{\begin{array}{l}
@@ -1853,7 +1854,9 @@ x_4=x_3
 \end{array}\right.&\mbox{(schuiven, logisch, 2-complement)}
 \end{array}
 \end{equation}
-Deze logica kunnen we vervolgens implementeren met OR-AND-poorten. Het resultaat van deze volledige implementatie staat op figuur \ref{fig:shiftImplementation}.
+
+Deze logica kunnen we vervolgens implementeren met OR-AND-poorten. Het resultaat van deze volledige implementatie staat op \figref{shiftImplementation}.
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US]
@@ -1907,8 +1910,10 @@ Deze logica kunnen we vervolgens implementeren met OR-AND-poorten. Het resultaat
 \caption{Implementatie van een schuifoperator over 1 bit.}
 \figlab{shiftImplementation}
 \end{figure}
+
 \paragraph{8-bit barrel left rotator}
-In de vorige paragraaf hebben we een schuifoperator gebouwd die 1-bit kan schuiven. Door verschillende van deze schuifoperatoren na elkaar te plaatsen kunnen we schuiven over meerdere plaatsen. Toch is dit niet erg praktisch: om $m$ plaatsen te schuiven zouden we $m$ van deze schuifoperatoren na elkaar moeten plaatsen, wat grote vertragingen zou impliceren. In deze paragraaf zullen we een rotator bouwen die de vertraging beperkt tot $\log_2 m$, met $m$ het maximaal aantal plaatsen dat kan opgeschoven worden. Het concept is echter ook toepasbaar op algemene schuifoperaties. Alleen is de implementatie te complex voor pedagogische doeleinden. Figuur \ref{fig:hBitBarrelLeftRotatorImplementation} geeft het concept mooi weer.
+In de vorige paragraaf hebben we een schuifoperator gebouwd die over $1$ bit kan schuiven. Door verschillende van deze schuifoperatoren na elkaar te plaatsen kunnen we schuiven over meerdere plaatsen. Toch is dit niet erg praktisch: om $m$ plaatsen te schuiven zouden we $m$ van deze schuifoperatoren na elkaar moeten plaatsen, wat grote vertragingen zou impliceren. In deze paragraaf zullen we een rotator bouwen die de vertraging beperkt tot $\log_2 m$, met $m$ het maximaal aantal plaatsen dat kan opgeschoven worden. Het concept is toepasbaar op algemene schuifoperaties, dus ook bijvoorbeeld logisch schuiven. \figref{hBitBarrelLeftRotatorImplementation} geeft het concept weer.
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -1939,4 +1944,5 @@ In de vorige paragraaf hebben we een schuifoperator gebouwd die 1-bit kan schuiv
 \caption{Implementatie van een 8-bit barrel left rotator.}
 \figlab{hBitBarrelLeftRotatorImplementation}
 \end{figure}
-Deze barrel left rotator is gebaseerd op het additief principe. Het additief principe stelt dat indien we een getal willen schuiven of roteren over $m$ bits, we dit ook kunnen verwezenlijken door eerst te schuiven/roteren over $m_1$ bits en vervolgens over $m_2$ bits met $m=m_1+m_2$. Indien we onze rotator bouwen volgens een structuur waarbij elke niveau $i$ een rotatie uitvoert over $2^i$ plaatsen kunnen we elke rotatie-operatie uitvoeren. Op figuur \ref{fig:hBitBarrelLeftRotatorImplementation} zien we dat het niveau $s_2$, vier plaatsen naar links roteert. Het volgende niveau twee en het laatste \'e\'en. Elk van deze niveaus heeft dezelfde vertraging. Indien we dus een $n$-bit barrel left rotator willen bouwen die maximaal $m$ plaatsen kan opschuiven moeten we dus $\left\lceil\log_2m\right\rceil$ niveaus synthetiseren. Een niveau $i$ roteert $2^i$ plaatsen voor $\forall i=0,1,\ldots,\left\lceil\log_2m\right\rceil-1$. Dit concept is eenvoudig te veralgemenen naar een volledige schuifoperator. Merk op dat het aantal niveaus dus theoretisch niet afhangt van het aantal bit in het getal. Op de meeste processoren neemt men echter $m=n$. Een andere mooie eigenschap is dat de volgorde van de niveaus niet relevant is.
+
+Deze barrel left rotator is gebaseerd op het additief principe. Het additief principe stelt dat indien we een getal willen schuiven of roteren over $m$ bits, we dit ook kunnen verwezenlijken door eerst te schuiven/roteren over $m_1$ bits en vervolgens over $m_2$ bits met $m=m_1+m_2$. Indien we onze rotator bouwen volgens een structuur waarbij elke niveau $i$ een rotatie uitvoert over $2^i$ plaatsen kunnen we elke rotatie-operatie uitvoeren. Gedurende dit hoofdstuk hebben we immers alle getallen binair kunnen voorstellen. Op \figref{hBitBarrelLeftRotatorImplementation} zien we dat het niveau $s_2$, vier plaatsen naar links roteert. Het volgende niveau twee en het laatste \'e\'en. Elk van deze niveaus heeft dezelfde vertraging. Indien we dus een $n$-bit barrel left rotator willen bouwen die maximaal $m$ plaatsen kan opschuiven moeten we dus $\ceil{\log_2m}$ niveaus synthetiseren. Een niveau $i$ roteert $2^i$ plaatsen voor $\forall i=0,1,\ldots,\ceil{\log_2m}-1$. Dit concept is eenvoudig te veralgemenen naar een volledige schuifoperator. Merk op dat het aantal niveaus dus theoretisch niet afhangt van het aantal bit in het getal. Op de meeste processoren neemt men echter $m=n$. Een andere mooie eigenschap is dat de volgorde van de niveaus niet relevant is.
