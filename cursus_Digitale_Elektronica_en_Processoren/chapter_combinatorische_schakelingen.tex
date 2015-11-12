@@ -179,10 +179,9 @@ Elk van de priemimplicanten die we geselecteerd hebben stelt het product voor va
 \begin{equation}
 \begin{array}{ll}
 \acclguard{
-\begin{array}{l}
 f=x_2'x_3'x_4'+x_1'x_4+x_1x_3\\
 g=x_1'x_3'x_4'+x_1'x_2'x_3x_4+x_2x_3x_4'+x_2x_3'x_4+x_1x_2x_3
-}&\leaex
+}&\leaex{}
 \end{array}
 \end{equation}
 
@@ -456,7 +455,7 @@ Met behulp van een half adder en $n$ full adders kunnen we vervolgens een optell
 \figref{rippleCarryAdder} toont hoe dit in z'n werk gaat: we tellen de laatste twee bits op met een half adder\footnote{Op de figuur gebruiken we hiervoor een full adder $\mbox{FA}_0$, maar met carry ingang $c_0=0$, wat op hetzelfde neerkomt. Later zullen we zien dat door een full adder te gebruiken, we meer kunnen doen met een ripple-carry opteller.}, de overige bits tellen we op met full adders. De carry uitgang van elke adder gaat naar de de ingang van de volgende adder. De allerlaatste carry uitgang $c_n$, kan men gebruiken als een \gtermen{overflow}{Een signaal dat na een bewerking - bijvoorbeeld een optelling - het resultaat niet meer volledig voor te stellen valt op de gegeven bits. Dit is bijvoorbeeld het geval bij een $8$-bit opteller, waarbij het resultaat groter is dan $255$.} uitgang. Indien we immers twee $n$-bit getallen met elkaar optellen, kan dit resulteren in getallen waarvoor die we enkel met $n+1$ bits kunnen voorstellen. In een ander geval wordt deze uitgang gebruikt om de waarde van de $n+1$-ste bit te bepalen. We kunnen ook - zoals op de figuur - de half adder vervangen door een full adder met als carry ingang $c_0=0$.
 
 \paragraph{}
-Omdat we meestal getallen met een groot aantal bits optellen\footnote{Op de meeste processoren spreken we over $32$ of $64$ bits.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen \'e\en XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
+Omdat we meestal getallen met een groot aantal bits optellen\footnote{Op de meeste processoren spreken we over $32$ of $64$ bits.} is het interessant om het tijdsgedrag van een ripple-carry adder te bekijken. Het kritisch pad gaat logischerwijs van een ingang van de half adder tot de laatste full adder. Indien we de implementaties van de full adder met functionele ontbinding beschouwen blijkt het kritische pad $x_0\rightarrow c_n$ te zijn. In dit geval moet het signaal doorheen \'e\'en XOR, $n$ AND en $n$ OR poorten. Elk van deze poorten heeft twee ingangen, de vertraging is dus bijgevolg:
 
 \begin{equation}
 \mbox{vertraging}=2.4n+2.4n+3.2=4.8n+3.2
@@ -1119,7 +1118,7 @@ Een standaard om tekst voor te stellen is de American Standard Code for Informat
 
 \section{Andere basisschakelingen}
 \seclab{andereBasis}
-Naast de rekenkundige schakelingen in \secref{rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In \sscref{multiplexer} bespreken we de multiplexer. Daarna bespreken we in \sscref{decoder} en \sscref{demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \sscef{encoder}. We eindigen met de vergelijker in \sscref{comparator} en de reeds aangehaalde schuifoperatie in subsectie \sscref{shiftoperators}.
+Naast de rekenkundige schakelingen in \secref{rekenkundig} zullen we in schema's ook geregeld enkele andere bouwstenen terugvinden. In deze sectie zullen we de meest voornaamste bespreken: In \sscref{multiplexer} bespreken we de multiplexer. Daarna bespreken we in \sscref{decoder} en \sscref{demultiplexer} twee verwante bouwstenen: de decoder en demultiplexer. Het omgekeerde van de decoder, de encoder behandelen we in \sscref{encoder}. We eindigen met de vergelijker in \sscref{comparator} en de reeds aangehaalde schuifoperatie in subsectie \sscref{shiftoperators}.
 
 \subsection{Multiplexer}
 \ssclab{multiplexer}
