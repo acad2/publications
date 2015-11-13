@@ -3,11 +3,13 @@
 \chplab{SeqComp}
 \chapterquote{We denken dat sommige mensen intelligent zijn, terwijl ze alleen maar een goed geheugen hebben.}{Fr\'ed\'eric Dard, Frans humoristisch schrijver (1921-2000)}
 \begin{chapterintro}
-??
+In het vorige hoofdstuk hebben we combinatorische schakelingen gebouwd: schakelingen waarbij de waardes op de uitgangen enkel afhangen van de waardes die op de ingangen staan. Bij de meeste schakelingen is er echter sprake van geheugen: een component die een toestand kan bijhouden. Afhankelijk van de invoer verandert de toestand en de uitvoer hangt af van de toestand van het component en de waardes die op de ingangen staan. In dit hoofstuk introduceren we hier eerst de nodige terminologie voor waarna we een reeks componenten ontwikkelen om gegevens op te slaan. Daarna bespreken we hoe we componenten met geheugen kunnen ontwerpen. We maken hierbij een onderscheid tussen synchrone sequenti\"ele schakelingen: schakelingen met een klok, en asynchrone sequenti\"ele schakelingen: schakelingen waarbij een verandering aan de invoer de oorzaak is van verandering van toestand.
 \end{chapterintro}
 \minitoc[n]
+
 \section{Terminologie}
 Een \termen{Sequenti\"ele schakeling} is een schakeling waarbij niet alleen de ingangen $X$ van belang zijn, maar ook de toestand van deze schakeling. De \termen{toestand $S$} wordt bepaald door de ingang, en door de vorige toestand $S_{\mbox{\tiny{prev.}}}$. In de wiskunde wordt een dergelijke constructie beschreven als een \termen{eindige-toestanden machine} of \termen{finite state machine (FSM)}. Om dit te verwezenlijken hebben we een \termen{geheugencomponent} nodig, een component die de toestand bijhoudt. Dit kunnen we bijvoorbeeld verwezenlijken met een condensator. In DRAM geheugens wordt dergelijke implementatie gebruikt. Het probleem met een condensator is dat de lading na verloop van tijd verloren gaat, wat tot dynamische logica leidt. In DRAM wordt dit opgelost door de condensatoren in kwestie terug op te laden. Een alternatief zijn componenten met \termen{positieve terugkoppeling}, doorgaans zijn deze bekend als \termen{flipflop} of \termen{register}. In sectie \ref{s:memoryBlocks} zullen we verschillende van deze bouwblokken bespreken.
+
 \subsection{Classificatie van sequenti\"ele schakelingen}
 \label{ss:classificationSequential}
 Doorgaans kunnen we sequenti\"ele schakelingen onderverdelen volgens twee classificatiesystemen: gebaseerd op de uitgangsfunctie $F$, en de synchroniciteit van de schakeling. Wat betreft de uitgangsfunctie beschouwen we twee types:
