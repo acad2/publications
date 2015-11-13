@@ -23,27 +23,33 @@ Verder maken we ook een onderscheid in schakelingen inzake synchroniciteit. Hier
 Veruit de meeste sequenti\"ele schakelingen worden gebouwd op basis van een klok. In \secref{synchroneSequence} zullen we synchrone schakelingen en hun synthese uitgebreid bespreken.
 \end{itemize}
 
-%REVIEW
 \subsection{Terminologie van het kloksignaal}
 Bij synchrone schakelingen maken we gebruik van een klokingang. Op deze klokingang staat periodiek een $0$ gevolgd door een $1$, dit signaal herhaalt zich eindeloos. Om dit kloksignaal te beschrijven gebruikt men een specifieke terminologie die we hier introduceren:
 \begin{itemize}
- \item \termen{Klokperiode}: de tijd tussen twee opeenvolgende klokovergangen van $0$ naar $1$.
- \item \termen{Klokfrequentie}: het aantal klokperiodes per seconden of formeler:
+ \item \gtermen{Klokperiode}{De tijd tussen twee opeenvolgende overgangen van $0$ naar $1$ van het kloksignaal.}: de tijd tussen twee opeenvolgende klokovergangen van $0$ naar $1$.
+ \item \gtermen{Klokfrequentie}{Het aantal klokperiodes per seconde.}: het aantal klokperiodes per seconden of formeler:
+
 \begin{equation}
 \mbox{klokfrequentie}=\displaystyle\frac{1}{\mbox{klokperiode}}
 \end{equation}
- \item ``\termen{Duty cycle}'': fragment van de klokcyclus dat de klok op 1 staat.
+
+ \item ``\gtermen{Duty cycle}{Het fragment van de klokcyclus dat het kloksignaal op $1$ staat.}'': het fragment van de klokcyclus dat het kloksignaal op $1$ staat.
+
 \begin{equation}
-\mbox{duty cycle}=\displaystyle\frac{\mbox{tijd klok is 1}}{\mbox{klokperiode}}
+\mbox{duty cycle}=\displaystyle\frac{\mbox{tijd klok is $1$}}{\mbox{klokperiode}}
 \end{equation}
-De klok staat dus niet per definitie even lang op 0 als op 1.
- \item \termen{Stijgende flank} (ook wel \termen{rising edge} genoemd): de klokovergang waarbij de klok van 0 naar 1 gaat.
- \item \termen{Dalende flank} (ook wel \termen{falling edge} genoemd): de klokovergang waarbij de klok van 1 naar 0 gaat.
+
+De klok staat dus niet per definitie even lang op $0$ als op $1$. Indien dit wel het geval is, is de duty cycle gelijk aan $1/2$.
+ \item \gtermen[stijgende flank]{Stijgende flank}{De overgang van het kloksignaal van $0$ naar $1$.} (ook wel \stermen{rising edge}{stijgende flank} genoemd): de klokovergang waarbij de klok van $0$ naar $1$ gaat.
+ \item \gtermen[dalende flank]{Dalende flank}{De overgangg van het kloksignaal van $1$ naar $0$.} (ook wel \stermen{falling edge}{dalende flank} genoemd): de klokovergang waarbij de klok van $1$ naar $0$ gaat.
 \end{itemize}
+
 \section{Bouwblokken}
 \seclab{memory}
 \seclab{memoryBlocks}
-In deze sectie zullen we de bouwblokken van geheugen ontwikkelen. Hierbij zullen we in \sscref{flipflop} eerst het basisblok ontwikkelen om \'e\'en bit te onthouden: de flipflop. Door flipflops te groeperen kunnen we een groter geheugen ontwikkelen. Dergelijke geheugens worden registers genoemd. Registers kunnen meestal maar een beperkt aantal flipflops tegelijk aanspreken. Registers bespreken we in subsectie \ref{ss:registers}. Een andere populaire toepassing van geheugens is een teller. We ontwikkelen een tellerschakeling in subsectie \ref{ss:counters}.
+In deze sectie zullen we de bouwblokken van geheugen ontwikkelen. Hierbij zullen we in \sscref{flipflop} eerst het basisblok ontwikkelen om \'e\'en bit te onthouden: de flipflop. Door flipflops te groeperen kunnen we een groter geheugen ontwikkelen. Dergelijke geheugens worden registers genoemd. Registers kunnen meestal maar een beperkt aantal flipflops tegelijk aanspreken. Registers bespreken we in \sscref{registers}. Een andere populaire toepassing van geheugens is een teller. We ontwikkelen een tellerschakeling in subsectie \sscref{counters}.
+
+%REVIEW
 \subsection{De flipflop}
 \ssclab{flipflop}
 Bij de synthese van een flipflop zullen we een eerste positief feedback component introduceren: de \termen{set-reset latch}. Vervolgens zullen we deze latch uitbreiden en verschillende varianten bespreken. Een probleem met latches is het zogenaamde \termen{transparantie-probleem}. Dit probleem zullen we oplossen door extra logica met deze latch te verbinden wat resulteert in een \termen{flipflop}. Er zijn verschillende varianten van flipflops om verschillende toepassingen te ondersteunen, we eindigen met een beknopt overzicht van de verschillende flipflops.
