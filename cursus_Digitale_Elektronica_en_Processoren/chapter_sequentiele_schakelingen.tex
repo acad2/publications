@@ -82,9 +82,8 @@ Bij de hierboven beschreven SR-latch is er geen sprake van een klokingang: we ku
 \figlab{clockedSRLatch}
 \end{figure}
 
-%REVIEW
 \paragraph{Geklokte D-latch}
-Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het meestal de moeite om de geklokte SR-latch om te vormen tot een \termen{geklokte D-latch}. Een geklokte D-latch zoals op \figref{clockedDLatch} bouwt meestal extra logica rond een geklokte SR-latch die met de \termen{data-ingang $D$} de $S$ en $R$ ingang aanstuurt. D-latches zijn populair bij schakelingen waarbij bij iedere klokflank een nieuwe waarde wordt ingelezen. Soms wordt dan echter ook een SR-latch gebruikt omdat dit de logica rond deze geheugenmodules soms kan vereenvoudigen.
+Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het meestal de moeite om extra logica te voorzien en de geklokte SR-latch om te vormen tot een \gtermen{geklokte D-latch}{Een variant van de geklokte SR-latch waarbij men een klokingang en een data-ingang $D$ beschouwt. Wanneer het kloksignaal hoog is, wordt de waarde die aan de data-ingang staat ingelezen. Telkens wanneer de klok hoog is, wordt een nieuwe (mogelijk dezelfde) waarde ingelezen. Dit in tegenstelling tot de SR-latch waarin men kan beslissen om het geheugen niet te overschrijven.}. Een geklokte D-latch zoals op \figref{clockedDLatch} voorziet naast de klokingang enkel een \termen{data-ingang $D$} die de $S$- en $R$-ingang van de inwendige geklokte SR-latch aanstuurt. D-latches zijn populair bij schakelingen waarbij bij iedere klokflank een nieuwe waarde wordt ingelezen. Soms wordt dan echter ook een SR-latch gebruikt omdat dit de logica rond deze geheugenmodules soms kan vereenvoudigen.
 
 \begin{figure}[hbt]
 \centering
@@ -94,6 +93,7 @@ Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het 
 \figlab{clockedDLatch}
 \end{figure}
 
+%REVIEW
 \paragraph{Set-up- en houdtijd}
 Aan de hand van de implementatie van de geklokte D-latch op figuur \ref{fig:clockedDLatch} zullen we de vertragingen van verschillende signalen berekenen:
 \begin{equation}
