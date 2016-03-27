@@ -93,9 +93,8 @@ Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het 
 \figlab{clockedDLatch}
 \end{figure}
 
-%REVIEW
 \paragraph{Set-up- en houdtijd}
-Aan de hand van de implementatie van de geklokte D-latch op figuur \ref{fig:clockedDLatch} zullen we de vertragingen van verschillende signalen berekenen:
+Aan de hand van de implementatie van de geklokte D-latch op \figref{clockedDLatch} kunnen we de vertragingen van verschillende signalen berekenen:
 \begin{equation}
 \begin{array}{ccl}
 D\rightarrow Q&:&\left\{\begin{array}{lll}
@@ -115,9 +114,9 @@ t_{HL}=1.4+1.4+1.4=4.2&\ifun&D=0\wedge\mbox{Clk}=1\\
 t_{LH}=1.4+1.4=2.8&\ifun&D=1\wedge\mbox{Clk}=1
 \end{array}\right.
 \end{array}
-\label{eqn:dLatchDelays}
+\eqnlab{dLatchDelays}%TODO: use acclguards
 \end{equation}
-We kunnen dergelijke vertragingen grafisch weergeven zoals op de tijdsgrafieken op figuur \ref{fig:timebehavDLatch}.
+We kunnen dergelijke vertragingen ook grafisch weergeven zoals op de tijdsgrafieken op figuur \figref{timebehavDLatch}.
 \begin{figure}[hbt]
 \centering
 \subfigure[Set-up-tijd??]{%TODO: ongeldige toestand op figuur zetten
@@ -134,20 +133,23 @@ We kunnen dergelijke vertragingen grafisch weergeven zoals op de tijdsgrafieken 
 \end{tikzpicture}
 \figlab{timebehavDLatchHold}
 }
-\caption{Tijdsgrafieken van een D-latch.}
+\caption{Tijdsgrafieken voor een D-latch.}
 \figlab{timebehavDLatch}
 \end{figure}
-Deze grafische voorstelling toont twee bekende problemen die veroorzaakt worden door het niet respecteren van twee parameters:
+Deze grafische voorstelling toont ook twee bekende problemen die veroorzaakt worden door het niet respecteren van twee belangrijke parameters:
 \begin{itemize}
- \item \termen{Set-up-tijd}: De tijd alvorens de het actieve kloksignaal wordt verlaten waarin de waarde op de data-ingang niet meer mag wijzigen. Bij een geklokte $D$-latch zoals op figuur \ref{fig:clockedDLatch} is dit:
+ \item \gtermen{Set-up-tijd}{De minimale toegelaten tijdsverschil bij een latch waarin men het gewenste signaal moet aanleggen op de ingang(en) en het moment waarop het kloksignaal van hoog naar laag gaat.}: het minimale toegelaten tijdsverschil tussen het aanleggen van de gewenste waarde aan de $D$-ingang, en het moment waarop het kloksignaal van hoog naar laag gaat. Het spreek voor zich dat het signaal tijdens deze twee momenten niet langer mag veranderen. Bij een geklokte $D$-latch zoals op \figref{clockedDLatch} is dit:
 \begin{equation}
 \begin{array}{cr}
 t_{\mbox{\tiny{set-up}}}=t_{pHL}\left(\mbox{inverter}\right)&\mbox{(vertraging van een hoog-naar-laag signaal door een inverter)}
 \end{array}
 \end{equation}
-\figref{timebehavDLatchSetup} toont twee senarios. Bij het eerste wordt de set-up tijd gerespecteerd, bij het tweede faalt de toekenning. Dit komt omdat bij dit scenario $S^*$ weer hoog wordt alvorens $R^*$ een hoog signaal aanlegt. Indien we de vertragingen van de poorten doorrekenen komen we uit dat de vertraging van aan de inverter een cruciale rol speelt. Dit is ook enigszins logisch: indien we een 0 aan de data-ingang $D$ aanleggen zal gedurende deze periode 1 op zowel de $S$ als $R$ van de geklokte SR-latch worden aangelegd, wat eigenlijk een ongeldige invoer is.
- \item \termen{Houdtijd}: We moeten niet alleen het signaal op tijd aanleggen voor de klok een laag signaal aanlegt. Meestal moeten we het signaal daarna nog een tijdje laten staan om te vermijden dat de latch alsnog een foute waarde aanneemt. \figref{timebehavDLatchHold} toont opnieuw twee scenarios.??%TODO: afwerken
+
+\figref{timebehavDLatchSetup} toont twee scenarios. Bij het eerste wordt de set-up tijd gerespecteerd, bij het tweede faalt de toekenning. Dit komt omdat bij dit scenario $S^*$ weer hoog wordt alvorens $R^*$ een hoog signaal aanlegt. Indien we de vertragingen van de poorten doorrekenen komen we uit dat de vertraging van aan de inverter een cruciale rol speelt. Dit is logisch: indien we een $0$ aan de data-ingang $D$ aanleggen zal gedurende de tijd dat de invertor nodig heeft om over te schakelen, $1$ op zowel de $S$ als $R$ van de geklokte SR-latch worden aangelegd, wat eigenlijk een ongeldige invoer is. In zo een geval is het niet bepaald welke waarde er uiteindelijk ingelezen zal worden.
+ \item \gtermen{Houdtijd}{De minimale tijdsduur bij een latch dat men het nieuwe signaal moet aanhouden om er zeker van te zijn dat deze waarde ook correct wordt opgeslagen in de latch.}: We moeten niet alleen het signaal op tijd aanleggen voor de klok een laag signaal aanlegt. Meestal moeten we het signaal daarna nog een tijdje laten staan om te vermijden dat de latch alsnog een foute waarde aanneemt. \figref{timebehavDLatchHold} toont opnieuw twee scenarios. Links respecteert men de houdtijd, de rechtse afbeelding toont een falend scenario.
 \end{itemize}
+
+%REVIEW
 \paragraph{Metastabiliteit}
 Een ander probleem dat komt kijken bij latches is de \termen{metastabiliteit}. Dit probleem treedt op bij de twee poorten\footnote{NAND- of NOR-implementatie maakt niet uit.} van de SR-latch en dus bijgevolg alle afgeleide latches. Als we bij de NOR-implementatie $\left(S,R\right)=\left(0,0\right)$ aanleggen, of bij een NAND-implementatie $\left(S^*,R^*\right)=\left(1,1\right)$, kunnen we deze poorten modelleren als NOT-poorten zoals op figuur \ref{fig:metastabilityNotGates}.
 \begin{figure}[hbt]
