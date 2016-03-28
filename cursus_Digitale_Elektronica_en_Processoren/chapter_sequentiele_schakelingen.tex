@@ -203,19 +203,25 @@ Een latch kan in een metastabiele toestand komen door een zogenaamde \gtermen{ma
 
 %REVIEW
 \subsubsection{De flipflop}
-Latches kunnen we gebruiken bij het opslaan van \'e\'en bit. Indien we een geklokte latch aan een kloksignaal hangen zijn er twee toestanden afhankelijk van het niveau van het kloksignaal:
+Latches kunnen we gebruiken bij het opslaan van \'e\'en bit. Indien we een geklokte latch met een klok verbinden, zijn er twee tmogelijke functionaliteiten. De gekozen functionaliteit hangt af van het kloksignaal:
+
 \begin{itemize}
- \item Indien het kloksignaal hoog is $\mbox{Clk}=1$ is de latch \termen{transparant}. De latch neemt de waarde over die aan de ingang staat.
- \item Indien het kloksignaal laag is $\mbox{Clk}=0$ onthoudt de latch de laatste waarde die aan de ingang stond toen de latch transparant was.
+ \item indien het kloksignaal hoog is, $\mbox{Clk}=1$, is de latch \gtermen{transparant}{Een functionaliteit van een geklokte latch. Wanneer een latch transparant is, neemt de latch de waarde over die aan de ingang(en) staan.}. De latch neemt de waarde over die aan de ingang(en) staan, rekening houdend met de set-up- en houdtijd; en
+ \item indien het kloksignaal laag is, $\mbox{Clk}=0$, onthoudt de latch de laatste waarde die aan de ingang stond toen de latch transparant was.
 \end{itemize}
-Latches geven echter problemen op het moment we verschillende latches na elkaar willen hangen. In dat geval zullen immers alle latches transparant zijn op hetzelfde moment. Hierdoor zal de laatste latch de waarde aannemen die op de eerste latch wordt aangelegd\footnote{Bij een groot aantal latches zal het signaal door vertragingen en set-up- en houdtijd uiteraard maar door een beperkt aantal latches in \'e\'en klokflank propageren.}. Dit probleem wordt ook wel het \termen{transparantie-probleem} genoemd. Meestal willen we echter bij een sequentie van een aantal geheugencomponenten afdwingen dat de informatie door \'e\'en geheugencomponent per klokflank propageert. De flipflop is een geheugencomponent die in tegenstelling tot de latch \termen{flankgevoelig} is. Dit betekent dat de flipflop enkel transparant is op het moment dat de klok van 0 naar 1 gaat, in tegenstelling tot een latch die transparant is gedurdende de volledige periode dat de klok hoog is. Om dit te realiseren zijn er doorgaans twee methodes:
+
+Latches geven echter problemen op het moment we verschillende latches naast elkaar plaatsen zodat de uitgang van de ene latch de ingang van de volgende latch aanstuurt. In dat geval zullen immers alle latches transparant zijn op hetzelfde moment. Hierdoor zal de laatste latch in de keten de waarde aannemen die op de eerste latch wordt aangelegd\footnote{Bij een groot aantal latches zal het signaal door vertragingen en set-up- en houdtijd uiteraard maar door een beperkt aantal latches in \'e\'en klokperiode propageren.}. Dit probleem wordt ook wel het \termen{transparantie-probleem} genoemd. Meestal willen we met een serie van een aantal geheugencomponenten afdwingen dat de informatie door \'e\'en geheugencomponent per klokflank propageert. De flipflop is een geheugencomponent die in tegenstelling tot de latch \gtermen{flankgevoelig}{Een component is flankgevoelig wanneer het een bepaalde functionaliteit uitvoert, enkel op het moment dat het kloksignaal van $0$ naar $1$, of van $1$ naar $0$ springt. Dit in tegenstelling tot bijvoorbeeld een geklokte latch waarbij de functionaliteit afhankelijk is van de waarde van het kloksignaal. Een schoolvoorbeeld  van een flankgevoelig component is de flipflop.} is. Dit betekent dat de flipflop enkel transparant is op het moment dat de klok van $0$ naar $1$ gaat. Dit in tegenstelling tot een latch die transparant is gedurdende de volledige periode dat het kloksignaal hoog is. Om dit te realiseren zijn er doorgaans twee methodes:
+
 \begin{itemize}
- \item De \termen{master-slave flipflop}.
- \item De \termen{edge-triggered flipflop}.
+ \item De \gtermen{master-slave flipflop}{Een mogelijke realisatie van een flipflop aan de hand van twee in serie geplaatste latches: een master en een slave. De master is transparant op het moment dat het kloksignaal laag is, de slave op het moment dat het hoog is. Een variant van de master-slave flipflop is de edge-triggered flipflop.}: men realiseert de flipflip aan de hand van twee latches, een master en een slave; en
+ \item de \termen{edge-triggered flipflop}: men bouwt extra logica rond de basis-latch om het component flankgevoelig te maken.
 \end{itemize}
+
 We zullen deze twee verschillende technieken in de volgende paragrafen toelichten.
+
 \paragraph{Master-slave flipflop}
 Een master-slave flipflop maakt gebruik van twee latches die beurtelings transparant zijn. De master (eerste latch) is transparant wanneer het kloksignaal laag is, de tweede latch is transparant bij een hoog kloksignaal. Gegroepeerd vormen we dus een geheugen die de laatste waarde opslaat die aan de ingang stond op het moment dat het kloksignaal laag was, en deze verder propageert op het moment dat het kloksignaal hoog is. \figref{masterSlaveFlipflop} toont dit concept samen met een tijdsgrafiek.??
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Implementatie.]{
@@ -250,6 +256,7 @@ Een master-slave flipflop maakt gebruik van twee latches die beurtelings transpa
 \caption{Master-slave flipflop.}
 \figlab{masterSlaveFlipflop}
 \end{figure}
+
 \paragraph{Edge-triggered flipflop}
 Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om het signaal op te slaan die aan de ingang staat op het moment dat de klok van 0 naar 1 gaat. \figref{edgeTriggeredFlipflop} toont een basis en meer uitgebreide implementatie samen met een tijdsgrafiek.
 \begin{figure}[hbt]
