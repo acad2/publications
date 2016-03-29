@@ -411,9 +411,9 @@ Q&Q_{\mbox{\tiny{next}}}&S&R\\\hline
 \figlab{setResetFlipflop}
 \end{figure}
 
-%REVIEW
 \paragraph{D-flipflop}
-Ook de \termen{data-flipflop} of \termen{D-flipflop} is conceptueel equivalent aan zijn latch tegenhanger. Op het moment dat de klok van laag naar hoog gaat, zal het signaal dat aan de data-ingang $D$ staat in het geheugen worden geladen. Hierdoor is het bouwen van schakelingen met D-flipflops meestal zeer eenvoudig. Merk dus op dat elk signaal slechts \'e\'en klokperiode bewaard wordt. \figref{dataFlipflop} toont het symbool samen met de karakteristieke- en excitatietabel.
+Ook de \gtermen{data-flipflop}{Een flipflop met naast een klokingang enkel een data-ingang. Elke stijgende klokflank wordt de waarde die aan de data-ingang staat ``ingeklokt''. Men kan dus niet zomaar beslissen de originele opgeslagen waarde te laten staan.} of \stermen{D-flipflop}{data-flipflop} is conceptueel equivalent aan zijn latch tegenhanger. Op het moment dat de klok van laag naar hoog gaat, zal het signaal dat aan de data-ingang $D$ staat in het geheugen worden geladen. Hierdoor is het bouwen van schakelingen met D-flipflops meestal eenvoudig: elke klokflank wordt de oude waarde vergeten. Merk dus op dat elk signaal slechts \'e\'en klokperiode bewaard wordt. \figref{dataFlipflop} toont het symbool samen met de karakteristieke- en excitatietabel.
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -437,7 +437,10 @@ Q&Q_{\mbox{\tiny{next}}}&D\\\hline
 \caption{Data-flipflop.}
 \figlab{dataFlipflop}
 \end{figure}
-\paragraph{T-flipflop} Een nieuwe variant is de zogenaamde \termen{toggle-flipflop} ofwel \termen{T-flipflop}. De toggle-flipflop heeft een `toggle'-ingang $T$. Indien deze ingang bij een stijgende klokflank hoog is, zal de flipflop het omgekeerde van zijn huidige waarde opslaan, de zogenaamde `\termen{toggle}'-operatie. Indien $T=0$, blijft de opgeslagen toestand dezelfde. We kunnen een toggle-flipflop bouwen met behulp van een data-flipflop en een XOR-poort. \figref{toggleFlipflop} toont het symbool, een mogelijke implementatie en de karakteristieke- en excitatietabel van de T-flipflop.
+
+%REVIEW
+\paragraph{T-flipflop}
+Een nieuwe variant is de zogenaamde \gtermen{toggle-flipflop}{.} ofwel \stermen{T-flipflop}{toggle-flipflop}. De toggle-flipflop heeft een \gtermen[toggle-ingang]{`toggle'-ingang $T$}{.}. Indien deze ingang bij een stijgende klokflank hoog is, zal de flipflop het omgekeerde van zijn huidige waarde opslaan, de zogenaamde `\termen{toggle}'-operatie. Indien $T=0$, blijft de opgeslagen toestand dezelfde. We kunnen een toggle-flipflop bouwen met behulp van een data-flipflop en een XOR-poort. \figref{toggleFlipflop} toont het symbool, een mogelijke implementatie en de karakteristieke- en excitatietabel van de T-flipflop.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US]
