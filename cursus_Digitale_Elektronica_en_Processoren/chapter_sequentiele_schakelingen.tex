@@ -260,7 +260,13 @@ Een nadeel aan deze manier van werken is dat het signaal pas doorpropageert na e
 
 %REVIEW
 \paragraph{Edge-triggered flipflop}
-Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om het signaal op te slaan die aan de ingang staat op het moment dat de klok van $0$ naar $1$ gaat. \figref{edgeTriggeredFlipflop} toont een basis en meer uitgebreide implementatie samen met een tijdsgrafiek.
+Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om het signaal op te slaan die aan de ingang staat op het moment dat de klok van $0$ naar $1$ gaat.
+
+\paragraph{}
+De latch werkt als volgt: zolang het kloksignaal op $0$ staat, staan de twee gelinkte NAND-poorten op $1$, bijgevolg geldt dat zolang het kloksignaal laag is, $\tupl{S^*,R^*}=\tupl{1,1}$ wat de stabiele toestand is. We kunnen dus het geheugen niet manipuleren. Wanneer $D$ op $0$ komt te staan, zal $B$ ook op $1$ komen te staan. Een bijkomend effect is dat de bovenste NAND poort ($A$) ook op $0$ staat. Wanneer de klok vervolgens opkomt verandert er \'e\'en poort: $S^*$. Bijgevolg bekomen we $\tupl{S^*,R^*}=\tupl{1,0}$ we doen dus een reset op de meest rechtse latch. De klok voorkomt vervolgens dat de poorten links verder schakelen. Een analoog effect treedt op wanneer $D=1$. In dat geval is $B=1$, en bijgevolg wordt $A=0$. Hierdoor voeden we $\tupl{S^*,R^*}=\tupl{0,1}$ wanneer de klok op $1$ komt te staan. De klok neemt opnieuw het geheugen-effect over waardoor een wijziging aan de data-ingang $D$ geen verder effect heeft zolang het kloksignaal hoog is. De edge-triggered flipflop slaat dus enkel de waarde op die op het moment aan de data-ingang stond, wanneer de klok het geheugen-effect overneemt.
+
+\paragraph{}
+\figref{edgeTriggeredFlipflop} toont een basisimplementatie waarbij we de drie latches met grijze rechthoeken groeperen, en een meer uitgebreide implementatie samen met een tijdsgrafiek.
 
 \begin{figure}[hbt]
 \centering
