@@ -299,6 +299,11 @@ Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groepe
 \draw (\dx-1,0) -- ++(-0.5,0) node[anchor=east,scale=0.75]{Klok Clk};
 \pdot{\dx-1,0};
 \draw (NA03.input 2) -- (NA03.input 2 -| \dx-1.5,0) node[anchor=east,scale=0.75]{$D$};
+\begin{pgfonlayer}{background}
+\node[inner sep=5pt,fill=black!20,fit=(NA10) (NA11)] {};
+\node[inner sep=5pt,fill=black!20,fit=(NA00) (NA01)] {};
+\node[inner sep=5pt,fill=black!20,fit=(NA02) (NA03)] {};
+\end{pgfonlayer}
 \end{tikzpicture}
 \figlab{edgeTriggeredFlipflopBasic}}
 \subfigure[Uitgebreide implementatie.]{
