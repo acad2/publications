@@ -382,9 +382,9 @@ Er bestaan analoog aan de latches ook verschillende types flipflops. Hierbij is 
 
 Deze twee tabellen zijn niet strikt het omgekeerde omdat de excitatietabel een kolom voorziet voor zowel $Q$ en $\qnext{}$, terwijl de karakteristieke tabel uitsluitend \'e\'en kolom aan de rechterkant voorziet. In de volgende paragrafen zullen we de verschillende types flipflops bespreken met hun karakteristieke- en excitatietabel.
 
-%REVIEW
 \paragraph{SR-flipflop}
-De \gtermen{SR-flipflop}{.} ofwel \stermen{set-reset flipflop}{SR-flipflop} werkt volledig analoog aan een SR-latch, alleen verandert de waarde uitsluitend op het moment dat de klok van een laag signaal naar een hoog signaal gaat. De karakteristieke tabel is dan ook volledig equivalent met deze van de SR-latch op figuur \ref{fig:setResetLatch}. \figref{setResetFlipflop} toont de interface en de karakteristieke- en excitatietabel van de SR-flipflop.
+De \gtermen{SR-flipflop}{Een flipflop met naast de klokingang een $S$ en $R$ ingang. Indien $S$ hoog is, en $R$ laag wordt bij de volgende klokflank een $1$ in de flipflop ingeladen. Indien $R$ hoog is en $S$ laag, wordt de volgende klokflank een $0$ ingeladen. Indien beide ingangen op $0$ staan blijft het geheugen onveranderd. Indien zowel $S$ als $R$ een $1$ aanleggen tenslotte, is het gedrag onbepaald (het is niet de bedoeling dat dit ooit gebeurd).} ofwel \stermen{set-reset flipflop}{SR-flipflop} werkt volledig analoog aan een SR-latch, alleen verandert de waarde uitsluitend op het moment dat de klok van een laag signaal naar een hoog signaal gaat (de stijgende klokflank). De karakteristieke tabel is dan ook volledig equivalent met deze van de SR-latch op \figref{setResetLatch}. \figref{setResetFlipflop} toont de interface en de karakteristieke- en excitatietabel van de SR-flipflop. Wat opvalt is de driehoekige inkeping die stelt dat het geheugencomponent door een klokflank wordt getriggered.
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
@@ -410,7 +410,10 @@ Q&Q_{\mbox{\tiny{next}}}&S&R\\\hline
 \caption{Set-reset flipflop.}
 \figlab{setResetFlipflop}
 \end{figure}
-\paragraph{D-flipflop} Ook de \termen{data-flipflop} of \termen{D-flipflop} is conceptueel equivalent aan zijn latch tegenhanger. Op het moment dat de klok van laag naar hoog gaat, zal het signaal dat aan de data-ingang $D$ staat in het geheugen worden geladen. Hierdoor is het bouwen van schakelingen met D-flipflops meestal zeer eenvoudig. Merk dus op dat elk signaal slechts \'e\'en klokperiode bewaard wordt. \figref{dataFlipflop} toont het symbool samen met de karakteristieke- en excitatietabel.
+
+%REVIEW
+\paragraph{D-flipflop}
+Ook de \termen{data-flipflop} of \termen{D-flipflop} is conceptueel equivalent aan zijn latch tegenhanger. Op het moment dat de klok van laag naar hoog gaat, zal het signaal dat aan de data-ingang $D$ staat in het geheugen worden geladen. Hierdoor is het bouwen van schakelingen met D-flipflops meestal zeer eenvoudig. Merk dus op dat elk signaal slechts \'e\'en klokperiode bewaard wordt. \figref{dataFlipflop} toont het symbool samen met de karakteristieke- en excitatietabel.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
