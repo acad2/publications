@@ -390,14 +390,14 @@ De \gtermen{SR-flipflop}{Een flipflop met naast de klokingang een $S$ en $R$ ing
 \begin{tikzpicture}
 \node[srff,anchor=west] (I) at (0,0) {};
 \node (KT) at (8.5,0) {$\begin{array}{cc|c}
-S&R&Q_{\mbox{\tiny{next}}}\\\hline
+S&R&\qnext{}\\\hline
 0&0&Q\\
 0&1&0\\
 1&0&1\\
 1&1&\mbox{N/A}
 \end{array}$};
 \node[anchor=east] (ET) at (14,0) {$\begin{array}{cc|cc}
-Q&Q_{\mbox{\tiny{next}}}&S&R\\\hline
+Q&\qnext{}&S&R\\\hline
 0&0&0&-\\
 0&1&1&0\\
 1&0&0&1\\
@@ -419,12 +419,12 @@ Ook de \gtermen{data-flipflop}{Een flipflop met naast een klokingang enkel een d
 \begin{tikzpicture}
 \node[dff,anchor=west] (I) at (0,0) {};
 \node (KT) at (8.5,0) {$\begin{array}{c|c}
-D&Q_{\mbox{\tiny{next}}}\\\hline
+D&\qnext{}\\\hline
 0&0\\
 1&1
 \end{array}$};
 \node[anchor=east] (ET) at (14,0) {$\begin{array}{cc|c}
-Q&Q_{\mbox{\tiny{next}}}&D\\\hline
+Q&\qnext{}&D\\\hline
 0&0&0\\
 0&1&1\\
 1&0&0\\
@@ -438,9 +438,9 @@ Q&Q_{\mbox{\tiny{next}}}&D\\\hline
 \figlab{dataFlipflop}
 \end{figure}
 
-%REVIEW
 \paragraph{T-flipflop}
-Een nieuwe variant is de zogenaamde \gtermen{toggle-flipflop}{.} ofwel \stermen{T-flipflop}{toggle-flipflop}. De toggle-flipflop heeft een \gtermen[toggle-ingang]{`toggle'-ingang $T$}{.}. Indien deze ingang bij een stijgende klokflank hoog is, zal de flipflop het omgekeerde van zijn huidige waarde opslaan, de zogenaamde `\termen{toggle}'-operatie. Indien $T=0$, blijft de opgeslagen toestand dezelfde. We kunnen een toggle-flipflop bouwen met behulp van een data-flipflop en een XOR-poort. \figref{toggleFlipflop} toont het symbool, een mogelijke implementatie en de karakteristieke- en excitatietabel van de T-flipflop.
+Een nieuwe variant is de zogenaamde \gtermen{toggle-flipflop}{Een type flipflop met een toggle-ingang $T$. Indien $T=1$ bij een stijgende klokflank wordt de opgeslagen waarde omgedraaid: $0$ wordt $1$ en vice versa. Indien $T=0$ blijft de originele waarde behouden.} ofwel \stermen{T-flipflop}{toggle-flipflop}. De toggle-flipflop heeft een ``\gtermen[toggle-ingang T]{toggle-ingang $T$}{Een ingang bij een flipflop. Indien de ingang actief is, wordt de volgende stijgende klokflank de opgeslagen waarde omgedraaid: $0$ wordt $1$ en vice versa. Indien de ingang passief is, blijft de originele waarde in de flipflop behouden.}''. Indien deze ingang bij een stijgende klokflank hoog is, zal de flipflop het omgekeerde van zijn huidige waarde opslaan, de zogenaamde `\gtermen{toggle}{Een operatie equivalent met inverteren: $0$ wordt $1$ en vice versa. Wordt soms ook bitgewijs uitgevoerd.}'-operatie. Indien $T=0$, blijft de opgeslagen toestand dezelfde. We kunnen een toggle-flipflop bouwen met behulp van een data-flipflop en een XOR-poort. \figref{toggleFlipflop} toont het symbool, een mogelijke implementatie en de karakteristieke- en excitatietabel van de T-flipflop.
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US]
@@ -458,12 +458,12 @@ Een nieuwe variant is de zogenaamde \gtermen{toggle-flipflop}{.} ofwel \stermen{
 \draw (X.input 2) -- (X.input 2 -| -1.75,0) node[scale=0.75,anchor=east]{$T$};
 \end{scope}
 \node (KT) at (8.5,0) {$\begin{array}{c|c}
-T&Q_{\mbox{\tiny{next}}}\\\hline
+T&\qnext{}\\\hline
 0&Q\\
 1&Q'\\
 \end{array}$};
 \node[anchor=east] (ET) at (14,0) {$\begin{array}{cc|c}
-Q&Q_{\mbox{\tiny{next}}}&T\\\hline
+Q&\qnext{}&T\\\hline
 0&0&0\\
 0&1&1\\
 1&0&1\\
@@ -477,14 +477,19 @@ Q&Q_{\mbox{\tiny{next}}}&T\\\hline
 \caption{Toggle-flipflop.}
 \figlab{toggleFlipflop}
 \end{figure}
-\paragraph{JK-flipflop} De \termen{JK-flipflop} of voluit \termen{Jack Kilby-flipflop}\footnote{Genoemd naar Jack Kilby (1923-2005), Amerikaans natuurkundige en nobelprijswinnaar.} is een combinatie van de set-reset flipflop en de toggle-flipflop. Bij een SR-flipflop komen we immers in een ongeldige toestand indien we aan de ingangen $\left(S,R\right)=\left(1,1\right)$. De JK-flipflop lost dit probleem op door in dat geval een toggle-operatie uit te voeren op het geheugenelement, zoals te zien op de karakteristieke tabel op figuur \ref{fig:jackKilbyFlipflop}. We kunnen een JK-flipflop realiseren met behulp van een SR-flipflop waarbij:
+
+\paragraph{JK-flipflop}
+De \gtermen{JK-flipflop}{Een flipflop met naast de klokingang twee andere ingangen: $J$ en $K$. De $J$ en $K$ gedragen zich respectievelijk als de $S$ en de $R$ ingangen bij een SR-flipflop. Het verschil met de SR-flipflop is echter dat bij invoer $\tupl{J,K}=\tupl{1,1}$, de toggle-operatie wordt uitgevoerd. In dat opzicht is de JK-flipflop een kruising tussen de SR-flipflop en de T-flipflop.} of voluit \stermen{Jack Kilby-flipflop}{JK-flipflop}\footnote{Genoemd naar Jack Kilby (1923-2005), Amerikaans natuurkundige en nobelprijswinnaar.} is een combinatie van de set-reset flipflop en de toggle-flipflop. Bij een SR-flipflop komen we immers in een ongeldige toestand indien we aan de ingangen $\tupl{S,R}=\tupl{1,1}$. De JK-flipflop lost dit probleem op door in dat geval een toggle-operatie uit te voeren op het geheugenelement, zoals te zien op de karakteristieke tabel op \figref{jackKilbyFlipflop}. We kunnen een JK-flipflop realiseren met behulp van een SR-flipflop waarbij:
+
 \begin{equation}
 \left\{\begin{array}{l}
 S=J\cdot Q'\\
 R=K\cdot Q
 \end{array}\right.
 \end{equation}
-JK-flipflops worden vooral gebruikt om goedkopere schakelingen te synthetiseren. Deze eigenschap kunnen we afleiden uit de vele don't cares in de excitatietabel.
+
+JK-flipflops worden vooral gebruikt om goedkopere logica rond de geheugens te synthetiseren. Deze eigenschap kunnen we afleiden uit de vele don't cares in de excitatietabel die terug te vinden zijn op \figref{jackKilbyFlipflop}.
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US]
@@ -507,14 +512,14 @@ JK-flipflops worden vooral gebruikt om goedkopere schakelingen te synthetiseren.
 \draw (A1.input 2) -- (A1.input 2 -| -1.75,0) node[scale=0.75,anchor=east]{$K$};
 \end{scope}
 \node (KT) at (8.5,0) {$\begin{array}{cc|c}
-J&K&Q_{\mbox{\tiny{next}}}\\\hline
+J&K&\qnext{}\\\hline
 0&0&Q\\
 0&1&0\\
 1&0&1\\
 1&1&Q'
 \end{array}$};
 \node[anchor=east] (ET) at (14,0) {$\begin{array}{cc|cc}
-Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
+Q&\qnext{}&J&K\\\hline
 0&0&0&-\\
 0&1&1&-\\
 1&0&-&1\\
@@ -528,7 +533,10 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 \caption{Jack-Kilby flipflop.}
 \figlab{jackKilbyFlipflop}
 \end{figure}
-\paragraph{Overzicht} We bundelen vervolgens al de latches en flipflops in figuur \ref{fig:latchFlipflopOverview}. Indien een cel leeg is bij dit overzicht is er geen realisatie mogelijk. Zo kunnen we onmogelijk een toggle-latch bouwen: deze zou immers bij een actief kloksignaal continue inverteren, waardoor het uiteindelijke resultaat onvoorspelbaar is. We kunnen elke flipflop verrijken met de asynchrone preset en clear ingangen. Verder bestaan er ook nog varianten van deze componenten waarbij we eerst een negatie toepassen op de ingang. In dat geval plaatsen we een cirkel bij deze ingang. Indien we een negatie toepassen op de klokingang bij een flipflop zal de flipflop dus de waarde memoriseren bij een falling edge, in plaats van een rising edge.
+
+\paragraph{Overzicht}
+We bundelen in dit overzicht alle besproken latches en flipflops in \figref{latchFlipflopOverview}. Indien een cel leeg is bij dit overzicht is er geen realisatie mogelijk. Zo kunnen we onmogelijk een toggle-latch bouwen: deze zou immers bij een actief kloksignaal continue inverteren, waardoor het uiteindelijke resultaat onvoorspelbaar is. We kunnen elke flipflop verrijken met de asynchrone preset en clear ingangen. Verder bestaan er ook nog varianten van deze componenten waarbij we eerst een negatie toepassen op de ingang. In dat geval plaatsen we een cirkel bij deze ingang. Indien we een negatie toepassen op de klokingang bij een flipflop zal de flipflop dus de waarde memoriseren bij een falling edge, in plaats van een rising edge. Dit overzicht is dus niet exhaustief, maar het biedt voldoende bouwstenen voor de volgende secties.
+
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[decoration={brace}]
@@ -563,8 +571,10 @@ Q&Q_{\mbox{\tiny{next}}}&J&K\\\hline
 \caption{Overzicht van de interfaces van geheugencomponenten.}
 \figlab{latchFlipflopOverview}
 \end{figure}
+
+%REVIEW
 \subsection{Registers}
-\label{ss:registers}
+\ssclab{registers}
 \paragraph{Register}Een flipflop kan \'e\'en bit opslaan voor \'e\'en of meerdere klokflanken. Meestal willen we echter meerdere bits opslaan om bijvoorbeeld een getal voor te stellen. Dit kunnen we doen door middel van verschillende flipflops die elk een individuele bit opslaan. Een \termen{register} is in dat opzicht eigenlijk ook een $n$-flipflop. Omdat we vaak meerdere bits opslaan defini\"eren we dus het registercomponent. Een register neemt enige functionaliteit weg van de flipflops: zo kunnen we niet beslissen dat een individuele flipflop een bit aan de ingang opslaat, en de andere flipflops niet. Desalniettemin maken ze schema's eenvoudiger en worden registers op chipniveau verkocht. Verder biedt een dergelijk chip naast geheugenopslag ook extra functies aan: bijvoorbeeld schuifregisters en tellers. Een register heeft tradioneel ingangen voor de klok $\mbox{Clk}$, data $D_1, D_2,\ldots, D_n$, load $\mbox{LD}$ en asynchrone preset $\mbox{Pr}^*$ en clear $\mbox{Clr}^*$. Als uitgangen heeft het minstens de data-uitgangen $Q_1, Q_2, \ldots, Q_n$. Enkel indien de load hoog is bij een rising edge zal de waarde die aan de data-ingangen staat opgeslagen worden. Indien dit niet zo is, wordt de vorige waarde behouden. \figref{register} toont de interface van een register, samen met een mogelijke implementatie. We werken hier met D-flipflops en multiplexers om te kiezen tussen het laden van een nieuwe waarde en een vorige waarde. Meestal wordt de clear en preset in negatieve logica ge\"implementeerd\footnote{Vandaar de asterisk (*) bij $\mbox{Clr}^*$ en $\mbox{Pr}^*$.}.
 \begin{figure}[hbt]
 \centering
