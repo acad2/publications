@@ -201,7 +201,6 @@ De \gtermen{tijdsconstante $\tau$}{Een tijdsconstante die gebruikt wordt bij een
 \paragraph{}
 Een latch kan in een metastabiele toestand komen door een zogenaamde \gtermen{marginale triggering}{Het feit dat men op onvoldoende wijze aan een latch duidelijk maakt welke waarde deze precies moet aannemen. Bijvoorbeeld door de set-up- of houdtijd of de pulsbreedte niet te respecteren. Marginale triggering kan ertoe leiden dat de latch in een metastabiele toestand terecht komt.}: een schending van de set-up- of houdtijd of van de minimale pulsbreedte\footnote{De tijd dat een signaal wordt aangelegd.}. In deze gevallen kan een overgang tussen twee stabiele toestanden worden onderbroken. Indien dit gebeurt op het moment dat de latch net voorbij de metastabiele toestand passeert -- om een andere waarde aan te nemen -- treedt dit probleem op. Een latch komt dan ook bij elke overgang kortstondig in een metastabiele toestand. Een tijdje in een metastabiele toestand blijven is geen probleem. Zolang we de correcte waarden op de $S^*$ en $R^*$ ingangen blijven aanleggen\footnote{Zodat het systeem wel degelijk in de correcte toestand terecht komt, en dus niet per ongeluk in $0$ waar het $1$ had moeten zijn.} en deze toestand niet meer actief is wanneer we het signaal gaan gebruiken zullen er geen problemen optreden. Een populaire voorstelling van metastabiliteit is de zogenaamde \gtermen{bal-en-heuvel-analogie}{Een analogie voor de metastabiele toestand van een latch. Hierbij beschouwen we een heuvel waarbij de heuveltop de metastabiele toestand voorstelt. De twee dallen die ontstaan door de heuvel zijn de stabiele toestanden. Een kleine hoeveelheid ruis (wind) kan de bal in \'e\'en van de twee stabiele toestanden blazen. We dienen de bal ook telkens over de heuvel te rollen om in de andere toestand terecht te komen.}. In deze analogie beschrijven we een heuvel zoals op \figref{metastabilityAnalogy}. Een bal kan op deze heuvel in drie toestanden een evenwicht bereiken: twee toestanden in een dal (passief evenwicht) en een metastabiele toestand op de heuvel (actief evenwicht). Bij asynchrone circuits is metastabiliteit een veel voorkomend fenomeen. Zeker wanneer de klokfrequentie geen veelvoud is van de frequentie waarmee de ingang omwisselt. In dat geval bestaat de oplossing van het probleem eerder uit ``hoe ga ik om met metastabiliteit?'', in plaats van ``hoe los ik de metastabiliteit op?''.
 
-%REVIEW
 \subsubsection{De flipflop}
 Latches kunnen we gebruiken bij het opslaan van \'e\'en bit. Indien we een geklokte latch met een klok verbinden, zijn er twee tmogelijke functionaliteiten. De gekozen functionaliteit hangt af van het kloksignaal:
 
@@ -220,7 +219,7 @@ Latches geven echter problemen op het moment we verschillende latches naast elka
 We zullen deze twee verschillende technieken in de volgende paragrafen toelichten.
 
 \paragraph{Master-slave flipflop}
-Een master-slave flipflop maakt gebruik van twee latches die beurtelings transparant zijn. De master (eerste latch) is transparant wanneer het kloksignaal laag is, de tweede latch is transparant bij een hoog kloksignaal. Gegroepeerd vormen we dus een geheugen die de laatste waarde opslaat die aan de ingang stond op het moment dat het kloksignaal laag was, en deze verder propageert op het moment dat het kloksignaal hoog is. \figref{masterSlaveFlipflop} toont dit concept samen met een tijdsgrafiek.??
+Een master-slave flipflop maakt gebruik van twee latches: de \gtermen{master-latch}{Een van de twee latches bij een master-slave flipflop. De master-latch is de eerste en is transparant bij een laag kloksignaal.} en de \gtermen{slave-latch}{Een van de twee latches bij een master-slave flipflop. De slave-latch komt na de master-latch en is transparant bij een hoog kloksignaal.}. Deze latches zijn beurtelings transparant. De master (eerste latch) is transparant wanneer het kloksignaal laag is, de slave-latch is transparant bij een hoog kloksignaal. Gegroepeerd vormen we dus een geheugen die de laatste waarde opslaat die aan de ingang stond op het moment dat het kloksignaal laag was, en deze verder propageert op het moment dat het kloksignaal hoog is. \figref{masterSlaveFlipflop} toont dit concept samen met een tijdsgrafiek.??
 
 \begin{figure}[hbt]
 \centering
@@ -257,8 +256,12 @@ Een master-slave flipflop maakt gebruik van twee latches die beurtelings transpa
 \figlab{masterSlaveFlipflop}
 \end{figure}
 
+Een nadeel aan deze manier van werken is dat het signaal pas doorpropageert na een halve klokperiode. Er gaat dus kostbare tijd verloren om bijvoorbeeld intussen al rekenkundige bewerkingen uit te voeren met het resultaat die in de latch is opgeslagen.
+
+%REVIEW
 \paragraph{Edge-triggered flipflop}
-Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om het signaal op te slaan die aan de ingang staat op het moment dat de klok van 0 naar 1 gaat. \figref{edgeTriggeredFlipflop} toont een basis en meer uitgebreide implementatie samen met een tijdsgrafiek.
+Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om het signaal op te slaan die aan de ingang staat op het moment dat de klok van $0$ naar $1$ gaat. \figref{edgeTriggeredFlipflop} toont een basis en meer uitgebreide implementatie samen met een tijdsgrafiek.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Basisimplementatie.]{
@@ -348,6 +351,7 @@ Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groepe
 \caption{Edge-triggered flipflop.}
 \figlab{edgeTriggeredFlipflop}
 \end{figure}
+
 In de meer uitgebreide versie zijn er naast de data- en klokingang ook nog twee andere ingangen beschreven:
 \begin{itemize}
  \item \termen{Preset $\mbox{PR}^*$}: Indien dit signaal laag wordt, slaan we asynchroon een 1 op in de flipflop.
