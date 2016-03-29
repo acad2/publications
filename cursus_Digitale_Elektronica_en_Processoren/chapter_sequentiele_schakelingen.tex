@@ -258,7 +258,6 @@ Een master-slave flipflop maakt gebruik van twee latches: de \gtermen{master-lat
 
 Een nadeel aan deze manier van werken is dat het signaal pas doorpropageert na een halve klokperiode. Er gaat dus kostbare tijd verloren om bijvoorbeeld intussen al rekenkundige bewerkingen uit te voeren met het resultaat die in de latch is opgeslagen.
 
-%REVIEW
 \paragraph{Edge-triggered flipflop}
 Een edge-triggered flipflop maakt gebruik van een structuur die we kunnen groeperen als drie latches. Deze schakeling stelt ons in staat om het signaal op te slaan die aan de ingang staat op het moment dat de klok van $0$ naar $1$ gaat.
 
@@ -363,21 +362,29 @@ De latch werkt als volgt: zolang het kloksignaal op $0$ staat, staan de twee gel
 \figlab{edgeTriggeredFlipflop}
 \end{figure}
 
-In de meer uitgebreide versie zijn er naast de data- en klokingang ook nog twee andere ingangen beschreven:
+In de meer uitgebreide versie zien we dat er naast de data- en klokingang ook nog twee andere ingangen worden beschreven:
+
 \begin{itemize}
- \item \termen{Preset $\mbox{PR}^*$}: Indien dit signaal laag wordt, slaan we asynchroon een 1 op in de flipflop.
- \item \termen{Clear $\mbox{CLR}^*$}: Indien dit signaal laag wordt, slaan we asynchroon een 0 op in de flipflop. 
+ \item \gtermen[preset PR]{Preset $\mbox{PR}^*$}{Een ingang van een uitgebreide flipflop. Indien het signaal laag wordt, wordt een asynchrone set uitgevoerd op de flipflop: ongeacht de toestand van het kloksignaal, wordt $1$ in de flipflop ingelezen. Men vindt de preset ook terug op andere geheugencomponenten zoals registers.}: Indien dit signaal laag wordt, slaan we \emph{asynchroon} een $1$ op in de flipflop.
+ \item \gtermen[clear CLR]{Clear $\mbox{CLR}^*$}{Een ingang van een uitgebreide flipflop. Indien het signaal laag wordt, wordt een asynchrone reset uitgevoerd op de flipflop: ongeacht de toestand van het kloksignaal wordt $0$ in de flipflop ingelezen. Men vindt een clear ook terug op andere geheugencomponenten zoals registers.}: Indien dit signaal laag wordt, slaan we \emph{asynchroon} een $0$ op in de flipflop. 
 \end{itemize}
-Deze twee signalen worden ook wel de \termen{asynchrone set en reset} genoemd. Ze zijn asynchroon omdat ze onafhankelijk van de toestand van de klok een waarde in het geheugen kunnen inbrengen, deze eigenschap wordt bijvoorbeeld gebruikt om bij het opkomen van de stroom in de elektronica de flipflop in een gekende toestand te brengen\footnote{Bij het opkomen van de stroom zal de flipflop of latch immers een waarde aannemen afhankelijk van de ruis en minimale verschillen in poortvertragingen.}.
+
+Deze twee signalen worden ook wel de \gtermen{asynchrone set en reset}{Twee ingangen bij een uitgebreide flipflop die respectievelijk het geheugen asynchroon op $1$ of $0$ zetten. Met asynchroon bedoelen we dat dit ongeacht de toestand van het kloksignaal op dat moment gebeurd.} genoemd. Ze zijn asynchroon omdat ze onafhankelijk van de toestand van het kloksignaal een waarde in het geheugen kunnen inbrengen, deze eigenschap wordt bijvoorbeeld gebruikt om bij het opkomen van de stroom in de elektronica de flipflop in een gekende toestand te brengen\footnote{Bij het opkomen van de stroom zal de flipflop of latch immers een waarde aannemen afhankelijk van de ruis en minimale verschillen in poortvertragingen.}.
+
 \subsubsection{Types flipflops}
-\label{sss:typesFlipflops}
-Er bestaan analoog aan de latches ook verschillende types flipflops. Hierbij is niet de klokaansturing variabel, maar de manier hoe data ingelezen wordt. Denk bijvoorbeeld aan het verschil tussen een SR-latch en D-latch. Elk type flipflop kunnen we karakteriseren aan de hand van twee tabellen:
+\ssslab{typesFlipflops}
+Er bestaan analoog aan de latches ook verschillende types flipflops. Hierbij is niet de klokaansturing de variabele parameter, maar de manier hoe data ingelezen wordt. Denk bijvoorbeeld aan het verschil tussen een SR-latch en D-latch. Elk type flipflop kunnen we karakteriseren aan de hand van twee tabellen:
+
 \begin{itemize}
- \item De \termen{karakteristieke tabel}: deze tabel gebruikt men bij de implementatie van de flipflops. Het toont aan de linkerkant de ingangen, en aan de rechterkant geeft het weer hoe er op deze ingangen wordt ingespeeld. 
- \item De \termen{excitatietabel}: deze tabel beschrijft de verschillende vormen van gedrag van de component aan de linkerkant, en aan de rechterkant hoe we dit gedrag kunnen verwezenlijken met de ingangen.
+ \item De \gtermen{karakteristieke tabel}{Een tabel die bij geheugencomponenten wordt gebruikt. Aan de linkerkant staan de mogelijk ingangen, aan de rechterkant de nieuwe toestand $\qnext{}$ in functie van de vorige toestand $Q$. Deze tabel wordt gebruikt bij het realiseren van het geheugencomponent.}: deze tabel gebruikt men bij de implementatie van de flipflops. Het toont aan de linkerkant de mogelijk configuraties van ingangen, en aan de rechterkant geeft het weer hoe er op deze ingangen wordt ingespeeld: men zet de nieuwe toestand $\qnext{}$ in functie van de oude $Q$.
+ \item De \gtermen{excitatietabel}{Een tabel die bij geheugencomponenten wordt gebruikt. Aan de linkerkant staan de oude toestand $Q$ en de nieuwe toestand $\qnext{}$. Aan de rechterkant staat de configuratie(s) die we hiervoor aan de ingang moeten aanbrengen. Deze tabel wordt gebruikt wanneer we een geheugencomponent in een schakeling willen gebruiken.}: deze tabel beschrijft de verschillende vormen van gedrag van de component aan de linkerkant, en aan de rechterkant hoe we dit gedrag kunnen verwezenlijken met de ingangen.
 \end{itemize}
-Deze twee tabellen zijn niet strikt het omgekeerde omdat de excitatietabel een kolom voorziet voor $Q$ en $Q_{\mbox{\tiny{next}}}$, terwijl de karakteristieke tabel uitsluitend \'e\'en kolom aan de rechterkant voorziet. In de volgende paragrafen zullen we de verschillende types flipflops bespreken met hun karakteristieke- en excitatietabel.
-\paragraph{SR-flipflop} De \termen{SR-flipflop} ofwel \termen{set-reset flipflop} werkt volledig analoog aan een SR-latch, alleen verandert de waarde uitsluitend op het moment dat de klok van een laag signaal naar een hoog signaal gaat. De karakteristieke tabel is dan ook volledig equivalent met deze van de SR-latch op figuur \ref{fig:setResetLatch}. \figref{setResetFlipflop} toont de interface en de karakteristieke- en excitatietabel van de SR-flipflop.
+
+Deze twee tabellen zijn niet strikt het omgekeerde omdat de excitatietabel een kolom voorziet voor zowel $Q$ en $\qnext{}$, terwijl de karakteristieke tabel uitsluitend \'e\'en kolom aan de rechterkant voorziet. In de volgende paragrafen zullen we de verschillende types flipflops bespreken met hun karakteristieke- en excitatietabel.
+
+%REVIEW
+\paragraph{SR-flipflop}
+De \gtermen{SR-flipflop}{.} ofwel \stermen{set-reset flipflop}{SR-flipflop} werkt volledig analoog aan een SR-latch, alleen verandert de waarde uitsluitend op het moment dat de klok van een laag signaal naar een hoog signaal gaat. De karakteristieke tabel is dan ook volledig equivalent met deze van de SR-latch op figuur \ref{fig:setResetLatch}. \figref{setResetFlipflop} toont de interface en de karakteristieke- en excitatietabel van de SR-flipflop.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}
