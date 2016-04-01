@@ -691,7 +691,7 @@ Een teller die enkel naar boven telt wordt een \gtermen{up-counter}{Een teller d
  \item \gtermen[down-up D/U]{Down-Up $D/U^*$}{Een ingang bij een teller. Deze ingang beslist -- indien er op dat moment geteld wordt -- in welke richting er geteld wordt. Bij hoog signaal wordt naar beneden geteld, bij een laag signaal tellen we naar boven.}: deze ingang bepaalt de richting waarin er geteld wordt. Uit het symbool kunnen we afleiden dat indien het signaal laag is we naar boven tellen, indien het signaal hoog is tellen we naar beneden.
 \end{itemize}
 
-Een uitgang die we regelmatig in een teller zien terugkomen in \termen{Counter Enabled $\mbox{CE}_{\mbox{\tiny{out}}}$}. Deze uitgang is hoog op de klokflank waarbij de teller een wrap-around uitvoert. Indien we dan een cascade van tellers bouwen zal de teller die erna geschakeld is bij een wrap-around opgehoogd worden. Op die manier kunnen we bijvoorbeeld met 3 4-bit tellers een 12-bit teller bouwen. Deze uitgang wordt soms ook de ``\termen{Ripple Carry Output (RCO)}'' genoemd.
+Een uitgang die we regelmatig in een teller zien terugkomen in \gtermen[counter enabled CE out]{Counter Enabled $\mbox{CE}_{\mbox{\tiny{out}}}$}{.}. Deze uitgang is hoog op de klokflank waarbij de teller een wrap-around uitvoert. Indien we dan een cascade van tellers bouwen zal de teller die erna geschakeld is bij een wrap-around opgehoogd worden. Op die manier kunnen we bijvoorbeeld met 3 4-bit tellers een 12-bit teller bouwen. Deze uitgang wordt soms ook de ``\termen{Ripple Carry Output (RCO)}'' genoemd.
 \begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US]
