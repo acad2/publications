@@ -468,7 +468,7 @@ Een \gtermen[carry-lookahead opteller]{Carry-lookahead opteller (CLA)}{Een uitbr
 
 \begin{itemize}
  \item \gtermen[carry-generate]{carry-generate $g_i$}{Een uitgang van een carry-lookahead opteller; $1$ indien er carry gegenereerd zal worden door $x_i$ en $y_i$. Dit is het geval wanneer beide ingangen een $1$ aanleggen. In het andere geval staat er $0$ op deze uitgang.}: $1$ indien er bij het optellen van $x_i$ en $y_i$ overdracht gegenereerd wordt; $0$ in het andere geval. Bijgevolg is $g_i=x_i\cdot y_i$.
- \item \gtermen[carry-propagate]{carry-propagate $p_i$}{Een uitgang van een carry-lookahead opteller; $1$ indien er carry gepropageerd zal worden door $x_i$ en $y_i$ en niet gegenereerd. Dit is het geval wanneer \'e\'en van de twee ingangen $1$ aanlegt. In het andere geval staat er $0$ op deze uitgang.}: $1$ indien bij de optelling de overdracht van de vorige bit verder gepropageerd zal worden, en deze overdracht niet gegenereerd wordt; $0$ in het andere geval. Bijgevolg $p_i=x_i\cdot y_i'+x_i'\cdot y_i=x_i\oplus y_i$.
+ \item \gtermen[carry-propagate]{carry-propagate $p_i$}{Een uitgang van een carry-look\-ahead opteller; $1$ indien er carry gepropageerd zal worden door $x_i$ en $y_i$ en niet gegenereerd. Dit is het geval wanneer \'e\'en van de twee ingangen $1$ aanlegt. In het andere geval staat er $0$ op deze uitgang.}: $1$ indien bij de optelling de overdracht van de vorige bit verder gepropageerd zal worden, en deze overdracht niet gegenereerd wordt; $0$ in het andere geval. Bijgevolg $p_i=x_i\cdot y_i'+x_i'\cdot y_i=x_i\oplus y_i$.
  \item som $s_i$: het resultaat van de optelling $s_i=c_i\oplus\brak{x_i\oplus y_i}$, wat equivalent is met $s_i=c_ip_i'+c_i'p_i=c_i\oplus p_i$.
 \end{itemize}
 
