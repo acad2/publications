@@ -723,10 +723,10 @@ Een uitgang die we regelmatig in een teller zien terugkomen in \gtermen[counter 
 \figlab{asynchroneCounter}
 \end{figure}
 
-%REVIEW
 \paragraph{Asynchrone teller}
-Bij een \gtermen{asynchrone teller}{Ook wel asynchronous counter of ripple counter genoemd. .}, \stermen{asynchronous counter}{asynchrone teller} ofwel \stermen{ripple counter}{asynchrone teller} wordt de verandering van de bittoestand van \'e\'en van de bits gebruikt als klokingang voor de volgende bit. Dit leidt tot minimaal hardwaregebruik, maar heeft hetzelfde probleem als een ripple adder: het signaal dient te propageren door de bits\footnote{Hiervan komt overigens de notie van asynchroniciteit: niet alle bits veranderen op hetzelfde moment van waarde.}, wat leidt tot grote vertragingen als het om veel bits gaat. Vooral indien we logica koppelen aan hoge bits kunnen deze vertragingen nefast zijn en leiden tot een lage performantie. We kunnen een down-counter realiseren door de $Q_n$-uitgang aan de toggle-ingang van de volgende flipflop te koppelen (en niet de $Q$-uitgang). Eventueel kunnen we deze schakeling dus zelfs uitbreiden door een multiplexer te plaatsen tussen de flipflops die selecteert tussen $Q$ en $Q_n$ en zo de gebruiker laat kiezen in welke richting de teller werkt. Het nadeel is dat ook deze multiplexer een vertraging induceert. Een eenvoudige implementatie van een asynchrone teller staat op \figref{asynchroneCounter}.
-\begin{figure}[hbt]
+Bij een \gtermen{asynchrone teller}{Ook wel asynchronous counter of ripple counter genoemd. Een teller die een serie toggle flipflops beschouwt. Telkens is de omgekeerde uitgang van de vorige flipflop verbonden met de klokingang van de volgende flipflop, hierdoor toggelen de grotere bits uitsluitend wanneer de vorige flipflop van hoog naar laag gaat. Deze teller is goedkoop te realiseren, maar het kan lang duren voor een effect volledig is doorgerekend.}, \stermen{asynchronous counter}{asynchrone teller} ofwel \stermen{ripple counter}{asynchrone teller} wordt de verandering van de bittoestand van \'e\'en van de bits gebruikt als klokingang voor de volgende bit. Dit leidt tot minimaal hardwaregebruik, maar heeft hetzelfde probleem als een ripple adder: het signaal dient te propageren doorheen de bits, wat leidt tot grote vertragingen als het om veel bits gaat. Wel is het meestal zo dat het signaal maar door een beperkte hoeveelheid flipflops moet propageren, men verandert nu eenmaal niet altijd de hoogste bit als men telt. Indien we logica koppelen aan hoge bits kunnen deze vertragingen nefast zijn en leiden tot een lage performantie voor het volledige circuit. We kunnen een down-counter realiseren door de $Q_n$-uitgang aan de toggle-ingang van de volgende flipflop te koppelen (en niet de $Q$-uitgang). Eventueel kunnen we deze schakeling dus zelfs uitbreiden door een multiplexer te plaatsen tussen de flipflops die selecteert tussen $Q$ en $Q_n$ en zo de gebruiker laat kiezen in welke richting de teller werkt. Het nadeel is dat ook deze multiplexer een vertraging induceert. Een eenvoudige implementatie van een asynchrone teller staat op \figref{asynchroneCounter}.
+
+\ begin{figure}[hbt]
 \centering
 \begin{tikzpicture}[circuit logic US]
 \def\sc{0.8};
@@ -764,6 +764,8 @@ Bij een \gtermen{asynchrone teller}{Ook wel asynchronous counter of ripple count
 \caption{Synchrone 4-bit teller}
 \figlab{synchroneCounter}
 \end{figure}
+
+%REVIEW
 \paragraph{Synchrone teller}
 Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen. Dit doen we door de volgende toestand reeds vooraf uit te rekenen en bij het kloksignaal deze toestand op te slaan in de flipflops. Hoe we deze toestand berekenen staat ons in principe vrij net als de keuze van het type flipflop. \figref{synchroneCounter} toont een implementatie met T-flipflops. Merk op dat ondanks het feit dat de nieuwe toestand berekend wordt voor de klokflank de teller daarom geen vertraging kan teweeg brengen: het berekenen van de volgende toestand van een teller met een grote woordlengte vraagt immers ook veel tijd (en kan dus het kritieke pad worden). Het voordeel van een synchrone teller is dat we deze berekening parallel doen met andere berekeningen die van de teller afhangen. Doordat de volgende toestand ook meteen beschikbaar is zullen berekeningen die afhangen van de teller ook onmiddellijk kunnen worden uitgerekend.
 \begin{figure}[hbt]
