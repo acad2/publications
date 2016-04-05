@@ -724,7 +724,7 @@ Een uitgang die we regelmatig in een teller zien terugkomen in \gtermen[counter 
 \end{figure}
 
 \paragraph{Asynchrone teller}
-Bij een \gtermen{asynchrone teller}{Ook wel asynchronous counter of ripple counter genoemd. Een teller die een serie toggle flipflops beschouwt. Telkens is de omgekeerde uitgang van de vorige flipflop verbonden met de klokingang van de volgende flipflop, hierdoor toggelen de grotere bits uitsluitend wanneer de vorige flipflop van hoog naar laag gaat. Deze teller is goedkoop te realiseren, maar het kan lang duren voor een effect volledig is doorgerekend.}, \stermen{asynchronous counter}{asynchrone teller} ofwel \stermen{ripple counter}{asynchrone teller} wordt de verandering van de bittoestand van \'e\'en van de bits gebruikt als klokingang voor de volgende bit. Dit leidt tot minimaal hardwaregebruik, maar heeft hetzelfde probleem als een ripple adder: het signaal dient te propageren doorheen de bits, wat leidt tot grote vertragingen als het om veel bits gaat. Wel is het meestal zo dat het signaal maar door een beperkte hoeveelheid flipflops moet propageren, men verandert nu eenmaal niet altijd de hoogste bit als men telt. Indien we logica koppelen aan hoge bits kunnen deze vertragingen nefast zijn en leiden tot een lage performantie voor het volledige circuit. We kunnen een down-counter realiseren door de $Q_n$-uitgang aan de toggle-ingang van de volgende flipflop te koppelen (en niet de $Q$-uitgang). Eventueel kunnen we deze schakeling dus zelfs uitbreiden door een multiplexer te plaatsen tussen de flipflops die selecteert tussen $Q$ en $Q_n$ en zo de gebruiker laat kiezen in welke richting de teller werkt. Het nadeel is dat ook deze multiplexer een vertraging induceert. Een eenvoudige implementatie van een asynchrone teller staat op \figref{asynchroneCounter}.
+Bij een \gtermen{asynchrone teller}{Ook wel asynchronous counter of ripple counter genoemd. Een teller die een serie toggle flipflops beschouwt. Telkens is de omgekeerde uitgang van de vorige flipflop verbonden met de klokingang van de volgende flipflop, hierdoor toggelen de grotere bits uitsluitend wanneer de vorige flipflop van hoog naar laag gaat. Deze teller is goedkoop te realiseren, maar het kan lang duren voor een effect volledig is doorgerekend.}, \stermen{asynchronous counter}{asynchrone teller} ofwel \stermen{ripple counter}{asynchrone teller} wordt de verandering van de bittoestand van \'e\'en van de bits gebruikt als klokingang voor de volgende bit. Dit leidt tot minimaal hardwaregebruik, maar heeft hetzelfde probleem als een ripple adder: het signaal dient te propageren doorheen de bits\footnote{Hiervan komt overigens de notie van asynchroniciteit: niet alle bits veranderen op hetzelfde moment van waarde.}, wat leidt tot grote vertragingen als het om veel bits gaat. Wel is het meestal zo dat het signaal maar door een beperkte hoeveelheid flipflops moet propageren, men verandert nu eenmaal niet altijd de hoogste bit als men telt. Indien we logica koppelen aan hoge bits kunnen deze vertragingen nefast zijn en leiden tot een lage performantie voor het volledige circuit. We kunnen een down-counter realiseren door de $Q_n$-uitgang aan de toggle-ingang van de volgende flipflop te koppelen (en niet de $Q$-uitgang). Eventueel kunnen we deze schakeling dus zelfs uitbreiden door een multiplexer te plaatsen tussen de flipflops die selecteert tussen $Q$ en $Q_n$ en zo de gebruiker laat kiezen in welke richting de teller werkt. Het nadeel is dat ook deze multiplexer een vertraging induceert. Een eenvoudige implementatie van een asynchrone teller staat op \figref{asynchroneCounter}.
 
 \ begin{figure}[hbt]
 \centering
@@ -765,9 +765,9 @@ Bij een \gtermen{asynchrone teller}{Ook wel asynchronous counter of ripple count
 \figlab{synchroneCounter}
 \end{figure}
 
-%REVIEW
 \paragraph{Synchrone teller}
-Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen. Dit doen we door de volgende toestand reeds vooraf uit te rekenen en bij het kloksignaal deze toestand op te slaan in de flipflops. Hoe we deze toestand berekenen staat ons in principe vrij net als de keuze van het type flipflop. \figref{synchroneCounter} toont een implementatie met T-flipflops. Merk op dat ondanks het feit dat de nieuwe toestand berekend wordt voor de klokflank de teller daarom geen vertraging kan teweeg brengen: het berekenen van de volgende toestand van een teller met een grote woordlengte vraagt immers ook veel tijd (en kan dus het kritieke pad worden). Het voordeel van een synchrone teller is dat we deze berekening parallel doen met andere berekeningen die van de teller afhangen. Doordat de volgende toestand ook meteen beschikbaar is zullen berekeningen die afhangen van de teller ook onmiddellijk kunnen worden uitgerekend.
+Een \gtermen{synchrone teller}{Een teller die waarbij op de stijgende klokflank alle bits tegelijk de binaire representatie van het volgende getal aannemen. Dit doet men door het volgende getal reeds op voorhand uit te rekenen. Bij het kloksignaal wordt het dan ingelezen in flipflops. Men bewerkstelligt dit met flipflops door telkens de AND operatie uit te voeren op de data-uitgang $Q$ en de toggle-ingang $T$ van de vorige flipflop: we toggelen bit $i$ als bit $i-1$ op $1$ staat, en zelf zal toggelen.} laat alle bits wel tegelijk van waarde veranderen. Dit doen men door de volgende toestand reeds op voorhand uit te rekenen en bij het kloksignaal deze toestand op te slaan in de flipflops. Hoe we deze toestand berekenen staat ons in principe vrij net als de keuze van het type flipflop. \figref{synchroneCounter} toont een implementatie met T-flipflops. Merk op dat ondanks het feit dat de nieuwe toestand berekend wordt voor de klokflank, de teller daarom nog steeds een vertraging kan teweeg brengen: het berekenen van de volgende waarde voor een teller met een grote woordlengte vraagt immers ook veel tijd (en kan dus het kritieke pad worden). Het voordeel van een synchrone teller is echter dat we deze berekening parallel doen met andere berekeningen die van de teller afhangen. Doordat de volgende toestand ook meteen beschikbaar gesteld wordt, zullen berekeningen die afhangen van de teller ook onmiddellijk kunnen worden uitgerekend.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Algemene implementatie]{\begin{tikzpicture}[circuit logic US]
@@ -799,28 +799,12 @@ Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen.
   \draw (T\i.Q -| Q\i) -- (Q\i |- M\i.north) -| (CD\i.Qi);
   \coordinate (DU\i) at (CD\i.Dir |- DU);
   \draw (CD\i.Dir) -- (DU\i);
-  %\node[and gate,scale=0.75*\sc] (A\i) at (3*\sc*\i+2.5*\sc,\ya) {};
-  %\node[xor gate,rotate=180,scale=0.75*\sc] (Xa\i) at (3*\sc*\i-0.35*\sc,\yb) {};
-  %\node[xor gate,scale=0.75*\sc] (Xb\i) at (3*\sc*\i+\sc,\yb) {};
-  %\coordinate (Xm\i) at (3*\sc*\i+0.325*\sc,0 |- Xb\i.input 2);
-  %\coordinate (DU\i) at (3*\sc*\i+0.55*\sc,0 |- DU);
-  %\coordinate (CE\i) at (3*\sc*\i+0.15*\sc,0 |- CE);
-  %\pdot{Xm\i};
-  %\pdot{CE\i};
-  %\draw (Xm\i) -- (Xm\i |- M\i.data0) -| (T\i.Q -| Q\i);
-  %\draw (Xa\i.output) -| (M\i.data0);
-  %\draw (Xa\i.input 1) -- (Xb\i.input 2);
-  %\draw (Xb\i.input 1) -| (DU\i);
-  %\draw (Xa\i.input 2) -| (CE\i);
-  %\draw (Xb\i.output) -- ++(0.2*\sc,0) |- (A\i.input 2);
 }
 \foreach \i/\ii in {0/1,1/2,2/3} {
   \draw (M\i.selout0) -- (M\ii.selin0);
   \draw (CD\i.Eii) -- (CD\ii.Ei);
   \pdot{DU\i};
-  %\draw (A\i.output) -- (A\i.output -| 3*\sc*\ii+0.325*\sc,0) |- (A\ii.input 1);
 }
-%\draw (CE) -- (CE -| 0.325*\sc,0) |- (A0.input 1);
 \draw (CE) -- (CD0.Ei);
 \draw (CEO) -- (CD3.Eii);
 \draw (M0.selin0) -- (LD);
@@ -873,6 +857,8 @@ Een \termen{synchrone teller} laat alle bits wel tegelijk van waarde veranderen.
 \caption{Parallel-laadbare bidirectionele 4-bit teller.}
 \figlab{loadableSynchroneCounterTotal}
 \end{figure}
+
+%REVIEW
 \paragraph{Parallel-laadbare bidirectionele teller}
 Een speciaal geval van een synchrone teller is een \termen{parallel-laadbare bidirectionele teller}. Een implementatie van zo'n teller staat op figuur \ref{fig:loadableSynchroneCounter}. Deze teller is \termen{parallel laadbaar} wanneer we de waarde van de teller kunnen zetten op een ingegeven waarde in \'e\'en klokflank\footnote{Het schuifregister of figuur \ref{fig:shiftRegister} kan bijvoorbeeld ook sequentieel geladen worden, waarbij we per klokflank een bit van het getal inschuiven.}. Bij het laden wordt de LD ingang hoog gezet. In het andere geval dienen we elke bit te berekenen. Hiervoor wordt op figuur \ref{fig:loadableSynchroneCounter} een naamloze component ingevoerd. De nieuwe waarde van een bit wordt ge\"inverteerd indien er geteld wordt op deze bit. In het andere geval blijft de bit onveranderd. Een bit wordt opgeteld indien de vorige bit geteld wordt en de bit \'e\'en is bij een telling naar boven (analoog aan een overdracht (``carry'') dus), of nul en een telling naar beneden (een lening (``borrow'') dus). Bij het berekenen van de eerste bit $Q_0$ gebruiken we logischerwijs de counter enabled CE ingang. \figref{loadableSynchroneCounterLambda} toont een implementatie voor een dergelijk component. De teller die we hiermee ontwikkelen verenigt de meeste functionaliteiten die we in tellers kunnen terugvinden. \figref{counterInterface} toont een interface die vaak gebruik wordt voor tellers. Indien een functionaliteit niet wordt aangeboden wordt de vermelding eenvoudigweg weggelaten.
 \paragraph{Modulo-teller}Tot nu toe hebben we enkel teller geconstrueerd die tellen van 0 tot het maximaal voor te stellen getal. Bij een $n$-bit teller is dit dus $2^n-1$. In de praktijk komt het geregeld voor dat we tellen tot een bepaalde waarde om daarna terug bij 0 te beginnen. Stel bijvoorbeeld dat we een teller maken die het aantal minuten bijhoudt. Indien dit getal boven de 60 gaat komt het aantal minuten terug op 0, en dient het aantal uren verhoogd te worden. Ook controllers die elektronica aansturen dienen soms een beperkt aantal toestanden met de regelmaat van de klok te herhalen, zelden zijn dit aantal toestanden een macht van twee. Voor dergelijke problemen kunnen we een \termen{Modulo-teller} gebruiken. Een modulo-teller bestaat traditioneel uit een teller met daarrond extra logica die indien de maximale waarde wordt vastgesteld, in de volgende klokflank een 0 in de teller laadt. We kunnen deze teller veralgemenen door ook het tellen naar beneden toe te laten, in dat geval dient de maximale waarde in de klokcyclus na 0 ingeladen te worden. \figref{moduloCounter} toont een algemeen geval van een 4-bit teller.
