@@ -73,7 +73,10 @@
 *.hi
 *.sch
 *.ods
-*.swp
+
+#Swap files
+.*.swp
+.*.sw?
 *.bak
 *.kate-swp
 *.glsdefs

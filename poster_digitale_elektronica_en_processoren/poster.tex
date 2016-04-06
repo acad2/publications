@@ -1,0 +1,55 @@
+\documentclass{preziposters}
+\usepackage[dutch]{babel}
+\usepackage{brackets,Haskelllogo}
+\usepackage[pdftitle={Poster Digitale Elektronica en Processoren},pdfauthor={Willem Van Onsem},pdfsubject={Digitale Elektronica en Processoren},pdfkeywords={Digitale Elektronica, Schakelingen, Processoren, Logica}]{hyperref}
+\definecolor{redback}{rgb}{1,0.88,0.85}
+\definecolor{greenback}{rgb}{0.9,0.98,0.85}
+\definecolor{blueback}{rgb}{0.9,0.88,0.95}
+\definecolor{orangeback}{rgb}{1.0,0.93,0.85}
+
+\DeclareDocumentCommand{\comput}{ O{LABEL} O{1.00} O{2.00} m m}{\def\cola{red};\def\colb{red};\ifthenelse{#5>1}{\def\cola{green};}{}\ifthenelse{\isodd{#5}}{\def\colb{green};}{}\computmul[#1][#2][#3]{#4}{\cola,\colb}}
+\newcommand{\findcolor}[2]{\def#1{gray}\ifthenelse{\equal{#2}{TURING}}{\def#1{red}}{\ifthenelse{\equal{#2}{REGEX}}{\def#1{green}}{\ifthenelse{\equal{#2}{CTXFR}}{\def#1{blue}}{\ifthenelse{\equal{#2}{CTXSE}}{\def#1{purple}}{}}}}}
+\DeclareDocumentCommand{\innerc}{ O{LABEL} O{1.00} O{2.00} m m m m m m }{\findcolor{\cola}{#4}\findcolor{\colb}{#5}\findcolor{\colc}{#6}\findcolor{\cold}{#7}\findcolor{\cole}{#8}\findcolor{\colf}{#9}\computmul[#1][#2][#3]{}{\cola,\colb,\colc,\cold,\cole,\colf}}
+
+\newcounter{tmpA}
+\newcounter{tmpB}
+
+\title{Digitale Elektronica en Processoren}
+\suptitle{Samenvatting van}
+\author{Willem~M.~A.~Van~Onsem}
+\disclaimer{\textbf{Disclaimer}: Er is geen garantie dat de volledige inhoud gedekt wordt of correct wordt voorgesteld.}
+
+\begin{document}
+\begin{theposter}
+\def\dma{5 mm};
+\def\mid{594.5 mm};
+\def\dyl{100.0 mm};
+\def\dylm{5.0 mm};
+\def\dylma{105.0 mm};
+\def\dylhma{65.0 mm};
+\def\dylqma{125.0 mm};
+\def\dyw{1100.0 mm};
+\def\dywb{550.0 mm};
+\def\dywt{366.7 mm};
+\def\dywq{275.0 mm};
+\def\dywu{220.0 mm};
+\def\dywh{183.3 mm};
+\begin{scope}[yshift=-3*\dylm]
+\begin{pgfonlayer}{background}
+
+\defgroup[\dma][0][-\dylhma][]{\dyw}{0.6*\dyl}{Programmeerbare Processoren (\S6)}{orange}{PROG}
+\defgroup[\dma][0][-\dylhma-\dylqma][]{\dyw}{1.2*\dyl}{Niet-Programmeerbare Processoren (\S5)}{red}{PROC}
+\defgroup[\dma][0][-\dylma-\dylhma-\dylqma][]{\dyw}{\dyl}{Sequenti\"ele Schakelingen (\S4)}{purple}{CTXSE}
+\defgroup[\dma][0][-2*\dylma-\dylhma-\dylqma][]{\dyw}{\dyl}{Combinatorische Schakelingen (\S3)}{blue}{CTXFR}
+\defgroup[\dma][0][-2*\dylma-\dylhma-2*\dylqma][]{\dyw}{1.2*\dyl}{Basis (\S1)}{green}{REGEX}
+\defgroup[\dma][0][-6*\dylma-5*\dma][]{0.8*\dyw}{\dyl}{Technologische Voorwaarden (\S2)}{yellow}{LAMBDA}
+% \defgroup[\dma][0.8*\dyw+\dma][-6*\dylma-5*\dma][]{0.2*\dyw-\dma}{\dyl}{Legende}{backg}{LEGEND}
+% \defgroup[\dma][\dywh][-7*\dylma-5*\dma][]{\dyw-\dywh-\dywt}{\dyl}{Andere paradigma's (\S5)}{gray}{OTHER}
+% \defgroup[\dma][0][-7*\dylma-5*\dma][]{\dywh}{\dyl}{Taal-aspecten (\S2.1-\S2.3)}{backg}{LANG}
+% \defgroup[\dma][\dyw-\dywt][-7*\dylma-5*\dma][]{\dywt}{\dyl}{Problemen}{backg}{PROB}
+
+\end{pgfonlayer}
+\end{scope}
+
+\end{theposter}
+\end{document}
