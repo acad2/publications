@@ -980,10 +980,10 @@ We zullen dit stappenplan doorlopen met behulp van twee voorbeelden. Het eerste 
 
 %REVIEW
 \paragraph{}
-We implementeren een Moore-machine die een $1$ op de uitvoer aanlegt indien de laatste drie klokcycli afwisselend een $0$, $1$ en $0$ op de ingang hebben gestaan. We implementeren een min of meer equivalente constructie voor een Mealy-machine: hier dienen echter op de twee laatste klokcycli een $0$ en $1$ op de ingang aangelegd te worden, en dient er op dat moment een $0$ op de ingang te staan. De Mealy-machine is dus de Moore-machine maar met \'e\'en klokcyclus verschoven. We doen dit bewust om de verschillen in synthese te tonen tussen twee vrij gelijklopende voorbeelden.
+We implementeren een Moore-machine die een $1$ op de uitvoer aanlegt indien de laatste drie klokcycli afwisselend een $0$, $1$ en $0$ op de ingang hebben gestaan. We implementeren een min of meer equivalente constructie voor een Mealy-machine: hier dienen echter op de twee laatste klokcycli een $0$ en $1$ op de ingang aangelegd te worden, en dient er op dat moment een $0$ op de ingang te staan. De Mealy-machine is dus de Moore-machine maar met \'e\'en klokcyclus verschoven. We doen dit bewust om de verschillen in synthese te tonen tussen twee vrij gelijklopende voorbeelden. Bovendien kan de lezer ook zo het verschil in kostprijs tussen de twee modellen bestuderen.
 
 \subsection{Stap 1: opstellen van het toestandsdiagram}
-Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige toestandsmachine beschrijft door de toestanden voor te stellen als cirkels en de overgangen als bogen tussen de cirkels. Bij een Moore-machine worden de toestanden geanotteerd met de uitvoer bij de respectievelijke toestand. Op de bogen staan de nodige ingangen om de overgang te verwezelijken. Bij een Mealy-machine worden de bogen ook geanoteerd met de respectievelijke uitvoer.} is de eerste stap in het proces. Dit komt omdat men niet formeel kan uitdrukken hoe men uit de specificaties een toestandsdiagram opstelt. Het opstellen van een dergelijk diagram omvat echter meestal dezelfde vaardigheden als deze die bij bijvoorbeeld programmeren aan bod komen. Door middel van oefening kan men dan ook bekwaamheid verwerven.
+Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige toestandsmachine beschrijft door de toestanden voor te stellen als cirkels en de overgangen als bogen tussen de cirkels. Bij een Moore-machine worden de toestanden geanotteerd met de uitvoer bij de respectievelijke toestand. Op de bogen staan de nodige ingangen om de overgang te verwezelijken. Bij een Mealy-machine worden de bogen ook geanoteerd met de respectievelijke uitvoer.} is de eerste en minst eenvoudige stap in het proces. Dit komt omdat men niet formeel kan uitdrukken hoe men uit de specificaties een toestandsdiagram opstelt. Het opstellen van een dergelijk diagram omvat echter meestal dezelfde vaardigheden als deze die bij bijvoorbeeld programmeren aan bod komen. Door middel van oefening kan men dan ook bekwaamheid verwerven.
 
 \begin{figure}[hbt]
 \centering
@@ -1003,36 +1003,21 @@ Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige
 \node[state] (B) [above=of H] {$B$\nodepart{lower} $0$};
 \node[state] (C) [below=of L] {$C$\nodepart{lower} $0$};
 \node[state,initial,initial text=RST, initial where=right] (A) [above=of B] {$A$\nodepart{lower} $0$};
-\path (H) edge [loop above] node {0} (H)
-          edge node {1} (I)
-      (I) edge[swap] node {0} (J)
-          edge[bend left] node {1} (K)
-      (M) edge[bend left,swap] node {0} (J)
-          edge node {1} (K)
-      (K) edge node {0} (N)
-          edge node {1} (O)
-      (L) edge node {0} (H)
-          edge node {1} (I)
-      (J) edge node {0} (L)
-          edge[bend left,swap] node {1} (M)
-      (N) edge[bend left] node {0} (L)
-          edge[swap] node {1} (M)
-      (O) edge node {0} (N)
-          edge [loop below] node {1} (O)
-       (D) edge[swap] node {0} (H)
-           edge node {1} (I)
-       (E) edge node {0} (J)
-           edge[bend left] node {1} (K)
-       (F) edge[bend left] node {0} (L)
-           edge node {1} (M)
-       (G) edge node {0} (N)
-           edge[swap] node {1} (O)
-       (B) edge[bend left,swap] node {0} (D)
-           edge[bend left] node {1} (E)
-       (C) edge[bend right] node {0} (F)
-           edge[bend right] node {1} (G)
-       (A) edge node {0} (B)
-           edge[bend right] node {1} (C);
+\path (H) edge [loop above] node {0} (H) edge node {1} (I)
+      (I) edge[swap] node {0} (J) edge[bend left] node {1} (K)
+      (M) edge[bend left,swap] node {0} (J) edge node {1} (K)
+      (K) edge node {0} (N) edge node {1} (O)
+      (L) edge node {0} (H) edge node {1} (I)
+      (J) edge node {0} (L) edge[bend left,swap] node {1} (M)
+      (N) edge[bend left] node {0} (L) edge[swap] node {1} (M)
+      (O) edge node {0} (N) edge [loop below] node {1} (O)
+      (D) edge[swap] node {0} (H) edge node {1} (I)
+      (E) edge node {0} (J) edge[bend left] node {1} (K)
+      (F) edge[bend left] node {0} (L) edge node {1} (M)
+      (G) edge node {0} (N) edge[swap] node {1} (O)
+      (B) edge[bend left,swap] node {0} (D) edge[bend left] node {1} (E)
+      (C) edge[bend right] node {0} (F) edge[bend right] node {1} (G)
+      (A) edge node {0} (B) edge[bend right] node {1} (C);
 \end{tikzpicture}}
 \subfigure[Mealy-machine]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
 \node[state] (D) {$D$};
@@ -1065,22 +1050,22 @@ Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige
 \begin{table}[hbt]
 \centering
 \subtable[Moore-machine]{\small{\begin{tabular}{c|cc|c}
-Toestand&0&1&Uitgang\\\hline
-$A$&$B$&$C$&0\\
-$B$&$D$&$E$&0\\
-$C$&$F$&$G$&0\\
-$D$&$H$&$I$&0\\
-$E$&$J$&$K$&0\\
-$F$&$L$&$M$&0\\
-$G$&$N$&$O$&0\\
-$H$&$H$&$I$&0\\
-$I$&$J$&$K$&0\\
-$J$&$L$&$M$&1\\
-$K$&$N$&$O$&0\\
-$L$&$H$&$I$&0\\
-$M$&$J$&$K$&0\\
-$N$&$L$&$M$&0\\
-$O$&$N$&$O$&0
+Toestand&$0$&$1$&Uitgang\\\hline
+$A$  &$B$  &$C$  &$0$\\
+$B$  &$D$  &$E$  &$0$\\
+$C$  &$F$  &$G$  &$0$\\
+$D$  &$H$  &$I$  &$0$\\
+$E$  &$J$  &$K$  &$0$\\
+$F$  &$L$  &$M$  &$0$\\
+$G$  &$N$  &$O$  &$0$\\
+$H$  &$H$  &$I$  &$0$\\
+$I$  &$J$  &$K$  &$0$\\
+$J$  &$L$  &$M$  &$1$\\
+$K$  &$N$  &$O$  &$0$\\
+$L$  &$H$  &$I$  &$0$\\
+$M$  &$J$  &$K$  &$0$\\
+$N$  &$L$  &$M$  &$0$\\
+$O$  &$N$  &$O$  &$0$
 \end{tabular}}}
 \subtable[Mealy-machine]{\small{\begin{tabular}{c|cc}
 Toestand&0&1\\\hline
@@ -1130,7 +1115,7 @@ Het enige wat we nu moeten doen is deze stap herhalen op de nieuwe partitie $\mb
 \small{
 \begin{array}{lr}
 \left\{\begin{array}{l}
-\mbox{partitie}_{\mbox{\small{Moore,0}}}=\left\{\left\{A,B,C,D,E,F,G,H,I,K,L,M,N,O\right\},\left\{J\right\}\right\}\\
+\mbox{partitie}_{\mbox{\small{Moore,0}}}=\accl{\accl{A,B,C,D,E,F,G,H,I,K,L,M,N,O},\accl{J}}\\
 \mbox{partitie}_{\mbox{\small{Moore,1}}}=\left\{\left\{A,B,C,D,F,G,H,K,L,N,O\right\},\left\{E,I,M\right\},\left\{J\right\}\right\}\\
 \mbox{partitie}_{\mbox{\small{Moore,2}}}=\left\{\left\{A,C,G,K,O\right\},\left\{B,D,F,H,L,N\right\},\left\{E,I,M\right\},\left\{J\right\}\right\}\\
 \mbox{partitie}_{\mbox{\small{Moore,3}}}=\left\{\left\{A,C,G,K,O\right\},\left\{B,D,F,H,L,N\right\},\left\{E,I,M\right\},\left\{J\right\}\right\}
@@ -1148,6 +1133,27 @@ Het geval van de Mealy-machine is volledig analoog: we bekomen dan:
 \end{array}\right.&\mbox{(Leidend voorbeeld)}
 \end{array}}
 \end{equation}
+
+\paragraph{software}
+In het softwarepakket die bij dit boek hoort, kan men het commando \verb+minimize-fsm+ oproepen met een bestand die een eindige toestandsmachine bevat (Mealy of Moore), het programma minimaliseert dan automatisch de machine. Bijvoorbeeld:
+
+\begin{verbatim}
+$ ./dep minimize-fsm examples/moore_example.fsm
+       | 0      | 1     |
+---------------------------
+ACGKO  | BDFHLN | ACGKO | 0
+BDFHLN | BDFHLN | EIM   | 0
+EIM    | J      | ACGKO | 0
+J      | BDFHLN | EIM   | 1
+
+$ ./dep minimize-fsm examples/mealy_example.fsm
+    | 0     | 1
+-------------------
+ACG | BDF/0 | ACG/0
+BDF | BDF/0 | E/0
+E   | BDF/1 | ACG/0
+\end{verbatim}
+
 \subsubsection{Omzetting naar een toestandsdiagram en -tabel}
 Nadat we het aantal toestanden geminimaliseerd hebben, dienen we alleen nog een nieuwe Moore- of Mealy-machine te bouwen op basis van de partitie van de toestanden van de originele machine. Zoals we al enkele keren vermeld hebben staat een partitie voor de toestand van de minimale machine. We dienen dus voor elke partitie een nieuwe toestand te voorzien. Dit doet men meestal door de nieuwe toestand dezelfde naam te geven als de toestand in de partitie die alfabetisch het eerst voorkomt. Maar we kunnen uiteraard ook een arbitraire naam kiezen, of een naam die de letters van alle inwendige toestanden omvat. Verder dienen we in het geval van een Moore machine aan elke toestand een uitvoerconfiguratie toe te kennen. Omdat we de eerste voorwaarde hebben afgedwongen hebben alle toestanden in een partitie dezelfde uitvoerconfiguratie, bijgevolg nemen we de configuratie van \'e\'en van de toestanden in de partitie over. Hetzelfde geldt voor de Mealy-machine. De uitgang verbonden aan de transitie uit een bepaalde nieuwe toestand is dezelfde als de uitgang van dezelfde transitie uit \'e\'en van de toestanden in de partitie. De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle toestanden in partitie zullen voor eenzelfde ingangscombinatie naar eenzelfde partitie lopen. Op die manier kunnen we dus een transitie-functie opstellen over de nieuwe toestanden. De initi\"ele toestand ten slotte is de toestand verbonden aan de partitie die de oorspronkelijke initi\"ele toestand bevat. Op figuur \ref{fig:minimaalToestandsdiagram} en tabel \ref{tbl:minimaalToestandstabel} staan de nieuwe machines na minimalisatie van de leidende voorbeelden. We kunnen eenvoudig vaststellen dat minimalisatie soms tot spectaculaire reducties van het aantal toestanden kan leiden.
 \begin{figure}[hbt]
