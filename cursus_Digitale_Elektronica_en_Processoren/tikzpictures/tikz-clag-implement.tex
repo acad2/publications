@@ -24,16 +24,16 @@
   \coordinate (COP02) at (0,-0.166*\dh -| CLB);
   \foreach \i/\j in {1/0,2/1,3/2} {
     \coordinate (COC\i) at (CLB -| 0.5*\dw-0.25*\i*\dw,0);
-    \draw (COC\i) -- ++(0,-\dp) node[anchor=north]{$c_{\i}$};
+    \draw (COC\i) -- ++(0,-\dp cm) node[anchor=north]{$c_{\i}$};
     \coordinate (CIP\j) at (CRT -| 0.5*\dw+0.5*\ddp-0.25*\i*\dw,0);
     \coordinate (CIG\j) at (CRT -| 0.5*\dw-0.5*\ddp-0.25*\i*\dw,0);
-    \draw (CIP\j) -- ++(0,\dp) node[anchor=south]{$p_{\j}$};
-    \draw (CIG\j) -- ++(0,\dp) node[anchor=south]{$g_{\j}$};
+    \draw (CIP\j) -- ++(0,\dp cm) node[anchor=south]{$p_{\j}$};
+    \draw (CIG\j) -- ++(0,\dp cm) node[anchor=south]{$g_{\j}$};
   }
 
-  \draw (CIC0) -- ++(\dp,0) node[anchor=west]{$c_0$};
-  \draw (COG02) -- ++(-\dp,0) node[anchor=east]{$g_{0,2}$};
-  \draw (COP02) -- ++(-\dp,0) node[anchor=east]{$p_{0,2}$};
+  \draw (CIC0) -- ++(\dp cm,0) node[anchor=west]{$c_0$};
+  \draw (COG02) -- ++(-\dp cm,0) node[anchor=east]{$g_{0,2}$};
+  \draw (COP02) -- ++(-\dp cm,0) node[anchor=east]{$p_{0,2}$};
 \end{scope}
 
 %hline coordinates

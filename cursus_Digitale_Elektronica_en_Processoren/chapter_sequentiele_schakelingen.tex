@@ -978,12 +978,11 @@ Nu we de bouwstenen hebben beschreven om een sequenti\"ele schakeling te bouwen 
 \subsection{Leidende voorbeelden}
 We zullen dit stappenplan doorlopen met behulp van twee voorbeelden. Het eerste is een Moore-FSM. Uit subsectie \sscref{classificationSequential} weten we nog dat de uitgang dus volledig bepaald wordt door de toestand. In het tweede voorbeeld behandelen we een Mealy-FSM waarbij ook de invoer een rol speelt in het resultaat op de uitgangen. Het stappenplan zelf verschilt meestal op enkele punten tussen het proces naar synthese van een Moore-machine en een Mealy-machine. In dat geval zullen op de afbeeldingen aan de linkerkant de Moore-machine staan, en aan de rechterkant de Mealy-machine. Indien dit niet relevant is voor het concept zullen we telkens gebruik maken van de Mealy-machine. Deze keuze is uiteraard louter arbitrair.
 
-%REVIEW
 \paragraph{}
 We implementeren een Moore-machine die een $1$ op de uitvoer aanlegt indien de laatste drie klokcycli afwisselend een $0$, $1$ en $0$ op de ingang hebben gestaan. We implementeren een min of meer equivalente constructie voor een Mealy-machine: hier dienen echter op de twee laatste klokcycli een $0$ en $1$ op de ingang aangelegd te worden, en dient er op dat moment een $0$ op de ingang te staan. De Mealy-machine is dus de Moore-machine maar met \'e\'en klokcyclus verschoven. We doen dit bewust om de verschillen in synthese te tonen tussen twee vrij gelijklopende voorbeelden. Bovendien kan de lezer ook zo het verschil in kostprijs tussen de twee modellen bestuderen.
 
 \subsection{Stap 1: opstellen van het toestandsdiagram}
-Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige toestandsmachine beschrijft door de toestanden voor te stellen als cirkels en de overgangen als bogen tussen de cirkels. Bij een Moore-machine worden de toestanden geanotteerd met de uitvoer bij de respectievelijke toestand. Op de bogen staan de nodige ingangen om de overgang te verwezelijken. Bij een Mealy-machine worden de bogen ook geanoteerd met de respectievelijke uitvoer.} is de eerste en minst eenvoudige stap in het proces. Dit komt omdat men niet formeel kan uitdrukken hoe men uit de specificaties een toestandsdiagram opstelt. Het opstellen van een dergelijk diagram omvat echter meestal dezelfde vaardigheden als deze die bij bijvoorbeeld programmeren aan bod komen. Door middel van oefening kan men dan ook bekwaamheid verwerven.
+Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige toestandsmachine beschrijft door de toestanden voor te stellen als cirkels en de overgangen als bogen tussen de cirkels. Bij een Moore-machine worden de toestanden geanotteerd met de uitvoer bij de respectievelijke toestand. Op de bogen staan de nodige ingangen om de overgang te verwezelijken. Bij een Mealy-machine worden de bogen ook geanoteerd met de respectievelijke uitvoer.} is de eerste en minst makkelijk te automatiseren stap in het proces. Dit komt omdat men niet formeel kan uitdrukken hoe men uit de specificaties een toestandsdiagram opstelt. Het opstellen van een dergelijk diagram omvat echter meestal dezelfde vaardigheden als deze die bij bijvoorbeeld programmeren aan bod komen. Door middel van oefening kan men dan ook bekwaamheid verwerven.
 
 \begin{figure}[hbt]
 \centering
@@ -1027,26 +1026,20 @@ Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige
 \node[state] (G) [below left=of A] {$G$};
 \node[state] (C) [below left=of G] {$C$};
 \node[state] (F) [above left=of C] {$F$};
-\path (D) edge node[swap] {1/0} (E)
-          edge [loop above] node {0/0} (D)
-      (E) edge[bend left,swap] node {0/1} (F)
-          edge node {1/0} (G)
-      (F) edge node {0/0} (D)
-          edge[bend left,swap] node {1/0} (E)
-      (G) edge node[swap] {0/0} (F)
-          edge [loop below] node {1/0} (G)
-      (B) edge node {0/0} (D)
-          edge node {1/0} (E)
-      (C) edge node {0/0} (F)
-          edge node {1/0} (G)
-      (A) edge[bend right,swap] node {0/0} (B)
-          edge[bend left] node {1/0} (C);
+\path (D) edge node[swap] {1/0} (E) edge [loop above] node {0/0} (D)
+      (E) edge[bend left,swap] node {0/1} (F) edge node {1/0} (G)
+      (F) edge node {0/0} (D) edge[bend left,swap] node {1/0} (E)
+      (G) edge node[swap] {0/0} (F) edge [loop below] node {1/0} (G)
+      (B) edge node {0/0} (D) edge node {1/0} (E)
+      (C) edge node {0/0} (F) edge node {1/0} (G)
+      (A) edge[bend right,swap] node {0/0} (B) edge[bend left] node {1/0} (C);
 \end{tikzpicture}}
 \caption{Toestandsdiagrammen van de leidende voorbeelden.}
 \figlab{toestandsdiagram}
 \end{figure}
 
-\paragraph{Het toestandsdiagram} Alvorens we een toestandsdiagram kunnen opstellen zullen we eerst een toestandsdiagram formeel defini\"eren. Een toestandsdiagram bestaat uit een set van \gtermen{toestanden}{Een opsomming van de waarde val alle parameters waarin een systeem zich op een gegeven moment bevindt.}. Een toestand duiden we aan met een cirkel. Meestal benoemen we toestanden met een hoofdletter. Dit is niet verplicht maar maakt het makkelijk om naar een toestand te verwijzen. Verder zijn er ook \gtermen{transities}{Een overgang van de ene toestand naar de andere toestand. Wordt op een toestandsdiagram met een pijl aangeduid. Een transitie van een toestand naar een andere is meestal onderhevig aan voorwaarden en heeft soms effecten op de uitvoer.}: overgangen van de ene toestand naar de andere\footnote{Een transitie kan ook naar dezelfde toestand gaan.} toestand onder een bepaalde \termen{ingangscombinatie}. Een transitie duiden we aan met behulp van een gerichte pijl vanuit de brontoestand naar de doeltoestand. Voor elke mogelijke ingangscombinatie dient vanuit elke toestand een dergelijke pijl te vertrekken. De ingangscombinatie waarbij de transitie van toepassing is noteren we bij de gerichte pijl. Het kloksignaal is in een synchrone sequenti\"ele schakeling geen onderdeel van de ingangscombinatie. Tot slot bevat een toestandsdiagram ook de \gtermen{initalisatie}{De eerste toestand in een toestandsdiagram waarin het systeem terecht komt.}, een gerichte pijl die naar een bepaalde toestand wijst maar niet uit een toestand komt. Het is de eerste toestand waarin de schakeling zich bevindt. Verder keert de schakeling ook naar deze toestand terug als de gebruiker een reset-operatie op de schakeling uitvoert. De \termen{uitgangscombinatie} wordt ook weergegeven op het toestandsdiagram. Deze verschilt uiteraard tussen een Moore-machine en een Mealy-machine: bij een Moore-machine worden de uitgangen bij de toestanden genoteerd, dus in de ellips. Vermits de uitgangen bij een Mealy-machine afhangen van de ingangscombinatie wordt de uitgang bij de transitiepijlen gezet. We maken hierbij een onderscheid tussen de ingangscombinatie en de uitgang door hier een slash (``/'') tussen te plaatsen. Op figuur \ref{fig:toestandsdiagram} geven we de toestandsdiagrammen van de Moore- en Mealy-machine weer.
+\paragraph{Het toestandsdiagram} Alvorens we een toestandsdiagram kunnen opstellen zullen we eerst een toestandsdiagram formeel defini\"eren. Een toestandsdiagram bestaat uit een set van \gtermen{toestanden}{Een opsomming van de waarde van alle parameters waarin een systeem zich op een gegeven moment kan bevinden.}. Een toestand duiden we aan met een cirkel. Meestal benoemen we toestanden met een hoofdletter. Dit is niet verplicht maar maakt het makkelijk om naar een toestand te verwijzen. Verder zijn er ook \gtermen{transities}{Een overgang van een toestand naar een toestand. Transities worden op een toestandsdiagram met een pijl aangeduid. Een transitie van een toestand naar een (mogelijks dezelfde) toestand is meestal onderhevig aan voorwaarden en heeft soms effecten op de uitvoer.}: overgangen van een toestand naar een toestand\footnote{Een transitie kan ook naar dezelfde toestand gaan.} onder een bepaalde \termen{ingangscombinatie}. Een transitie duiden we aan met behulp van een gerichte pijl vanuit de \termen{brontoestand} naar de \termen{doeltoestand}. Voor elke mogelijke ingangscombinatie dient vanuit elke toestand een dergelijke pijl te vertrekken. De ingangscombinatie waarop de transitie van toepassing is noteren we boven de gerichte pijl. Het kloksignaal is in een synchrone sequenti\"ele schakeling geen onderdeel van de ingangscombinatie. Tot slot bevat een toestandsdiagram ook de \gtermen{initialisatie}{De eerste toestand in een toestandsdiagram waarin het systeem terecht komt.}: de eerste toestand in een toestandsdiagram waarin het systeem terecht komt. Deze initialisatie duiden we aan met een gerichte pijl die naar een bepaalde toestand wijst maar niet uit een toestand komt. De schakeling keert ook naar deze toestand terug als de gebruiker een reset-operatie op de schakeling uitvoert. De \termen{uitgangscombinatie} wordt ook weergegeven op het toestandsdiagram. Deze verschilt uiteraard tussen een Moore-machine en een Mealy-machine: bij een Moore-machine worden de uitgangen bij de toestanden genoteerd, dus in de cirkel (bijvoorbeeld onderaan). Vermits de uitgangen bij een Mealy-machine afhangen van de ingangscombinatie wordt de uitgang boven de transitiepijlen gezet. We maken hierbij een onderscheid tussen de ingangscombinatie en de uitgang door hier een slash\footnote{Dit is louter per conventie. De slash heeft verder geen enkele betekenis.} (``/'') tussen te plaatsen. Op \figref{toestandsdiagram} geven we de toestandsdiagrammen van de Moore- en Mealy-machine van het leidend voorbeeld weer.
+
 \begin{table}[hbt]
 \centering
 \subtable[Moore-machine]{\small{\begin{tabular}{c|cc|c}
@@ -1069,42 +1062,74 @@ $O$  &$N$  &$O$  &$0$
 \end{tabular}}}
 \subtable[Mealy-machine]{\small{\begin{tabular}{c|cc}
 Toestand&0&1\\\hline
-$A$&$B/0$&$C/0$\\
-$B$&$D/0$&$E/0$\\
-$C$&$F/0$&$G/0$\\
-$D$&$D/0$&$E/0$\\
-$E$&$F/1$&$G/0$\\
-$F$&$D/0$&$E/0$\\
-$G$&$F/0$&$G/0$
+$A$  &$B/0$  &$C/0$\\
+$B$  &$D/0$  &$E/0$\\
+$C$  &$F/0$  &$G/0$\\
+$D$  &$D/0$  &$E/0$\\
+$E$  &$F/1$  &$G/0$\\
+$F$  &$D/0$  &$E/0$\\
+$G$  &$F/0$  &$G/0$
 \end{tabular}}}
 \caption{Toestandstabellen van de leidende voorbeelden.}
 \tbllab{toestandstabel}
 \end{table}
-\paragraph{Toestandstabel}Een toestandsdiagram is een grafische voorstelling. Bij een groot aantal toestanden of bij bijvoorbeeld invoer van een toestandsdiagram in een computer, maken we meestal gebruik van een alternatieve voorstelling: de \termen{toestandstabel}. De rijen in de toestandstabel stellen de verschillende toestanden voor, de kolommen stellen de invoercombinatie voor. In een cel $i,j$ voor toestand $A_i$ en invoer $I_j$ plaatsen we de volgende toestand. In het geval van een Moore-machine voorzien we een extra kolom die per rij de uitgangscombinatie van deze toestand weergeeft. Bij een Mealy-machine plaatsen we in elke cel naast de volgende toestand de uitgangscombinatie voor toestand $A_i$ en invoer $I_j$. Ook hier plaatsen we een slash om de volgende toestand van de uitvoer te onderscheiden. De toestandstabellen van de leidende voorbeelden staan in tabel \ref{tbl:toestandstabel}.
-\paragraph{Opstellen van een toestandsdiagram en -tabel}Zoals reeds gezegd is het opstellen van een toestandsdiagram of -tabel een kunst. Een algemene techniek die gehanteerd kan worden is het aantal klokflanken te bepalen dat we geheugen moeten voorzien.  In het geval van de voorbeelden is dit drie klokflanken voor de Moore-machine en twee klokflanken voor de Mealy-machine. Vervolgens kunnen we een toestandstabel of -diagram opstellen die de overgang naar verschillende toestanden van het geheugen voorstelt. Zo komt $A$ in beide voorbeelden overeen met de toestand waarin we starten, er is bijgevolg nog geen sprake over inhoud in het geheugen. $B$ en $C$ betekent dat er na de eerste klokflank respectievelijk een 0 en een 1 in het geheugen opgeslagen is. $D$, $E$, $F$ en $G$ spreken over de respectievelijke geheugentoestanden $00$, $01$, $10$ en $11$. Voor de Mealy-machine is dit reeds voldoende. Bij de Moore-machine introduceren we nog een extra niveau. De overgangen op dit laatste niveau houden in dat we de oudste bit vergeten en de nieuwe bit memoriseren. Hierdoor gaan alle overgangen van een toestand op het laatste niveau enkel naar toestanden op hetzelfde niveau. We kunnen machinaal eenvoudig een tabel opstellen voor een arbitraire diepte. Een groot nadeel is dat indien we $n$ klokflanken willen memoriseren, we $2^{n+1}-1$ toestanden bekomen. Na het opstellen van deze tabel dienen we enkel de specificaties nog te vertalen in de uitgangen van de toestanden in het geval van een Moore-machine, en de overgangen bij een Mealy-machine. Meestal kan men echter door logisch te redeneren voorkomen dat we dergelijke grote toestandstabellen moeten opstellen. In de volgende subsectie reduceren we het aantal toestanden tot de theoretische ondergrens. Of we de initi\"ele tabel opstellen met de hier beschreven methode of door logisch te redeneren verandert niets aan het resultaat van de volgende stap.
+
+\paragraph{Toestandstabel}
+Een toestandsdiagram is een grafische voorstelling. Bij een groot aantal toestanden of bij bijvoorbeeld invoer van een toestandsdiagram in een computer, maken we meestal gebruik van een alternatieve voorstelling: de \gtermen{toestandstabel}{Een voorstelling van een eindige toestandsmachine -- Moore of Mealy -- met behulp van een tabel. In de tabel stellen de toestanden rijen voor. De kolommen ingangscombinaties en in het geval van een Moore machine stelt de laatste kolom de uitvoer voer. Een cel $i,j$ beschrijft de transitie vanuit toestand $A_i$ onder invoer $I_j$.}. De rijen in de toestandstabel stellen de verschillende toestanden $A_i$ voor, de kolommen stellen de verschillende invoercombinaties $I_j$ voor. In een cel $i,j$ voor toestand $A_i$ en invoer $I_j$ plaatsen we de volgende toestand. In het geval van een Moore-machine voorzien we een extra kolom die per rij de uitgangscombinatie $O_i$ van deze toestand $A_i$ weergeeft. Bij een Mealy-machine plaatsen we in elke cel $i,j$ naast de volgende toestand de uitgangscombinatie voor toestand $A_i$ en invoer $I_j$. Ook hier plaatsen we een slash om de volgende toestand van de uitvoer te onderscheiden. Men kan de initi\"ele toestand (initialisatie) aanduiden door deze als eerste rij in het diagram te beschouwen. De toestandstabellen van de leidende voorbeelden staan in \tblref{toestandstabel}.
+
+\paragraph{Opstellen van een toestandsdiagram en -tabel}
+Zoals reeds gezegd is het opstellen van een toestandsdiagram of -tabel een kunst. Een algemene techniek die gehanteerd kan worden is het aantal klokflanken te bepalen dat we geheugen moeten voorzien.  In het geval van de voorbeelden is dit drie klokflanken voor de Moore-machine en twee klokflanken voor de Mealy-machine. Vervolgens kunnen we een toestandstabel of -diagram opstellen die de overgang naar verschillende toestanden van het geheugen voorstelt. Zo komt $A$ in beide voorbeelden overeen met de toestand waarin we starten, op dat ogenblik zit er dus nog niets in het geheugen $m$, ofwel $\fun{m}{A}=\tupl{}$. $B$ en $C$ betekenen dat er na de eerste klokflank respectievelijk een $0$ en een $1$ in het geheugen opgeslagen is ofwel $\fun{m}{B}=\tupl{0}$ en $\fun{m}{C}=\tupl{1}$. $D$, $E$, $F$ en $G$ spreken over de respectievelijke geheugentoestanden $00$, $01$, $10$ en $11$ we voorzien dus transities van $B$ naar $D$ en $E$ en van $C$ naar $F$ en $G$. Voor de Mealy-machine is dit reeds voldoende: immers dienen we bij de Mealy-machine slechts de laatste twee klokflanken te onthouden, en wordt de derde door de invoer op dat moment bepaald. Bij de Moore-machine introduceren we nog een extra laag aan toestanden: $H$, $I$, $J$, $K$, $L$, $M$, $N$ en $O$. De overgangen tussen toestanden in dit laatste niveau houden in dat we de oudste bit vergeten en de nieuwe bit memoriseren. Zo is er een overgang tussen $M$ (met $\fun{m}{M}=\tupl{1,0,1}$) naar $J$ (met $\fun{m}{J}=\tupl{0,1,0}$) bij invoer $1$ omdat we de oudste bit vergeten, en de ingangs-bit $0$ achteraan toevoegen. Hierdoor gaan alle overgangen van een toestand op het laatste niveau enkel naar toestanden op hetzelfde niveau. We kunnen machinaal eenvoudig een tabel opstellen voor een arbitraire diepte. Een groot nadeel is dat indien we $n$ klokflanken willen memoriseren, we $2^{n+1}-1$ toestanden bekomen: $1$ start-toestand, $2$ toestanden met $1$ bit geheugen, $4$ toestanden met $2$ bit geheugen, enzovoort. Na het opstellen van deze tabel dienen we enkel de specificaties nog te vertalen in de uitgangen van de toestanden in het geval van een Moore-machine, en de overgangen bij een Mealy-machine. Meestal kan men echter door logisch te redeneren voorkomen dat we dergelijke grote toestandstabellen moeten opstellen. In de volgende subsectie reduceren we het aantal toestanden tot de theoretische ondergrens. Of we de initi\"ele tabel opstellen met de hier beschreven methode of door logisch te redeneren verandert niets aan het resultaat van de volgende stap.
+
 \subsection{Stap 2: Minimaliseren van de toestanden}
-\label{ss:minimizeFSMSeq}
-Nu we een toestandsdiagram opgesteld hebben kunnen we dit diagram implementeren met behulp van logica. Het loont echter meestal de moeite om eerst het toestandsdiagram te minimaliseren. Minder toestanden impliceren minder geheugencomponenten om de toestand bij te houden. Bovendien kunnen we meestal ook de achterliggende logica die de volgende toestand en de uitgangen berekent minimaliseren. Hiertoe geven we een methode die gegarandeerd het kleinste toestandsdiagram vindt die de specificaties kan implementeren. Met minimaal bedoelen we hier het aantal toestanden. Dit betekent dus niet noodzakelijk dat de schakeling die we hiermee verwezenlijken ook minimaal is.
+\ssclab{minimizeFSMSeq}
+Nu we een toestandsdiagram en/of toestandstabel opgesteld hebben kunnen we dit diagram implementeren met behulp van logica. Het loont echter meestal de moeite om eerst het toestandsdiagram te minimaliseren: het terugdringen van het aantal toestanden. Minder toestanden impliceert minder geheugencomponenten om de toestand voor te stellen wat dus goedkoper is. Bovendien kunnen we meestal ook de achterliggende logica die de volgende toestand en de uitgangen berekent minimaliseren. Hiertoe geven we een methode die de garantie biedt een equivalent toestandsdiagram te vinden met het theoretisch minimum aantal toestanden. Als maat nemen we dus het aantal toestanden; dit betekent dus niet noodzakelijk dat de schakeling die we hiermee verwezenlijken ook de goedkoopste is, al zal de kostprijs vaak hiermee schalen.
+
 \subsubsection{Het minimalisatiealoritme}
-\paragraph{Het algemeen idee}De methode die we implementeren gaat uit van een positief idee: alle toestanden zijn vertegenwoordigers van dezelfde toestand. Uiteraard is dit niet altijd het geval. Er zijn twee omstandigheden waarin twee toestanden niet gelijk aan elkaar zijn:
+
+\paragraph{Het algemeen idee}
+De methode die we implementeren gaat uit van een optimistisch idee: alle toestanden zijn vertegenwoordigers van dezelfde toestand. We kunnen dus elk diagram met \'e\'en toestand beschrijven. Uiteraard is dit meestal niet het geval. Er zijn namelijk twee omstandigheden waarin twee toestanden $A_i$ en $A_j$ niet gelijk aan elkaar zijn:
+
 \begin{enumerate}
- \item De uitgang van de toestanden of overgangen uit een toestand zijn verschillend. In dat geval kunnen we immers onmogelijk de uitgangsfunctie implementeren. Een uitgang kan immers niet tegelijk 0 of 1 zijn.
- \item De uitgang na een willekeurig aantal willekeurige invoer (configuraties bij een klokflank) is verschillend. In dat geval betekent dit dat we dus in de toekomst op het vorige probleem zullen botsen.
+ \item De uitgang van de toestanden (voor Moore), of de uitgangen bij overgangen uit een toestand (voor Mealy) zijn verschillend. In dat geval kunnen we immers onmogelijk de uitgangsfunctie implementeren. Een uitgang kan immers niet tegelijk $0$ en $1$ zijn.
+ \item De uitgang van de toestand na een willekeurig hoeveelheid willekeurige invoer (configuraties bij een klokflank) is verschillend. In dat geval betekent dit dat we dus in de toekomst vroeg of laat op het vorige probleem zullen botsen.
 \end{enumerate}
-\paragraph{De eerste voorwaarde}We kunnen deze twee condities eenvoudig in een algoritme implementeren. Het algoritme werkt op basis van een partitionering van de aanvankelijke toestandsruimte. Als twee toestanden tot dezelfde partitite behoren. betekent dit dat ze eigenlijk hetzelfde zijn. Zoals eerder vermeld begint de methode met een positieve ingesteldheid: alle toestanden zijn gelijk. De initi\"ele configuratie bevat dus \'e\'en partitie waar alle toestanden in zitten. Vervolgens kunnen de eerste voorwaarde toepassen. Toestanden die een verschillende uitgang opleveren kunnen onmogelijk hetzelfde zijn. Voor een Moore-machine betekent dit dus de uitgang van de toestand. In het leidend voorbeeld is de uitgang 0 of 1. We partitioneren de configuratie dus in een partitie die 0 als uitgang geeft en een partitie met 1 als uitgang. De configuratie is dan:
+
+Deze voorwaarden zullen aanleiding geven tot het onderverdelen van de toestanden in meer partities zodat elke twee toestanden in eenzelfde partitie, gelijk zijn aan elkaar (de twee hierboven gestelde voorwaarden zijn niet van toepassing).
+
+\paragraph{De eerste voorwaarde}
+We kunnen deze twee condities eenvoudig in een algoritme implementeren. De eerste voorwaarde kunnen we implementeren door initieel de toestandsruimte te partitioneren op de uitgang van te toestanden:
+
+\begin{quote}
+Twee toestanden $A_i$ en $A_j$ behoren tot eenzelfde partitie als en slechts ofwel de uitvoer voor de toestanden $O_i$ en $O_j$ gelijk zijn (Moore), ofwel voor alle invoer $I_k$, de uitvoer onder een transitie $O_{i,k}$ en $O_{j,k}$ gelijk zijn (Mealy).
+\end{quote}
+
+Als twee toestanden tot dezelfde partitite behoren betekent dit dat ze op dat moment equivalent zijn. Zoals eerder vermeld begint de methode met een optimistische ingesteldheid: alle toestanden zijn gelijk. De initi\"ele configuratie bevat dus \'e\'en partitie waar alle toestanden in zitten. Vervolgens kunnen de eerste voorwaarde toepassen. Toestanden die een verschillende uitgang opleveren kunnen onmogelijk hetzelfde zijn.
+
+\paragraph{}
+Voor een Moore-machine betekent dit dus de uitgang van de toestand. In het leidend voorbeeld is de uitgang $0$ of $1$. We partitioneren de configuratie dus in een partitie die $0$ als uitgang geeft en een partitie met 1 als uitgang. De configuratie is dan:
+
 \begin{equation}
 \begin{array}{lr}
-\mbox{partitie}_{\mbox{\small{Moore,0}}}=\left\{\left\{A,B,C,D,E,F,G,H,I,K,L,M,N,O\right\},\left\{J\right\}\right\}&\mbox{(Leidend voorbeeld)}
+\mbox{partitie}_{\mbox{\small{Moore,0}}}=\accl{\accl{A,B,C,D,E,F,G,H,I,K,L,M,N,O},\accl{J}}&\mbox{(Leidend voorbeeld)}
 \end{array}
 \end{equation}
-Merk echter op dat een schakeling ook meerdere lijnen als uitgang kan hebben. Indien de uitgang $n$ bits telt levert dit ons een configuratie op van hoogstens $2^n$ partities. In het geval een Mealy-machine leidt een toestand niet rechtstreeks tot een uitgang. Twee toestanden zijn dan gelijk indien voor elke invoer-configuratie bij deze toestand, we dezelfde uitvoerconfiguratie bekomen. In het leidend voorbeeld beschouwen we een 1-bit ingang en een 1-bit uitgang. Dit leidt dus tot hoogstens 4 partities. In ons geval zijn er maar 2 partities:
+
+Merk echter op dat een schakeling ook meerdere draden als uitgang kan hebben. Indien de uitgang $n$ bits telt levert dit ons een configuratie op van hoogstens $2^n$ partities.
+
+\paragraph{}
+In het geval een Mealy-machine leidt een toestand niet rechtstreeks tot een uitgang. Twee toestanden zijn dan gelijk indien voor elke invoer-configuratie bij deze toestand, we dezelfde uitvoerconfiguratie bekomen. In het leidend voorbeeld beschouwen we een 1-bit ingang en een 1-bit uitgang. Dit leidt dus tot hoogstens 4 partities. In ons geval zijn er maar 2 partities:
+
 \begin{equation}
 \begin{array}{lr}
-\mbox{partitie}_{\mbox{\small{Mealy,0}}}=\left\{\left\{A,B,C,D,F,G\right\},\left\{E\right\}\right\}&\mbox{(Leidend voorbeeld)}
+\mbox{partitie}_{\mbox{\small{Mealy,0}}}=\accl{\accl{A,B,C,D,F,G},\accl{E}}&\mbox{(Leidend voorbeeld)}
 \end{array}
 \end{equation}
+
 In het algemene geval met een $m$-bit ingang en een $n$-bit uitgang bekomen we hoogstens $2^{n+m}$ partities.
-\paragraph{De tweede voorwaarde}De tweede voorwaarde kunnen we ook afdwingen door middel van iteratie. Hierbij itereren we over de lengte van de invoer. Het specifieke geval is uiteraard het geval waarbij de uitvoer na \'e\'en klokcyclus reeds verschilt. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $x_0$ en $y_0$ onder een willekeurige invoer $i_0$ naar twee toestanden $x_1$ en $y_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $x_0$ en $y_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $x_0$ en $y_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $x_0$ en $y_0$ toe behoort. Indien we daarna de invoer $i_0$ dienen te verwerken komen we in toestand die zowel $x_1$ en $x_2$ dient te vertegenwoordigen. Vermits $x_1$ en $y_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen. We gebruiken de eerste configuratie van de minimale Moore-machine als voorbeeld. Hierbij gaan van de eerste partitie de toestanden $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder invoer van $0$ en $1$ naar de eerste partitie. De toestanden $E$, $I$ en $M$ gaan onder invoer van $0$ naar de tweede partitie ($J$) en onder invoer van $1$ naar de eerste partitie. Bijgevolg splitsen we de eerste partitie op in $\left\{\left\{A,B,C,D,F,G,H,K,L,N,O\right\},\left\{E,I,M\right\}\right\}$. Vermits de tweede partitie reeds uit \'e\'en element bestaat, valt deze niet verder op te delen. De totale partitie na \'e\'en iteratie is dan gelijk aan:
+
+%REVIEW
+\paragraph{De tweede voorwaarde}
+De tweede voorwaarde kunnen we afdwingen met behulp van iteratie. Hierbij voeren we een instructie $m$ keer uit, met $m$ het aantal toestanden. Het specifieke geval is uiteraard het geval waarbij de uitvoer na \'e\'en klokcyclus reeds verschilt. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $x_0$ en $y_0$ onder een willekeurige invoer $i_0$ naar twee toestanden $x_1$ en $y_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $x_0$ en $y_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $x_0$ en $y_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $x_0$ en $y_0$ toe behoort. Indien we daarna de invoer $i_0$ dienen te verwerken komen we in toestand die zowel $x_1$ en $x_2$ dient te vertegenwoordigen. Vermits $x_1$ en $y_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen. We gebruiken de eerste configuratie van de minimale Moore-machine als voorbeeld. Hierbij gaan van de eerste partitie de toestanden $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder invoer van $0$ en $1$ naar de eerste partitie. De toestanden $E$, $I$ en $M$ gaan onder invoer van $0$ naar de tweede partitie ($J$) en onder invoer van $1$ naar de eerste partitie. Bijgevolg splitsen we de eerste partitie op in $\left\{\left\{A,B,C,D,F,G,H,K,L,N,O\right\},\left\{E,I,M\right\}\right\}$. Vermits de tweede partitie reeds uit \'e\'en element bestaat, valt deze niet verder op te delen. De totale partitie na \'e\'en iteratie is dan gelijk aan:
 \begin{equation}
 \begin{array}{lr}
 \mbox{partitie}_{\mbox{\small{Moore,1}}}=\left\{\left\{A,B,C,D,F,G,H,K,L,N,O\right\},\left\{E,I,M\right\},\left\{J\right\}\right\}&\mbox{(Leidend voorbeeld)}
