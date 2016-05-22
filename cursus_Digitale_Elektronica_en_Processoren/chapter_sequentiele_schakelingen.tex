@@ -1135,24 +1135,30 @@ De tweede voorwaarde luidt:
 Twee toestanden zijn niet-equivalent wanneer door een willekeurige lange sequentie invoerconfiguraties we in twee niet-equivalente toestanden terecht komen.
 \end{quote}
 
-We kunnen deze voorwaarde afdwingen met behulp van iteratie. Hierbij voeren we een hieronder beschreven methode hoogstens $k-1$ keer uit, met $k$ het aantal aanvankelijke toestanden.
+We kunnen deze voorwaarde afdwingen met behulp van iteratie. Hierbij voeren we een hieronder beschreven methode hoogstens $k-1$ keer uit, met $k$ het aantal aanvankelijke toestanden. Eenmaal het algoritme echter een vast punt bereikt: namelijk de partitie is dezelfde voor en na het uitvoeren van de methode, hebben we echter het antwoord gevonden en hoeven we geen verdere iteraties uit te voeren.
 
 \paragraph{}
-Een speciaal geval van de hierboven gestelde voorwaarde is een sequentie van invoerconfiguraties met lengte $1$. Twee voorwaardes zijn dan in \emph{conflict} wanneer ze na \'e\'en klokflank in niet-equivalente toestanden kunnen zitten. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $A_0$ en $B_0$ onder een willekeurige invoer $I_0$ naar twee toestanden $A_1$ en $B_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $A_0$ en $B_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $A_0$ en $B_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $A_0$ en $B_0$ toe behoort. Indien we daarna de invoer $I_0$ dienen te verwerken komen we in toestand die zowel $A_1$ en $B_1$ dient te vertegenwoordigen. Vermits $x_1$ en $y_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen. We gebruiken de eerste configuratie van de minimale Moore-machine als voorbeeld. Hierbij gaan van de eerste partitie de toestanden $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder invoer van $0$ en $1$ naar de eerste partitie. De toestanden $E$, $I$ en $M$ gaan onder invoer van $0$ naar de tweede partitie ($J$) en onder invoer van $1$ naar de eerste partitie. Bijgevolg splitsen we de eerste partitie op in $\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M}}$. Vermits de tweede partitie reeds uit \'e\'en element bestaat, valt deze niet verder op te delen. De totale partitie na \'e\'en iteratie is dan gelijk aan:
+Een speciaal geval van de hierboven gestelde voorwaarde is een sequentie van invoerconfiguraties met lengte $1$. Twee voorwaardes zijn dan in \emph{conflict} wanneer ze na \'e\'en klokflank in niet-equivalente toestanden kunnen zitten. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $A_0$ en $B_0$ onder een willekeurige invoer $I_0$ naar twee toestanden $A_1$ en $B_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $A_0$ en $B_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $A_0$ en $B_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $A_0$ en $B_0$ toe behoort. Indien we daarna de invoer $I_0$ dienen te verwerken komen we in toestand die zowel $A_1$ en $B_1$ dient te vertegenwoordigen. Vermits $A_1$ en $B_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen.
+
+\paragraph{}
+We gebruiken de eerste partitie van de minimale Moore-machine als voorbeeld. Hierbij gaan van de eerste partitie de toestanden $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder invoer van $0$ en $1$ naar de eerste partitie. De toestanden $E$, $I$ en $M$ gaan onder invoer van $0$ naar de tweede partitie ($\accl{J}$) en onder invoer van $1$ naar de eerste partitie. Bijgevolg splitsen we de eerste partitie op in $\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M}}$. Vermits de tweede partitie reeds uit \'e\'en element bestaat, valt deze niet verder op te delen: eenmaal een partitie uit \'e\'en toestand bestaat kunnen we deze partitie voor de rest van het algoritme met rust laten. De totale partitie na \'e\'en iteratie is dan gelijk aan:
+
 \begin{equation}
 \begin{array}{lr}
 \mbox{partitie}_{\mbox{\small{Moore,1}}}=\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M},\accl{J}}&\mbox{(Leidend voorbeeld)}
 \end{array}
 \end{equation}
-Het enige wat we nu moeten doen is deze stap herhalen op de nieuwe partitie $\mbox{partitie}_{\mbox{\small{Moore,1}}}$. Op die manier passen we de regel toe bij een invoerlengte van 2. De enige vraag die open blijft is wanneer we mogen stoppen. Deze vraag is eenvoudig te beantwoorden: zolang er partities bijkomen kan een volgende stap de partities verder verdelen. Indien de uitvoering van een stap geen wijzigingen aan de partities aanbrengt, zal de volgende stap dit uiteraard ook niet meer doen, en alle stappen hierna ook niet meer. In dat geval is het veilig om te stoppen. Bij de minimalisatie van de Moore-machine zullen we dan volgende partities bekomen:
+
+Het enige wat we nu moeten doen is deze stap herhalen op de nieuwe partitie $\mbox{partitie}_{\mbox{\small{Moore,1}}}$. Op die manier passen we de tweede voorwaarde onrechtstreeks toe op invoersequenties met lengte $2$. De enige vraag die open blijft is wanneer we mogen stoppen. Deze vraag is eenvoudig te beantwoorden: zolang er partities bijkomen kan een volgende stap de partities verder verdelen. Indien de uitvoering van een stap geen wijzigingen aan de partities aanbrengt, zal de volgende stap dit uiteraard ook niet meer doen: immers zijn de stappen deterministisch. In dat geval is het veilig om te stoppen. Bij de minimalisatie van de Moore-machine zullen we dan volgende partities bekomen:
+
 \begin{equation}
 \small{
 \begin{array}{lr}
 \left\{\begin{array}{l}
 \mbox{partitie}_{\mbox{\small{Moore,0}}}=\accl{\accl{A,B,C,D,E,F,G,H,I,K,L,M,N,O},\accl{J}}\\
-\mbox{partitie}_{\mbox{\small{Moore,1}}}=\left\{\left\{A,B,C,D,F,G,H,K,L,N,O\right\},\left\{E,I,M\right\},\left\{J\right\}\right\}\\
-\mbox{partitie}_{\mbox{\small{Moore,2}}}=\left\{\left\{A,C,G,K,O\right\},\left\{B,D,F,H,L,N\right\},\left\{E,I,M\right\},\left\{J\right\}\right\}\\
-\mbox{partitie}_{\mbox{\small{Moore,3}}}=\left\{\left\{A,C,G,K,O\right\},\left\{B,D,F,H,L,N\right\},\left\{E,I,M\right\},\left\{J\right\}\right\}
+\mbox{partitie}_{\mbox{\small{Moore,1}}}=\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M},\accl{J}}\\
+\mbox{partitie}_{\mbox{\small{Moore,2}}}=\accl{\accl{A,C,G,K,O},\accl{B,D,F,H,L,N},\accl{E,I,M},\accl{J}}\\
+\mbox{partitie}_{\mbox{\small{Moore,3}}}=\accl{\accl{A,C,G,K,O},\accl{B,D,F,H,L,N},\accl{E,I,M},\accl{J}}
 \end{array}\right.&\mbox{(Leidend voorbeeld)}
 \end{array}}
 \end{equation}
@@ -1161,9 +1167,9 @@ Het geval van de Mealy-machine is volledig analoog: we bekomen dan:
 \small{
 \begin{array}{lr}
 \left\{\begin{array}{l}
-\mbox{partitie}_{\mbox{\small{Mealy,0}}}=\left\{\left\{A,B,C,D,F,G\right\},\left\{E\right\}\right\}\\
-\mbox{partitie}_{\mbox{\small{Mealy,1}}}=\left\{\left\{A,C,G\right\},\left\{B,D,F\right\},\left\{E\right\}\right\}\\
-\mbox{partitie}_{\mbox{\small{Mealy,2}}}=\left\{\left\{A,C,G\right\},\left\{B,D,F\right\},\left\{E\right\}\right\}
+\mbox{partitie}_{\mbox{\small{Mealy,0}}}=\accl{\accl{A,B,C,D,F,G},\accl{E}}\\
+\mbox{partitie}_{\mbox{\small{Mealy,1}}}=\accl{\accl{A,C,G},\accl{B,D,F},\accl{E}}\\
+\mbox{partitie}_{\mbox{\small{Mealy,2}}}=\accl{\accl{A,C,G},\accl{B,D,F},\accl{E}}
 \end{array}\right.&\mbox{(Leidend voorbeeld)}
 \end{array}}
 \end{equation}
