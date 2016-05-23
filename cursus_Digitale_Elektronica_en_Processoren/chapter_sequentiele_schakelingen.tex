@@ -1127,7 +1127,6 @@ In het geval een Mealy-machine leidt een toestand niet rechtstreeks tot een uitg
 
 In het algemene geval met een $m$-bit ingang en een $n$-bit uitgang bekomen we hoogstens $2^{n\cdot 2^m}$ partities.
 
-%REVIEW
 \paragraph{De tweede voorwaarde}
 De tweede voorwaarde luidt:
 
@@ -1137,6 +1136,7 @@ Twee toestanden zijn niet-equivalent wanneer door een willekeurige lange sequent
 
 We kunnen deze voorwaarde afdwingen met behulp van iteratie. Hierbij voeren we een hieronder beschreven methode hoogstens $k-1$ keer uit, met $k$ het aantal aanvankelijke toestanden. Eenmaal het algoritme echter een vast punt bereikt: namelijk de partitie is dezelfde voor en na het uitvoeren van de methode, hebben we echter het antwoord gevonden en hoeven we geen verdere iteraties uit te voeren.
 
+%REVIEW
 \paragraph{}
 Een speciaal geval van de hierboven gestelde voorwaarde is een sequentie van invoerconfiguraties met lengte $1$. Twee voorwaardes zijn dan in \emph{conflict} wanneer ze na \'e\'en klokflank in niet-equivalente toestanden kunnen zitten. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $A_0$ en $B_0$ onder een willekeurige invoer $I_0$ naar twee toestanden $A_1$ en $B_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $A_0$ en $B_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $A_0$ en $B_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $A_0$ en $B_0$ toe behoort. Indien we daarna de invoer $I_0$ dienen te verwerken komen we in toestand die zowel $A_1$ en $B_1$ dient te vertegenwoordigen. Vermits $A_1$ en $B_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen.
 
