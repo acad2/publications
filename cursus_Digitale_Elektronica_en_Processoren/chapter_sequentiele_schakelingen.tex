@@ -1077,6 +1077,42 @@ $G$  &$F/0$  &$G/0$
 \paragraph{Toestandstabel}
 Een toestandsdiagram is een grafische voorstelling. Bij een groot aantal toestanden of bij bijvoorbeeld invoer van een toestandsdiagram in een computer, maken we meestal gebruik van een alternatieve voorstelling: de \gtermen{toestandstabel}{Een voorstelling van een eindige toestandsmachine -- Moore of Mealy -- met behulp van een tabel. In de tabel stellen de toestanden rijen voor. De kolommen ingangscombinaties en in het geval van een Moore machine stelt de laatste kolom de uitvoer voer. Een cel $i,j$ beschrijft de transitie vanuit toestand $A_i$ onder invoer $I_j$.}. De rijen in de toestandstabel stellen de verschillende toestanden $A_i$ voor, de kolommen stellen de verschillende invoercombinaties $I_j$ voor. In een cel $i,j$ voor toestand $A_i$ en invoer $I_j$ plaatsen we de volgende toestand. In het geval van een Moore-machine voorzien we een extra kolom die per rij de uitgangscombinatie $O_i$ van deze toestand $A_i$ weergeeft. Bij een Mealy-machine plaatsen we in elke cel $i,j$ naast de volgende toestand de uitgangscombinatie voor toestand $A_i$ en invoer $I_j$. Ook hier plaatsen we een slash om de volgende toestand van de uitvoer te onderscheiden. Men kan de initi\"ele toestand (initialisatie) aanduiden door deze als eerste rij in het diagram te beschouwen. De toestandstabellen van de leidende voorbeelden staan in \tblref{toestandstabel}.
 
+\paragraph{Software}
+Men kan ook een Moore- of Mealy-machine als tekstbestand doorgeven aan de software die bij dit boek hoort. Dit in de vorm van een toestandstabel zoals onderstaande voorbeelden duidelijk maken:
+
+\begin{verbatim}
+$ cat examples/moore_example.fsm
+  | 0 | 1 |
+--+---+---+--
+A | B | C | 0
+B | D | E | 0
+C | F | G | 0
+D | H | I | 0
+E | J | K | 0
+F | L | M | 0
+G | N | O | 0
+H | H | I | 0
+I | J | K | 0
+J | L | M | 1
+K | N | O | 0
+L | H | I | 0
+M | J | K | 0
+N | L | M | 0
+O | N | O | 0
+$ cat examples/mealy_example.fsm
+  |   0   |   1
+--+-------+------
+A | B / 0 | C / 0
+B | D / 0 | E / 0
+C | F / 0 | G / 0
+D | D / 0 | E / 0
+E | F / 1 | G / 0
+F | D / 0 | E / 0
+G | F / 0 | G / 0
+\end{verbatim}
+
+Men kan op deze modellen enkele operaties uitvoeren die we in het verdere verloop van deze cursus zullen beschrijven.
+
 \paragraph{Opstellen van een toestandsdiagram en -tabel}
 Zoals reeds gezegd is het opstellen van een toestandsdiagram of -tabel een kunst. Een algemene techniek die gehanteerd kan worden is het aantal klokflanken te bepalen dat we geheugen moeten voorzien.  In het geval van de voorbeelden is dit drie klokflanken voor de Moore-machine en twee klokflanken voor de Mealy-machine. Vervolgens kunnen we een toestandstabel of -diagram opstellen die de overgang naar verschillende toestanden van het geheugen voorstelt. Zo komt $A$ in beide voorbeelden overeen met de toestand waarin we starten, op dat ogenblik zit er dus nog niets in het geheugen $m$, ofwel $\fun{m}{A}=\tupl{}$. $B$ en $C$ betekenen dat er na de eerste klokflank respectievelijk een $0$ en een $1$ in het geheugen opgeslagen is ofwel $\fun{m}{B}=\tupl{0}$ en $\fun{m}{C}=\tupl{1}$. $D$, $E$, $F$ en $G$ spreken over de respectievelijke geheugentoestanden $00$, $01$, $10$ en $11$ we voorzien dus transities van $B$ naar $D$ en $E$ en van $C$ naar $F$ en $G$. Voor de Mealy-machine is dit reeds voldoende: immers dienen we bij de Mealy-machine slechts de laatste twee klokflanken te onthouden, en wordt de derde door de invoer op dat moment bepaald. Bij de Moore-machine introduceren we nog een extra laag aan toestanden: $H$, $I$, $J$, $K$, $L$, $M$, $N$ en $O$. De overgangen tussen toestanden in dit laatste niveau houden in dat we de oudste bit vergeten en de nieuwe bit memoriseren. Zo is er een overgang tussen $M$ (met $\fun{m}{M}=\tupl{1,0,1}$) naar $J$ (met $\fun{m}{J}=\tupl{0,1,0}$) bij invoer $1$ omdat we de oudste bit vergeten, en de ingangs-bit $0$ achteraan toevoegen. Hierdoor gaan alle overgangen van een toestand op het laatste niveau enkel naar toestanden op hetzelfde niveau. We kunnen machinaal eenvoudig een tabel opstellen voor een arbitraire diepte. Een groot nadeel is dat indien we $n$ klokflanken willen memoriseren, we $2^{n+1}-1$ toestanden bekomen: $1$ start-toestand, $2$ toestanden met $1$ bit geheugen, $4$ toestanden met $2$ bit geheugen, enzovoort. Na het opstellen van deze tabel dienen we enkel de specificaties nog te vertalen in de uitgangen van de toestanden in het geval van een Moore-machine, en de overgangen bij een Mealy-machine. Meestal kan men echter door logisch te redeneren voorkomen dat we dergelijke grote toestandstabellen moeten opstellen. In de volgende subsectie reduceren we het aantal toestanden tot de theoretische ondergrens. Of we de initi\"ele tabel opstellen met de hier beschreven methode of door logisch te redeneren verandert niets aan het resultaat van de volgende stap.
 
@@ -1138,10 +1174,10 @@ We kunnen deze voorwaarde afdwingen met behulp van iteratie. Hierbij voeren we e
 
 %REVIEW
 \paragraph{}
-Een speciaal geval van de hierboven gestelde voorwaarde is een sequentie van invoerconfiguraties met lengte $1$. Twee voorwaardes zijn dan in \emph{conflict} wanneer ze na \'e\'en klokflank in niet-equivalente toestanden kunnen zitten. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $A_0$ en $B_0$ onder een willekeurige invoer $I_0$ naar twee toestanden $A_1$ en $B_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $A_0$ en $B_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $A_0$ en $B_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $A_0$ en $B_0$ toe behoort. Indien we daarna de invoer $I_0$ dienen te verwerken komen we in toestand die zowel $A_1$ en $B_1$ dient te vertegenwoordigen. Vermits $A_1$ en $B_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen.
+Een speciaal geval van de hierboven gestelde voorwaarde is \'e\'en invoerconfiguratie. Twee voorwaardes zijn dan in \emph{conflict} wanneer ze na \'e\'en klokflank in niet-equivalente toestanden terecht komen. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $A_0$ en $B_0$ onder een willekeurige invoer $I_0$ naar twee toestanden $A_1$ en $B_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $A_0$ en $B_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $A_0$ en $B_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $A_0$ en $B_0$ toe behoort. Indien we daarna de invoer $I_0$ dienen te verwerken komen we in toestand die zowel $A_1$ en $B_1$ dient te vertegenwoordigen. Vermits $A_1$ en $B_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen.
 
 \paragraph{}
-We gebruiken de eerste partitie van de minimale Moore-machine als voorbeeld. Hierbij gaan van de eerste partitie de toestanden $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder invoer van $0$ en $1$ naar de eerste partitie. De toestanden $E$, $I$ en $M$ gaan onder invoer van $0$ naar de tweede partitie ($\accl{J}$) en onder invoer van $1$ naar de eerste partitie. Bijgevolg splitsen we de eerste partitie op in $\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M}}$. Vermits de tweede partitie reeds uit \'e\'en element bestaat, valt deze niet verder op te delen: eenmaal een partitie uit \'e\'en toestand bestaat kunnen we deze partitie voor de rest van het algoritme met rust laten. De totale partitie na \'e\'en iteratie is dan gelijk aan:
+We gebruiken de eerste partitie van de minimale Moore-machine als voorbeeld. Voor de eerste partitie de toestanden gaan $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder invoer van $0$ en $1$ naar de eerste partitie. De toestanden $E$, $I$ en $M$ gaan onder invoer van $0$ naar de tweede partitie ($\accl{J}$) en onder invoer van $1$ naar de eerste partitie. Bijgevolg splitsen we de eerste partitie op in $\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M}}$. Vermits de tweede partitie reeds uit \'e\'en element bestaat, valt deze niet verder op te delen: eenmaal een partitie uit \'e\'en toestand bestaat kunnen we deze partitie voor de rest van het algoritme met rust laten. De totale partitie na \'e\'en iteratie is dan gelijk aan:
 
 \begin{equation}
 \begin{array}{lr}
@@ -1162,7 +1198,9 @@ Het enige wat we nu moeten doen is deze stap herhalen op de nieuwe partitie $\mb
 \end{array}\right.&\mbox{(Leidend voorbeeld)}
 \end{array}}
 \end{equation}
-Het geval van de Mealy-machine is volledig analoog: we bekomen dan:
+
+\paragraph{}
+Het geval van de Mealy-machine is volledig analoog. We bekomen dan:
 \begin{equation}
 \small{
 \begin{array}{lr}
@@ -1174,28 +1212,8 @@ Het geval van de Mealy-machine is volledig analoog: we bekomen dan:
 \end{array}}
 \end{equation}
 
-\paragraph{software}
-In het softwarepakket die bij dit boek hoort, kan men het commando \verb+minimize-fsm+ oproepen met een bestand die een eindige toestandsmachine bevat (Mealy of Moore), het programma minimaliseert dan automatisch de machine. Bijvoorbeeld:
-
-\begin{verbatim}
-$ ./dep minimize-fsm examples/moore_example.fsm
-       | 0      | 1     |
----------------------------
-ACGKO  | BDFHLN | ACGKO | 0
-BDFHLN | BDFHLN | EIM   | 0
-EIM    | J      | ACGKO | 0
-J      | BDFHLN | EIM   | 1
-
-$ ./dep minimize-fsm examples/mealy_example.fsm
-    | 0     | 1
--------------------
-ACG | BDF/0 | ACG/0
-BDF | BDF/0 | E/0
-E   | BDF/1 | ACG/0
-\end{verbatim}
-
 \subsubsection{Omzetting naar een toestandsdiagram en -tabel}
-Nadat we het aantal toestanden geminimaliseerd hebben, dienen we alleen nog een nieuwe Moore- of Mealy-machine te bouwen op basis van de partitie van de toestanden van de originele machine. Zoals we al enkele keren vermeld hebben staat een partitie voor de toestand van de minimale machine. We dienen dus voor elke partitie een nieuwe toestand te voorzien. Dit doet men meestal door de nieuwe toestand dezelfde naam te geven als de toestand in de partitie die alfabetisch het eerst voorkomt. Maar we kunnen uiteraard ook een arbitraire naam kiezen, of een naam die de letters van alle inwendige toestanden omvat. Verder dienen we in het geval van een Moore machine aan elke toestand een uitvoerconfiguratie toe te kennen. Omdat we de eerste voorwaarde hebben afgedwongen hebben alle toestanden in een partitie dezelfde uitvoerconfiguratie, bijgevolg nemen we de configuratie van \'e\'en van de toestanden in de partitie over. Hetzelfde geldt voor de Mealy-machine. De uitgang verbonden aan de transitie uit een bepaalde nieuwe toestand is dezelfde als de uitgang van dezelfde transitie uit \'e\'en van de toestanden in de partitie. De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle toestanden in partitie zullen voor eenzelfde ingangscombinatie naar eenzelfde partitie lopen. Op die manier kunnen we dus een transitie-functie opstellen over de nieuwe toestanden. De initi\"ele toestand ten slotte is de toestand verbonden aan de partitie die de oorspronkelijke initi\"ele toestand bevat. Op figuur \ref{fig:minimaalToestandsdiagram} en tabel \ref{tbl:minimaalToestandstabel} staan de nieuwe machines na minimalisatie van de leidende voorbeelden. We kunnen eenvoudig vaststellen dat minimalisatie soms tot spectaculaire reducties van het aantal toestanden kan leiden.
+Nadat we het aantal toestanden geminimaliseerd hebben, dienen we nog een nieuwe Moore- of Mealy-machine te bouwen op basis van de partitie van de toestanden van de originele machine. Zoals we al enkele keren vermeld hebben staat een partitie voor de toestand van de minimale machine. We dienen dus voor elke partitie een nieuwe toestand te voorzien. Dit doet men meestal door de nieuwe toestand dezelfde naam te geven als de toestand in de partitie die alfabetisch het eerst voorkomt. Maar we kunnen uiteraard ook een arbitraire naam kiezen, of een naam die de letters van alle inwendige toestanden omvat. Verder dienen we in het geval van een Moore machine aan elke toestand een uitvoerconfiguratie toe te kennen. Omdat we de eerste voorwaarde hebben afgedwongen hebben alle toestanden in een partitie dezelfde uitvoerconfiguratie, bijgevolg nemen we de configuratie van \'e\'en van de toestanden in de partitie over. Hetzelfde geldt voor de Mealy-machine. De uitgang verbonden aan de transitie uit een bepaalde nieuwe toestand is dezelfde als de uitgang van dezelfde transitie uit \'e\'en van de toestanden in de partitie. De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle toestanden in partitie zullen voor eenzelfde ingangscombinatie naar eenzelfde partitie lopen. Op die manier kunnen we dus een transitie-functie opstellen over de nieuwe toestanden. De initi\"ele toestand ten slotte is de toestand verbonden aan de partitie die de oorspronkelijke initi\"ele toestand bevat. Op figuur \ref{fig:minimaalToestandsdiagram} en tabel \ref{tbl:minimaalToestandstabel} staan de nieuwe machines na minimalisatie van de leidende voorbeelden. We kunnen eenvoudig vaststellen dat minimalisatie soms tot spectaculaire reducties van het aantal toestanden kan leiden.
 \begin{figure}[hbt]
 \centering
 \subfigure[Moore-machine]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,state/.style=state with output,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
@@ -1246,8 +1264,10 @@ $E$&$B/1$&$A/0$
 \caption{Geminimaliseerde toestandstabellen van de leidende voorbeelden.}
 \tbllab{minimaalToestandstabel}
 \end{table}
+
 \paragraph{Een formeel algoritme}
 De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{minimizeFSM}.
+
 \begin{algorithm}[hbt]
 \caption{Minimaliseren van een toestandsdiagram.}\label{alg:minimizeFSM}
 \begin{algorithmic}[1]
@@ -1270,6 +1290,7 @@ De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat e
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
 Het algoritme bevat de algemene \procedureref{Minimize}-procedure. Deze procedure maakt gebruik van twee functies: \procedureref{Minimize1} en \procedureref{Minimize2}. De eerste functie wijkt af tussen een Moore- en Mealy-machine. Daarom wordt deze functie opgesplitst: voor de Moore-machine gebruiken we dus \procedureref{Minimize1Moore}, de Mealy-machine maakt gebruik van \procedureref{Minimize1Mealy}. We dienen ook een formele beschrijving te geven van de variabelen in het algoritme. Het algoritme heeft als invoer 3 verzamelingen:
 \begin{itemize}
  \item $S$ is de verzameling van alle toestanden.
@@ -1281,7 +1302,32 @@ Daarnaast heeft het algoritme ook nood aan twee functies:
  \item Een transitiefunctie $\delta:S\times I\rightarrow S$ die de volgende toestand beschouwt na een bepaalde invoer op de ingangen te hebben waargenomen bij de klokflank.
  \item Een uitvoerfunctie $f$. Bij de Moore-machine is deze functie van de signatuur $f:S\rightarrow O$, bij een Mealy-machine is dit $f:S\times I\rightarrow O$.
 \end{itemize}
-Het algoritme is ge\"implementeerd in het softwarepakket die wordt meegeleverd met deze cursus. De interface en de implementatie wordt besproken in \apprefpag{software}.
+
+\paragraph{software}
+In het softwarepakket bij dit boek, kan men het commando \verb+minimize-fsm+ oproepen met een bestand die een eindige toestandsmachine bevat (Mealy of Moore), het programma minimaliseert dan automatisch de machine. Bijvoorbeeld:
+
+\begin{verbatim}
+$ ./dep minimize-fsm examples/moore_example.fsm
+       | 0      | 1     |
+---------------------------
+ACGKO  | BDFHLN | ACGKO | 0
+BDFHLN | BDFHLN | EIM   | 0
+EIM    | J      | ACGKO | 0
+J      | BDFHLN | EIM   | 1
+
+$ ./dep minimize-fsm examples/mealy_example.fsm
+    | 0     | 1
+-------------------
+ACG | BDF/0 | ACG/0
+BDF | BDF/0 | E/0
+E   | BDF/1 | ACG/0
+\end{verbatim}
+
+
+Een meer gedetailleerde beschrijving is terug te vinden in \apprefpag{software}.
+
+
+
 \subsection{Stap 3: Implementeren van de toestanden in het geheugen}
 \subsubsection{Stap 3A: Coderen van de toestanden}
 \label{term:minimalBitChange}
