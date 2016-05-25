@@ -1172,12 +1172,11 @@ Twee toestanden zijn niet-equivalent wanneer door een willekeurige lange sequent
 
 We kunnen deze voorwaarde afdwingen met behulp van iteratie. Hierbij voeren we een hieronder beschreven methode hoogstens $k-1$ keer uit, met $k$ het aantal aanvankelijke toestanden. Eenmaal het algoritme echter een vast punt bereikt: namelijk de partitie is dezelfde voor en na het uitvoeren van de methode, hebben we echter het antwoord gevonden en hoeven we geen verdere iteraties uit te voeren.
 
-%REVIEW
 \paragraph{}
-Een speciaal geval van de hierboven gestelde voorwaarde is \'e\'en invoerconfiguratie. Twee voorwaardes zijn dan in \emph{conflict} wanneer ze na \'e\'en klokflank in niet-equivalente toestanden terecht komen. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $A_0$ en $B_0$ onder een willekeurige invoer $I_0$ naar twee toestanden $A_1$ en $B_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partities, dan behoren $A_0$ en $B_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $A_0$ en $B_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we in de toestand geraken die door de partitie waar $A_0$ en $B_0$ toe behoort. Indien we daarna de invoer $I_0$ dienen te verwerken komen we in toestand die zowel $A_1$ en $B_1$ dient te vertegenwoordigen. Vermits $A_1$ en $B_1$ echter tot een andere partitie behoren is dit onmogelijk. We gebruiken deze regel om partities vervolgens verder op te delen.
+Een speciaal geval van de hierboven gestelde voorwaarde is dat we slechts \'e\'en klokflank verder kijken. Twee toestanden zijn dan in \emph{conflict} wanneer ze na \'e\'en klokflank in twee niet-equivalente toestanden terecht komen. Dit kunnen we herformuleren tot het volgende: Indien twee toestanden $A_0$ en $B_0$ onder een willekeurige invoer $I_0$ respectievelijk naar twee toestanden $A_1$ en $B_1$ gaan, en deze twee toestanden behoren niet tot dezelfde partitie, dan behoren $A_0$ en $B_0$ ook niet tot dezelfde partitie. Deze uitspraak is logisch, stel dat $A_0$ en $B_0$ tot dezelfde partitie zouden behoren, dan kan het gebeuren dat we -- onder een bepaalde invoer $I_0$ -- in toestanden $A_1$ en $B_1$ raken. Vermits $A_1$ en $B_1$ niet in dezelfde partitie zitten, is ofwel hun uitvoer anders, ofwel zullen we na een zekere invoer in twee toestanden terecht komen waarbij de uitvoer verschilt. Omdat we slechts \'e\'en uitgangscombinatie kunnen aanleggen, dienen we de partitie waar $A_0$ en $B_0$ toe behoren dus verder op te splitsen in meerdere partities\footnote{Dit kunnen er meer dan twee zijn.}.
 
 \paragraph{}
-We gebruiken de eerste partitie van de minimale Moore-machine als voorbeeld. Voor de eerste partitie de toestanden gaan $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder invoer van $0$ en $1$ naar de eerste partitie. De toestanden $E$, $I$ en $M$ gaan onder invoer van $0$ naar de tweede partitie ($\accl{J}$) en onder invoer van $1$ naar de eerste partitie. Bijgevolg splitsen we de eerste partitie op in $\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M}}$. Vermits de tweede partitie reeds uit \'e\'en element bestaat, valt deze niet verder op te delen: eenmaal een partitie uit \'e\'en toestand bestaat kunnen we deze partitie voor de rest van het algoritme met rust laten. De totale partitie na \'e\'en iteratie is dan gelijk aan:
+We gebruiken de eerste partitie van de minimale Moore-machine als voorbeeld. Voor de eerste partitie de toestanden gaan $A$, $B$, $C$, $D$, $F$, $G$, $H$, $K$, $L$, $N$ en $O$ onder zowel invoer $0$ en invoer $1$ allemaal naar toestanden in de eerste partitie. De toestanden $E$, $I$ en $M$ -- die ook tot de eerste partitie behoren  --  gaan onder invoer van $0$ naar de tweede partitie ($\accl{J}$) en onder invoer van $1$ naar de eerste partitie. Omdat de twee hierboven beschouwde verzamelingen van toestanden in conflict leven, dienen we de eerste partitie op te splitsen. De eerste partitie wordt opgesplitst in twee nieuwe partitites: $\accl{A,B,C,D,F,G,H,K,L,N,O}$ en $\accl{E,I,M}$. Vermits de tweede oorspronkelijke partitie $\accl{J}$ reeds uit \'e\'en element bestaat, valt deze niet verder op te delen: eenmaal een partitie uit \'e\'en toestand bestaat kunnen we deze partitie voor de rest van het algoritme met rust laten. De totale partitie na \'e\'en iteratie is dan gelijk aan:
 
 \begin{equation}
 \begin{array}{lr}
@@ -1190,30 +1189,39 @@ Het enige wat we nu moeten doen is deze stap herhalen op de nieuwe partitie $\mb
 \begin{equation}
 \small{
 \begin{array}{lr}
-\left\{\begin{array}{l}
+\acclguard{
 \mbox{partitie}_{\mbox{\small{Moore,0}}}=\accl{\accl{A,B,C,D,E,F,G,H,I,K,L,M,N,O},\accl{J}}\\
 \mbox{partitie}_{\mbox{\small{Moore,1}}}=\accl{\accl{A,B,C,D,F,G,H,K,L,N,O},\accl{E,I,M},\accl{J}}\\
 \mbox{partitie}_{\mbox{\small{Moore,2}}}=\accl{\accl{A,C,G,K,O},\accl{B,D,F,H,L,N},\accl{E,I,M},\accl{J}}\\
 \mbox{partitie}_{\mbox{\small{Moore,3}}}=\accl{\accl{A,C,G,K,O},\accl{B,D,F,H,L,N},\accl{E,I,M},\accl{J}}
-\end{array}\right.&\mbox{(Leidend voorbeeld)}
+}&\mbox{(Leidend voorbeeld)}
 \end{array}}
 \end{equation}
 
+We zien dat er nog \'e\'en opsplitsing volgt: de partitie $\accl{A,B,C,D,F,G,H,K,L,N,O}$ valt uiteen in $\accl{A,C,G,K,O}$ en $\accl{B,D,F,H,L,N}$. Dat komt omdat onder zowel invoer $0$ en invoer $1$, de toestanden $A$,$C$,$G$,$K$ en $O$ allemaal naar een toestand in partitie $1$ gaan. Voor de toestanden $B$, $D$, $F$, $H$, $L$ en $N$ gaat men onder invoer $0$ ook naar toestanden in de eerste partitie, maar onder invoer $1$ gaan al deze toestanden naar toestanden in de tweede partitie. Wanneer we vervolgens de stap een laatste maal uitvoeren, merken we dat er geen partities meer gesplitst hoeven te worden. Dit is het signaal dat we mogen stoppen: het minimaliseren is voltooid. Nu dienen we nog een nieuwe Moore-machine te bouwen op basis van deze partities. Dit doen we in de volgende subsubsectie.
+
 \paragraph{}
-Het geval van de Mealy-machine is volledig analoog. We bekomen dan:
+Het iteratieve proces van de Mealy-machine is volledig analoog. We bekomen dan:
 \begin{equation}
 \small{
 \begin{array}{lr}
-\left\{\begin{array}{l}
+\acclguard{
 \mbox{partitie}_{\mbox{\small{Mealy,0}}}=\accl{\accl{A,B,C,D,F,G},\accl{E}}\\
 \mbox{partitie}_{\mbox{\small{Mealy,1}}}=\accl{\accl{A,C,G},\accl{B,D,F},\accl{E}}\\
 \mbox{partitie}_{\mbox{\small{Mealy,2}}}=\accl{\accl{A,C,G},\accl{B,D,F},\accl{E}}
-\end{array}\right.&\mbox{(Leidend voorbeeld)}
+}&\mbox{(Leidend voorbeeld)}
 \end{array}}
 \end{equation}
 
 \subsubsection{Omzetting naar een toestandsdiagram en -tabel}
-Nadat we het aantal toestanden geminimaliseerd hebben, dienen we nog een nieuwe Moore- of Mealy-machine te bouwen op basis van de partitie van de toestanden van de originele machine. Zoals we al enkele keren vermeld hebben staat een partitie voor de toestand van de minimale machine. We dienen dus voor elke partitie een nieuwe toestand te voorzien. Dit doet men meestal door de nieuwe toestand dezelfde naam te geven als de toestand in de partitie die alfabetisch het eerst voorkomt, zo wordt $\accl{A,C,G,K,O}$ voortaan de nieuwe toestand $A$. Maar we kunnen uiteraard ook een arbitraire naam kiezen uit de verzameling, of een naam die de letters van alle inwendige toestanden omvat, of een volledig nieuwe naam. Verder dienen we in het geval van een Moore machine aan elke toestand een uitvoerconfiguratie toe te kennen. Omdat we de eerste voorwaarde hebben afgedwongen hebben alle toestanden in een partitie dezelfde uitvoerconfiguratie, bijgevolg nemen we de configuratie van \'e\'en van de toestanden in de partitie over. Hetzelfde geldt voor de Mealy-machine. De uitgang verbonden aan de transitie uit een bepaalde nieuwe toestand is dezelfde als de uitgang van dezelfde transitie uit \'e\'en van de toestanden in de partitie. De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle toestanden in partitie zullen voor eenzelfde ingangscombinatie naar eenzelfde partitie lopen. Op die manier kunnen we dus een transitie-functie opstellen over de nieuwe toestanden. De initi\"ele toestand ten slotte is de toestand verbonden aan de partitie die de oorspronkelijke initi\"ele toestand bevat. Op figuur \ref{fig:minimaalToestandsdiagram} en tabel \ref{tbl:minimaalToestandstabel} staan de nieuwe machines na minimalisatie van de leidende voorbeelden. We kunnen eenvoudig vaststellen dat minimalisatie soms tot spectaculaire reducties van het aantal toestanden kan leiden.
+Nadat we het aantal toestanden geminimaliseerd hebben, dienen we nog een nieuwe Moore- of Mealy-machine te bouwen op basis van de partitie van de toestanden van de originele machine.
+
+%REVIEW
+\paragraph{Toestanden}
+Zoals we al enkele keren vermeld hebben staat een partitie voor een toestand in de minimale machine. We dienen dus voor elke partitie een nieuwe toestand te voorzien. Dit doet men meestal door de nieuwe toestand dezelfde naam te geven als de toestand in de partitie die alfabetisch het eerst voorkomt, zo wordt $\accl{A,C,G,K,O}$ voortaan de nieuwe toestand $A$. Maar we kunnen uiteraard ook een arbitraire naam kiezen uit de verzameling (zoals $C$), of een naam die de letters van alle inwendige toestanden omvat (zoals $ACGKO$), of een volledig nieuwe naam (zoals $T$).
+
+\paragraph{Uitgang voor Moore-machines}
+In het geval van een Moore machine aan elke toestand een uitvoerconfiguratie toe te kennen. Uit de eerste voorwaarde hebben we afgedwongen hebben alle toestanden in een partitie dezelfde uitvoerconfiguratie hebben, bijgevolg nemen we de configuratie van \'e\'en van de toestanden in de partitie over. Hetzelfde geldt voor de Mealy-machine. De uitgang verbonden aan de transitie uit een bepaalde nieuwe toestand is dezelfde als de uitgang van dezelfde transitie uit \'e\'en van de toestanden in de partitie. De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle toestanden in partitie zullen voor eenzelfde ingangscombinatie naar eenzelfde partitie lopen. Op die manier kunnen we dus een transitie-functie opstellen over de nieuwe toestanden. De initi\"ele toestand ten slotte is de toestand verbonden aan de partitie die de oorspronkelijke initi\"ele toestand bevat. Op \figref{minimaalToestandsdiagram} en \tblref{minimaalToestandstabel} staan de nieuwe machines na minimalisatie van de leidende voorbeelden. We kunnen eenvoudig vaststellen dat minimalisatie soms tot spectaculaire reducties van het aantal toestanden kan leiden.
 \begin{figure}[hbt]
 \centering
 \subfigure[Moore-machine]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,state/.style=state with output,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
