@@ -1219,12 +1219,15 @@ Nadat we het aantal toestanden geminimaliseerd hebben, dienen we nog een nieuwe 
 \paragraph{Toestanden}
 Zoals we al enkele keren vermeld hebben staat een partitie van de laatste iteratie voor een toestand in de minimale machine. We dienen dus voor elke partitie een nieuwe toestand te voorzien. Dit doen we door een nieuwe toestand te beschouwen en deze een unieke naam te geven. Bijvoorbeeld dezelfde als de toestand in de partitie die alfabetisch het eerst voorkomt, zo wordt $\accl{A,C,G,K,O}$ voortaan de nieuwe toestand $A$. We kunnen uiteraard ook een arbitraire naam kiezen uit de verzameling (zoals $C$), of een naam die de letters van alle inwendige toestanden omvat (zoals $ACGKO$), of een volledig nieuwe naam (zoals $T$). Men dient er alleen voor te zorgen dat er geen naam-conflicten ontstaan: twee verschillende partities die eenzelfde nieuwe naam krijgen.
 
-%REVIEW
 \paragraph{Uitgangconfiguraties}
-In het geval van een Moore machine moeten we aan elke toestand een uitvoerconfiguratie toe te kennen. Uit de eerste voorwaarde volgt dat elke toestand in een partitie dezelfde uitvoerconfiguratie heeft, bijgevolg nemen we de uitvoerconfiguratie van \'e\'en willekeurige toestand in de partitie over. Hetzelfde geldt voor de Mealy-machine. De uitvoerconfiguratie verbonden aan de transitie uit een bepaalde nieuwe toestand is dezelfde voor alle oude toestanden die deze nieuwe toestand vertegenwoordigt: de partitie.
+In het geval van een Moore machine moeten we aan elke toestand een uitvoerconfiguratie toe te kennen. Uit de eerste voorwaarde volgt dat elke toestand in een partitie dezelfde uitvoerconfiguratie heeft, bijgevolg nemen we de uitvoerconfiguratie van \'e\'en willekeurige toestand in de partitie over. Hetzelfde geldt voor de Mealy-machine: de eerste voorwaarde dwingt af dat voor elke toestand in de partitie onder elke invoerconfiguratie, de uitvoerconfiguratie dezelfde is. We kunnen dus eenvoudigweg deze configuraties overnemen.
 
-\paragraph{Transitiefunctie}
-De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle toestanden in partitie zullen voor eenzelfde ingangscombinatie naar eenzelfde partitie lopen. Op die manier kunnen we dus een transitie-functie opstellen over de nieuwe toestanden. De initi\"ele toestand ten slotte is de toestand verbonden aan de partitie die de oorspronkelijke initi\"ele toestand bevat. Op \figref{minimaalToestandsdiagram} en \tblref{minimaalToestandstabel} staan de nieuwe machines na minimalisatie van de leidende voorbeelden. We kunnen eenvoudig vaststellen dat minimalisatie soms tot spectaculaire reducties van het aantal toestanden kan leiden.
+\paragraph{Transitiefunctie en initi\"ele toestand}
+De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle toestanden in partitie zullen voor eenzelfde ingangscombinatie naar eenzelfde partitie lopen. Op die manier kunnen we dus een transitie-functie opstellen over de nieuwe toestanden. De initi\"ele toestand ten slotte is de toestand die een partitie vertegenwoordigt die de oorspronkelijke initi\"ele toestand bevat.
+
+\paragraph{}
+Op \figref{minimaalToestandsdiagram} en \tblref{minimaalToestandstabel} staan de nieuwe machines na minimalisatie van de leidende voorbeelden. We kunnen eenvoudig vaststellen dat minimalisatie soms tot spectaculaire reducties van het aantal toestanden kan leiden. Dit heeft gevolgen voor het aantal flipflops die we in de schakeling zullen gebruiken, en vaak zal ook de logica goedkoper worden.
+
 \begin{figure}[hbt]
 \centering
 \subfigure[Moore-machine]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,state/.style=state with output,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
@@ -1257,6 +1260,7 @@ De transitiefunctie kunnen we opstellen op basis van de tweede voorwaarde: alle 
 \caption{Geminimaliseerde toestandsdiagrammen van de leidende voorbeelden.}
 \figlab{minimaalToestandsdiagram}
 \end{figure}
+
 \begin{table}[hbt]
 \centering
 \subtable[Moore-machine]{\small{\begin{tabular}{c|cc|c}
@@ -1277,7 +1281,7 @@ $E$&$B/1$&$A/0$
 \end{table}
 
 \paragraph{Een formeel algoritme}
-De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{minimizeFSM}.
+De cursus ``\emph{Automaten en Berekenbaarheid}'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{minimizeFSM}.
 
 \begin{algorithm}[hbt]
 \caption{Minimaliseren van een toestandsdiagram.}\label{alg:minimizeFSM}
@@ -1302,16 +1306,16 @@ De cursus ``Automaten en Berekenbaarheid'' van prof. Demoen\cite{aenb10} bevat e
 \end{algorithmic}
 \end{algorithm}
 
-Het algoritme bevat de algemene \procedureref{Minimize}-procedure. Deze procedure maakt gebruik van twee functies: \procedureref{Minimize1} en \procedureref{Minimize2}. De eerste functie wijkt af tussen een Moore- en Mealy-machine. Daarom wordt deze functie opgesplitst: voor de Moore-machine gebruiken we dus \procedureref{Minimize1Moore}, de Mealy-machine maakt gebruik van \procedureref{Minimize1Mealy}. We dienen ook een formele beschrijving te geven van de variabelen in het algoritme. Het algoritme heeft als invoer 3 verzamelingen:
+Het algoritme bevat de algemene \procedureref{Minimize}-procedure. Deze procedure maakt gebruik van twee functies: \procedureref{Minimize1} en \procedureref{Minimize2}. De eerste functie wijkt af tussen een Moore- en Mealy-machine. Daarom wordt deze functie opgesplitst: voor de Moore-machine gebruiken we dus \procedureref{Minimize1Moore}, de Mealy-machine maakt gebruik van \procedureref{Minimize1Mealy}. We dienen ook een formele beschrijving te geven van de variabelen in het algoritme. Het algoritme heeft als invoer drie verzamelingen:
 \begin{itemize}
- \item $S$ is de verzameling van alle toestanden.
- \item $I$ is de verzameling van alle invoerconfiguraties.
+ \item $S$ is de verzameling van alle toestanden;
+ \item $I$ is de verzameling van alle invoerconfiguraties; en
  \item $O$ is de verzameling van alle uitvoerconfiguraties.
 \end{itemize}
 Daarnaast heeft het algoritme ook nood aan twee functies:
 \begin{itemize}
- \item Een transitiefunctie $\delta:S\times I\rightarrow S$ die de volgende toestand beschouwt na een bepaalde invoer op de ingangen te hebben waargenomen bij de klokflank.
- \item Een uitvoerfunctie $f$. Bij de Moore-machine is deze functie van de signatuur $f:S\rightarrow O$, bij een Mealy-machine is dit $f:S\times I\rightarrow O$.
+ \item Een transitiefunctie $\delta:S\times I\rightarrow S$ die de volgende toestand beschouwt voor een bepaalde invoer op de ingangen te hebben waargenomen bij de klokflank; en
+ \item een uitvoerfunctie $f$. Bij de Moore-machine heeft deze functie de signatuur $f:S\rightarrow O$, bij een Mealy-machine is dit $f:S\times I\rightarrow O$.
 \end{itemize}
 
 \paragraph{software}
@@ -1338,14 +1342,15 @@ E   | BDF/1 | ACG/0
 Een meer gedetailleerde beschrijving is terug te vinden in \apprefpag{software}.
 
 
-
+%REVIEW
 \subsection{Stap 3: Implementeren van de toestanden in het geheugen}
+
 \subsubsection{Stap 3A: Coderen van de toestanden}
 \label{term:minimalBitChange}
 \label{term:grayCodeCounter}
 Tot nu toe hebben we toestanden altijd voorgesteld met letters. Uiteraard dienen we deze toestanden op de een of andere manier voor te stellen in de geheugencomponenten in onze schakeling. Vermits letters niet opgeslagen kunnen worden in een flipflop of een register\footnote{Uiteraard kunnen we bijvoorbeeld wel het ASCII equivalent opslaan.} zullen we de toestanden moeten omzetten naar een binaire voorstelling. Dit wordt het \termen{coderen} van de toestanden genoemd. Doorgaans lijkt dit geen ingewikkeld probleem, we kunnen eenvoudigweg elke toestand een opeenvolgend nummer geven en deze toestanden dan binair coderen. Merk echter op dat de toestand geen impliciete ordening hebben, alleen al door opeenvolgende nummers te gebruiken zijn er $n!$ mogelijke coderingen mogelijk. Er bestaan echter technieken die ervoor zorgen dat we door een intelligente codering minder hardware zullen gebruiken. Dit leidt meestal tot goedkopere en snellere schakelingen. Algemeen zijn er drie technieken die we kunnen gebruiken:
 \begin{itemize}
- \item ``\termen{Straightforward codering}'': soms is de codering triviaal.
+ \item ``\termen{Straightforward codering}'': soms is de codering triviaal. Wanneer bijvoorbeeld bij een Moore machine elke toestand een eigen uitgangsconfiguratie heeft, kan men deze uitvoer ook gebruiken om de toestand zelf voor te stellen, dit is bijvoorbeeld het geval bij een teller.
  \item De ``\termen{one-hot codering}'': hierbij stellen we $n$ toestanden voor door $n$ bits, elke toestand krijgt z'n eigen bit. Indien de toestand actief is, is deze bit hoog, de andere bits zijn dan laag.
  \item De ``\termen{minimal-bit-change}'': we zoeken een codering die telkens een minimum aan bits verandert. Hierbij gebruiken we $\left\lceil\log_2 n\right\rceil$ bits om de $n$ toestanden voor te stellen.
 \end{itemize}
