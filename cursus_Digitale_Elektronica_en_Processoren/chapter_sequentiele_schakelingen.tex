@@ -1433,6 +1433,20 @@ Een typisch voorbeeld van een minimal-bit change codering is de \gtermen{Gray-co
 \figlab{grayCodeCounter}
 \end{figure}
 
+Het softwarepakket bevat echter wel een commando om Gray-code sequenties met een arbitrair aantal bits te genereren:
+
+\begin{verbatim}
+$ echo '3' | ./dep generate-gray
+000
+001
+011
+010
+110
+111
+101
+100
+\end{verbatim}
+
 \paragraph{Leidende voorbeelden}Voor de Moore-machine kiezen we voor een minimal-bit-change benadering en voor de Mealy-machine een one-hot codering. Deze keuzes zijn louter didactief. De toegewezen bitvoorstellingen worden in een toestandstabel geschreven. Voor een one-hot codering is dit vrij triviaal. We wijzen elke toestand \'e\'en bit toe. Welke bit heeft geen invloed op de schakeling. \tblref{mealyBitRepresentation} stelt de Mealy-machine uit de leidende voorbeelden voor met de one-hot codering.
 
 \begin{table}[hbt]
