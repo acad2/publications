@@ -495,7 +495,7 @@
     \draw[thick] (\xi*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bj+0.5*\ni);
   }
   \foreach \t/\dt/\i/\j in {#8} {
-    \draw[gray,very tiny,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
+    \draw[gray,very thin,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
   }
 \end{scope}
 }
@@ -528,7 +528,7 @@
     \draw[thick] (\xi*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bj+0.5*\ni);
   }
   \foreach \t/\dt/\i/\j in {#6} {
-     \draw[gray,very tiny,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
+     \draw[gray,very thin,->] (\t*\xs,0.25+0.5*\i) .. controls (\t*\xs+\dt*\xs,0.25+0.5*\i) and (\t*\xs,0.25+0.5*\j) .. (\t*\xs+\dt*\xs,0.25+0.5*\j);
   }
   \foreach \ti/\tj/\n in {#7} {
     \draw[decorate,decoration={brace}] (\tj*\xs,-0.1) -- (\ti*\xs,-0.1);
