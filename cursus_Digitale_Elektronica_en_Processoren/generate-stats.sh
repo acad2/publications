@@ -18,4 +18,5 @@ fls=$(grep -m 1 -i '^filesize' $erf | grep -o -P '\d*')
 
 pgs=$(grep -m 1 -i 'pages' old-errors.dat | grep -P '\d*' -o)
 
+echo >&2 -e "timestamp\t#errors\t#warnings\t#references\t#glos\tcompile-time\tfilesize\tpages"
 echo -e "$tim\t$err\t$wrn\t$msl\t$gla\t$prd\t$fls\t$pgs"
