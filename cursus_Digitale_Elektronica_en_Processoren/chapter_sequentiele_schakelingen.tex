@@ -1433,7 +1433,7 @@ Een typisch voorbeeld van een minimal-bit change codering is de \gtermen{Gray-co
 \figlab{grayCodeCounter}
 \end{figure}
 
-Het softwarepakket bevat echter wel een commando om Gray-code sequenties met een arbitrair aantal bits te genereren:
+Het softwarepakket bevat echter wel een commando om Gray-code sequenties met een arbitrair aantal bits\footnote{Het programma werkt tot hoogstens $64$ bits.} te genereren:
 
 \begin{verbatim}
 $ echo '3' | ./dep generate-gray
@@ -1447,7 +1447,8 @@ $ echo '3' | ./dep generate-gray
 100
 \end{verbatim}
 
-\paragraph{Leidende voorbeelden}Voor de Moore-machine kiezen we voor een minimal-bit-change benadering en voor de Mealy-machine een one-hot codering. Deze keuzes zijn louter didactief. De toegewezen bitvoorstellingen worden in een toestandstabel geschreven. Voor een one-hot codering is dit vrij triviaal. We wijzen elke toestand \'e\'en bit toe. Welke bit heeft geen invloed op de schakeling. \tblref{mealyBitRepresentation} stelt de Mealy-machine uit de leidende voorbeelden voor met de one-hot codering.
+\paragraph{Leidende voorbeelden}
+Voor de Moore-machine kiezen we voor een minimal-bit-change benadering en voor de Mealy-machine een one-hot codering. Deze keuzes zijn louter didactief. De toegewezen bitvoorstellingen worden in een toestandstabel geschreven. Voor een one-hot codering is dit vrij triviaal. We wijzen elke toestand \'e\'en bit toe. Welke bit heeft geen invloed op de schakeling. \tblref{mealyBitRepresentation} stelt de Mealy-machine uit de leidende voorbeelden voor met de one-hot codering.
 
 \begin{table}[hbt]
 \centering
@@ -1489,7 +1490,7 @@ Toestand&0&1&Uitgang\\\hline
 \end{table}
 
 \subsubsection{Stap 3B: De keuze van het type flipflop}
-Nadat we elke toestand kunnen voorstellen met een sequentie aan bits, dienen we flipflops te voorzien om deze toestand bij te houden. Hierbij hebben we de keuze tussen de verschillende flipflops die we in \sssref{typesFlipflops} besproken hebben. Elk van deze types zal een specifieke combinatorische logica vereisen met specifieke kosten en vertraging. Om de meest optimale schakeling te realiseren zullen we altijd alle types moeten uitproberen. Verder kunnen we ook voor verschillende bits een verschillend type flipflop voorzien. Hierop gaan we echter niet in. De ervaring leert ons wel dat voor verschillende toepassingen verschillende soorten flipflops een zekere voorkeur genieten. De typische toepassingen zeg maar. Een cruciale factor is ook het aantal don't cares. In het algemeen is het zo dat hoe meer don't cares de combinatorische schakeling bevat, hoe eenvoudiger te implementeren. Sommige flipflops introduceren makkelijker don't cares dan andere flipflops.
+Nu we elke toestand voorstellen met een sequentie aan bits, dienen we flipflops te voorzien om deze sequentie aan bits op te slaan en bijgevolg een toestand bij te houden. Hierbij hebben we de keuze tussen de verschillende flipflops die we in \sssref{typesFlipflops} besproken hebben. Elk van deze types zal een specifieke combinatorische logica vereisen met specifieke kosten en vertraging. Om de meest optimale schakeling te realiseren zullen we altijd alle types moeten uitproberen. Verder kunnen we ook voor verschillende bits een verschillend type flipflop voorzien. Hierop gaan we echter niet in. De ervaring leert ons wel dat voor verschillende toepassingen verschillende soorten flipflops een zekere voorkeur genieten. De typische toepassingen zeg maar. Een cruciale factor is ook het aantal don't cares. In het algemeen is het zo dat hoe meer don't cares de combinatorische schakeling bevat, hoe eenvoudiger te implementeren. Sommige flipflops introduceren makkelijker don't cares dan andere flipflops.
 
 \paragraph{De kosten van een flipflop}
 Als we de kostprijs van de verschillende types flipflops met elkaar vergelijken merken we dat de JK-flipflop opmerkelijk duurder\footnote{Ter illustratie een JK-flipflop ge\"integreerd circuit kost \$0.116, een gelijkaardige D-flipflop kost ongeveer \$0.049.} is. Dit betekent daarom niet dat de totale kostprijs van de schakeling groter is. Immers dienen we ook een combinatorisch gedeelte te voorzien; de optelling van beide leidt tot de totale kostprijs.
