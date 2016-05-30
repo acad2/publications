@@ -1281,7 +1281,7 @@ $E$&$B/1$&$A/0$
 \end{table}
 
 \paragraph{Een formeel algoritme}
-De cursus ``\emph{Automaten en Berekenbaarheid}'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{minimizeFSM}.
+De cursus ``\emph{Automaten en Berekenbaarheid}'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{minimizeFSM}\footnote{Dit algoritme dient men niet te kunnen opstellen, men dient echter wel een FSM te kunnen minimaliseren.}.
 
 \begin{algorithm}[hbt]
 \caption{Minimaliseren van een toestandsdiagram.}\label{alg:minimizeFSM}
@@ -1488,7 +1488,6 @@ Toestand&0&1&Uitgang\\\hline
 \tbllab{mooreBitRepresentation}
 \end{table}
 
-%REVIEW
 \subsubsection{Stap 3B: De keuze van het type flipflop}
 Nu we elke toestand voorstellen met een sequentie aan bits, dienen we flipflops te voorzien om deze sequentie aan bits op te slaan en bijgevolg een toestand bij te houden. Hierbij hebben we de keuze tussen de verschillende flipflops die we in \sssref{typesFlipflops} besproken hebben. Elk type zal een specifieke combinatorische logica vereisen met specifieke kosten en vertraging. Om de meest optimale schakeling te realiseren zullen we altijd alle soorten flipflops moeten uitproberen. Om het nog ingewikkelder te maken zouden we ook kunnen beslissen om voor verschillende toestandsbits verschillende soorten flipflops te gebruiken. Hierop gaan we echter niet in. De ervaring leert ons wel dat voor verschillende toepassingen verschillende soorten flipflops een zekere voorkeur genieten, de \emph{typische} toepassingen zeg maar. Een cruciale factor is ook het aantal don't cares. In het algemeen is het zo dat hoe meer don't cares de combinatorische schakeling bevat, hoe eenvoudiger te implementeren. Sommige flipflops introduceren makkelijker don't cares dan andere flipflops.
 
@@ -1496,19 +1495,20 @@ Nu we elke toestand voorstellen met een sequentie aan bits, dienen we flipflops 
 Als we de kostprijs van de verschillende types flipflops met elkaar vergelijken merken we dat de JK-flipflop opmerkelijk duurder\footnote{Ter illustratie een JK-flipflop ge\"integreerd circuit kost \$0.116, een gelijkaardige D-flipflop kost ongeveer \$0.049.} is. Dit betekent daarom niet dat de totale kostprijs van de schakeling groter is. Immers dienen we ook een combinatorisch gedeelte te voorzien; de optelling van beide leidt tot de totale kostprijs.
 
 \paragraph{Don't cares}
-Een JK-flipflop is dan duurder, maar door de typische realisatie leidt dit tot veel don't cares. Dit leidt tot een eenvoudige schakeling. Het is logisch dat een JK-flipflop nogal wat don't cares impliceert: er zijn immers enkele manieren om dezelfde waarde in een JK-flipflop te klokken. Ook een SR-flipflop laat ruimte voor don't cares in het combinatorische gedeelte. Een D-flipflop laat doorgaans weinig plaats voor don't cares. Dit komt omdat in elke klokflank een nieuwe waarde uit de ingang wordt gelezen. We dienen er dus telkens voor te zorgen dat op dit moment de juiste waarde aan de ingang staat. Een T-flipflop ten slotte heeft net hetzelfde probleem, meestal is het effect hier zelfs nog erger.
+Een JK-flipflop is dan duurder, maar door de typische realisatie leidt dit tot veel don't cares. Meer don't cares leiden tot een eenvoudigere en dus goedkopere schakeling. Het is logisch dat een JK-flipflop nogal wat don't cares impliceert: er zijn immers enkele manieren om dezelfde waarde in een JK-flipflop te klokken, denk hierbij terug aan \figrefpag{jackKilbyFlipflop}. Ook een SR-flipflop laat ruimte voor don't cares in het combinatorische gedeelte. Een D-flipflop laat doorgaans weinig plaats voor don't cares. Dit komt omdat in elke klokflank een nieuwe waarde uit de ingang wordt gelezen. Een T-flipflop ten slotte heeft net hetzelfde probleem: meestal is het effect hier zelfs nog erger.
 
 \paragraph{Eenvoud van het ontwerp}
 Indien we de schakeling zelf moeten realiseren moeten we ook rekening houden met het tijdsaspect en dus de eenvoud van het ontwerp. Doorgaans leidt een D-flipflop tot de eenvoudigste implementatie. Dit komt omdat we meestal geneigd zijn absoluut te denken. Verder heeft een D-flipflop ook slechts \'e\'en ingang, en is de component makkelijk te specifi\"eren: "wat we aan de ingang aanleggen staat de volgende klokflank in de flipflop". Het opstellen van een \termen{excitatietabel} is dan ook eenvoudig. Een T-flipflop is ook conceptueel eenvoudig: "indien de waarde moet omslaan, leg dan 1 aan op de ingang". Moeilijker zijn de SR- en JK-flipflop. Dit komt in de eerste plaats omdat beide componenten twee ingangen hebben. Merk dus op dat we een excitatietabel met twee ingangen moeten opstellen.
 
 \paragraph{Toepassingen}
-Door jaren ervaring heeft men kennis opgebouwd welke toepassing welke flipflop vereist. In \sscref{counters} hebben we reeds tellers gebruikt en hebben we vaak gebruik gemaakt van T- en D-flipflops. Tellers en frequentiedelers\footnote{Een frequentiedeler is een moduloteller die de frequentie waarmee er geteld wordt deelt door het modulo-getal. Enkel wanneer zich een overflow voordoet geven we het signaal door. Hierdoor kunnen we delen van de schakeling aan een lagere klokfrequentie laten werken.} worden typisch ge\"implementeerd met T-flipflops. Meestal zal dit tot ijle excitatietabellen leiden. Een D-flipflop wordt typisch gebruikt om een waarde zeer tijdelijk te onthouden, meestal slechts enkele klokflanken. Voor complexe toepassingen waarbij de waarde van de flipflop frequent een 0 of 1 wordt zijn SR- en JK-flipflops het meest geschikt.
+Door jaren ervaring heeft men kennis opgedaan over welke type flipflop het beste werkt bij welke soort toepassing. In \sscref{counters} hebben we reeds tellers ge\"implementeerd en hebben we vaak gebruik gemaakt van T- en D-flipflops. Tellers en frequentiedelers\footnote{Een frequentiedeler is een moduloteller die de frequentie waarmee er geteld wordt deelt door het modulo-getal. Enkel wanneer zich een overflow voordoet geven we het signaal door. Hierdoor kunnen we delen van de schakeling aan een lagere klokfrequentie laten werken.} worden typisch ge\"implementeerd met T-flipflops. Meestal zal dit tot ijle excitatietabellen leiden. Een D-flipflop wordt typisch gebruikt om een waarde zeer tijdelijk te onthouden, meestal slechts enkele klokflanaken\footnote{Immers onthoudt de D-flipflop de waarde ook juist \'e\'en klokflank.}. Voor complexe toepassingen waarbij de waarde van de flipflop frequent een $0$ of $1$ wordt, zijn SR- en JK-flipflops het meest geschikt.
 
 \paragraph{Welke flipflop kiezen?}
-De vorige paragrafen proberen hints te geven welke flipflops het meest geschikt zijn, deze hints zijn echter niet absoluut. Om tot de goedkoopste schakeling te komen, moeten we alle mogelijkheden uitproberen. Meestal hebben we de tijd niet alle configuraties te proberen. In dat geval zijn D-flipflops meestal de beste keuze. Ook een FPGA volgt deze redenering en bevat enkel D-flipflops.
+De vorige paragrafen proberen hints te geven welke flipflops het meest geschikt zijn, deze hints zijn echter niet fundamenteel. Om tot de goedkoopste schakeling te komen, moeten we alle mogelijkheden uitproberen. Meestal hebben we de tijd niet alle configuraties te proberen. In dat geval zijn D-flipflops meestal de beste keuze. Ook een FPGA volgt deze redenering en bevat enkel D-flipflops.
 
 \paragraph{Samevatting}
-We vatten de vorige paragrafen samen in tabel \ref{tbl:whichFlipflop}.
+We vatten de vorige paragrafen samen in \tblref{whichFlipflop}.
+
 \begin{table}[hbt]
 \centering
 \small{\begin{tabular}{|*{5}{M}}
@@ -1522,6 +1522,8 @@ Toepassingen&\multicolumn{2}{c|}{veel veranderingen}&tijdelijke geheugens&teller
 \caption{Keuze van het type flipflop.}
 \tbllab{whichFlipflop}
 \end{table}
+
+%REVIEW
 \subsection{Stap 4: Implementeren van de combinatorische logica}
 Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de volgende toestand berekent, en de logica die de uitgang bepaalt. We bespreken elk van deze onderdelen apart.
 \subsubsection{Stap 4A: Logica die de volgende toestand berekent}
