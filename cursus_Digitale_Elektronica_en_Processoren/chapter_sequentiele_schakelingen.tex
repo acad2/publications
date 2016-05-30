@@ -1525,9 +1525,13 @@ Toepassingen&\multicolumn{2}{c|}{veel veranderingen}&tijdelijke geheugens&teller
 
 %REVIEW
 \subsection{Stap 4: Implementeren van de combinatorische logica}
-Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de volgende toestand berekent, en de logica die de uitgang bepaalt. We bespreken elk van deze onderdelen apart.
+Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de \emph{volgende toestand} berekent, en de logica die de \emph{uitgang} bepaalt. We bespreken elk van deze onderdelen apart.
+
 \subsubsection{Stap 4A: Logica die de volgende toestand berekent}
-\paragraph{Excitatietabellen van flipflops}Het deel van de logica die de volgende toestand van het circuit berekent is bij zowel een Moore- als een Mealy-machine identiek. Het is een combinatorische schakeling die als ingangen de invoer van de component en de toestand heeft, als uitvoer heeft het de ingangen van de flipflops die de toestand bijhouden. Het aantal uitgangen en de uitgangen zelf hangen dus af van het type flipflop die we gekozen hebben. We dienen dus een tabel op te stellen die op basis van de invoer van de schakeling en de toestand aangeeft welke ingangen van welke flipflops hoog of laag moeten zijn. Deze functies noemen we de \termen{excitatiefuncties}; deze komen voort uit de \termen{excitatietabellen} van de verschillende flipflops. Deze tabellen werden reeds ge\"introduceerd in \sssref{typesFlipflops}. In tabel \ref{tbl:excitationTablesFlipflops} geven we eerst opnieuw een kort overzicht van de excitatietabellen van de verschillende flipflops.
+
+\paragraph{Excitatietabellen van flipflops}
+Het deel van de logica die de volgende toestand van het circuit berekent is bij zowel een Moore- als een Mealy-machine identiek. Het is een combinatorische schakeling die als ingangen de invoer van de component en de toestand neem, en als uitvoer heeft het de ingangen van de flipflops die de toestand bijhouden. Het aantal uitgangen en de semantiek van deze uitgangen van de schakeling die we implementeren, hangen dus af van het type flipflop die we gekozen hebben. We dienen hiervoor een tabel op te stellen die op basis van de invoer van de schakeling en de toestand van de schakeling, aangeeft welke ingangen van welke flipflops hoog of laag moeten zijn. Deze functies noemen we de \gtermen{excitatiefuncties}{Een reeks functies die als invoer de de invoer van de sequenti\"ele schakeling nemen, en de toestand waarin de schakeling zich bevindt, en die de signalen berekenen waarmee we de flipflops aansturen om van toestand te veranderen.}; deze komen voort uit de \termen{excitatietabellen} van de verschillende flipflops. Deze tabellen werden reeds ge\"introduceerd in \sssref{typesFlipflops}. In \tblref{excitationTablesFlipflops} geven we eerst opnieuw een kort overzicht van de excitatietabellen van de verschillende flipflops.
+
 \begin{table}[hbt]
 \centering
 \subtable[JK]{
@@ -1569,14 +1573,20 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$T$\\\hline
 \caption{Excitatietabellen van de verschillende flipflops}
 \tbllab{excitationTablesFlipflops}
 \end{table}
+
 Op basis van deze tabellen kunnen we nu de excitatiefuncties berekenen. Deze functies bevatten traditioneel veel don't cares. Deze don't cares hebben drie oorzaken:
+
 \begin{itemize}
  \item De don't cares die we terug vinden bij de excitatietabellen. Dit zijn don't cares in de uitgang van de functie en komen enkel voor bij implementaties met JK- en SR-flipflops.
- \item Binaire coderingen van toestanden die niet bestaan. Een concreet geval is bijvoorbeeld $011$ bij een one-hot codering. Dergelijke invoer codeert nooit naar een uitvoer.
- \item Binaire coderingen van ingangscombinaties die niet mogelijk zijn. Stel bijvoorbeeld dat we een $2$-bit ingang beschouwen en enkel configuraties $00$, $01$ en $11$ kunnen voorkomen.
+ \item Binaire coderingen van toestanden die niet bestaan. Een concreet geval is bijvoorbeeld $011$ bij een one-hot codering. Dergelijke invoer codeert nooit naar een uitvoer vermits bij een one-hot codering, er altijd juist \'e\'en bit $1$ is bij de toestandscodering.
+ \item Binaire coderingen van ingangscombinaties die niet mogelijk zijn. Stel bijvoorbeeld dat we een $2$-bit ingang beschouwen en enkel configuraties $00$, $01$ en $11$ kunnen voorkomen. In dat geval zijn er don't cares voor de invoer $10$.
 \end{itemize}
-Deze laatste twee zijn een vorm van invoer die niet kan voorkomen. In een tabel kunnen we de rijen weglaten, of we kunnen de rij opvullen met don´t cares aan het uitganggedeelte.
-\paragraph{De transitiefunctie}We stellen de transitiefunctie op door voor elke bit die de toestand voorstelt de ingangen van deze flipflop als uitgangen van onze schakeling te zien. Hiervoor kunnen we eerst het coderingstabel wijzigen. We lineariseren het diagram en laten de uitvoer voorlopig vallen. We illustreren dit concept met de Moore-machine uit het leidende voorbeeld. In tabel \ref{tbl:stateTableMooreComb} staat de toestandstabel van deze Moore-machine beschreven. Elke bit van de toestand $F_i$ is een ingang samen met de in dit geval 1-bit ingang $I_i$ van de schakeling. Als uitgang nemen we voorlopig de bits $D_i$ die de volgende toestand voorstellen. Deze linearisatie staat in tabel \ref{tbl:stateTableMooreCombLinD}.
+
+Deze laatste twee zijn een vorm van invoerconfiguraties -- hetzij de invoer van de toestand, hetzij de invoer van de invoer van het sequenti\"ele component -- die niet kunnen voorkomen. In een tabel kunnen we de rijen weglaten, of we kunnen de rij opvullen met don´t cares aan het uitganggedeelte.
+
+\paragraph{De transitiefunctie}
+We stellen de transitiefunctie op door voor elke bit die de toestand voorstelt de ingangen van deze flipflop als uitgangen van onze schakeling te zien. Hiervoor kunnen we eerst de coderingstabel wijzigen. We lineariseren het diagram\footnote{Hiermee bedoelen we dat we de invoer van de kolommen van de coderingstabel ook als een deel van de invoer-kant van een rij beschouwen.} en laten de uitvoer voorlopig vallen. We illustreren dit concept met de Moore-machine uit het leidende voorbeeld. In \tblref{stateTableMooreComb} staat de toestandstabel van deze Moore-machine beschreven. Elke bit van de toestand $F_i$ is een ingang samen met de in dit geval $1$-bit ingang $I_i$ van de schakeling. Als uitgang nemen we voorlopig de bits $D_i$ -- de ingangen van de D-flipflops die de toestand voorstellen -- die de volgende toestand voorstellen. Deze linearisatie staat in \tblref{stateTableMooreCombLinD}.
+
 \begin{table}[hbt]
 \centering
 \subtable[Coderingstabel]{\begin{tabular}{c|cc|c}
@@ -1619,26 +1629,26 @@ $F_0$&$F_1$&$I_0$&$J_0$&$K_0$&$J_1$&$K_1$\\\hline
 0&1&1&1&-&-&1\\
 1&0&0&-&1&0&-\\
 1&0&1&-&0&0&-\\
-1&1&0&-&1&-&0\\
-1&1&1&-&1&-&1
+1&1&0&-&1&-&1\\
+1&1&1&-&1&-&0
 \end{tabular}
 \tbllab{stateTableMooreCombLinJK}}
 \subtable[SR-flipflop]{\begin{tabular}{ccc|cccc}
 $F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$\\\hline
 0&0&0&0&-&0&-\\
 0&0&1&0&-&1&0\\
-0&1&0&1&0&0&0\\
-0&1&1&1&0&-&1\\
+0&1&0&1&0&-&0\\
+0&1&1&1&0&0&1\\
 1&0&0&0&1&0&-\\
 1&0&1&-&0&0&-\\
-1&1&0&0&1&-&0\\
-1&1&1&0&1&0&1
+1&1&0&0&1&0&1\\
+1&1&1&0&1&-&0
 \end{tabular}
 \tbllab{stateTableMooreCombLinSR}}
 \caption{Voorstelling van de transitiefunctie van de Moore-machine.}
 \tbllab{stateTableMooreCombLin}
 \end{table}
-Merk op dat deze reeds de implementatie zijn als we werken met D-flipflops. In het geval we niet met D-flipflops werken dienen we nog een extra stap te beschouwen: in dat geval beschouwen we voor elke flipflop het tuple $\left(F_i,D_i\right)$. Hierbij geldt $F_i=Q$ en $D_i=Q_{\mbox{\small{next.}}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft in de excitatietabellen (zie tabel \ref{tbl:excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen. Voorbeelden hiervan voor respectievelijk de T-, JK- en SR-flipflop staan in tabellen \ref{tbl:stateTableMooreCombLinT}, \ref{tbl:stateTableMooreCombLinJK} en \ref{tbl:stateTableMooreCombLinSR}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren. We minimaliseren eerst de functies met behulp van Karnaugh-kaarten en implementeren dan vervolgens de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben (1 per D- en T-flipflop en 2 per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op figuur \ref{fig:mooreCombImpl} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie.
+In het geval we niet met D-flipflops werken dienen we nog een extra stap te beschouwen: in dat geval beschouwen we voor elke flipflop het tuple $\tupl{F_i,D_i}$, en kijken we op de excitatie-tabel van het type flipflop. Hierbij geldt dan $F_i=Q$ en $D_i=Q_{\mbox{\small{next.}}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft (zie tabel \ref{tbl:excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen. Voorbeelden hiervan voor respectievelijk de T-, JK- en SR-flipflop staan in tabellen \ref{tbl:stateTableMooreCombLinT}, \ref{tbl:stateTableMooreCombLinJK} en \ref{tbl:stateTableMooreCombLinSR}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren. We minimaliseren eerst de functies met behulp van Karnaugh-kaarten en implementeren dan vervolgens de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben (1 per D- en T-flipflop en 2 per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op figuur \ref{fig:mooreCombImpl} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie.
 \begin{figure}[hbt]
 \centering
 \subfigure[D-flipflops]{
