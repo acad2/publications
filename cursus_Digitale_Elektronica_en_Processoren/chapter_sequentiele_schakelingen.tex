@@ -1835,7 +1835,7 @@ De volledig uitgewerkte voorbeelden voor het leidend voorbeeld staan met T-, JK-
 \kkaartc[0.75]{1.5}{3.5}{$K_0$}{$F_0$/$F_1$/$I_0$}{-/-/-/-/1/0/1/1};
 \kkaartcmarks[0.75]{0}{-0.5}{/0/1/1/1/\ta}{};
 \kkaartc[0.75]{0}{-0.5}{$J_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/-/0/0/-/-};
-\kkaartcmarks[0.75]{1.5}{-0.5}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
+\kkaartcmarks[0.75]{1.5}{-0.5}{/0/1/1/1/\ta,/2/0/3/0/\ta}{};
 \kkaartc[0.75]{1.5}{-0.5}{$K_1$}{$F_0$/$F_1$/$I_0$}{-/-/0/1/-/-/1/0};
 \def\sc{0.75};
 \def\sca{0.8};
@@ -1880,8 +1880,8 @@ De volledig uitgewerkte voorbeelden voor het leidend voorbeeld staan met T-, JK-
 %\node[and gate,inputs={normal,inverted}] (A00) at ([yshift=0.5 cm] ANDr |- O0.output) {};
 
 \node[and gate,inputs={inverted,normal}] (A00) at (ANDr |- FF1.J) {};
-\node[and gate,inputs={inverted,inverted}] (A10) at (ANDr |- O1.input 1) {};
-\node[and gate,inputs={normal,normal}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
+\node[and gate,inputs={inverted,normal}] (A10) at (ANDr |- O1.input 1) {};
+\node[and gate,inputs={normal,inverted}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
 \foreach \x in {0,1,2} {
   \coordinate (L\x) at (-3.5-0.2*\x,0);
 }
@@ -1926,9 +1926,9 @@ De volledig uitgewerkte voorbeelden voor het leidend voorbeeld staan met T-, JK-
 \kkaartc[0.75]{0}{3.5}{$S_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/0/-/0/0};
 \kkaartcmarks[0.75]{1.5}{3.5}{/2/0/2/1/\ta,/2/0/3/0/\tb}{};
 \kkaartc[0.75]{1.5}{3.5}{$R_0$}{$F_0$/$F_1$/$I_0$}{-/-/0/0/1/0/1/1};
-\kkaartcmarks[0.75]{0}{-0.5}{/0/1/1/1/\ta}{};
+\kkaartcmarks[0.75]{0}{-0.5}{/0/1/0/1/\ta}{};
 \kkaartc[0.75]{0}{-0.5}{$S_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/0/0/0/0/-};
-\kkaartcmarks[0.75]{1.5}{-0.5}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
+\kkaartcmarks[0.75]{1.5}{-0.5}{/1/1/1/1/\ta,/2/0/3/0/\ta}{};
 \kkaartc[0.75]{1.5}{-0.5}{$R_1$}{$F_0$/$F_1$/$I_0$}{-/0/0/1/-/-/1/0};
 \def\sc{0.75};
 \def\sca{0.8};
@@ -1972,12 +1972,12 @@ De volledig uitgewerkte voorbeelden voor het leidend voorbeeld staan met T-, JK-
 
 %\node[and gate,inputs={normal,inverted}] (A00) at ([yshift=0.5 cm] ANDr |- O0.output) {};
 
+\node[and gate,inputs={inverted,normal}] (A20) at (ANDr |- FF0.S) {};
 \node[and gate,inputs={normal,normal}] (A00) at (ANDr |- O0.input 1) {};
 \node[and gate,inputs={normal,inverted}] (A01) at ([yshift=-0.8 cm] ANDr |- O0.input 1) {};
-\node[and gate,inputs={inverted,normal}] (A20) at (ANDr |- FF0.S) {};
-\node[and gate,inputs={inverted,normal}] (A30) at (ANDr |- FF1.S) {};
-\node[and gate,inputs={inverted,inverted}] (A10) at (ANDr |- O1.input 1) {};
-\node[and gate,inputs={normal,normal}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
+\node[and gate,inputs={inverted,inverted,normal}] (A30) at (ANDr |- FF1.S) {};
+\node[and gate,inputs={inverted,normal,normal}] (A10) at (ANDr |- O1.input 1) {};
+\node[and gate,inputs={normal,inverted}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
 \foreach \x in {0,1,2} {
   \coordinate (L\x) at (-3.5-0.2*\x,0);
 }
@@ -1991,7 +1991,7 @@ De volledig uitgewerkte voorbeelden voor het leidend voorbeeld staan met T-, JK-
 \foreach \x/\y/\z/\t in {1/0/1/0.2,1/1/2/0.2,0/0/1/0.2,0/1/2/0.2} {
   \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
 }
-\foreach \x/\y/\z/\t in {2/0/1/0,2/0/2/1,3/0/1/0,3/0/2/2,1/0/1/0,1/0/2/2,1/1/1/0,1/1/2/2,0/0/1/0,0/0/2/1,0/1/1/0,0/1/2/2} {
+\foreach \x/\y/\z/\t in {2/0/1/0,2/0/2/1,3/0/1/0,3/0/2/1,3/0/3/2,1/0/1/0,1/0/2/1,1/0/3/2,1/1/1/0,1/1/2/2,0/0/1/0,0/0/2/1,0/1/1/0,0/1/2/2} {
   \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
   \pdot{A\x\y.input \z -| L\t};
 }
