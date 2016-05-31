@@ -1038,7 +1038,8 @@ Het opstellen van het \gtermen{toestandsdiagram}{Een diagram die dat een eindige
 \figlab{toestandsdiagram}
 \end{figure}
 
-\paragraph{Het toestandsdiagram} Alvorens we een toestandsdiagram kunnen opstellen zullen we eerst een toestandsdiagram formeel defini\"eren. Een toestandsdiagram bestaat uit een set van \gtermen{toestanden}{Een opsomming van de waarde van alle parameters waarin een systeem zich op een gegeven moment kan bevinden.}. Een toestand duiden we aan met een cirkel. Meestal benoemen we toestanden met een hoofdletter. Dit is niet verplicht maar maakt het makkelijk om naar een toestand te verwijzen. Verder zijn er ook \gtermen{transities}{Een overgang van een toestand naar een toestand. Transities worden op een toestandsdiagram met een pijl aangeduid. Een transitie van een toestand naar een (mogelijks dezelfde) toestand is meestal onderhevig aan voorwaarden en heeft soms effecten op de uitvoer.}: overgangen van een toestand naar een toestand\footnote{Een transitie kan ook naar dezelfde toestand gaan.} onder een bepaalde \termen{ingangscombinatie}. Een transitie duiden we aan met behulp van een gerichte pijl vanuit de \termen{brontoestand} naar de \termen{doeltoestand}. Voor elke mogelijke ingangscombinatie dient vanuit elke toestand een dergelijke pijl te vertrekken. De ingangscombinatie waarop de transitie van toepassing is noteren we boven de gerichte pijl. Het kloksignaal is in een synchrone sequenti\"ele schakeling geen onderdeel van de ingangscombinatie. Tot slot bevat een toestandsdiagram ook de \gtermen{initialisatie}{De eerste toestand in een toestandsdiagram waarin het systeem terecht komt.}: de eerste toestand in een toestandsdiagram waarin het systeem terecht komt. Deze initialisatie duiden we aan met een gerichte pijl die naar een bepaalde toestand wijst maar niet uit een toestand komt. De schakeling keert ook naar deze toestand terug als de gebruiker een reset-operatie op de schakeling uitvoert. De \termen{uitgangscombinatie} wordt ook weergegeven op het toestandsdiagram. Deze verschilt uiteraard tussen een Moore-machine en een Mealy-machine: bij een Moore-machine worden de uitgangen bij de toestanden genoteerd, dus in de cirkel (bijvoorbeeld onderaan). Vermits de uitgangen bij een Mealy-machine afhangen van de ingangscombinatie wordt de uitgang boven de transitiepijlen gezet. We maken hierbij een onderscheid tussen de ingangscombinatie en de uitgang door hier een slash\footnote{Dit is louter per conventie. De slash heeft verder geen enkele betekenis.} (``/'') tussen te plaatsen. Op \figref{toestandsdiagram} geven we de toestandsdiagrammen van de Moore- en Mealy-machine van het leidend voorbeeld weer.
+\paragraph{Het toestandsdiagram}
+Alvorens we een toestandsdiagram kunnen opstellen zullen we eerst een toestandsdiagram formeel defini\"eren. Een toestandsdiagram bestaat uit een set van \gtermen{toestanden}{Een opsomming van de waarde van alle parameters waarin een systeem zich op een gegeven moment kan bevinden.}. Een toestand duiden we aan met een cirkel. Meestal benoemen we toestanden met een hoofdletter. Dit is niet verplicht maar maakt het makkelijk om naar een toestand te verwijzen. Verder zijn er ook \gtermen{transities}{Een overgang van een toestand naar een toestand. Transities worden op een toestandsdiagram met een pijl aangeduid. Een transitie van een toestand naar een (mogelijks dezelfde) toestand is meestal onderhevig aan voorwaarden en heeft soms effecten op de uitvoer.}: overgangen van een toestand naar een toestand\footnote{Een transitie kan ook naar dezelfde toestand gaan.} onder een bepaalde \termen{ingangscombinatie}. Een transitie duiden we aan met behulp van een gerichte pijl vanuit de \termen{brontoestand} naar de \termen{doeltoestand}. Voor elke mogelijke ingangscombinatie dient vanuit elke toestand een dergelijke pijl te vertrekken. De ingangscombinatie waarop de transitie van toepassing is noteren we boven de gerichte pijl. Het kloksignaal is in een synchrone sequenti\"ele schakeling geen onderdeel van de ingangscombinatie. Tot slot bevat een toestandsdiagram ook de \gtermen{initialisatie}{De eerste toestand in een toestandsdiagram waarin het systeem terecht komt.}: de eerste toestand in een toestandsdiagram waarin het systeem terecht komt. Deze initialisatie duiden we aan met een gerichte pijl die naar een bepaalde toestand wijst maar niet uit een toestand komt. De schakeling keert ook naar deze toestand terug als de gebruiker een reset-operatie op de schakeling uitvoert. De \termen{uitgangscombinatie} wordt ook weergegeven op het toestandsdiagram. Deze verschilt uiteraard tussen een Moore-machine en een Mealy-machine: bij een Moore-machine worden de uitgangen bij de toestanden genoteerd, dus in de cirkel (bijvoorbeeld onderaan). Vermits de uitgangen bij een Mealy-machine afhangen van de ingangscombinatie wordt de uitgang boven de transitiepijlen gezet. We maken hierbij een onderscheid tussen de ingangscombinatie en de uitgang door hier een slash\footnote{Dit is louter per conventie: de slash heeft verder geen enkele betekenis.} (``/'') tussen te plaatsen. Op \figref{toestandsdiagram} geven we de toestandsdiagrammen van de Moore- en Mealy-machine van het leidend voorbeeld weer.
 
 \begin{table}[hbt]
 \centering
@@ -1447,7 +1448,7 @@ $ echo '3' | ./dep generate-gray
 \end{verbatim}
 
 \paragraph{Leidende voorbeelden}
-Voor de Moore-machine kiezen we voor een minimal-bit-change benadering en voor de Mealy-machine een one-hot codering. Deze keuzes zijn louter didactief. De toegewezen bitvoorstellingen worden in een toestandstabel geschreven. Voor een one-hot codering is dit vrij triviaal. We wijzen elke toestand \'e\'en bit toe. Welke bit heeft geen invloed op de schakeling: immers is dit louter een permutatie van de achterliggende flipflops. \tblref{mealyBitRepresentation} stelt de Mealy-machine uit de leidende voorbeelden voor met de one-hot codering.
+Voor de Moore-machine kiezen we voor een minimal-bit-change benadering en voor de Mealy-machine een one-hot codering. Deze keuzes zijn louter didactief. De toegewezen bitvoorstellingen worden in een toestandstabel geschreven. In deze cursus noemen we een dergelijke tabel een \gtermen{coderingstabel}{Een toestandstabel waarbij de voorstellingen van de toestanden vervangen worden door de coderingen van deze toestanden.}. Voor een one-hot codering is dit vrij triviaal. We wijzen elke toestand \'e\'en bit toe. Welke bit voor welke toestand gebruikt wordt, heeft geen invloed op de schakeling: immers is dit louter een permutatie van de achterliggende flipflops. \tblref{mealyBitRepresentation} stelt de Mealy-machine uit de leidende voorbeelden voor met de one-hot codering.
 
 \begin{table}[hbt]
 \centering
@@ -1523,7 +1524,6 @@ Toepassingen&\multicolumn{2}{c|}{veel veranderingen}&tijdelijke geheugens&teller
 \tbllab{whichFlipflop}
 \end{table}
 
-%REVIEW
 \subsection{Stap 4: Implementeren van de combinatorische logica}
 Met alle vorige stappen hebben we beslist hoe we de specificaties van de sequenti\"ele schakeling zullen implementeren. Het enige wat we nu nog moeten doen is de schakeling zelf implementeren. Deze implementatie is op te delen in het implementeren van de logica die de \emph{volgende toestand} berekent, en de logica die de \emph{uitgang} bepaalt. We bespreken elk van deze onderdelen apart.
 
@@ -1536,7 +1536,7 @@ Het deel van de logica die de volgende toestand van het circuit berekent is bij 
 \centering
 \subtable[JK]{
 \begin{tabular}{c|c|cc}
-$Q$&$Q_{\mbox{\small{next.}}}$&$J$&$K$\\\hline
+$Q$&$\qnext{}$&$J$&$K$\\\hline
 0&0&0&-\\
 0&1&1&-\\
 1&0&-&1\\
@@ -1545,7 +1545,7 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$J$&$K$\\\hline
 \tbllab{excitationTablesFlipflopsJK}}
 \subtable[SR]{
 \begin{tabular}{c|c|cc}
-$Q$&$Q_{\mbox{\small{next.}}}$&$S$&$R$\\\hline
+$Q$&$\qnext{}$&$S$&$R$\\\hline
 0&0&0&-\\
 0&1&1&0\\
 1&0&0&1\\
@@ -1554,7 +1554,7 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$S$&$R$\\\hline
 \tbllab{excitationTablesFlipflopsSR}}
 \subtable[D]{
 \begin{tabular}{c|c|c}
-$Q$&$Q_{\mbox{\small{next.}}}$&$D$\\\hline
+$Q$&$\qnext{}$&$D$\\\hline
 0&0&0\\
 0&1&1\\
 1&0&0\\
@@ -1563,14 +1563,14 @@ $Q$&$Q_{\mbox{\small{next.}}}$&$D$\\\hline
 \tbllab{excitationTablesFlipflopsD}}
 \subtable[T]{
 \begin{tabular}{c|c|c}
-$Q$&$Q_{\mbox{\small{next.}}}$&$T$\\\hline
+$Q$&$\qnext{}$&$T$\\\hline
 0&0&0\\
 0&1&1\\
 1&0&1\\
 1&1&0\\
 \end{tabular}
 \tbllab{excitationTablesFlipflopsT}}
-\caption{Excitatietabellen van de verschillende flipflops}
+\caption{Excitatietabellen van de verschillende soorten flipflops}
 \tbllab{excitationTablesFlipflops}
 \end{table}
 
@@ -1584,6 +1584,7 @@ Op basis van deze tabellen kunnen we nu de excitatiefuncties berekenen. Deze fun
 
 Deze laatste twee zijn een vorm van invoerconfiguraties -- hetzij de invoer van de toestand, hetzij de invoer van de invoer van het sequenti\"ele component -- die niet kunnen voorkomen. In een tabel kunnen we de rijen weglaten, of we kunnen de rij opvullen met don´t cares aan het uitganggedeelte.
 
+%REVIEW
 \paragraph{De transitiefunctie}
 We stellen de transitiefunctie op door voor elke bit die de toestand voorstelt de ingangen van deze flipflop als uitgangen van onze schakeling te zien. Hiervoor kunnen we eerst de coderingstabel wijzigen. We lineariseren het diagram\footnote{Hiermee bedoelen we dat we de invoer van de kolommen van de coderingstabel ook als een deel van de invoer-kant van een rij beschouwen.} en laten de uitvoer voorlopig vallen. We illustreren dit concept met de Moore-machine uit het leidende voorbeeld. In \tblref{stateTableMooreComb} staat de toestandstabel van deze Moore-machine beschreven. Elke bit van de toestand $F_i$ is een ingang samen met de in dit geval $1$-bit ingang $I_i$ van de schakeling. Als uitgang nemen we voorlopig de bits $D_i$ -- de ingangen van de D-flipflops die de toestand voorstellen -- die de volgende toestand voorstellen. Deze linearisatie staat in \tblref{stateTableMooreCombLinD}.
 
@@ -1648,7 +1649,15 @@ $F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$\\\hline
 \caption{Voorstelling van de transitiefunctie van de Moore-machine.}
 \tbllab{stateTableMooreCombLin}
 \end{table}
-In het geval we niet met D-flipflops werken dienen we nog een extra stap te beschouwen: in dat geval beschouwen we voor elke flipflop het tuple $\tupl{F_i,D_i}$, en kijken we op de excitatie-tabel van het type flipflop. Hierbij geldt dan $F_i=Q$ en $D_i=Q_{\mbox{\small{next.}}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft (zie tabel \ref{tbl:excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen. Voorbeelden hiervan voor respectievelijk de T-, JK- en SR-flipflop staan in tabellen \ref{tbl:stateTableMooreCombLinT}, \ref{tbl:stateTableMooreCombLinJK} en \ref{tbl:stateTableMooreCombLinSR}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren. We minimaliseren eerst de functies met behulp van Karnaugh-kaarten en implementeren dan vervolgens de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben (1 per D- en T-flipflop en 2 per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op figuur \ref{fig:mooreCombImpl} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie.
+
+%REVIEW
+In het geval we niet met D-flipflops werken dienen we nog een extra stap uit te voeren: in dat geval beschouwen we voor elke flipflop het tuple $\tupl{F_i,D_i}$, en kijken we op de excitatie-tabel van het type flipflop. Hierbij geldt dan $\tupl{F_i,D_i}=\tupl{Q,\qnext{}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft (zie \tblref{excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen voor de logica die de volgende toestand moet berekenen.
+
+\paragraph{}
+Stel dat we bijvoorbeeld beslissen om onze schakeling met JK-flipflops te bouwen, dan voorzien we als uitgangen $J_0$ en $K_0$ die de eerste flipflop aansturen, en $J_1$ en $K_1$ die de tweede flipflop aansturen. Nu vullen we \tblref{stateTableMooreCombLinJK} als volgt in: voor de eerste lijn zien we in \tblref{stateTableMooreCombLinD} $\tupl{F_0,F_1,I_0,D_0,D_1}=\tupl{0,0,0,0,0}$ staan. Voor de eerste JK-flipflop betekent dit dus $\tupl{F_0,D_0}=\tupl{Q,\qnext{}}=\tupl{0,0}$. Wanneer we deze configuratie opzoeken in \tblref{excitationTablesFlipflopsJK} zien we dat $\tupl{J_0,K_0}=\tupl{0,-}$. Hetzelfde geldt voor de tweede flipflop: $\tupl{F_1,D_1}=\tupl{Q,\qnext{}}=\tupl{0,0}$ dus $\tupl{J_1,K_1}=\tupl{0,-}$. We vullen dus als eerste rij in voor \tblref{stateTableMooreCombLinJK}, $\tupl{F_0,F_1,I_0,J_0,K_0,J_1,K_1}=\tupl{0,0,0,0,-,0,-}$. Voor de tweede rij volgen we dezelfde procedure: $\tupl{F_0,F_1,I_0,D_0,D_1}=\tupl{0,0,1,0,1}$. Bijgevolg geldt $\tupl{F_0,D_0}=\tupl{Q,\qnext{}}=\tupl{0,0}$ wat dus opnieuw leidt tot $\tupl{J_0,K_0}=\tupl{0,-}$. Voor de tweede flipflop is de situatie nu anders: $\tupl{F_1,D_1}=\tupl{Q,\qnext{}}=\tupl{0,1}$. Wanneer we deze configuratie opzoeken in \tblref{excitationTablesFlipflopsJK}, merken we dat $\tupl{J_1,K_1}=\tupl{1,-}$. De tweede rij is dus voluit $\tupl{F_0,F_1,I_0,J_0,K_0,J_1,K_1}=\tupl{0,0,0,0,-,1,-}$. We zetten deze procedure verder tot we elke lijn hebben ``vertaald''.
+
+\paragraph{}
+De volledig uitgewerkte voorbeelden voor het leidend voorbeeld staan met T-, JK- en SR-flipflop staan respectievelijk in \tblref{stateTableMooreCombLinT}, \tblref{stateTableMooreCombLinJK} en \tblref{stateTableMooreCombLinSR}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren voor het transitie-gedeelte. We beschouwen de transitiefunctie beschreven in de tabel, en minimaliseren deze functie met behulp van Karnaugh-kaarten. Vervolgens implementeren we dan de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben ($1$ per D- en T-flipflop en $2$ per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op \figref{mooreCombImpl} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie.
 \begin{figure}[hbt]
 \centering
 \subfigure[D-flipflops]{
@@ -1827,7 +1836,7 @@ In het geval we niet met D-flipflops werken dienen we nog een extra stap te besc
 \kkaartcmarks[0.75]{0}{-0.5}{/0/1/1/1/\ta}{};
 \kkaartc[0.75]{0}{-0.5}{$J_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/-/0/0/-/-};
 \kkaartcmarks[0.75]{1.5}{-0.5}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
-\kkaartc[0.75]{1.5}{-0.5}{$K_1$}{$F_0$/$F_1$/$I_0$}{-/-/1/0/-/-/0/1};
+\kkaartc[0.75]{1.5}{-0.5}{$K_1$}{$F_0$/$F_1$/$I_0$}{-/-/0/1/-/-/1/0};
 \def\sc{0.75};
 \def\sca{0.8};
 \begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
@@ -1918,9 +1927,9 @@ In het geval we niet met D-flipflops werken dienen we nog een extra stap te besc
 \kkaartcmarks[0.75]{1.5}{3.5}{/2/0/2/1/\ta,/2/0/3/0/\tb}{};
 \kkaartc[0.75]{1.5}{3.5}{$R_0$}{$F_0$/$F_1$/$I_0$}{-/-/0/0/1/0/1/1};
 \kkaartcmarks[0.75]{0}{-0.5}{/0/1/1/1/\ta}{};
-\kkaartc[0.75]{0}{-0.5}{$S_1$}{$F_0$/$F_1$/$I_0$}{0/1/0/-/0/0/-/0};
+\kkaartc[0.75]{0}{-0.5}{$S_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/0/0/0/0/-};
 \kkaartcmarks[0.75]{1.5}{-0.5}{/0/0/1/0/\ta,/2/1/3/1/\ta}{};
-\kkaartc[0.75]{1.5}{-0.5}{$R_1$}{$F_0$/$F_1$/$I_0$}{-/0/1/0/-/-/0/1};
+\kkaartc[0.75]{1.5}{-0.5}{$R_1$}{$F_0$/$F_1$/$I_0$}{-/0/0/1/-/-/1/0};
 \def\sc{0.75};
 \def\sca{0.8};
 \begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
@@ -2008,6 +2017,7 @@ In het geval we niet met D-flipflops werken dienen we nog een extra stap te besc
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
 \figlab{mooreCombImpl}
 \end{figure}
+
 Naast de logica voor de volgende toestand, verbinden we ook de klokingangen van de flipflops met het globale kloksignaal, en implementeren we de clear logica. De clear zorgt ervoor dat op het moment dat we de schakeling herzetten en dus het \clrsin{} signaal van de schakeling 0 wordt, de schakeling in de eerste toestand terechtkomt. In ons geval is dat 10. Daarom verbinden we de clear-ingang met de preset ingang van de eerste flipflop en de clear-ingang van de tweede flipflop. Op de clear-ingang van de eerste flipflop en de preset-ingang van de tweede wordt steeds een hoog signaal aangelegd. Merk verder ook op we in principe geen negatieve ingangen voor toestandssignalen moeten gebruiken. In plaats van een negatie aan de ingang van de AND-poort te plaatsen, kunnen we eenvoudig gebruik maken van de $\overline{Q}$-uitgang van de flipflop. Omdat we echter hiermee het aantal lijnen voor de flipflops bijna verdubbelen, maken we er in de figuur abstractie van. Dit principe kunnen we enkel toepassen voor signalen die uit de flipflops komen. De signalen die de ingangsconfiguratie bepalen hebben wel een expliciete NOT-poort nodig.
 \paragraph{Het one-hot-codering geval}Naast het geval van de Moore-machine zullen we ook de transitiefunctie van de Mealy-machine implementeren. Over deze realisatie is het ook eenvoudiger om enkele eigenschappen te formaliseren. Deze eigenschappen gaan over de kosten van de transitiefunctie v\'o\'or dat we minimalisatie van de Karnaugh-kaarten toepassen. Verder hangen de eigenschappen af van het type flipflop die we gebruiken:
 \begin{itemize}
@@ -2337,6 +2347,7 @@ t_{\small{FF_1\rightarrow FF_2}}=\mbox{Clk}\rightarrow \overline{Q}+\mbox{set-up
 \end{array}
 \end{equation}
 Beide paden hebben hier dus dezelfde vertraging. Als we een referentievertraging van $1\mbox{ ns}$ nemen, is de maximale frequentie $f_{\mbox{\small{max.}}}=1/7.6\mbox{ ns}\approx 131\mbox{ MHz}$.
+
 \section{Asynchrone schakelingen}
 \seclab{asynchroneSequence}
 Naast schakelingen waar het ritme bepaald wordt door een klok, bestaan er ook schakelingen die een vorm van geheugen bezitten, maar van toestand veranderen doordat het ingangssignaal verandert. We hebben in dit hoofdstuk reeds dergelijke schakelingen ge\"implementeerd. In \sscref{flipflop} hebben we een latch geconstrueerd. Een latch heeft in principe geen klokingang, maar houdt wel een toestand bij. Op het moment dat we een ingang aan een SR-latch aanpasen, zal de latch soms in een andere toestand terechtkomen. Verder bezit de component ook duidelijk een geheugen vermits als de ingang $\left(S,R\right)=\left(0,0\right)$, de vorige toestand behouden blijft. De situatie van de latch illustreert hoe asynchrone schakelingen worden gerealiseerd: We hebben een aantal ingangssignalen, die door logica worden verwerkt in een soort geheugen. Dit geheugen vertraagt een terugkoppeling, en houdt de toestand bij. Het terugkoppelen betekent dat de uitgangen van een logische schakeling als een deel van de invoer fungeren die door die logica verwerkt wordt. In deze cursus zullen we uitsluitend asynchrone sequenti\"ele schakelingen beschouwen die voldoen aan een belangrijke voorwaarde: de \termen{fundamentele modus}, ofwel de ``\termen{fundamental mode restriction}''. Deze beperking bestaat uit twee delen:

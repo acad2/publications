@@ -488,8 +488,8 @@
     \draw (-0.5,0.25+0.5*\i) node[scale=0.85]{\t};
     \draw (0,0.125+0.5*\i) node[anchor=east,scale=0.65]{$0$};
     \draw (0,0.375+0.5*\i) node[anchor=east,scale=0.65]{$1$};
-    \draw[dotted,tiny] (0,0.375+0.5*\i) -- (#3+0.3,0.375+0.5*\i);
-    \draw[dotted,tiny] (0,0.125+0.5*\i) -- (#3+0.3,0.125+0.5*\i);
+    \draw[dotted] (0,0.375+0.5*\i) -- (#3+0.3,0.375+0.5*\i);
+    \draw[dotted] (0,0.125+0.5*\i) -- (#3+0.3,0.125+0.5*\i);
   }
   \foreach \ni/\xi/\bi/\xj/\bj in {#7} {
     \draw[thick] (\xi*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bi+0.5*\ni) -- (\xj*\xs,0.125+0.25*\bj+0.5*\ni);
