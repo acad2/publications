@@ -26,6 +26,7 @@ while true
     while [ "$tmi" -le "$tmio" ]
         do
         make $pdff >$stdo 2>$stde
+        pdfinfo 'cursus.pdf' >/dev/null 2>/dev/null && cp 'cursus.pdf' 'cursus_dep.pdf'
 
         grep -q '^make: .* is up to date.$' $stdo
 
