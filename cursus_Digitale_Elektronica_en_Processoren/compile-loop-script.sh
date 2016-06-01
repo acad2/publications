@@ -66,8 +66,10 @@ while true
     bash generate-stats.sh >> "$stds"
     gnuplot diagnostics.gnplt
 
+
+    pdfinfo 'cursus.pdf' && git commit -am 'temporary commit'
+
     make purge >/dev/null 2>/dev/null
 
-    git commit -am 'temporary commit'
 
 done
