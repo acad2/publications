@@ -112,7 +112,7 @@
 }
 
 %G02 output
-\node[or gate,rotate=180,inputs={nnn},anchor=output] (GA) at ($(COG02)+(\dgw,0)$);
+\node[or gate,rotate=180,inputs={nnn},anchor=output] (GA) at ($(COG02)+(\dgw,0)$) {};
 \draw (GA.output) -- (COG02);
 \draw (GA.input 3) -- (C3.input 4 |- GA.input 3);
 \pdot{C3.input 4 |- GA.input 3};
