@@ -1282,7 +1282,7 @@ $E$&$B/1$&$A/0$
 \end{table}
 
 \paragraph{Een formeel algoritme}
-De cursus ``\emph{Automaten en Berekenbaarheid}'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{minimizeFSM}\footnote{Dit algoritme dient men niet te kunnen opstellen, men dient echter wel een FSM te kunnen minimaliseren.}.
+De cursus ``\emph{Automaten en Berekenbaarheid}'' van prof. Demoen\cite{aenb10} bevat een formeel algoritme voor de minimalisatie van een deterministische eindige toestandsautomaat (DFA). Met minimale veranderingen kan dit algoritme omgevormd worden tot een algoritme\footnote{Dit algoritme dient men niet te kunnen opstellen, men dient echter wel een FSM te kunnen minimaliseren.} die Moore- en Mealy-machines minimaliseert. We beschouwen dit in \algoref{minimizeFSM}.
 
 \begin{algorithm}[hbt]
 \caption{Minimaliseren van een toestandsdiagram.}\label{alg:minimizeFSM}
@@ -1369,68 +1369,14 @@ Bij de one-hot codering voorzien we voor elke toestand een flipflop, hierdoor sc
 Indien de kostprijs en vermogenverbruik een belangrijke factor zijn maken we meestal gebruik van de minimal-bit-change. Hierbij proberen we ervoor te zorgen dat de som van het aantal bits die veranderen over alle overgangen heen, het minst mogelijke is. Dit probleem is echter niet triviaal en is NP-hard\footnote{In de theoretische informatica betekent NP-hard dat het probleem waarschijnlijk niet eenvoudig op te lossen is met een algoritme in polynomiale tijd.}. Bij een klein aantal toestanden kunnen we alle mogelijkheden uitproberen, bij een groter aantal maakt men gebruik van programma's zoals bijvoorbeeld \textsc{MUSE}, \textsc{JEDI} en \textsc{MUSTANG}. Deze programma's werken op basis van heuristieken\footnote{Een heuristiek is een programma die een benaderende oplossing voorstelt. Optimaliteit wordt dus niet gegarandeerd.} en geven meestal een benaderende oplossing. Soms worden er ook kansen bij de overgangen betrokken om het de kosten en het vermogenverbruik verder te minimaliseren.
 
 \paragraph{}
-Een typisch voorbeeld van een minimal-bit change codering is de \gtermen{Gray-code teller}{Een teller waar bij increment en decrement telkens juist \'e\'en bit omschakelt.}\footnote{Vernoemd naar Frank Gray (1887-1969), fysicus bij Bell Labs.}. Gray ontwikkelde een teller die bij elke overgang slechts \'e\'en bit veranderde. \figref{grayCodeCounter} toont het toestandsdiagram van een 2-bit en 3-bit teller. Op de bogen plaatsen we hier het aantal bits die veranderen. Het feit dat we niet voor een straightforward implementatie voor een teller kiezen kan vreemd lijken. Deze teller dient dan ook meestal niet om de binaire waarde onmiddellijk uit te lezen, maar kan bijvoorbeeld gebruikt worden als een controller die een lus vormt over een vast aantal toestanden. Over het concreet oplossen van dit probleem gaan we niet verder in.
+Een typisch voorbeeld van een minimal-bit change codering is de \gtermen{Gray-code teller}{Een teller waar bij increment en decrement telkens juist \'e\'en bit omschakelt.}\footnote{Vernoemd naar Frank Gray (1887-1969), fysicus bij Bell Labs.}. Gray ontwikkelde een teller die bij elke overgang slechts \'e\'en bit veranderde. \figref{gray-code-counter} toont het toestandsdiagram van een 2-bit en 3-bit teller. Op de bogen plaatsen we hier het aantal bits die veranderen. Het feit dat we niet voor een straightforward implementatie voor een teller kiezen kan vreemd lijken. Deze teller dient dan ook meestal niet om de binaire waarde onmiddellijk uit te lezen, maar kan bijvoorbeeld gebruikt worden als een controller die een lus vormt over een vast aantal toestanden. Over het concreet oplossen van dit probleem gaan we niet verder in.
 
 \begin{figure}[hbt]
 \centering
-\subfigure[Gray-code (minimal-bit-change)]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
-\node[state,initial,initial text=RST, initial where=left] (A) {$00$};
-\node[state] (B) [right=of A] {$01$};
-\node[state] (C) [below=of B] {$11$};
-\node[state] (D) [left=of C] {$10$};
-\begin{scope}[node distance=1.414cm]
-  \node[state,initial,initial text=RST, initial where=left,above left=of A] (AA) {$000$};
-  \node[state] (CC) [above right=of B] {$011$};
-  \node[state] (EE) [below right=of C] {$110$};
-  \node[state] (GG) [below left=of D] {$101$};
-\end{scope}
-\node[state] (BB) [right=of AA] {$001$};
-\node[state] (DD) [below=of CC] {$010$};
-\node[state] (FF) [left=of EE] {$111$};
-\node[state] (HH) [above=of GG] {$100$};
-\path (A) edge node{1} (B)
-      (B) edge node{1} (C)
-      (C) edge node{1} (D)
-      (D) edge node{1} (A);
-\path (AA) edge node{1} (BB)
-      (BB) edge node{1} (CC)
-      (CC) edge node{1} (DD)
-      (DD) edge node{1} (EE)
-      (EE) edge node{1} (FF)
-      (FF) edge node{1} (GG)
-      (GG) edge node{1} (HH)
-      (HH) edge node{1} (AA);
-\end{tikzpicture}}
-\subfigure[Straightforward]{\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
-\node[state,initial,initial text=RST, initial where=left] (A) {$00$};
-\node[state] (B) [right=of A] {$01$};
-\node[state] (C) [below=of B] {$10$};
-\node[state] (D) [left=of C] {$11$};
-\begin{scope}[node distance=1.414cm]
-  \node[state,initial,initial text=RST, initial where=left,above left=of A] (AA) {$000$};
-  \node[state] (CC) [above right=of B] {$010$};
-  \node[state] (EE) [below right=of C] {$100$};
-  \node[state] (GG) [below left=of D] {$110$};
-\end{scope}
-\node[state] (BB) [right=of AA] {$001$};
-\node[state] (DD) [below=of CC] {$011$};
-\node[state] (FF) [left=of EE] {$101$};
-\node[state] (HH) [above=of GG] {$111$};
-\path (A) edge node{1} (B)
-      (B) edge node{2} (C)
-      (C) edge node{1} (D)
-      (D) edge node{2} (A);
-\path (AA) edge node{1} (BB)
-      (BB) edge node{2} (CC)
-      (CC) edge node{1} (DD)
-      (DD) edge node{3} (EE)
-      (EE) edge node{1} (FF)
-      (FF) edge node{2} (GG)
-      (GG) edge node{1} (HH)
-      (HH) edge node{3} (AA);
-\end{tikzpicture}}
+\importtikzsubfigure{gray-code-counter-gray}{Gray-code (minimal-bit-change)}
+\importtikzsubfigure{gray-code-counter-straight}{Straightforward}
 \caption{Een 2-bit en 3-bit Gray-code teller en zijn straightforward equivalent.}
-\figlab{grayCodeCounter}
+\figlab{gray-code-counter}
 \end{figure}
 
 Het softwarepakket bevat echter een commando om Gray-code sequenties met een arbitrair aantal bits\footnote{Het programma werkt tot hoogstens $64$ bits.} te genereren:
@@ -1585,20 +1531,17 @@ Op basis van deze tabellen kunnen we nu de excitatiefuncties berekenen. Deze fun
 Deze laatste twee zijn een vorm van invoerconfiguraties -- hetzij de invoer van de toestand, hetzij de invoer van de invoer van het sequenti\"ele component -- die niet kunnen voorkomen. In een tabel kunnen we de rijen weglaten, of we kunnen de rij opvullen met don´t cares aan het uitganggedeelte.
 
 \paragraph{De transitiefunctie}
-We stellen de transitiefunctie op door voor elke bit die de toestand voorstelt de ingangen van deze flipflop als uitgangen van onze schakeling te zien. Hiervoor kunnen we eerst de coderingstabel wijzigen. We lineariseren het diagram\footnote{Hiermee bedoelen we dat we de invoer van de kolommen van de coderingstabel ook als een deel van de invoer-kant van een rij beschouwen.} en laten de uitvoer voorlopig vallen. We illustreren dit concept met de Moore-machine uit het leidende voorbeeld. In \tblref{stateTableMooreComb} staat de toestandstabel van deze Moore-machine beschreven. Elke bit van de toestand $F_i$ is een ingang samen met de in dit geval $1$-bit ingang $I_i$ van de schakeling. Als uitgang nemen we voorlopig de bits $D_i$ -- de ingangen van de D-flipflops die de toestand voorstellen -- die de volgende toestand voorstellen. Deze linearisatie staat in \tblref{stateTableMooreCombLinD}.
+We stellen de transitiefunctie op door voor elke bit die de toestand voorstelt de ingangen van deze flipflop als uitgangen van onze schakeling te zien. Hiervoor kunnen we eerst de coderingstabel wijzigen. We lineariseren het diagram\footnote{Hiermee bedoelen we dat we de invoer van de kolommen van de coderingstabel ook als een deel van de invoer-kant van een rij beschouwen.} en laten de uitvoer voorlopig vallen. We illustreren dit concept met de Moore-machine uit het leidende voorbeeld. In \tblref{state-table-moore-comb} staat de toestandstabel van deze Moore-machine beschreven. Elke bit van de toestand $F_i$ is een ingang samen met de in dit geval $1$-bit ingang $I_i$ van de schakeling. Als uitgang nemen we voorlopig de bits $D_i$ -- de ingangen van de D-flipflops die de toestand voorstellen -- die de volgende toestand voorstellen. Deze linearisatie staat in \tblref{state-table-moore-comb-lin-D}.
 
 \begin{table}[hbt]
 \centering
-\subtable[Coderingstabel]{\begin{tabular}{c|cc|c}
-Toestand&0&1&Uitgang\\\hline
+\subtable[Coderingstabel]{\defaulttable{c|cc|c}{\bf Toestand&$0$&$1$&\bf Uitgang}{
 \texttt{10}&\texttt{00}&\texttt{10}&\texttt{0}\\
 \texttt{00}&\texttt{00}&\texttt{01}&\texttt{0}\\
 \texttt{01}&\texttt{11}&\texttt{10}&\texttt{0}\\
-\texttt{11}&\texttt{00}&\texttt{01}&\texttt{1}\\
-\end{tabular}
-\tbllab{stateTableMooreComb}}
-\subtable[D-flipflop]{\begin{tabular}{ccc|cc}
-$F_0$&$F_1$&$I_0$&$D_0$&$D_1$\\\hline
+\texttt{11}&\texttt{00}&\texttt{01}&\texttt{1}}
+\tbllab{state-table-moore-comb}}
+\subtable[D-flipflop]{\defaulttable{ccc|cc}{$F_0$&$F_1$&$I_0$&$D_0$&$D_1$}{
 0&0&0&0&0\\
 0&0&1&0&1\\
 0&1&0&1&1\\
@@ -1606,11 +1549,9 @@ $F_0$&$F_1$&$I_0$&$D_0$&$D_1$\\\hline
 1&0&0&0&0\\
 1&0&1&1&0\\
 1&1&0&0&0\\
-1&1&1&0&1
-\end{tabular}
-\tbllab{stateTableMooreCombLinD}}
-\subtable[T-flipflop]{\begin{tabular}{ccc|cc}
-$F_0$&$F_1$&$I_0$&$T_0$&$T_1$\\\hline
+1&1&1&0&1}
+\tbllab{state-table-moore-comb-lin-d}}
+\subtable[T-flipflop]{\defaulttable{ccc|cc}{$F_0$&$F_1$&$I_0$&$T_0$&$T_1$}{
 0&0&0&0&0\\
 0&0&1&0&1\\
 0&1&0&1&0\\
@@ -1618,11 +1559,9 @@ $F_0$&$F_1$&$I_0$&$T_0$&$T_1$\\\hline
 1&0&0&1&0\\
 1&0&1&0&0\\
 1&1&0&1&1\\
-1&1&1&1&0
-\end{tabular}
-\tbllab{stateTableMooreCombLinT}}
-\subtable[JK-flipflop]{\begin{tabular}{ccc|cccc}
-$F_0$&$F_1$&$I_0$&$J_0$&$K_0$&$J_1$&$K_1$\\\hline
+1&1&1&1&0}
+\tbllab{state-table-moore-comb-lin-t}}
+\subtable[JK-flipflop]{\defaulttable{ccc|cccc}{$F_0$&$F_1$&$I_0$&$J_0$&$K_0$&$J_1$&$K_1$}{
 0&0&0&0&-&0&-\\
 0&0&1&0&-&1&-\\
 0&1&0&1&-&-&0\\
@@ -1630,11 +1569,9 @@ $F_0$&$F_1$&$I_0$&$J_0$&$K_0$&$J_1$&$K_1$\\\hline
 1&0&0&-&1&0&-\\
 1&0&1&-&0&0&-\\
 1&1&0&-&1&-&1\\
-1&1&1&-&1&-&0
-\end{tabular}
-\tbllab{stateTableMooreCombLinJK}}
-\subtable[SR-flipflop]{\begin{tabular}{ccc|cccc}
-$F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$\\\hline
+1&1&1&-&1&-&0}
+\tbllab{state-table-moore-comb-lin-jk}}
+\subtable[SR-flipflop]{\defaulttable{ccc|cccc}{$F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$}{
 0&0&0&0&-&0&-\\
 0&0&1&0&-&1&0\\
 0&1&0&1&0&-&0\\
@@ -1642,386 +1579,52 @@ $F_0$&$F_1$&$I_0$&$S_0$&$R_0$&$S_1$&$R_1$\\\hline
 1&0&0&0&1&0&-\\
 1&0&1&-&0&0&-\\
 1&1&0&0&1&0&1\\
-1&1&1&0&1&-&0
-\end{tabular}
-\tbllab{stateTableMooreCombLinSR}}
+1&1&1&0&1&-&0}
+\tbllab{state-table-moore-comb-lin-sr}}
 \caption{Voorstelling van de transitiefunctie van de Moore-machine.}
-\tbllab{stateTableMooreCombLin}
+\tbllab{state-table-moore-comb-lin}
 \end{table}
 
 %REVIEW
 In het geval we niet met D-flipflops werken dienen we nog een extra stap uit te voeren: in dat geval beschouwen we voor elke flipflop het tuple $\tupl{F_i,D_i}$, en kijken we op de excitatie-tabel van het type flipflop. Hierbij geldt dan $\tupl{F_i,D_i}=\tupl{Q,\qnext{}}$. We dienen dan nog enkel op te zoeken welke invoer het specifieke type flipflop nodig heeft (zie \tblref{excitationTablesFlipflops}). In het geval van een SR- en JK-flipflop leidt dit dus tot een verdubbeling van het aantal uitgangen voor de logica die de volgende toestand moet berekenen.
 
 \paragraph{}
-Stel dat we bijvoorbeeld beslissen om onze schakeling met JK-flipflops te bouwen, dan voorzien we als uitgangen $J_0$ en $K_0$ die de eerste flipflop aansturen, en $J_1$ en $K_1$ die de tweede flipflop aansturen. Nu vullen we \tblref{stateTableMooreCombLinJK} als volgt in: voor de eerste lijn zien we in \tblref{stateTableMooreCombLinD} $\tupl{F_0,F_1,I_0,D_0,D_1}=\tupl{0,0,0,0,0}$ staan. Voor de eerste JK-flipflop betekent dit dus $\tupl{F_0,D_0}=\tupl{Q,\qnext{}}=\tupl{0,0}$. Wanneer we deze configuratie opzoeken in \tblref{excitationTablesFlipflopsJK} zien we dat $\tupl{J_0,K_0}=\tupl{0,-}$. Hetzelfde geldt voor de tweede flipflop: $\tupl{F_1,D_1}=\tupl{Q,\qnext{}}=\tupl{0,0}$ dus $\tupl{J_1,K_1}=\tupl{0,-}$. We vullen dus als eerste rij in voor \tblref{stateTableMooreCombLinJK}, $\tupl{F_0,F_1,I_0,J_0,K_0,J_1,K_1}=\tupl{0,0,0,0,-,0,-}$. Voor de tweede rij volgen we dezelfde procedure: $\tupl{F_0,F_1,I_0,D_0,D_1}=\tupl{0,0,1,0,1}$. Bijgevolg geldt $\tupl{F_0,D_0}=\tupl{Q,\qnext{}}=\tupl{0,0}$ wat dus opnieuw leidt tot $\tupl{J_0,K_0}=\tupl{0,-}$. Voor de tweede flipflop is de situatie nu anders: $\tupl{F_1,D_1}=\tupl{Q,\qnext{}}=\tupl{0,1}$. Wanneer we deze configuratie opzoeken in \tblref{excitationTablesFlipflopsJK}, merken we dat $\tupl{J_1,K_1}=\tupl{1,-}$. De tweede rij is dus voluit $\tupl{F_0,F_1,I_0,J_0,K_0,J_1,K_1}=\tupl{0,0,0,0,-,1,-}$. We zetten deze procedure verder tot we elke lijn hebben ``vertaald''.
+Stel dat we bijvoorbeeld beslissen om onze schakeling met JK-flipflops te bouwen, dan voorzien we als uitgangen $J_0$ en $K_0$ die de eerste flipflop aansturen, en $J_1$ en $K_1$ die de tweede flipflop aansturen. Nu vullen we \tblref{state-table-moore-comb-lin-jk} als volgt in: voor de eerste lijn zien we in \tblref{state-table-moore-comb-lin-d} $\tupl{F_0,F_1,I_0,D_0,D_1}=\tupl{0,0,0,0,0}$ staan. Voor de eerste JK-flipflop betekent dit dus $\tupl{F_0,D_0}=\tupl{Q,\qnext{}}=\tupl{0,0}$. Wanneer we deze configuratie opzoeken in \tblref{excitationTablesFlipflopsJK} zien we dat $\tupl{J_0,K_0}=\tupl{0,-}$. Hetzelfde geldt voor de tweede flipflop: $\tupl{F_1,D_1}=\tupl{Q,\qnext{}}=\tupl{0,0}$ dus $\tupl{J_1,K_1}=\tupl{0,-}$. We vullen dus als eerste rij in voor \tblref{state-table-moore-comb-lin-jk}, $\tupl{F_0,F_1,I_0,J_0,K_0,J_1,K_1}=\tupl{0,0,0,0,-,0,-}$. Voor de tweede rij volgen we dezelfde procedure: $\tupl{F_0,F_1,I_0,D_0,D_1}=\tupl{0,0,1,0,1}$. Bijgevolg geldt $\tupl{F_0,D_0}=\tupl{Q,\qnext{}}=\tupl{0,0}$ wat dus opnieuw leidt tot $\tupl{J_0,K_0}=\tupl{0,-}$. Voor de tweede flipflop is de situatie nu anders: $\tupl{F_1,D_1}=\tupl{Q,\qnext{}}=\tupl{0,1}$. Wanneer we deze configuratie opzoeken in \tblref{excitationTablesFlipflopsJK}, merken we dat $\tupl{J_1,K_1}=\tupl{1,-}$. De tweede rij is dus voluit $\tupl{F_0,F_1,I_0,J_0,K_0,J_1,K_1}=\tupl{0,0,0,0,-,1,-}$. We zetten deze procedure verder tot we elke lijn hebben ``vertaald''.
 
-\paragraph{}
-De volledig uitgewerkte voorbeelden voor de Moore-machine staan met implementaties in T-, JK- en SR-flipflop respectievelijk in \tblref{stateTableMooreCombLinT}, \tblref{stateTableMooreCombLinJK} en \tblref{stateTableMooreCombLinSR}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren voor het transitie-gedeelte. We beschouwen de transitiefunctie beschreven in de tabel, en minimaliseren deze functie met behulp van Karnaugh-kaarten. Vervolgens implementeren we dan de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben ($1$ per D- en T-flipflop en $2$ per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op \figref{mooreCombImpl} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie.
 \begin{figure}[hbt]
 \centering
-\subfigure[D-flipflops]{
-\begin{tikzpicture}[circuit logic US]
-\def\ta{0.09};
-\def\tb{0.03};
-\kkaartcmarks[1]{0}{3}{/1/0/1/1/\ta,/3/1/3/1/\ta}{};
-\kkaartc{0}{3}{$D_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/0/1/0/0};
-\kkaartcmarks[1]{0}{0}{/0/1/0/1/\ta,/1/0/1/0/\ta,/2/1/2/1/\ta}{};
-\kkaartc{0}{0}{$D_1$}{$F_0$/$F_1$/$I_0$}{0/1/1/0/0/0/0/1};
-\def\sc{0.75};
-\def\sca{0.8};
-\begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
-\node[dffxn,scale=\sca] (FF0) at (0,2) {$F_0$};
-\node[dffxn,scale=\sca] (FF1) at (0,-2) {$F_1$};
-\coordinate (F0I) at (-3.5,3.8);
-\coordinate (F1I) at (-3.7,4.0);
-\coordinate (F2I) at (-3.9,4.0);
-\coordinate (F3I) at (-4.1,4.0);
-\coordinate (F4I) at (-4.3,4.0);
-\coordinate (F0O) at (1,3.8);
-\coordinate (F1O) at (1.2,4.0);
-
-\coordinate (Clk0) at (F3I |- 0,1);
-\coordinate (Clk1) at (F3I |- 0,-3);
-\coordinate (CLR0) at (F4I |- 0,0.5);
-\coordinate (CLR1) at (F4I |- 0,-3.5);
-\coordinate (PR0) at (F4I |- 0,3.5);
-\coordinate (PR1) at (F4I |- 0,-0.5);
-\coordinate (MID) at (FF0.CLR |- 0,0);
-
-\draw (FF0.Q) -| (F0O) -- (F0I);
-\draw (FF1.Q) -| (F1O) -- (F1I);
-\draw (F0I) -- (F0I |- 0,-4);
-\draw (F1I) -- (F1I |- 0,-4);
-\draw (F2I) -- (F2I |- 0,-4);
-\draw (F3I) -- (F3I |- 0,-4);
-\draw (F4I) -- (F4I |- 0,-4);
-\coordinate (I0) at (-5,0);
-\coordinate (I1) at (-5,-0.5);
-\coordinate (I2) at (-5,-1);
-\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| F2I);
-\draw (I1) node[anchor=east]{Clk} -- (I1 -| F3I);
-\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| F4I);
-\coordinate (ORr) at (-1.5,0);
-\coordinate (ANDr) at (-2.65,0);
-
-\node[or gate] (O0) at (FF0.D -| ORr) {};
-\node[or gate,inputs={normal,normal,normal}] (O1) at (FF1.D -| ORr) {};
-
-\node[and gate,inputs={inverted,normal}] (A00) at ([yshift=0.5 cm] ANDr |- O0.output) {};
-\node[and gate,inputs={normal,inverted,normal}] (A01) at ([yshift=-0.5 cm] ANDr |- O0.output) {};
-
-\node[and gate,inputs={inverted,inverted,normal}] (A10) at ([yshift=1 cm] ANDr |- O1.output) {};
-\node[and gate,inputs={inverted,normal,inverted}] (A11) at (ANDr |- O1.output) {};
-\node[and gate,inputs={normal,normal,normal}] (A12) at ([yshift=-1 cm] ANDr |- O1.output) {};
-\foreach \x in {0,1,2} {
-  \coordinate (L\x) at (-3.5-0.2*\x,0);
-}
-\end{scope}
-\foreach \x in {0,1} {
-  \draw (O\x.output) -- (FF\x.D);
-}
-\foreach \x/\y/\z/\t in {0/0/1/0.2,0/1/2/0.2,1/0/1/0.2,1/1/2/0,1/2/3/0.2} {
-  \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
-}
-\foreach \x/\y/\z/\t in {0/0/1/0,0/0/2/1,0/1/1/0,0/1/2/1,0/1/3/2,1/0/1/0,1/0/2/1,1/0/3/2,1/1/1/0,1/1/2/1,1/1/3/2,1/2/1/0,1/2/2/1,1/2/3/2} {
-  \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
-  \pdot{A\x\y.input \z -| L\t};
-}
-\foreach \x/\z/\t in {} {
-  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
-  \pdot{O\x.input \z -| L\t};
-}
-\foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
-  \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \pdot{\y};
-}
-\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
-\draw (FF0.PR) |- (PR0);\pdot{PR0};
-\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
-\pdot{I0 -| F2I};
-\pdot{I1 -| F3I};
-\pdot{I2 -| F4I};
-\end{tikzpicture}
-\figlab{mooreTotalImplementationD}}
-\subfigure[T-flipflops]{
-\begin{tikzpicture}[circuit logic US]
-\def\ta{0.09};
-\def\tb{0.03};
-\kkaartcmarks[1]{0}{3}{/1/0/2/1/\ta,/2/0/3/0/\tb}{};
-\kkaartc{0}{3}{$T_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/1/0/1/1};
-\kkaartcmarks[1]{0}{0}{/0/1/1/1/\ta,/2/0/2/0/\ta}{};
-\kkaartc{0}{0}{$T_1$}{$F_0$/$F_1$/$I_0$}{0/1/0/1/0/0/1/0};
-\def\sc{0.75};
-\def\sca{0.8};
-\begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
-\node[tffxn,scale=\sca] (FF0) at (0,2) {$F_0$};
-\node[tffxn,scale=\sca] (FF1) at (0,-2) {$F_1$};
-\coordinate (F0I) at (-3.5,3.8);
-\coordinate (F1I) at (-3.7,4.0);
-\coordinate (F2I) at (-3.9,4.0);
-\coordinate (F3I) at (-4.1,4.0);
-\coordinate (F4I) at (-4.3,4.0);
-\coordinate (F0O) at (1,3.8);
-\coordinate (F1O) at (1.2,4.0);
-
-\coordinate (Clk0) at (F3I |- 0,1);
-\coordinate (Clk1) at (F3I |- 0,-3);
-\coordinate (CLR0) at (F4I |- 0,0.5);
-\coordinate (CLR1) at (F4I |- 0,-3.5);
-\coordinate (PR0) at (F4I |- 0,3.5);
-\coordinate (PR1) at (F4I |- 0,-0.5);
-\coordinate (MID) at (FF0.CLR |- 0,0);
-
-\draw (FF0.Q) -| (F0O) -- (F0I);
-\draw (FF1.Q) -| (F1O) -- (F1I);
-\draw (F0I) -- (F0I |- 0,-4);
-\draw (F1I) -- (F1I |- 0,-4);
-\draw (F2I) -- (F2I |- 0,-4);
-\draw (F3I) -- (F3I |- 0,-4);
-\draw (F4I) -- (F4I |- 0,-4);
-\coordinate (I0) at (-5,0);
-\coordinate (I1) at (-5,-0.5);
-\coordinate (I2) at (-5,-1);
-\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| F2I);
-\draw (I1) node[anchor=east]{Clk} -- (I1 -| F3I);
-\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| F4I);
-\coordinate (ORr) at (-1.5,0);
-\coordinate (ANDr) at (-2.65,0);
-
-\node[or gate] (O0) at (FF0.T -| ORr) {};
-\node[or gate] (O1) at (FF1.T -| ORr) {};
-
-\node[and gate,inputs={normal,inverted}] (A00) at ([yshift=0.5 cm] ANDr |- O0.output) {};
-
-\node[and gate,inputs={inverted,normal}] (A10) at ([yshift=0.5 cm] ANDr |- O1.output) {};
-\node[and gate,inputs={normal,normal,inverted}] (A11) at ([yshift=-0.5 cm] ANDr |- O1.output) {};
-\foreach \x in {0,1,2} {
-  \coordinate (L\x) at (-3.5-0.2*\x,0);
-}
-\end{scope}
-\foreach \x in {0,1} {
-  \draw (O\x.output) -- (FF\x.T);
-}
-\foreach \x/\y/\z/\t in {0/0/1/0.2,1/0/1/0.2,1/1/2/0.2} {
-  \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
-}
-\foreach \x/\y/\z/\t in {0/0/1/0,0/0/2/2,1/0/1/0,1/0/2/2,1/1/1/0,1/1/2/1,1/1/3/2} {
-  \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
-  \pdot{A\x\y.input \z -| L\t};
-}
-\foreach \x/\z/\t in {0/2/1} {
-  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
-  \pdot{O\x.input \z -| L\t};
-}
-\foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
-  \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \pdot{\y};
-}
-\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
-\draw (FF0.PR) |- (PR0);\pdot{PR0};
-\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
-\pdot{I0 -| F2I};
-\pdot{I1 -| F3I};
-\pdot{I2 -| F4I};
-\end{tikzpicture}}
-\subfigure[JK-flipflops]{
-\begin{tikzpicture}[circuit logic US]
-\def\ta{0.09};
-\def\tb{0.03};
-\kkaartcmarks[0.75]{0}{3.5}{/1/0/2/1/\ta}{};
-\kkaartc[0.75]{0}{3.5}{$J_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/-/-/-/-};
-\kkaartcmarks[0.75]{1.5}{3.5}{/1/0/2/1/\ta,/0/0/3/0/\tb}{};
-\kkaartc[0.75]{1.5}{3.5}{$K_0$}{$F_0$/$F_1$/$I_0$}{-/-/-/-/1/0/1/1};
-\kkaartcmarks[0.75]{0}{-0.5}{/0/1/1/1/\ta}{};
-\kkaartc[0.75]{0}{-0.5}{$J_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/-/0/0/-/-};
-\kkaartcmarks[0.75]{1.5}{-0.5}{/0/1/1/1/\ta,/2/0/3/0/\ta}{};
-\kkaartc[0.75]{1.5}{-0.5}{$K_1$}{$F_0$/$F_1$/$I_0$}{-/-/0/1/-/-/1/0};
-\def\sc{0.75};
-\def\sca{0.8};
-\begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
-\node[jkffxn,scale=\sca] (FF0) at (0,2) {};
-\node[jkffxn,scale=\sca] (FF1) at (0,-2) {};
-\coordinate (F0I) at (-3.5,3.8);
-\coordinate (F1I) at (-3.7,4.0);
-\coordinate (F2I) at (-3.9,4.0);
-\coordinate (F3I) at (-4.1,4.0);
-\coordinate (F4I) at (-4.3,4.0);
-\coordinate (F0O) at (1,3.8);
-\coordinate (F1O) at (1.2,4.0);
-
-\coordinate (Clk0) at (F3I |- FF0.Clk);
-\coordinate (Clk1) at (F3I |- FF1.Clk);
-\coordinate (CLR0) at (F4I |- 0,0.2);
-\coordinate (CLR1) at (F4I |- 0,-3.8);
-\coordinate (PR0) at (F4I |- 0,3.5);
-\coordinate (PR1) at (F4I |- 0,-0.5);
-\coordinate (MID) at (FF0.CLR |- 0,0);
-
-\draw (FF0.Q) -| (F0O) -- (F0I);
-\draw (FF1.Q) -| (F1O) -- (F1I);
-\draw (F0I) -- (F0I |- 0,-4);
-\draw (F1I) -- (F1I |- 0,-4);
-\draw (F2I) -- (F2I |- 0,-4);
-\draw (F3I) -- (F3I |- 0,-4);
-\draw (F4I) -- (F4I |- 0,-4);
-\coordinate (I0) at (-5,0);
-\coordinate (I1) at (-5,-0.5);
-\coordinate (I2) at (-5,-1);
-\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| F2I);
-\draw (I1) node[anchor=east]{Clk} -- (I1 -| F3I);
-\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| F4I);
-\coordinate (ORr) at (-1.5,0);
-\coordinate (ANDr) at (-2.65,0);
-
-\node[or gate,inputs={normal,inverted}] (O0) at (FF0.K -| ORr) {};
-\node[or gate] (O1) at (FF1.K -| ORr) {};
-
-\node[and gate,inputs={inverted,normal}] (A00) at (ANDr |- FF1.J) {};
-\node[and gate,inputs={inverted,normal}] (A10) at (ANDr |- O1.input 1) {};
-\node[and gate,inputs={normal,inverted}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
-\foreach \x in {0,1,2} {
-  \coordinate (L\x) at (-3.5-0.2*\x,0);
-}
-\end{scope}
-\foreach \x in {0,1} {
-  \draw (O\x.output) -- (FF\x.K);
-}
-\foreach \x/\y in {00/1} {
-  \draw (A\x.output) -- (FF\y.J);
-}
-\foreach \x/\y/\z/\t in {1/0/1/0.2,1/1/2/0.2} {
-  \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
-}
-\foreach \x/\y/\z/\t in {0/0/1/0,0/0/2/2,1/0/1/0,1/0/2/2,1/1/1/0,1/1/2/2} {
-  \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
-  \pdot{A\x\y.input \z -| L\t};
-}
-\foreach \x/\z/\t in {0/1/1,0/2/2} {
-  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
-  \pdot{O\x.input \z -| L\t};
-}
-\foreach \x/\y/\t in {FF0/J/1} {
-  \draw (\x.\y) -- (\x.\y -| L\t);
-  \pdot{\x.\y -| L\t};
-}
-\foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
-  \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \pdot{\y};
-}
-\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
-\draw (FF0.PR) |- (PR0);\pdot{PR0};
-\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
-\pdot{I0 -| F2I};
-\pdot{I1 -| F3I};
-\pdot{I2 -| F4I};
-\end{tikzpicture}}
-\subfigure[SR-flipflops]{
-\begin{tikzpicture}[circuit logic US]
-\def\ta{0.09};
-\def\tb{0.03};
-\kkaartcmarks[0.75]{0}{3.5}{/1/0/1/1/\ta}{};
-\kkaartc[0.75]{0}{3.5}{$S_0$}{$F_0$/$F_1$/$I_0$}{0/0/1/1/0/-/0/0};
-\kkaartcmarks[0.75]{1.5}{3.5}{/2/0/2/1/\ta,/2/0/3/0/\tb}{};
-\kkaartc[0.75]{1.5}{3.5}{$R_0$}{$F_0$/$F_1$/$I_0$}{-/-/0/0/1/0/1/1};
-\kkaartcmarks[0.75]{0}{-0.5}{/0/1/0/1/\ta}{};
-\kkaartc[0.75]{0}{-0.5}{$S_1$}{$F_0$/$F_1$/$I_0$}{0/1/-/0/0/0/0/-};
-\kkaartcmarks[0.75]{1.5}{-0.5}{/1/1/1/1/\ta,/2/0/3/0/\ta}{};
-\kkaartc[0.75]{1.5}{-0.5}{$R_1$}{$F_0$/$F_1$/$I_0$}{-/0/0/1/-/-/1/0};
-\def\sc{0.75};
-\def\sca{0.8};
-\begin{scope}[xshift=6 cm,yshift=2.5 cm,scale=\sc]
-\node[srffxn,scale=\sca] (FF0) at (0,2) {};
-\node[srffxn,scale=\sca] (FF1) at (0,-2) {};
-\coordinate (F0I) at (-3.5,3.8);
-\coordinate (F1I) at (-3.7,4.0);
-\coordinate (F2I) at (-3.9,4.0);
-\coordinate (F3I) at (-4.1,4.0);
-\coordinate (F4I) at (-4.3,4.0);
-\coordinate (F0O) at (1,3.8);
-\coordinate (F1O) at (1.2,4.0);
-
-\coordinate (Clk0) at (F3I |- FF0.Clk);
-\coordinate (Clk1) at (F3I |- FF1.Clk);
-\coordinate (CLR0) at (F4I |- 0,0.2);
-\coordinate (CLR1) at (F4I |- 0,-3.8);
-\coordinate (PR0) at (F4I |- 0,3.5);
-\coordinate (PR1) at (F4I |- 0,-0.5);
-\coordinate (MID) at (FF0.CLR |- 0,0);
-
-\draw (FF0.Q) -| (F0O) -- (F0I);
-\draw (FF1.Q) -| (F1O) -- (F1I);
-\draw (F0I) -- (F0I |- 0,-4);
-\draw (F1I) -- (F1I |- 0,-4);
-\draw (F2I) -- (F2I |- 0,-4);
-\draw (F3I) -- (F3I |- 0,-4);
-\draw (F4I) -- (F4I |- 0,-4);
-\coordinate (I0) at (-5,0);
-\coordinate (I1) at (-5,-0.5);
-\coordinate (I2) at (-5,-1);
-\draw (I0) node[anchor=east]{$I_0$} -- (I0 -| F2I);
-\draw (I1) node[anchor=east]{Clk} -- (I1 -| F3I);
-\draw (I2) node[anchor=east]{Clr$^*$} -- (I2 -| F4I);
-\coordinate (ORr) at (-1.5,0);
-\coordinate (ANDr) at (-2.65,0);
-
-\node[or gate,inputs={normal,normal}] (O0) at (FF0.R -| ORr) {};
-\node[or gate] (O1) at (FF1.R -| ORr) {};
-
-\node[and gate,inputs={inverted,normal}] (A20) at (ANDr |- FF0.S) {};
-\node[and gate,inputs={normal,normal}] (A00) at (ANDr |- O0.input 1) {};
-\node[and gate,inputs={normal,inverted}] (A01) at ([yshift=-0.8 cm] ANDr |- O0.input 1) {};
-\node[and gate,inputs={inverted,inverted,normal}] (A30) at (ANDr |- FF1.S) {};
-\node[and gate,inputs={inverted,normal,normal}] (A10) at (ANDr |- O1.input 1) {};
-\node[and gate,inputs={normal,inverted}] (A11) at ([yshift=-0.8 cm] ANDr |- O1.input 1) {};
-\foreach \x in {0,1,2} {
-  \coordinate (L\x) at (-3.5-0.2*\x,0);
-}
-\end{scope}
-\foreach \x in {0,1} {
-  \draw (O\x.output) -- (FF\x.R);
-}
-\foreach \x/\y in {30/1,20/0} {
-  \draw (A\x.output) -- (FF\y.S);
-}
-\foreach \x/\y/\z/\t in {1/0/1/0.2,1/1/2/0.2,0/0/1/0.2,0/1/2/0.2} {
-  \draw (O\x.input \z) -- ++(-\t,0) |- (A\x\y.output);
-}
-\foreach \x/\y/\z/\t in {2/0/1/0,2/0/2/1,3/0/1/0,3/0/2/1,3/0/3/2,1/0/1/0,1/0/2/1,1/0/3/2,1/1/1/0,1/1/2/2,0/0/1/0,0/0/2/1,0/1/1/0,0/1/2/2} {
-  \draw (A\x\y.input \z) -- (A\x\y.input \z -| L\t);
-  \pdot{A\x\y.input \z -| L\t};
-}
-\foreach \x/\z/\t in {} {
-  \draw (O\x.input \z) -- (O\x.input \z -| L\t);
-  \pdot{O\x.input \z -| L\t};
-}
-\foreach \x/\y/\t in {} {
-  \draw (\x.\y) -- (\x.\y -| L\t);
-  \pdot{\x.\y -| L\t};
-}
-\foreach \x/\y/\z in {FF0/Clk0/CLR0,FF1/Clk1/CLR1} {
-  \draw (\x.Clk) -- ++(-0.35,0) |- (\y);
-  \pdot{\y};
-}
-\draw (FF1.CLR) |- (CLR1);\pdot{CLR1};
-\draw (FF0.PR) |- (PR0);\pdot{PR0};
-\draw (FF0.CLR) -- (FF1.PR);\pdot{MID};\draw (MID) -- ++(-1,0) node[scale=0.75,anchor=east]{$1$};
-\pdot{I0 -| F2I};
-\pdot{I1 -| F3I};
-\pdot{I2 -| F4I};
-\end{tikzpicture}}
+\importtikzsubfigure{moore-trans-implementation-d}{D-flipflops}
+\importtikzsubfigure{moore-trans-implementation-t}{T-flipflops}
+\importtikzsubfigure{moore-trans-implementation-jk}{JK-flipflops}
+\importtikzsubfigure{moore-trans-implementation-sr}{SR-flipflops}
 \caption{Implementatie van de Moore-schakeling met verschillende soorten flipflops.}
-\figlab{mooreCombImpl}
+\figlab{moore-trans-implementation}
 \end{figure}
 
-Naast de logica om de volgende toestand te berekenen, verbinden we ook de klokingangen van de flipflops met het globale kloksignaal, en implementeren we de clear logica. De clear zorgt ervoor dat op het moment dat we de schakeling resetten en dus het \clrsin{} signaal van de schakeling 0 wordt, de schakeling in de eerste toestand terechtkomt. In ons geval is dat 10. Daarom verbinden we de clear-ingang met de preset ingang van de eerste flipflop en de clear-ingang van de tweede flipflop. Op de clear-ingang van de eerste flipflop en de preset-ingang van de tweede wordt steeds een hoog signaal aangelegd. Merk verder ook op we in principe geen negatieve ingangen voor toestandssignalen moeten gebruiken. In plaats van een negatie aan de ingang van de AND-poort te plaatsen, kunnen we eenvoudig gebruik maken van de $\overline{Q}$-uitgang van de flipflop. Omdat we echter hiermee het aantal lijnen voor de flipflops bijna verdubbelen, maken we er in de figuur abstractie van. Dit principe kunnen we enkel toepassen voor signalen die uit de flipflops komen. De signalen die de ingangsconfiguratie bepalen hebben wel een expliciete NOT-poort nodig.
-\paragraph{Het one-hot-codering geval}Naast het geval van de Moore-machine zullen we ook de transitiefunctie van de Mealy-machine implementeren. Over deze realisatie is het ook eenvoudiger om enkele eigenschappen te formaliseren. Deze eigenschappen gaan over de kosten van de transitiefunctie v\'o\'or dat we minimalisatie van de Karnaugh-kaarten toepassen. Verder hangen de eigenschappen af van het type flipflop die we gebruiken:
+\paragraph{}
+De volledig uitgewerkte voorbeelden voor de Moore-machine staan met implementaties in T-, JK- en SR-flipflop respectievelijk in \tblref{state-table-moore-comb-lin-t}, \tblref{state-table-moore-comb-lin-jk} en \tblref{state-table-moore-comb-lin-sr}. In principe hebben we nu alle elementen om de combinatorische schakeling te realiseren voor het transitie-gedeelte. We beschouwen de transitiefunctie beschreven in de tabel, en minimaliseren deze functie met behulp van Karnaugh-kaarten. Vervolgens implementeren we dan de logica. Merk op dat deze schakelingen meervoudige uitgangen hebben (\'e\'en per D- en T-flipflop en twee per JK- en SR-flipflop). We kunnen dus ook de logica verder optimaliseren door implicanten over de verschillende Karnaugh-kaarten samen te nemen. Op \figref{moore-trans-implementation} geven we voor elk type flipflop de Karnaugh-kaarten en een implementatie.
+
+Naast de logica om de volgende toestand te berekenen, verbinden we ook de klokingangen van de flipflops met het globale kloksignaal.
+
+\paragraph{Clear-logica}
+We implementeren we de clear logica. De clear zorgt ervoor dat op het moment dat we de schakeling resetten en dus het \clrsin{} signaal van de schakeling $0$ wordt, de schakeling in de eerste toestand terechtkomt. In ons geval is dat de toestand $A$ met codering $10$. Daarom verbinden we de globale clear-ingang met de preset ingang van de eerste flipflop en de clear-ingang van de tweede flipflop. Op de clear-ingang van de eerste flipflop en de preset-ingang van de tweede wordt steeds een hoog signaal aangelegd. In het algemeen geldt dus dat we, wanneer bij een clear een specifieke toestandsbit $0$ hoort te zijn, we de globale clear-ingang verbinden met de clear-ingang van de overeenkomstige flipflop, en $1$ aanleggen op de preset-ingang van deze flipflop. In het geval de toestandsbit $1$ hoort te zijn bij initialisatie, is het net omgekeerd.
+
+\paragraph{Abstracties op de figuur}
+De figuren in \figref{moore-trans-implementation} zijn niet helemaal accuraat in de zin dat we niet zomaar het aantal poorten kunnen optellen om de uiteindelijke kostprijs te bepalen. Zo zien we bijvoorbeeld op \figref{moore-trans-implementation-jk} verschillende AND-poorten staan, maar verschillende van deze AND-poorten berekenen eenzelfde functie. We kunnen deze bijgevolg samennemen. Ook zien we op de figuur regelmatig dat we een negatie uitvoeren op een toestandsbit. We hoeven deze negatie niet uit te voeren vermits een flipflop ook over een $\overline{Q}$-uitgang beschikt die ons gratis een negatie van de toestandsbit ter beschikking stelt. Wanneer we gebruik zouden maken van deze $\overline{Q}$-lijnen op de figuur, zou het aantal lijnen verdubbelen waardoor we beslisten om er op de figuur abstractie van te maken. De signalen die de ingangsconfiguratie bepalen hebben wel een expliciete NOT-poort nodig.
+
+\paragraph{Het geval one-hot}
+Naast de Moore-machine zullen we ook de transitiefunctie van de Mealy-machine implementeren. We namen de beslissen om voor een one-hot codering te kiezen. Vanwege de eenvoud van de one-hot codering, kan men enkele eigenschappen betreffende de implementatie formaliseren. Deze eigenschappen hebben betrekking op de kosten van de transitiefunctie v\'o\'or we minimaliseren met Karnaugh-kaarten. In die zin zijn ze dus een bovengrens op hoeveel een dergelijke schakeling zal kosten. Afhankelijk van het type flipflop, doen we de volgende uitspraken:
 \begin{itemize}
- \item Bij een D-flipflop is het aantal AND-poorten voor een flipflop equivalent met het aantal transities naar de toestand die de flipflop voorstelt. Bij een transitie\footnote{Inclusief lussen.} naar toestand $x$ dient immer de overeenkomstige flipflop op 1 gezet te worden, in de andere gevallen is de waarde van de flipflop altijd 0. We kunnen dit verder formaliseren tot: ``Het aantal enen in de $D_i$ kolom is gelijk aan het aantal transities naar toestand $i$''.
- \item Bij een T-flipflop is het aantal T-poorten gelijk met het aantal transities die naar een de bijbehorende toestand gaan, of vanuit de toestand vertrekken, die geen lussen zijn. Of eenvoudiger: ``Het aantal enen in de $T_i$-kolom is gelijk aan het aantal transitites van of naar toestand $i$ die geen lussen zijn''.
+ \item Bij een D-flipflop is het aantal AND-poorten voor een flipflop equivalent met het aantal transities naar de toestand die de flipflop vertegenwoordigt. Bij een transitie\footnote{Inclusief lussen.} naar toestand $x$ dient immer de overeenkomstige flipflop op $1$ gezet te worden, in de andere gevallen is de waarde van de flipflop altijd $0$. We kunnen dit verder formaliseren tot: 
+ \begin{quote}
+   Het aantal enen in de $D_i$ kolom van de combinatorische tabel is steeds gelijk aan het aantal transities naar toestand $i$.
+ \end{quote}
+ In \tblrefpag{mealyBitRepresentation} zien we bijvoorbeeld dat er drie transities zijn naar de toestand $010$, dit betekent dus dat er drie enen staan bij kolom $D_1$ in \tblref{state-table-mealy-comb-lin-djk}.
+ \item Bij een T-flipflop is het aantal AND-poorten gelijk met het aantal transities die naar een de bijbehorende toestand gaan, of vanuit de toestand vertrekken, die geen lussen zijn. Of eenvoudiger: ``Het aantal enen in de $T_i$-kolom is gelijk aan het aantal transitites van of naar toestand $i$ die geen lussen zijn''.
  \item Bij een SR-flipflop is het aantal AND-poorten die naar de S-ingang gaan gelijk aan het aantal transities naar de toestand, die niet uit de toestand komen. Het aantal AND-poorten die voor de R-ingang staan zijn het aantal transities die uit de toestand vertrekken, en die geen lussen zijn. Deze logica kunnen we ook omzetten naar het aantal enen in de kolommen $S_i$ en $R_i$.
  \item Bij JK-flipflops gelden dezelfde regels als bij de SR-flipflops, we dienen hier S door J en R door K te vervangen.
 \end{itemize}
-We kunnen deze theorie testen met de praktijk in tabel \ref{tbl:stateTableMealyCombLin}. Hierbij hebben we de tabellen voor de verschillende types flipflops naast elkaar gezet, dit is louter om de voorstelling eenvoudig te houden. Merk op dat verschillende rijen uitsluitend don't cares bevatten. Dit is het gevolg van het feit dat heel wat binaire voorstellingen van toestanden bij de invoer geen overeenkomstige toestand hebben. Meestal worden deze rijen in een tabel weggelaten, wat de tweede tabel een stuk korter en leesbaarder maakt. Uiteraard dienen we dan wel op deze plaatsen in de Karnaugh-kaarten don't cares te plaatsen.
+We kunnen deze theorie testen met de praktijk in \tblref{stateTableMealyCombLin}. Hierbij hebben we de tabellen voor de verschillende types flipflops naast elkaar gezet, dit is louter om de voorstelling eenvoudig te houden. Merk op dat verschillende rijen uitsluitend don't cares bevatten. Dit is het gevolg van het feit dat heel wat binaire voorstellingen van toestanden bij de invoer geen overeenkomstige toestand hebben. Meestal worden deze rijen in een tabel weggelaten, wat de tweede tabel een stuk korter en leesbaarder maakt. Uiteraard dienen we dan wel op deze plaatsen in de Karnaugh-kaarten don't cares te plaatsen.
 \begin{table}[hbt]
 \centering
 \subtable[D- en JK-flipflops]{\small{\begin{tabular}{cccc|ccc|cccccc}
@@ -2042,7 +1645,8 @@ $F_0$&$F_1$&$F_2$&$I_0$&$D_0$&$D_1$&$D_2$&$J_0$&$K_0$&$J_1$&$K_1$&$J_2$&$K_2$\\\
 1&1&0&1&-&-&-&-&-&-&-&-&-\\
 1&1&1&0&-&-&-&-&-&-&-&-&-\\
 1&1&1&1&-&-&-&-&-&-&-&-&-
-\end{tabular}}}
+\end{tabular}}
+\tbllab{state-table-mealy-comb-lin-djk}}
 \subtable[T- en SR-flipflops]{\small{\begin{tabular}{cccc|ccc|cccccc}
 $F_0$&$F_1$&$F_2$&$I_0$&$T_0$&$T_1$&$T_2$&$S_0$&$R_0$&$S_1$&$R_1$&$S_2$&$R_2$\\\hline
 0&0&1&0&0&1&1&0&-&1&0&0&1\\
@@ -2198,6 +1802,7 @@ We zien dat $D_0$ \'e\'en 1 bevat, wat overeenkomt met \'e\'en transitie naar to
 \figlab{mealyCombImpl}
 \end{figure}
 Merk op dat we hier de verbindingen naar de \clrsin{} en \prsin{} ingangen anders geconfigureerd zijn dan bij de Moore-machine. Dit komt omdat de begintoestand van de Mealy-machine 001 is, terwijl dit 10 is bij de Moore-machine.
+
 \subsubsection{Stap 4B: Logica die de uitgang toestand berekent}
 Naast de logica die de volgende toestand berekent, dienen we ook de de logica te synthetiseren die de uitgangen bepaalt. Dit is eigenlijk niets anders dan het synthetiseren van een combinatorische schakeling. Hiervoor dienen een tabel op te stellen die vanuit de coderingstabel een tabel opstelt die de functie bepaalt. Vermits de uitgang bij een Moore-machine anders bepaald wordt dan bij een Mealy-machine, zal ook de techniek om deze tabel op te stellen licht verschillen. Bij een Moore-machine wordt de uitgang enkel bepaald door de toestand. Hierdoor kunnen we de tabel opstellen door de transitiekolommen weg te laten. Bij een Mealy-machine dienen we een linearisering toe te passen. Hierbij beschouwen we niet meer de codering van de volgende toestand zoals in de vorige stap, maar uiteraard de uitgang. Vanuit die tabel stellen we dan opnieuw een combinatorische schakeling op. Merk op dat deze schakeling niet afhangt van het type flipflop. Immers hebben alle types flipflop een $Q$-uitgang. De schakeling hangt wel af van de toestandscodering. Op tabel \ref{tbl:mooreMealyTables}
 \begin{table}[hbt]
@@ -2299,8 +1904,9 @@ toont de tabellen die we opstellen voor de Moore- en Mealy-machine naast hun cod
 \caption{Volledige implementatie van de Mealy-machine met D-flipflops.}
 \figlab{mealyTotalImplementation}
 \end{figure}
+
 \subsection{Tijdsgedrag}
-\label{ss:timeBehaviorSeqSync}
+\ssclab{timeBehaviorSeqSync}
 Tot slot bepalen we de maximale klokfrequentie die we bij een implementatie van een sequenti\"ele schakeling kunnen hanteren. We herinneren ons uit het hoofdstuk over combinatorische schakelingen dat de vertraging in een systeem bepaald wordt door het kritische pad, de maximale tijd die een signaal nodig heeft om zich doorheen de schakeling voort te planten. In een sequenti\"ele schakeling betekent dit dat het signaal zich doorheen de combinatorische schakeling dient te propageren die de volgende toestand bepaalt. Verder dient ook de set-tup-tijd van de geheugenmodules en de tijd die het kloksignaal nodig heeft om zich tot aan de $Q$- of $\overline{Q}$-uitgang te propageren in rekening te worden gebracht. Bij het bepalen van het kritische pad van de transitiefunctie moeten we alle paden vanuit alle ingangen (dus ook de flipflops die toestand bijhouden) beschouwen, naar alle flipflops. Of formeler:
 \begin{equation}
 \mbox{vertraging pad}=\mbox{logica transitie}+\mbox{set-up flipflop}+\mbox{Clk naar $Q$ of $\overline{Q}$}
@@ -2310,9 +1916,11 @@ De vertragingen van de klok naar $Q$ en $\overline{Q}$ kunnen we berekenen vanui
 f_{\mbox{\small{max.}}}=\displaystyle\frac{1}{\mbox{vertraging kritisch pad}}
 \end{equation}
 Merk wel op dat we bij het berekenen van de vertraging geen eenheid gegeven hebben. Deze vertragingen die we tot hier toe hebben berekend dienen uitsluitend om verschillende implementaties met elkaar te vergelijken. In de praktijk zal de technologie waarmee we de schakeling realiseren een tijds\'e\'enheid impliceren waarmee we die vertraging kunnen vermenigvuldigen.
+
 \subsubsection{Leidend voorbeeld}
+
 \paragraph{Moore-machine}
-We berekenen de vertraging van de implementatie van de Moore-machine die beschreven staat op figuur \ref{fig:mooreTotalImplementationD}. In totaal kunnen we 10 verschillende paden onderscheiden: in de schakeling staan twee flipflops. Het signaal van deze flipflops vormt een ingang bij alle 5 de AND-poorten. Merk op dat we de inverter aan de AND-poort niet moeten meetellen in onze berekening. We dienen in dat geval de $\overline{Q}$-uitgang te beschouwen. In de onderstaande vergelijking berekenen we de vertraging van alle paden. Het subscript van de vertraging wijst op de bron- en doel-flipflop, en de AND-poort. Deze poorten nummeren we van 0 tot 4 van boven naar beneden:
+We berekenen de vertraging van de implementatie van de Moore-machine die beschreven staat op \figref{moore-trans-implementation-d}. In totaal kunnen we 10 verschillende paden onderscheiden: in de schakeling staan twee flipflops. Het signaal van deze flipflops vormt een ingang bij alle 5 de AND-poorten. Merk op dat we de inverter aan de AND-poort niet moeten meetellen in onze berekening. We dienen in dat geval de $\overline{Q}$-uitgang te beschouwen. In de onderstaande vergelijking berekenen we de vertraging van alle paden. Het subscript van de vertraging wijst op de bron- en doel-flipflop, en de AND-poort. Deze poorten nummeren we van 0 tot 4 van boven naar beneden:
 \begin{equation}
 \begin{array}{ll}
 \left\{\begin{array}{l}

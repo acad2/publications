@@ -22,6 +22,7 @@ for i in {1..4}
   timeout $tmo pdflatex $popt --interaction $pint "$texf" >/dev/null 2>/dev/null
   timeout $tmo makeglossaries -q "$bsf" >/dev/null 2>/dev/null
   timeout $tmo makeindex -q "$bsf" >/dev/null 2>/dev/null
+  timeout $tmo bibtex "$bsf" >/dev/null 2>/dev/null
   sleep $tim
 done
 

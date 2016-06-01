@@ -1,0 +1,28 @@
+\begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,on grid,semithick,every state/.style={draw=black!50,very thick,fill=black!20,scale=0.75}]
+\node[state,initial,initial text=RST, initial where=left] (A) {$00$};
+\node[state] (B) [right=of A] {$01$};
+\node[state] (C) [below=of B] {$11$};
+\node[state] (D) [left=of C] {$10$};
+\begin{scope}[node distance=1.414cm]
+  \node[state,initial,initial text=RST, initial where=left,above left=of A] (AA) {$000$};
+  \node[state] (CC) [above right=of B] {$011$};
+  \node[state] (EE) [below right=of C] {$110$};
+  \node[state] (GG) [below left=of D] {$101$};
+\end{scope}
+\node[state] (BB) [right=of AA] {$001$};
+\node[state] (DD) [below=of CC] {$010$};
+\node[state] (FF) [left=of EE] {$111$};
+\node[state] (HH) [above=of GG] {$100$};
+\path (A) edge node{1} (B)
+      (B) edge node{1} (C)
+      (C) edge node{1} (D)
+      (D) edge node{1} (A);
+\path (AA) edge node{1} (BB)
+      (BB) edge node{1} (CC)
+      (CC) edge node{1} (DD)
+      (DD) edge node{1} (EE)
+      (EE) edge node{1} (FF)
+      (FF) edge node{1} (GG)
+      (GG) edge node{1} (HH)
+      (HH) edge node{1} (AA);
+\end{tikzpicture}
