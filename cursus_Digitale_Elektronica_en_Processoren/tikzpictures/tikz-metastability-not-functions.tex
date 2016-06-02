@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+\draw[thick,->] (-0.1,0) -- (2.2,0) node[anchor=north east,scale=0.75]{$x$};
+\draw[thick,->] (0,-0.1) -- (0,2.2) node[anchor=north east,scale=0.75]{$y$};
+\draw [samples=100,smooth,domain=0.1:1.9,variable=\x,dashed] plot (\x,{1.75-1.5/(1+exp(-8*\x+8))});
+\draw [samples=100,smooth,domain=0.1:1.9,variable=\x] plot ({1.75-1.5/(1+exp(-8*\x+8))},\x);
+\pdot{1,1};
+\pdot{0.2538,1.7462};
+\pdot{1.7462,0.2538};
+\end{tikzpicture}

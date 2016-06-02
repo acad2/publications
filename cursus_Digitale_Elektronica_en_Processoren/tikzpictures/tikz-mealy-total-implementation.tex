@@ -1,0 +1,63 @@
+\begin{tikzpicture}[circuit logic US]
+\def\sca{0.8};
+\def\dw{0.15};
+\def\dt{0.25};
+\def\xii{-2.5};
+\def\dff{2.75 cm};
+
+\coordinate (XP) at (-1.5,0);
+
+\node[dffxn,scale=\sca] (FF0) at (0,\dff) {$FF_0$};
+\node[dffxn,scale=\sca] (FF1) at (0,0) {$FF_1$};
+\node[dffxn,scale=\sca] (FF2) at (0,-\dff) {$FF_2$};
+
+\node[and gate,scale=\sca] (G0) at (XP |- FF0.D) {};\draw (G0.output) -- (FF0.D);
+\node[not gate,scale=\sca] (G1) at (XP |- FF1.D) {};\draw (G1.output) -- (FF1.D);
+\node[and gate,scale=\sca] (G2) at (XP |- FF2.D) {};\draw (G2.output) -- (FF2.D);
+
+\draw (FF0.PR) |- ++(\dt,\dw) node[anchor=west]{$1$};
+\draw (FF1.PR) |- ++(\dt,\dw) node[anchor=west]{$1$};
+\draw (FF2.CLR) |- ++(\dt,-\dw) node[anchor=west]{$1$};
+\draw (FF2.PR) -- (FF1.CLR);
+\coordinate (FFCLR) at ($(FF0.CLR)-(\dt,\dw)$);
+\draw (FF0.CLR) |- (FFCLR -| \xii,0) node[anchor=east]{Clr$^*$};
+
+\coordinate (Cll) at ($(FF0.D)-(2*\dw,0)$);
+\coordinate (Ilu) at ($(FF1.north west)-(\dw,3*\dw)$);
+
+\coordinate (Sa) at ($(FF2.south east)+(\dw,-4*\dw)$);
+\coordinate (Sb) at ($(G2.input 2)-(\dw,0)$);
+
+\coordinate (Na) at ($(FF0.north east)+(2*\dw,4*\dw)$);
+\coordinate (Nb) at ($(G0.input 1)-(\dw,0)$);
+
+
+\coordinate (Inl) at (Nb);
+\coordinate (Rsl) at ($(Nb)-(\dw,0)$);
+
+\draw (FF1.Q) -| (Na) -| (Nb) -- (G0.input 1);
+\draw (FF1.Qn) -| (Sa) -| (Sb) -- (G2.input 2);
+
+\draw (G0.input 2) -- (G0.input 2 -| Inl) -- (G2.input 1 -| Inl) -- (G2.input 1);
+\pdot{Inl |- G1.input}
+
+\draw (Rsl |- FFCLR) |- (0,-0.5*\dff);
+\pdot{Rsl |- FFCLR};\pdot{0,-0.5*\dff};
+
+\foreach \x in {0,1,2} {
+  \coordinate (Cl\x) at (FF\x.Clk -| Cll);
+  \draw (FF\x.Clk) -- (Cl\x);
+}
+\draw (Cl0) -- (Cl2) -- (Cl2 -| \xii,0) node[anchor=east]{Clk};
+\draw (G1.input) -- (G1.input -| \xii,0) node[anchor=east]{$I_0$};
+\foreach \x in {1,2} {
+  \pdot{Cl\x};
+}
+
+\node[and gate,scale=\sca,anchor=input 1] (G3) at ($(FF0.Q)+(3*\dw,0)$) {};
+\draw (FF0.Q) -- (G3.input 1);
+\draw (G3.output) -- ++(\dw,0) node[anchor=west]{$O_0$};
+\coordinate (OM) at ($(FF0.Q)+(\dw,0)$);
+\draw ($(FF1.D)-(\dw,0)$) |- (0,0.5*\dff) -| (G3.input 2 -| OM) -- (G3.input 2);
+\pdot{$(FF1.D)-(\dw,0)$}
+\end{tikzpicture}
