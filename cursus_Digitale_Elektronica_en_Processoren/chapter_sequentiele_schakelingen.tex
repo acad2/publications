@@ -2,21 +2,24 @@
 \chplab{SeqComp}
 \chapterquote{We denken dat sommige mensen intelligent zijn, terwijl ze alleen maar een goed geheugen hebben.}{Fr\'ed\'eric Dard, Frans humoristisch schrijver (1921-2000)}
 \begin{chapterintro}
-In het vorige hoofdstuk hebben we combinatorische schakelingen gebouwd: schakelingen waarbij de waardes op de uitgangen enkel afhangen van de waardes die op de ingangen staan. Bij de meeste schakelingen is er echter sprake van geheugen: een component die een toestand kan bijhouden. Afhankelijk van de invoer verandert de toestand en de uitvoer hangt af van de toestand van het component en de waardes die op de ingangen staan. In dit hoofstuk introduceren we hier eerst de nodige terminologie voor waarna we een reeks componenten ontwikkelen om gegevens op te slaan. Daarna bespreken we hoe we componenten met geheugen kunnen ontwerpen. We maken hierbij een onderscheid tussen synchrone sequenti\"ele schakelingen: schakelingen met een klok, en asynchrone sequenti\"ele schakelingen: schakelingen waarbij een verandering aan de invoer de oorzaak is van de verandering van toestand.
+In het vorige hoofdstuk hebben we combinatorische schakelingen gebouwd: schakelingen waarbij de waardes op de uitgangen enkel afhangen van de waardes die op de ingangen staan. Bij de meeste schakelingen is er echter sprake van geheugen: een component die een toestand kan bijhouden. Afhankelijk van de invoer verandert de toestand en de uitvoer hangt af van de toestand van het component en de waardes die op de ingangen staan. In dit hoofdstuk introduceren we hier eerst de nodige terminologie voor waarna we een reeks componenten ontwikkelen om gegevens op te slaan. Daarna bespreken we hoe we componenten met geheugen kunnen ontwerpen. We maken hierbij een onderscheid tussen synchrone sequenti\"ele schakelingen: schakelingen met een klok, en asynchrone sequenti\"ele schakelingen: schakelingen waarbij een verandering aan de invoer de oorzaak is van de verandering van toestand.
 \end{chapterintro}
 \minitoc[n]
 
 \section{Terminologie}
-Een \gtermen[seqentiele schakeling]{sequenti\"ele schakeling}{Een schakeling waarbij de waardes die op de uitgangen worden gezet, niet enkel afhangen van de waardes die aan de ingang staan, maar ook aan een interne toestand van de schakeling. Deze toestand wordt bijgehouden door een geheugencomponent. De toestand van een sequenti\"ele schakeling kan veranderen door veranderingen aan de invoer, of door een klokflank.} is een schakeling waarbij niet alleen de ingangen $X$ van belang zijn, maar ook de toestand van deze schakeling. De \gtermen[toestand]{toestand $S$}{Een bepaalde voorwaarde waar een systeem zich op een bepaald moment in bevindt. Een toestand heeft meestal invloed op het gedrag van het systeem: de invoer wordt anders ge\"interpreteerd en de uitvoer is afhankelijk van de uitvoer. Een eindige-toestanden machine formaliseert dit concept.} wordt bepaald door de ingang, en door de vorige toestand $S_{\mbox{\tiny{prev.}}}$. In de wiskunde wordt een dergelijke constructie beschreven als een \gtermen{eindige-toestanden machine}{Een wiskundig formalisme van een machine dat zich telkens in een toestand uit een eindige verzameling toestanden bevindt. Op elke tijdstap wordt een waarde ingelezen en afhankelijk van deze waarde komt het systeem in een nieuwe toestand terecht.} of \stermen{finite state machine (FSM)}{eindige-toestanden machine}. Om dit te verwezenlijken hebben we een \gtermen{geheugencomponent}{Een component die in staat is een toestand bij te houden. Dit kan op verschillende manier maar meestal gebruikt men ofwel een capaciteit ofwel een positief terugkoppelingsmechanisme.} nodig, een component die de toestand bijhoudt. Dit kunnen we bijvoorbeeld verwezenlijken met een condensator, in DRAM geheugens wordt een dergelijke implementatie gebruikt. Het probleem met een condensator is dat de lading na verloop van tijd verloren gaat, wat tot dynamische logica leidt. In DRAM wordt dit opgelost door de condensatoren in kwestie terug na verloop van tijd op te laden. Een alternatief zijn componenten met \gtermen{positieve terugkoppeling}{Een systeem met positieve terugkoppeling is een systeem waarbij een deel van de uitvoer tevens dienst doet als een deel van de invoer. Deze invoer wordt zo verwerkt dat het effect positief is: het effect op de uitvoer wordt net verder versterkt. Systemen met positieve terugkoppeling zijn meestal geheugens.}, doorgaans zijn deze bekend als \termen{flipflop} of \termen{register}. In \secref{memoryBlocks} zullen we verschillende van deze bouwblokken bespreken.%TODO: glossary
+Een \gtermen[sequentiele schakeling]{sequenti\"ele schakeling}{Een schakeling waarbij de waardes die op de uitgangen worden gezet, niet enkel afhangen van de waardes die aan de ingang staan, maar ook aan een interne toestand van de schakeling. Deze toestand wordt bijgehouden door een geheugencomponent. De toestand van een sequenti\"ele schakeling kan veranderen door veranderingen aan de invoer, of door een klokflank.} is een schakeling waarbij niet alleen de ingangen $X$ van belang zijn, maar ook de toestand van deze schakeling. De \gtermen[toestand]{toestand $S$}{Een bepaalde voorwaarde waar een systeem zich op een bepaald moment in bevindt. Een toestand heeft meestal invloed op het gedrag van het systeem: de invoer wordt anders ge\"interpreteerd en de uitvoer is afhankelijk van de uitvoer. Een eindige-toestanden machine formaliseert dit concept.} wordt bepaald door de ingang, en door de vorige toestand $S_{\mbox{\tiny{prev.}}}$. In de wiskunde wordt een dergelijke constructie beschreven als een \gtermen{eindige-toestanden machine}{Een wiskundig formalisme van een machine dat zich telkens in een toestand uit een eindige verzameling toestanden bevindt. Op elke tijdstap wordt een waarde ingelezen en afhankelijk van deze waarde komt het systeem in een nieuwe toestand terecht.} of \stermen{finite state machine (FSM)}{eindige-toestanden machine}. Om dit te verwezenlijken hebben we een \gtermen{geheugencomponent}{Een component die in staat is een toestand bij te houden. Dit kan op verschillende manier maar meestal gebruikt men ofwel een capaciteit ofwel een positief terugkoppelingsmechanisme.} nodig, een component die de toestand bijhoudt. Dit kunnen we bijvoorbeeld verwezenlijken met een condensator, in DRAM geheugens wordt een dergelijke implementatie gebruikt. Het probleem met een condensator is dat de lading na verloop van tijd verloren gaat, wat tot dynamische logica leidt. In DRAM wordt dit opgelost door de condensatoren in kwestie terug na verloop van tijd op te laden. Een alternatief zijn componenten met \gtermen{positieve terugkoppeling}{Een systeem met positieve terugkoppeling is een systeem waarbij een deel van de uitvoer tevens dienst doet als een deel van de invoer. Deze invoer wordt zo verwerkt dat het effect positief is: het effect op de uitvoer wordt net verder versterkt. Systemen met positieve terugkoppeling zijn meestal geheugens.}, doorgaans zijn deze bekend als \termen{flipflop} of \termen{register}. In \secref{memoryBlocks} zullen we verschillende van deze bouwblokken bespreken.%TODO: glossary
 
 \subsection{Classificatie van sequenti\"ele schakelingen}
 \ssclab{classificationSequential}
 Doorgaans kunnen we sequenti\"ele schakelingen onderverdelen volgens twee classificatiesystemen: gebaseerd op de uitgangsfunctie $F$, en de synchroniciteit van de schakeling. Wat betreft de uitgangsfunctie beschouwen we twee types:
+
 \begin{itemize}
  \item \gtermen[toestandsgebonden sequentiele schakelingen]{Toestandsgebonden sequenti\"ele schakelingen}{Een variant van sequenti\"ele schakeling waarbij de uitvoer uitsluitend afhangt van de toestand waarin de schakeling zich op dat moment bevindt. Toestandsgebonden sequenti\"ele schakelingen worden geformaliseerd als Moore machines.}: In dit geval hangt de uitgangsfunctie enkel af van de toestand op dat moment, of anders gesteld de uitgangsfunctie wordt beschreven door een functie $\fun{F}{S}$. Dit concept is ook bekend als de \gtermen{Moore machine}{Een eindige-toestanden machine waarbij de uitvoer uitsluitend afhangt van de toestand waarin de machine zich bevindt. Dit in tegenstelling tot een Mealy machine waar de uitvoer wordt bepaald door de toestand en de waardes die op dat moment op de invoer staan.} ofwel \stermen{Moore-FSM}{Moore machine}. Bij een Moore machine is de invloed van de ingang dus met vertraging te zien: de schakeling moet eerst van toestand veranderen, alvorens we iets aan de uitvoer merken.
  \item \gtermen[inputgebonden sequentiele schakeling]{Inputgebonden sequenti\"ele schakelingen}{Een variant van een sequenti\"ele schakeling waarbij de uitvoer zowel afhangt van de toestand waarin de schakeling zich bevindt, als de waardes die op dat moment op de invoer staan.}: Hierbij wordt de signatuur van de uitgangsfunctie uitgebreid. De uitgang is zowel afhankelijk van de toestand $S$ als van de ingang $X$. Dit betekent dat indien de ingang verandert, maar de toestand niet de uitvoer $\fun{F}{S,X}$ ook verandert. Dit concept wordt ook wel de \gtermen{Mealy machine}{Een variant van een eindige-toestanden machine waarbij de uitvoer zowel afhangt van de invoer als van de toestand van de machine op dat moment. Dit in tegenstelling tot een Moore machine waarbij de uitvoer enkel afhangt van de toestand.} ofwel \stermen{Mealy-FSM}{Mealy machine} genoemd. Elke Moore machine is dus ook een Mealy machine waar de invoer geen onderdeel uitmaakt van de logica die de uitgang berekent. Door het aantal toestanden uit te breiden kan men echter van elke Moore machine een Mealy machine maken die \'e\'en tijdseenheid na-ijlt op zijn equivalente Mealy machine.
 \end{itemize}
+
 Verder maken we ook een onderscheid in schakelingen inzake synchroniciteit. Hiermee bedoelen we welke gebeurtenissen er aanleiding geven om van toestand te veranderen. We beschouwen twee soorten:
+
 \begin{itemize}
  \item \gtermen[asynchrone sequentiele schakelingen]{Asynchrone sequenti\"ele schakelingen}{Een asynchrone sequenti\"ele schakeling is een variant van een sequenti\"ele schakeling waarbij de schakeling van toestand verandert wanneer de waardes aan de invoer veranderen, dit in tegenstelling tot synchrone sequenti\"ele schakelingen die veranderen van toestand door aansturing van een kloksignaal. Asynchrone schakelingen hebben het potentieel sneller te werken omdat ze dus geen tijd verloren laten gaan tussen het veranderen van de ingang en het volgende kloksignaal. Het ontwerpen van asynchrone schakelingen is echter geen sinecure.}: Hierbij verandert de toestand $S$ en bijgevolg ook de uitvoer $F$ wanneer de ingang $X$ verandert. We zullen asynchrone schakelingen kort bespreken in \secref{asynchroneSequence}, bovendien zullen we veronderstellen dat slechts \'e\'en bit tegelijk verandert aan de ingang. Deze laatste voorwaarde leidt echter vaak reeds tot heel wat problemen.
  \item \gtermen[synchrone sequentiele schakelingen]{Synchrone sequenti\"ele schakelingen}{Een variant van sequenti\"ele schakelingen waarbij de schakeling van toestand verandert bij een klokflank, veranderingen aan de invoer voor deze klokflank worden dus niet meteen doorgerekend voor de toestand, mogelijk wel voor de uitvoer. Synchrone schakelingen lenen zich tot eenvoudige ontwerpen en hebben minder problemen dan hun asynchrone tegenhangers.}: Hierbij veranderen de uitgang $F$ en toestand $S$ enkel op het moment de zogenoemde \gtermen{klokingang}{Een speciale ingang van synchrone sequenti\"ele schakelingen. De ingang verandert periodiek van $0$ naar $1$ en terug. De klokingang zal doorgaans veel logica in de schakeling aansturen, omdat enkel op de klokflank de schakeling van toestand verandert: op dat moment accepteren dus bijvoorbeeld de flipflops nieuwe gegevens.} verandert.
@@ -25,6 +28,7 @@ Veruit de meeste sequenti\"ele schakelingen worden gebouwd op basis van een klok
 
 \subsection{Terminologie van het kloksignaal}
 Bij synchrone schakelingen maken we gebruik van een klokingang. Op deze klokingang staat periodiek een $0$ gevolgd door een $1$, dit signaal herhaalt zich eindeloos. Om dit kloksignaal te beschrijven gebruikt men een specifieke terminologie die we hier introduceren:
+
 \begin{itemize}
  \item \gtermen{Klokperiode}{De tijd tussen twee opeenvolgende overgangen van $0$ naar $1$ van het kloksignaal.}: de tijd tussen twee opeenvolgende klokovergangen van $0$ naar $1$.
  \item \gtermen{Klokfrequentie}{Het aantal klokperiodes per seconde.}: het aantal klokperiodes per seconden of formeler:
@@ -47,7 +51,7 @@ De klok staat dus niet per definitie even lang op $0$ als op $1$. Indien dit wel
 \section{Bouwblokken}
 \seclab{memory}
 \seclab{memoryBlocks}
-In deze sectie zullen we de bouwblokken van geheugen ontwikkelen. Hierbij zullen we in \sscref{flipflop} eerst het basisblok ontwikkelen om \'e\'en bit te onthouden: de flipflop. Door flipflops te groeperen kunnen we een groter geheugen ontwikkelen. Dergelijke geheugens worden registers genoemd. Registers kunnen meestal maar een beperkt aantal flipflops tegelijk aanspreken. Registers bespreken we in \sscref{registers}. Een andere populaire toepassing van geheugens is een teller. We ontwikkelen een tellerschakeling in subsectie \sscref{counters}.
+In deze sectie zullen we de bouwblokken van geheugen ontwikkelen. Hierbij zullen we in \sscref{flipflop} eerst het basisblok ontwikkelen om \'e\'en bit te onthouden: de flipflop. Door flipflops te groeperen kunnen we een groter geheugen ontwikkelen. Dergelijke geheugens worden registers genoemd. Registers kunnen meestal maar een beperkt aantal flipflops tegelijk aanspreken. Registers bespreken we in \sscref{registers}. Een andere populaire toepassing van geheugens is een teller. We ontwikkelen een teller-schakeling in subsectie \sscref{counters}.
 
 \subsection{De flipflop}
 \ssclab{flipflop}
@@ -94,25 +98,25 @@ Indien we elke klokflank een nieuwe waarde in de latch willen opslaan loont het 
 \end{figure}
 
 \paragraph{Set-up- en houdtijd}
-Aan de hand van de implementatie van de geklokte D-latch op \figref{clockedDLatch} kunnen we de vertragingen van verschillende signalen berekenen:
+Aan de hand van de implementatie van de geklokte D-latch op \figref{clockedDLatch} kunnen we de theoretische vertragingen van verschillende signalen berekenen:
 \begin{equation}
 \begin{array}{ccl}
-D\rightarrow Q&:&\left\{\begin{array}{lll}
-t_{HL}=1.4+1.4=2.8&\ifun&D=0\wedge\mbox{Clk}=1\\
-t_{LH}=1+1.4+1.4+1.4=5.2&\ifun&D=1\wedge\mbox{Clk}=1
-\end{array}\right.\\\\
-D\rightarrow Q_n&:&\left\{\begin{array}{lll}
-t_{HL}=1+1.4+1.4=3.8&\ifun&D=0\wedge\mbox{Clk}=1\\
-t_{LH}=1.4+1.4+1.4=4.2&\ifun&D=1\wedge\mbox{Clk}=1
-\end{array}\right.\\\\
-\mbox{Clk}\rightarrow Q&:&\left\{\begin{array}{lll}
-t_{HL}=1.4+1.4+1.4=4.2&\ifun&D=0\wedge\mbox{Clk}=1\\
-t_{LH}=1.4+1.4=2.8&\ifun&D=1\wedge\mbox{Clk}=1
-\end{array}\right.\\\\
-\mbox{Clk}\rightarrow Q_n&:&\left\{\begin{array}{lll}
-t_{HL}=1.4+1.4+1.4=4.2&\ifun&D=0\wedge\mbox{Clk}=1\\
-t_{LH}=1.4+1.4=2.8&\ifun&D=1\wedge\mbox{Clk}=1
-\end{array}\right.
+D\rightarrow Q&:&\acclguard{
+t_{HL}=1.4+1.4=2.8&\ifun D=0\wedge\mbox{Clk}=1\\
+t_{LH}=1+1.4+1.4+1.4=5.2&\ifun D=1\wedge\mbox{Clk}=1
+}\\\\
+D\rightarrow Q_n&:&\acclguard{
+t_{HL}=1+1.4+1.4=3.8&\ifun D=0\wedge\mbox{Clk}=1\\
+t_{LH}=1.4+1.4+1.4=4.2&\ifun D=1\wedge\mbox{Clk}=1
+}\\\\
+\mbox{Clk}\rightarrow Q&:&\acclguard{
+t_{HL}=1.4+1.4+1.4=4.2&\ifun D=0\wedge\mbox{Clk}=1\\
+t_{LH}=1.4+1.4=2.8&\ifun D=1\wedge\mbox{Clk}=1
+}\\\\
+\mbox{Clk}\rightarrow Q_n&:&\acclguard{
+t_{HL}=1.4+1.4+1.4=4.2&\ifun D=0\wedge\mbox{Clk}=1\\
+t_{LH}=1.4+1.4=2.8&\ifun D=1\wedge\mbox{Clk}=1
+}
 \end{array}
 \eqnlab{dLatchDelays}%TODO: use acclguards
 \end{equation}
@@ -141,42 +145,18 @@ t_{\mbox{\tiny{set-up}}}=t_{pHL}\left(\mbox{inverter}\right)&\mbox{(vertraging v
 \end{itemize}
 
 \paragraph{Metastabiliteit}
-Een ander probleem dat komt kijken bij latches is de \gtermen{metastabiliteit}{Een probleem bij latches en afgeleide producten (flipflops, geheugens,...). In het geval van metastabiliteit kan bij het inlezen van een nieuwe waarde, het systeem in een toestand terecht komen die niet $0$ of $1$ is, maar ergens ertussen. Dit systeem is dan in actief evenwicht. Uiteindelijk zal de latch terugvallen op een $0$ of een $1$, maar de exacte waarde is niet gekend, en de tijd die de latch hiervoor nodig heeft is Poisson verdeeld.}. Dit probleem treedt op bij de twee poorten\footnote{Of het om een NAND- of NOR-implementatie gaat, maakt niets uit.} van de SR-latch en dus bijgevolg alle afgeleide latches en geheugencomponenten (flipflops, registers, tellers, ...). Als we bij de NOR-implementatie $\tupl{S,R}=\tupl{0,0}$ aanleggen, of bij een NAND-implementatie $\tupl{S^*,R^*}=\tupl{1,1}$, kunnen we deze poorten modelleren als NOT-poorten zoals op \figref{metastabilityNotGates}.
+Een ander probleem dat komt kijken bij latches is de \gtermen{metastabiliteit}{Een probleem bij latches en afgeleide producten (flipflops, geheugens,...). In het geval van metastabiliteit kan bij het inlezen van een nieuwe waarde, het systeem in een toestand terecht komen die niet $0$ of $1$ is, maar ergens ertussen. Dit systeem is dan in actief evenwicht. Uiteindelijk zal de latch terugvallen op een $0$ of een $1$, maar de exacte waarde is niet gekend, en de tijd die de latch hiervoor nodig heeft is Poisson verdeeld.}. Dit probleem treedt op bij de twee poorten\footnote{Of het om een NAND- of NOR-implementatie gaat, maakt niets uit.} van de SR-latch en dus bijgevolg alle afgeleide latches en geheugencomponenten (flipflops, registers, tellers, ...). Als we bij de NOR-implementatie $\tupl{S,R}=\tupl{0,0}$ aanleggen, of bij een NAND-implementatie $\tupl{S^*,R^*}=\tupl{1,1}$, kunnen we deze poorten modelleren als NOT-poorten zoals op \figref{metastability-not-gates}.
 
 \begin{figure}[hbt]
 \centering
-\subfigure[Implementatie.]{
-\begin{tikzpicture}[circuit logic US,scale=1.2]
-\node[not gate] (NO0) at (0,0.65) {};
-\node[not gate] (NO1) at (0,-0.65) {};
-\draw (NO1.output) -- (NO1.output -| 0.85,0) node[anchor=west,scale=0.75]{$x$} -- (0.85,-0.4) -- (-0.75,0.4) -- (NO0.input -| -0.75,0) -- (NO0.input);
-\draw (NO0.output) -- (NO0.output -| 0.85,0) node[anchor=west,scale=0.75]{$y$} -- (0.85,0.4) -- (-0.75,-0.4) -- (NO1.input -| -0.75,0) -- (NO1.input);
-\end{tikzpicture}
-\figlab{metastabilityNotGates}}
-\subfigure[Transfer-functies.]{
-\begin{tikzpicture}
-\draw[thick,->] (-0.1,0) -- (2.2,0) node[anchor=north east,scale=0.75]{$x$};
-\draw[thick,->] (0,-0.1) -- (0,2.2) node[anchor=north east,scale=0.75]{$y$};
-\draw [samples=100,smooth,domain=0.1:1.9,variable=\x,dashed] plot (\x,{1.75-1.5/(1+exp(-8*\x+8))});
-\draw [samples=100,smooth,domain=0.1:1.9,variable=\x] plot ({1.75-1.5/(1+exp(-8*\x+8))},\x);
-\pdot{1,1};
-\pdot{0.2538,1.7462};
-\pdot{1.7462,0.2538};
-\end{tikzpicture}
-\figlab{metastabilityNotFunctions}}
-\subfigure[Bal-en-heuvel-analogie.]{
-\begin{tikzpicture}
-\draw[pattern=vertical lines] [samples=100,smooth,domain=-2:2,variable=\x] plot (\x,{cos(114.591559029*\x)}) -- (2,-1.3) -- (-2,-1.3) -- cycle;
-\filldraw[fill=black!20,draw=black] (0,1.125) circle (0.125 cm);
-\filldraw[fill=black!20,draw=black] (-1.570796327,-0.875) circle (0.125 cm);
-\filldraw[fill=black!20,draw=black] (1.570796327,-0.875) circle (0.125 cm);
-\end{tikzpicture}
-\figlab{metastabilityAnalogy}}
+\importtikzsubfigure{metastability-not-gates}{Implementatie.}
+\importtikzsubfigure{metastability-not-functions}{Transfer-functies.}
+\importtikzsubfigure{metastability-analogy}{Bal-en-heuvel-analogie.}
 \caption{Metastabiliteit.}
 \figlab{metastability}
 \end{figure}
 
-Indien we deze schakeling logisch analyseren zien we twee mogelijke stabiele oplossingen: waarbij ofwel $x$ ofwel $y$ $1$ is, en de andere -- ofwel $y$ ofwel $x$ -- $0$. Deze waarden zijn ook de enige die we beschouwen indien we de NOT-poort louter als een \emph{logische} component zien. We implementeren deze poorten echter met behulp van transistoren, bijgevolg behoudt de poort een zeker analoog karakter\footnote{Onthou dat $0$ en $1$ en de waarheidstabellen een simplificatie van de werkelijkheid zijn.}. Op de grafiek op \figref{metastabilityNotFunctions} geven we de transfer-functie van deze twee NOT-poorten weer. De stippelijn geeft de transfer-functie van de bovenste NOT-poort weer, de volle lijn de onderste. We zien zoals verwacht de twee \gtermen{stabiele toestanden}{Toestanden waarbij het circuit positieve feedback uitoefent waardoor het systeem enkel bij verandering van invoer kan veranderen. Een latch heeft twee stabiele toestanden: eentje waarbij men $0$ opslaat, of eentje waarbij men $1$ opslaat. Een latch heeft echter ook een metastabiele toestand.}. We bemerken echter ook een \gtermen{metastabiele toestand}{Een toestand waarin een latch kan terecht komen. Hierbij staan beide poorten ergens tussen $0$ en $1$ in. Dit is echter geen stabiel evenwicht: ruis zal ertoe leiden dat de latch in \'e\'en van de twee stabiele toestanden komt. Dewelke dit is en wanneer dit zal gebeuren is echter niet te voorspellen.}. Op het moment dat op $x$ of $y$ een kleine hoeveelheid ruis wordt aangebracht zullen de poorten dit effect versterken en zal de schakeling uiteindelijk in een stabiele toestand terechtkomen. Het probleem is echter dat we niet weten wanneer dit zal gebeuren. We gaan er echter vanuit dat de kans dat na een bepaald tijdstip er nog onvoldoende ruis is opgetreden Poisson-verdeeld is\footnote{De meeste kansverdelingen op het voorkomen van een gebeurtenis voor een zekere tijd zijn bij benadering Poisson-verdeeld.}. We formaliseren dus tot:
+Indien we deze schakeling logisch analyseren zien we twee mogelijke stabiele oplossingen: waarbij ofwel $x$ ofwel $y$ $1$ is, en de andere -- ofwel $y$ ofwel $x$ -- $0$. Deze waarden zijn ook de enige die we beschouwen indien we de NOT-poort louter als een \emph{logische} component zien. We implementeren deze poorten echter met behulp van transistoren, bijgevolg behoudt de poort een zeker analoog karakter\footnote{Onthou dat $0$ en $1$ en de waarheidstabellen een simplificatie van de werkelijkheid zijn.}. Op de grafiek op \figref{metastability-not-functions} geven we de transfer-functie van deze twee NOT-poorten weer. De stippelijn geeft de transfer-functie van de bovenste NOT-poort weer, de volle lijn de onderste. We zien zoals verwacht de twee \gtermen{stabiele toestanden}{Toestanden waarbij het circuit positieve feedback uitoefent waardoor het systeem enkel bij verandering van invoer kan veranderen. Een latch heeft twee stabiele toestanden: eentje waarbij men $0$ opslaat, of eentje waarbij men $1$ opslaat. Een latch heeft echter ook een metastabiele toestand.}. We bemerken echter ook een \gtermen{metastabiele toestand}{Een toestand waarin een latch kan terecht komen. Hierbij staan beide poorten ergens tussen $0$ en $1$ in. Dit is echter geen stabiel evenwicht: ruis zal ertoe leiden dat de latch in \'e\'en van de twee stabiele toestanden komt. Dewelke dit is en wanneer dit zal gebeuren is echter niet te voorspellen.}. Op het moment dat op $x$ of $y$ een kleine hoeveelheid ruis wordt aangebracht zullen de poorten dit effect versterken en zal de schakeling uiteindelijk in een stabiele toestand terechtkomen. Het probleem is echter dat we niet weten wanneer dit zal gebeuren. We gaan er echter vanuit dat de kans dat na een bepaald tijdstip er nog onvoldoende ruis is opgetreden Poisson-verdeeld is\footnote{De meeste kansverdelingen op het voorkomen van een gebeurtenis voor een zekere tijd zijn bij benadering Poisson-verdeeld.}. We formaliseren dus tot:
 
 \begin{equation}
 \fun{p}{\mbox{nog in metastabiele toestand na $t$}}=e^{-t/\tau}
@@ -186,11 +166,11 @@ De \gtermen[tijdsconstante]{tijdsconstante $\tau$}{Een tijdsconstante die gebrui
 
 \begin{itemize}
  \item De hoeveelheid ruis: hoe meer ruis hoe lager de tijdsconstante.
- \item De stijlheid van de curves rond de metastabiele toestand: hoe stijler hoe lager de tijdsconstante.
+ \item De steilheid van de curves rond de metastabiele toestand: hoe steiler hoe lager de tijdsconstante.
 \end{itemize}
 
 \paragraph{}
-Een latch kan in een metastabiele toestand komen door een zogenaamde \gtermen{marginale triggering}{Het feit dat men op onvoldoende wijze aan een latch duidelijk maakt welke waarde deze precies moet aannemen. Bijvoorbeeld door de set-up- of houdtijd of de pulsbreedte niet te respecteren. Marginale triggering kan ertoe leiden dat de latch in een metastabiele toestand terecht komt.}: een schending van de set-up- of houdtijd of van de minimale pulsbreedte\footnote{De tijd dat een signaal wordt aangelegd.}. In deze gevallen kan een overgang tussen twee stabiele toestanden worden onderbroken. Indien dit gebeurt op het moment dat de latch net voorbij de metastabiele toestand passeert -- om een andere waarde aan te nemen -- treedt dit probleem op. Een latch komt dan ook bij elke overgang kortstondig in een metastabiele toestand. Een tijdje in een metastabiele toestand blijven is geen probleem. Zolang we de correcte waarden op de $S^*$ en $R^*$ ingangen blijven aanleggen\footnote{Zodat het systeem wel degelijk in de correcte toestand terecht komt, en dus niet per ongeluk in $0$ waar het $1$ had moeten zijn.} en deze toestand niet meer actief is wanneer we het signaal gaan gebruiken zullen er geen problemen optreden. Een populaire voorstelling van metastabiliteit is de zogenaamde \gtermen{bal-en-heuvel-analogie}{Een analogie voor de metastabiele toestand van een latch. Hierbij beschouwen we een heuvel waarbij de heuveltop de metastabiele toestand voorstelt. De twee dallen die ontstaan door de heuvel zijn de stabiele toestanden. Een kleine hoeveelheid ruis (wind) kan de bal in \'e\'en van de twee stabiele toestanden blazen. We dienen de bal ook telkens over de heuvel te rollen om in de andere toestand terecht te komen.}. In deze analogie beschrijven we een heuvel zoals op \figref{metastabilityAnalogy}. Een bal kan op deze heuvel in drie toestanden een evenwicht bereiken: twee toestanden in een dal (passief evenwicht) en een metastabiele toestand op de heuvel (actief evenwicht). Bij asynchrone circuits is metastabiliteit een veel voorkomend fenomeen. Zeker wanneer de klokfrequentie geen veelvoud is van de frequentie waarmee de ingang omwisselt. In dat geval bestaat de oplossing van het probleem eerder uit ``hoe ga ik om met metastabiliteit?'', in plaats van ``hoe los ik de metastabiliteit op?''.
+Een latch kan in een metastabiele toestand komen door een zogenaamde \gtermen{marginale triggering}{Het feit dat men op onvoldoende wijze aan een latch duidelijk maakt welke waarde deze precies moet aannemen. Bijvoorbeeld door de set-up- of houdtijd of de pulsbreedte niet te respecteren. Marginale triggering kan ertoe leiden dat de latch in een metastabiele toestand terecht komt.}: een schending van de set-up- of houdtijd of van de minimale pulsbreedte\footnote{De tijd dat een signaal wordt aangelegd.}. In deze gevallen kan een overgang tussen twee stabiele toestanden worden onderbroken. Indien dit gebeurt op het moment dat de latch net voorbij de metastabiele toestand passeert -- om een andere waarde aan te nemen -- treedt dit probleem op. Een latch komt dan ook bij elke overgang kortstondig in een metastabiele toestand. Een tijdje in een metastabiele toestand blijven is geen probleem. Zolang we de correcte waarden op de $S^*$ en $R^*$ ingangen blijven aanleggen\footnote{Zodat het systeem wel degelijk in de correcte toestand terecht komt, en dus niet per ongeluk in $0$ waar het $1$ had moeten zijn.} en deze toestand niet meer actief is wanneer we het signaal gaan gebruiken zullen er geen problemen optreden. Een populaire voorstelling van metastabiliteit is de zogenaamde \gtermen{bal-en-heuvel-analogie}{Een analogie voor de metastabiele toestand van een latch. Hierbij beschouwen we een heuvel waarbij de heuveltop de metastabiele toestand voorstelt. De twee dallen die ontstaan door de heuvel zijn de stabiele toestanden. Een kleine hoeveelheid ruis (wind) kan de bal in \'e\'en van de twee stabiele toestanden blazen. We dienen de bal ook telkens over de heuvel te rollen om in de andere toestand terecht te komen.}. In deze analogie beschrijven we een heuvel zoals op \figref{metastability-analogy}. Een bal kan op deze heuvel in drie toestanden een evenwicht bereiken: twee toestanden in een dal (passief evenwicht) en een metastabiele toestand op de heuvel (actief evenwicht). Bij asynchrone circuits is metastabiliteit een veel voorkomend fenomeen. Zeker wanneer de klokfrequentie geen veelvoud is van de frequentie waarmee de ingang omwisselt. In dat geval bestaat de oplossing van het probleem eerder uit ``hoe ga ik om met metastabiliteit?'', in plaats van ``hoe los ik de metastabiliteit op?''.
 
 \subsubsection{De flipflop}
 Latches kunnen we gebruiken bij het opslaan van \'e\'en bit. Indien we een geklokte latch met een klok verbinden, zijn er twee tmogelijke functionaliteiten. De gekozen functionaliteit hangt af van het kloksignaal:
